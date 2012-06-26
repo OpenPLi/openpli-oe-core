@@ -4,9 +4,8 @@ require conf/license/openpli-gplv2.inc
 
 PACKAGES = "${PN}"
 PACKAGE_ARCH = "all"
-RDEPENDS_${PN} = "libcrypto"
-RPROVIDES_${PN} = "libcrypto${PV} libssl${PV}"
-PR = "r2"
+RDEPENDS_${PN} = "openssl"
+PR = "r3"
 SRC_URI = ""
 S = "${WORKDIR}"
 
@@ -23,3 +22,5 @@ do_install () {
 	ln -s /lib/libcrypto.so.0.9.8 ${D}/usr/lib/libcrypto.so.0.9.7
 	ln -s libssl.so.0.9.8 ${D}/usr/lib/libssl.so.0.9.7
 }
+
+FILES_${PN} = "/usr/lib/"
