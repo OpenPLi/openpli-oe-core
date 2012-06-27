@@ -61,6 +61,7 @@ OPTIONAL_PACKAGES += " \
 	vim \
 	wakelan \
 	zeroconf \
+	iperf \
 	"
 
 export IMAGE_BASENAME = "openpli"
