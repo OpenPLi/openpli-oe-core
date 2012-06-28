@@ -8,7 +8,7 @@ require conf/license/openpli-gplv2.inc
 RDEPENDS_${PN} += "showiframe"
 
 PV = "3.0"
-PR = "r1"
+PR = "r2"
 
 S = "${WORKDIR}/"
 
@@ -17,12 +17,11 @@ INITSCRIPT_PARAMS = "start 21 S ."
 
 inherit update-rc.d
 
-BOOTLOGOMVI = "${@base_contains("MACHINE_FEATURES", "hdtv", "bootlogo-hd.mvi" , "bootlogo.mvi", d)}"
 # This needs a small explanation; when the machine has 'switchoff' support, it switches itself off, so we don't need switchoff.mvi...
 SWITCHOFFMVI = "${@base_contains("MACHINE_FEATURES", "switchoff", "" , "switchoff.mvi", d)}"
 
 SRC_URI = " \
-	file://${BOOTLOGOMVI} \
+	file://bootlogo.mvi \
 	file://switchoff.mvi \
 	file://bootlogo.jpg \
 	file://bootlogo.sh \
@@ -33,18 +32,16 @@ BINARY_VERSION_mipsel = "8"
 
 IMAGES_VERSION = "1"
 
-MVI = "${SWITCHOFFMVI}"
+MVI = "${SWITCHOFFMVI} bootlogo.mvi"
 MVISYMLINKS = "bootlogo_wait backdrop"
 
 do_install() {
-        if [ -n "${BRANDINGDIR}" -a -d "${BRANDINGDIR}/bootlogo" ] ; then
-                cp -p ${BRANDINGDIR}/bootlogo/* ${S}/.
-        fi
+	if [ -n "${BRANDINGDIR}" -a -d "${BRANDINGDIR}/bootlogo" ] ; then
+		cp -p ${BRANDINGDIR}/bootlogo/* ${S}/.
+	fi
 
 	install -d ${D}/boot
 	install -d ${D}/usr/share
-	install -m 0755 ${S}/${BOOTLOGOMVI} ${D}/usr/share/bootlogo.mvi
-	ln -sf /usr/share/bootlogo.mvi ${D}/boot/bootlogo.mvi
 	for i in ${MVI}; do
 		install -m 0755 ${S}/$i ${D}/usr/share/
 		ln -sf /usr/share/$i ${D}/boot/$i
