@@ -79,6 +79,7 @@ ENIGMA2_OPTIONAL = " \
 	softcams-enigma2-meta \
 	task-openplugins \
 	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
+	dvb-usb-drivers-meta \
 	"
 
 IMAGE_INSTALL += " \
