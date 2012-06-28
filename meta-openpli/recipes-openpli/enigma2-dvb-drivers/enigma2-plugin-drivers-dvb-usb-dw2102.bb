@@ -1,5 +1,7 @@
 DESCRIPTION = "USB DVB driver for DW210x/DW310x chipset"
 
+require conf/license/openpli-gplv2.inc
+
 DVBPROVIDER ?= "kernel"
 
 RDEPENDS_${PN} = " \

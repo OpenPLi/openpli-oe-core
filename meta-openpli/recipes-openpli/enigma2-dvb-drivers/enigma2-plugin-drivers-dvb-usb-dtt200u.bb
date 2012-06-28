@@ -1,5 +1,7 @@
 DESCRIPTION = "USB DVB driver for dtt200u chipsets"
 
+require conf/license/openpli-gplv2.inc
+
 DVBPROVIDER ?= "kernel"
 
 RDEPENDS_${PN} = " \

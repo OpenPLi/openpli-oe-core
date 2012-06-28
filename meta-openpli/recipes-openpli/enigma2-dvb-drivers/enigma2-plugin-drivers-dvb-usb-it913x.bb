@@ -1,5 +1,7 @@
 DESCRIPTION = "USB DVB driver for it913x chipsets"
 
+require conf/license/openpli-gplv2.inc
+
 DVBPROVIDER ?= "kernel"
 
 RDEPENDS_${PN} = " \

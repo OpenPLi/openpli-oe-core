@@ -1,5 +1,7 @@
 DESCRIPTION = "meta file for USB DVB drivers"
 
+require conf/license/openpli-gplv2.inc
+
 DEPENDS = "\
 	enigma2-plugin-drivers-dvb-usb-dib0700 \
 	enigma2-plugin-drivers-dvb-usb-af9015 \
