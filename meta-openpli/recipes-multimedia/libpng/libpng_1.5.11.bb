@@ -4,7 +4,7 @@ LICENSE = "libpng"
 SECTION = "libs"
 PRIORITY = "required"
 LICENSE = "Libpng"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=e7a99a5e5374ed691ad710b0f411ae8f"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=769a67aea75568083a4c21f7b36752ca"
 
 DEPENDS = "zlib"
 
