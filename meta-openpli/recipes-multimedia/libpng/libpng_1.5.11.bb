@@ -15,8 +15,8 @@ S = "${WORKDIR}/libpng-${PV}"
 
 inherit autotools pkgconfig binconfig
 
-SRC_URI[libpng.md5sum] = "f4395eaf426bdd870446c246df307aae"
-SRC_URI[libpng.sha256sum] = "4d044852d3fbe5c0fad51f80f3f9bd519a6d5e1997079b165aa2292bd706cd5d"
+SRC_URI[libpng.md5sum] = "cc1f78c87292161464c6f6f51fa19428"
+SRC_URI[libpng.sha256sum] = "a2919797897d7159cec15a7305f668e0e50993c019d6716515aa8ec831e8704d"
 
 PACKAGES =+ "${PN}15"
 
