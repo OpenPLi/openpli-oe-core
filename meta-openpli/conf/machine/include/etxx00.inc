@@ -27,7 +27,7 @@ GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
 PREFERRED_PROVIDER_virtual/kernel = "linux-etxx00"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs = "et-blindscan-dvbs-utils"
 
-PREFERRED_VERSION_linux-etxx00 = "3.3.0"
+PREFERRED_VERSION_linux-etxx00 = "3.4.3"
 PREFERRED_VERSION_linux-libc-headers = "3.3"
 
 KERNEL_IMAGETYPE = "vmlinux"
@@ -59,4 +59,4 @@ MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff blindscan-dvbs textlcd osd
 
 require conf/machine/include/tune-mips32.inc
 
-MACHINE_KERNEL_PR = "r0"
+MACHINE_KERNEL_PR = "r1"
