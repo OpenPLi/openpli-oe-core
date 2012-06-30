@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://hal/hal_init.c;beginline=1;endline=19;md5=f8d10a6bd2f
 
 RREPLACES_${PN} = "kernel-module-rtl8192cu"
 
-inherit module 
+inherit module machine_kernel_pr
 
 SRC_URI = "http://downloads.pli-images.org/misc/rtl8188C_8192C_8192D_usb_linux_v3.3.0_2971.20111128.tar.gz \
 	file://additional_productids.patch \
