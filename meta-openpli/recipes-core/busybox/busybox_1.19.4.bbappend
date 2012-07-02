@@ -1,4 +1,4 @@
-PRINC = "10"
+PRINC = "11"
 
 SRC_URI += " \
 			file://0001-ifupdown-support-post-up-pre-down-hooks.patch \
@@ -29,8 +29,15 @@ INITSCRIPT_PACKAGES += "${PN}-inetd"
 INITSCRIPT_NAME_${PN}-inetd = "inetd.${BPN}" 
 CONFFILES_${PN}-inetd = "${sysconfdir}/inetd.conf"
 FILES_${PN}-inetd = "${sysconfdir}/init.d/inetd.${BPN} ${sysconfdir}/inetd.conf"
+RDEPENDS_${PN}-inetd += "${PN}"
 
 RRECOMMENDS_${PN} += "${PN}-inetd"
+
+PACKAGES =+ "${PN}-cron"
+INITSCRIPT_PACKAGES += "${PN}-cron"
+INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron" 
+FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
+RDEPENDS_${PN}-cron += "${PN}"
 
 do_install_append() {
 	if grep -q "CONFIG_CRONTAB=y" ${WORKDIR}/defconfig; then
