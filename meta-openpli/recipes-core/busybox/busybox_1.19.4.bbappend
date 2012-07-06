@@ -1,4 +1,4 @@
-PRINC = "11"
+PRINC = "12"
 
 SRC_URI += " \
 			file://0001-ifupdown-support-post-up-pre-down-hooks.patch \
@@ -48,3 +48,10 @@ do_install_append() {
 }
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${P}:"
+
+# finally, fix the mdev starting order
+# mdev should have the same precedence as udev (03)
+# especially since modutils runs at 04
+
+INITSCRIPT_PARAMS_${PN}-mdev = "start 03 S ."
+
