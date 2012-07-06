@@ -15,6 +15,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-vuplus-${KV}:"
 SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.bz2 \
 	file://fix_cpu_proc.patch;striplevel=1 \
 	file://iosched-slice_idle-1.patch \
+	file://dvb-usb-smsdvb_fix_frontend.patch \
         file://${MACHINE}_defconfig \
         "
 
