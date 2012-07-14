@@ -4,11 +4,11 @@ IMAGE_CMD_jffs2.nfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
 		--disable-compressor=lzo \
-		--compression-mode=size \
+		--compression-mode=none \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	rm -rf ${IMAGE_ROOTFS}/boot/*; \
-	printf '/dev/mtdblock2\t/boot\t\tjffs2\tro\t\t\t\t0 0\n' >> ${IMAGE_ROOTFS}/etc/fstab; \
+	printf '/dev/mtdblock2\t/boot\t\tjffs2\tcompr=none\t\t\t\t0 0\n' >> ${IMAGE_ROOTFS}/etc/fstab; \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS} \
 		--disable-compressor=lzo \
@@ -26,7 +26,7 @@ IMAGE_CMD_sum.jffs2.nfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
 		--disable-compressor=lzo \
-		--compression-mode=size \
+		--compression-mode=none \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	sumtool \
@@ -37,8 +37,8 @@ IMAGE_CMD_sum.jffs2.nfi = " \
 	printf '/dev/mtdblock2\t/boot\t\tjffs2\tro\t\t\t\t0 0\n' >> ${IMAGE_ROOTFS}/etc/fstab; \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS} \
-		--disable-compressor=lzo \
-		--compression-mode=size \
+		--enable-compressor=lzo \
+		--compression-mode=priority \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	sumtool \
