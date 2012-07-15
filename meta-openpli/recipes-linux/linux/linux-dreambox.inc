@@ -1,15 +1,17 @@
 require linux.inc
 
-INC_PR = "r8"
+INC_PR = "r9"
 
 PACKAGES_DYNAMIC = "kernel-*"
 
 # For packages that RDEPEND on particular kernel modules, list the ones built into
 # the kernel here, so that it is known that the kernel has them built in.
 KERNEL_BUILTIN_MODULES = ""
+
 KERNEL_BUILTIN_MODULES_dm8000 = "\
 	kernel-module-aes-generic \
 	kernel-module-crc32c \
+	kernel-module-fuse \
 	kernel-module-mac80211 \
 	kernel-module-cfg80211 \
 	kernel-module-ath \
@@ -17,6 +19,18 @@ KERNEL_BUILTIN_MODULES_dm8000 = "\
 	kernel-module-sr-mod \
 	kernel-module-isofs \
 	kernel-module-udf \
+	kernel-module-stv0299 \
+	"
+KERNEL_BUILTIN_MODULES_dm800se = "\
+	kernel-module-fuse \
+	kernel-module-stv0299 \
+	"
+KERNEL_BUILTIN_MODULES_dm7020hd = "\
+	kernel-module-fuse \
+	kernel-module-stv0299 \
+	"
+KERNEL_BUILTIN_MODULES_dm500hd = "\
+	kernel-module-fuse \
 	"
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
