@@ -2,7 +2,7 @@ require recipes-connectivity/samba/samba.inc
 require recipes-connectivity/samba/samba-basic.inc
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://../COPYING;md5=8ca43cbc842c2336e835926c2166c28b"
-PR = "r2"
+PR = "r3"
 
 SRC_URI += "file://configure.patch \
             file://kernel-oplocks.patch \
