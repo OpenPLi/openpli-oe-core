@@ -1,9 +1,20 @@
-PRINC = "2"
+PRINC = "3"
 
 SRC_URI += " \
 	file://01samba-kill \
 	file://01samba-start \
 "
+
+EXTRA_OECONF += " \
+	samba_cv_LINUX_LFS_SUPPORT=yes \
+	samba_cv_HAVE_OFF64_T=yes \
+	samba_cv_have_longlong=yes \
+	samba_cv_HAVE_UNSIGNED_CHAR=yes \
+	samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
+	samba_cv_HAVE_C99_VSNPRINTF=yes \
+	samba_cv_HAVE_BROKEN_READDIR=no \
+	samba_cv_HAVE_IFACE_IFCONF=yes \
+	"
 
 PACKAGES =+ "smbfs smbfs-doc sambaserver libpopt libtalloc"
 
