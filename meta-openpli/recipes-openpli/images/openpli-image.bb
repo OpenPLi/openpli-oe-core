@@ -68,3 +68,5 @@ OPTIONAL_PACKAGES += " \
 
 export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""
+
+IMAGE_FEATURES += "package-management"
