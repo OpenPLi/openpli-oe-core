@@ -1,7 +1,7 @@
-PR = "${INC_PR}.24"
+PR = "${INC_PR}.25"
 
 PATCHREV = "b299a6a132d842b074b289b2568eece452d0663c"
-PATCHLEVEL = "24"
+PATCHLEVEL = "25"
 
 SRC_URI = " \
 			${KERNELORG_MIRROR}/linux/kernel/v3.x/linux-3.2.tar.bz2;name=kernel \
@@ -26,8 +26,8 @@ SRC_URI = " \
 
 SRC_URI[kernel.md5sum] = "7ceb61f87c097fc17509844b71268935"
 SRC_URI[kernel.sha256sum] = "c881fc2b53cf0da7ca4538aa44623a7de043a41f76fd5d0f51a31f6ed699d463"
-SRC_URI[kernel-patch.md5sum] = "9e86e2d649c8716085f8e02be6d8eedf"
-SRC_URI[kernel-patch.sha256sum] = "2d007b303738e9b1d1138c46e075e31ba1e25dcdee0b75dd6bf779bbc4ac5d49"
+SRC_URI[kernel-patch.md5sum] = "9d632e7af66720f5f82d2f8852fe3717"
+SRC_URI[kernel-patch.sha256sum] = "0de3899b10967e07933302ed154f0668631e678d2ebb42ae7dd0e2da1b75f405"
 SRC_URI[dmm-patch.md5sum] = "c364975ed4c2d066634729827f8552b9"
 SRC_URI[dmm-patch.sha256sum] = "e56c75ad2c8e1d9328d55a7abf7c7ce805acb96354eb26449d5f91c65ad340a4"
 SRC_URI[unionfs.md5sum] = "06e7c9f6cafd49b72184be851116c511"
