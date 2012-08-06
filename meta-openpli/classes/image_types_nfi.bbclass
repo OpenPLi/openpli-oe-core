@@ -8,7 +8,6 @@ IMAGE_CMD_jffs2.nfi = " \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	rm -rf ${IMAGE_ROOTFS}/boot/*; \
-	printf '/dev/mtdblock2\t/boot\t\tjffs2\tcompr=none\t\t\t\t0 0\n' >> ${IMAGE_ROOTFS}/etc/fstab; \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS} \
 		--disable-compressor=lzo \
@@ -34,7 +33,6 @@ IMAGE_CMD_sum.jffs2.nfi = " \
 		-o ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.sum.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	rm -rf ${IMAGE_ROOTFS}/boot/*; \
-	printf '/dev/mtdblock2\t/boot\t\tjffs2\tro\t\t\t\t0 0\n' >> ${IMAGE_ROOTFS}/etc/fstab; \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS} \
 		--enable-compressor=lzo \

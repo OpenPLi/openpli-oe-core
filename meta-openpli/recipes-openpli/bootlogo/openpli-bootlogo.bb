@@ -55,7 +55,7 @@ do_install() {
 }
 
 pkg_preinst() {
-	[ -d /proc/stb ] && mount -t jffs2 mtd:'boot partition' /boot
+	[ -d /proc/stb ] && mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
 	true
 }
 
@@ -65,7 +65,7 @@ pkg_postinst() {
 }
 
 pkg_prerm() {
-	[ -d /proc/stb ] && mount -t jffs2 mtd:'boot partition' /boot
+	[ -d /proc/stb ] && mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
 	true
 }
 
