@@ -1,6 +1,6 @@
 require linux-vuplus-3.1.1.inc
 
-MACHINE_KERNEL_PR_append = ".9"
+MACHINE_KERNEL_PR_append += ".9"
 
 SRC_URI += "\
 	file://linux_3.1.1_vuduo.patch;striplevel=1 \

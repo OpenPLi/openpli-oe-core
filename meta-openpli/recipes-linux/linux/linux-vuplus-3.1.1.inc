@@ -3,6 +3,8 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.1.1"
 
+MACHINE_KERNEL_PR_append = ".1"
+
 SRCREV = "r2"
 
 SRC_URI[md5sum] = "4dc3ac322453abbfaade7020cddea205"
@@ -40,9 +42,8 @@ do_configure_prepend() {
 }
 
 kernel_do_install_append() {
-        install -d ${D}/${KERNEL_IMAGEDEST}
-        install -m 0755 ${KERNEL_OUTPUT} ${D}/${KERNEL_IMAGEDEST}
-        gzip ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
+        ${STRIP} ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
+        gzip -9c ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION} > ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
 }
 
 pkg_postinst_kernel-image () {
