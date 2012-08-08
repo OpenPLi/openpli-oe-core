@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.1.1"
 
-MACHINE_KERNEL_PR_append = ".1"
+PR_INC = ".1"
 
 SRCREV = "r2"
 
