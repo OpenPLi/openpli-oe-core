@@ -1,5 +1,5 @@
 SRCREV = "30414"
-MACHINE_KERNEL_PR_append = ".${INC_PR}.1"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.2"
 
 # versions of OpenWrt backfire (10.03)
 HAL_VERSION = "20090508"
@@ -16,6 +16,7 @@ SRC_URI += " \
         file://fix-build-3.2.patch;apply=no \
         file://ath-rate-ctlname.patch;apply=no \
         file://set-affinity-hint.patch;apply=no \
+        file://workaround-high-interrupt-latency.patch;apply=no \
         file://madwifi-smp-affinity \
         "
 SRC_URI[md5sum] = "2c7352cbbdac995de8c3bce5b80db5f2"
@@ -40,6 +41,7 @@ do_postpatch() {
         patch -p1 -i ${WORKDIR}/fix-build-3.2.patch
         patch -p1 -i ${WORKDIR}/ath-rate-ctlname.patch
         patch -p1 -i ${WORKDIR}/set-affinity-hint.patch
+        patch -p1 -i ${WORKDIR}/workaround-high-interrupt-latency.patch
 }
 
 do_install_append() {
