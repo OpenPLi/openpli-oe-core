@@ -61,6 +61,7 @@ OPTIONAL_PACKAGES += " \
 	smartmontools \
 	strace \
 	tcpdump \
+	transmission \
 	vim \
 	wakelan \
 	zeroconf \
