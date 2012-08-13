@@ -12,12 +12,13 @@ S = "${WORKDIR}/git/tuxtxt"
 
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 
 PACKAGES = "${PN}-src ${PN}-dbg ${PN}"
 FILES_${PN}-dbg = "/usr/lib/.debug"
 FILES_${PN}-src = "/usr/src /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.py"
-FILES_${PN} = "/usr/lib/libtuxtxt32bpp.so.* /usr/share/fonts /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.pyo /etc/tuxtxt"
+FILES_${PN} = "/usr/lib/libtuxtxt32bpp.so.* /usr/share/fonts /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.pyo"
+CONFFILES_${PN} = "/etc/tuxtxt"
 
 inherit autotools pkgconfig
 
