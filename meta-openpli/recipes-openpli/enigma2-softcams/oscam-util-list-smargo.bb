@@ -1,5 +1,9 @@
 DESCRIPTION = "List smargo utility"
 LICENSE = "GPLv3"
+
+# stick to working rev, r7267 breaks CMakeLists.txt.diff
+SRCREV_pn-oscam-util-list-smargo = "7175"
+
 PV = "svn${SRCPV}"
 PR = "r0"
 
