@@ -7,8 +7,10 @@ DEPENDS = "libusb"
 
 INHIBIT_PACKAGE_STRIP = "1"
 
+include oscamurl.inc
+
 SRC_URI = " \
-		svn://oscam.to/svn/oscam/trunk;module=utils;proto=http;scmdata=keep \
+		svn://${OSCAMHOST}/svn/oscam/trunk;module=utils;proto=http;scmdata=keep \
 		file://CMakeLists.txt.diff \
 		"
 

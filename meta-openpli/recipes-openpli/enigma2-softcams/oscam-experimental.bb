@@ -1,7 +1,7 @@
 MODULE = "trunk"
 OSCAMBIN = "oscam-experimental"
 
-URI = "svn://oscam.to/svn/oscam;module=trunk;proto=http;scmdata=keep"
+SUBURI = "svn/oscam;module=trunk;proto=http;scmdata=keep"
 
 ALTERNATIVE_PRIORITY = "20"
 

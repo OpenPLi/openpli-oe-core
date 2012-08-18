@@ -2,7 +2,7 @@ SRCREV = "5741"
 MODULE = "1.10"
 OSCAMBIN = "oscam-stable"
 
-URI = "svn://oscam.to/svn/oscam/tags;module=1.10;proto=http;scmdata=keep;rev=${SRCREV}"
+SUBURI = "svn/oscam/tags;module=1.10;proto=http;scmdata=keep;rev=${SRCREV}"
 
 ALTERNATIVE_PRIORITY = "10"
 
