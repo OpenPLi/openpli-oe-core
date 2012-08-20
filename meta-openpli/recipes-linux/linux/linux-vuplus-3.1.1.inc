@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.1.1"
 
-PR_INC = ".1"
+PR_INC = ".2"
 
 SRCREV = "r2"
 
@@ -18,6 +18,8 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.
 	file://fix_cpu_proc.patch;striplevel=1 \
 	file://iosched-slice_idle-1.patch \
 	file://dvb-usb-smsdvb_fix_frontend.patch \
+        file://em28xx_fix_terratec_entries.patch \
+        file://em28xx_add_terratec_h5_rev3.patch \
         file://${MACHINE}_defconfig \
         "
 
