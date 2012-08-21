@@ -2,7 +2,7 @@ DESCRIPTION = "Oscam binary, freshly compiled"
 LICENSE = "GPLv3"
 
 PV = "svn${SRCPV}"
-PR = "r3"
+PR = "r4"
 
 DEPENDS = "libusb openssl"
 RDEPENDS_${PN} = "openssl oscam-util-list-smargo"
@@ -31,15 +31,15 @@ S = "${WORKDIR}/${MODULE}"
 
 
 do_generate_toolchain_file_append() {
-	echo "set( OPTIONAL_INCLUDE_DIR \"${STAGING_DIR_HOST}/usr/include/PCSC\" CACHE STRING \"Some optional include directories\" )" >> ${WORKDIR}/toolchain.cmake
-	echo "set( LIBUSBDIR ${STAGING_DIR_HOST} ) " >> ${WORKDIR}/toolchain.cmake \
+	echo "set( OPTIONAL_INCLUDE_DIR \"${STAGING_DIR_HOST}/usr/include/PCSC\" CACHE STRING \"Some optional include directories\" )" >> ${WORKDIR}/toolchain.cmake \
 }
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \
 	-DWEBIF=1 \
 	-DWITH_STAPI=0 \
-	-DHAVE_LIBUSB=1 \
+	${LIBUSB} \
+	-DSTATIC_LIBUSB=1 \
 	-DWITH_SSL=1 \
 	-DHAVE_PCSC=0 \
 	"

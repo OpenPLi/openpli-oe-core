@@ -1,11 +1,8 @@
 DESCRIPTION = "List smargo utility"
 LICENSE = "GPLv3"
 
-# stick to working rev, r7267 breaks CMakeLists.txt.diff
-SRCREV_pn-oscam-util-list-smargo = "7175"
-
 PV = "svn${SRCPV}"
-PR = "r0"
+PR = "r1"
 
 DEPENDS = "libusb"
 
@@ -15,7 +12,6 @@ include oscamurl.inc
 
 SRC_URI = " \
 		svn://${OSCAMHOST}/svn/oscam/trunk;module=utils;proto=http;scmdata=keep \
-		file://CMakeLists.txt.diff \
 		"
 
 LIC_FILES_CHKSUM = "file://list_smargo.c;startline=5;endline=17;md5=d0df56ed6dc45b68c4946b217f2aeb84"
@@ -25,12 +21,10 @@ S = "${WORKDIR}/utils"
 OECMAKE_SOURCEPATH = "${S}"
 EXTRA_OEMAKE = "-c ${OECMAKE_SOURCEPATH} "
 
-do_generate_toolchain_file_append() {
-	echo "set( LIBUSBDIR ${STAGING_DIR_HOST} ) " >> ${WORKDIR}/toolchain.cmake
-}
 
 EXTRA_OECMAKE += "\
 		-DOSCAM_SYSTEM_NAME=Tuxbox \
+		-DSTATIC_LIBUSB=1 \
 		"
 
 inherit cmake

@@ -1,5 +1,6 @@
 MODULE = "trunk"
 OSCAMBIN = "oscam-experimental"
+LIBUSB = "-DHAVE_LIBUSB=1"
 
 SUBURI = "svn/oscam;module=trunk;proto=http;scmdata=keep"
 

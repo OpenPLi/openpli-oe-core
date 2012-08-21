@@ -1,6 +1,7 @@
 SRCREV = "5741"
 MODULE = "1.10"
 OSCAMBIN = "oscam-stable"
+LIBUSB = "-DHAVE_LIBUSB=0"
 
 SUBURI = "svn/oscam/tags;module=1.10;proto=http;scmdata=keep;rev=${SRCREV}"
 
