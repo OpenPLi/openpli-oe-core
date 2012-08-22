@@ -54,6 +54,7 @@ OPTIONAL_PACKAGES += " \
 	openvpn \
 	parted \
 	procps \
+	pyload \
 	rsync \
 	sabnzbd \
 	samba \
