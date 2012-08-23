@@ -4,7 +4,7 @@ MAINTAINER = "PLi team"
 require conf/license/openpli-gplv2.inc
 
 PV = "1.0"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "file://volatile-media.sh"
 

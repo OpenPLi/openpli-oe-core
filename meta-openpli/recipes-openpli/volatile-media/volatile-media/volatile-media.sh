@@ -10,7 +10,7 @@ create_point() {
 	fi
 }
 
-grep -v "^#" /etc/fstab | while read LINE
+grep -v "^#" /etc/fstab | grep "\s/media/" | while read LINE
 do
 	create_point $LINE
 done
