@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PRINC = "4"
+PRINC = "5"
 
 SRC_URI += " \
 			file://some_configure_fixes.patch;striplevel=0 \
@@ -8,6 +8,7 @@ SRC_URI += " \
 			file://no-ldconfig.patch \
 			file://ctypes-error-handling-fix.patch \
 			file://setuptweaks-2.patch \
+			file://pgettext.patch \
 "
 
 EXTRA_OECONF += " \
