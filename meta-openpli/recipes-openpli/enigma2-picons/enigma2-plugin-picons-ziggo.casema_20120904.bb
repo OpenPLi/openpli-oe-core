@@ -6,5 +6,5 @@ SRC_URI = "http://downloads.pli-images.org/picons/picons-ziggo-casema-${PV}.tar.
 
 include enigma2-plugin-picons.inc
 
-SRC_URI[md5sum] = "23dcb95a3bd6107ca247b470996731c7"
-SRC_URI[sha256sum] = "f942a8bc192859ddf2fa6bdddd15be21b21611f8f9da01f8e2474aba088b17cc"
+SRC_URI[md5sum] = "994ed6acae79aae33a7beb18c7c93982"
+SRC_URI[sha256sum] = "aeef3ce2c75949fe7abf7b2fc9b3f756c178d2ce78067b78176be3e82ca964f7"
