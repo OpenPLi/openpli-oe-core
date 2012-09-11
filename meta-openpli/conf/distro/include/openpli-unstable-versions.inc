@@ -21,6 +21,7 @@ SRCREV_pn-tuxtxt-enigma2 ?= "${AUTOREV}"
 SRCREV_pn-libdvbsi++ ?= "bf0c2bb7b326b93713629dbf74f63a0a54ffe59d"
 SRCREV_pn-gst-plugin-subsink ?= "${AUTOREV}"
 SRCREV_pn-librtmp ?= "${AUTOREV}"
+SRCREV_pn-hamsterdb ?= "${AUTOREV}"
 
 HENKSAT_GITREV ?= "${AUTOREV}"
 SRCREV_pn-enigma2-plugin-settings-henksat-19e ?= "${HENKSAT_GITREV}"
