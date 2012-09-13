@@ -15,8 +15,6 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	ntfs-3g \
 	"
 
-CHIPSET = "bcm7413"
-
 DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dtsdownmix"
 
 TARGET_ARCH = "mipsel"
@@ -53,10 +51,8 @@ IMAGE_CMD_ubi_append = " \
 	rm -Rf ${IMAGEDIR}; \
 	"
 
-TARGET_FPU = "hard"
-
-MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff blindscan-dvbs textlcd osdposition hdmicec"
+MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff textlcd osdposition hdmicec"
 
 require conf/machine/include/tune-mips32.inc
 
-MACHINE_KERNEL_PR = "r1"
+MACHINE_KERNEL_PR = "r2"
