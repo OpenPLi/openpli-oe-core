@@ -25,6 +25,7 @@ SRCREV_pn-hamsterdb ?= "${AUTOREV}"
 
 HENKSAT_GITREV ?= "${AUTOREV}"
 SRCREV_pn-enigma2-plugin-settings-henksat-19e ?= "${HENKSAT_GITREV}"
+SRCREV_pn-enigma2-plugin-settings-henksat-23e ?= "${HENKSAT_GITREV}"
 SRCREV_pn-enigma2-plugin-settings-henksat-13e-19e ?= "${HENKSAT_GITREV}"
 SRCREV_pn-enigma2-plugin-settings-henksat-19e-23e ?= "${HENKSAT_GITREV}"
 SRCREV_pn-enigma2-plugin-settings-henksat-19e-23e-28e ?= "${HENKSAT_GITREV}"

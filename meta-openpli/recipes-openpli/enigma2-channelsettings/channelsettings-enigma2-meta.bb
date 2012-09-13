@@ -4,6 +4,7 @@ DESCRIPTION = "meta file for settings"
 
 DEPENDS = "\
 	enigma2-plugin-settings-henksat-19e \
+	enigma2-plugin-settings-henksat-23e \
 	enigma2-plugin-settings-henksat-13e-19e \
 	enigma2-plugin-settings-henksat-19e-23e \
 	enigma2-plugin-settings-henksat-19e-23e-28e \
