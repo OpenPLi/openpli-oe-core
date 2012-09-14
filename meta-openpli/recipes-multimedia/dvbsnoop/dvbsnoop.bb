@@ -6,7 +6,7 @@ SRCDATE = "20081001"
 PV = "0.0+cvs${SRCDATE}"
 PR = "r1"
 
-SRC_URI = "cvs://anoncvs@cvs.tuxbox.org/cvs/tuxbox;module=apps/dvb/dvbsnoop;method=ext"
+SRC_URI = "cvs://anoncvs@cvs.tuxbox.org/cvs/tuxbox;module=apps/dvb/dvbsnoop;method=ext;rsh=ssh"
 
 S = "${WORKDIR}/dvbsnoop"
 
