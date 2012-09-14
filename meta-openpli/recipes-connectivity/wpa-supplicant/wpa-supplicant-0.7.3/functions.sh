@@ -1007,7 +1007,7 @@ ifdown () {
 #
 if_post_down_up () {
 	if [ -x /bin/ip ]; then
-		ip addr flush dev "$WPA_IFACE" 2>/dev/null
+		ip addr flush dev "$WPA_IFACE" scope global 2>/dev/null
 		ip link set "$WPA_IFACE" up
 	else
 		ifconfig "$WPA_IFACE" up
