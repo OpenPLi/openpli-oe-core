@@ -42,7 +42,7 @@ case "$ACTION" in
 			fi
 		fi
 		# first allow fstab to determine the mountpoint
-		if ! mount /dev/$MDEV > /dev/null 2>& ; then
+		if ! mount /dev/$MDEV > /dev/null 2>&1 ; then
 			# no fstab entry, use automatic mountpoint
 			REMOVABLE=`cat /sys/block/$DEVBASE/removable`
 			readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci'
