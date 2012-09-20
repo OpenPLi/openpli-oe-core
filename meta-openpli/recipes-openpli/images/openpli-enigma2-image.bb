@@ -68,6 +68,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-drivers-usbserial \
 	enigma2-plugin-extensions-ambx \
 	enigma2-plugin-extensions-et-livestream \
+	enigma2-plugin-extensions-openuitzendinggemist \
 	enigma2-plugin-extensions-tuxcom \
 	enigma2-plugin-extensions-tuxterm \
 	enigma2-plugin-extensions-xmltvimport \
