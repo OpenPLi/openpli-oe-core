@@ -1,4 +1,4 @@
-PRINC = "18"
+PRINC = "19"
 
 SRC_URI += " \
 			file://0001-ifupdown-support-post-up-pre-down-hooks.patch \
@@ -15,6 +15,7 @@ SRC_URI += " \
 			"
 
 SRC_URI += " \
+			file://mount_single_uuid.patch \
 			file://mdev-mount.sh \
 			file://inetd \
 			file://inetd.conf \
