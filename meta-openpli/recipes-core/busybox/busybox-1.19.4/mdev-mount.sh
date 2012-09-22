@@ -26,6 +26,12 @@ case "$ACTION" in
 			# blocked
 			exit 0
 		fi
+		if [ $TYPE == swap ] ; then
+			if ! grep -q "^/dev/${MDEV} " /proc/swaps ; then
+				swapon /dev/${MDEV}
+			fi
+			exit 0
+		fi
 		# check for full-disk partition
 		if [ "${DEVBASE}" == "${MDEV}" ] ; then
 			if [ -d /sys/block/${DEVBASE}/${DEVBASE}1 ] ; then
