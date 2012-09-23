@@ -58,7 +58,7 @@ case "$ACTION" in
 				# mount the first non-removable internal device on /media/hdd
 				DEVICETYPE="hdd"
 			else
-				if [ -z "$LABEL" ] ; then
+				if [ -z "${LABEL}" ] ; then
 					MODEL=`cat /sys/block/$DEVBASE/device/model`
 					if [ "$MODEL" == "USB CF Reader   " ]; then
 						DEVICETYPE="cf"
@@ -87,20 +87,20 @@ case "$ACTION" in
 			fi
 			# Use mkdir as 'atomic' action, failure means someone beat us to the punch
 			MOUNTPOINT="/media/$DEVICETYPE"
-			if ! mkdir $MOUNTPOINT ; then
+			if ! mkdir "${MOUNTPOINT}" ; then
 				MOUNTPOINT="/media/$MDEV"
-				mkdir -p $MOUNTPOINT
+				mkdir -p "${MOUNTPOINT}"
 			fi
-			mount -t auto /dev/$MDEV $MOUNTPOINT
+			mount -t auto /dev/$MDEV "${MOUNTPOINT}"
 		fi
 		;;
 	remove)
-		MOUNTPOINT=`grep "^/dev/$MDEV\s" /proc/mounts | cut -d' ' -f 2`
-		if [ -z "$MOUNTPOINT" ] ; then
+		MOUNTPOINT=`grep "^/dev/$MDEV\s" /proc/mounts | cut -d' ' -f 2 | sed 's/\\\\040/ /g'`
+		if [ -z "${MOUNTPOINT}" ] ; then
 			MOUNTPOINT="/media/$MDEV"
 		fi
-		umount $MOUNTPOINT || umount /dev/$MDEV
-		rmdir $MOUNTPOINT
+		umount "${MOUNTPOINT}" || umount "/dev/${MDEV}"
+		rmdir "${MOUNTPOINT}"
 		;;
 	*)
 		# Unexpected keyword
