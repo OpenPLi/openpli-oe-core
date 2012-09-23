@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.1.1"
 
-PR_INC = ".2"
+PR_INC = ".3"
 
 SRCREV = "r2"
 
