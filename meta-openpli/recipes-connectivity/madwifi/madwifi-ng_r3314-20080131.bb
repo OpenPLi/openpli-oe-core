@@ -1,5 +1,5 @@
 SRCREV = "30414"
-PR = "${INC_PR}.1"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.1"
 
 # versions of OpenWrt backfire (10.03)
 HAL_VERSION = "20090508"
