@@ -9,7 +9,7 @@ PACKAGES_DYNAMIC = "enigma2-plugin-pli-.*"
 # add custom PROVIDES for plugins which do not match PACKAGES_DYNAMIC
 PROVIDES += "enigma2-plugin-extensions-openuitzendinggemist enigma2-plugin-extensions-ushare"
 
-DEPENDS = "nfs-utils ushare"
+DEPENDS = "enigma2 nfs-utils ushare"
 
 DESCRIPTION_enigma2-plugin-extensions-ushare = "UPnP media server"
 RDEPENDS_enigma2-plugin-extensions-ushare = "ushare"
