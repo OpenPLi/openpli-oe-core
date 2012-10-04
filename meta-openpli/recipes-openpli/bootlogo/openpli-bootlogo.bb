@@ -8,7 +8,7 @@ require conf/license/openpli-gplv2.inc
 RDEPENDS_${PN} += "showiframe"
 
 PV = "3.0"
-PR = "r2"
+PR = "r3"
 
 S = "${WORKDIR}/"
 
@@ -27,10 +27,9 @@ SRC_URI = " \
 	file://bootlogo.sh \
 	"
 
-BINARY_VERSION = "1"
-BINARY_VERSION_mipsel = "8"
+BINARY_VERSION = "9"
 
-IMAGES_VERSION = "1"
+SRC_URI += "${@base_contains("MACHINE_FEATURES", "dreambox", "http://sources.dreamboxupdate.com/download/7020/bootlogo-${MACHINE}-${BINARY_VERSION}.elf" , "", d)}"
 
 MVI = "${SWITCHOFFMVI} bootlogo.mvi"
 MVISYMLINKS = "bootlogo_wait backdrop"
@@ -46,6 +45,7 @@ do_install() {
 		install -m 0755 ${S}/$i ${D}/usr/share/
 		ln -sf /usr/share/$i ${D}/boot/$i
 	done;
+	${@base_contains("MACHINE_FEATURES", "dreambox", "install -m 0755 ${S}/bootlogo-${MACHINE}-${BINARY_VERSION}.elf ${D}/boot/bootlogo.elf; install -m 0755 ${S}/bootlogo.jpg ${D}/boot/", "", d)}
 	for i in ${MVISYMLINKS}; do
 		ln -sf /boot/bootlogo.mvi ${D}/boot/$i.mvi
 		ln -sf /usr/share/bootlogo.mvi ${D}/usr/share/$i.mvi;
