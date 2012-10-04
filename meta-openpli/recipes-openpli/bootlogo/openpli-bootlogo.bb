@@ -31,6 +31,9 @@ BINARY_VERSION = "9"
 
 SRC_URI += "${@base_contains("MACHINE_FEATURES", "dreambox", "http://sources.dreamboxupdate.com/download/7020/bootlogo-${MACHINE}-${BINARY_VERSION}.elf" , "", d)}"
 
+SRC_URI[md5sum] = "5b7aa440ef459b2470fe45af9e123811"
+SRC_URI[sha256sum] = "81363d7ab6497da8a905080871ebc8268cf7a946d4ea0fa18d6f126ed77e13b7"
+
 MVI = "${SWITCHOFFMVI} bootlogo.mvi"
 MVISYMLINKS = "bootlogo_wait backdrop"
 
