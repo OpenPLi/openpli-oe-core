@@ -26,7 +26,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-openembedded/meta-oe \
 	$(CURDIR)/openembedded-core/meta \
 	$(CURDIR)/meta-openpli \
-	$(CURDUR)/meta-local
+	$(CURDIR)/meta-local
 
 CONFFILES = \
 	$(TOPDIR)/env.source \
