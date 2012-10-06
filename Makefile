@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-# MACHINE examples: et5x00 et6x00 et9x00 dm500hd dm800se dm7020hd dm8000
+# MACHINE examples: et4x00 et5x00 et6x00 et9x00 dm500hd dm800se dm7020hd dm8000 xp1000
 MACHINE ?= ${subst /,,${subst build-,,${firstword ${dir ${wildcard build-*/}}}}}
 
 ifeq "$(MACHINE)" ""
@@ -26,6 +26,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-openembedded/meta-oe \
 	$(CURDIR)/openembedded-core/meta \
 	$(CURDIR)/meta-openpli \
+	$(CURDUR)/meta-local
 
 CONFFILES = \
 	$(TOPDIR)/env.source \
