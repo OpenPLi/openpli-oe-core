@@ -66,6 +66,7 @@ OPTIONAL_PACKAGES += " \
 	transmission \
 	vim \
 	wakelan \
+	xfsprogs \
 	zeroconf \
 	"
 
