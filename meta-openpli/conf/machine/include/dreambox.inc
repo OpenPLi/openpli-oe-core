@@ -9,6 +9,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "dreambox-dvb-modules-${MACHINE}"
 include conf/machine/include/autoload-wifi.inc
 include conf/machine/include/autoload-dvb-usb.inc
 include conf/machine/include/autoload-usbserial.inc
+include conf/machine/include/autoload-filesystems.inc
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	gst-plugin-dreambox-dvbmediasink \
