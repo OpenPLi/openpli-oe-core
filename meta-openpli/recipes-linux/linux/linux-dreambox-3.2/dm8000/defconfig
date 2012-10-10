@@ -2478,7 +2478,7 @@ CONFIG_JFS_FS=m
 CONFIG_XFS_FS=m
 # CONFIG_XFS_QUOTA is not set
 # CONFIG_XFS_POSIX_ACL is not set
-# CONFIG_XFS_RT is not set
+CONFIG_XFS_RT=m
 # CONFIG_XFS_DEBUG is not set
 # CONFIG_GFS2_FS is not set
 # CONFIG_OCFS2_FS is not set
