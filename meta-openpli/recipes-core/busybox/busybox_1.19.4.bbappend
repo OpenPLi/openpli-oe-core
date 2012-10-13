@@ -1,4 +1,4 @@
-PRINC = "21"
+PRINC = "22"
 
 SRC_URI += " \
 			file://0001-ifupdown-support-post-up-pre-down-hooks.patch \

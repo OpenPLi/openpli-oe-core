@@ -10,11 +10,6 @@ notify() {
 case "$ACTION" in
 	add|"")
 		ACTION="add"
-		# Run the result of blkid as a shell command
-		eval `blkid /dev/${MDEV} | grep ${MDEV} | cut -d ':' -f 2`
-		if [ -z "$TYPE" ] ; then
-			exit 0
-		fi
 		# check if already mounted
 		if grep -q "^/dev/${MDEV} " /proc/mounts ; then
 			# Already mounted
@@ -24,6 +19,12 @@ case "$ACTION" in
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
 			# blocked
+			exit 0
+		fi
+		# Run the result of blkid as a shell command
+		eval `blkid /dev/${MDEV} | grep ${MDEV} | cut -d ':' -f 2`
+		if [ -z "$TYPE" ] ; then
+			notify
 			exit 0
 		fi
 		if [ $TYPE == swap ] ; then
