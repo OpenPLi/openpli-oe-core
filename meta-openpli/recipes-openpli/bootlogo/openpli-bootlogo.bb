@@ -63,23 +63,41 @@ do_install() {
 }
 
 pkg_preinst() {
-	[ -d /proc/stb ] && mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
-	true
+	if [ -z "$D" ]
+	then
+		if mountpoint -q /boot
+		then
+			mount -o remount,rw,compr=none /boot
+		else
+			mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
+		fi
+	fi
 }
 
 pkg_postinst() {
-	[ -d /proc/stb ] && umount /boot
-	true
+	if [ -z "$D" ]
+	then
+		umount /boot
+	fi
 }
 
 pkg_prerm() {
-	[ -d /proc/stb ] && mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
-	true
+	if [ -z "$D" ]
+	then
+		if mountpoint -q /boot
+		then
+			mount -o remount,rw,compr=none /boot
+		else
+			mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
+		fi
+	fi
 }
 
 pkg_postrm() {
-	[ -d /proc/stb ] && umount /boot
-	true
+	if [ -z "$D" ]
+	then
+		umount /boot
+	fi
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
