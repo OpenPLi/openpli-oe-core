@@ -4,7 +4,7 @@ LICENSE = "libpng"
 SECTION = "libs"
 PRIORITY = "required"
 LICENSE = "Libpng"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=efd93d73f344c56580c7f0ea3815fdbf"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=00b5b35853278d508806c2e5860e82cb"
 
 DEPENDS = "zlib"
 
@@ -15,8 +15,8 @@ S = "${WORKDIR}/libpng-${PV}"
 
 inherit autotools pkgconfig binconfig
 
-SRC_URI[libpng.md5sum] = "d87f9c34ccab8242c00e41925839f6c9"
-SRC_URI[libpng.sha256sum] = "e83c4897bb92a7c67e6610a56676f2fdc213fe2995e9c1fef6f0cf7d70b30976"
+SRC_URI[libpng.md5sum] = "186b3098d1ef844f76681bc69968efe2"
+SRC_URI[libpng.sha256sum] = "16e761e584e5d72d72fc80923e7851a468bf86538456e304aea401b99038ca92"
 
 PACKAGES =+ "${PN}15"
 
