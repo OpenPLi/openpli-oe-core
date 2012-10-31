@@ -881,7 +881,7 @@ CONFIG_BLK_DEV_RAM_SIZE=4096
 # CONFIG_EEPROM_LEGACY is not set
 # CONFIG_EEPROM_MAX6875 is not set
 CONFIG_EEPROM_93CX6=y
-+# CONFIG_EEPROM_93XX46 is not set
+# CONFIG_EEPROM_93XX46 is not set
 
 #
 # Texas Instruments shared transport line discipline
@@ -2554,7 +2554,7 @@ CONFIG_HAVE_ARCH_KGDB=y
 # CONFIG_TEST_KSTRTOX is not set
 # CONFIG_EARLY_PRINTK is not set
 CONFIG_CMDLINE_BOOL=y
-CONFIG_CMDLINE="ubi.mtd=rootfs rootfstype=ubifs root=ubi0:rootfs bmem=256M@512M bmem=16M console=null"
+CONFIG_CMDLINE="ubi.mtd=rootfs rootfstype=ubifs root=ubi0:rootfs bmem=256M@512M bmem=16M console=null consoleblank=0"
 # CONFIG_CMDLINE_OVERRIDE is not set
 # CONFIG_DEBUG_STACKOVERFLOW is not set
 # CONFIG_RUNTIME_DEBUG is not set
