@@ -8,6 +8,7 @@ inherit gitpkgv
 PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 PR = "r0"
+PACKAGE_ARCH = "all"
 
 PACKAGES = "${PN}"
 PROVIDES = "${PN}"

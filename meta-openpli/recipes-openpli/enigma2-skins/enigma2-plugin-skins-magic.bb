@@ -8,6 +8,7 @@ inherit gitpkgv
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r2"
+PACKAGE_ARCH = "all"
 
 PV_font-valis-enigma = "2009.11.12"
 PR_font-valis-enigma = "r1"
