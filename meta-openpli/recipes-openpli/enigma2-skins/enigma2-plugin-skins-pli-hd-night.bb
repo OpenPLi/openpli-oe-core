@@ -1,7 +1,7 @@
 DESCRIPTION = "PLi HD Night skin"
 MAINTAINER = "delagroov"
 LICENSE = "Proprietary"
-LIC_FILES_CHKSUM = "file://usr/share/enigma2/PLi-HD-Night/skin.xml;beginline=3;endline=8;md5=dfc1f4b5dcf9618d1764823baad5eeef"
+LIC_FILES_CHKSUM = "file://usr/share/enigma2/PLi-HD-Night/skin.xml;beginline=3;endline=8;md5=37fd5ab5f29199bd7a981abfe72a6c1f"
 
 inherit gitpkgv
 
