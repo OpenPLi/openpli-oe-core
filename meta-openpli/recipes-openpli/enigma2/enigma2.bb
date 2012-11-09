@@ -21,6 +21,7 @@ RDEPENDS_${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
 	enigma2-plugin-skins-pli-hd \
+	enigma2-plugin-skins-pli-hd-night \
 	ethtool \
 	glibc-gconv-iso8859-15 \
 	gst-plugin-subsink \
@@ -140,7 +141,7 @@ inherit gitpkgv
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r36"
+PR = "r37"
 
 ENIGMA2_BRANCH ?= "master"
 SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
