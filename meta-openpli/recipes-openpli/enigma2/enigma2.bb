@@ -20,17 +20,20 @@ DEPENDS = " \
 RDEPENDS_${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
-	enigma2-plugin-skins-pli-hd \
 	ethtool \
 	glibc-gconv-iso8859-15 \
-	gst-plugin-subsink \
-	\
 	${PYTHON_RDEPS} \
+	"
+
+RRECOMMENDS_${PN} = " \
+	enigma2-plugin-skins-pli-hd \
+	gst-plugin-subsink \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
 	${GST_UGLY_RDEPS} \
 	"
+
 PYTHON_RDEPS = " \
 	python-codecs \
 	python-core \
@@ -140,7 +143,7 @@ inherit gitpkgv
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r38"
+PR = "r39"
 
 ENIGMA2_BRANCH ?= "master"
 SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
