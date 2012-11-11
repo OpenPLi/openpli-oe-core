@@ -21,7 +21,6 @@ RDEPENDS_${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
 	enigma2-plugin-skins-pli-hd \
-	enigma2-plugin-skins-pli-full-hd-night \
 	ethtool \
 	glibc-gconv-iso8859-15 \
 	gst-plugin-subsink \
