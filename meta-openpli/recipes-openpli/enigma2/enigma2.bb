@@ -20,17 +20,20 @@ DEPENDS = " \
 RDEPENDS_${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
-	enigma2-plugin-skins-pli-hd \
 	ethtool \
 	glibc-gconv-iso8859-15 \
-	gst-plugin-subsink \
-	\
 	${PYTHON_RDEPS} \
+	"
+
+RRECOMMENDS_${PN} = " \
+	enigma2-plugin-skins-pli-hd \
+	gst-plugin-subsink \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
 	${GST_UGLY_RDEPS} \
 	"
+
 PYTHON_RDEPS = " \
 	python-codecs \
 	python-core \
@@ -106,7 +109,7 @@ GST_UGLY_RDEPS = " \
 
 # DVD playback is integrated, we need the libraries
 RDEPENDS_${PN} += "libdreamdvd"
-RRECOMMENDS_${PN} = "libdvdcss"
+RRECOMMENDS_${PN} += "libdvdcss"
 
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
 RDEPENDS_${PN} += "font-valis-enigma"
@@ -140,7 +143,7 @@ inherit gitpkgv
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r40"
+PR = "r41"
 
 ENIGMA2_BRANCH ?= "master"
 SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
