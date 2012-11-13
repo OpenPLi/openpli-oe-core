@@ -13,6 +13,10 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	ntfs-3g \
 	"
 
+EXTRA_IMAGEDEPENDS += "\
+	vuplus-opera-browser-plugin \
+	"
+
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
 
