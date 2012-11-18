@@ -1,7 +1,5 @@
 require glib.inc
 
-DEFAULT_PREFERENCE = "-1"
-
 PR = "r0"
 PE = "1"
 
@@ -24,6 +22,7 @@ SRC_URI[sha256sum] = "cde9d9f25ed648069c547e323897ad9379974e1f936b4477fa51bcf1bb
 # Only apply this patch for target recipe on uclibc
 SRC_URI_append_libc-uclibc = " ${@['', 'file://no-iconv.patch']['${PN}' == '${BPN}']}"
 
+SRC_URI_append_virtclass-native = " file://glib-gettextize-dir.patch"
 BBCLASSEXTEND = "native nativesdk"
 
 PERLPATH = "${bindir}/env perl"
