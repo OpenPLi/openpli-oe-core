@@ -1,7 +1,5 @@
 require orc.inc
 
-DEFAULT_PREFERENCE = "-1"
-
 PR = "${INC_PR}.0"
 
 SRC_URI[orc.md5sum] = "e482932e544c847761449b106ecbc483"
