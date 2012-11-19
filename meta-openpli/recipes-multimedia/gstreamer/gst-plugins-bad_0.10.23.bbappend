@@ -1,6 +1,6 @@
 DEPENDS := "${@oe_filter_out('librsvg', '${DEPENDS}', d)}"
 
-PRINC = "2"
+PRINC = "3"
 
 SRC_URI += " \
         file://0001-mpegtsdemux-fix-bd-streamtype-detection.diff.patch \

@@ -1,7 +1,7 @@
 DEPENDS := "${@oe_filter_out('^(gconf|pulseaudio)$', '${DEPENDS}', d)}"
 DEPENDS := "${@oe_filter_out('gtk+', '${DEPENDS}', d)}"
 
-PRINC = "2"
+PRINC = "3"
 
 SRC_URI += "file://audioparser-raise-ranks.patch"
 

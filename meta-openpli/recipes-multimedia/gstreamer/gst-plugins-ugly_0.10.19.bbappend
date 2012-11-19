@@ -1,4 +1,4 @@
-PRINC = "2"
+PRINC = "3"
 
 SRC_URI += "file://dvdsubdec-addproperty-singlebuffer.patch"
 
