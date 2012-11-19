@@ -14,10 +14,11 @@ SRC_URI = "${GNOME_MIRROR}/glib/${SHRT_VER}/glib-${PV}.tar.xz \
           file://60_wait-longer-for-threads-to-die.patch \
           file://glib-2.0_fix_for_x32.patch \
           file://nodbus.patch \
+          file://nodocs.patch \
           "
 
-SRC_URI[md5sum] = "c5fa76fbf9184d20dfb04af66b598190"
-SRC_URI[sha256sum] = "cde9d9f25ed648069c547e323897ad9379974e1f936b4477fa51bcf1bb261ae4"
+SRC_URI[md5sum] = "a8a6be30781952e5ab2651c79da69a90"
+SRC_URI[sha256sum] = "2d99a8309cdd0c584bd5386a49265fb19ac64575fe108fd901d6f26c8d73c708"
 
 # Only apply this patch for target recipe on uclibc
 SRC_URI_append_libc-uclibc = " ${@['', 'file://no-iconv.patch']['${PN}' == '${BPN}']}"

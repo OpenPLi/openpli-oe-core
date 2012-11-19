@@ -1,25 +1,18 @@
-copy from OE, said to borrow from Ubuntu. Not in glib-2.0 upstream yet. Add for sanity.
-Added to poky by Kevin Tian <kevin.tian@intel.com>, 06/25/2010
-Rebased for glib-2.27.3 by Dongxiao Xu <dongxiao.xu@intel.com>, 11/16/2010
-
-Upstream-Status: Inappropriate [patches for test code]
-
-diff -ruN glib-2.30.0-orig/tests/threadpool-test.c glib-2.30.0/tests/threadpool-test.c
---- glib-2.30.0-orig/tests/threadpool-test.c	2009-04-01 07:04:21.000000000 +0800
-+++ glib-2.30.0/tests/threadpool-test.c	2010-11-16 12:28:09.002172678 +0800
-@@ -5,8 +5,8 @@
+Index: glib-2.34.2/tests/threadpool-test.c
+===================================================================
+--- glib-2.34.2.orig/tests/threadpool-test.c	2012-11-19 19:21:23.007594309 +0100
++++ glib-2.34.2/tests/threadpool-test.c	2012-11-19 19:21:45.395598384 +0100
+@@ -5,7 +5,7 @@
  
  #include <glib.h>
  
--#define DEBUG_MSG(x)
--/* #define DEBUG_MSG(args) g_printerr args ; g_printerr ("\n");  */
-+/* #define DEBUG_MSG(x) */
-+#define DEBUG_MSG(args) g_printerr args ; g_printerr ("\n");
+-/* #define DEBUG 1 */
++#define DEBUG 1
  
- #define WAIT                5    /* seconds */
- #define MAX_THREADS         10
-@@ -130,10 +130,10 @@
-            test_count_threads () == 0)
+ #ifdef DEBUG
+ # define DEBUG_MSG(args) g_printerr args ; g_printerr ("\n");
+@@ -113,10 +113,10 @@
+        if (g_thread_pool_get_num_unused_threads () == 0)
           break;
  
 -       DEBUG_MSG (("[unused] waiting ONE second for threads to die"));
@@ -30,4 +23,4 @@ diff -ruN glib-2.30.0-orig/tests/threadpool-test.c glib-2.30.0/tests/threadpool-
 +       g_usleep (5 * G_USEC_PER_SEC);
       }
  
-    DEBUG_MSG (("[unused] stopped idle threads, %d remain, %d threads still exist",
+    DEBUG_MSG (("[unused] stopped idle threads, %d remain",
