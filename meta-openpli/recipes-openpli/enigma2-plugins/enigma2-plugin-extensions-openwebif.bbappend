@@ -1,4 +1,4 @@
-PRINC = "1"
+PRINC = "2"
 
 python do_package_prepend () {
 	boxtypes = [
@@ -9,6 +9,8 @@ python do_package_prepend () {
 		('et5x00', 'et5x00.jpg', 'et_rc5_normal.png'),
 		('et6x00', 'et5x00.jpg', 'et_rc5_normal.png'),
 		('et9x00', 'et9x00.jpg', 'et_rc7_normal.png'),
+		('et4x00', 'unknown.jpg', 'et_rc13_normal.png'),
+		('xp1000', 'unknown.jpg', 'xp_rc14_normal.png'),
 		('vuduo', 'duo.jpg', 'vu_normal.png'),
 		('vusolo', 'solo.jpg', 'vu_normal.png'),
 		('vuultimo', 'ultimo.jpg', 'vu_ultimo.png'),
