@@ -318,7 +318,7 @@ CONFIG_CLEAR=y
 # CONFIG_DUMPKMAP is not set
 # CONFIG_KBD_MODE is not set
 # CONFIG_LOADFONT is not set
-# CONFIG_LOADKMAP is not set
+CONFIG_LOADKMAP=y
 # CONFIG_OPENVT is not set
 CONFIG_RESET=y
 # CONFIG_RESIZE is not set
