@@ -31,6 +31,7 @@ IMAGE_INSTALL = " \
 
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
+	autofs \
 	autossh \
 	ctorrent \
 	cups \
