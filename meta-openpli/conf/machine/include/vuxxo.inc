@@ -2,7 +2,6 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
 	"
 
-include conf/machine/include/autoload-wifi.inc
 include conf/machine/include/autoload-dvb-usb.inc
 include conf/machine/include/autoload-usbserial.inc
 include conf/machine/include/autoload-filesystems.inc
