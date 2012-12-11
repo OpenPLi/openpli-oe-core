@@ -9,3 +9,9 @@ touch /dev/.udev
 [ -d "/sys/kernel" ] || mount sysfs /sys -t sysfs
 
 mdev -s
+
+# Probe all USB modules, mdev -s does not list devices without driver
+grep -h '^usb:' `find /sys/devices/ -name modalias` | while read m
+do
+	modprobe $m > /dev/null 2> /dev/null
+done
