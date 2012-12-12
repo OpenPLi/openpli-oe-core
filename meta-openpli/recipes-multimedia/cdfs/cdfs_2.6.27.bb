@@ -3,7 +3,8 @@ HOMEPAGE = "http://users.elis.ugent.be/~mronsse/cdfs/"
 SECTION = "kernel/modules"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=8ca43cbc842c2336e835926c2166c28b"
-PR = "r3"
+
+MACHINE_KERNEL_PR_append = ".1"
 
 SRC_URI = " \
         http://users.elis.ugent.be/~mronsse/cdfs/download/${P}.tar.bz2 \
@@ -15,7 +16,7 @@ SRC_URI = " \
 SRC_URI[md5sum] = "ac64c014a90e3c488394832ea29605b3"
 SRC_URI[sha256sum] = "d034f6c6d9578fe2addfaeceaa101584a4a1fc9f27d825c340baebd345d8d724"
 
-inherit module
+inherit module machine_kernel_pr
 
 do_compile() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
