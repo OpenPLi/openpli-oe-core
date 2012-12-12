@@ -81,6 +81,7 @@ ENIGMA2_OPTIONAL = " \
 	task-openplugins \
 	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
 	dvb-usb-drivers-meta \
+	cdfs cdtextinfo \
 	"
 
 IMAGE_INSTALL += " \
