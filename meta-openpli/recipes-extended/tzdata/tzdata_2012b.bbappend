@@ -1,4 +1,4 @@
-PRINC = "2"
+PRINC = "3"
 
 DEFAULT_TIMEZONE = "CET"
 
@@ -54,6 +54,8 @@ FILES_${PN} = "                                          \
                 ${datadir}/zoneinfo/Australia/Hobart     \
                 ${datadir}/zoneinfo/Australia/Perth      \
                 ${datadir}/zoneinfo/Australia/Sydney     \
+                ${datadir}/zoneinfo/Brazil/Acre          \
+                ${datadir}/zoneinfo/Brazil/DeNoronha     \
                 ${datadir}/zoneinfo/Brazil/East          \
                 ${datadir}/zoneinfo/Brazil/West          \
                 ${datadir}/zoneinfo/Canada/Newfoundland  \
