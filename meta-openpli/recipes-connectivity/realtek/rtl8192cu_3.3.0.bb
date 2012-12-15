@@ -14,15 +14,13 @@ SRC_URI = "http://downloads.pli-images.org/misc/rtl8188C_8192C_8192D_usb_linux_v
 
 S = "${WORKDIR}/rtl8188C_8192C_8192D_usb_linux_v3.3.0_2971.20111128"
 
-MACHINE_KERNEL_PR_append = ".2"
+MACHINE_KERNEL_PR_append = ".3"
 
 EXTRA_OEMAKE = "KSRC=${STAGING_KERNEL_DIR}"
 
 do_install() {
 	install -d ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
 	install -m 0644 ${S}/8192cu.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
-	install -d ${D}/etc/modules-load.d
-	echo 8192cu > ${D}/etc/modules-load.d/r8192cu.conf
 }
 
 SRC_URI[md5sum] = "6d5bd5f94d9d6d6667393839c1861101"
