@@ -6,8 +6,6 @@ MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 	kernel-module-cdfs \
 	"
 
-include conf/machine/include/autoload-dvb-usb.inc
-include conf/machine/include/autoload-usbserial.inc
 include conf/machine/include/autoload-filesystems.inc
 
 MACHINE_EXTRA_RRECOMMENDS = " \
