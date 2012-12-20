@@ -3,6 +3,7 @@ LICENSE = "GPL"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d4333f07cbfa8fe036e90820f556b2ad"
 HOMEPAGE = "http://pyload.org/"
 RDEPENDS_${PN} = "\
+  python-compression \
   python-db \
   python-email \
   python-html \
@@ -20,7 +21,9 @@ RDEPENDS_${PN} = "\
 RRECOMMENDS_${PN} = "unrar"
 
 PV = "0.4.9"
-PR = "r0"
+PR = "r1"
+
+inherit update-rc.d
 
 SRC_URI = "http://download.pyload.org/pyload-src-v${PV}.zip \
   file://pyload.init \
@@ -31,6 +34,9 @@ SRC_URI[sha256sum] = "77a1f75168be34a84874af030a2f52891b5c1c1b31b608070e143b88d6
 S = "${WORKDIR}/pyload"
 
 FILES_${PN} = "/usr/pyload/* /etc/*"
+
+INITSCRIPT_NAME = "${PN}"
+INITSCRIPT_PARAMS = "defaults 60 "
 
 do_compile() {
 	python -m compileall ${S}
