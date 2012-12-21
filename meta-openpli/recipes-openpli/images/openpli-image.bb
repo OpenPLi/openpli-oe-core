@@ -64,6 +64,7 @@ OPTIONAL_PACKAGES += " \
 	smartmontools \
 	strace \
 	tcpdump \
+	tmux \
 	transmission \
 	vim \
 	wakelan \
