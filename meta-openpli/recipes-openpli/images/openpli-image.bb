@@ -58,6 +58,7 @@ OPTIONAL_PACKAGES += " \
 	procps \
 	pyload \
 	rsync \
+	rtorrent \
 	sabnzbd \
 	samba \
 	sshpass \
