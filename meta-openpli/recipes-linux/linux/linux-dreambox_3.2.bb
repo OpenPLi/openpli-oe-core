@@ -1,7 +1,7 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.31"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.32"
 
 PATCHREV = "b299a6a132d842b074b289b2568eece452d0663c"
-PATCHLEVEL = "32"
+PATCHLEVEL = "31"
 
 SRC_URI = " \
 			${KERNELORG_MIRROR}/linux/kernel/v3.x/linux-3.2.tar.bz2;name=kernel \
