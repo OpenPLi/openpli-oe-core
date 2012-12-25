@@ -35,6 +35,9 @@ case "$1" in
 
 	renew|bound)
                 if [ $have_bin_ip -eq 1 ]; then
+			if [ -z "$BROADCAST" ]; then
+				BROADCAST="broadcast +"
+			fi
                         ip addr add dev $interface local $ip/$mask $BROADCAST
                 else
                         /sbin/ifconfig $interface $ip $BROADCAST $NETMASK
