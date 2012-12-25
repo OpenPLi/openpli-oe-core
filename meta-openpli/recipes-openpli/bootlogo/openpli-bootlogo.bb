@@ -8,7 +8,7 @@ require conf/license/openpli-gplv2.inc
 RDEPENDS_${PN} += "showiframe"
 
 PV = "3.0"
-PR = "r7"
+PR = "r8"
 
 S = "${WORKDIR}/"
 
@@ -62,7 +62,7 @@ do_install() {
 	install -m 0755 ${S}/bootlogo.sh ${D}/${sysconfdir}/init.d/bootlogo
 }
 
-pkg_preinst() {
+pkg_preinst_dreambox() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -74,14 +74,14 @@ pkg_preinst() {
 	fi
 }
 
-pkg_postinst() {
+pkg_postinst_dreambox() {
 	if [ -z "$D" ]
 	then
 		umount /boot
 	fi
 }
 
-pkg_prerm() {
+pkg_prerm_dreambox() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -93,7 +93,7 @@ pkg_prerm() {
 	fi
 }
 
-pkg_postrm() {
+pkg_postrm_dreambox() {
 	if [ -z "$D" ]
 	then
 		umount /boot
