@@ -82,6 +82,7 @@ ENIGMA2_OPTIONAL = " \
 	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
 	dvb-usb-drivers-meta \
 	cdfs cdtextinfo \
+	meta-enigma2-dvdburn \
 	"
 
 IMAGE_INSTALL += " \
