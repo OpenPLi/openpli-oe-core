@@ -1,10 +1,10 @@
 [submodule "openembedded-core"]
 	path = openembedded-core
-	url = git://git.openembedded.org/openembedded-core-contrib
+	url = git://git.openembedded.org/openembedded-core
 	ignore = dirty
 [submodule "meta-openembedded"]
 	path = meta-openembedded
-	url = git://git.openembedded.org/meta-openembedded-contrib
+	url = git://git.openembedded.org/meta-openembedded
 	ignore = dirty
 [submodule "bitbake"]
 	path = bitbake
