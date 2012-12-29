@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=8e37f34d0e40d32ea2bc90ee812c9131"
 
 PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
 
-inherit gitpkgv
+inherit gitpkgv pythonnative
 
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
@@ -40,9 +40,9 @@ DEPENDS = "enigma2 \
 	python-mutagen \
 	python-twisted \
 	python-daap \
-	dvdbackup \
 	libcddb \
 	"
+BROKEN_DEPENDS = "dvdbackup"
 
 python populate_packages_prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
@@ -64,13 +64,16 @@ python populate_packages_prepend () {
                 full_package = line[9:]
             elif line.startswith('Depends: '):
                 # some plugins still reference twisted-* dependencies, these packages are now called python-twisted-*
-                depends = line[9:].replace(',', '').split(' ')
-                rdepends = ''
-                for depend in depends:
+                rdepends = []
+                for depend in line[9:].split(','):
+                    depend = depend.strip()
                     if depend.startswith('twisted-'):
-                        rdepends += ' ' + depend.replace('twisted-', 'python-twisted-')
+                        rdepends.append(depend.replace('twisted-', 'python-twisted-'))
+                    elif depend.startswith('enigma2') and not depend.startswith('enigma2-'):
+                        pass # Ignore silly depends on enigma2 with all kinds of misspellings
                     else:
-                        rdepends += ' ' + depend
+                        rdepends.append(depend)
+		rdepends = ' '.join(rdepends)
                 bb.data.setVar('RDEPENDS_' + full_package, rdepends, d)
             elif line.startswith('Recommends: '):
                 bb.data.setVar('RRECOMMENDS_' + full_package, line[12:], d)

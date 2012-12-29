@@ -142,7 +142,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL}"
 RDEPENDS_enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
 
-inherit gitpkgv
+inherit gitpkgv pythonnative
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"

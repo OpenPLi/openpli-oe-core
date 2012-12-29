@@ -1,4 +1,5 @@
 # dreambox.inc
+include conf/machine/include/openpli.inc
 
 EXTRA_IMAGEDEPENDS += "dreambox-secondstage-${MACHINE}"
 

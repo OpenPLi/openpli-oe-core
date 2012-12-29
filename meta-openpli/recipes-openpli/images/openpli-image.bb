@@ -2,11 +2,13 @@ require conf/license/openpli-gplv2.inc
 
 inherit task image
 
+IMAGE_INSTALL_BROKEN = "sambaserver cifs"
+
+
 IMAGE_INSTALL = " \
 	${ROOTFS_PKGMANAGE} \
 	3rd-party-feed-configs \
 	avahi-daemon \
-	cifs \
 	distro-feed-configs \
 	dropbear \
 	e2fsprogs-e2fsck \
@@ -17,7 +19,6 @@ IMAGE_INSTALL = " \
 	nfs-utils-client \
 	openpli-bootlogo \
 	opkg \
-	sambaserver \
 	sdparm \
 	task-base \
 	task-core-boot \
@@ -29,6 +30,7 @@ IMAGE_INSTALL = " \
 	vsftpd \
 	"
 
+OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
 	autofs \
@@ -60,7 +62,6 @@ OPTIONAL_PACKAGES += " \
 	rsync \
 	rtorrent \
 	sabnzbd \
-	samba \
 	sshpass \
 	smartmontools \
 	strace \

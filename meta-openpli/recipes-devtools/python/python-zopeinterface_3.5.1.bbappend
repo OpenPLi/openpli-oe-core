@@ -1,11 +1,5 @@
 PRINC = "2"
 
-inherit openpli-distutils
-
-do_install() {
-	distutils_do_install_keep_pyo
-}
-
 PACKAGES =+ "${PN}-src"
 RDEPENDS_{PN}-src = "${PN}"
 FILES_${PN}-src += "${PYTHON_SITEPACKAGES_DIR}/zope/interface/*.py"

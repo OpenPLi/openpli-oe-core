@@ -1,3 +1,5 @@
+include conf/machine/include/openpli.inc
+
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "\
 	xp-dvb-modules-${MACHINE} \
 	"

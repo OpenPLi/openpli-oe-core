@@ -1,10 +1,6 @@
 PRINC = "1"
 
-inherit setuptools openpli-distutils
-
-do_install() {
-	distutils_do_install_keep_pyo
-}
+inherit setuptools
 
 PACKAGES =+ "${PN}-src"
 RDEPENDS_{PN}-src = "${PN}"
