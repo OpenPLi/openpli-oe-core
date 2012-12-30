@@ -1,6 +1,6 @@
 require conf/license/openpli-gplv2.inc
 
-inherit task image
+inherit image
 
 IMAGE_INSTALL_BROKEN = "sambaserver cifs"
 
@@ -19,9 +19,9 @@ IMAGE_INSTALL = " \
 	nfs-utils-client \
 	openpli-bootlogo \
 	opkg \
+	packagegroup-base \
+	packagegroup-core-boot \
 	sdparm \
-	task-base \
-	task-core-boot \
 	tuxbox-common \
 	tuxbox-links \
 	tzdata \

@@ -73,7 +73,7 @@ python populate_packages_prepend () {
                         pass # Ignore silly depends on enigma2 with all kinds of misspellings
                     else:
                         rdepends.append(depend)
-		rdepends = ' '.join(rdepends)
+                rdepends = ' '.join(rdepends)
                 bb.data.setVar('RDEPENDS_' + full_package, rdepends, d)
             elif line.startswith('Recommends: '):
                 bb.data.setVar('RRECOMMENDS_' + full_package, line[12:], d)
