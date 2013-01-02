@@ -63,7 +63,11 @@ int main(int argc, char **argv)
 		unsigned char stuffing[8192];
 		memset(stuffing, 0, 8192);
 		read(f, iframe, s.st_size);
-		ioctl(fd, VIDEO_SET_STREAMTYPE, 0); // set to mpeg2
+
+		if(iframe[0] == 0x00 && iframe[1] == 0x00 && iframe[2] == 0x00 && iframe[3] == 0x01 && (iframe[4] & 0x0f) == 0x07)
+			ioctl(fd, VIDEO_SET_STREAMTYPE, 1); // set to mpeg4
+		else
+			ioctl(fd, VIDEO_SET_STREAMTYPE, 0); // set to mpeg2
 		c(ioctl(fd, VIDEO_SELECT_SOURCE, VIDEO_SOURCE_MEMORY));
 		c(ioctl(fd, VIDEO_PLAY));
 		c(ioctl(fd, VIDEO_CONTINUE));
