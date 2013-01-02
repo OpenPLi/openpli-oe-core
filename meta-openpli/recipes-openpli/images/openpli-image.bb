@@ -2,13 +2,11 @@ require conf/license/openpli-gplv2.inc
 
 inherit image
 
-IMAGE_INSTALL_BROKEN = "sambaserver cifs"
-
-
 IMAGE_INSTALL = " \
 	${ROOTFS_PKGMANAGE} \
 	3rd-party-feed-configs \
 	avahi-daemon \
+	cifs \
 	distro-feed-configs \
 	dropbear \
 	e2fsprogs-e2fsck \
@@ -21,6 +19,7 @@ IMAGE_INSTALL = " \
 	opkg \
 	packagegroup-base \
 	packagegroup-core-boot \
+	sambaserver \
 	sdparm \
 	tuxbox-common \
 	tuxbox-links \
