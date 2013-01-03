@@ -11,7 +11,7 @@ INHIBIT_PACKAGE_STRIP = "1"
 include oscamurl.inc
 
 SRC_URI = " \
-		svn://${OSCAMHOST}/svn/oscam/trunk;module=utils;proto=http;scmdata=keep \
+		svn://${OSCAMHOST}/svn/oscam/trunk;module=utils;protocol=http;scmdata=keep \
 		"
 
 LIC_FILES_CHKSUM = "file://list_smargo.c;startline=5;endline=17;md5=d0df56ed6dc45b68c4946b217f2aeb84"

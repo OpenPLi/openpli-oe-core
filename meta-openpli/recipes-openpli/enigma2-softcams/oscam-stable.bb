@@ -3,7 +3,7 @@ MODULE = "1.10"
 OSCAMBIN = "oscam-stable"
 LIBUSB = "-DHAVE_LIBUSB=0"
 
-SUBURI = "svn/oscam/tags;module=1.10;proto=http;scmdata=keep;rev=${SRCREV}"
+SUBURI = "svn/oscam/tags;module=1.10;protocol=http;scmdata=keep;rev=${SRCREV}"
 
 ALTERNATIVE_PRIORITY = "10"
 

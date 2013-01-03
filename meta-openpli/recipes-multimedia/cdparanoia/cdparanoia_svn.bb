@@ -9,7 +9,7 @@ SRCREV = "17289"
 PV = "10.2+svnr${SRCPV}"
 PR = "r1"
 
-SRC_URI = "svn://svn.xiph.org/trunk;module=cdparanoia;proto=http \
+SRC_URI = "svn://svn.xiph.org/trunk;module=cdparanoia;protocol=http \
 	 file://fixes10.patch \
 	 file://Makefile.in.patch \
 	 file://interface_Makefile.in.patch \
