@@ -41,8 +41,8 @@ DEPENDS = "enigma2 \
 	python-twisted \
 	python-daap \
 	libcddb \
+	dvdbackup \
 	"
-BROKEN_DEPENDS = "dvdbackup"
 
 python populate_packages_prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
