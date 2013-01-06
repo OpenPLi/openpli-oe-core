@@ -26,7 +26,7 @@ do_install() {
 	install -d  ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 	install -m 0644 ${S}/lib/python/Plugins/Extensions/HbbTV/*.py ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 	install -m 0644 ${WORKDIR}/aitreader.py ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
-	install -m 0644 ${WORKDIR}/dumpait ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
+	install -m 0755 ${WORKDIR}/dumpait ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 
 	python -O -m compileall ${D}/usr/lib/enigma2/python/Plugins/
 }
