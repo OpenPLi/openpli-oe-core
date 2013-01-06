@@ -11,6 +11,9 @@ SCHWERKRAFT_PROJECT = "dvbmediasink"
 
 inherit autotools schwerkraft-git
 
+SRC_URI += " \
+	file://getdecodertime.patch"
+
 FILES_${PN} = "${libdir}/gstreamer-0.10/*.so"
 FILES_${PN}-dev += "${libdir}/gstreamer-0.10/*.la"
 FILES_${PN}-staticdev += "${libdir}/gstreamer-0.10/*.a"
