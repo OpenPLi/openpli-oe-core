@@ -61,7 +61,6 @@ GST_BASE_RDEPS = " \
 	gst-plugins-base-audioresample \
 	gst-plugins-base-decodebin \
 	gst-plugins-base-decodebin2 \
-	gst-plugins-base-ivorbisdec \
 	gst-plugins-base-ogg \
 	gst-plugins-base-playbin \
 	gst-plugins-base-subparse \
@@ -146,7 +145,7 @@ inherit gitpkgv pythonnative
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r41"
+PR = "r42"
 
 ENIGMA2_BRANCH ?= "openpli4"
 SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
