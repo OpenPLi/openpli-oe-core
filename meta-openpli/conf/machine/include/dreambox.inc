@@ -16,6 +16,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	kernel-module-hmac \
 	kernel-module-md4 \
 	kernel-module-ecb \
+	dreambox-boot-progress \
 	"
 
 MACHINE_FEATURES += "alsa usbhost 3dtv switchoff tpm dreambox"
