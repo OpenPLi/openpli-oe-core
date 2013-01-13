@@ -15,7 +15,7 @@ start)
 	if ! test -d $MOUNTPOINT; then
 		mkdir $MOUNTPOINT
 	fi
-	modprobe -q fuse
+	modprobe -q fuse || true
 	start-stop-daemon -S -b -x $DAEMON -- $ARGS
 	echo "done."
 	;;
