@@ -1,0 +1,268 @@
+diff --git a/lib/python/Plugins/SystemPlugins/TransCodingSetup/plugin.py b/lib/python/Plugins/SystemPlugins/TransCodingSetup/plugin.py
+index 09ec093..473ddee 100755
+--- a/lib/python/Plugins/SystemPlugins/TransCodingSetup/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/TransCodingSetup/plugin.py
+@@ -12,131 +12,87 @@ from __init__ import _
+ 
+ config.plugins.transcodingsetup = ConfigSubsection()
+ config.plugins.transcodingsetup.transcoding = ConfigSelection(default = "disabled", choices = [ ("enabled", _("enabled")), ("disabled", _("disabled"))] )
+-config.plugins.transcodingsetup.port = ConfigSelection(default = "8002", choices = [ ("8001", "8001"), ("8002", "8002")] )
+-
+-error_msg ={
+-	-1 : "File not exist - /proc/stb/encoder/enable.",
+-	-2 : "File not exist - /etc/inetd.conf.",
+-	-3 : "File open error - /proc/stb/encoder/enable.",
+-	-4 : "File open error - /etc/inetd.conf.",
+-	-5 : "Set encoder error.",
+-	-6 : "Set port error.",
+-	-7 : "Setting value is incorrect."
+-}
++
++_trascodingsetup_error_msg = ""
++
++def ERR(msg):
++	print _("[TranscodingSetup]"), msg
++	global _trascodingsetup_error_msg
++	_trascodingsetup_error_msg = msg
++
++def isExistFile(filename):
++	if not fileExists(filename):
++		ERR(_("File not found : ") + filename)
++		return False
++	return True
++
+ class TranscodingSetupInit:
+ 	def __init__(self):
+-		self.transcoding_value = config.plugins.transcodingsetup.transcoding.value
+-		if self.transcoding_value == "disabled":
+-			self.port_value = "8002"
+-		else:
+-			self.port_value = config.plugins.transcodingsetup.port.value
+-		self.transcoding_old = config.plugins.transcodingsetup.transcoding.value
+-		ret = self.setTranscoding(self.transcoding_value, self.port_value)
+-		if ret is not None and ret < 0:
+-			print "[TranscodingSetup] set failed!(%s, %s)"%(self.transcoding_value, self.port_value)
+-
+-	def setTranscoding(self, transcoding, port):
+-		if not self.getModel():
+-			print "This plugin is only supported for solo2/duo2."
+-			return -8
+-		if transcoding not in ["enabled","disabled"] or port not in ["8001","8002"]:
+-			print "Input error."
+-			return -7
+-		if not fileExists("/proc/stb/encoder/enable"):
+-			return -1
+-		elif not fileExists("/etc/inetd.conf"):
+-			return -2
+-		if self.setEncoder(transcoding) < 0:
+-			return -5
+-		res = self.setPort(port)
+-		if res < 0:
+-			self.setEncoder(self.transcoding_old)
+-			return res
+-		else:
+-			self.inetdRestart()
+-		return res
+-
+-	def setEncoder(self,mode = "disabled"):
+-		print "<TranscodingSetup> set encoder : %s" % mode
+-		mode = mode.strip(' ').strip('\n')
+-		try:
+-			fd = open("/proc/stb/encoder/enable",'r')
+-			self.transcoding_old = fd.read()
+-			fd.close()
+-			fd = open("/proc/stb/encoder/enable",'w')
+-			fd.write(mode)
+-			fd.close()
+-			fd = open("/proc/stb/encoder/enable",'r')
+-			encoder_enable = fd.read().strip(' ').strip('\n')
+-			fd.close()
+-			if encoder_enable == mode:
+-				return 0
+-			else:
+-#				print "<TranscodingSetup> can not setting."
+-				return -1
+-		except:
+-#			print "setEncoder exception error"
+-			return -1
+-
+-	def setPort(self, port = "8001"):
+-		print "<TranscodingSetup> set port : %s" % port
+-		try:
+-			fp = file('/etc/inetd.conf', 'r')
+-			datas = fp.readlines()
+-			fp.close()
+-		except:
+-#			print "file open error, inetd.conf!"
+-			return -4
++		self.old_trascoding = config.plugins.transcodingsetup.transcoding.value
++
++		self.setTranscoding()
++
++	def setTranscoding(self):
++		trascoding = config.plugins.transcodingsetup.transcoding.value
++		if not self.isAvailableModel():
++			ERR(_("This plugin is only supported for solo2/duo2."))
++			return False
++		if not isExistFile("/proc/stb/encoder/enable") or not isExistFile("/etc/inetd.conf"):
++			return False
++		activate = trascoding == "enabled"
++		activate_msg = activate and "activate" or "inactivate"
++
++		if not self.activateEncoder(activate):
++			ERR(_("Encoder failed to ") + activate_msg)
++			return False
++		if not self.activateTranstreamproxy(activate):
++			ERR(_("Transtreamproxy failed to ") + activate_msg)
++			activate = self.old_trascoding == "enabled"
++			self.activateEncoder(activate)
++			return False
++		if fileExists("/etc/init.d/inetd.busybox"):
++			os_system("/etc/init.d/inetd.busybox restart")
++		return True
++
++	def activateEncoder(self, activate=False):
++		def tryWrite(filename, retry, value):
++			self.old_trascoding = file(filename).read().strip()
++			for x in range(retry):
++				file(filename,'w').write(value)
++				if file(filename).read().strip() == value:
++					return True
++			return False
++		enable = activate and "enabled" or "disabled"
++		return tryWrite("/proc/stb/encoder/enable", 2, enable)
++
++	def activateTranstreamproxy(self, activate=False):
+ 		try:
+-			newdatas=""
+-			s_port = ""
+-			if port == "8001":
+-				s_port = "8002"
+-			else:
+-				s_port = "8001"
+-			for line in datas:
++			lines = ""
++			for line in file('/etc/inetd.conf').readlines():
+ 				if line.find("transtreamproxy") != -1:
+-					p=line.replace('\t',' ').find(' ')
+-					line = port+line[p:]
+-				elif line.find("streamproxy") != -1:
+-					p=line.replace('\t',' ').find(' ')
+-					line = s_port+line[p:]
+-				newdatas+=line
+-
+-			if newdatas.find("transtreamproxy") == -1:
+-				newdatas+=port+'\t'+'stream'+'\t'+'tcp'+'\t'+'nowait'+'\t'+'root'+'\t'+'/usr/bin/transtreamproxy'+'\t'+'transtreamproxy\n'
+-			fd = file("/etc/inetd.conf",'w')
+-			fd.write(newdatas)
+-			fd.close()
+-		except:
+-			return -6
+-		return 0
+-
+-	def inetdRestart(self):
+-		if fileExists("/etc/init.d/inetd"):
+-			os_system("/etc/init.d/inetd restart")
+-
+-	def getModel(self):
+-		if fileExists("/proc/stb/info/vumodel"):
+-			vumodel = open("/proc/stb/info/vumodel")
+-			info=vumodel.read().strip()
+-			vumodel.close()
+-			if info in ["solo2", "duo2"]:
+-				return True
+-			else:
+-				return False
+-		else:
+-			return False
++					continue
++				lines += line
++			if activate:
++				lines += '8002\tstream\ttcp\tnowait\troot\t/usr/bin/transtreamproxy\ttranstreamproxy\n'
++			file("/etc/inetd.conf",'w').write(lines)
++		except:	return False
++		return True
++
++	def isAvailableModel(self):
++		try:
++			info = file("/proc/stb/info/vumodel").read().strip()
++			return info in ["solo2", "duo2"]
++		except: return False
+ 
+ class TranscodingSetup(Screen,ConfigListScreen, TranscodingSetupInit):
+ 	skin =  """
+-		<screen position="center,center" size="560,270" title="Transcoding Setup" >
++		<screen position="center,center" size="560,280" title="Transcoding Setup" >
+ 			<ePixmap pixmap="skin_default/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
+ 			<ePixmap pixmap="skin_default/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
+ 			<widget source="key_red" render="Label" position="110,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" foregroundColor="#ffffff" transparent="1" />
+ 			<widget source="key_green" render="Label" position="310,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" foregroundColor="#ffffff" transparent="1" />
+-			<widget name="config" zPosition="2" position="5,70" size="550,70" scrollbarMode="showOnDemand" transparent="1" />
+-			<widget source="text" render="Label" position="20,140" size="520,130" font="Regular;18" halign="center" valign="center" />
++			<widget name="config" zPosition="2" position="5,70" size="550,80" scrollbarMode="showOnDemand" transparent="1" />
++			<widget source="text" render="Label" position="20,150" size="520,130" font="Regular;18" halign="center" valign="center" />
+ 		</screen>
+ 		"""
+ 
+@@ -163,16 +119,16 @@ class TranscodingSetup(Screen,ConfigListScreen, TranscodingSetupInit):
+ 		self.checkModelTimer.callback.append(self.invalidmodel)
+ 
+ 	def checkModel(self):
+-		if not self.getModel():
++		if not self.isAvailableModel():
+ 			self.checkModelTimer.start(1000,True)
+ 
+ 	def invalidmodel(self):
+-			self.session.openWithCallback(self.close, MessageBox, _("This plugin is available on SOLO2/DUO2"), MessageBox.TYPE_ERROR)
++		self.session.openWithCallback(self.close, MessageBox, _("This plugin is available on SOLO2/DUO2"), MessageBox.TYPE_ERROR)
+ 
+ 	def createSetup(self):
+ 		self.list = []
+ 		self.transcoding = getConfigListEntry(_("Transcoding"), config.plugins.transcodingsetup.transcoding)
+-		self.port = getConfigListEntry(_("Port"), config.plugins.transcodingsetup.port)
++		self.port = getConfigListEntry(_("Port"), ConfigSelection(default = "8002", choices = [ ("8002", "8002")] ))
+ 		self.list.append( self.transcoding )
+ 		if config.plugins.transcodingsetup.transcoding.value == "enabled":
+ 			self.list.append( self.port )
+@@ -180,32 +136,22 @@ class TranscodingSetup(Screen,ConfigListScreen, TranscodingSetupInit):
+ 		self["config"].l.setList(self.list)
+ 
+ 	def keySave(self):
+-		transcoding = config.plugins.transcodingsetup.transcoding.value
+-		port = config.plugins.transcodingsetup.port.value
+-		print "<TranscodingSetup> Transcoding %s(port : %s)"%(transcoding, port)
+-		ret = self.setupTranscoding(transcoding, port)
+-		if ret is not None and ret <0 :
++		if not self.setupTranscoding() :
+ 			self.resetConfig()
+-			global error_msg
+-			self.session.openWithCallback(self.close, MessageBox, _("Failed, Encoder %s\n(%s).")%(transcoding, error_msg[ret]), MessageBox.TYPE_ERROR)
+-		else:
+-			self.saveAll()
+-			if transcoding == "enabled" and port == "8001" :
+-				text = "PC Streaming is replaced with mobile streaming."
+-				self.session.openWithCallback(self.close, MessageBox, _("OK. Encoder %s.\n%s")%(transcoding,text), MessageBox.TYPE_INFO)
+-			else:
+-				self.session.openWithCallback(self.close, MessageBox, _("OK. Encoder %s.")%transcoding, MessageBox.TYPE_INFO)
+-			self.close()
++			global _trascodingsetup_error_msg
++			self.session.openWithCallback(self.close, MessageBox, _trascodingsetup_error_msg, MessageBox.TYPE_ERROR)
++			return
++		self.saveAll()
++		msg = config.plugins.transcodingsetup.transcoding.value
++		self.session.openWithCallback(self.close, MessageBox, _("OK. Encoder ")+msg, MessageBox.TYPE_INFO)
++		self.close()
+ 
+ 	def resetConfig(self):
+ 		for x in self["config"].list:
+ 			x[1].cancel()
+ 
+ 	def setupTranscoding(self, transcoding = None, port = None):
+-		if transcoding == "disabled":
+-			config.plugins.transcodingsetup.port.value = "8002"
+-			port = "8002"
+-		return self.setTranscoding(transcoding, port)
++		return self.setTranscoding()
+ 
+ 	def keyLeft(self):
+ 		ConfigListScreen.keyLeft(self)
