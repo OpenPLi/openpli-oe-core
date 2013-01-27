@@ -9,7 +9,7 @@ SRC_URI[sha256sum] = "3abe16a21183d72db7f8d07bf78bb704fb72ecaed35043e5d938368878
 
 LIC_FILES_CHKSUM = "file://${WORKDIR}/linux-${PV}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-MACHINE_KERNEL_PR_append = ".9"
+MACHINE_KERNEL_PR_append = ".10"
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
 # to be installed in parallel. We revert this change and rprovide the versioned
@@ -39,6 +39,7 @@ SRC_URI += "http://www.xp-support.tv/support/linux/linux-${PV}-xp.tar.gz \
 	file://it913x-switch-off-PID-filter-by-default.patch \
 	file://tda18271-advertise-supported-delsys.patch \
 	file://fix-dvb-siano-sms-order.patch \
+	file://nfs-max-rwsize-8k.patch \
 	"
 
 S = "${WORKDIR}/linux-${PV}"
