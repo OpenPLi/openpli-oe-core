@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.3.6"
 
-PR_INC = ".0"
+PR_INC = ".1"
 
 SRCREV = "r0"
 
@@ -49,7 +49,7 @@ kernel_do_install_append() {
 
 pkg_postinst_kernel-image () {
         if [ -d /proc/stb ] ; then
-                flash_eraseall -j /dev/mtd2
+                flash_eraseall /dev/mtd2
                 nandwrite -p /dev/mtd2 /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
         fi
         rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
