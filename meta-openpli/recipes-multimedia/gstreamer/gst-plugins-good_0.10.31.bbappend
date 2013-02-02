@@ -1,5 +1,4 @@
-DEPENDS := "${@oe_filter_out('^(gconf|pulseaudio)$', '${DEPENDS}', d)}"
-DEPENDS := "${@oe_filter_out('gtk+', '${DEPENDS}', d)}"
+DEPENDS := "${@oe_filter_out('^(gtk+|gconf)$', '${DEPENDS}', d)}"
 
 PRINC = "3"
 
