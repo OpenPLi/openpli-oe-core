@@ -65,4 +65,3 @@ PACKAGES = "\
 	"
 
 PROVIDES="${PACKAGES}"
-
