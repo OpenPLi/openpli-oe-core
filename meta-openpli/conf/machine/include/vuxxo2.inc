@@ -31,15 +31,15 @@ PREFERRED_PROVIDER_virtual/blindscan-dvbs = "vuplus-blindscan-utils-${MACHINE}"
 IMAGE_FSTYPES ?= "ubi"
 
 UBI_VOLNAME = "rootfs"
-MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096 -F"
+MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 UBINIZE_ARGS = "-m 2048 -p 128KiB"
 
 IMAGEDIR ?= "${MACHINE}"
 EXTRA_IMAGECMD_COMPAT = " --eraseblock=0x20000 -n -l "
 
 IMAGE_CMD_ubi_prepend = " \
-        cp ${IMAGE_ROOTFS}/boot/vmlinux.gz ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.vmlinux.gz; \
-        rm -f ${IMAGE_ROOTFS}/boot/vmlinux.gz; \
+        cp ${IMAGE_ROOTFS}/tmp/vmlinux.gz ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.vmlinux.gz; \
+        rm -f ${IMAGE_ROOTFS}/tmp/vmlinux.gz; \
         "
 
 IMAGE_CMD_ubi_append = " \
