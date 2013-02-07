@@ -4,6 +4,7 @@ PRIORITY = "optional"
 LICENSE = "CLOSED"
 
 DEPENDS = "tslib mpfr gmp"
+RDEPENDS = "tslib"
 
 SRC_DATE = "20121128_0"
 SRC_URI = "http://code.vuplus.com/download/build.fc3abf29fb03f797e78f907928125638/embedded/opera-sdk-build-package/opera-hbbtv_${SRC_DATE}.tar.gz"
