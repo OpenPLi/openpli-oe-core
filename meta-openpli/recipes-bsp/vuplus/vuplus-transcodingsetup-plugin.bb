@@ -5,7 +5,7 @@ SRCREV = "6e2ef83a9d63faa57c7266d7331b0ca9b9f4c9f9"
 PR = "r1"
 
 DEPENDS = "enigma2-transtreamproxy-util"
-RDEPENDS = "enigma2-transtreamproxy-util enigma2"
+RDEPENDS_${PN} = "enigma2-transtreamproxy-util enigma2"
 
 BRANCH = "vuplus_experimental"
 
