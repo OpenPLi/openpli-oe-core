@@ -4,7 +4,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
 
 DEPENDS = "vuplus-opera-browser-util"
-RDEPENDS = "vuplus-opera-browser-util"
+RDEPENDS_${PN} = "vuplus-opera-browser-util"
 
 SRCREV = "6e2ef83a9d63faa57c7266d7331b0ca9b9f4c9f9"
 inherit gitpkgv
