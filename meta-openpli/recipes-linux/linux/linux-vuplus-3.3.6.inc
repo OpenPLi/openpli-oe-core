@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.3.6"
 
-PR_INC = ".1"
+PR_INC = ".2"
 
 SRCREV = "r0"
 
@@ -20,6 +20,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-1.2.tar.bz2
         file://brcm_mtd_mac.patch;striplevel=1 \
         file://dvb_core_5.5.patch;striplevel=1 \
 	file://brcm_remove_entire_mtd.patch;striplevel=1 \
+	file://dvb_backport.patch;striplevel=1 \
         file://${MACHINE}_defconfig \
 	"
 
@@ -32,7 +33,7 @@ export OS = "Linux"
 KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "vmlinux"
 KERNEL_OBJECT_SUFFIX = "ko"
-KERNEL_IMAGEDEST = "/boot"
+KERNEL_IMAGEDEST = "tmp"
 
 FILES_kernel-image = "/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
 

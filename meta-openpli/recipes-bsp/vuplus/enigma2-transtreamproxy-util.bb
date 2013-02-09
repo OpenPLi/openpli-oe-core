@@ -19,4 +19,3 @@ do_install() {
 	install -d ${D}/usr/bin
 	install -m 0755 ${S}/src/streamproxy      ${D}/usr/bin/transtreamproxy
 }
-
