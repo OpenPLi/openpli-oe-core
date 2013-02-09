@@ -43,7 +43,7 @@ install_egg_info() {
 }
 
 
-pkg_postinst() {
+pkg_postinst_${PN}() {
 
 	if [ ! -f $D/etc/image-version ]
 	then
@@ -62,7 +62,7 @@ pkg_postinst() {
 	fi
 }
 
-pkg_prerm() {
+pkg_prerm_${PN}() {
 	if [ -f /usr/bin/enigma2.sh.xmltvbak ] ; then
 		mv -f /usr/bin/enigma2.sh.xmltvbak /usr/bin/enigma2.sh
 	fi
