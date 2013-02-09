@@ -14,6 +14,7 @@ IMAGE_INSTALL = " \
 	e2fsprogs-tune2fs \
 	early-configure \
 	fakelocale \
+	modutils-loadscript \
 	nfs-utils-client \
 	openpli-bootlogo \
 	opkg \
