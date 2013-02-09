@@ -1,12 +1,5 @@
 #!/usr/bin/make -f
 
-# MACHINE examples: et4x00 et5x00 et6x00 et9x00 dm500hd dm800se dm7020hd dm8000 xp1000
-MACHINE ?= ${subst /,,${subst build-,,${firstword ${dir ${wildcard build-*/}}}}}
-
-ifeq "$(MACHINE)" ""
-	MACHINE=et9x00
-endif
-
 # Adjust according to the number CPU cores to use for parallel build.
 # Default: Number of processors in /proc/cpuinfo, if present, or 1.
 NR_CPU := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:' /proc/cpuinfo || echo 1)
@@ -15,7 +8,7 @@ PARALLEL_MAKE ?= -j $(NR_CPU)
 
 XSUM ?= md5sum
 
-BUILD_DIR = $(CURDIR)/build-$(MACHINE)
+BUILD_DIR = $(CURDIR)/build
 TOPDIR = $(BUILD_DIR)
 DL_DIR = $(CURDIR)/sources
 SSTATE_DIR = $(TOPDIR)/sstate-cache
@@ -39,8 +32,8 @@ CONFFILES = \
 CONFDEPS = \
 	$(DEPDIR)/.env.source.$(BITBAKE_ENV_HASH) \
 	$(DEPDIR)/.openpli.conf.$(OPENPLI_CONF_HASH) \
-	$(DEPDIR)/.bblayers.conf.$(MACHINE).$(BBLAYERS_CONF_HASH) \
-	$(DEPDIR)/.local.conf.$(MACHINE).$(LOCAL_CONF_HASH)
+	$(DEPDIR)/.bblayers.conf.$(BBLAYERS_CONF_HASH) \
+	$(DEPDIR)/.local.conf.$(LOCAL_CONF_HASH)
 
 GIT ?= git
 GIT_REMOTE := $(shell $(GIT) remote)
@@ -55,9 +48,9 @@ all: init
 	@echo "Openembedded for the OpenPLi 3.0 environment has been initialized"
 	@echo "properly. Now you can start building your image, by doing either:"
 	@echo
-	@echo " MACHINE=$(MACHINE) make image"
+	@echo " MACHINE=... make image"
 	@echo "	or"
-	@echo " cd $(BUILD_DIR) ; source env.source ; bitbake openpli-enigma2-image"
+	@echo " cd $(BUILD_DIR) ; source env.source ; MACHINE=... bitbake openpli-enigma2-image"
 	@echo
 
 $(BBLAYERS):
@@ -95,6 +88,8 @@ BITBAKE_ENV_HASH := $(call hash, \
 
 $(TOPDIR)/env.source: $(DEPDIR)/.env.source.$(BITBAKE_ENV_HASH)
 	@echo 'Generating $@'
+	@echo 'export BB_ENV_EXTRAWHITE="MACHINE"' > $@
+	@echo 'export MACHINE' >> $@
 	@echo 'export PATH=$(CURDIR)/openembedded-core/scripts:$(CURDIR)/bitbake/bin:$${PATH}' >> $@
 
 OPENPLI_CONF_HASH := $(call hash, \
@@ -127,14 +122,12 @@ LOCAL_CONF_HASH := $(call hash, \
 	'LOCAL_CONF_VERSION = "0"' \
 	'CURDIR = "$(CURDIR)"' \
 	'TOPDIR = "$(TOPDIR)"' \
-	'MACHINE = "$(MACHINE)"' \
 	)
 
-$(TOPDIR)/conf/local.conf: $(DEPDIR)/.local.conf.$(MACHINE).$(LOCAL_CONF_HASH)
+$(TOPDIR)/conf/local.conf: $(DEPDIR)/.local.conf.$(LOCAL_CONF_HASH)
 	@echo 'Generating $@'
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'TOPDIR = "$(TOPDIR)"' > $@
-	@echo 'MACHINE = "$(MACHINE)"' >> $@
 	@echo 'require $(TOPDIR)/conf/openpli.conf' >> $@
 
 $(TOPDIR)/conf/site.conf: $(CURDIR)/site.conf
@@ -154,7 +147,7 @@ BBLAYERS_CONF_HASH := $(call hash, \
 	'BBLAYERS = "$(BBLAYERS)"' \
 	)
 
-$(TOPDIR)/conf/bblayers.conf: $(DEPDIR)/.bblayers.conf.$(MACHINE).$(BBLAYERS_CONF_HASH)
+$(TOPDIR)/conf/bblayers.conf: $(DEPDIR)/.bblayers.conf.$(BBLAYERS_CONF_HASH)
 	@echo 'Generating $@'
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'LCONF_VERSION = "4"' >> $@
