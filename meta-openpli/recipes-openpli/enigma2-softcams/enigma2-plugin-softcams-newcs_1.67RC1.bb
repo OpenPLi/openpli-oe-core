@@ -21,7 +21,7 @@ do_install() {
 	install -m 0644 ${WORKDIR}/newcs.xml ${D}/etc/tuxbox/config/newcs.xml.example
 }
 
-pkg_postinst () {
+pkg_postinst_${PN} () {
 	[ -e $D/etc/tuxbox/config/newcs.xml ] || cp $D/etc/tuxbox/config/newcs.xml.example $D/etc/tuxbox/config/newcs.xml
 }
 
