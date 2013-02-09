@@ -30,7 +30,7 @@ do_install() {
 	install -m 0644 ${S}/peer.cfg.example ${D}/usr/keys/peer.cfg.example.mg
 }
 
-pkg_postinst () {
+pkg_postinst_${PN} () {
 	[ -e $D/etc/tuxbox/config/newcamd.list ] || mv $D/etc/tuxbox/config/newcamd.list.example.mg $D/etc/tuxbox/config/newcamd.list
 	[ -e $D/etc/tuxbox/config/newcamd.conf ] || mv $D/etc/tuxbox/config/newcamd.conf.example.mg $D/etc/tuxbox/config/newcamd.conf
 	[ -e $D/usr/keys/mg_cfg ] || mv $D/usr/keys/mg_cfg.example.mg $D/usr/keys/mg_cfg

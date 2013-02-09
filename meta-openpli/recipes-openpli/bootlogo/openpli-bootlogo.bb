@@ -62,7 +62,7 @@ do_install() {
 	install -m 0755 ${S}/bootlogo.sh ${D}/${sysconfdir}/init.d/bootlogo
 }
 
-pkg_preinst_dreambox() {
+pkg_preinst_${PN}_dreambox() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -74,14 +74,14 @@ pkg_preinst_dreambox() {
 	fi
 }
 
-pkg_postinst_dreambox() {
+pkg_postinst_${PN}_dreambox() {
 	if [ -z "$D" ]
 	then
 		umount /boot
 	fi
 }
 
-pkg_prerm_dreambox() {
+pkg_prerm_${PN}_dreambox() {
 	if [ -z "$D" ]
 	then
 		if mountpoint -q /boot
@@ -93,7 +93,7 @@ pkg_prerm_dreambox() {
 	fi
 }
 
-pkg_postrm_dreambox() {
+pkg_postrm_${PN}_dreambox() {
 	if [ -z "$D" ]
 	then
 		umount /boot

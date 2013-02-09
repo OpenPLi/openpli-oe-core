@@ -58,7 +58,7 @@ do_install_append () {
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
-pkg_postinst_append () {
+pkg_postinst_${PN}_append () {
 	if [ ! -e ${CSLINK} ] || [ "$D/etc/init.d/cardserver.None" == `readlink -f $D${CSLINK}` ]
 	then
 		rm -f $D${CSLINK}
@@ -73,7 +73,7 @@ pkg_postinst_append () {
 }
 
 # Stop this cam (if running), and move softlink to None if we're the current cam
-pkg_prerm_prepend () {
+pkg_prerm_${PN}_prepend () {
 	${CSPATH} stop
 	OLDLINK=`readlink -f ${CSLINK}`
 	if [ "${OLDLINK}" == "${CSPATH}" ]

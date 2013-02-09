@@ -24,7 +24,7 @@ do_install() {
 }
 
 # Safeguard: Don't activate on a running image
-pkg_postinst() {
+pkg_postinst_${PN}() {
 	if [ "x$D" != "x" ]
 	then
 		ln -sf ../init.d/settings-restore.sh $D/etc/rcS.d/S20settingsrestore
