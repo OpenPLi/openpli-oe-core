@@ -24,8 +24,8 @@ do_install() {
 	for f in *.ko; do
 		install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/${KV}${KV_EXTRA}/extra/$f;
 	done
-	install -d ${D}/${sysconfdir}/modutils
+	install -d ${D}/${sysconfdir}/modules-load.d
 	for i in `ls | grep \\.ko | sed -e 's/.ko//g'`; do
-		echo $i >> ${D}/${sysconfdir}/modutils/_vuplus
+		echo $i >> ${D}/${sysconfdir}/modules-load.d/_vuplus.conf
 	done
 }
