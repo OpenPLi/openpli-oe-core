@@ -1,5 +1,5 @@
 PV = "20111105"
-PR = "r1"
+PR = "r2"
 SRC_URI = "file://*"
 DESCRIPTION = "Autorecover settings and install packages at first boot from /media/*/backup"
 PACKAGES = "${PN}"
@@ -27,7 +27,7 @@ do_install() {
 pkg_postinst_${PN}() {
 	if [ "x$D" != "x" ]
 	then
-		ln -sf ../init.d/settings-restore.sh $D/etc/rcS.d/S20settingsrestore
+		ln -sf ../init.d/settings-restore.sh $D/etc/rcS.d/S31settingsrestore
 		ln -sf ../init.d/autoinstall.sh $D/etc/rcS.d/S99autoinstall
 	fi
 }
