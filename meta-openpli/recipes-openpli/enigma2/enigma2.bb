@@ -27,6 +27,7 @@ RDEPENDS_${PN} = " \
 
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
+	enigma2-plugin-skins-pli-scale-hd \
 	gst-plugin-subsink \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
