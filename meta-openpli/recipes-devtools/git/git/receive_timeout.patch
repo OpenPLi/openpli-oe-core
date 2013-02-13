@@ -9,7 +9,7 @@ index ee1d4b4..1718f80 100644
 +	struct timeval tv;
  	int sockfd = git_tcp_connect_sock(host, flags);
  
-+	tv.tv_sec = 15;
++	tv.tv_sec = 90;
 +	tv.tv_usec = 0;
 +	setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 +
