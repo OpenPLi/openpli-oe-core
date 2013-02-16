@@ -53,7 +53,12 @@ do_install_append() {
         echo "/boot/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}.gz ${USB_CMDLINE}" >> ${D}/${KERNEL_IMAGEDEST}/autoexec_${MACHINE}.bat
 }
 
-FILES_kernel-image += "/${KERNEL_IMAGEDEST}/autoexec*.bat"
+# The vmlinux package gets priority over the kernel-image, so make it empty so that
+# kernel-image gets those files.
+FILES_kernel-vmlinux = ""
+FILES_kernel-image += "\
+	/${KERNEL_IMAGEDEST}/autoexec*.bat \
+	"
 
 pkg_preinst_kernel-image() {
 	if [ -z "$D" ]
