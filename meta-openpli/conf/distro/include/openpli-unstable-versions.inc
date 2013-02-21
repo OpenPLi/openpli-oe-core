@@ -43,6 +43,7 @@ SRCREV_pn-enigma2-plugin-settings-hans-13e-19e-23e-28e-rotating ?= "${HANS_GITRE
 
 # svn
 SRCREV_pn-tuxbox-common ?= "${AUTOREV}"
+SRCREV_pn-dvbsnoop ?= "${AUTOREV}"
 SRCREV_pn-tuxterm ?= "${AUTOREV}"
 SRCREV_pn-enigma2-plugin-extensions-tuxcom ?= "${AUTOREV}"
 SRCREV_pn-enigma2-plugin-extensions-tuxterm ?= "${AUTOREV}"
