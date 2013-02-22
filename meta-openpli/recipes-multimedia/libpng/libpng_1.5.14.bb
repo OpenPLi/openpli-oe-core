@@ -10,13 +10,13 @@ DEPENDS = "zlib"
 
 PR = "r0"
 
-SRC_URI = "ftp://ftp.simplesystems.org/pub/png/src/libpng-${PV}.tar.bz2;name=libpng"
+SRC_URI = "${SOURCEFORGE_MIRROR}/${PN}/libpng15/${PV}/${P}.tar.gz"
 S = "${WORKDIR}/libpng-${PV}"
 
 inherit autotools pkgconfig binconfig
 
-SRC_URI[libpng.md5sum] = "d7a89c2dc12e439f0c84306a06ceafdd"
-SRC_URI[libpng.sha256sum] = "bd6bab0534d75ceec08be3ddc08d57096013b829f81cd39ebd468f2c7d10d1bc"
+SRC_URI[md5sum] = "27e76e0223d654093ffeb2f3daa56cc3"
+SRC_URI[sha256sum] = "22007f80f6b6d6ad2b5d37bc135dce6701a17a4d64aee6d46edd3898bfbb1018"
 
 PACKAGES =+ "${PN}15"
 
