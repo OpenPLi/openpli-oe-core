@@ -1,9 +1,9 @@
 SUMMARY = "PLi-Scale-HD skin, scalable clean maximum screen utilisation"
 DESCRIPTION = "Screen based on resizable templates."
 MAINTAINER = "Stephen R. van den Berg AKA BuGless <srb@cuci.nl>"
-LICENSE = "Proprietary"
+LICENSE = "GPLv2+"
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=8c6df343eefac4184a40b488b231ab9f"
+LIC_FILES_CHKSUM = "file://COPYING;md5=eb723b61539feef013de476e68b5c50a"
 
 inherit gitpkgv
 

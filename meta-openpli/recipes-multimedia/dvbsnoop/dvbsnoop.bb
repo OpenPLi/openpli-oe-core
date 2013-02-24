@@ -6,8 +6,8 @@ SRCDATE = "20081001"
 PV = "0.0+cvs${SRCDATE}"
 PR = "r1"
 
-SRC_URI = "cvs://anoncvs@cvs.tuxbox.org/cvs/tuxbox;module=apps/dvb/dvbsnoop;method=ext;rsh=ssh"
+SRC_URI = "git://gitorious.org/tuxbox-cvs/apps.git;protocol=git;module=apps/dvb/dvbsnoop"
 
-S = "${WORKDIR}/dvbsnoop"
+S = "${WORKDIR}/git/dvb/dvbsnoop"
 
 inherit autotools

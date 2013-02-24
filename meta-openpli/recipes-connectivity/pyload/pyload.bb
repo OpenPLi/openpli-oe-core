@@ -28,8 +28,8 @@ inherit update-rc.d
 SRC_URI = "http://download.pyload.org/pyload-src-v${PV}.zip \
   file://pyload.init \
   file://pyload.tar.gz.defaults"
-SRC_URI[md5sum] = "9b2e5a7c884871a5489cb5141d5c704b"
-SRC_URI[sha256sum] = "77a1f75168be34a84874af030a2f52891b5c1c1b31b608070e143b88d6927772"
+SRC_URI[md5sum] = "28876150af22999b6f539c8579d3b415"
+SRC_URI[sha256sum] = "f937631d376216bc830d6ffcd5b4ecb1806afd4012a184849da1a333a7ba0016"
 
 S = "${WORKDIR}/pyload"
 

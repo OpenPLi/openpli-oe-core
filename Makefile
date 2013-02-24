@@ -49,8 +49,16 @@ all: init
 	@echo "properly. Now you can start building your image, by doing either:"
 	@echo
 	@echo " MACHINE=... make image"
-	@echo "	or"
-	@echo " cd $(BUILD_DIR) ; source env.source ; MACHINE=... bitbake openpli-enigma2-image"
+	@echo
+	@echo "	or:"
+	@echo
+	@echo " cd $(BUILD_DIR)
+	@echo " source env.source
+	@echo " MACHINE=... bitbake openpli-enigma2-image"
+	@echo
+	@echo "	or, if you want to build not just the image, but the optional packages in the feed as well:"
+	@echo
+	@echo " MACHINE=... bitbake openpli-enigma2-feed"
 	@echo
 
 $(BBLAYERS):
