@@ -10,7 +10,7 @@ DEPENDS = "zlib"
 
 PR = "r0"
 
-SRC_URI = "${SOURCEFORGE_MIRROR}/${PN}/libpng15/${PV}/${P}.tar.gz"
+SRC_URI = "${SOURCEFORGE_MIRROR}/libpng/libpng15/${PV}/libpng-${PV}.tar.gz"
 S = "${WORKDIR}/libpng-${PV}"
 
 inherit autotools pkgconfig binconfig
