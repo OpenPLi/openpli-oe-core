@@ -10,7 +10,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r25"
 
-OPENPLI_GIT ?= "git://openpli.git.sourceforge.net/gitroot/openpli"
+OPENPLI_GIT ?= "git://git.code.sf.net/p/openpli"
 SRC_URI = "${OPENPLI_GIT}/plugin-xmltvimport;protocol=git"
 
 

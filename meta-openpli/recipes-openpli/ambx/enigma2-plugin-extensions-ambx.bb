@@ -9,7 +9,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/plugin-ambx;protocol=git"
+SRC_URI = "git://git.code.sf.net/p/openpli/plugin-ambx;protocol=git"
 
 FILES_${PN} = "/usr/bin /usr/lib/enigma2/python"
 

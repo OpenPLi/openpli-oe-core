@@ -6,7 +6,7 @@ DESCRIPTION = "tuxbox tuxtxt for enigma2"
 
 inherit gitpkgv
 
-SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt;protocol=git"
+SRC_URI = "git://git.code.sf.net/p/openpli/tuxtxt;protocol=git"
 
 S = "${WORKDIR}/git/tuxtxt"
 
