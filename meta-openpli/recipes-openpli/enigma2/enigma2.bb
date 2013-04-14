@@ -32,6 +32,7 @@ RRECOMMENDS_${PN} = " \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
 	${GST_UGLY_RDEPS} \
+	gst-plugin-libxt \
 	"
 
 PYTHON_RDEPS = " \
@@ -145,7 +146,7 @@ inherit gitpkgv
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r42"
+PR = "r43"
 
 ENIGMA2_BRANCH ?= "master"
 SRC_URI = "git://git.code.sf.net/p/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
