@@ -18,7 +18,7 @@ DESCRIPTION_font-valis-enigma = "Valis enigma font"
 PACKAGES = "${PN} font-valis-enigma"
 PROVIDES += "font-valis-enigma"
 
-OPENPLI_GIT ?= "git://openpli.git.sourceforge.net/gitroot/openpli"
+OPENPLI_GIT ?= "git://git.code.sf.net/p/openpli"
 SRC_URI = "${OPENPLI_GIT}/skin-magic;protocol=git"
 
 FILES_${PN} = "/usr/share/enigma2/Magic"

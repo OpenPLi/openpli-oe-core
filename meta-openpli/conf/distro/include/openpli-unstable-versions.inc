@@ -38,6 +38,7 @@ SRCREV_pn-enigma2-plugin-settings-henksat-13e-19e-23e-28e-42e-7e ?= "${HENKSAT_G
 
 HANS_GITREV ?= "${AUTOREV}"
 SRCREV_pn-enigma2-plugin-settings-hans-19e-23e ?= "${HANS_GITREV}"
+SRCREV_pn-enigma2-plugin-settings-hans-19e-23e-28e ?= "${HANS_GITREV}"
 SRCREV_pn-enigma2-plugin-settings-hans-13e-19e-23e-28e ?= "${HANS_GITREV}"
 SRCREV_pn-enigma2-plugin-settings-hans-13e-19e-23e-28e-rotating ?= "${HANS_GITREV}"
 

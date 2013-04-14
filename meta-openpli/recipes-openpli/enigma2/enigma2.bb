@@ -148,7 +148,7 @@ PKGV = "2.7+git${GITPKGV}"
 PR = "r42"
 
 ENIGMA2_BRANCH ?= "master"
-SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
+SRC_URI = "git://git.code.sf.net/p/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
 
 S = "${WORKDIR}/git"
 

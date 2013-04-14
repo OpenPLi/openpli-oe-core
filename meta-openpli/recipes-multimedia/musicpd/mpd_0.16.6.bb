@@ -49,6 +49,6 @@ do_compile_prepend() {
 do_install_append() {
 	install -d ${D}/var/lib/mpd/playlists
 	install -d ${D}${sysconfdir}/init.d
-	install -m 755 ${WORKDIR}/mpd/mpd.init ${D}${sysconfdir}/init.d/mpd
-	install -m 644 ${WORKDIR}/mpd/mpd.conf ${D}${sysconfdir}/mpd.conf
+	install -m 755 ${WORKDIR}/mpd.init ${D}${sysconfdir}/init.d/mpd
+	install -m 644 ${WORKDIR}/mpd.conf ${D}${sysconfdir}/mpd.conf
 }

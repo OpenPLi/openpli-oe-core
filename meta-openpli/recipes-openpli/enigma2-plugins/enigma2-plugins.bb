@@ -12,7 +12,7 @@ PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
 PR = "r7"
 
-SRC_URI="git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2;protocol=git"
+SRC_URI="git://git.code.sf.net/p/openpli/plugins-enigma2;protocol=git"
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \
