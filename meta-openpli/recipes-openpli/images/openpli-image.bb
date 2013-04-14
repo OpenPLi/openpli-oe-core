@@ -38,6 +38,7 @@ OPTIONAL_PACKAGES += " \
 	djmount \
 	dvbsnoop \
 	dvdfs \
+	evtest \
 	gdb \
 	hddtemp \
 	hdparm \
