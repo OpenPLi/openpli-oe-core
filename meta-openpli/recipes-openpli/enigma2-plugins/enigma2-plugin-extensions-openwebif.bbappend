@@ -1,4 +1,4 @@
-PRINC = "2"
+PRINC = "3"
 
 python do_package_prepend () {
 	boxtypes = [
@@ -35,3 +35,28 @@ python do_package_prepend () {
 			if target_remote != name and name != 'ow_remote.png':
 				os.remove(os.path.join(root, name))
 }
+
+PACKAGES =+ "${PN}-src"
+
+inherit autotools pkgconfig
+
+FILES_${PN}-dbg += "\
+	/usr/lib/enigma2/python/Plugins/*/*/.debug \
+	/usr/lib/enigma2/python/Plugins/*/*/*/.debug \
+	/usr/lib/enigma2/python/Plugins/*/*/*/*/.debug \
+	/usr/lib/enigma2/python/Plugins/*/*/*/*/*/.debug \
+	/usr/lib/enigma2/python/Plugins/*/*/*/*/*/*/.debug \
+	"
+
+FILES_${PN}-src = "\
+	/usr/lib/enigma2/python/*/*.py \
+	/usr/lib/enigma2/python/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*/*/*/*/*/*.py \
+	/usr/lib/enigma2/python/*/*/*/*/*/*/*/*/*/*/*.py \
+	"
