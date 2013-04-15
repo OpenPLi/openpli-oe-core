@@ -11,7 +11,7 @@ inherit gitpkgv
  
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
-PR = "r4"
+PR = "r5"
 BRANCH = "vuplus_experimental"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
@@ -27,6 +27,9 @@ do_install() {
 	install -m 0644 ${S}/lib/python/Plugins/Extensions/HbbTV/*.py ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 	install -m 0644 ${WORKDIR}/aitreader.py ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 	install -m 0755 ${WORKDIR}/dumpait ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
+	install -m 0644 ${S}/lib/python/Plugins/Extensions/HbbTV/keymap.xml ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
+	install -d  ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/locale
+	cp -av ${S}/lib/python/Plugins/Extensions/HbbTV/locale/*.po ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/locale
 
 	python -O -m compileall ${D}/usr/lib/enigma2/python/Plugins/
 }
