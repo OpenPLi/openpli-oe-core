@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.36"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.37"
 
 PATCHREV = "4e0356d04e89df800361b9252f990716f5523c6e"
 PATCHLEVEL = "41"
@@ -29,7 +29,6 @@ SRC_URI = " \
 			file://dvb-usb-af9035.patch \
 			file://dvb-usb-a867.patch \
 			file://defconfig \
-			file://nfs-max-rwsize-8k.patch \
 "
 
 SRC_URI[kernel.md5sum] = "7ceb61f87c097fc17509844b71268935"
