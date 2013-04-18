@@ -15,7 +15,7 @@ PACKAGES = "${PN} ${PN}-bin"
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-RDEPENDS_${PN} = "mtd-utils-nandwrite mtd-utils-mtd-debug dreambox-buildimage"
+RDEPENDS_${PN} = "mtd-utils dreambox-buildimage"
 
 FILES_${PN} = "${datadir}/dreambox-secondstage/secondstage-${MACHINE}.bin"
 
