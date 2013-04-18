@@ -34,9 +34,6 @@ KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "${KERNEL_IMAGETYPE}"
 KERNEL_CONSOLE = "${@base_contains('OPENPLI_FEATURES', 'usbconsole', 'ttyS0,115200', 'null', d)}"
 
-MKUBIFS_ARGS = "-m 2048 -e 129024 -c 1996 -x favor_lzo -X 1"
-UBINIZE_ARGS = "-m 2048 -p 128KiB -s 512"
-
 DREAMBOX_BUILDIMAGE = "buildimage --arch ${MACHINE} ${EXTRA_BUILDCMD} \
 	--erase-block-size ${DREAMBOX_ERASE_BLOCK_SIZE} \
 	--flash-size ${DREAMBOX_FLASH_SIZE} \
