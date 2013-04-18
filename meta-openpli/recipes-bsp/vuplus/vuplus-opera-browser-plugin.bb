@@ -11,11 +11,12 @@ inherit gitpkgv
  
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
-PR = "r5"
+PR = "r6"
 BRANCH = "vuplus_experimental"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	   file://vuplus-opera-browser-plugin_20130105.patch;striplevel=1 \
+	   file://hbbtv-nocrash.patch;striplevel=1 \
 	   file://aitreader.py \
 	   file://dumpait \
 "
