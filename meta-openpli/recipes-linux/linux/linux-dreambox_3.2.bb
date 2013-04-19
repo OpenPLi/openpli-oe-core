@@ -28,6 +28,7 @@ SRC_URI = " \
 			file://fix-dvb-siano-sms-order.patch \
 			file://dvb-usb-af9035.patch \
 			file://dvb-usb-a867.patch \
+			file://dvb-usb-rtl2832.patch \
 			file://defconfig \
 "
 
