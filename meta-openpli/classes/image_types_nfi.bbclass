@@ -3,8 +3,7 @@ inherit image_types
 IMAGE_CMD_jffs2.nfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
-		--disable-compressor=lzo \
-		--compression-mode=size \
+		--compression-mode=none \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	rm -rf ${IMAGE_ROOTFS}/boot/*; \
@@ -24,8 +23,7 @@ IMAGE_CMD_jffs2.nfi = " \
 IMAGE_CMD_sum.jffs2.nfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
-		--disable-compressor=lzo \
-		--compression-mode=size \
+		--compression-mode=none \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	sumtool \
@@ -53,8 +51,7 @@ IMAGE_CMD_sum.jffs2.nfi = " \
 IMAGE_CMD_ubi.nfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
-		--disable-compressor=lzo \
-		--compression-mode=size \
+		--compression-mode=none \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	rm -rf ${IMAGE_ROOTFS}/boot/*; \
