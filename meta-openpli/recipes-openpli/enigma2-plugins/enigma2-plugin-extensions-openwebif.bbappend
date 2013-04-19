@@ -1,4 +1,4 @@
-PRINC = "2"
+PRINC = "4"
 
 python do_package_prepend () {
     boxtypes = [

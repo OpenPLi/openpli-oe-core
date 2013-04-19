@@ -18,7 +18,7 @@ inherit gitpkgv
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r5"
+PR = "r7"
 
 SRC_URI = "git://git.code.sf.net/p/openpli/enigma2-plugins;protocol=git \
 		   file://pythonpaths.patch"

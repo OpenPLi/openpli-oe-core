@@ -10,7 +10,7 @@ inherit gitpkgv pythonnative
 
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
-PR = "r7"
+PR = "r9"
 
 SRC_URI="git://git.code.sf.net/p/openpli/plugins-enigma2;protocol=git"
 
