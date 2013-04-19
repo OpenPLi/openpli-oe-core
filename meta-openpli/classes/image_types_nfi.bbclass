@@ -35,8 +35,8 @@ IMAGE_CMD_sum.jffs2.nfi = " \
 	rm -rf ${IMAGE_ROOTFS}/boot/*; \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS} \
-		--disable-compressor=lzo \
-		--compression-mode=size \
+		--enable-compressor=lzo \
+		--compression-mode=priority \
 		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.jffs2 \
 		${EXTRA_IMAGECMD}; \
 	sumtool \
