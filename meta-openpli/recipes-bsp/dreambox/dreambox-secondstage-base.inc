@@ -4,30 +4,33 @@ LICENSE = "CLOSED"
 PROVIDES += "virtual/bootloader"
 RPROVIDES_${PN} += "dreambox-secondstage"
 PRIORITY = "required"
-INC_PR = "r14"
+INC_PR = "r15"
 
 do_install() {
-        install -d ${D}${datadir}/dreambox-secondstage
-        install -m 0644 secondstage-${MACHINE}-${PV}.bin ${D}${datadir}/dreambox-secondstage/secondstage-${MACHINE}.bin
+	install -d ${D}/tmp
+	buildimage --arch ${MACHINE} --raw ${EXTRA_BUILDCMD} \
+	--erase-block-size ${DREAMBOX_ERASE_BLOCK_SIZE} \
+	--flash-size ${DREAMBOX_FLASH_SIZE} \
+	--sector-size ${DREAMBOX_SECTOR_SIZE} \
+	--boot-partition=${DREAMBOX_PART0_SIZE}:secondstage-${MACHINE}-${PV}.bin \
+	> ${D}/tmp/secondstage-${MACHINE}.bin
 }
 
 PACKAGES = "${PN} ${PN}-bin"
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-RDEPENDS_${PN} = "mtd-utils dreambox-buildimage"
+DEPENDS = "dreambox-buildimage-native"
+RDEPENDS_${PN} = "mtd-utils"
 
-FILES_${PN} = "${datadir}/dreambox-secondstage/secondstage-${MACHINE}.bin"
+FILES_${PN} = "/tmp/secondstage-${MACHINE}.bin"
 
 pkg_postinst_${PN}() {
-if [ -z "$D" ] && grep -q '\<${MACHINE}\>' /proc/stb/info/model; then
-	buildimage --arch=${MACHINE} --flash-size=${DREAMBOX_FLASH_SIZE} --raw ${EXTRA_BUILDCMD} \
-		--erase-block-size=`mtd_debug info /dev/mtd1 | grep '^mtd\.erasesize' | awk '{print $3}'` \
-		--sector-size=`mtd_debug info /dev/mtd1 | grep '^mtd\.writesize' | awk '{print $3}'` \
-		--boot-partition=${DREAMBOX_PART0_SIZE}:${datadir}/${PN}/secondstage-${MACHINE}.bin \
-		> /var/tmp/secondstage.nand
-	mtd_debug erase /dev/mtd1 0 `mtd_debug info /dev/mtd1 | grep '^mtd\.size' | awk '{print $3}'`
-	nandwrite -m -n -o /dev/mtd1 /var/tmp/secondstage.nand
-	sync
-fi
+	if [ -z "$D" ] && grep -q '\<${MACHINE}\>' /proc/stb/info/model; then
+		if [ -f /tmp/secondstage-${MACHINE}.bin ]; then
+			flash_erase /dev/mtd1 0 0
+			nandwrite -m -n -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin
+			rm /tmp/secondstage-${MACHINE}.bin
+		fi
+	fi
 }
