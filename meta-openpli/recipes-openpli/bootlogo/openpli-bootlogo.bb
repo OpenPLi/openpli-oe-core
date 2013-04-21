@@ -69,7 +69,7 @@ pkg_preinst_${PN}_dreambox() {
 		then
 			mount -o remount,rw,compr=none /boot
 		else
-			mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
+			mount -t jffs2 -o rw,compr=none mtd:boot /boot
 		fi
 	fi
 }
@@ -88,7 +88,7 @@ pkg_prerm_${PN}_dreambox() {
 		then
 			mount -o remount,rw,compr=none /boot
 		else
-			mount -t jffs2 -o rw,compr=none mtd:'boot partition' /boot
+			mount -t jffs2 -o rw,compr=none mtd:boot /boot
 		fi
 	fi
 }

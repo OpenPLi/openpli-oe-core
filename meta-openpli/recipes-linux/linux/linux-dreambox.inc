@@ -1,6 +1,6 @@
 require linux.inc
 
-INC_PR = "14"
+INC_PR = "15"
 
 PACKAGES_DYNAMIC = "kernel-*"
 
@@ -62,7 +62,7 @@ pkg_preinst_kernel-image() {
 		then
 			mount -o remount,rw,compr=none /${KERNEL_IMAGEDEST}
 		else
-			mount -t jffs2 -o rw,compr=none mtd:'boot partition' /${KERNEL_IMAGEDEST}
+			mount -t jffs2 -o rw,compr=none mtd:boot /${KERNEL_IMAGEDEST}
 		fi
 	fi
 }
@@ -73,7 +73,7 @@ pkg_prerm_kernel-image() {
 		then
 			mount -o remount,rw,compr=none /${KERNEL_IMAGEDEST}
 		else
-			mount -t jffs2 -o rw,compr=none mtd:'boot partition' /${KERNEL_IMAGEDEST}
+			mount -t jffs2 -o rw,compr=none mtd:boot /${KERNEL_IMAGEDEST}
 		fi
 	fi
 }
