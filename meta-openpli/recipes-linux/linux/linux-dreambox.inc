@@ -82,7 +82,7 @@ pkg_postinst_kernel-image() {
                 if grep -q '\<root=/dev/mtdblock3\>' /proc/cmdline && grep -q '\<root=ubi0:rootfs\>' /boot/autoexec.bat; then
                         sed -ie 's!${CMDLINE_UBI}!${CMDLINE_JFFS2}!' /boot/autoexec.bat;
                 fi
-                mount -o remount,ro /${KERNEL_IMAGEDEST};
+                umount /${KERNEL_IMAGEDEST};
         fi
 }
 pkg_postrm_kernel-image() {
