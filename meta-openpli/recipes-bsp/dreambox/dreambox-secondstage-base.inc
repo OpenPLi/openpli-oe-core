@@ -14,6 +14,7 @@ do_install() {
 	--sector-size ${DREAMBOX_SECTOR_SIZE} \
 	--boot-partition=${DREAMBOX_PART0_SIZE}:secondstage-${MACHINE}-${PV}.bin \
 	> ${D}/tmp/secondstage-${MACHINE}.bin
+	install -d ${DEPLOY_DIR_IMAGE}
 	install -m 0644 secondstage-${MACHINE}-${PV}.bin ${DEPLOY_DIR_IMAGE}/secondstage-${MACHINE}.bin
 }
 
