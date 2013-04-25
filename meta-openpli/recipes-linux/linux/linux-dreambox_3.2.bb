@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.38"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.39"
 
 PATCHREV = "4e0356d04e89df800361b9252f990716f5523c6e"
 PATCHLEVEL = "41"
@@ -23,6 +23,8 @@ SRC_URI = " \
 			file://0005-block2mtd-add-possibility-to-remove-block2mtd-device.patch \
 			file://0006-mtd-block2mtd-fix-recursive-call-of-mtd_writev.patch \
 			file://0007-mtd-block2mtd-throttle-writes-by-calling-balance_dir.patch \
+			file://0001-brmcnand_base-disable-flash-BBT-on-64MB-nand.patch \
+			file://0002-ubifs-add-config-option-to-use-zlib-as-default-compr.patch \
 			file://em28xx_fix_terratec_entries.patch \
 			file://em28xx_add_terratec_h5_rev3.patch \
 			file://fix-dvb-siano-sms-order.patch \
