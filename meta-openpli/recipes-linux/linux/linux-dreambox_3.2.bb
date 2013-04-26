@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.39"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.40"
 
 PATCHREV = "4e0356d04e89df800361b9252f990716f5523c6e"
 PATCHLEVEL = "41"
@@ -31,6 +31,7 @@ SRC_URI = " \
 			file://dvb-usb-af9035.patch \
 			file://dvb-usb-a867.patch \
 			file://dvb-usb-rtl2832.patch \
+			file://dvb_usb_disable_rc_polling.patch \
 			file://defconfig \
 "
 
