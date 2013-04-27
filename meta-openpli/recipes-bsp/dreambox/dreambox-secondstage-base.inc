@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 PROVIDES += "virtual/bootloader"
 RPROVIDES_${PN} += "dreambox-secondstage"
 PRIORITY = "required"
-INC_PR = "r16"
+INC_PR = "r17"
 
 do_install() {
 	install -d ${D}/tmp
@@ -23,15 +23,15 @@ PACKAGES = "${PN} ${PN}-bin"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 DEPENDS = "dreambox-buildimage-native"
-RDEPENDS_${PN} = "mtd-utils"
 
 FILES_${PN} = "/tmp/secondstage-${MACHINE}.bin"
 
 pkg_postinst_${PN}() {
 	if [ -z "$D" ] && grep -q '\<${MACHINE}\>' /proc/stb/info/model; then
 		if [ -f /tmp/secondstage-${MACHINE}.bin ]; then
-			flash_erase /dev/mtd1 0 0
-			nandwrite -m -n -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin
+			# first try mtd-utils, and fallback to busybox applets
+			flash_erase /dev/mtd1 0 0 2>/dev/null || flash_eraseall /dev/mtd1
+			nandwrite -m -n -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin 2>/dev/null || nandwrite -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin
 			rm /tmp/secondstage-${MACHINE}.bin
 		fi
 	fi
