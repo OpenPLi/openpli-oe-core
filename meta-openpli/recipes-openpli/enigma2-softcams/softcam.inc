@@ -25,7 +25,7 @@ CAMSTOP  ?= "exec start-stop-daemon -K -R 2 -x /usr/bin/${CAMNAME}"
 
 # Generate a simplistic standard init script
 # (sorry for the sleep 1, but start-stop-daemon -R does not work as advertised)
-do_compile () {
+do_compile_append () {
 	if [ ! -f init.${CAMNAME} ]
 	then
 		cat > init.${CAMNAME} << EOF
