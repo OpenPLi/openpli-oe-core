@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 PROVIDES += "virtual/bootloader"
 RPROVIDES_${PN} += "dreambox-secondstage"
 PRIORITY = "required"
-INC_PR = "r17"
+INC_PR = "r18"
 
 do_install() {
 	install -d ${D}/tmp
@@ -23,6 +23,9 @@ PACKAGES = "${PN} ${PN}-bin"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 DEPENDS = "dreambox-buildimage-native"
+
+# DM8000 needs mtd-utils nandwrite for the secondstage update, 7405 nand driver works fine with busybox nandwrite
+RDEPENDS_${PN}_dm8000 = "mtd-utils"
 
 FILES_${PN} = "/tmp/secondstage-${MACHINE}.bin"
 
