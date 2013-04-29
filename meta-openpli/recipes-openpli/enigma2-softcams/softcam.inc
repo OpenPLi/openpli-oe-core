@@ -68,13 +68,13 @@ do_install_append () {
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
 pkg_postinst_${PN}_append () {
-	if [ ! -e ${CAMLINK} ] || [ "$D/etc/init.d/softcam.None" == `readlink -f $D${CAMLINK}` ]
+	if [ ! -e "${CAMLINK}" ] || [ "/etc/init.d/softcam.None" == "`readlink -f ${CAMLINK}`" ]
 	then
-		rm -f $D${CAMLINK}
-		ln -s softcam.${CAMNAME} $D${CAMLINK}
+		rm -f "${CAMLINK}"
+		ln -s "softcam.${CAMNAME}" "${CAMLINK}"
 		echo "Switching default softcam to ${CAMNAME}"
 	fi
-	if [ "${CAMPATH}" == `readlink -f ${CAMLINK}` ]
+	if [ "${CAMPATH}" == "`readlink -f ${CAMLINK}`" ]
 	then
 		echo "Softcam is selected as default, (re)starting ${CAMNAME}"
 		${CAMPATH} restart
@@ -84,12 +84,11 @@ pkg_postinst_${PN}_append () {
 # Stop this cam (if running), and move softlink to None if we're the current cam
 pkg_prerm_${PN}_prepend () {
 	${CAMPATH} stop
-	OLDLINK=`readlink -f ${CAMLINK}`
+	OLDLINK="`readlink -f ${CAMLINK}`"
 	if [ "${OLDLINK}" == "${CAMPATH}" ]
 	then
 		echo "${CAMNAME} was selected, now selecting None as softcam"
-		rm -f ${CAMLINK}
-		ln -s softcam.None ${CAMLINK}
+		rm -f "${CAMLINK}"
+		ln -s "softcam.None" "${CAMLINK}"
 	fi
 }
-
