@@ -28,6 +28,7 @@ RDEPENDS_${PN} = " \
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
 	gst-plugin-subsink \
+	glib-networking \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
@@ -147,7 +148,7 @@ inherit gitpkgv
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r46"
+PR = "r47"
 
 ENIGMA2_BRANCH ?= "master"
 SRC_URI = "git://git.code.sf.net/p/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
