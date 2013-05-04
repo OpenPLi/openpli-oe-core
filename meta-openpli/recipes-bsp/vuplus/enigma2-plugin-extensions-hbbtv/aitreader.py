@@ -41,9 +41,15 @@ class eAITSectionReader:
 		return self.mAppList
 
 	def doOpen(self):
-		document = os.popen(self.mCommand).read()
+		document = ""
+		try:	document = os.popen(self.mCommand).read()
+		except Exception, ErrMsg:
+			print ErrMsg
+			return False
 		if len(document) == 0:
 			return False
+		document = document.decode("cp1252").encode("utf-8")
+		#print document
 		self.mDocument = xml.dom.minidom.parseString(document)
 		return True
 
