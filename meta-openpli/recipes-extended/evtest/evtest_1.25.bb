@@ -19,7 +19,7 @@ do_install () {
         install -m 0755 ${WORKDIR}/${PN}-${PV}/evtest ${D}${bindir}/evtest
 }
 
-FILES = "${bindir}/evtest"
+FILES_${PN} = "${bindir}/evtest"
 
 INHIBIT_AUTO_STAGE = "1"
 

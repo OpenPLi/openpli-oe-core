@@ -3,28 +3,28 @@ require softcam.inc
 inherit gitpkgv
 inherit cmake
 
-DESCRIPTION			= "OScam ${PV} Open Source Softcam"
-LICENSE				= "GPLv3"
-LIC_FILES_CHKSUM	= "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
+DESCRIPTION = "OScam ${PV} Open Source Softcam"
+LICENSE = "GPLv3"
+LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-BRANCH				= "master"
-SRCREV				= "99553b60dacce7d245fc9f46ed31cf42d68dd161"
-PV					= "svn8631"
-PKGV				= "svn8631"
-SRC_URI				= "git://git.cuci.nl/oscam;protocol=git;branch=${BRANCH};tag=${SRCREV}"
-PR					= "r0"
+BRANCH = "master"
+SRCREV = "99553b60dacce7d245fc9f46ed31cf42d68dd161"
+PV = "svn8631"
+PKGV = "svn8631"
+SRC_URI = "git://git.cuci.nl/oscam;protocol=git;branch=${BRANCH};tag=${SRCREV}"
+PR = "r0"
 
-DEPENDS				= "libusb openssl"
-RCONFLICTS_${PN} 	= "oscam oscam-stable oscam-unstable oscam-experimental oscam-util-list-smargo"
-RCONFLICTS_${PN}	+= "enigma2-plugin-softcams-oscam-cs"
-RCONFLICTS_${PN}	+= "enigma2-plugin-softcams-oscam-stable-cs enigma2-plugin-softcams-oscam-unstable-cs enigma2-plugin-softcams-oscam-experimental-cs"
-RCONFLICTS_${PN}	+= "enigma2-plugin-softcams-oscam-stable    enigma2-plugin-softcams-oscam-unstable    enigma2-plugin-softcams-oscam-experimental"
-RREPLACES			= "${RCONFLICTS_${PN}}"
+DEPENDS = "libusb openssl"
+RCONFLICTS_${PN} = "oscam oscam-stable oscam-unstable oscam-experimental oscam-util-list-smargo"
+RCONFLICTS_${PN} += "enigma2-plugin-softcams-oscam-cs"
+RCONFLICTS_${PN} += "enigma2-plugin-softcams-oscam-stable-cs enigma2-plugin-softcams-oscam-unstable-cs enigma2-plugin-softcams-oscam-experimental-cs"
+RCONFLICTS_${PN} += "enigma2-plugin-softcams-oscam-stable    enigma2-plugin-softcams-oscam-unstable    enigma2-plugin-softcams-oscam-experimental"
+RREPLACES_${PN} = "${RCONFLICTS_${PN}}"
 
-S					= "${WORKDIR}/git"
-CAMNAME				= "oscam"
-CAMSTART			= "/usr/bin/oscam --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
-CAMSTOP				= "kill \`cat /tmp/oscam.pid\` 2> /dev/null"
+S = "${WORKDIR}/git"
+CAMNAME = "oscam"
+CAMSTART = "/usr/bin/oscam --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
+CAMSTOP = "kill \`cat /tmp/oscam.pid\` 2> /dev/null"
 
 SRC_URI += " \
 	file://oscam.conf \
