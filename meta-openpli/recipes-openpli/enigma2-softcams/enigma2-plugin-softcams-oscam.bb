@@ -19,7 +19,7 @@ RCONFLICTS_${PN} = "oscam oscam-stable oscam-unstable oscam-experimental oscam-u
 RCONFLICTS_${PN} += "enigma2-plugin-softcams-oscam-cs"
 RCONFLICTS_${PN} += "enigma2-plugin-softcams-oscam-stable-cs enigma2-plugin-softcams-oscam-unstable-cs enigma2-plugin-softcams-oscam-experimental-cs"
 RCONFLICTS_${PN} += "enigma2-plugin-softcams-oscam-stable    enigma2-plugin-softcams-oscam-unstable    enigma2-plugin-softcams-oscam-experimental"
-RREPLACES = "${RCONFLICTS_${PN}}"
+RREPLACES_${PN} = "${RCONFLICTS_${PN}}"
 
 S = "${WORKDIR}/git"
 CAMNAME = "oscam"
