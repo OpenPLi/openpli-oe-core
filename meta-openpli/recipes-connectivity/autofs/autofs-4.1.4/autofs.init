@@ -480,10 +480,49 @@ stop() {
 	return $RETVAL
 }
 
+stop_autofs() {
+	echo -n 'Stopping automounter:'
 
+	umount_loopback
 
-case "$1" in
-start)
+	any=0
+	for file in `ls /var/run/autofs/*.pid 2>/dev/null`
+	do
+		if [ -e "$file" ]
+		then
+			any=1
+			pid=`head -n 1 $file`
+			mnt=`ps -wwo 'cmd=' $pid | sed -e \
+			  's,.* --pid-file=/var/run/autofs/\([^ ]*\)\.pid.*,\1,; s,_,/,g'`
+			dname=`basename $DAEMON`
+
+			start-stop-daemon --stop --quiet --pidfile $file --name $dname
+
+			ret=$?
+			case $ret in
+			0)
+#				echo -n " $mnt"
+				rm -f $file
+				;;
+			1)
+				echo -n -e "\n No process for automount $mnt"
+				rm -f $file
+				;;
+			2)
+				echo -n -e "\n  Couldn't stop automount for $mnt"
+				;;
+			*)
+				echo -n -e \
+				"\n Strange start-stop-daemon exit status: $ret"
+				;;
+			esac
+		fi
+	done
+
+	echo " done."
+}
+
+start_autofs() {
 	echo -n 'Starting automounter:'
 
 	# make sure autofs4 is loaded
@@ -530,49 +569,9 @@ start)
 	done
 
 	echo " done."
-	;;
-stop)
-	echo -n 'Stopping automounter:'
+}
 
-	umount_loopback
-	
-	any=0
-	for file in `ls /var/run/autofs/*.pid 2>/dev/null`
-	do
-		if [ -e "$file" ]
-		then
-			any=1
-			pid=`head -n 1 $file`
-			mnt=`ps -wwo 'cmd=' $pid | sed -e \
-			  's,.* --pid-file=/var/run/autofs/\([^ ]*\)\.pid.*,\1,; s,_,/,g'`
-			dname=`basename $DAEMON`
-
-			start-stop-daemon --stop --quiet --pidfile $file --name $dname
-
-			ret=$?
-			case $ret in
-			0)
-#				echo -n " $mnt"
-				rm -f $file
-				;;
-			1)
-				echo -n -e "\n No process for automount $mnt"
-				rm -f $file
-				;;
-			2)
-				echo -n -e "\n  Couldn't stop automount for $mnt"
-				;;
-			*)
-				echo -n -e \
-			 	"\n Strange start-stop-daemon exit status: $ret"
-				;;
-			esac
-		fi
-	done
-
-	echo " done."
-	;;
-reload)
+reload_autofs() {
 	echo "Reloading automounter: checking for changes ... "
 
 	TMP1=`mktemp autofs.XXXXXX`
@@ -624,10 +623,21 @@ reload)
 	done)
 
 	rm -f $TMP1 $TMP2
+}
+
+case "$1" in
+start)
+	start_autofs
+	;;
+stop)
+	stop_autofs
+	;;
+reload)
+	reload_autofs
 	;;
 force-reload|restart)
-	stop
-	start
+	stop_autofs
+	start_autofs
 	;;
 status)
 	status
@@ -639,7 +649,13 @@ active)
     	alive
 	;;
 *)
-	echo "Usage: $initdir/autofs {start|stop|restart|reload|status|getmounts|active}" >&2
+	if ! ps -A | grep -q $prog
+	then
+	    start_autofs
+	else
+	    echo "Usage: $initdir/autofs {start|stop|restart|reload|status|getmounts|active}" >&2
+	    reload_autofs > /dev/null
+	fi
 	exit 1
 	;;
 esac

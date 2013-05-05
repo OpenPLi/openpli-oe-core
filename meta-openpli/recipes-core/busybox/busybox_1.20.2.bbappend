@@ -1,4 +1,4 @@
-PRINC = "27"
+PRINC = "28"
 
 SRC_URI_IGNORED = " \
 			file://0001-ifupdown-support-post-up-pre-down-hooks.patch \
@@ -12,6 +12,7 @@ SRC_URI_IGNORED += " \
 			file://0001-work-around-linux-ext2_fs.h-breakage.patch \
 			file://0002-Create-and-use-our-own-copy-of-linux-ext2_fs.h.patch \
 			file://0003-Drop-include-bb_linux_ext2_fs.h-use-existing-e2fspro.patch \
+			file://0001-nandwrite-add-OOB-support.patch \
 			"
 
 SRC_URI += " \

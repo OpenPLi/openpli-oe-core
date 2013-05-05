@@ -5,7 +5,7 @@ LICENSE = "CLOSED"
 
 DEPENDS = "tslib mpfr gmp"
 
-SRC_DATE = "20121128_0"
+SRC_DATE = "20130425_pli0"
 SRC_URI = "http://code.vuplus.com/download/build.fc3abf29fb03f797e78f907928125638/embedded/opera-sdk-build-package/opera-hbbtv_${SRC_DATE}.tar.gz"
 
 PR = "r3_${SRC_DATE}"
@@ -40,6 +40,9 @@ do_install() {
 	cp -avR ${S}/plugin/* ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 }
 
+do_package_qa() {
+}
+
 INHIBIT_PACKAGE_STRIP = "1"
 
 FILES_${PN} = "/usr/lib /usr/local /usr/share /usr/bin /etc "
@@ -47,5 +50,5 @@ PACKAGES = "${PN}"
 PROVIDES="${PACKAGES}"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-SRC_URI[md5sum] = "5a8bf37321bcb2c8b23b4538d3862e87"
-SRC_URI[sha256sum] = "4e3a41188b81a871d7f0bf559d1cd0efc5f2faded9d37ca81c4e28e0675b5178"
+SRC_URI[md5sum] = "2e16afc3db22f80cf99de3bfb891fa06"
+SRC_URI[sha256sum] = "41bbf4cda0b19ca7c79cb06ec4ab8cafee62fd9944d17e71978d4c9e6d72d264"
