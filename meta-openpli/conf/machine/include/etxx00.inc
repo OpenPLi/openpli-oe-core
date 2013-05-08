@@ -15,7 +15,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	ntfs-3g \
 	"
 
-DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dtsdownmix"
+DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dts"
 
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
@@ -54,4 +54,4 @@ MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff textlcd osdposition hdmice
 
 require conf/machine/include/tune-mips32.inc
 
-MACHINE_KERNEL_PR = "r3"
+MACHINE_KERNEL_PR = "r5"
