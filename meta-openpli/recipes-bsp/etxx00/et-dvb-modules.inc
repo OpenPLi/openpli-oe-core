@@ -14,6 +14,8 @@ INHIBIT_PACKAGE_STRIP = "1"
 
 inherit module
 
+FILES_${PN} += "${sysconfdir}/modules-load.d/_${MACHINE}.conf"
+
 do_compile() {
 }
 
