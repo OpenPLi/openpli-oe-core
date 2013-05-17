@@ -24,7 +24,6 @@ GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-xp"
 
-PREFERRED_VERSION_linux-xp = "3.5.1"
 PREFERRED_VERSION_linux-libc-headers = "3.3"
 
 KERNEL_IMAGETYPE = "vmlinux"
@@ -56,4 +55,4 @@ MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff textlcd osdposition hdmice
 
 require conf/machine/include/tune-mips32.inc
 
-MACHINE_KERNEL_PR = "r0"
+MACHINE_KERNEL_PR = "r1"
