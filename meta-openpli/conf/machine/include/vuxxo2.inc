@@ -20,7 +20,7 @@ DEFAULTTUNE = "mips32el"
 
 GLIBC_EXTRA_OECONF = "--with-tls"
 
-PREFERRED_VERSION_linux-${MACHINE} = "3.3.6"
+PREFERRED_VERSION_linux-${MACHINE} = "3.3.8"
 PREFERRED_VERSION_linux-libc-headers = "3.3"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-${MACHINE}"
@@ -57,6 +57,6 @@ IMAGE_CMD_ubi_append = " \
 
 TARGET_FPU = "hard"
 
-MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff osdposition hdmicec"
+MACHINE_FEATURES += "alsa usbhost wifi 3dtv switchoff osdposition hdmicec fan"
 
 require conf/machine/include/tune-mips32.inc
