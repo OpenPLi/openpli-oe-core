@@ -1,4 +1,4 @@
-PRINC = "4"
+PRINC = "5"
 
 python do_package_prepend () {
 	boxtypes = [
@@ -13,7 +13,7 @@ python do_package_prepend () {
 		('xp1000', 'unknown.jpg', 'xp_rc14_normal.png'),
 		('vuduo', 'duo.jpg', 'vu_normal.png'),
 		('vusolo', 'solo.jpg', 'vu_normal.png'),
-		('vusolo2', 'solo2.jpg', 'vu_ultimo.png'),
+		('vusolo2', 'solo2.jpg', 'vu_normal.png'),
 		('vuultimo', 'ultimo.jpg', 'vu_ultimo.png'),
 		('vuuno', 'uno.jpg', 'vu_normal.png'),
 	]
