@@ -55,7 +55,7 @@ KERNEL_OUTPUT = "vmlinux"
 KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "/tmp"
 
-FILES_kernel-image = "/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
+FILES_kernel-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
 
 
 
@@ -66,8 +66,8 @@ do_configure_prepend() {
 
 kernel_do_install_append() {
         install -d ${D}/${KERNEL_IMAGEDEST}
-        install -m 0755 ${KERNEL_OUTPUT} ${D}/${KERNEL_IMAGEDEST}
-        gzip ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
+        install -m 0755 ${KERNEL_OUTPUT} ${D}${KERNEL_IMAGEDEST}
+        gzip ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
 }
 
 pkg_postinst_kernel-image () {

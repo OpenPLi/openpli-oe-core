@@ -19,6 +19,8 @@ inherit module
 do_compile() {
 }
 
+FILES_${PN} += "${sysconfdir}/modules-load.d/_vuplus.conf"
+
 do_install() {
 	install -d ${D}/lib/modules/${KV}${KV_EXTRA}/extra
 	for f in *.ko; do
