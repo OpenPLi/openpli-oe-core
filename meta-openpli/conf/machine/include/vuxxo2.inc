@@ -14,7 +14,6 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 EXTRA_IMAGEDEPENDS += "\
 	vuplus-opera-browser-plugin \
-	vuplus-transcodingsetup-plugin \
 	"
 
 TARGET_ARCH = "mipsel"
