@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343 \
 
 DEPENDS += "gst-plugins-base cdparanoia cairo jpeg libpng zlib libid3tag flac speex libsoup-2.4"
 
-PR = "r2"
+PR = "r3"
 GIT_PV = ""
 
 SRCREV = "7768342230450559509e3e593b2ea33e81ea0ca4"
@@ -18,6 +18,7 @@ SRC_URI += " \
 		file://orc.m4-fix-location-of-orcc-when-cross-compiling.patch \
 		file://0001-accept-substream-syncwords-DTS-HD.patch \
 		file://0002-gstflvdemux-max-width-height.patch \
+		file://0003-qtdemux-don-t-assert-if-upstream-size-is-not-availab.patch \
 		${@base_contains('MACHINE_FEATURES', 'legacykernel', 'file://v4l-compile-fix-old-kernel.patch', '', d)} \
 "
 
