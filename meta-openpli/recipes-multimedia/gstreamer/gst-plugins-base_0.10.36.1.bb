@@ -10,7 +10,7 @@ DEPENDS += "${@base_contains('DISTRO_FEATURES', 'x11', 'virtual/libx11 libxv', '
 DEPENDS += "alsa-lib freetype liboil libogg libvorbis libtheora avahi util-linux tremor cdparanoia orc orc-native"
 DEPENDS += "gstreamer"
 
-PR = "r1"
+PR = "r2"
 GIT_PV = ""
 
 SRCREV = "bdb33163478fdf95938fbdca7eabad3ea920a277"
@@ -64,6 +64,8 @@ addtask common_update after do_unpack before do_patch
 do_configure_prepend() {
 	# This m4 file contains nastiness which conflicts with libtool 2.2.2
 	rm -f ${S}/m4/lib-link.m4
+	# manually provide remove-potcdate.sin, while our intltoolize does not install it
+	cp ${STAGING_DATADIR_NATIVE}/gettext/po/remove-potcdate.sin ${S}/po/
 }
 
 FILES_${PN} += "${datadir}/${BPN}"

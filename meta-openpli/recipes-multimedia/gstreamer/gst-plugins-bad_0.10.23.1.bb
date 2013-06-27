@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3 \
 
 DEPENDS += "gst-plugins-base libmusicbrainz tremor curl libmms librtmp"
 
-PR = "r1"
+PR = "r2"
 GIT_PV = ""
 
 SRCREV = "fb0d8700e71c4a6569ba023d16201087aec119fd"
@@ -65,4 +65,6 @@ addtask common_update after do_unpack before do_patch
 do_configure_prepend() {
 	# This m4 file contains nastiness which conflicts with libtool 2.2.2
 	rm ${S}/m4/lib-link.m4 || true
+	# manually provide remove-potcdate.sin, while our intltoolize does not install it
+	cp ${STAGING_DATADIR_NATIVE}/gettext/po/remove-potcdate.sin ${S}/po/
 }
