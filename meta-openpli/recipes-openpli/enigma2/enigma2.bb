@@ -96,6 +96,7 @@ GST_BAD_RDEPS = " \
 	gst-plugins-bad-rtmp \
 	gst-plugins-bad-vcdsrc \
 	gst-plugins-bad-fragmented \
+	gst-plugins-bad-faad \
 	"
 
 GST_UGLY_RDEPS = " \
@@ -148,7 +149,7 @@ inherit gitpkgv pythonnative
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r47"
+PR = "r49"
 
 ENIGMA2_BRANCH ?= "master"
 SRC_URI = "git://git.code.sf.net/p/openpli/enigma2;protocol=git;branch=${ENIGMA2_BRANCH}"
