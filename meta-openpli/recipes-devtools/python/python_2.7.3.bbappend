@@ -3,6 +3,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 PRINC = "5"
 
 SRC_URI += " \
+			file://04-default-is-optimized.patch \
+			file://99-ignore-optimization-flag.patch \
 			file://some_configure_fixes.patch;striplevel=0 \
 			file://fix_pthread_site.patch;striplevel=0 \
 			file://no-ldconfig.patch \
