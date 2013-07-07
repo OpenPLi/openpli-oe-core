@@ -84,5 +84,6 @@ do_install_append() {
 	install -D -m 644 ${WORKDIR}/volatiles.03_samba ${D}${sysconfdir}/default/volatiles/volatiles.03_samba
 	install -d ${D}/var/log/samba
 	install -d ${D}/var/spool/samba
+	rmdir ${D}/var/run
 }
 
