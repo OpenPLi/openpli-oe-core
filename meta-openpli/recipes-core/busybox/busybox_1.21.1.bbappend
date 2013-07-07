@@ -51,9 +51,3 @@ do_install_append() {
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${P}:"
 
-# finally, fix the mdev starting order
-# mdev should have the same precedence as udev (03)
-# especially since modutils runs at 04
-
-INITSCRIPT_PARAMS_${PN}-mdev = "start 03 S ."
-
