@@ -20,6 +20,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-2.0.tar.bz2
 	file://brcm_mtd_mac.patch;patch=1;pnum=1 \
 	file://dvb_core_5.5.patch;patch=1;pnum=1 \
 	file://bmips-no-array-bounds.patch;patch=1;pnum=1 \
+	file://mips-refactor-clearpage-and-copypage.patch \
 	file://dvb-usb-af9035.patch \
 	file://tda18218-7mhz-lopass.patch \
 	file://dvb-usb-a867.patch \

@@ -11,6 +11,7 @@ SRC_URI = " \
 			file://clear_sublevel.patch \
 			file://fadvise_dontneed_change.patch \
 			file://fix-proc-cputype.patch \
+			file://mips-refactor-clearpage-and-copypage.patch \
 			file://rtl8712-backport-b.patch \
 			file://rtl8712-backport-c.patch \
 			file://rtl8712-backport-d.patch \
