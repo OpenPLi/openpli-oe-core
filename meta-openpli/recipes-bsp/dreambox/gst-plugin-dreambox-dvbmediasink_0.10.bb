@@ -14,7 +14,6 @@ SRC_URI += " \
 	file://getdecodertime.patch \
 	file://0001-Handle-DTS-Passthrough-and-Downmix.patch \
 	file://0002-Set-only-by-hardware-supported-audio-mpeg-4-profile.patch \
-	file://0003-Fix-ac3-audio-playback-if-aac-track-is-present.patch \
 "
 
 FILES_${PN} = "${libdir}/gstreamer-0.10/*.so"
