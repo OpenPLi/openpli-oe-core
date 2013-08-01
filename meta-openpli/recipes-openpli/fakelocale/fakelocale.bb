@@ -3,9 +3,9 @@ LICENSE = "CLOSED"
 SECTION = "base"
 PRIORITY = "required"
 MAINTAINER = "OpenPli team"
-PR = "r4"
+PR = "r5"
 
-SRC_URI = "file://lctimelocales.tar.gz file://locale.alias"
+SRC_URI = "file://lctimelocales.tar.gz file://locale.alias file://SYS_LC_MESSAGES"
 
 S = "${WORKDIR}/locales"
 
@@ -32,6 +32,13 @@ do_install() {
 
 	install -d ${D}${LOCALEDIR}
 	cp -rp ${S}/* ${D}/${LOCALEDIR}
+
+	install -d ${D}${LOCALEDIR}/fake/LC_MESSAGES
+	install ${WORKDIR}/SYS_LC_MESSAGES ${D}${LOCALEDIR}/fake/LC_MESSAGES/
+
+	for lang in ${LANGUAGES}; do
+		ln -s ../fake/LC_MESSAGES ${D}${LOCALEDIR}/${lang}/LC_MESSAGES
+	done
 }
 
 FILES_${PN} = "${LOCALEDIR} ${LOCALEDIR2}"
