@@ -1,0 +1,20 @@
+diff --git a/lib/python/Plugins/Extensions/DLNABrowser/plugin.py b/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
+index 884b5a0..3ffdfa7 100644
+--- a/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
++++ b/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
+@@ -903,6 +903,13 @@ class DLNADeviceBrowser(Screen):
+ 
+ def main(session, **kwargs):
+ 	session.open(DLNADeviceBrowser)
+-                                                           
++                                   
++def autostart(reason, **kwargs):
++	ps_str = os.popen('cat /etc/mtab | grep djmount').read()
++	if ps_str.strip() == '':
++		return
++	os.system('/etc/init.d/djmount stop')
++
+ def Plugins(**kwargs):
+-	return PluginDescriptor(name=_("DLNA/uPnP Browser"), description="This is dlna/upnp client using djmount.", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
++	return [PluginDescriptor(name=_("DLNA/uPnP Browser"), description="This is dlna/upnp client using djmount.", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main),
++		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc = autostart)]

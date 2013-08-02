@@ -1,0 +1,13 @@
+diff --git a/lib/python/Plugins/SystemPlugins/WOLSetup/plugin.py b/lib/python/Plugins/SystemPlugins/WOLSetup/plugin.py
+index bf29218..725ebb8 100644
+--- a/lib/python/Plugins/SystemPlugins/WOLSetup/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/WOLSetup/plugin.py
+@@ -176,7 +176,7 @@ class WOLSetup(ConfigListScreen, Screen):
+ 		else:	print "[WOLSetup] Nomal Deep Standby."
+ 
+ def SessionStartMain(session, **kwargs):
+-	config.misc.DeepStandbyOn.addNotifier(WOLSetup.DeepStandbyNotifierCB, initial_call=False)
++	config.misc.DeepStandby.addNotifier(WOLSetup.DeepStandbyNotifierCB, initial_call=False)
+ 
+ def PluginMain(session, **kwargs):
+ 	session.open(WOLSetup)

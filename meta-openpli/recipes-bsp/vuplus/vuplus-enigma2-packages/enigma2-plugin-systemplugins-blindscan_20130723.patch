@@ -1,0 +1,131 @@
+diff --git a/lib/python/Plugins/SystemPlugins/Blindscan/plugin.py b/lib/python/Plugins/SystemPlugins/Blindscan/plugin.py
+index 013df5b..bd6c340 100644
+--- a/lib/python/Plugins/SystemPlugins/Blindscan/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/Blindscan/plugin.py
+@@ -3,7 +3,6 @@ from Plugins.Plugin import PluginDescriptor
+ from Screens.Screen import Screen
+ from Screens.ServiceScan import ServiceScan
+ from Screens.MessageBox import MessageBox
+-from Screens.DefaultWizard import DefaultWizard
+ 
+ from Components.Label import Label
+ from Components.TuneTest import Tuner
+@@ -14,7 +13,7 @@ from Components.NimManager import nimmanager, getConfigSatlist
+ from Components.config import config, ConfigSubsection, ConfigSelection, ConfigYesNo, ConfigInteger, getConfigListEntry, ConfigSlider, ConfigEnableDisable
+ 
+ from Tools.HardwareInfo import HardwareInfo
+-from Tools.Directories import resolveFilename, SCOPE_DEFAULTPARTITIONMOUNTDIR, SCOPE_DEFAULTDIR, SCOPE_DEFAULTPARTITION
++from Tools.Directories import resolveFilename 
+ 
+ from enigma import eTimer, eDVBFrontendParametersSatellite, eComponentScan, eDVBSatelliteEquipmentControl, eDVBFrontendParametersTerrestrial, eDVBFrontendParametersCable, eConsoleAppContainer, eDVBResourceManager
+ 
+@@ -83,9 +82,39 @@ class Blindscan(ConfigListScreen, Screen):
+ 
+ 		self.i2c_mapping_table = None
+ 		self.makeNimSocket()
+-
+-	def makeNimSocket(self):
+-		self.i2c_mapping_table = {0:2, 1:3, 2:1, 3:0}
++		self.nimSockets = self.ScanNimsocket()
++
++	def ScanNimsocket(self):
++		_nimSocket = {}
++		fp = file('/proc/bus/nim_sockets')
++
++		sNo, sName = -1, ""
++		for line in fp:
++			line = line.strip()
++			if line.startswith('NIM Socket'):
++				sNo = line.split()[2][:-1]
++			elif line.startswith('Name:'):
++				sName = line.split()[3][4:-1]
++			if sNo >= 0 and sName != "":
++				_nimSocket[sNo] = sName
++				sNo   = -1
++				sName = ''
++		fp.close()
++		return _nimSocket
++
++	def makeNimSocket(self, nimname=""):
++		self.i2c_mapping_table = {}
++
++		if nimname == "AVL6222":
++			model = file('/proc/stb/info/vumodel').read().strip()
++			if model == "uno":
++				self.i2c_mapping_table = {0:3, 1:3, 2:1, 3:0}
++			elif model == "duo2":
++				if self.nimSockets['0'] == "AVL6222":
++					self.i2c_mapping_table = {0:2, 1:2, 2:4, 3:4}
++				else:	self.i2c_mapping_table = {0:2, 1:4, 2:4, 3:0}
++			else:	self.i2c_mapping_table = {0:2, 1:4, 2:0, 3:0}
++		else:	self.i2c_mapping_table = {0:2, 1:3, 2:1, 3:0}
+ 
+ 	def getNimSocket(self, slot_number):
+ 		if slot_number < 0 or slot_number > 3:
+@@ -330,6 +359,22 @@ class Blindscan(ConfigListScreen, Screen):
+ 		self.doRun(tmp_list, tmp_pol, tmp_band)
+ 		
+ 	def doRun(self, tmp_list, tmp_pol, tmp_band):
++		def GetCommand(nimIdx):
++			_nimSocket = self.nimSockets
++			try:
++				sName = _nimSocket[str(nimIdx)]
++				sType = _supportNimType[sName]
++				return "vuplus_%(TYPE)sblindscan"%{'TYPE':sType}, sName
++			except: pass
++			return "vuplus_blindscan", ""
++		self.binName,nimName =  GetCommand(self.scan_nims.value)
++		
++		self.makeNimSocket(nimName)
++		if self.binName is None:
++			self.session.open(MessageBox, "Blindscan is not supported in " + nimName + " tuner.", MessageBox.TYPE_ERROR)
++			print nimName + " is not support blindscan."
++			return
++
+ 		self.full_data = ""
+ 		self.total_list=[]
+ 		for x in tmp_list:
+@@ -407,8 +452,9 @@ class Blindscan(ConfigListScreen, Screen):
+ 		if self.getNimSocket(self.feid) < 0:
+ 			print "can't find i2c number!!"
+ 			return
+-
+-		cmd = "vuplus_blindscan %d %d %d %d %d %d %d %d" % (self.blindscan_start_frequency.value/1000000, self.blindscan_stop_frequency.value/1000000, self.blindscan_start_symbol.value/1000000, self.blindscan_stop_symbol.value/1000000, tab_pol[pol], tab_hilow[band], self.feid, self.getNimSocket(self.feid))
++		try:
++			cmd = "%s %d %d %d %d %d %d %d %d" % (self.binName, self.blindscan_start_frequency.value/1000000, self.blindscan_stop_frequency.value/1000000, self.blindscan_start_symbol.value/1000000, self.blindscan_stop_symbol.value/1000000, tab_pol[pol], tab_hilow[band], self.feid, self.getNimSocket(self.feid))
++		except: return
+ 		print "prepared command : [%s]" % (cmd)
+ 		self.blindscan_container = eConsoleAppContainer()
+ 		self.blindscan_container.appClosed.append(self.blindscanContainerClose)
+@@ -453,17 +499,20 @@ class Blindscan(ConfigListScreen, Screen):
+ 						"PILOT_OFF" : parm.Pilot_Off}
+ 					pol = {	"HORIZONTAL" : parm.Polarisation_Horizontal,
+ 						"VERTICAL" : parm.Polarisation_Vertical}
+-					parm.orbital_position = self.orb_position
+-					parm.polarisation = pol[data[1]]
+-					parm.frequency = int(data[2])
+-					parm.symbol_rate = int(data[3])
+-					parm.system = sys[data[4]]
+-					parm.inversion = inv[data[5]]
+-					parm.pilot = pilot[data[6]]
+-					parm.fec = fec[data[7]]
+-					parm.modulation = qam[data[8]]
+-					parm.rolloff = roll[data[9]]
+-					self.tmp_tplist.append(parm)
++					try :
++						parm.orbital_position = self.orb_position
++						parm.polarisation = pol[data[1]]
++						parm.frequency = int(data[2])
++						parm.symbol_rate = int(data[3])
++						parm.system = sys[data[4]]
++						parm.inversion = inv[data[5]]
++						parm.pilot = pilot[data[6]]
++						parm.fec = fec[data[7]]
++						parm.modulation = qam[data[8]]
++						parm.rolloff = roll[data[9]]
++						self.tmp_tplist.append(parm)
++					except:
++						pass
+ 		self.blindscan_session.close(True)
+ 
+ 	def blindscanContainerAvail(self, str):

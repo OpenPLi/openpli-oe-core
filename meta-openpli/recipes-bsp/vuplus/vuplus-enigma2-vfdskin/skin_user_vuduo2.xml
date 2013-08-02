@@ -1,0 +1,202 @@
+<skin>
+	<windowstyle id="1" type="skinned">
+		<color color="#000000" name="Background"/>
+		<color color="#ffffff" name="LabelForeground"/>
+		<color color="#000000" name="ListboxBackground"/>
+		<color color="#ffffff" name="ListboxForeground"/>
+		<color color="#000000" name="ListboxSelectedBackground"/>
+		<color color="#ffffff" name="ListboxSelectedForeground"/>
+		<color color="#000000" name="ListboxMarkedBackground"/>
+		<color color="#ffffff" name="ListboxMarkedForeground"/>
+		<color color="#000000" name="ListboxMarkedAndSelectedBackground"/>
+		<color color="#ffffff" name="ListboxMarkedAndSelectedForeground"/>
+		<color color="#ffffff" name="WindowTitleForeground"/>
+		<color color="#000000" name="WindowTitleBackground"/>
+	</windowstyle>
+	<fonts>
+		<!-- pick a funky name for the font, so we don't conflict  -->
+		<font filename="nmsbd.ttf" name="FdLcD" scale="90"/>
+	</fonts>
+
+	<screen name="InfoBarSummary" position="fill">
+		<widget source="session.CurrentService" render="Label" position="5,10" size="130,20" font="FdLcD;16" halign="center" valign="top" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	 </screen>
+	 <screen name="ChannelSelection_summary" position="fill">
+		<widget source="parent.ServiceEvent" render="Label" position="5,10" size="130,20" font="FdLcD;16" halign="center" valign="top" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	</screen>
+	<screen name="InfoBarMoviePlayerSummary" position="fill">
+		<widget source="session.CurrentService" render="Label" position="5,10" size="130,20" font="FdLcD;20" halign="center" valign="top" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	</screen>
+	<screen name="ChoiceBox_summary" position="fill">
+		<widget source="parent.summary_list" render="Label" position="10,0" size="130,32" font="FdLcD;15" halign="center" valign="top" />
+	</screen>
+	<screen name="MessageBox_summary" position="fill">
+		<widget source="parent.selectedChoice" render="Label" position="5,5" size="130,20" font="FdLcD;20" halign="center" valign="top" />
+	</screen>
+	<screen name="MenuSummary" position="fill">
+		<widget source="parent.menu" render="Label" position="5,10" size="130,20" font="FdLcD;16" halign="center" valign="top">
+			<convert type="StringListSelection" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	</screen>
+	<screen name="SetupSummary" position="fill">
+		<widget source="SetupTitle" render="Label" position="5,10" size="130,20" font="FdLcD;16" halign="center" valign="top" />
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	</screen>
+	<screen name="StandbySummary" position="fill">
+		<widget source="global.CurrentTime" render="Label" position="13,7" size="90,22" font="FdLcD;28" halign="right" valign="center" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="105,5" zPosition="1" size="40,16" font="FdLcD;16" halign="left" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	</screen>
+	<screen name="SimpleSummary" position="fill">
+		<widget source="parent.Title" render="Label" position="5,10" size="130,20" font="FdLcD;16" halign="center" valign="top" />
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/teletext.png" position="5,0" size="8,7">
+                        <convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/crypt.png" position="15,0"  size="8,7">
+                        <convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+                <widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/dolby.png" position="25,0" size="10,7">
+                        <convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+                </widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="vfd_icons/format.png" position="37,0" size="15,7">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+                <widget source="session.RecordState" render="Pixmap" pixmap="vfd_icons/rec.png" position="54,0"  size="12,7">
+			<convert type="ConditionalShowHide" />
+                </widget>
+	</screen>
+	<screen name="MediaPlayerLCDScreen" position="fill">
+		<widget name="text1" position="6,8" size="134,18" font="FdLcD;16"/>
+	</screen>
+	<screen name="WizardSummary" position="fill">
+		<widget source="parent.list" render="Label" position="6,6" size="134,16" font="FdLcD;16" valign="top" halign="left" >
+			<convert type="StringListSelection" />
+		</widget>
+	</screen>
+</skin>

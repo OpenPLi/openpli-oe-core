@@ -1,0 +1,27 @@
+diff --git a/lib/python/Plugins/Extensions/StreamTV/plugin.py b/lib/python/Plugins/Extensions/StreamTV/plugin.py
+index 8e0623b..fbfd2c4 100644
+--- a/lib/python/Plugins/Extensions/StreamTV/plugin.py
++++ b/lib/python/Plugins/Extensions/StreamTV/plugin.py
+@@ -235,8 +235,6 @@ class StreamTVList(Screen):
+ 		self["infomation"] = Label(" ")
+ 		self.updateInfomation()
+ 
+-		self.onLayoutFinish.append(self.layoutFinished)
+-
+ 		self.beforeService  = None
+ 		self.currentService = None
+ 		self.playerStoped   = False
+@@ -244,13 +242,6 @@ class StreamTVList(Screen):
+ 
+ 		self.keyLocked = False
+ 
+-	def layoutFinished(self):
+-		rc = os.popen('ps -ef | grep rtmpdump | grep -v grep').read()
+-		print "a process already running :", rc
+-		if rc is not None:
+-			if rc.strip() != '':
+-				os.system('killall -INT rtmpdump')
+-
+ 	def updateInfomation(self):
+ 		infomation = ''
+ 		try:

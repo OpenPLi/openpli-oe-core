@@ -1,0 +1,187 @@
+diff --git a/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py b/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py
+index e1c914f..fbb0e72 100755
+--- a/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py
++++ b/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py
+@@ -36,24 +36,24 @@ class instandbyOn:
+ 		self.checkStstusTimer.callback.append(self.checkStstus)
+ 		if config.plugins.manualfancontrols.pwmvalue.value == 0:
+ 			self.fanoffmode = 'ON'
+-		if self.fanoffmode == 'ON':
+-			self.checkStatusLoopStart()
+-
+-		config.misc.standbyCounter.addNotifier(self.standbyBegin, initial_call = False)
+-		print "<ManualFancontrol> init :  self.fanoffmode : ", self.fanoffmode
+-		print "<ManualFancontrol> init :  config.plugins.manualfancontrols.pwmvalue.value : ", config.plugins.manualfancontrols.pwmvalue.value
++		if self.check_fan_pwm():
++			if self.fanoffmode == 'ON':
++				self.checkStatusLoopStart()
++			config.misc.standbyCounter.addNotifier(self.standbyBegin, initial_call = False)
++#		print "[ManualFancontrol] init :  self.fanoffmode : ", self.fanoffmode
++#		print "[ManualFancontrol] init :  config.plugins.manualfancontrols.pwmvalue.value : ", config.plugins.manualfancontrols.pwmvalue.value
+ 
+ 	def checkStatusLoopStart(self):
+-		print "<ManualFancontrol> checkStatusLoopStart"
++#		print "[ManualFancontrol] checkStatusLoopStart"
+ 		self.checkStstusTimer.start(int(config.plugins.manualfancontrols.checkperiod.value) * 1000)
+ 
+ 	def checkStatusLoopStop(self):
+-		print "<ManualFancontrol> checkStatusLoopStop"
++#		print "[ManualFancontrol] checkStatusLoopStop"
+ 		self.checkStstusTimer.stop()
+ 
+ 	def checkStstus(self):
+ 		from Screens.Standby import inStandby
+-		print "<ManualFancontrol> checkStstus, fanoffmode : %s, "%self.fanoffmode,"inStandby : ",inStandby and True or False
++#		print "[ManualFancontrol] checkStstus, fanoffmode : %s, "%self.fanoffmode,"inStandby : ",inStandby and True or False
+ 		if self.fanoffmode is 'ON' : # pwmvalue is '0'
+ 			if self.isRecording() or self.isHDDActive():
+ 				self.setPWM(self.minimum_pwm)
+@@ -64,11 +64,13 @@ class instandbyOn:
+ 				self.setPWM(config.plugins.manualfancontrols.pwmvalue.value)
+ 			else:
+ 				self.setPWM(0)
+-		elif self.getPWM() != config.plugins.manualfancontrols.pwmvalue.value : # normal mode
+-			self.setPWM(config.plugins.manualfancontrols.pwmvalue.value)
++		else:
++			pwm = self.getPWM()
++			if pwm is not None and pwm != config.plugins.manualfancontrols.pwmvalue.value : # normal mode
++				self.setPWM(config.plugins.manualfancontrols.pwmvalue.value)
+ 
+ 	def standbyBegin(self, configElement):
+-		print "<ManualFancontrol> Standby Begin"
++#		print "[ManualFancontrol] Standby Begin"
+ 		if config.plugins.manualfancontrols.standbymode.value == "yes" and self.fanoffmode is "OFF":
+ 			from Screens.Standby import inStandby
+ 			inStandby.onClose.append(self.StandbyEnd)
+@@ -77,19 +79,19 @@ class instandbyOn:
+ 			self.checkStstus()
+ 
+ 	def StandbyEnd(self):
+-		print "<ManualFancontrol> Standby End"
++#		print "[ManualFancontrol] Standby End"
+ 		if self.fanoffmode is "OFF":
+ 			self.removeRecordEventCB()
+ 			self.checkStatusLoopStop()
+ 		self.checkStstus()
+ 
+ 	def addRecordEventCB(self):
+-		print "<ManualFancontrol> addRecordEventCB"
++#		print "[ManualFancontrol] addRecordEventCB"
+ 		if self.getRecordEvent not in NavigationInstance.instance.record_event:
+ 			NavigationInstance.instance.record_event.append(self.getRecordEvent)
+ 
+ 	def removeRecordEventCB(self):
+-		print "<ManualFancontrol> removeRecordEventCB"
++#		print "[ManualFancontrol] removeRecordEventCB"
+ 		if self.getRecordEvent in NavigationInstance.instance.record_event:
+ 			NavigationInstance.instance.record_event.remove(self.getRecordEvent)
+ 
+@@ -99,7 +101,7 @@ class instandbyOn:
+ 
+ 	def isRecording(self):
+ 		recordings = NavigationInstance.instance.getRecordings()
+-		print "<ManualFancontrol_> recordings : ",len(recordings)
++#		print "<ManualFancontrol_> recordings : ",len(recordings)
+ 		if recordings :
+ 			return True
+ 		else:
+@@ -108,23 +110,38 @@ class instandbyOn:
+ 	def isHDDActive(self): # remake certainly
+ 		for hdd in harddiskmanager.HDDList():
+ 			if not hdd[1].isSleeping():
+-				print "<ManualFancontrol_> %s is not Sleeping"%hdd[0]
++#				print "<ManualFancontrol_> %s is not Sleeping"%hdd[0]
+ 				return True
+-		print "<ManualFancontrol_> All HDDs are Sleeping"
++#		print "<ManualFancontrol_> All HDDs are Sleeping"
+ 		return False
+ 
+ 	def getPWM(self):
+-		f = open("/proc/stb/fp/fan_pwm", "r")
+-		value = int(f.readline().strip(), 16)
+-		f.close()
+-		print "<ManualFancontrol> getPWM : %d "%value
+-		return value
++		try:
++			f = open("/proc/stb/fp/fan_pwm", "r")
++			value = int(f.readline().strip(), 16)
++			f.close()
++#			print "[ManualFancontrol] getPWM : %d "%value
++			return value
++		except:
++#			print "[ManualFancontrol] /proc/stb/fp/fan_pwm is not exist"
++			return None
+ 
+ 	def setPWM(self, value):
+-		print "<ManualFancontrol> setPWM to : %d"%value
+-		f = open("/proc/stb/fp/fan_pwm", "w")
+-		f.write("%x" % value)
+-		f.close()
++		try:
++			f = open("/proc/stb/fp/fan_pwm", "w")
++			f.write("%x" % value)
++			f.close()
++#			print "[ManualFancontrol] setPWM to : %d"%value
++		except:
++			pass
++#			print "[ManualFancontrol] /proc/stb/fp/fan_pwm is not exist"
++
++	def check_fan_pwm(self):
++		from os import access, F_OK
++		if access("/proc/stb/fp/fan_pwm", F_OK):
++			return True
++		else:
++			return False
+ 
+ instandbyon = instandbyOn()
+ 
+diff --git a/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py b/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py
+index 6a31162..f889bba 100755
+--- a/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py
+@@ -7,6 +7,7 @@ from Components.Sources.StaticText import StaticText
+ from Plugins.Plugin import PluginDescriptor
+ from Plugins.SystemPlugins.ManualFancontrol.InstandbyOn import instandbyon
+ import NavigationInstance
++from enigma import eTimer
+ 
+ class ManualFancontrol(Screen,ConfigListScreen):
+ 	skin = """
+@@ -38,11 +39,21 @@ class ManualFancontrol(Screen,ConfigListScreen):
+ 		self.oldfanoffmode = instandbyon.fanoffmode
+ 		if instandbyon.fanoffmode is 'ON' :
+ 			instandbyon.checkStatusLoopStop()
++		self.checkFanTimer = eTimer()
++		self.checkFanTimer.callback.append(self.fan_pwm_error)
++		self.onLayoutFinish.append(self.checkFan)
++
++	def checkFan(self):
++		if not instandbyon.check_fan_pwm():
++			self.checkFanTimer.start(10,True)
++
++	def fan_pwm_error(self):
++		self.session.openWithCallback(self.close, MessageBox, _("Can not open 'fan_pwm'"), MessageBox.TYPE_ERROR)
+ 
+ 	def displayCurrentValue(self):
+ 		currrent_val = self["config"].getCurrent()[0]+" : "+str(self["config"].getCurrent()[1].value)
+ 		self["current"].setText(_(currrent_val))
+-		print currrent_val
++#		print currrent_val
+ 
+ 	def selectionChanged(self):
+ 		if self["config"].getCurrent() == self.pwmEntry:
+@@ -87,12 +98,12 @@ class ManualFancontrol(Screen,ConfigListScreen):
+ 
+ 	def keySave(self):
+ 		if instandbyon.fanoffmode is 'OFF' and config.plugins.manualfancontrols.pwmvalue.value == 0:
+-			print "<SimpleFancontrol> instandbyon.fanoffmode 'OFF' -> 'ON'"
++#			print "[ManualFancontrol] instandbyon.fanoffmode 'OFF' -> 'ON'"
+ 			instandbyon.fanoffmode = 'ON'
+ 			instandbyon.addRecordEventCB()
+ 			instandbyon.checkStatusLoopStart()
+ 		elif instandbyon.fanoffmode is 'ON' and config.plugins.manualfancontrols.pwmvalue.value != 0:
+-			print "<SimpleFancontrol> instandbyon.fanoffmode 'ON' -> 'OFF'"
++#			print "[ManualFancontrol] instandbyon.fanoffmode 'ON' -> 'OFF'"
+ 			instandbyon.fanoffmode = 'OFF'
+ 			instandbyon.removeRecordEventCB()
+ #			instandbyon.checkStatusLoopStop() # stoped at init

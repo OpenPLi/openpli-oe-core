@@ -1,0 +1,35 @@
+diff --git a/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py b/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py
+index d11facc..cd623ab 100755
+--- a/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py
+@@ -31,7 +31,7 @@ class RemoteControlCodeInit:
+ 			vumodel = open("/proc/stb/info/vumodel")
+ 			info=vumodel.read().strip()
+ 			vumodel.close()
+-			if info in ["uno", "ultimo"]:
++			if info not in ["duo", "solo"]:
+ 				return True
+ 			else:
+ 				return False
+@@ -77,7 +77,7 @@ class RemoteControlCode(Screen,ConfigListScreen,RemoteControlCodeInit):
+ 			self.checkModelTimer.start(1000,True)
+ 
+ 	def invalidmodel(self):
+-			self.session.openWithCallback(self.close, MessageBox, _("This Plugin only support for UNO/ULTIMO"), MessageBox.TYPE_ERROR)
++			self.session.openWithCallback(self.close, MessageBox, _("This Plugin doesn't support on SOLO/DUO"), MessageBox.TYPE_ERROR)
+ 
+ 	def createSetup(self):
+ 		self.list = []
+@@ -117,9 +117,9 @@ class MessageBoxConfirmCode(MessageBox):
+ 	skin = """
+ 		<screen position="center,center" size="600,10" title="Message">
+ 		<widget name="text" position="65,8" size="420,0" font="Regular;22" />
+-		<widget name="ErrorPixmap" pixmap="Vu_HD/icons/input_error.png" position="5,5" size="53,53" alphatest="blend" />
+-		<widget name="QuestionPixmap" pixmap="Vu_HD/icons/input_question.png" position="5,5" size="53,53" alphatest="blend" />
+-		<widget name="InfoPixmap" pixmap="Vu_HD/icons/input_info.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="ErrorPixmap" pixmap="skin_default/icons/input_error.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="QuestionPixmap" pixmap="skin_default/icons/input_question.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="InfoPixmap" pixmap="skin_default/icons/input_info.png" position="5,5" size="53,53" alphatest="blend" />
+ 		<widget name="list" position="100,100" size="380,375" transparent="1" backgroundColor="darkgrey" />
+ 		<applet type="onLayoutFinish">
+ # this should be factored out into some helper code, but currently demonstrates applets.

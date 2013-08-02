@@ -38,6 +38,14 @@ do_install_vuuno() {
 	install -m 0755 "${S}/vuplus_6222_blindscan" "${D}/${bindir}"
 }
 
+do_install_vuduo2() {
+	install -d "${D}/${bindir}"
+	install -m 0755 "${S}/tda1002x" "${D}/${bindir}"
+	install -m 0755 "${S}/vuplus_blindscan" "${D}/${bindir}"
+	install -m 0755 "${S}/vuplus_6211_blindscan" "${D}/${bindir}"
+	install -m 0755 "${S}/vuplus_6222_blindscan" "${D}/${bindir}"
+}
+
 FILES_vuplus-blindscan-dvbs-utils-${MACHINE} = "\
 	${bindir}/vuplus_blindscan \
 	${bindir}/vuplus_6211_blindscan \
