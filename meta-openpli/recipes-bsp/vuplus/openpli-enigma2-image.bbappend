@@ -19,7 +19,7 @@ VUPLUS_PLUGINS = " \
 	"
 
 VUPLUS_INSTALL = " \
-	${@base_contains('MACHINE', 'vuduo2', 'enigma2-plugin-extensions-lcd4linux enigma2-plugin-extensions-lcd4linuxsupport vuplus-enigma2-vfdskin vuplus-checkvfd', '', d)} \
+	${@base_contains('MACHINE', 'vuduo2', 'enigma2-plugin-extensions-lcd4linux enigma2-plugin-extensions-lcd4linuxsupport vuplus-checkvfd', '', d)} \
 	"
 
 ENIGMA2_PLUGINS += " ${VUPLUS_PLUGINS} "
