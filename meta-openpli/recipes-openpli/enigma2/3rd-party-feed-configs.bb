@@ -3,12 +3,13 @@ PR = "r1"
 
 require conf/license/openpli-gplv2.inc
 
-FEEDS = "3rd-party"
-# Use the machine-specific 3rd party feed from OpenPLi 3.0
-DISTRO_FEED_URI = "http://downloads.pli-images.org/feeds/openpli-3.0/${MACHINE}"
+# Use the PLi download server, regardless of where we are. Even for "private" feeds,
+# the 3rd party plugins originate here.
+DISTRO_HOST = "downloads.pli-images.org"
+FEEDS = "3rd-party 3rd-party-$MACHINE"
 
 do_compile() {
-    mkdir -p ${S}/${sysconfdir}/opkg
+    [ ! -d ${S}/${sysconfdir}/opkg ] && mkdir -p ${S}/${sysconfdir}/opkg
     for feed in ${FEEDS}; do
         echo "src/gz ${DISTRO_FEED_PREFIX}-${feed} ${DISTRO_FEED_URI}/${feed}" > ${S}/${sysconfdir}/opkg/${feed}-feed.conf
     done
