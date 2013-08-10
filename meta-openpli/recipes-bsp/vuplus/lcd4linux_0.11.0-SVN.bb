@@ -6,21 +6,22 @@ DEPENDS = "virtual/libusb0 ncurses readline jpeg"
 RDEPENDS_${PN} = "jpeg"
 
 PV = "0.11.0-SVN"
-PR = "r2"
+PR = "r3"
 
-EXTRA_OECONF = " --with-glib-prefix=${STAGING_LIBDIR}/.. \
-		--with-glib-exec-prefix=${STAGING_LIBDIR}/.. \
-		--with-ncurses=${STAGING_LIBDIR}/.."
+EXTRA_OECONF = " \
+	--with-glib-prefix=${STAGING_LIBDIR}/.. \
+	--with-glib-exec-prefix=${STAGING_LIBDIR}/.. \
+	--with-ncurses=${STAGING_LIBDIR}/.."
 
-SRC_URI = "svn://ssl.bulix.org/svn/lcd4linux/;module=trunk;proto=https;rev=1200 \
-		file://lcd4linux.init \
-"
+SRC_URI = "svn://ssl.bulix.org/svn/lcd4linux/;module=trunk;protocol=https;rev=1200 \
+	file://lcd4linux.init \
+	"
 
 S =  "${WORKDIR}/trunk"
 
 addtask setlibtool before do_configure after do_patch
 
-do_setlibtool (){
+do_setlibtool () {
 	sed -i "s#LIBTOOL=libtool#LIBTOOL=\${STAGING_BINDIR_CROSS}\/\${HOST_SYS}-libtool#" ${S}/Makefile.am
 }
 
