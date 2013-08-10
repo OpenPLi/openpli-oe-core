@@ -53,8 +53,8 @@ all: init
 	@echo
 	@echo "	or:"
 	@echo
-	@echo " cd $(BUILD_DIR)
-	@echo " source env.source
+	@echo " cd $(BUILD_DIR)"
+	@echo " source env.source"
 	@echo " MACHINE=... bitbake openpli-enigma2-image"
 	@echo
 	@echo "	or, if you want to build not just the image, but the optional packages in the feed as well:"
