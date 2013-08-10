@@ -20,8 +20,6 @@ DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dts --with-eac3"
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
 
-GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
-
 PREFERRED_PROVIDER_virtual/kernel = "linux-xp"
 
 PREFERRED_VERSION_linux-libc-headers = "3.3"
