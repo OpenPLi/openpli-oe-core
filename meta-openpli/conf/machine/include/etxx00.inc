@@ -20,8 +20,6 @@ DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dts --with-eac3"
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
 
-GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
-
 PREFERRED_PROVIDER_virtual/kernel = "linux-etxx00"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs = "et-blindscan-dvbs-utils"
 
