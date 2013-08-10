@@ -4,16 +4,19 @@ SECTION = "network"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552"
 
-SRCDATE = "20101014"
-PV = "1.0cvs${SRCDATE}"
+inherit gitpkgv
 
-SRC_URI = "cvs://anonymous@cvs.schwerkraft.elitedvb.net/cvsroot/streamproxy;module=enigma2-streamproxy;method=pserver \
+PV = "1.0+git${SRCPV}"
+PKGV = "1.0+git${GITPKGV}"
+PR = "2" 
+
+SRC_URI = "git://schwerkraft.elitedvb.net/streamproxy/streamproxy.git;protocol=git \
 	file://transcoding.patch;patch=1;pnum=1 \
 	"
 
 inherit autotools
 
-S = "${WORKDIR}/enigma2-streamproxy"
+S = "${WORKDIR}/git"
 
 do_install() {
 	install -d ${D}/usr/bin
