@@ -1,9 +1,11 @@
 DESCRIPTION = "Configuration files for 3rd-party feeds"
-PR = "r0"
+PR = "r1"
 
 require conf/license/openpli-gplv2.inc
 
 FEEDS = "3rd-party"
+# Use the machine-specific 3rd party feed from OpenPLi 3.0
+DISTRO_FEED_URI = "http://downloads.pli-images.org/feeds/openpli-3.0/${MACHINE}"
 
 do_compile() {
     mkdir -p ${S}/${sysconfdir}/opkg
