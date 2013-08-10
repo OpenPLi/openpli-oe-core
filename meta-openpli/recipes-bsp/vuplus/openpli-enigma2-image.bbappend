@@ -2,7 +2,6 @@ VUPLUS_EXT_PLUGINS = " \
 	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-streamtv \
-	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-systemplugins-wirelessaccesspoint \
 	enigma2-plugin-systemplugins-zappingmodeselection \
 	enigma2-plugin-systemplugins-manualfancontrol \
@@ -12,7 +11,6 @@ VUPLUS_EXT_PLUGINS = " \
 VUPLUS_PLUGINS = " \
 	${@base_contains('MACHINE_FEATURES', 'hbbtv', 'enigma2-plugin-extensions-hbbtv', '', d)} \
 	${@base_contains('MACHINE_FEATURES', 'transcodingsetup', 'enigma2-plugin-systemplugins-transcodingsetup', '', d)} \
-	${@base_contains('MACHINE_FEATURES', 'blindscan-dvbs', 'enigma2-plugin-systemplugins-blindscan', '', d)} \
 	${@base_contains('MACHINE_FEATURES', 'ctrlrc', 'enigma2-plugin-systemplugins-remotecontrolcode', '', d)} \
 	${@base_contains('MACHINE_FEATURES', 'wol', 'enigma2-plugin-systemplugins-wolsetup', '', d)} \
 	${@base_contains('MACHINE', 'vuduo2', '${VUPLUS_EXT_PLUGINS}', '', d)} \
