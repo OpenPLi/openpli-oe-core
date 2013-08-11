@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.1.1"
 
-PR_INC = ".7"
+PR_INC = ".8"
 
 SRCREV = "r2"
 
@@ -16,7 +16,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-vuplus-${KV}:"
 
 SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.bz2 \
 	file://fix_cpu_proc.patch;striplevel=1 \
-	file://mips-refactor-clearpage-and-copypage.patch \
+	file://mips-refactor-clearpage-and-copypage_311.patch \
 	file://iosched-slice_idle-1.patch \
 	file://dvb-usb-smsdvb_fix_frontend.patch \
         file://em28xx_fix_terratec_entries.patch \
