@@ -3,46 +3,40 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
 pkg_dir=$1
-if [ -z $pkg_dir ] || [ ! -d $pkg_dir ]; then
-  echo "Usage: recreate_feed <package_directory>"
-  exit 1
+if [[ -z $pkg_dir || ! -d $pkg_dir ]] ; then
+    echo "Usage: recreate_feed <package_directory>"
+    exit 1
 fi
 
-for pkg in `find $pkg_dir -maxdepth 1 -name '*.ipk' | sort`; do
-  filename=`basename $pkg`
-  pkgname=${filename%%_*}
-  echo "Generating index for package ${pkgname}" >&2
-  ## checking for multiple versions
-  oldflag=
-  for other in ${pkg_dir}/${pkgname}_*; do
-    if [ $pkg != $other -a $other -nt $pkg ]; then
-      oldflag=y
-      break;
-    fi;
-  done
-  if [ -z "$oldflag" ]; then \
-    file_size=$(ls -l $pkg | awk '{print $5}')
-    md5sum=$(md5sum $pkg | awk '{print $1}')
-    # Take pains to make variable value sed-safe
-    sed_safe_pkg=`echo $filename | sed -e 's/\\//\\\\\\//g'`
-    file $pkg |grep gzip >/dev/null
-    if [ $? -eq 0 ]; then 
-    tar -xzOf $pkg ./control.tar.gz | tar xzOf - ./control | sed -e "s/^Filename:.*//g" | grep -v '^$' | sed -e "s/^Description:/Filename: $sed_safe_pkg\\
-Size: $file_size\\
-MD5Sum: $md5sum\\
-Description:/"
-    echo ""
+find $pkg_dir -maxdepth 1 -type f -name '*.ipk' | sort | while read pkg ; do
+    filename=${pkg##*/}
+    pkgname=${filename%%_*}
+    echo "Generating index for package $pkgname" >&2
+    ## checking for multiple versions
+    oldflag=
+    for other in $pkg_dir/${pkgname}_*; do
+        if [[ $pkg != $other && $other -nt $pkg ]] ; then
+            oldflag=y
+            echo >&2 "Skipped old file: $pkg ($other is newer)"
+            mv $pkg $pkg_dir/old/
+            break
+        fi
+    done
+    [[ -n $oldflag ]] && continue
+
+    file_size=$(stat -c %s $pkg)
+    md5sum=$(md5sum $pkg | cut -d' ' -f1)
+    if file $pkg | grep -q gzip ; then
+        tar -xzf $pkg ./control.tar.gz 
     else
-      (ar x $pkg control.tar.gz ; cat control.tar.gz ; rm control.tar.gz) | tar xzOf - ./control | sed -e "s/^Filename:.*//g" | grep -v '^$' | sed -e "s/^Description:/Filename: $sed_safe_pkg\\
-Size: $file_size\\
-MD5Sum: $md5sum\\
-Description:/"
-    echo ""
+        ar x $pkg control.tar.gz
     fi
-  else
-    echo >&2 "Skipped old file: $pkg ($other is newer)"
-    mv $pkg $pkg_dir/old/
-  fi
+    tar xzOf control.tar.gz ./control | egrep -iv "^Filename:|^MD5SUm:|^Size:|^$"
+    echo "Filename: $filename"
+    echo "Size: $file_size"
+    echo "MD5Sum: $md5sum"
+    echo ""
+    rm control.tar.gz
 done >> $pkg_dir/Packages
 
 rm -f $pkg_dir/Packages.gz
