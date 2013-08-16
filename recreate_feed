@@ -42,3 +42,12 @@ done >> $pkg_dir/Packages
 
 rm -f $pkg_dir/Packages.gz
 gzip $pkg_dir/Packages
+
+# As Packages.gz is created as a new file, the parent dir will be updated
+# However gzip will set times of the .gz file to taht of the original file.
+# So make sure Packages.gz is 'newer' that its parent dir
+touch  $pkg_dir/Packages.gz
+
+#
+# The End
+#
