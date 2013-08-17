@@ -18,7 +18,7 @@ find $pkg_dir -maxdepth 1 -type f -name '*.ipk' | sort | while read pkg ; do
         if [[ $pkg != $other && $other -nt $pkg ]] ; then
             oldflag=y
             echo >&2 "Skipped old file: $pkg ($other is newer)"
-            [[ ! -d $pkg_dir/old ]] && mvkdir $pkg_dir/old
+            [[ ! -d $pkg_dir/old ]] && mkdir $pkg_dir/old
             mv $pkg $pkg_dir/old/.
             break
         fi
