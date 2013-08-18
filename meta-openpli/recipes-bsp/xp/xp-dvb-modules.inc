@@ -4,7 +4,7 @@ PRIORITY = "required"
 LICENSE = "CLOSED"
 
 PV = "${KV}+${SRCDATE}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://www.xp-support.tv/support/drivers/${MACHINE}-drivers-${KV}-${SRCDATE}.zip"
 
@@ -13,6 +13,8 @@ S = "${WORKDIR}"
 INHIBIT_PACKAGE_STRIP = "1"
 
 inherit module
+
+FILES_${PN} += "${sysconfdir}/modules-load.d/_${MACHINE}.conf"
 
 do_compile() {
 }
