@@ -19,6 +19,7 @@ WIFI_DRIVERS = " \
 	kernel-module-rtl8187 \
 	kernel-module-zd1211rw \
 	rtl8192cu \
+	rtl8188eu \
 	"
 
 ENIGMA2_PLUGINS = " \
