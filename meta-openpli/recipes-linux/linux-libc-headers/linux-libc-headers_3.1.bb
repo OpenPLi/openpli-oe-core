@@ -2,5 +2,5 @@ PRINC = "1"
 
 require linux-libc-headers.inc
 
-SRC_URI[md5sum] = "4dc3ac322453abbfaade7020cddea205"
-SRC_URI[sha256sum] = "1d18eb39677a23eace6b27ee25656c25f21b57be7e77a2adcdd15c76d1c3e875"
+SRC_URI[md5sum] = "8d43453f8159b2332ad410b19d86a931"
+SRC_URI[sha256sum] = "2573d2378c754b0c602b57586e9311e5b38c5d1e6c137f02873833633a4b9359"
