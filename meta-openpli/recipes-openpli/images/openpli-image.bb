@@ -78,3 +78,13 @@ export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""
 
 IMAGE_FEATURES += "package-management"
+
+# Some features in image.bbclass we do NOT want, so override them
+# to be empty. We want to log in as root, but NOT via SSH. So we want
+# to live without debug-tweaks...
+zap_root_password () {
+	true
+}
+ssh_allow_empty_password () {
+	true
+}
