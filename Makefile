@@ -17,6 +17,7 @@ DEPDIR = $(TOPDIR)/.deps
 
 BBLAYERS ?= \
 	$(CURDIR)/meta-openembedded/meta-oe \
+	$(CURDIR)/meta-openembedded/meta-filesystems \
 	$(CURDIR)/meta-openembedded/meta-multimedia \
 	$(CURDIR)/meta-openembedded/meta-networking \
 	$(CURDIR)/openembedded-core/meta \
