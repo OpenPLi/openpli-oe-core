@@ -19,6 +19,8 @@ EXTRA_IMAGEDEPENDS += "\
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
 
+DVBMEDIASINK_CONFIG = "--with-pcm"
+
 PREFERRED_VERSION_linux-${MACHINE} = "3.3.8"
 PREFERRED_VERSION_linux-libc-headers = "3.3"
 
