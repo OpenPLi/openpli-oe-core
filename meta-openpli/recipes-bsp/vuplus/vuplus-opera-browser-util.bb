@@ -28,8 +28,6 @@ do_unpack() {
 }
 
 do_install() {
-	install -d ${D}/usr
-	install -d ${D}/usr/local
 	install -d ${D}/usr/local/hbb-browser
 
 	mv ${S}/opera/lib/libopera.so ${S}/opera/lib/libopera.so.0
@@ -47,10 +45,6 @@ do_install() {
 	install -d ${D}/usr/share
 	cp -avR ${S}/dfb/usr/share/* ${D}/usr/share/
 
-	install -d ${D}/usr/lib/enigma2
-	install -d ${D}/usr/lib/enigma2/python
-	install -d ${D}/usr/lib/enigma2/python/Plugins
-	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 	cp -avR ${S}/plugin/* ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 }
