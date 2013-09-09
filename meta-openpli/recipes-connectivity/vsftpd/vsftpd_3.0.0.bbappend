@@ -1,3 +1,5 @@
+PRINC = "1"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 # Undo things that we don't want
