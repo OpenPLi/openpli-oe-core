@@ -32,7 +32,7 @@ find $pkg_dir -maxdepth 1 -type f -name '*.ipk' | sort | while read pkg ; do
     else
         ar x $pkg control.tar.gz
     fi
-    tar xzf control.tar.gz ./control | egrep -iv "^Filename:|^MD5SUm:|^Size:|^$" | sed -e "/^Depends:/s/(>\([^>=]\)/(>=\1/g" -e "/^Depends:/s/(<\([^<=]\)/(<=\1/g"
+    tar zxOf control.tar.gz ./control | egrep -iv "^Filename:|^MD5SUm:|^Size:|^$" | sed -e "/^Depends:/s/(>\([^>=]\)/(>=\1/g" -e "/^Depends:/s/(<\([^<=]\)/(<=\1/g"
     echo "Filename: $filename"
     echo "Size: $file_size"
     echo "MD5Sum: $md5sum"
