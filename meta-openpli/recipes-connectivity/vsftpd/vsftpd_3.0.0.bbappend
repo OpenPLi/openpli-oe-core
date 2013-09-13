@@ -1,6 +1,9 @@
-PRINC = "1"
+PRINC = "2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+# Disable tcp-wrappers support (is default in PACKAGECONFIG)
+PACKAGECONFIG = ""
 
 # Undo things that we don't want
 # Add an "empty" dir
