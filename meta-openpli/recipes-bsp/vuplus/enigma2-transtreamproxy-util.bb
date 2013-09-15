@@ -1,4 +1,4 @@
-SUMMARY = "streamproxy manages streaming data to a Mobile device using enigma2"
+SUMMARY = "Transtreamproxy invokes the hardware transcoding facilities to enable transcoded streaming"
 
 SECTION = "network"
 LICENSE = "GPLv2"
@@ -20,5 +20,5 @@ S = "${WORKDIR}/git"
 
 do_install() {
 	install -d ${D}/usr/bin
-	install -m 0755 ${S}/src/streamproxy      ${D}/usr/bin/transtreamproxy
+	install -m 0755 ${S}/src/streamproxy ${D}/usr/bin/transtreamproxy
 }
