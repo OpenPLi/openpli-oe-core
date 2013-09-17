@@ -62,8 +62,9 @@ OPTIONAL_PACKAGES += " \
 	rsync \
 	rtorrent \
 	sabnzbd \
-	sshpass \
 	smartmontools \
+	smbnetfs \
+	sshpass \
 	strace \
 	tcpdump \
 	tmux \
