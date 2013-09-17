@@ -220,7 +220,7 @@ addtask openpli_preinstall after do_compile before do_install
 
 do_openpli_branding() {
 	if [ -n "${BRANDINGDIR}" -a -d "${BRANDINGDIR}/enigma2" ] ; then
-		cp -p ${BRANDINGDIR}/enigma2/* ${S}/data/.
+		cp -rp ${BRANDINGDIR}/enigma2/* ${S}/data/
 	fi
 	if [ -n "${CRASHADDR}" ] ; then
 		sed "s/^#define CRASH_EMAILADDR .*/#define CRASH_EMAILADDR \"${CRASHADDR}\"/" ${S}/main/bsod.cpp > ${S}/main/bsod.cpp.new && \
