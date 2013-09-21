@@ -1,22 +1,20 @@
 require conf/license/openpli-gplv2.inc
 require softcam.inc
-inherit gitpkgv
 inherit cmake
 
 DESCRIPTION = "OScam ${PV} Open Source Softcam"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-BRANCH = "master"
-SRCREV = "99553b60dacce7d245fc9f46ed31cf42d68dd161"
-PV = "svn8917"
+SRCREV = "8917"
+PV = "svn${SRCREV}"
 PKGV = "${PV}"
-SRC_URI = "git://git.cuci.nl/oscam;protocol=git;branch=${BRANCH};tag=${SRCREV}"
+SRC_URI = "svn://www.streamboard.tv/svn/oscam;protocol=http;module=trunk"
 PR = "r0"
 
 DEPENDS = "libusb openssl"
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/trunk"
 CAMNAME = "oscam"
 CAMSTART = "/usr/bin/oscam --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
 CAMSTOP = "kill \`cat /tmp/oscam.pid\` 2> /dev/null"
