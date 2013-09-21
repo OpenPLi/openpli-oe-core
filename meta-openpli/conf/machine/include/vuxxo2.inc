@@ -14,7 +14,19 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 EXTRA_IMAGEDEPENDS += "\
 	vuplus-opera-browser-plugin \
-	"
+	enigma2-plugin-systemplugins-firmwareupgrade \
+	enigma2-plugin-systemplugins-remotecontrolcode \
+	enigma2-plugin-systemplugins-manualfancontrol \
+	enigma2-plugin-extensions-dlnabrowser \
+	enigma2-plugin-extensions-dlnaserver \
+	enigma2-plugin-extensions-streamtv \
+	enigma2-plugin-extensions-addstreamurl \
+	enigma2-plugin-systemplugins-zappingmodeselection \
+"
+
+IMAGE_INSTALL_append += "\
+	enigma2-plugin-systemplugins-transcodingsetup \
+"
 
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
