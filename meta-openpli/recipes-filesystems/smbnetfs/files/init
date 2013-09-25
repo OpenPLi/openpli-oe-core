@@ -12,7 +12,7 @@ case "$1" in
 		fi
 		;;
 	stop)
-		killall /usr/bin/smbnetfs
+		umount "${MOUNTPOINT}"
 		rmdir "${MOUNTPOINT}"
 		;;
 	*)
