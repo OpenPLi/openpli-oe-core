@@ -70,8 +70,6 @@ int main(int argc, char **argv)
 	{
 		size_t pos=0;
 		int seq_end_avail = 0;
-
-		int count = 7;
 		/* 0x0 0x0 0x1 0xffffffe0 0x10 0x8 0xffffff80 0xffffff80 0x5 0x21 0x0 0x1 0x0 0x1 */
 		
 		/* unsigned char pes_header[] = { 0x00, 0x00, 0x01, 0xE0, 0x00, 0x00, 0x80, 0x00, 0x00 }; */
@@ -94,18 +92,14 @@ int main(int argc, char **argv)
 		c(ioctl(fd, VIDEO_CLEAR_BUFFER));
 		while(pos <= (s.st_size-4) && !(seq_end_avail = (!iframe[pos] && !iframe[pos+1] && iframe[pos+2] == 1 && iframe[pos+3] == 0xB7)))
 			++pos;
-		while(count--){
-			if ((iframe[3] >> 4) != 0xE) // no pes header
-			{
-				write_all(fd, pes_header, sizeof(pes_header));
-				usleep(8000);
-			}
-			else {
-				iframe[4] = iframe[5] = 0x00;
-			}
-			write_all(fd, iframe, s.st_size);
-			usleep(8000);
+		if ((iframe[3] >> 4) != 0xE) // no pes header
+		{
+			write_all(fd, pes_header, sizeof(pes_header));
 		}
+		else {
+			iframe[4] = iframe[5] = 0x00;
+		}
+		write_all(fd, iframe, s.st_size);
 		if (!seq_end_avail)
 			write_all(fd, seq_end, sizeof(seq_end));
 		write_all(fd, stuffing, 8192);
