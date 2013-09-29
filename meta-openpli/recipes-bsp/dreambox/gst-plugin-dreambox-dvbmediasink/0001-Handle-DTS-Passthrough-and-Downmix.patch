@@ -1,6 +1,6 @@
-From 94bc5368e5427c154deefc35b5d65c9fcc376d29 Mon Sep 17 00:00:00 2001
+From 7842259d11ad14b083a3097c7348a8cab77d72c6 Mon Sep 17 00:00:00 2001
 From: Athanasios Oikonomou <athoik@gmail.com>
-Date: Fri, 27 Sep 2013 22:47:07 +0300
+Date: Sun, 29 Sep 2013 16:36:01 +0300
 Subject: [PATCH] Handle DTS Passthrough and Downmix
 
 When downmix is enabled we remove on runtime the dts caps to give priority on dtsdownmix.
@@ -8,7 +8,7 @@ When downmix is enabled we remove on runtime the dts caps to give priority on dt
 Also provide a simple way to check if ac3plus is enabled using cheap access call
 
 diff --git a/src/gstdvbaudiosink.c b/src/gstdvbaudiosink.c
-index ac1c145..8a1eaf2 100644
+index ac1c145..9a201d6 100644
 --- a/src/gstdvbaudiosink.c
 +++ b/src/gstdvbaudiosink.c
 @@ -62,6 +62,7 @@
@@ -62,9 +62,12 @@ index ac1c145..8a1eaf2 100644
  	int eac3_pos = 12;
  
  	if (hwtype == DM8000) {
-@@ -329,11 +336,14 @@ gst_dvbaudiosink_get_caps (GstBaseSink *basesink)
+@@ -327,13 +334,16 @@ gst_dvbaudiosink_get_caps (GstBaseSink *basesink)
+ 		--eac3_pos;
+ 	}
  	else
- 		caps = gst_static_caps_get(&hwtemplate->static_caps);
+-		caps = gst_static_caps_get(&hwtemplate->static_caps);
++		caps = gst_caps_copy(&hwtemplate->static_caps.caps);
  
 -	if (eac3_support < 0) {
 -		if (eac3_pos == 12)
