@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	}
 	fstat(f, &s);
 
-	int fd = open("/dev/dvb/adapter0/video0", O_WRONLY|O_NONBLOCK);
+	int fd = open("/dev/dvb/adapter0/video0", O_WRONLY);
 
 	if (fd <= 0)
 	{
