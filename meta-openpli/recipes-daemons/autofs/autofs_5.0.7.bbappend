@@ -1,4 +1,6 @@
-PRINC = "1"
+PRINC = "2"
+
+EXTRA_OECONF += "--with-confdir=/etc/default"
 
 # Remove bash scripting from init script (meaning, remove "function"
 # from each shell function)
