@@ -52,14 +52,12 @@ python populate_packages_prepend () {
     def getControlLines(mydir, d, package):
         import os
         try:
-            #ac3lipsync is renamed since 20091121 to audiosync.. but rename in cvs is not possible without lost of revision history..
-            #so the foldername is still ac3lipsync
-            if package == 'audiosync':
-                package = 'ac3lipsync'
             src = open(mydir + package + "/CONTROL/control").read()
-        except IOError:
+        except Exception, ex:
+            bb.note("Failed to get control lines for package '%s': %s" % (package, ex))
             return
         for line in src.split("\n"):
+            full_package = "enigma2-plugin-extensions-" + package
             if line.startswith('Package: '):
                 full_package = line[9:]
             elif line.startswith('Depends: '):
