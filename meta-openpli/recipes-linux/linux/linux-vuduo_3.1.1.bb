@@ -7,3 +7,5 @@ SRC_URI += "\
 	file://linux-sata_brcm.patch;striplevel=1 \
 	file://nfs-max-rwsize-8k.patch \
 	"
+
+COMPATIBLE_MACHINE = "vuduo"

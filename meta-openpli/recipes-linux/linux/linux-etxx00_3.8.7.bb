@@ -2,6 +2,8 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 SECTION = "kernel"
 LICENSE = "GPLv2"
 
+COMPATIBLE_MACHINE = "et[0-9]+"
+
 KERNEL_RELEASE = "3.8.7"
 
 SRC_URI[md5sum] = "5f6aaac90a4587df34e418bedd7d40eb"

@@ -8,3 +8,4 @@ SRC_URI += "\
 	file://nfs-max-rwsize-8k.patch \
 	"
 
+COMPATIBLE_MACHINE = "vusolo"

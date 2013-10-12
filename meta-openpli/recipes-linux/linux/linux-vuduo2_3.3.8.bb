@@ -7,3 +7,5 @@ SRC_URI += " \
 	file://nand_base.patch;patch=1;pnum=1 \
 	file://brcm_s3_wol.patch;patch=1;pnum=1 \
 "
+
+COMPATIBLE_MACHINE = "vuduo2"
