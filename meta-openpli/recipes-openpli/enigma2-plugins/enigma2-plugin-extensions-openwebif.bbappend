@@ -1,4 +1,6 @@
-PRINC = "6"
+PRINC = "7"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 python do_package_prepend () {
     boxtypes = [
