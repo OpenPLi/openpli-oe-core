@@ -12,7 +12,7 @@ S = "${WORKDIR}/git/tuxtxt"
 
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
-PR = "r2"
+PR = "r3"
 
 PACKAGES = "${PN}-src ${PN}-dbg ${PN}-dev ${PN}"
 FILES_${PN}-src = "/usr/src /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.py"
@@ -24,3 +24,5 @@ inherit autotools pkgconfig
 EXTRA_OECONF = "--with-boxtype=generic --with-configdir=/etc \
 	${@base_contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
