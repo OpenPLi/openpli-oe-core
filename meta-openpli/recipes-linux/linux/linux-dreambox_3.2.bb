@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.42"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.43"
 
 COMPATIBLE_MACHINE = "dm[0-9]+.*"
 
@@ -34,6 +34,7 @@ SRC_URI = " \
 			file://dvb-usb-a867.patch \
 			file://dvb-usb-rtl2832.patch \
 			file://dvb_usb_disable_rc_polling.patch \
+			file://dvb-usb-smsdvb_fix_frontend.patch \
 			file://defconfig \
 "
 
