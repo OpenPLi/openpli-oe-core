@@ -43,8 +43,15 @@ MVI = "${SWITCHOFFMVI} bootlogo.mvi"
 MVISYMLINKS = "bootlogo_wait backdrop"
 
 do_install() {
-	if [ -n "${BRANDINGDIR}" -a -d "${BRANDINGDIR}/bootlogo" ] ; then
-		cp -p ${BRANDINGDIR}/bootlogo/* ${S}/.
+	if [ -n "${BRANDINGDIR}" ] ; then
+		# copy generic logo stuff
+		if [ -d "${BRANDINGDIR}/bootlogo" ] ; then
+			cp -p ${BRANDINGDIR}/bootlogo/* ${S}/.
+		fi
+		# copy specific logo stuff
+		if [ -d "${BRANDINGDIR}/bootlogo-${MACHINE}" ] ; then
+			cp -p ${BRANDINGDIR}/bootlogo-${MACHINE}/* ${S}/.
+		fi
 	fi
 
 	install -d ${D}/boot
