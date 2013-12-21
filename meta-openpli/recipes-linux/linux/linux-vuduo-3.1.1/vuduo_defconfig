@@ -1906,6 +1906,13 @@ CONFIG_FB=y
 # Display device support
 #
 # CONFIG_DISPLAY_SUPPORT is not set
+
+#
+# Console display driver support
+#
+# CONFIG_VGA_CONSOLE is not set
+CONFIG_DUMMY_CONSOLE=y
+# CONFIG_FRAMEBUFFER_CONSOLE is not set
 # CONFIG_LOGO is not set
 CONFIG_SOUND=y
 CONFIG_SOUND_OSS_CORE=y
@@ -1973,7 +1980,10 @@ CONFIG_USB_HIDDEV=y
 # CONFIG_HID_KENSINGTON is not set
 # CONFIG_HID_LCPOWER is not set
 CONFIG_HID_LOGITECH=y
-CONFIG_HID_LOGITECH_DJ=y
+# CONFIG_LOGITECH_FF is not set
+# CONFIG_LOGIRUMBLEPAD2_FF is not set
+# CONFIG_LOGIG940_FF is not set
+# CONFIG_LOGIWII_FF is not set
 # CONFIG_HID_MAGICMOUSE is not set
 # CONFIG_HID_MICROSOFT is not set
 # CONFIG_HID_MONTEREY is not set
@@ -2242,8 +2252,9 @@ CONFIG_R8712U=m
 # CONFIG_VME_BUS is not set
 # CONFIG_DX_SEP is not set
 # CONFIG_IIO is not set
-# CONFIG_XVMALLOC is not set
-# CONFIG_ZRAM is not set
+CONFIG_XVMALLOC=y
+CONFIG_ZRAM=y
+# CONFIG_ZRAM_DEBUG is not set
 # CONFIG_FB_SM7XX is not set
 # CONFIG_VIDEO_DT3155 is not set
 # CONFIG_CRYSTALHD is not set
@@ -2258,6 +2269,7 @@ CONFIG_R8712U=m
 #
 # Speakup console speech
 #
+# CONFIG_SPEAKUP is not set
 # CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4 is not set
 # CONFIG_ALTERA_STAPL is not set
 CONFIG_IOMMU_SUPPORT=y

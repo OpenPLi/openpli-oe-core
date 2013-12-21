@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.43"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.44"
 
 COMPATIBLE_MACHINE = "dm[0-9]+.*"
 
