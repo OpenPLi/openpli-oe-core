@@ -27,6 +27,7 @@ IMAGE_INSTALL = " \
 	util-linux-sfdisk \
 	volatile-media \
 	vsftpd \
+	zram \
 	"
 
 OPTIONAL_PACKAGES_BROKEN = "samba"
