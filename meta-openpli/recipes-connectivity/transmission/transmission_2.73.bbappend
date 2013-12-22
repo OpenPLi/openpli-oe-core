@@ -1,4 +1,9 @@
-SRC_URI += "file://configure-kill-intl-check.patch"
+PRINC="1"
+
+SRC_URI += "\
+	file://configure-kill-intl-check.patch \
+	file://configure-allow-local-network.patch \
+	"
 
 DEPENDS = "gnutls openssl libtool intltool-native curl glib-2.0-native libevent"
 
@@ -13,4 +18,3 @@ OE_EXTRACONF = "\
 	--enable-daemon \
 	CPPFLAGS=-DTR_EMBEDDED \
 	"
-
