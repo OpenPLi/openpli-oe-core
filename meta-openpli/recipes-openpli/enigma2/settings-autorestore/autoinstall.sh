@@ -26,11 +26,7 @@ else
 	AUTOINSTALL=$BACKUPDIR/backup/autoinstall
 fi
 
-if [[ -x /usr/bin/opkg ]] ; then
-	IPKG=/usr/bin/opkg
-else
-	IPKG=ipkg
-fi
+IPKG=/usr/bin/opkg
 
 $IPKG list_installed | cut -d ' ' -f 1 > $INSTALLED
 chmod 444 $INSTALLED
@@ -41,7 +37,7 @@ chmod 444 $INSTALLED
 if [[ -f $AUTOINSTALL ]] ; then
 	$IPKG update
 	sed 's/,/ /g' $AUTOINSTALL | while read packagefile packageoption ; do
-		echo $IPKG install ${packageoption:---force-defaults} $packagefile
+		$IPKG install ${packageoption} $packagefile
 	done
 fi
 
