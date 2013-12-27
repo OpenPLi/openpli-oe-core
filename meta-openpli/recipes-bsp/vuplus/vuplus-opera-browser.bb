@@ -1,21 +1,23 @@
-DESCRIPTION = "opera-hbbtv-browser"
-SECTION = "base"
+DESCRIPTION = "Opera HbbTV browser"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
+SECTION = "base"
 
 DEPENDS = "tslib mpfr gmp"
+RREPLACES_{$PN} = "vuplus-opera-browser-util"
+RCONFLICTS_{$PN} = "vuplus-opera-browser-util"
 
-SRC_DATE = "20130425_pli0"
+SRC_DATE = "20131224_0"
 SRC_URI = ""
+SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
 
-PR = "r3_${SRC_DATE}"
+PR = "r4_${SRC_DATE}"
 
 S = "${WORKDIR}/opera-hbbtv"
 
-SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
 do_fetch() {
        if [ ! -e ${DL_DIR}/${SRC_FILE} -a -e /etc/vuplus_browser.pwd ]; then
-sshpass -f /etc/vuplus_browser.pwd sftp guestuser@code.vuplus.com << +
+sshpass -f /etc/vuplus_browser.pwd sftp -o StrictHostKeyChecking=no guestuser@code.vuplus.com << +
 get ${SRC_FILE}
 bye
 +
@@ -29,8 +31,6 @@ do_unpack() {
 
 do_install() {
 	install -d ${D}/usr/local/hbb-browser
-
-	mv ${S}/opera/lib/libopera.so ${S}/opera/lib/libopera.so.0
 	cp -avR ${S}/opera/* ${D}/usr/local/hbb-browser/
 
 	install -d ${D}/etc
@@ -55,9 +55,5 @@ do_package_qa() {
 INHIBIT_PACKAGE_STRIP = "1"
 
 FILES_${PN} = "/usr/lib /usr/local /usr/share /usr/bin /etc "
-PACKAGES = "${PN}"
-PROVIDES="${PACKAGES}"
+PROVIDES="${PN}"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
-
-SRC_URI[md5sum] = "2e16afc3db22f80cf99de3bfb891fa06"
-SRC_URI[sha256sum] = "41bbf4cda0b19ca7c79cb06ec4ab8cafee62fd9944d17e71978d4c9e6d72d264"
