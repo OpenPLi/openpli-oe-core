@@ -41,7 +41,7 @@ do
 done
 
 # suicide...
-rm -f /etc/rcS.d/S*settingsrestore
+rm -f /etc/rc?.d/S*settingsrestore*
 
 if  [ ! -f ${BACKUPDIR}/backup/.timestamp ]
 then

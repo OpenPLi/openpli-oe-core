@@ -45,4 +45,4 @@ fi
 [[ -f /sys/class/vtconsole/vtcon1/bind ]] && echo 0 > /sys/class/vtconsole/vtcon1/bind
 
 # suicide...
-rm -f /etc/rcS.d/S*autoinstall
+rm -f /etc/rc?.d/S*autoinstall*

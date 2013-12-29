@@ -2,7 +2,7 @@
 BACKUPDIR=$1
 
 # suicide...
-rm -f /etc/rcS.d/S*settingsrestore
+rm -f /etc/rc?.d/S*settingsrestore*
 
 echo "Old style restoring from: ${BACKUPDIR}"
 
