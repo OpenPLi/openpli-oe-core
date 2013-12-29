@@ -14,7 +14,7 @@ then
 #  If a MAC Address dependent backup was found, use that
 #  Always use the latest version
 #  Prefer an older MAC address dependent backup to a newer one without it 
-for candidate in `cat /proc/mounts | cut -d ' ' -f 2 | grep '^/media'`
+for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
    if [ -d ${candidate}/backup ]
    then
