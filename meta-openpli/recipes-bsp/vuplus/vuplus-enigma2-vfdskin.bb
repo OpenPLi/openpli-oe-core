@@ -2,6 +2,8 @@ require conf/license/openpli-gplv2.inc
 
 RDEPENDS_${PN} = "enigma2"
 
+COMPATIBLE_MACHINE = "vuduo2|vuultimo"
+
 SRCDATE = "20130801_p0"
 PR = "${SRCDATE}_r0"
 
