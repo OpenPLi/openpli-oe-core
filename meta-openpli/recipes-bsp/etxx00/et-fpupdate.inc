@@ -2,8 +2,9 @@ DESCRIPTION = "frontpanel update"
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
+COMPATIBLE_MACHINE = "et"
 
-PR = "r4"
+PR = "r5"
 
 PV = "${FPVERSION}"
 
@@ -19,10 +20,10 @@ inherit update-rc.d
 INITSCRIPT_NAME = "fpupdate"
 INITSCRIPT_PARAMS = "start 22 S ."
 
-FILES_${PN} = "/${bindir} /lib/firmware /etc/init.d"
+FILES_${PN} = "${bindir} /lib/firmware /etc/init.d"
 
 do_install() {
-	install -d ${D}/${bindir}
+	install -d ${D}${bindir}
 	install -d ${D}/lib/firmware
 	install -m 0755 ${S}/fpupdate ${D}/${bindir}
 	install -m 0644 ${S}/avrmain-* ${D}/lib/firmware/
