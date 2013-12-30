@@ -13,7 +13,6 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	"
 
 EXTRA_IMAGEDEPENDS += "\
-	vuplus-opera-browser-plugin \
 	enigma2-plugin-systemplugins-firmwareupgrade \
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-systemplugins-manualfancontrol \
