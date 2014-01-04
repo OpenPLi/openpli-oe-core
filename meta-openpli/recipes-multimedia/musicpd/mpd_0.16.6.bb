@@ -9,7 +9,7 @@ DEPENDS = "libvorbis libogg libao zlib libmikmod flac audiofile virtual/libiconv
 
 PR = "r1"
 
-SRC_URI = "${SOURCEFORGE_MIRROR}/musicpd/mpd-${PV}.tar.bz2 \
+SRC_URI = "http://www.musicpd.org/download/mpd/0.16/mpd-${PV}.tar.bz2 \
 		file://mpd.conf \
 		file://mpd.init \
 		"
