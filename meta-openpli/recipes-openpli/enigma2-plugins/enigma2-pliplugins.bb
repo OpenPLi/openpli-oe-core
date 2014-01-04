@@ -9,7 +9,7 @@ PACKAGES_DYNAMIC = "enigma2-plugin-pli-.*"
 # add custom PROVIDES for plugins which do not match PACKAGES_DYNAMIC
 PROVIDES += "enigma2-plugin-extensions-openuitzendinggemist enigma2-plugin-extensions-ushare"
 
-DEPENDS = "enigma2 nfs-utils ushare"
+DEPENDS = "ushare"
 
 DESCRIPTION_enigma2-plugin-extensions-ushare = "UPnP media server"
 RDEPENDS_enigma2-plugin-extensions-ushare = "ushare"
@@ -20,16 +20,13 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r7"
 
-SRC_URI = "git://git.code.sf.net/p/openpli/enigma2-plugins;protocol=git \
-		   file://pythonpaths.patch"
+SRC_URI = "git://git.code.sf.net/p/openpli/enigma2-plugins;protocol=git"
 
 S = "${WORKDIR}/git"
 
 inherit autotools
 
-EXTRA_OECONF = "--with-boxtype=${MACHINE} \
-    STAGING_INCDIR=${STAGING_INCDIR} \
-    STAGING_LIBDIR=${STAGING_LIBDIR}"
+EXTRA_OECONF = "LIBDIR=${libdir}"
 
 python populate_packages_prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
@@ -46,6 +43,6 @@ python populate_packages_prepend () {
 }
 
 do_install_append() {
-	find ${D}/usr/lib/enigma2/python/ -name '*.pyc' -exec rm {} \;
+	find ${D}${libdir}/enigma2/python/ -name '*.pyc' -exec rm {} \;
 }
 
