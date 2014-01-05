@@ -4,21 +4,18 @@ DESCRIPTION = "VU+ HBBTV plugin"
 
 LICENSE			= "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
-SRCREV			= "6e2ef83a9d63faa57c7266d7331b0ca9b9f4c9f9"
+SRCREV			= "59df7d4b4fc7d1740f30d36290553972c4a3a652"
 PV				= "experimental-git${SRCPV}"
 PKGV			= "experimental-git${GITPKGV}"
-PR				= "r9"
+PR				= "r10"
 BRANCH			= "vuplus_experimental"
-PROVIDES		= "vuplus-opera-browser-plugin"
-RDEPENDS_${PN}	= "vuplus-opera-browser vuplus-opera-dumpait"
+RDEPENDS_${PN}	= "vuplus-opera-browser vuplus-hbbtv-dumpait"
 FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/*"
 PACKAGES		= "${PN}"
-PACKAGE_ARCH	= "${MACHINE_ARCH}"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://vuplus-opera-browser-plugin_20130105.patch;striplevel=1 \
-	   file://hbbtv-nocrash.patch;striplevel=1 \
-	   file://vuplus-opera-browser-plugin-append_20130429.patch;striplevel=1 \
+	   file://hbbtv-add-abort.patch;striplevel=1 \
+	   file://hbbtv-move-youtube.patch;striplevel=1 \
 	   file://aitreader.py \
 	  "
 

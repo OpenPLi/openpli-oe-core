@@ -4,6 +4,9 @@ LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE.GPLv3;md5=5ed852a46d22220a8b07a68e564d84c7"
 
 PR = "r1"
+RREPLACES_${PN} = "vuplus-opera-dumpait"
+RCONFLICTS_${PN} = "vuplus-opera-dumpait"
+
 DESTDIR = "enigma2/python/Plugins/Extensions/HbbTV"
 SRC_URI = "git://code.vuplus.com/git/dumpait.git;protocol=git;branch=master;tag=HEAD \
            file://fix-gcc47-compile.patch"
@@ -20,4 +23,3 @@ do_install() {
 FILES_${PN} = "${libdir}/${DESTDIR}/dumpait"
 
 PACKAGES = "${PN}"
-
