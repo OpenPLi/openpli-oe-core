@@ -170,7 +170,8 @@ SRC_URI += "file://debian/ca.patch \
 
 SRC_URI += "file://configure-targets.patch \
             file://shared-libs.patch \
-            file://parallel-make-fix.patch"
+            file://parallel-make-fix.patch \
+            file://perl-deprecated.patch"
 
 SRC_URI[md5sum] = "ee17e9bc805c8cc7d0afac3b0ef78eda"
 SRC_URI[sha256sum] = "7ce0c7f2c451070b4497ea7ca6f23eba6cef1a56db2e86e433f65926a7bc7497"
