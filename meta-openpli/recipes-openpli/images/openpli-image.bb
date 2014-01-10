@@ -27,7 +27,6 @@ IMAGE_INSTALL = " \
 	util-linux-sfdisk \
 	volatile-media \
 	vsftpd \
-	zram \
 	"
 
 OPTIONAL_PACKAGES_BROKEN = "samba"
@@ -75,6 +74,7 @@ OPTIONAL_PACKAGES += " \
 	wakelan \
 	xfsprogs \
 	zeroconf \
+	zram \
 	"
 
 export IMAGE_BASENAME = "openpli"
