@@ -1,4 +1,4 @@
-PRINC="1"
+PRINC="2"
 # Get rid of silly dependencies like util-linux
 RDEPENDS_${PN} = ""
 RRECOMMENDS_${PN} = "kernel-module-zram"
@@ -9,4 +9,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 # We don't have systemd
 do_install_append() {
 	rm -rf ${D}${systemd_unitdir}/system
+	mv ${D}${sysconfdir}/init.d/zram ${D}${sysconfdir}/init.d/zram.sh
 }
+
+INITSCRIPT_NAME = "zram.sh"

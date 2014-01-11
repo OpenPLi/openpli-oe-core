@@ -4,18 +4,36 @@ set -e
 start() {
     FACTOR=50
     [ -f /etc/default/zram ] && source /etc/default/zram || true
-    [ -e /dev/zram0 ] || modprobe zram
-    factor=$FACTOR # percentage
+    cd /dev
+    if [ -e zram0 ]
+    then
+		num_cpus=$(ls zram* | wc -l)
+	else
+		num_cpus=$(grep -c processor /proc/cpuinfo)
+		[ "$num_cpus" != 0 ] || num_cpus=1
+		if ! modprobe zram num_devices=$num_cpus
+		then
+			echo "Failed to load zram module"
+			exit 1
+		fi
+    fi
     memtotal=$(grep MemTotal /proc/meminfo | awk ' { print $2 } ')
-    mem_by_cpu=$(($memtotal*$factor/100*1024))
-   	echo 1 > /sys/block/zram0/reset
-   	echo $mem_by_cpu > /sys/block/zram0/disksize
-	mkswap /dev/zram0
-	swapon /dev/zram0
+    mem_by_cpu=$(($memtotal/$num_cpus*$FACTOR/100*1024))
+    for z in zram*
+    do
+		echo 1 > /sys/block/$z/reset
+		echo $mem_by_cpu > /sys/block/$z/disksize
+		mkswap /dev/$z > /dev/null
+		swapon /dev/$z
+	done
 }
 
 stop() {
-    swapoff /dev/zram0 || true
+	for z in /dev/zram*
+	do
+		swapoff $z || true
+	done
+	modprobe -r zram
 }
 
 case "$1" in
