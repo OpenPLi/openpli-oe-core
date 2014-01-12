@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.3.8"
 
-PR_INC = ".5"
+PR_INC = ".6"
 
 SRCREV = ""
 
@@ -38,6 +38,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-2.0.tar.bz2
 	file://it913x-backports-from-kernel-3.5.patch \
 	file://it913x-switch-off-PID-filter-by-default.patch \
 	file://it913x-fix-bulk-read-write-retry-loop.patch \
+	file://it913x-enable-endpoint-3-on-devices-with-HID-interface.patch \
 	file://dvb-usb-dib0700-disable-sleep.patch \
 	file://dvb_usb_disable_rc_polling.patch \
 	file://fix-dvb-siano-sms-order.patch \
