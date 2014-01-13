@@ -12,7 +12,7 @@ GIT_PV = ""
 
 SRCREV = "7768342230450559509e3e593b2ea33e81ea0ca4"
 
-SRC_URI = "git://anongit.freedesktop.org/gstreamer/${PN}"
+SRC_URI = "git://anongit.freedesktop.org/gstreamer/${PN};branch=0.10"
 
 SRC_URI += " \
 		file://orc.m4-fix-location-of-orcc-when-cross-compiling.patch \

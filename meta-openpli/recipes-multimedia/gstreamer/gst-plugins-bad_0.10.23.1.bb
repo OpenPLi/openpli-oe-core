@@ -20,7 +20,7 @@ EXTRA_OECONF += "--disable-examples --disable-experimental --disable-sdl --disab
 
 ARM_INSTRUCTION_SET = "arm"
 
-SRC_URI = "git://anongit.freedesktop.org/gstreamer/${PN}"
+SRC_URI = "git://anongit.freedesktop.org/gstreamer/${PN};branch=0.10"
 
 SRC_URI += " \
 		file://0003-mpegpsdemux_speedup.diff.patch \

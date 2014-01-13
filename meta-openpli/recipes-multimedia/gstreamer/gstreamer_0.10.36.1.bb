@@ -14,7 +14,7 @@ GIT_PV = ""
 
 SRCREV = "1bcabb9a23afb25dcd059bd827aa35b8ee7e5043"
 
-SRC_URI = "git://anongit.freedesktop.org/gstreamer/${PN}"
+SRC_URI = "git://anongit.freedesktop.org/gstreamer/${PN};branch=0.10"
 
 SRC_URI += " \
 		file://check_fix.patch \
