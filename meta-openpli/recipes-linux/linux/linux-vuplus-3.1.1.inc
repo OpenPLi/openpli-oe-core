@@ -3,7 +3,7 @@ LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.1.1"
 
-PR_INC = ".9"
+PR_INC = ".10"
 
 SRCREV = "r2"
 
@@ -22,6 +22,9 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.
         file://em28xx_fix_terratec_entries.patch \
         file://em28xx_add_terratec_h5_rev3.patch \
 	file://fix-dvb-siano-sms-order.patch \
+	file://dvb-usb-af9035.patch \
+	file://dvb-usb-a867.patch \
+	file://dvb-usb-rtl2832.patch \
         file://${MACHINE}_defconfig \
         "
 
