@@ -41,7 +41,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-2.0.tar.bz2
 	file://it913x-enable-endpoint-3-on-devices-with-HID-interface.patch \
 	file://dvb-usb-dib0700-disable-sleep.patch \
 	file://dvb_usb_disable_rc_polling.patch \
-	file://fix-dvb-siano-sms-order.patch \
+	file://dvb-usb-siano-always-load-smsdvb.patch \
         file://${MACHINE}_defconfig \
 	file://nfs-max-rwsize-8k.patch \
 	"

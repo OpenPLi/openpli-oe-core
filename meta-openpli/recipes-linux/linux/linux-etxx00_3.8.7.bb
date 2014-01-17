@@ -11,7 +11,7 @@ SRC_URI[sha256sum] = "afc3e654b779f4b994a0d455d6ad12f46ff0dbec2fe222a4f55925744b
 
 LIC_FILES_CHKSUM = "file://${WORKDIR}/linux-${PV}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-MACHINE_KERNEL_PR_append = ".10"
+MACHINE_KERNEL_PR_append = ".11"
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
 # to be installed in parallel. We revert this change and rprovide the versioned
@@ -42,7 +42,7 @@ SRC_URI += "http://www.et-view.com/download/linux-${PV}.tar.gz \
 	file://iosched-slice_idle-1.patch \
 	file://it913x-switch-off-PID-filter-by-default.patch \
 	file://tda18271-advertise-supported-delsys.patch \
-	file://fix-dvb-siano-sms-order.patch \
+	file://dvb-usb-siano-always-load-smsdvb-v2.patch \
 	file://mxl5007t-add-no_probe-and-no_reset-parameters.patch \
 	file://nfs-max-rwsize-8k.patch \
 	file://0001-rt2800usb-add-support-for-rt55xx.patch \
