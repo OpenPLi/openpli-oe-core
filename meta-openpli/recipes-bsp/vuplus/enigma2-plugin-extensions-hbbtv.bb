@@ -17,8 +17,8 @@ FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/* \
 PACKAGES		= "${PN}"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://hbbtv-zdf.patch;striplevel=1 \
-	  "
+	file://hbbtv-zdf.patch;striplevel=1 \
+"
 
 S = "${WORKDIR}/git"
 
