@@ -13,6 +13,7 @@ SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol
 
 SRC_URI += " \
 	file://fix_dvbaudiosink_async_opt.patch;patch=1;pnum=1 \
+	file://fix_dvbvideosink_dm8000_padtemplate.patch;patch=1;pnum=1 \
 	file://fix_dvbaudiosink_support_ddp.patch \
 	file://fix_dvbaudiosink_remove_wma.patch \
 "
