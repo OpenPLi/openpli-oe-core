@@ -1,25 +1,12 @@
 #! /bin/sh
 #
 # This is an init script for openembedded
-# Copy it to /etc/init.d/transmission and type
-# > update-rc.d transmission defaults 60
-#
-# 
 
+TRANSOPTIONS="-g /var/lib/transmission-daemon"
 # load default values
 [ -f /etc/default/transmission-daemon ] && . /etc/default/transmission-daemon
 
-if [ "$DAEMON_ENABLED" != "YES" ] ; then
-	echo "Transmission Deamon Not Enabled"
-	echo "edit /etc/default/transmission to enable"
-	exit
-fi
-
-# Exit if the package is not installed
-test -f /usr/bin/transmission-daemon || exit 0
-
 [ -z "$DAEMON_USER" ] || SSDOPTIONS="--chuid $DAEMON_USER:$DAEMON_GROUP"
-TRANSOPTIONS="-g $CONFIG_DIR -w $DOWNLOAD_DIR"
 
 case "$1" in
   start)

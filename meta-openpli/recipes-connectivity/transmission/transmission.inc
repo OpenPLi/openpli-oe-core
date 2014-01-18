@@ -6,7 +6,7 @@ LICENSE = "GPLv2"
 INC_PR = "r1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7ee657ac1dce0e7353033fc06c8087d2"
 
-SRC_URI = "http://mirrors.m0k.org/transmission/files/transmission-${PV}.tar.bz2;name=archive \
+SRC_URI = "http://download.transmissionbt.com/files/transmission-${PV}.tar.xz;name=archive \
            file://init \
            file://config"
 
@@ -26,7 +26,6 @@ do_install_append() {
 PACKAGES += "${PN}-gui ${PN}-client"
 
 FILES_${PN} = "${bindir}/transmission-daemon ${datadir}/transmission ${sysconfdir} ${localstatedir}/lib/${PN}-daemon"
-FILES_${PN}-client = "${bindir}/transmissioncli ${bindir}/transmission-remote"
-FILES_${PN}-gui += "${bindir}/transmission ${datadir}/icons ${datadir}/applications ${datadir}/pixmaps"
+FILES_${PN}-client = "${bindir}/transmission-remote ${bindir}/transmission-cli ${bindir}/transmission-create ${bindir}/transmission-show ${bindir}/transmission-edit"
+FILES_${PN}-gui += "${bindir}/transmission-gtk ${datadir}/icons ${datadir}/applications ${datadir}/pixmaps"
 CONFFILES_${PN} = "${sysconfdir}/default/transmission-daemon"
-

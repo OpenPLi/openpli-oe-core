@@ -1,0 +1,13 @@
+Index: transmission-2.82/libtransmission/platform.c
+===================================================================
+--- transmission-2.82.orig/libtransmission/platform.c
++++ transmission-2.82/libtransmission/platform.c
+@@ -385,7 +385,7 @@ tr_getDefaultDownloadDir (void)
+ #ifdef __HAIKU__
+         user_dir = tr_buildPath (getHomeDir (), "Desktop", NULL);
+ #else
+-        user_dir = tr_buildPath (getHomeDir (), "Downloads", NULL);
++        user_dir = tr_buildPath ("/media/hdd", "torrents", NULL);
+ #endif
+ 
+       tr_free (content);
