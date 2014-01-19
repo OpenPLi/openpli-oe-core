@@ -14,14 +14,14 @@ index 93cb587..2b5fe73 100644
 --- a/src/gstdvbaudiosink.c
 +++ b/src/gstdvbaudiosink.c
 @@ -196,7 +196,7 @@ GST_STATIC_PAD_TEMPLATE (
-				X_RAW_INT(24,24)
-				X_RAW_INT(32,24)
-				X_RAW_INT(32,32)
--				"audio/mpeg; "
-+				"audio/mpeg, profile = (string) lc; "
-				"audio/x-ac3; "
-				"audio/x-eac3; "
-				"audio/x-dts; "
+		X_RAW_INT(24,24)
+		X_RAW_INT(32,24)
+		X_RAW_INT(32,32)
+-		"audio/mpeg; "
++		"audio/mpeg, profile = (string) lc; "
+		"audio/x-ac3; "
+		"audio/x-eac3; "
+		"audio/x-private1-ac3; "
 -- 
 1.7.9.5
 
