@@ -42,14 +42,13 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-2.0.tar.bz2
 	file://dvb-usb-dib0700-disable-sleep.patch \
 	file://dvb_usb_disable_rc_polling.patch \
 	file://dvb-usb-siano-always-load-smsdvb.patch \
-        file://${MACHINE}_defconfig \
+	file://${MACHINE}_defconfig \
 	file://nfs-max-rwsize-8k.patch \
-	"
+"
 
 S = "${WORKDIR}/linux"
 
 inherit kernel
-
 
 export OS = "Linux"
 KERNEL_IMAGETYPE = "vmlinux"
@@ -60,25 +59,24 @@ KERNEL_IMAGEDEST = "/tmp"
 FILES_kernel-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
 
 
-
 do_configure_prepend() {
-        oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${S}/.config
-        oe_runmake oldconfig
+	oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${S}/.config
+	oe_runmake oldconfig
 }
 
 kernel_do_install_append() {
-        install -d ${D}/${KERNEL_IMAGEDEST}
-        install -m 0755 ${KERNEL_OUTPUT} ${D}${KERNEL_IMAGEDEST}
-        gzip ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
+	install -d ${D}/${KERNEL_IMAGEDEST}
+	install -m 0755 ${KERNEL_OUTPUT} ${D}${KERNEL_IMAGEDEST}
+	gzip ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
 }
 
 pkg_postinst_kernel-image () {
-        if [ -d /proc/stb ] ; then
-                flash_eraseall /dev/mtd2
-                nandwrite -p /dev/mtd2 /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
-        fi
-        rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
-        true
+	if [ -d /proc/stb ] ; then
+		flash_eraseall /dev/mtd2
+		nandwrite -p /dev/mtd2 /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
+	fi
+	rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
+	true
 }
 
 
