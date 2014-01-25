@@ -12,7 +12,7 @@ SRC_DATE = "20131224_0"
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
 
-PR = "r5_${SRC_DATE}"
+PR = "r6_${SRC_DATE}"
 
 S = "${WORKDIR}/opera-hbbtv"
 

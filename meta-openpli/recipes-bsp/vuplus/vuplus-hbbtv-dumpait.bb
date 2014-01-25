@@ -3,7 +3,7 @@ PRIORITY = "required"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE.GPLv3;md5=5ed852a46d22220a8b07a68e564d84c7"
 
-PR = "r1"
+PR = "r2"
 RREPLACES_${PN} = "vuplus-opera-dumpait"
 RCONFLICTS_${PN} = "vuplus-opera-dumpait"
 
@@ -18,6 +18,10 @@ S = "${WORKDIR}/git"
 do_install() {
 	install -d ${D}/usr/lib/${DESTDIR}
 	install -m 0755 ${S}/src/dumpait ${D}/usr/lib/${DESTDIR}
+}
+
+do_install_append() {
+	rm -rf ${S}
 }
 
 FILES_${PN} = "${libdir}/${DESTDIR}/dumpait"
