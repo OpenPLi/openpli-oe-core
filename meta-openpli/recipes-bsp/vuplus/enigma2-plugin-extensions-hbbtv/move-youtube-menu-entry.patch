@@ -1,0 +1,38 @@
+--- a/lib/python/Plugins/Extensions/HbbTV/plugin.py	2014-01-27 14:52:55.213446901 +0100
++++ b/lib/python/Plugins/Extensions/HbbTV/plugin.py	2014-01-26 16:38:52.000000000 +0100
+@@ -2226,6 +2235,7 @@
+ config.plugins.youtubetv = ConfigSubsection()
+ config.plugins.youtubetv.showhelp = ConfigYesNo(default = False)
+ config.plugins.youtubetv.uri = ConfigText(default = "http://www.youtube.com/tv", visible_width = 50, fixed_size = False)
++config.plugins.youtubetv.onMainMenu = ConfigYesNo(default = False)
+ class YoutubeTVWindow(Screen, HelpableScreen):
+         skin =	"""
+                 <screen name="YoutubeTVWindow" position="center,center" size="550,160" title="Start YouTube TV" >
+@@ -2364,8 +2374,10 @@
+ 	self.menulist = []
+ 	entryUri = getConfigListEntry(_("YouTube TV URL"), config.plugins.youtubetv.uri)
+ 	entryShowHelp = getConfigListEntry(_("Do not show YouTube TV Starter again"), config.plugins.youtubetv.showhelp)
++	entryOnMainMenu = getConfigListEntry(_("Display YouTube in main menu"), config.plugins.youtubetv.onMainMenu)
+ 	self.menulist.append(entryUri)
+ 	self.menulist.append(entryShowHelp)
++	self.menulist.append(entryOnMainMenu)
+ 
+ 	self["config"].list = self.menulist
+ 	self["config"].l.setList(self.menulist)
+@@ -2458,7 +2468,7 @@
+ 	session.open(YoutubeTVSettings)
+ 
+ def start_menu_main(menuid, **kwargs):
+-	if menuid == "mainmenu":
++	if menuid == "mainmenu" and config.plugins.youtubetv.onMainMenu.getValue():
+ 		return [(_("YouTube TV"), showYoutubeTV, "youtube_tv", 46)]
+ 	return []
+ 
+@@ -2490,6 +2500,7 @@
+ 	l = []
+ 	l.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=auto_start_main))
+ 	l.append(PluginDescriptor(name=_("YouTube TV"), where=PluginDescriptor.WHERE_MENU, fnc=start_menu_main))
++	l.append(PluginDescriptor(name=_("YouTube TV"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=showYoutubeTV))
+ 	l.append(PluginDescriptor(name=_("YouTube TV Settings"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=youtube_setting_main))
+ 	l.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, needsRestart=True, fnc=session_start_main, weight=-10))
+ 	l.append(PluginDescriptor(name=_("HbbTV Applications"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, needsRestart=True, fnc=plugin_extension_start_application))

@@ -18,6 +18,7 @@ PACKAGES		= "${PN}"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	file://hbbtv-zdf.patch;striplevel=1 \
+	file://move-youtube-menu-entry.patch;striplevel=1 \
 "
 
 S = "${WORKDIR}/git"
