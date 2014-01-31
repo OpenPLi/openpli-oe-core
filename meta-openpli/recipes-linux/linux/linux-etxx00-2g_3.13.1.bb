@@ -2,16 +2,16 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 SECTION = "kernel"
 LICENSE = "GPLv2"
 
-COMPATIBLE_MACHINE = "et[4,5,6,9]+"
+COMPATIBLE_MACHINE = "et[8,1]+"
 
-KERNEL_RELEASE = "3.8.7"
+KERNEL_RELEASE = "3.13.1"
 
-SRC_URI[md5sum] = "5f6aaac90a4587df34e418bedd7d40eb"
-SRC_URI[sha256sum] = "afc3e654b779f4b994a0d455d6ad12f46ff0dbec2fe222a4f55925744b498218"
+SRC_URI[md5sum] = "547c323bf83ab898f774ed3002ab31d5"
+SRC_URI[sha256sum] = "c2f127cd034afc2b0fef9d6d50bad9c489fc87f1fd82b2330adedadeefcd1331"
 
 LIC_FILES_CHKSUM = "file://${WORKDIR}/linux-${PV}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-MACHINE_KERNEL_PR_append = ".11"
+MACHINE_KERNEL_PR_append = ".0"
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
 # to be installed in parallel. We revert this change and rprovide the versioned
@@ -21,35 +21,21 @@ PKG_kernel-image = "kernel-image"
 RPROVIDES_kernel-base = "kernel-${KERNEL_VERSION}"
 RPROVIDES_kernel-image = "kernel-image-${KERNEL_VERSION}"
 
-SRC_URI += "http://www.et-view.com/download/linux-${PV}.tar.gz \
+SRC_URI += "http://xtrendet.com/linux-${PV}.tar.gz \
 	file://defconfig \
-	file://0001-Revert-default-authentication-needs-to-be-at-least-n.patch \
-	file://0001-Revert-MIPS-mm-Add-compound-tail-page-_mapcount-when.patch \
-	file://0001-Revert-MIPS-Add-fast-get_user_pages.patch \
-	file://0001-Revert-MIPS-Fix-potencial-corruption.patch \
 	file://add-dmx-source-timecode.patch \
 	file://af9015-output-full-range-SNR.patch \
 	file://af9033-output-full-range-SNR.patch \
 	file://as102-adjust-signal-strength-report.patch \
 	file://as102-scale-MER-to-full-range.patch \
-	file://cinergy_s2_usb_r2.patch \
 	file://cxd2820r-output-full-range-SNR.patch \
 	file://dvb-usb-dib0700-disable-sleep.patch \
-	file://dvb-usb-rtl2832.patch \
 	file://dvb_usb_disable_rc_polling.patch \
-	file://em28xx_add_terratec_h5_rev3.patch \
 	file://fix-proc-cputype.patch \
 	file://iosched-slice_idle-1.patch \
 	file://it913x-switch-off-PID-filter-by-default.patch \
 	file://tda18271-advertise-supported-delsys.patch \
-	file://dvb-usb-siano-always-load-smsdvb-v2.patch \
 	file://mxl5007t-add-no_probe-and-no_reset-parameters.patch \
-	file://nfs-max-rwsize-8k.patch \
-	file://0001-rt2800usb-add-support-for-rt55xx.patch \
-	file://rtl28xxu-and-tuners-update-to-latest-version-09-09-2013.patch \
-	file://rtl2832-scale-SNR-to-full-range.patch \
-	file://em28xx-dvb-enable-LNA-by-default-for-PCTV290e.patch \
-	file://zl10353-output-full-range-SNR.patch \
 	"
 
 S = "${WORKDIR}/linux-${PV}"
