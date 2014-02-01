@@ -13,6 +13,7 @@ IMAGE_INSTALL = " \
 	e2fsprogs-mke2fs \
 	e2fsprogs-tune2fs \
 	fakelocale \
+	kernel-params \
 	modutils-loadscript \
 	nfs-utils-client \
 	openpli-bootlogo \
