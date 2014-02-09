@@ -173,6 +173,7 @@ FILES_enigma2-fonts = "${datadir}/fonts"
 EXTRA_OECONF = "\
 	--with-libsdl=no --with-boxtype=${MACHINE} \
 	--enable-dependency-tracking \
+	ac_cv_prog_c_openmp=-fopenmp \
 	${@base_contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	${@base_contains("MACHINE_FEATURES", "colorlcd", "--with-colorlcd" , "", d)} \
 	BUILD_SYS=${BUILD_SYS} \

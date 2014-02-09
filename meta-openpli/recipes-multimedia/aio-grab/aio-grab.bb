@@ -16,3 +16,5 @@ SRC_URI = "git://git.code.sf.net/p/openpli/aio-grab;protocol=git"
 S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
+
+EXTRA_OECONF = "ac_cv_prog_c_openmp=-fopenmp"
