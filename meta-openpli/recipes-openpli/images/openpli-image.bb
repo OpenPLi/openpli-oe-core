@@ -61,6 +61,7 @@ OPTIONAL_PACKAGES += " \
 	procps \
 	pyload \
 	python-requests \
+	python-mechanize \
 	rsync \
 	rtorrent \
 	sabnzbd \
