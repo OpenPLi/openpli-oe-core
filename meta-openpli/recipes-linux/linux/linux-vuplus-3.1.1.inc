@@ -28,7 +28,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.
 
 S = "${WORKDIR}/linux-${KV}"
 
-inherit kernel
+inherit kernel machine_kernel_pr
 
 export OS = "Linux"
 KERNEL_IMAGETYPE = "vmlinux"

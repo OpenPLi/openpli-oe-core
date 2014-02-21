@@ -40,7 +40,7 @@ SRC_URI += "http://xtrendet.com/linux-${PV}.tar.gz \
 
 S = "${WORKDIR}/linux-${PV}"
 
-inherit kernel
+inherit kernel machine_kernel_pr
 
 export OS = "Linux"
 KERNEL_OBJECT_SUFFIX = "ko"

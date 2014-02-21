@@ -48,7 +48,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-2.0.tar.bz2
 
 S = "${WORKDIR}/linux"
 
-inherit kernel
+inherit kernel machine_kernel_pr
 
 export OS = "Linux"
 KERNEL_IMAGETYPE = "vmlinux"

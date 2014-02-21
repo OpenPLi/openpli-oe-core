@@ -1,7 +1,7 @@
 DESCRIPTION = "Linux kernel for ${MACHINE}"
 SECTION = "kernel"
 LICENSE = "GPLv2"
-PR = "r1"
+MACHINE_KERNEL_PR_append = ".1"
 
 COMPATIBLE_MACHINE = "xp1000"
 
@@ -41,7 +41,7 @@ SRC_URI += "http://www.xp-support.tv/support/linux/linux-${PV}-xp.tar.gz \
 
 S = "${WORKDIR}/linux-${PV}"
 
-inherit kernel
+inherit kernel machine_kernel_pr
 
 export OS = "Linux"
 KERNEL_OBJECT_SUFFIX = "ko"
