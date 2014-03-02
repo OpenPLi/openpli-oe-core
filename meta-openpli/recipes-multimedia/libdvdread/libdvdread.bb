@@ -7,6 +7,4 @@ PR = "r2"
 
 inherit autotools pkgconfig git-project
 
-SRC_URI = "git://git.videolan.org/libdvdread.git \
-           file://libdvdread_config_h.patch \
-           file://libdvdread_so_fix.patch"
+SRC_URI = "git://git.videolan.org/libdvdread.git"
