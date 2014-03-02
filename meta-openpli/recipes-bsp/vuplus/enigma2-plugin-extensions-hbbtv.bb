@@ -4,7 +4,7 @@ DESCRIPTION = "VU+ HBBTV plugin"
 
 LICENSE			= "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
-SRCREV			= "HEAD"
+SRCREV			= "${AUTOREV}"
 PV				= "experimental-git${SRCPV}"
 PKGV			= "experimental-git${GITPKGV}"
 PR				= "r14"
@@ -16,7 +16,7 @@ FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/* \
 
 PACKAGES		= "${PN}"
 
-SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
 	file://hbbtv-zdf.patch;striplevel=1 \
 	file://move-youtube-menu-entry.patch;striplevel=1 \
 "
