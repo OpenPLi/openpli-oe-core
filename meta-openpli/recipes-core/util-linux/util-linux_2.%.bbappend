@@ -5,6 +5,3 @@ PRINC = "1"
 
 ALTERNATIVE_PRIORITY[mount] = "10"
 ALTERNATIVE_PRIORITY[umount] = "10"
-
-PACKAGES =+ "util-linux-fstrim"
-FILES_util-linux-fstrim = "${base_sbindir}/fstrim"
