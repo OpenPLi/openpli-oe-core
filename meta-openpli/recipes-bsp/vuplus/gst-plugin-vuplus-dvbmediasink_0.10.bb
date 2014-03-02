@@ -9,7 +9,8 @@ BRANCH="master"
 PR = "r19"
 
 inherit autotools git-project
-SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH};tag=91738211ef106ae7d14c1ccc5c4dd26c0f2dbf58"
+SRCREV = "91738211ef106ae7d14c1ccc5c4dd26c0f2dbf58"
+SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH}"
 
 SRC_URI += " \
 	file://fix_dvbaudiosink_async_opt.patch;patch=1;pnum=1 \
