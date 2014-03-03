@@ -39,6 +39,7 @@ IMAGE_CMD_ubi_prepend = " \
 	--disable-compressor=lzo --compression-mode=size \
 	--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
 	${EXTRA_IMAGECMD_COMPAT}; rm -rf ${IMAGE_ROOTFS}/boot/*; \
+	rm -Rf ${IMAGE_ROOTFS}/tmp/*; \
 "
 
 IMAGE_CMD_ubi_append = " \
