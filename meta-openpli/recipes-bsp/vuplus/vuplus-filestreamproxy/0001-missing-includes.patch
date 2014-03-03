@@ -1,0 +1,36 @@
+diff --git a/src/eFilePumpThread.cpp b/src/eFilePumpThread.cpp
+index 4cd7fa6..7c5130a 100644
+--- a/src/eFilePumpThread.cpp
++++ b/src/eFilePumpThread.cpp
+@@ -12,6 +12,7 @@
+ #include <poll.h>
+ #include <stdio.h>
+ #include <fcntl.h>
++#include <unistd.h>
+ 
+ #include "ePreDefine.h"
+ #include "eFilePumpThread.h"
+diff --git a/src/eNetworkPumpThread.cpp b/src/eNetworkPumpThread.cpp
+index dc8972e..bf2710c 100644
+--- a/src/eNetworkPumpThread.cpp
++++ b/src/eNetworkPumpThread.cpp
+@@ -13,6 +13,7 @@
+ #include <errno.h>
+ #include <string.h>
+ #include <sys/ioctl.h>
++#include <unistd.h>
+ 
+ #include "ePreDefine.h"
+ #include "eNetworkPumpThread.h"
+diff --git a/src/main.cpp b/src/main.cpp
+index 967b64b..7d44ea9 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -11,6 +11,7 @@
+ #include <poll.h>
+ #include <stdlib.h>
+ #include <sys/ioctl.h>
++#include <unistd.h>
+ 
+ #include <vector>
+ #include <string>
