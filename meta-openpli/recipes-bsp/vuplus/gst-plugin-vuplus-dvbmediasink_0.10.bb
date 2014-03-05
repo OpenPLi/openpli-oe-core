@@ -6,18 +6,16 @@ LIC_FILES_CHKSUM = "file://src/gstdvbaudiosink.c;beginline=1;endline=45;md5=023e
 DEPENDS = "gstreamer gst-plugins-base"
 RDEPENDS_${PN} = "gst-ffmpeg"
 BRANCH="master"
-PR = "r19"
+PR = "r20"
 
 inherit autotools git-project
 SRCREV = "91738211ef106ae7d14c1ccc5c4dd26c0f2dbf58"
-SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH}"
-
-SRC_URI += " \
-	file://fix_dvbaudiosink_async_opt.patch;patch=1;pnum=1 \
-	file://fix_dvbvideosink_dm8000_padtemplate.patch;patch=1;pnum=1 \
-	file://fix_dvbaudiosink_support_ddp.patch \
-	file://fix_dvbaudiosink_remove_wma.patch \
-	file://Set-only-by-hardware-supported-audio-mpeg-4-profile.patch \
+SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH} \
+		file://0001-dvbaudiosink-enable-async.patch;apply=yes \
+		file://0002-dvbaudiosink-emulate-bcm7405-caps.patch;apply=yes \
+		file://0003-dvbaudiosink-support-ac3plus.patch;apply=yes \
+		file://0004-dvbaudiosink-remove_wma.patch;apply=yes \
+		file://0005-dvbaudiosink-remove-mp4a-non-lc.patch;apply=yes \
 "
 
 FILES_${PN} = "${libdir}/gstreamer-0.10/*.so"

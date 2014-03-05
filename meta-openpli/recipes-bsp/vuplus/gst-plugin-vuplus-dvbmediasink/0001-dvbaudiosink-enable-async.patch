@@ -1,8 +1,8 @@
 diff --git a/src/gstdvbaudiosink.c b/src/gstdvbaudiosink.c
-index 9a71412..b99f2fc 100644
+index ac59252..8eb22ce 100644
 --- a/src/gstdvbaudiosink.c
 +++ b/src/gstdvbaudiosink.c
-@@ -394,7 +394,7 @@ gst_dvbaudiosink_init (GstDVBAudioSink *klass, GstDVBAudioSinkClass * gclass)
+@@ -460,7 +460,7 @@ gst_dvbaudiosink_init (GstDVBAudioSink *klass, GstDVBAudioSinkClass * gclass)
  	klass->dump_filename = NULL;
  
  	gst_base_sink_set_sync (GST_BASE_SINK(klass), FALSE);
