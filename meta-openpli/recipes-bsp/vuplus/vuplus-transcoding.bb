@@ -4,7 +4,7 @@ SUMMARY = "Support for transcoding live streams and files on VU+ receivers"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE.GPLv3;md5=d32239bcb673463ab874e80d47fae504"
 
-PV = "1.0"
+PV = "2.0"
 PKGV = "${PV}"
 PR = "1"
 

@@ -9,11 +9,10 @@ inherit gitpkgv
 SRCREV = "${AUTOREV}"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "1"
+PR = "2"
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-RREPLACES_${PN} = "enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
 RCONFLICTS_${PN} = "enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
 
 SRC_URI = "git://code.vuplus.com/git/filestreamproxy.git;protocol=git;branch=master \
