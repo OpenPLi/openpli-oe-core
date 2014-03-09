@@ -18,7 +18,7 @@ SRC_URI = "git://github.com/kennethreitz/requests;protocol=git"
 
 S = "${WORKDIR}/git/"
 
-SRCREV = "v${PV}"
+SRCREV = "3bb13f8fbb9d4ed1a20bd33495cdc087eb062ca0"
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c858703330162aa799141655a10fe120"
 
