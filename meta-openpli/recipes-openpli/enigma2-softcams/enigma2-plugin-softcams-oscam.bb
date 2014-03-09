@@ -15,6 +15,7 @@ PR = "r0"
 DEPENDS = "libusb openssl"
 
 S = "${WORKDIR}/trunk"
+B = "${S}"
 CAMNAME = "oscam"
 CAMSTART = "/usr/bin/oscam --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
 CAMSTOP = "kill \`cat /tmp/oscam.pid\` 2> /dev/null"
@@ -43,5 +44,5 @@ do_install() {
 	install -d ${D}/etc/tuxbox/config/oscam
 	install -m 0644 ${WORKDIR}/oscam.* ${D}/etc/tuxbox/config/oscam/
 	install -d ${D}/usr/bin
-	install -m 0755 ${S}/oscam ${D}/usr/bin
+	install -m 0755 ${B}/oscam ${D}/usr/bin
 }
