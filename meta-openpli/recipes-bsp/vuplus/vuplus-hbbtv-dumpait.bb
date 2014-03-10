@@ -7,8 +7,9 @@ PR = "r2"
 RREPLACES_${PN} = "vuplus-opera-dumpait"
 RCONFLICTS_${PN} = "vuplus-opera-dumpait"
 
+SRVREV = "b83432e0f273738a2957f4a97fab91bd1a034a59"
 DESTDIR = "enigma2/python/Plugins/Extensions/HbbTV"
-SRC_URI = "git://code.vuplus.com/git/dumpait.git;protocol=git;branch=master;tag=HEAD \
+SRC_URI = "git://code.vuplus.com/git/dumpait.git \
            file://fix-gcc47-compile.patch"
 
 inherit autotools pkgconfig
