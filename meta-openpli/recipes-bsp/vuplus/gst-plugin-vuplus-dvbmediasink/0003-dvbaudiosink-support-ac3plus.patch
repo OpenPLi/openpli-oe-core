@@ -10,7 +10,34 @@
  		"audio/x-dts; "
  		"audio/x-private1-dts; "
  		"audio/x-private1-lpcm; "
-@@ -868,6 +870,10 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
+@@ -304,25 +306,7 @@ gst_dvbaudiosink_get_caps (GstBaseSink *basesink)
+ //	GstDVBAudioSink *self = GST_DVBAUDIOSINK (basesink);
+ //	gchar *strcaps;
+	GstCaps *caps;
+-	static int eac3_support;
+-
+-	if (!eac3_support) {
+-		int fd = open("/proc/stb/audio/ac3plus", O_RDONLY);
+-		if (fd >= 0) {
+-			eac3_support = 1;
+-			close(fd);
+-		}
+-		else
+-			eac3_support = -1;
+-	}
+-
+-	if (eac3_support < 0) {
+-		caps = gst_caps_copy(&hwtemplate->static_caps.caps);
+-		gst_caps_remove_structure(caps, 12); // remove x-eac3
+-		gst_caps_remove_structure(caps, 12); // remove x-private-eac3
+-	}
+-	else
+-		caps = gst_static_caps_get(&hwtemplate->static_caps);
++	caps = gst_static_caps_get(&hwtemplate->static_caps);
+
+ //	strcaps = gst_caps_to_string(caps);
+ //	GST_INFO_OBJECT (self, "dynamic caps for model %d '%s'", hwtype, gst_caps_to_string(caps));
+@@ -868,6 +852,10 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
  		GST_INFO_OBJECT (self, "MIMETYPE %s",type);
  		bypass = 0;
  	}
@@ -21,7 +48,7 @@
  	else if (!strcmp(type, "audio/x-private1-dts")) {
  		GST_INFO_OBJECT (self, "MIMETYPE %s (DVD Audio - 2 byte skipping)",type);
  		bypass = 2;
-@@ -887,6 +893,11 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
+@@ -887,6 +877,11 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
  		bypass = 7;
  		self->skip = 2;
  	}
@@ -33,7 +60,7 @@
  	else if (!strcmp(type, "audio/x-private1-lpcm")) {
  		GST_INFO_OBJECT (self, "MIMETYPE %s (DVD Audio)",type);
  		bypass = 6;
-@@ -1284,7 +1295,7 @@ gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
+@@ -1284,7 +1279,7 @@ gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
  			self->timestamp = timestamp;
  		else
  			timestamp = self->timestamp;
