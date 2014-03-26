@@ -8,11 +8,11 @@ RREPLACES_{$PN} = "vuplus-opera-browser-util"
 RCONFLICTS_{$PN} = "vuplus-opera-browser-util"
 PACKAGES = "${PN}"
 
-SRC_DATE = "20131224_0"
+SRC_DATE = "20140207_0"
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
 
-PR = "r6_${SRC_DATE}"
+PR = "r7_${SRC_DATE}"
 
 S = "${WORKDIR}/opera-hbbtv"
 
