@@ -12,9 +12,17 @@ PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
 SRC_URI = "git://github.com/eriksl/streamproxy.git;protocol=git"
-
+FILES_${PN} = "/usr/bin/streamproxy /etc/init.d/streamproxy.sh"
 S = "${WORKDIR}/git"
 
 inherit autotools
 
-FILES_${PN} = "/usr/bin/streamproxy"
+do_install_append() {
+	install -m 755 -d ${D}/etc/init.d/
+	install -m 755 ${S}/src/streamproxy.sh ${D}/etc/init.d/
+}
+
+INITSCRIPT_NAME = "streamproxy.sh"
+INITSCRIPT_PARAMS = "defaults"
+
+inherit update-rc.d
