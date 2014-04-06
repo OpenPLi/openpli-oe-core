@@ -21,7 +21,7 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-extensions-streamtv \
 	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-systemplugins-zappingmodeselection \
-	vuplus-transcoding \
+	streamproxy \
 "
 
 TARGET_ARCH = "mipsel"
