@@ -9,13 +9,12 @@ inherit gitpkgv
 SRCREV = "${AUTOREV}"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r1"
+PR = "r2"
 RCONFLICTS_${PN} = "vuplus-transcoding vuplus-livestreamproxy vuplus-filestreamproxy enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
 RREPLACES_${PN} = "vuplus-transcoding vuplus-livestreamproxy vuplus-filestreamproxy enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
 
 SRC_URI = "git://github.com/eriksl/streamproxy.git;protocol=git"
 FILES_${PN} = "/usr/bin/streamproxy /etc/init.d/streamproxy.sh"
-CONFFILES_${PN} = "/etc/init.d/streamproxy.sh"
 S = "${WORKDIR}/git"
 
 inherit autotools
