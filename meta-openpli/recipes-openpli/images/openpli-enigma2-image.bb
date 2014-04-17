@@ -105,6 +105,7 @@ IMAGE_INSTALL += " \
 	${ENIGMA2_PLUGINS} \
 	\
 	${@base_contains("MACHINE_FEATURES", "tpm", "tpmd", "", d)} \
+	${@base_contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
 	${@base_contains("MACHINE_FEATURES", "kernelwifi", "${KERNEL_WIFI_DRIVERS}", "", d)} \
 	${@base_contains("MACHINE_FEATURES", "extrakernelwifi", "${EXTRA_KERNEL_WIFI_DRIVERS}", "", d)} \
 	${@base_contains("MACHINE_FEATURES", "externalwifi", "${EXTERNAL_WIFI_DRIVERS}", "", d)} \

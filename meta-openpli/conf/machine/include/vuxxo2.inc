@@ -10,7 +10,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	vuplus-shutdown \
 	gst-plugin-vuplus-dvbmediasink \
 	ntfs-3g \
-	"
+"
 
 EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-firmwareupgrade \
@@ -21,7 +21,6 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-extensions-streamtv \
 	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-systemplugins-zappingmodeselection \
-	streamproxy \
 "
 
 TARGET_ARCH = "mipsel"
@@ -66,6 +65,6 @@ IMAGE_CMD_ubi_append = " \
 
 TARGET_FPU = "hard"
 
-MACHINE_FEATURES += "alsa usbhost wlan kernelwifi externalwifi 3dtv switchoff osdposition hdmicec fan"
+MACHINE_FEATURES += "alsa usbhost wlan kernelwifi externalwifi 3dtv switchoff osdposition hdmicec fan transcoding"
 
 require conf/machine/include/tune-mips32.inc
