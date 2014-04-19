@@ -10,6 +10,8 @@ SCHWERKRAFT_PROJECT = "dvbmediasink"
 
 inherit autotools schwerkraft-git
 
+SRCREV = "7671ff6f07a70151ef183e0f501097de5cf7f1b3"
+
 SRC_URI += " \
 	file://getdecodertime.patch \
 	file://0002-Set-only-by-hardware-supported-audio-mpeg-4-profile.patch \
