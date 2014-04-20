@@ -1,5 +1,4 @@
 DEPENDS += "openssl"
-PRINC = "2"
 
 FILES_wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
 

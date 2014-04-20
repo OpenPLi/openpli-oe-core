@@ -1,5 +1,3 @@
-PRINC = "2"
-
 PACKAGES =+ "${PN}-src"
 RDEPENDS_{PN}-src = "${PN}"
 FILES_${PN}-src += "${PYTHON_SITEPACKAGES_DIR}/zope/interface/*.py"
