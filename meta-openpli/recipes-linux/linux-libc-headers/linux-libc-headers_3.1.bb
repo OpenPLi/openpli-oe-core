@@ -1,4 +1,4 @@
-PRINC = "1"
+PR = "r1"
 
 require linux-libc-headers.inc
 

@@ -1,5 +1,3 @@
-PRINC="1"
-
 SRC_URI += "\
 	file://configure-kill-intl-check.patch \
 	file://configure-allow-local-network.patch \
