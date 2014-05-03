@@ -1,4 +1,4 @@
-PRINC = "1"
+PR = "r2"
 
 inherit setuptools
 
