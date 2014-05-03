@@ -1,5 +1,3 @@
-PRINC = "1"
-
 SRC_URI += " \
 	file://init \
 "
