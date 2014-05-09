@@ -12,7 +12,7 @@ SRC_DATE = "20140430_0"
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
 
-PR = "r7_${SRC_DATE}"
+PR = "r8_${SRC_DATE}"
 
 S = "${WORKDIR}/opera-hbbtv"
 
@@ -33,6 +33,8 @@ do_unpack() {
 do_install() {
 	install -d ${D}/usr/local/hbb-browser
 	cp -avR ${S}/opera/* ${D}/usr/local/hbb-browser/
+# workaround for broken startup script and segfault in libfaketime.so
+	sed -i -e '1,2d' -e 's/libfaketime.so //g' ${D}/usr/local/hbb-browser/launcher
 
 	install -d ${D}/etc
 	cp -avR ${S}/dfb/etc/* ${D}/etc/
