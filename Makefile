@@ -22,6 +22,10 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-openembedded/meta-networking \
 	$(CURDIR)/openembedded-core/meta \
 	$(CURDIR)/meta-openpli \
+	$(CURDIR)/meta-dream \
+	$(CURDIR)/meta-vuplus \
+	$(CURDIR)/meta-xp \
+	$(CURDIR)/meta-xtrend \
 	$(CURDIR)/meta-local
 
 CONFFILES = \

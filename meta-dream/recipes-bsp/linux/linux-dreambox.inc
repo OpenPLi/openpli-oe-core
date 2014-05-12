@@ -2,6 +2,8 @@ require linux.inc
 
 INC_PR = "17"
 
+FILESEXTRAPATHS_prepend := "${OPENPLI_BASE}/meta-openpli/recipes-linux/linux/files:"
+
 PACKAGES_DYNAMIC = "kernel-*"
 
 # For packages that RDEPEND on particular kernel modules, list the ones built into

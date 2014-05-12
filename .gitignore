@@ -1,6 +1,5 @@
 /build/
 /.deps/
-/meta-*/
 !/meta-openpli/
 !/meta-local/
 /openembedded-core/
