@@ -21,8 +21,6 @@ PKG_kernel-image = "kernel-image"
 RPROVIDES_kernel-base = "kernel-${KERNEL_VERSION}"
 RPROVIDES_kernel-image = "kernel-image-${KERNEL_VERSION}"
 
-FILESEXTRAPATHS_prepend := "${OPENPLI_BASE}/meta-openpli/recipes-linux/linux/files:"
-
 SRC_URI += "http://www.et-view.com/download/linux-${PV}.tar.gz \
 	file://defconfig \
 	file://0001-Revert-default-authentication-needs-to-be-at-least-n.patch \

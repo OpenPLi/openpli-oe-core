@@ -12,7 +12,7 @@ SRC_URI[sha256sum] = "f8a482de06251761d792ff7ea7fcb73eca4139e5cb80c3b38e39d1c4ef
 
 LIC_FILES_CHKSUM = "file://${WORKDIR}/linux/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-vuplus-${KV}:${OPENPLI_BASE}/meta-openpli/recipes-linux/linux/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-vuplus-${KV}:"
 
 SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-2.0.tar.bz2 \
 	file://brcm_3.3.patch;patch=1;pnum=1 \
