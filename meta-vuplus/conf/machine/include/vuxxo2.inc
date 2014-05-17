@@ -1,10 +1,12 @@
-include conf/machine/include/openpli.inc
+# We know about rtc
+MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
+
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
 	"
 
-include conf/machine/include/autoload-filesystems.inc
+module_autoload_xfs = "xfs"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	vuplus-shutdown \

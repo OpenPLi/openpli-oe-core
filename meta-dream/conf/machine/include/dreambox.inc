@@ -1,5 +1,7 @@
 # dreambox.inc
-include conf/machine/include/openpli.inc
+# We know about rtc
+MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
+
 
 EXTRA_IMAGEDEPENDS += "dreambox-secondstage-${MACHINE}"
 
@@ -7,7 +9,7 @@ GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "dreambox-dvb-modules-${MACHINE}"
 
-include conf/machine/include/autoload-filesystems.inc
+module_autoload_xfs = "xfs"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	gst-plugin-dreambox-dvbmediasink \
