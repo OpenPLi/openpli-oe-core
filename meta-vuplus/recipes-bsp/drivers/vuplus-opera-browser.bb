@@ -8,11 +8,13 @@ RREPLACES_{$PN} = "vuplus-opera-browser-util"
 RCONFLICTS_{$PN} = "vuplus-opera-browser-util"
 PACKAGES = "${PN}"
 
-SRC_DATE = "20140430_0"
+SRC_DATE = "20140519_1"
+PR = "r9_${SRC_DATE}"
+
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
-
-PR = "r8_${SRC_DATE}"
+SRC_URI[md5sum] = "e2f6220403c2a946f8f9583aa084bc60"
+SRC_URI[sha256sum] = "f8ec235ca0368bdcaaac2b61634204e2c41558d23d8d7d43ff4f02edc00d6ddb"
 
 S = "${WORKDIR}/opera-hbbtv"
 
@@ -33,8 +35,8 @@ do_unpack() {
 do_install() {
 	install -d ${D}/usr/local/hbb-browser
 	cp -avR ${S}/opera/* ${D}/usr/local/hbb-browser/
-# workaround for broken startup script and segfault in libfaketime.so
-	sed -i -e '1,2d' -e 's/libfaketime.so //g' ${D}/usr/local/hbb-browser/launcher
+# workaround for slightly broken startup script
+	sed -i -e '1,2d' ${D}/usr/local/hbb-browser/launcher
 
 	install -d ${D}/etc
 	cp -avR ${S}/dfb/etc/* ${D}/etc/
