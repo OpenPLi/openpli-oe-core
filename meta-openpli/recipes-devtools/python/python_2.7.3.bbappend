@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PRINC = "5"
+PR = "r5.3"
 
 SRC_URI += " \
 			file://04-default-is-optimized.patch \

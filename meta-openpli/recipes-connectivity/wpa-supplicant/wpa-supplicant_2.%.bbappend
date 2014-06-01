@@ -1,5 +1,4 @@
 DEPENDS += "openssl"
-PRINC = "2"
 
 FILES_wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
 
@@ -39,4 +38,4 @@ do_install_append() {
         ln -s ../../wpa_supplicant/ifupdown.sh ${D}${sysconfdir}/network/if-up.d/${PN}
 }
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${P}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"

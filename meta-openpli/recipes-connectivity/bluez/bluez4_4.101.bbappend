@@ -1,4 +1,4 @@
-PRINC = "1"
+PR = "r6"
 
 EXTRA_OECONF += " --disable-udevrules"
 

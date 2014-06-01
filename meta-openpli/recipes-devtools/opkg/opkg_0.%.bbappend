@@ -1,5 +1,3 @@
-PRINC = "4"
-
 SRC_URI += "file://sanity-check-provides.patch \
 	file://fix_uname_cache.patch \
 	file://0001-reuse-the-installed_files-list-when-possible.patch \

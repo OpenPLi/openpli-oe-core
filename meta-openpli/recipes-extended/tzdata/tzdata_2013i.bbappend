@@ -1,4 +1,4 @@
-PRINC = "3"
+PR = "r3"
 
 DEFAULT_TIMEZONE = "CET"
 

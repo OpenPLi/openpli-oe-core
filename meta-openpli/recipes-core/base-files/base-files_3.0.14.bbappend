@@ -1,4 +1,4 @@
-PRINC = "3"
+PR = "r76"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 

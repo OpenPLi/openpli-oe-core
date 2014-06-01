@@ -1,4 +1,4 @@
-PRINC = "2"
+PR = "r8"
 
 EXTRA_OECONF += "--with-confdir=/etc/default"
 
