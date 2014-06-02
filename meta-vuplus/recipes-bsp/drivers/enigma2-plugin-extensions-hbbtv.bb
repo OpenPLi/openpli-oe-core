@@ -1,27 +1,26 @@
-inherit gitpkgv
-
 DESCRIPTION = "VU+ HBBTV plugin"
 
-LICENSE			= "GPLv2"
+LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
-SRCREV			= "${AUTOREV}"
-PV				= "experimental-git${SRCPV}"
-PKGV			= "experimental-git${GITPKGV}"
-PR				= "r14"
-BRANCH			= "vuplus_experimental"
-RDEPENDS_${PN}	= "vuplus-opera-browser vuplus-hbbtv-dumpait"
-FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/* \
-					/usr/lib/enigma2/python/Components/Sources/* \
-					/usr/lib/enigma2/python/Components/Converter/*"
-
-PACKAGES		= "${PN}"
-
+BRANCH = "vuplus_experimental"
+S = "${WORKDIR}/git"
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
 	file://hbbtv-zdf.patch;striplevel=1 \
 	file://move-youtube-menu-entry.patch;striplevel=1 \
 "
 
-S = "${WORKDIR}/git"
+inherit gitpkgv
+SRCREV = "${AUTOREV}"
+PV = "experimental-git${SRCPV}"
+PKGV = "experimental-git${GITPKGV}"
+PR = "r14"
+
+RDEPENDS_${PN}	= "vuplus-opera-browser vuplus-hbbtv-dumpait"
+FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/* \
+					/usr/lib/enigma2/python/Components/Sources/* \
+					/usr/lib/enigma2/python/Components/Converter/* \
+"
+PACKAGES = "${PN}"
 
 do_install() {
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
@@ -37,7 +36,6 @@ do_install() {
 	cp -av ${S}/lib/python/Plugins/Extensions/HbbTV/locale/*.po ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/locale
 
 	python -O -m compileall ${D}/usr/lib/enigma2/python/Plugins/
-
 }
 
 do_install_append() {
