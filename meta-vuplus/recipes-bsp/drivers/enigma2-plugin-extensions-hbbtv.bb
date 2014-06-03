@@ -10,17 +10,15 @@ SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
 "
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
-PV = "experimental-git${SRCPV}"
-PKGV = "experimental-git${GITPKGV}"
-PR = "r14"
+SRCREV = "bbc323853f72cb7d5531cb87af04ffb4cd6e99c9"
+PV = "git${SRCPV}"
+PKGV = "git${GITPKGV}"
 
 RDEPENDS_${PN}	= "vuplus-opera-browser vuplus-hbbtv-dumpait"
 FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/* \
 					/usr/lib/enigma2/python/Components/Sources/* \
 					/usr/lib/enigma2/python/Components/Converter/* \
 "
-PACKAGES = "${PN}"
 
 do_install() {
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
