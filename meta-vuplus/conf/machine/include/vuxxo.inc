@@ -1,10 +1,9 @@
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
-	"
+"
 
 module_autoload_xfs = "xfs"
 
@@ -12,7 +11,11 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	vuplus-shutdown \
 	gst-plugin-vuplus-dvbmediasink \
 	ntfs-3g \
-	"
+"
+
+EXTRA_IMAGEDEPENDS += "\
+    vuplus-hbbtv-dumpait \
+"
 
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"

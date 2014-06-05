@@ -1,7 +1,6 @@
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
 	"
@@ -23,6 +22,7 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-extensions-streamtv \
 	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-systemplugins-zappingmodeselection \
+	vuplus-hbbtv-dumpait \
 "
 
 TARGET_ARCH = "mipsel"
