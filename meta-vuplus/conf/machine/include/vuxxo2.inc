@@ -17,7 +17,6 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-firmwareupgrade \
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-systemplugins-manualfancontrol \
-	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-streamtv \
 	enigma2-plugin-extensions-addstreamurl \
