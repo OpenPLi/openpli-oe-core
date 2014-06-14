@@ -48,7 +48,6 @@ OPTIONAL_PACKAGES += " \
 	iperf \
 	joe \
 	mc \
-	minidlna \
 	mpd \
 	mtd-utils \
 	nano \
