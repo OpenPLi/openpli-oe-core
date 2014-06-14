@@ -18,7 +18,6 @@ PR = "r0"
 RDEPENDS_${PN} = "readymedia"
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer/*"
 PACKAGES = "${PN}"
-PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 do_install() {
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer
