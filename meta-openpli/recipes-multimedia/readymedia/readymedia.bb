@@ -11,7 +11,7 @@ SRCREV = "bb9d584a86d058bdc410e81a0e498ee461e64f9b"
 PV = "1.1.0+git${SRCPV}"
 PKGV = "1.1.0+git${GITPKGV}"
 PR = "r0"
-DEPENDS = "libexif"
+DEPENDS = "libexif libav"
 
 SRC_URI = "git://git.code.sf.net/p/minidlna/git;protocol=git \
 			file://readymedia.sh \
