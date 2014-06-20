@@ -35,6 +35,5 @@ DEPENDS = "python-codecs \
 RDEPENDS_${PN} = $DEPENDS
 RDEPENDS_${PN} =+ "png-util"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN} = "/usr/lib/enigma2/python"
 FILES_${PN}-dbg += "/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/.debug/dpflib.so"
