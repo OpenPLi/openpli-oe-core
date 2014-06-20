@@ -19,7 +19,7 @@ do_install_append() {
 	rm -rf "${D}/usr/share"
 }
 
-DEPENDS = "python-codecs \
+lcd4linux_DEPENDS = "python-codecs \
 	python-datetime \
 	python-imaging \
 	python-textutils \
@@ -32,8 +32,8 @@ DEPENDS = "python-codecs \
 	python-simplejson \
 "
 
-RDEPENDS_${PN} = $DEPENDS
-RDEPENDS_${PN} =+ "png-util"
+DEPENDS = "${lcd4linux_DEPENDS}"
+RDEPENDS_${PN} = "${lcd4linux_DEPENDS} png-util"
 
 FILES_${PN} = "/usr/lib/enigma2/python"
 FILES_${PN}-dbg += "/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/.debug/dpflib.so"
