@@ -33,6 +33,7 @@ DEPENDS = "python-codecs \
 "
 
 RDEPENDS_${PN} = $DEPENDS
+RDEPENDS_${PN} =+ "png-util"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN} = "/usr/lib/enigma2/python"
