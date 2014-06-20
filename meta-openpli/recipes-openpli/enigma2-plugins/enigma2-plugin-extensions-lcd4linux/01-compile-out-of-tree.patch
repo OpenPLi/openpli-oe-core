@@ -1,0 +1,110 @@
+diff --git a/Rules_noxml-po.mak b/Rules_noxml-po.mak
+new file mode 100644
+index 0000000..131255d
+--- /dev/null
++++ b/Rules_noxml-po.mak
+@@ -0,0 +1,40 @@
++plugindir = $(libdir)/enigma2/python/Plugins/$(CATEGORY)/$(PLUGIN)
++
++LANGS = ar bg ca cs da de el en en_GB es et fa fi fr fy he hr hu is it lt lv nl no nb pl pt pt_BR ro ru sv sk sl sr th tr uk
++LANGMO = $(LANGS:=.mo)
++LANGPO = $(LANGS:=.po)
++
++# the TRANSLATORS: allows putting translation comments before the to-be-translated line.
++$(PLUGIN)-py.pot: $(srcdir)/../src/*.py
++	$(XGETTEXT) --no-wrap -L Python --from-code=UTF-8 -kpgettext:1c,2 --add-comments="TRANSLATORS:" -d $(PLUGIN) -s -o $@ $^
++
++$(PLUGIN).pot: $(PLUGIN)-py.pot
++	sed --in-place $(PLUGIN)-py.pot --expression=s/CHARSET/UTF-8/
++	$(MSGUNIQ) --no-wrap --no-location $^ -o $@
++
++%.po: $(PLUGIN).pot
++	if [ -f $@ ]; then \
++		$(MSGMERGE) --backup=none --no-wrap --no-location -s -N -U $@ $< && touch $@; \
++	else \
++		$(MSGINIT) -l $@ -o $@ -i $< --no-translator; \
++	fi
++
++.po.mo:
++	$(MSGFMT) -o $@ $<
++
++BUILT_SOURCES = $(LANGMO)
++CLEANFILES = $(LANGMO) $(PLUGIN)-py.pot $(PLUGIN)-xml.pot $(PLUGIN).pot
++
++dist-hook: $(LANGPO)
++
++install-data-local: $(LANGMO)
++	for lang in $(LANGS); do \
++		$(mkinstalldirs) $(DESTDIR)$(plugindir)/locale/$$lang/LC_MESSAGES; \
++		$(INSTALL_DATA) $$lang.mo $(DESTDIR)$(plugindir)/locale/$$lang/LC_MESSAGES/$(PLUGIN).mo; \
++		$(INSTALL_DATA) $$lang.po $(DESTDIR)$(plugindir)/locale/$$lang.po; \
++	done
++
++uninstall-local:
++	for lang in $(LANGS); do \
++		$(RM) $(DESTDIR)$(plugindir)/locale/$$lang/LC_MESSAGES/$(PLUGIN).mo; \
++	done
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..cb6781c
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,45 @@
++AC_INIT([lcd4linux],[1.0])
++AM_INIT_AUTOMAKE([foreign no-define])
++
++# Silent rules are available since 1.11, but older versions
++# are still in use. So don't use them unconditionally.
++m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
++
++AC_USE_SYSTEM_EXTENSIONS
++AC_SYS_LARGEFILE
++
++AC_PROG_CC
++AC_PROG_CXX
++m4_ifdef([LT_INIT], [LT_INIT], [AC_PROG_LIBTOOL])
++LT_INIT
++AC_CONFIG_MACRO_DIR([m4])
++
++AC_PATH_PROG(MSGFMT, msgfmt, AC_MSG_ERROR(Could not find msgfmt))
++AC_PATH_PROG(MSGINIT, msginit, AC_MSG_ERROR(Could not find msginit))
++AC_PATH_PROG(MSGMERGE, msgmerge, AC_MSG_ERROR(Could not find msgmerge))
++AC_PATH_PROG(MSGUNIQ, msguniq, AC_MSG_ERROR(Could not find msguniq))
++AC_PATH_PROG(XGETTEXT, xgettext, AC_MSG_ERROR(Could not find xgettext))
++
++AM_PATH_PYTHON
++#AX_PYTHON_DEVEL
++#AX_PTHREAD
++
++AC_CONFIG_FILES([
++Makefile
++src/Makefile
++src/data/Makefile
++src/data/Clock1/Makefile
++src/data/Clock2/Makefile
++src/data/Clock3/Makefile
++src/data/Clock4/Makefile
++src/data/Clock5/Makefile
++src/data/Clock6/Makefile
++src/meteo/Makefile
++src/renderer/Makefile
++src/wetter/Makefile
++src/arm/Makefile
++src/mips/Makefile
++meta/Makefile
++po/Makefile
++])
++AC_OUTPUT
+diff --git a/src/Makefile.am b/src/Makefile.am
+index ea5d168..d2837ab 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -7,8 +7,4 @@ install_PYTHON = *.py
+ install_SCRIPTS = FritzCallUserAction.sh
+ install_DATA = plugin.png History.txt
+ 
+-if CUBE
+-SUBDIRS += arm
+-else
+ SUBDIRS += mips
+-endif
