@@ -1,0 +1,44 @@
+#!/bin/sh
+
+#
+# Hack to implement if-modified http tag
+#
+# (c) Mirakels 2014
+#
+
+real=$1
+dest=$2
+src=$3
+shift 3
+
+log=/tmp/wget.$$
+mydest=/tmp/wgetrec.$$
+if [[ -f $real ]] ; then
+    ifmod=`TZ=0 ls -e $real | awk '{print $6 ", " $8 " " $7 " " $10 " " $9 " GMT"}'`
+    wget --header "If-Modified-Since:  $ifmod" $* -O $mydest $src 2> $log
+    rc=$?
+    if grep -q "304 Not Modified" $log ; then
+        rm $log
+        cp -p $real $dest  # caller wants to do mv $dest $real
+        exit $?
+    fi
+    rm $log
+else
+    wget  $* -O $dest  $src
+    rc=$?
+fi
+
+if [[ $rc == 0 -a -f $mydest ]] ; then
+    case $dest in
+        *Packages.gz)  gunzip -fc $mydest >  $dest
+                       rm $mydest
+                       ;;
+        *)             mv $mydest $dest
+                       ;;
+    esac
+fi
+return $rc
+
+#
+# The End
+#
