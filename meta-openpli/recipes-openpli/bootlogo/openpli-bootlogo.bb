@@ -8,7 +8,7 @@ require conf/license/openpli-gplv2.inc
 RDEPENDS_${PN} += "showiframe"
 
 PV = "3.0"
-PR = "r16"
+PR = "r17"
 
 S = "${WORKDIR}/"
 
