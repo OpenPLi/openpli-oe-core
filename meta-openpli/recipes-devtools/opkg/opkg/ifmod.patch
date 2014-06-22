@@ -1,0 +1,58 @@
+--- a/libopkg/opkg_download.c.org	2014-06-21 11:05:22.751240561 +0200
++++ a/libopkg/opkg_download.c	2014-06-21 11:30:08.762253398 +0200
+@@ -160,15 +160,15 @@
+       const char *argv[8];
+       int i = 0;
+ 
+-      argv[i++] = "wget";
++      argv[i++] = "opkg-wget";
++      argv[i++] = dest_file_name;
++      argv[i++] = tmp_file_location;
++      argv[i++] = src;
+       argv[i++] = "-q";
+       if (conf->http_proxy || conf->ftp_proxy) {
+ 	argv[i++] = "-Y";
+ 	argv[i++] = "on";
+       }
+-      argv[i++] = "-O";
+-      argv[i++] = tmp_file_location;
+-      argv[i++] = src;
+       argv[i++] = NULL;
+       res = xsystem(argv);
+ 
+--- a/libopkg/opkg.c.org	2014-06-21 14:13:25.322976577 +0200
++++ a/libopkg/opkg.c	2014-06-21 14:13:41.970191188 +0200
+@@ -589,6 +589,7 @@
+ 				      src->gzip ? "Packages.gz" : "Packages");
+ 
+ 		sprintf_alloc(&list_file_name, "%s/%s", lists_dir, src->name);
++#if MIRAKELSIFMOD
+ 		if (src->gzip) {
+ 			FILE *in, *out;
+ 			struct _curl_cb_data cb_data;
+@@ -629,6 +630,7 @@
+ 			}
+ 			free(tmp_file_name);
+ 		} else
++#endif
+ 			err = opkg_download(url, list_file_name, NULL, NULL, 0);
+ 
+ 		if (err) {
+--- a/libopkg/opkg_cmd.c.org	2014-06-21 14:13:05.995727404 +0200
++++ a/libopkg/opkg_cmd.c	2014-06-21 14:14:07.585521393 +0200
+@@ -164,6 +164,7 @@
+ 	      sprintf_alloc(&url, "%s/%s", src->value, src->gzip ? "Packages.gz" : "Packages");
+ 
+ 	  sprintf_alloc(&list_file_name, "%s/%s", lists_dir, src->name);
++#if MIRAKELSIFMOD
+ 	  if (src->gzip) {
+ 	      char *tmp_file_name;
+ 	      FILE *in, *out;
+@@ -186,6 +187,7 @@
+ 	      }
+ 	      free(tmp_file_name);
+ 	  } else
++#endif
+ 	      err = opkg_download(url, list_file_name, NULL, NULL, 0);
+ 	  if (err) {
+ 	       failures++;
