@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.47"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.48"
 
 COMPATIBLE_MACHINE = "dm[0-9]+.*"
 
@@ -11,6 +11,7 @@ SRC_URI = " \
 			http://sources.dreamboxupdate.com/download/kernel-patches/${P}-${PATCHREV}.patch.bz2;name=dmm-patch \
 			http://download.filesystems.org/unionfs/unionfs-2.x/unionfs-2.5.11_for_3.2.2.diff.gz;name=unionfs \
 			file://clear_sublevel.patch \
+			file://0001-Revert-MIPS-Fix-potencial-corruption.patch \
 			file://fadvise_dontneed_change.patch \
 			file://fix-proc-cputype.patch \
 			file://mips-refactor-clearpage-and-copypage.patch \
