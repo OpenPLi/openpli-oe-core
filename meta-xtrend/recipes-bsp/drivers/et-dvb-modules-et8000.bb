@@ -5,7 +5,8 @@ require et-dvb-modules.inc
 
 SRC_URI = "http://xtrendet.com/${MACHINE}-drivers-${KV}-${SRCDATE}.zip"
 
-SRC_URI[md5sum] = "e1588e37a88602684f5357ed9fad31b5"
-SRC_URI[sha256sum] = "51a7d4dd3bde4002f36601ebb26b206072acd10f184c2fd93d6a46ab5984558a"
+SRC_URI[md5sum] = "5e3bb901c959a28e416d4cb1c222e063"
+
+SRC_URI[sha256sum] = "dc370877c46a768d1b55593c6f349baae3f81b77b5c39b492d84c93374e314a7"
 
 COMPATIBLE_MACHINE = "et8000"
