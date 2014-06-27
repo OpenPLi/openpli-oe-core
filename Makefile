@@ -26,6 +26,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-vuplus \
 	$(CURDIR)/meta-xp \
 	$(CURDIR)/meta-xtrend \
+	$(CURDIR)/meta-formuler \
 	$(CURDIR)/meta-local
 
 CONFFILES = \
