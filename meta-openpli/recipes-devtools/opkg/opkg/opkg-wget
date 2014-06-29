@@ -28,16 +28,20 @@ else
     rc=$?
 fi
 
-if [[ $rc == 0 -a -f $mydest ]] ; then
-    case $dest in
-        *Packages.gz)  gunzip -fc $mydest >  $dest
-                       rm $mydest
-                       ;;
-        *)             mv $mydest $dest
-                       ;;
-    esac
+# Bash seems to fail on  [[ cond1 -a cond2 ]], sigh
+if [[ $rc == 0 ]] ; then
+    if [[ -f $mydest ]] ; then
+        case $dest in
+            *Packages.gz)  gunzip -fc $mydest >  $dest
+                           rm $mydest
+                           ;;
+            *)             mv $mydest $dest
+                           ;;
+        esac
+    fi
 fi
-return $rc
+
+exit $rc
 
 #
 # The End
