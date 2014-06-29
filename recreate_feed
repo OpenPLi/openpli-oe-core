@@ -27,7 +27,7 @@ find $pkg_dir -maxdepth 1 -type f -name '*.ipk' | sort | while read pkg ; do
 
     file_size=$(stat -c %s $pkg)
     md5sum=$(md5sum $pkg | cut -d' ' -f1)
-    if file $pkg | grep -q gzip ; then
+    if file -b $pkg | grep -q gzip ; then
         tar -xzf $pkg ./control.tar.gz 
     else
         ar x $pkg control.tar.gz
