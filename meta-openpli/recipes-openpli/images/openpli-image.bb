@@ -53,6 +53,7 @@ OPTIONAL_PACKAGES += " \
 	nano \
 	ntfs-3g \
 	ntp \
+	ofgwrite \
 	openresolv \
 	openssh \
 	openvpn \
