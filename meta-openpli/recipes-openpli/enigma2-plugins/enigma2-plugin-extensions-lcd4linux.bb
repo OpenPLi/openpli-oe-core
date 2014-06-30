@@ -1,4 +1,4 @@
-SUMMARY = "LCD4Linux plugin for VU+ Duo2"
+SUMMARY = "LCD4Linux plugin"
 AUTHOR = "IHAD joergm6 <joergm6@www.i-have-a-dreambox.com>"
 HOMEPAGE = "http://www.i-have-a-dreambox.com/wbb2/thread.php?postid=2023964"
 MAINTAINER = "PLi team"
@@ -6,7 +6,7 @@ LICENSE = "CC-BY-NC-SA-3.0"
 LIC_FILES_CHKSUM = "file://src/LICENSE;md5=fa31f0e5b0121243d59c7ff6a908c962"
 PV = "4.0+git${SRCPV}"
 PKGV = "4.0+git${GITPKGV}"
-PR = "r5"
+PR = "r6"
 SRC_URI = "git://github.com/oe-alliance/oe-alliance-plugins.git;protocol=git \
 	file://01-compile-out-of-tree.patch;striplevel=1 \
 "
@@ -30,6 +30,7 @@ lcd4linux_DEPENDS = "python-codecs \
 	python-email \
 	python-subprocess \
 	python-simplejson \
+	python-pyusb \
 "
 
 DEPENDS = "${lcd4linux_DEPENDS}"
