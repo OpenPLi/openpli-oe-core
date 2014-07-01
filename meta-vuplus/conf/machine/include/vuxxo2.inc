@@ -20,6 +20,7 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-extensions-streamtv \
 	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-systemplugins-zappingmodeselection \
+	enigma2-plugin-systemplugins-transcoding-setup \
 	vuplus-hbbtv-dumpait \
 "
 
