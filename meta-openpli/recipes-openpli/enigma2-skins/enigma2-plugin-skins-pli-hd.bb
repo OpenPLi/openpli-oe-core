@@ -14,7 +14,6 @@ SRC_URI = "git://github.com/littlesat/skin-PLiHD.git;protocol=git"
 
 FILES_${PN} = "/usr/share/enigma2/"
 
-RDEPENDS_${PN} = "font-valis-hd"
 S = "${WORKDIR}/git"
 
 do_compile() {
