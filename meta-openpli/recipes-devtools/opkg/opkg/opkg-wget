@@ -24,7 +24,7 @@ if [[ -f $real ]] ; then
     fi
     rm $log
 else
-    wget  $* -O $dest  $src
+    wget  $* -O $mydest  $src
     rc=$?
 fi
 
