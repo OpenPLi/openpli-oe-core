@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 PROVIDES += "virtual/bootloader"
 RPROVIDES_${PN} += "dreambox-secondstage"
 PRIORITY = "required"
-INC_PR = "r18"
+INC_PR = "r19"
 
 do_install() {
 	install -d ${D}/tmp
@@ -24,17 +24,16 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 DEPENDS = "dreambox-buildimage-native"
 
-# DM8000 needs mtd-utils nandwrite for the secondstage update, 7405 nand driver works fine with busybox nandwrite
-RDEPENDS_${PN}_dm8000 = "mtd-utils"
+# busybox nandwrite requires oob patch and is not working in every box
+RDEPENDS_${PN} = "mtd-utils"
 
 FILES_${PN} = "/tmp/secondstage-${MACHINE}.bin"
 
 pkg_postinst_${PN}() {
 	if [ -z "$D" ] && grep -q '\<${MACHINE}\>' /proc/stb/info/model; then
 		if [ -f /tmp/secondstage-${MACHINE}.bin ]; then
-			# first try mtd-utils, and fallback to busybox applets
-			flash_erase /dev/mtd1 0 0 2>/dev/null || flash_eraseall /dev/mtd1
-			nandwrite -m -n -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin 2>/dev/null || nandwrite -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin
+			flash_erase /dev/mtd1 0 0 2>/dev/null
+			nandwrite -m -n -o /dev/mtd1 /tmp/secondstage-${MACHINE}.bin 2>/dev/null
 			rm /tmp/secondstage-${MACHINE}.bin
 		fi
 	fi
