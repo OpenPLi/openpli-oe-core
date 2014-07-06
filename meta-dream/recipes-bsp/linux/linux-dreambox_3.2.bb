@@ -1,4 +1,4 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.48"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.49"
 
 COMPATIBLE_MACHINE = "dm[0-9]+.*"
 
@@ -37,6 +37,7 @@ SRC_URI = " \
 			file://dvb_usb_disable_rc_polling.patch \
 			file://dvb-usb-smsdvb_fix_frontend.patch \
 			file://0001-it913x-backport-changes-to-3.2-kernel.patch \
+			file://0001-linuxtv-api-DMM-drivers-are-now-ready-for-linux-tv-a.patch \
 			file://defconfig \
 "
 
