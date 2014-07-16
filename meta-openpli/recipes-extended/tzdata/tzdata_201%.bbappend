@@ -1,5 +1,3 @@
-PR = "r3"
-
 DEFAULT_TIMEZONE = "CET"
 
 FILES_${PN} = "                                          \

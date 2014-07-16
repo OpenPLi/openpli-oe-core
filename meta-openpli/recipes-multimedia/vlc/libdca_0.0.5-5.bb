@@ -10,7 +10,7 @@ SRC_URI = "git://anonscm.debian.org/collab-maint/${PN}.git;protocol=git"
 
 S = "${WORKDIR}/git"
 
-inherit autotools lib_package pkgconfig
+inherit autotools-brokensep lib_package pkgconfig
 
 do_unpackpost() {
     QUILT_PATCHES=debian/patches quilt push -a

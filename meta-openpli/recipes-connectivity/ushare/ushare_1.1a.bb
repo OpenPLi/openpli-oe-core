@@ -10,7 +10,7 @@ S = "${WORKDIR}/ushare-${PV}"
 
 PR = "r1"
 
-inherit autotools
+inherit autotools-brokensep
 
 # the configure script is hand-crafted, it rejects some of the usual
 # configure arguments

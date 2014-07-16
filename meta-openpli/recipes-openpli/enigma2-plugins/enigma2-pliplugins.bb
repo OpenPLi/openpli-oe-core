@@ -24,7 +24,7 @@ SRC_URI = "git://git.code.sf.net/p/openpli/enigma2-plugins;protocol=git"
 
 S = "${WORKDIR}/git"
 
-inherit autotools
+inherit autotools-brokensep
 
 EXTRA_OECONF = "LIBDIR=${libdir}"
 
