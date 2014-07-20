@@ -28,7 +28,7 @@ FILES_${PN} = "/usr/share/enigma2 /usr/share/fonts"
 FILES_${PN}-meta = "${datadir}/meta"
 RDEPENDS_${PN}-meta = ""
 
-inherit autotools
+inherit autotools-brokensep
 
 S = "${WORKDIR}/git"
 
