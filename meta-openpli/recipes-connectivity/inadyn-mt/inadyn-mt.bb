@@ -14,7 +14,7 @@ SRC_URI = "cvs://anonymous@inadyn-mt.cvs.sourceforge.net/cvsroot/inadyn-mt;modul
 
 S = "${WORKDIR}/${PN}"
 
-inherit autotools update-rc.d
+inherit autotools-brokensep update-rc.d
 
 INITSCRIPT_NAME = "inadyn-mt"
 CONFFILES_${PN} = "/etc/inadyn.conf"
@@ -25,7 +25,7 @@ do_compile() {
 
 do_install() {
 	install -d ${D}/usr/bin
-	install -m 755 ${S}/bin/linux/inadyn-mt ${D}/usr/bin
+	install -m 755 ${B}/bin/linux/inadyn-mt ${D}/usr/bin
 	install -d ${D}/etc
 	install -m 644 ${WORKDIR}/inadyn.conf ${D}/etc/
 	install -d ${D}/etc/init.d
