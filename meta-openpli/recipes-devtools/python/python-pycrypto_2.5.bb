@@ -12,6 +12,6 @@ SRC_URI[sha256sum] = "e950a78184e2a7defccf5d45e0c29c1e9edeb29984433f0d110a21e963
 
 S = "${WORKDIR}/pycrypto-${PV}"
 
-inherit autotools distutils
+inherit autotools-brokensep distutils
 
 BBCLASSEXTEND = "native"
