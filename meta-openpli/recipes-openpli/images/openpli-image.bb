@@ -34,7 +34,6 @@ OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
 	autofs \
-	autossh \
 	ctorrent \
 	cups \
 	djmount \
@@ -67,7 +66,6 @@ OPTIONAL_PACKAGES += " \
 	sabnzbd \
 	smartmontools \
 	smbnetfs \
-	sshpass \
 	strace \
 	tcpdump \
 	tmux \
