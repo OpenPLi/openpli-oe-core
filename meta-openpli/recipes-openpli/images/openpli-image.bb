@@ -73,7 +73,6 @@ OPTIONAL_PACKAGES += " \
 	tmux \
 	transmission \
 	vim \
-	wakelan \
 	xfsprogs \
 	zeroconf \
 	zram \
