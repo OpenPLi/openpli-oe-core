@@ -7,7 +7,7 @@ PR = "r0"
 VERSION := "${PV}"
 PV = "${VERSION}+svn${SRCPV}"
 
-SRC_URI = "${PLISVNURL}/${PLISVNBRANCH}/cdk/cdk;module=root;protocol=${PLISVNPROTO}"
+SRC_URI = "${PLISVNURL}/${PLISVNBRANCH}/cdk/cdk;module=root"
 
 FILES_${PN} = "/"
 
