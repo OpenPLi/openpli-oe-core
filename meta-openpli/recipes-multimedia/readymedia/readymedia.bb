@@ -21,7 +21,7 @@ S = "${WORKDIR}/git"
 
 CONFFILES_${PN} = "/etc/minidlna.conf"
 
-inherit autotools pkgconfig gettext update-rc.d
+inherit autotools-brokensep pkgconfig gettext update-rc.d
 
 INITSCRIPT_NAME = "readymedia.sh"
 INITSCRIPT_PARAMS = "stop 00 0 6 ."
