@@ -5,7 +5,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
 	"
 
-module_autoload_xfs = "xfs"
+KERNEL_MODULE_AUTOLOAD += "xfs"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	vuplus-shutdown \

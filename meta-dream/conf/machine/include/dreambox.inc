@@ -9,7 +9,7 @@ GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "dreambox-dvb-modules-${MACHINE}"
 
-module_autoload_xfs = "xfs"
+KERNEL_MODULE_AUTOLOAD += "xfs"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	gst-plugin-dreambox-dvbmediasink \
