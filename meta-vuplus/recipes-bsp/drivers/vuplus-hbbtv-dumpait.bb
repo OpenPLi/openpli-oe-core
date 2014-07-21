@@ -16,7 +16,7 @@ PKGV = "git${GITPKGV}"
 RREPLACES_${PN} = "vuplus-opera-dumpait"
 RCONFLICTS_${PN} = "vuplus-opera-dumpait"
 
-inherit autotools
+inherit autotools-brokensep
 
 do_install() {
 	install -d ${D}/usr/lib/${DESTDIR}
