@@ -13,7 +13,7 @@ SRC_URI = "git://github.com/oe-alliance/oe-alliance-plugins.git;protocol=git \
 SRCREV = "c25b354a26c397724b9db7ca10859dd86972f559"
 S = "${WORKDIR}/git/LCD4linux"
 
-inherit gitpkgv autotools
+inherit gitpkgv autotools-brokensep
 
 do_install_append() {
 	rm -rf "${D}/usr/share"
