@@ -6,13 +6,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=8e37f34d0e40d32ea2bc90ee812c9131"
 
 PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
 
-inherit gitpkgv pythonnative
+inherit gitpkgv pythonnative pkgconfig
 
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
 PR = "r10"
 
-SRC_URI="git://git.code.sf.net/p/openpli/plugins-enigma2;protocol=git"
+SRC_URI="git://git.code.sf.net/p/openpli/plugins-enigma2"
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \
