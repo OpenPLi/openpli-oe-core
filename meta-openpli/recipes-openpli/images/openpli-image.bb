@@ -34,6 +34,7 @@ OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
 	autofs \
+	autossh \
 	ctorrent \
 	cups \
 	djmount \
