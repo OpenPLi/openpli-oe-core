@@ -12,11 +12,12 @@ inherit gitpkgv
 SRCREV = "bbc323853f72cb7d5531cb87af04ffb4cd6e99c9"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
-PR = "r0"
+PR = "r2"
 
 DEPENDS = "djmount fuse libupnp"
 PROVIDES = "enigma2-plugin-systemplugins-dlnabrowser"
-RDEPENDS_${PN} = "djmount fuse-utils fuse libupnp kernel-module-fuse"
+RDEPENDS_${PN} = "djmount fuse-utils fuse libupnp"
+RRECOMMENDS_${PN} = "kernel-module-fuse"
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/DLNABrowser/*"
 PACKAGES = "${PN}"
 
