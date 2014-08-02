@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/athoik/${PN};branch=master"
 
 S = "${WORKDIR}/git"
 
-inherit gitpkgv
+inherit gitpkgv pkgconfig
 
 PV = "0.10.0+git${SRCPV}"
 PKGV = "0.10.0+git${GITPKGV}"

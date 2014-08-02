@@ -8,7 +8,7 @@ PR = "r10"
 
 SCHWERKRAFT_PROJECT = "dvbmediasink"
 
-inherit autotools schwerkraft-git
+inherit autotools schwerkraft-git pkgconfig
 
 SRCREV = "7671ff6f07a70151ef183e0f501097de5cf7f1b3"
 

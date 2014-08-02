@@ -8,7 +8,7 @@ RDEPENDS_${PN} = "gst-ffmpeg"
 BRANCH="master"
 PR = "r20"
 
-inherit autotools git-project
+inherit autotools git-project pkgconfig
 SRCREV = "91738211ef106ae7d14c1ccc5c4dd26c0f2dbf58"
 SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH} \
 		file://0001-dvbaudiosink-enable-async.patch;apply=yes \
