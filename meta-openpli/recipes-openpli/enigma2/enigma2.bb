@@ -37,6 +37,7 @@ RRECOMMENDS_${PN} = " \
 	"
 
 PYTHON_RDEPS = " \
+	python-numbers \
 	python-codecs \
 	python-core \
 	python-crypt \
