@@ -6,6 +6,16 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=8e37f34d0e40d32ea2bc90ee812c9131"
 
 PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
 
+# This prevents QA warnings because bitbake cannot see the dependencies
+# after parsing the recipe due to the PACKAGES_DYNAMIC stuff. It tells
+# the system what to build when installing these into an image.
+PACKAGES += "\
+	enigma2-plugin-extensions-mosaic \
+	enigma2-plugin-extensions-fancontrol2 \
+	"
+RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
+RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
+
 inherit gitpkgv pythonnative pkgconfig
 
 PV = "experimental-git${SRCPV}"
