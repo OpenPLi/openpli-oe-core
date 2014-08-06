@@ -1,7 +1,7 @@
 DESCRIPTION = "Backup Suite"
 LICENSE = "GPLv2"
 
-LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/BackupSuite/maintainer.info;md5=394462591145c3b5d703bf11f286ae58"
+LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/BackupSuite/GNU_LICENSE.txt;md5=8aab2037d6ccded90e5a3a3849bc60dc"
 
 SRC_URI = "git://github.com/Pedro-Newbie/BackupSuite.git"
 
@@ -15,8 +15,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-RDEPENDS_${PN} = "mtd-utils"
-RRECOMMENDS_${PN} = "mtd-utils-ubifs"
+RDEPENDS_${PN} = "mtd-utils-ubifs ofgwrite"
 
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/BackupSuite"
 
