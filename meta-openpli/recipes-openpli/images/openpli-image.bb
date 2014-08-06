@@ -32,6 +32,7 @@ IMAGE_INSTALL = " \
 
 OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
+OPTIONAL_BSP_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
 	autofs \
 	autossh \
@@ -75,6 +76,7 @@ OPTIONAL_PACKAGES += " \
 	xfsprogs \
 	zeroconf \
 	zram \
+	${OPTIONAL_BSP_PACKAGES} \
 	"
 
 export IMAGE_BASENAME = "openpli"
