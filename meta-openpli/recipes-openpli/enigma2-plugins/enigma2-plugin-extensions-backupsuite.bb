@@ -15,7 +15,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-RDEPENDS_${PN} = "mtd-utils-ubifs ofgwrite"
+RDEPENDS_${PN} = "mtd-utils mtd-utils-ubifs ofgwrite"
 
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/BackupSuite"
 
