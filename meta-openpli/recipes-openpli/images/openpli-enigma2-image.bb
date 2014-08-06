@@ -83,6 +83,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-et-livestream \
 	enigma2-plugin-extensions-openuitzendinggemist \
+	enigma2-plugin-extensions-tuxcom \
 	enigma2-plugin-extensions-xmltvimport \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
