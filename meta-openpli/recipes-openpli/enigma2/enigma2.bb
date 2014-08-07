@@ -121,6 +121,14 @@ RDEPENDS_${PN} += "${@base_contains("MACHINE_FEATURES", "blindscan-dvbc", "virtu
 
 DEMUXTOOL ?= "replex"
 
+# Mention packages before listing their dependencies
+PACKAGES += "\
+	enigma2-plugin-extensions-cutlisteditor \
+	enigma2-plugin-extensions-dvdburn \
+	enigma2-plugin-extensions-modem \
+	enigma2-plugin-systemplugins-wirelesslan \
+	"
+
 DESCRIPTION_append_enigma2-plugin-extensions-cutlisteditor = "enables you to cut your movies."
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
 DESCRIPTION_append_enigma2-plugin-extensions-graphmultiepg = "shows a graphical timeline EPG."
