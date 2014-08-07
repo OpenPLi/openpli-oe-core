@@ -124,8 +124,6 @@ DEMUXTOOL ?= "replex"
 # Mention packages before listing their dependencies
 PACKAGES += "\
 	enigma2-plugin-extensions-cutlisteditor \
-	enigma2-plugin-extensions-dvdburn \
-	enigma2-plugin-extensions-modem \
 	enigma2-plugin-systemplugins-wirelesslan \
 	"
 
@@ -144,12 +142,10 @@ RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "python-twisted-web"
 DESCRIPTION_append_enigma2-plugin-systemplugins-crashlogautosubmit = "automatically send crashlogs to Dream Multimedia"
 RDEPENDS_enigma2-plugin-systemplugins-crashlogautosubmit = "python-twisted-mail python-twisted-names python-compression python-mime python-email"
 DESCRIPTION_append_enigma2-plugin-systemplugins-cleanupwizard = "informs you on low internal memory on system startup."
-DESCRIPTION_append_enigma2-plugin-extensions-modem = "opens a menu to connect to internet via builtin modem."
-RDEPENDS_enigma2-plugin-extensions-modem = "dreambox-modem-ppp-scripts"
 DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python-wifi"
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
-# Note that these tools lack recipes
+# dvdauthor does not compile, skip this plugin
 RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL}"
 RDEPENDS_enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
 
