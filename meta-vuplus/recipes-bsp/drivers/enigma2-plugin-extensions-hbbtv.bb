@@ -7,12 +7,14 @@ S = "${WORKDIR}/git"
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
 	file://hbbtv-zdf.patch;striplevel=1 \
 	file://move-youtube-menu-entry.patch;striplevel=1 \
+	file://fix-hbbtv-crash-on-rtl-and-fox.patch;striplevel=1 \
 "
 
 inherit gitpkgv
 SRCREV = "bbc323853f72cb7d5531cb87af04ffb4cd6e99c9"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
+PR = "r1"
 
 RDEPENDS_${PN}	= "vuplus-opera-browser vuplus-hbbtv-dumpait"
 FILES_${PN}		= "/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/* \
