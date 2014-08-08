@@ -4,7 +4,9 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "git://github.com/OpenPLi/HenksatSettings.git;protocol=git"
+SRC_URI = "git://github.com/OpenPLi/HenksatSettings.git"
+SRCREV = "${AUTOREV}"
+
 S = "${WORKDIR}/git"
 
 inherit gitpkgv allarch
