@@ -2,6 +2,7 @@
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
+OPTIONAL_BSP_PACKAGES += "dreambox-buildimage"
 
 EXTRA_IMAGEDEPENDS += "dreambox-secondstage-${MACHINE}"
 
