@@ -13,7 +13,9 @@ DEPENDS = "\
 	enigma2-plugin-settings-henksat-rotating \
 	enigma2-plugin-settings-henksat-13e-19e-23e-28e-4.8e-0.8w \
 	enigma2-plugin-settings-henksat-13e-19e-23e-28e-42e-7e \
+	enigma2-plugin-settings-henksat-upc-regio-zevenaar \
 	enigma2-plugin-settings-henksat-ziggo-1111 \
+	enigma2-plugin-settings-henksat-ziggo-5555 \
 	enigma2-plugin-settings-ziggo-casema-west \
 	enigma2-plugin-settings-hans-19e-23e \
 	enigma2-plugin-settings-hans-19e-23e-28e \
