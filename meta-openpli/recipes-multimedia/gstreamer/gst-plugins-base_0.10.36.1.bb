@@ -66,6 +66,8 @@ do_configure_prepend() {
 	rm -f ${S}/m4/lib-link.m4
 	# manually provide remove-potcdate.sin, while our intltoolize does not install it
 	cp ${STAGING_DATADIR_NATIVE}/gettext/po/remove-potcdate.sin ${S}/po/
+	# Add foreign and subdir-objects
+	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects -Wno-portability 1.10])/' ${S}/configure.ac
 }
 
 FILES_${PN} += "${datadir}/${BPN}"

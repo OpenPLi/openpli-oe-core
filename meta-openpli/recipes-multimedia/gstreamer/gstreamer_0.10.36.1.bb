@@ -62,6 +62,8 @@ addtask common_update after do_unpack before do_patch
 do_configure_prepend() {
 	# This m4 file contains nastiness which conflicts with libtool 2.2.2
 	rm ${S}/m4/lib-link.m4 || true
+	# Add foreign and subdir-objects
+	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects -Wno-portability 1.10])/' ${S}/configure.ac
 }
 
 RRECOMMENDS_${PN}_qemux86    += "kernel-module-snd-ens1370 kernel-module-snd-rawmidi"

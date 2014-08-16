@@ -15,3 +15,8 @@ EXTRA_OECONF = "--disable-oggtest \
 		--with-vorbis=${STAGING_LIBDIR}"
 
 inherit autotools
+
+# Fixup for missing "foreign" and "subdir-objects" in automake
+do_configure_prepend() {
+	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac ${S}/*/configure.ac
+}

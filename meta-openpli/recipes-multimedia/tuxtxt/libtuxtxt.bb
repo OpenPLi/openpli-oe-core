@@ -5,7 +5,7 @@ DEPENDS = "libpng freetype"
 
 inherit gitpkgv
 
-SRC_URI = "git://git.code.sf.net/p/openpli/tuxtxt;protocol=git"
+SRC_URI = "git://git.code.sf.net/p/openpli/tuxtxt"
 
 S = "${WORKDIR}/git/libtuxtxt"
 

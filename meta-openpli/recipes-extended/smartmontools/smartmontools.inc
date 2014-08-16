@@ -8,3 +8,8 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/smartmontools/smartmontools-${PV}.tar.gz"
 S = "${WORKDIR}/smartmontools-${PV}"
 
 inherit autotools
+
+# Fixup for missing "foreign" and "subdir-objects" in automake
+do_configure_prepend() {
+	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.in
+}
