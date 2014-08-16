@@ -5,7 +5,7 @@ LICENSE_FLAGS = "commercial"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343 \
                     file://common/coverage/coverage-report.pl;beginline=2;endline=17;md5=622921ffad8cb18ab906c56052788a3f"
 
-DEPENDS += "gst-plugins-base libid3tag libmad mpeg2dec liba52 lame libcdio opencore-amr"
+DEPENDS += "gst-plugins-base libid3tag libmad mpeg2dec liba52 lame libcdio opencore-amr libdvdread bzip2 libpng libdvdnav"
 
 PR = "r2"
 GIT_PV = ""
