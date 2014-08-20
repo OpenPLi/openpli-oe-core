@@ -8,6 +8,13 @@ RDEPENDS_${PN} = "gst-ffmpeg"
 BRANCH="master"
 PR = "r20"
 
+S = "${WORKDIR}/git"
+
+do_configure_prepend() {
+	sed -i 's/AC_INIT/AC_INIT(gst-plugin-vuplus-dvbmediasink, 0.10, @pli4)/' ${S}/configure.ac
+	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
+}
+
 inherit autotools git-project pkgconfig
 SRCREV = "91738211ef106ae7d14c1ccc5c4dd26c0f2dbf58"
 SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH} \

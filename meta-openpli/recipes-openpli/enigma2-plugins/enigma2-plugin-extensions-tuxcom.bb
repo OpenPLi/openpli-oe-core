@@ -13,7 +13,7 @@ SRC_URI = "${PLISVNURL}/${PLISVNBRANCH}/external;module=tuxcom \
 
 S = "${WORKDIR}/tuxcom"
 
-inherit autotools
+inherit autotools pkgconfig
 
 do_install() {
 	install -d ${D}/usr/plugins

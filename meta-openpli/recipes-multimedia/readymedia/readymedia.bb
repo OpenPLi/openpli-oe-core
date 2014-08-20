@@ -19,6 +19,10 @@ SRC_URI = "git://git.code.sf.net/p/minidlna/git;protocol=git \
 "
 S = "${WORKDIR}/git"
 
+do_configure_prepend() {
+		sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
+}
+
 CONFFILES_${PN} = "/etc/minidlna.conf"
 
 inherit autotools-brokensep pkgconfig gettext update-rc.d
