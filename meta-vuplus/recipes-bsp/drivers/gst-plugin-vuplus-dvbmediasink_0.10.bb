@@ -11,7 +11,7 @@ PR = "r20"
 S = "${WORKDIR}/git"
 
 do_configure_prepend() {
-	sed -i 's/AC_INIT/AC_INIT(gst-plugin-vuplus-dvbmediasink, 0.10, @pli4)/' ${S}/configure.ac
+	sed -i 's/AC_INIT.*$/AC_INIT(gst-plugin-vuplus-dvbmediasink, 0.10, @pli4)/' ${S}/configure.ac
 	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
 }
 

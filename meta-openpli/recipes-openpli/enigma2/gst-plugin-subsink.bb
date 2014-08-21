@@ -16,7 +16,7 @@ SRC_URI = "git://git.code.sf.net/p/openpli/gstsubsink"
 S = "${WORKDIR}/git"
 
 do_configure_prepend() {
-	sed -i 's/AC_INIT/AC_INIT(gst-plugin-subsink, 0.10.0, @pli4)/' ${S}/configure.ac
+	sed -i 's/AC_INIT.*$/AC_INIT(gst-plugin-subsink, 0.10.0, @pli4)/' ${S}/configure.ac
 	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
 }
 inherit autotools pkgconfig
