@@ -20,3 +20,6 @@
 [submodule "meta-hd"]
 	path = meta-hd
 	url = https://github.com/HD-Digital/meta-hd.git
+[submodule "meta-xtrend"]
+	path = meta-xtrend
+	url = https://github.com/Xtrend-Official/meta-xtrend.git
