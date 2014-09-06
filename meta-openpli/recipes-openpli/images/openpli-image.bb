@@ -30,55 +30,6 @@ IMAGE_INSTALL = " \
 	vsftpd \
 	"
 
-OPTIONAL_PACKAGES_BROKEN = "samba"
-OPTIONAL_PACKAGES ?= ""
-OPTIONAL_BSP_PACKAGES ?= ""
-OPTIONAL_PACKAGES += " \
-	autofs \
-	autossh \
-	ctorrent \
-	cups \
-	djmount \
-	dvbsnoop \
-	dvdfs \
-	evtest \
-	gdb \
-	hddtemp \
-	hdparm \
-	inadyn-mt \
-	iperf \
-	joe \
-	mc \
-	mpd \
-	mtd-utils \
-	nano \
-	ntfs-3g \
-	ntp \
-	ofgwrite \
-	openresolv \
-	openssh \
-	openvpn \
-	parted \
-	procps \
-	pyload \
-	python-requests \
-	python-mechanize \
-	rsync \
-	rtorrent \
-	sabnzbd \
-	smartmontools \
-	smbnetfs \
-	strace \
-	tcpdump \
-	tmux \
-	transmission \
-	vim \
-	xfsprogs \
-	zeroconf \
-	zram \
-	${OPTIONAL_BSP_PACKAGES} \
-	"
-
 export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""
 

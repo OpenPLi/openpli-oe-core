@@ -74,31 +74,6 @@ DEPENDS += " \
 	enigma2-plugins \
 	"
 
-ENIGMA2_OPTIONAL = " \
-	channelsettings-enigma2-meta \
-	enigma2-pliplugins \
-	enigma2-plugin-drivers-usbserial \
-	enigma2-plugin-extensions-ambx \
-	enigma2-plugin-extensions-dlnabrowser \
-	enigma2-plugin-extensions-dlnaserver \
-	enigma2-plugin-extensions-et-livestream \
-	enigma2-plugin-extensions-openuitzendinggemist \
-	enigma2-plugin-extensions-tuxcom \
-	enigma2-plugin-extensions-xmltvimport \
-	enigma2-plugin-security-firewall \
-	enigma2-plugin-skins-pli-hd \
-	enigma2-plugin-skins-pli-hd-fullnight \
-	enigma2-plugins \
-	enigma2-skins \
-	picons-enigma2-meta \
-	softcams-enigma2-meta \
-	packagegroup-openplugins \
-	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
-	${@base_contains("MACHINE_FEATURES", "dreambox", "", "enigma2-plugin-extensions-backupsuite", d)} \
-	dvb-usb-drivers-meta \
-	cdfs cdtextinfo \
-	"
-
 IMAGE_INSTALL += " \
 	aio-grab \
 	enigma2 \
@@ -117,8 +92,5 @@ IMAGE_INSTALL += " \
 	${@base_contains('OPENPLI_FEATURES', 'dvd', 'cdfs cdtextinfo kernel-module-isofs kernel-module-udf', '', d)} \
 	"
 
-OPTIONAL_PACKAGES += " \
-	${ENIGMA2_OPTIONAL} \
-	"
 
 export IMAGE_BASENAME = "openpli-enigma2"
