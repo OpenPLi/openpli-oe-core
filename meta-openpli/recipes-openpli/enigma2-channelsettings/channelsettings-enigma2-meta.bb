@@ -21,6 +21,7 @@ DEPENDS = "\
 	enigma2-plugin-settings-hans-19e-23e-28e \
 	enigma2-plugin-settings-hans-13e-19e-23e-28e \
 	enigma2-plugin-settings-hans-13e-19e-23e-28e-rotating \
+	enigma2-plugin-settings-hans-kabelnl \
 	enigma2-plugin-settings-rytec-13e19e23e28e \
 	enigma2-plugin-settings-rytec-motor \
 	"
