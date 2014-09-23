@@ -3,4 +3,4 @@ user 			= dvbapiau
 pwd 			=
 disabled 		= 0
 group 			= 1
-au 				= 1
+au 			= 1
