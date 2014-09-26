@@ -18,6 +18,9 @@ else
 			if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
 			then
 				BACKUPDIR=${candidate}
+			elif [ -f ${BACKUPDIR}/backup/autoinstall${MACADDR} ]
+			then
+				break
 			elif [ ${candidate}/backup/.timestamp -nt ${BACKUPDIR}/backup/.timestamp ]
 			then
 				BACKUPDIR=${candidate}
