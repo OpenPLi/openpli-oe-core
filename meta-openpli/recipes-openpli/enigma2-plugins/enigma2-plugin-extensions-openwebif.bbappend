@@ -2,6 +2,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 python do_package_prepend () {
     boxtypes = [
+        ('formuler1', 'formuler1.jpg', 'formuler1.png'),
         ('dm500hd', 'dm500hd.jpg', 'dm_normal.png'),
         ('dm7020hd', 'dm7020hd.jpg', 'dm_normal.png'),
         ('dm8000', 'dm8000.jpg', 'dm_normal.png'),
