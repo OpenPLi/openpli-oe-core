@@ -1,0 +1,26 @@
+From 070d0508b41a623496ebc8bccac8662ecb04e59a Mon Sep 17 00:00:00 2001
+From: Mike Looijmans <milo-software@users.sourceforge.net>
+Date: Fri, 10 Oct 2014 18:30:41 +0200
+Subject: [PATCH] Revert "Change insane default again"
+
+This reverts commit f6c2accaaa1fc4d8d81738aa19d36b59e0d38901.
+---
+ plugin/plugin.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugin/plugin.py b/plugin/plugin.py
+index 19583fd..af604bf 100644
+--- a/plugin/plugin.py
++++ b/plugin/plugin.py
+@@ -35,7 +35,7 @@ config.OpenWebif.identifier.custom = ConfigYesNo(default=False)
+ config.OpenWebif.identifier.text = ConfigText(default = "", fixed_size = False)
+ config.OpenWebif.port = ConfigInteger(default = 80, limits=(1, 65535) )
+ config.OpenWebif.streamport = ConfigInteger(default = 8001, limits=(1, 65535) )
+-config.OpenWebif.auth = ConfigYesNo(default=True)
++config.OpenWebif.auth = ConfigYesNo(default=False)
+ config.OpenWebif.xbmcservices = ConfigYesNo(default=False)
+ config.OpenWebif.webcache = ConfigSubsection()
+ # FIXME: anything better than a ConfigText?
+-- 
+1.7.9.5
+
