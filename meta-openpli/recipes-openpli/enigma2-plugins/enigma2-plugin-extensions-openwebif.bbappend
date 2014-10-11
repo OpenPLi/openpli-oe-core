@@ -1,4 +1,6 @@
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+SRC_URI_append = " file://0001-Revert-Change-insane-default-again.patch"
 
 python do_package_prepend () {
     boxtypes = [
