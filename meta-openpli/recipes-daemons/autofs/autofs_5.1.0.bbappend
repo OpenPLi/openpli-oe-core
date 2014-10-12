@@ -1,16 +1,4 @@
-PR = "r8"
-
 EXTRA_OECONF += "--with-confdir=/etc/default"
-
-# Remove bash scripting from init script (meaning, remove "function"
-# from each shell function)
-do_configure_prepend () {
-	for bashfile in redhat/autofs.init.in samples/rc.autofs.in
-	do
-		sed -i 's.#!/bin/bash.#!/bin/sh.' $bashfile
-		sed -i 's/^function //g' $bashfile
-	done
-}
 
 # Remove and change configuration files
 do_install_append() {
