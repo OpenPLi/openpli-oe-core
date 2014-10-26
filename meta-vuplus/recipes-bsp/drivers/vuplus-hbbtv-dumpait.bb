@@ -12,6 +12,7 @@ inherit gitpkgv
 SRCREV = "b83432e0f273738a2957f4a97fab91bd1a034a59"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RREPLACES_${PN} = "vuplus-opera-dumpait"
 RCONFLICTS_${PN} = "vuplus-opera-dumpait"
