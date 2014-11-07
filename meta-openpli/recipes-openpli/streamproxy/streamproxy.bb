@@ -6,7 +6,7 @@ require conf/license/openpli-gplv2.inc
 
 inherit gitpkgv
 
-SRCREV = "37504af5e621af1fa4de35be61515013b1d7e6eb"
+SRCREV = "ff8efb3eb9bba8ee84a5ef4ffa51b86172ae3dc1"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r3"
