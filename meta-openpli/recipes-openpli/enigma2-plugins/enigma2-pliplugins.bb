@@ -46,3 +46,7 @@ do_install_append() {
 	find ${D}${libdir}/enigma2/python/ -name '*.pyc' -exec rm {} \;
 }
 
+# Nothing of this recipe should end up in sysroot, so blank it away.
+sysroot_stage_all() {
+    :
+}
