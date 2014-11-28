@@ -33,10 +33,7 @@ PREFERRED_PROVIDER_virtual/blindscan-dvbs = "dreambox-blindscan-utils"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc = "dreambox-blindscan-utils"
 
 # Dreamboxes need old kernel headers to work
-LINUX_LIBC_HEADERS_VERSION = "3.1"
-PREFERRED_VERSION_linux-libc-headers = "${LINUX_LIBC_HEADERS_VERSION}"
-PREFERRED_VERSION_linux-libc-headers-native = "${LINUX_LIBC_HEADERS_VERSION}"
-PREFERRED_VERSION_nativesdk-linux-libc-headers = "${LINUX_LIBC_HEADERS_VERSION}"
+PREFERRED_VERSION_linux-libc-headers = "3.1"
 
 PREFERRED_VERSION_linux-dreambox = "3.2"
 
