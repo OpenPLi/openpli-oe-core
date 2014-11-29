@@ -7,3 +7,4 @@
 *.swp
 site.conf
 bblayers.conf
+*~
