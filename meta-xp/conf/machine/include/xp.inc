@@ -22,7 +22,7 @@ CHIPSET = "bcm7358"
 DVBMEDIASINK_CONFIG = "--with-wma --with-wmv --with-pcm --with-dts --with-eac3"
 
 TARGET_ARCH = "mipsel"
-DEFAULTTUNE = "mips32el"
+DEFAULTTUNE ?= "mips32el"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-xp"
 
@@ -54,8 +54,6 @@ IMAGE_CMD_ubi_append = " \
 	zip ${DISTRO_NAME}-${DISTRO_VERSION}-${MACHINE}_usb.zip ${IMAGEDIR}/*; \
 	rm -Rf ${IMAGEDIR}; \
 	"
-
-TARGET_FPU = "soft"
 
 MACHINE_FEATURES += "alsa usbhost wlan kernelwifi extrakernelwifi 3dtv switchoff textlcd osdposition hdmicec"
 
