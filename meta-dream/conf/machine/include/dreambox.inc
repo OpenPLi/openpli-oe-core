@@ -5,8 +5,6 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 EXTRA_IMAGEDEPENDS += "dreambox-secondstage-${MACHINE}"
 
-GLIBC_EXTRA_OECONF = "--with-tls --with-__thread"
-
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "dreambox-dvb-modules-${MACHINE}"
 
 KERNEL_MODULE_AUTOLOAD += "xfs"
