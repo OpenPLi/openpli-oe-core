@@ -1,12 +1,9 @@
 SRC_URI += "file://sanity-check-provides.patch \
-	file://fix_uname_cache.patch \
 	file://0001-reuse-the-installed_files-list-when-possible.patch \
 	file://ifmod.patch \
 	file://modprobe \
 	file://opkg-wget \
 	"
-
-PR = "r5"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 PACKAGES =+ "opkg-wget"
