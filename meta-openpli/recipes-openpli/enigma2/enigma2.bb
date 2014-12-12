@@ -166,9 +166,10 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit autotools pkgconfig
 
 PACKAGES =+ "enigma2-fonts"
-PV_enigma2-fonts = "2010.11.14"
+PV_enigma2-fonts = "2014.12.11"
 PR_enigma2-fonts = "r0"
 PKGV_enigma2-fonts = "${PV_enigma2-fonts}"
+PKGR_enigma2-fonts = "${PR_enigma2-fonts}"
 FILES_enigma2-fonts = "${datadir}/fonts"
 
 EXTRA_OECONF = "\
