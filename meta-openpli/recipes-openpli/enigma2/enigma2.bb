@@ -167,7 +167,7 @@ inherit autotools pkgconfig
 
 PACKAGES =+ "enigma2-fonts"
 PV_enigma2-fonts = "2014.12.17"
-PR_enigma2-fonts = "r1"
+PR_enigma2-fonts = "r0"
 PKGV_enigma2-fonts = "${PV_enigma2-fonts}"
 PKGR_enigma2-fonts = "${PR_enigma2-fonts}"
 FILES_enigma2-fonts = "${datadir}/fonts"
