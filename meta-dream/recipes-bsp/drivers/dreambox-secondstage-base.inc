@@ -4,7 +4,12 @@ LICENSE = "CLOSED"
 PROVIDES += "virtual/bootloader"
 RPROVIDES_${PN} += "dreambox-secondstage"
 PRIORITY = "required"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 INC_PR = "r19"
+
+PACKAGES = "${PN} ${PN}-bin"
+DEPENDS = "dreambox-buildimage-native"
+
 
 do_install() {
 	install -d ${D}/tmp
@@ -18,15 +23,8 @@ do_install() {
 	install -m 0644 secondstage-${MACHINE}-${PV}.bin ${DEPLOY_DIR_IMAGE}/secondstage-${MACHINE}.bin
 }
 
-PACKAGES = "${PN} ${PN}-bin"
-
-PACKAGE_ARCH := "${MACHINE_ARCH}"
-
-DEPENDS = "dreambox-buildimage-native"
-
 # busybox nandwrite requires oob patch and is not working in every box
 RDEPENDS_${PN} = "mtd-utils"
-
 FILES_${PN} = "/tmp/secondstage-${MACHINE}.bin"
 
 pkg_postinst_${PN}() {
