@@ -7,6 +7,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 DEPENDS = "dreambox-buildimage-native"
 PR = "r20"
 
+inherit deploy
+
 SRC_URI = "http://sources.dreamboxupdate.com/download/7020/secondstage-${MACHINE}-${PV}.bin"
 
 PACKAGES = "${PN}"
@@ -21,8 +23,6 @@ do_install() {
 	--sector-size ${DREAMBOX_SECTOR_SIZE} \
 	--boot-partition=${DREAMBOX_PART0_SIZE}:secondstage-${MACHINE}-${PV}.bin \
 	> ${D}/tmp/secondstage-${MACHINE}.bin
-	install -d ${DEPLOY_DIR_IMAGE}
-	install -m 0644 secondstage-${MACHINE}-${PV}.bin ${DEPLOY_DIR_IMAGE}/secondstage-${MACHINE}.bin
 }
 
 # busybox nandwrite requires oob patch and is not working in every box
@@ -38,3 +38,9 @@ pkg_postinst_${PN}() {
 		fi
 	fi
 }
+
+do_deploy() {
+	install -d ${DEPLOYDIR}
+	install -m 0644 secondstage-${MACHINE}-${PV}.bin ${DEPLOYDIR}/secondstage-${MACHINE}.bin
+}
+addtask deploy before do_package after do_install
