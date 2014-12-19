@@ -23,3 +23,6 @@
 [submodule "meta-xtrend"]
 	path = meta-xtrend
 	url = https://github.com/Xtrend-Official/meta-xtrend.git
+[submodule "meta-vuplus"]
+	path = meta-vuplus
+	url = http://github.com/vu-plus/meta-vuplus.git
