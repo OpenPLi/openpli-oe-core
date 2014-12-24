@@ -3,6 +3,7 @@ LICENSE = "CLOSED"
 SECTION = "multimedia"
 PRIORITY = "optional"
 
+SRCREV = "568b515fa806c83e03ffe21e284da1e8624f7758"
 SRC_URI = "git://github.com/et-plugins/gst-plugin-libxt.git;protocol=git"
 S = "${WORKDIR}/git"
 
@@ -10,7 +11,6 @@ inherit gitpkgv
 
 PV = "0.10.0+git${SRCPV}"
 PKGV = "0.10.0+git${GITPKGV}"
-PR = "r0"
 
 FILES_${PN} = "${libdir}/gstreamer-0.10/"
 
