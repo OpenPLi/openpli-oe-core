@@ -2,9 +2,8 @@ DESCRIPTION = "Transmission is a BitTorrent client w/ a built-in Ajax-Powered We
 SECTION = "network"
 HOMEPAGE = "www.transmissionbt.com/"
 DEPENDS = "gtk+ gnutls openssl gettext libtool intltool-native curl glib-2.0-native libevent librtmp"
-LICENSE = "GPLv2"
-INC_PR = "r1"
-LIC_FILES_CHKSUM = "file://COPYING;md5=7ee657ac1dce0e7353033fc06c8087d2"
+LICENSE = "GPLv2 & GPLv3"
+LIC_FILES_CHKSUM = "file://COPYING;md5=a1923fe8f8ff37c33665716af0ec84f1"
 
 SRC_URI = "http://download.transmissionbt.com/files/transmission-${PV}.tar.xz;name=archive \
            file://init \
