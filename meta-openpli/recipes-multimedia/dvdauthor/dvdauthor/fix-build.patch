@@ -1,0 +1,62 @@
+diff --git a/Makefile.am b/Makefile.am
+index de76fc5..395b8c4 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,4 +1,4 @@
+-SUBDIRS = doc src
++SUBDIRS = src
+ 
+ noinst_DATA = dvdauthor.spec
+ 
+diff --git a/configure.ac b/configure.ac
+index 68301e3..d6cd07d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -78,22 +78,12 @@ PKG_CHECK_MODULES([FRIBIDI], [fribidi], [AC_DEFINE(HAVE_FRIBIDI, 1, [whether Fri
+ AC_SUBST(FRIBIDI_CFLAGS)
+ AC_SUBST(FRIBIDI_LIBS)
+ 
+-AC_CHECK_PROGS(FREETYPECONFIG, [freetype-config])
+-if test -n "$FREETYPECONFIG"; then
+-    FREETYPE_CPPFLAGS="`$FREETYPECONFIG --cflags`"
+-    FREETYPE_LIBS="`$FREETYPECONFIG --libs`"
+-    AC_DEFINE(HAVE_FREETYPE, 1, [Whether FreeType is available])
+-
+-    ac_save_CPPFLAGS="$CPPFLAGS"
+-    CPPFLAGS="$CPPFLAGS $FREETYPE_CPPFLAGS"
+-    AC_CHECK_HEADERS(ft2build.h)
+-    CPPFLAGS="$ac_save_CPPFLAGS"
+-    AC_SUBST(FREETYPE_CPPFLAGS)
+-    AC_SUBST(FREETYPE_LIBS)
+-else
+-    AC_MSG_ERROR([freetype not found])
+-fi
+-
++PKG_CHECK_MODULES([FREETYPE], [freetype2], [
++                   AC_DEFINE(HAVE_FREETYPE, 1, [whether FreeType is available])
++                   AC_DEFINE(HAVE_FT2BUILD_H, 1, [whether ft2build is availlable])
++                  ], [:])
++AC_SUBST(FREETYPE_CFLAGS)
++AC_SUBST(FREETYPE_LIBS)
+ 
+ AC_ARG_ENABLE([default-video-format],
+ AS_HELP_STRING([--enable-default-video-format=format], [specify a default video format, either NTSC or PAL, to be used if no configuration or input setting is given]),
+@@ -136,4 +126,4 @@ ifdef([AM_PATH_XML2],
+ 
+ AC_CHECK_DECLS(O_BINARY, , , [ #include <fcntl.h> ] )
+ 
+-AC_OUTPUT(Makefile doc/Makefile src/Makefile)
++AC_OUTPUT(Makefile src/Makefile)
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 5ef90c3..3cec718 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -8,7 +8,7 @@ endif
+ nodist_bin_SCRIPTS = dvddirdel
+ 
+ AM_CPPFLAGS = -DSYSCONFDIR="\"$(sysconfdir)\"" \
+-    @XML_CPPFLAGS@ @MAGICK_CFLAGS@ @FREETYPE_CPPFLAGS@ @FRIBIDI_CFLAGS@ @FONTCONFIG_CFLAGS@
++    @XML_CPPFLAGS@ @MAGICK_CFLAGS@ @FREETYPE_CFLAGS@ @FRIBIDI_CFLAGS@ @FONTCONFIG_CFLAGS@
+ AM_CFLAGS = -Wall
+ 
+ dvdauthor_SOURCES = dvdauthor.c common.h dvdauthor.h da-internal.h \
