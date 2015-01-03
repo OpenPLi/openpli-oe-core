@@ -84,6 +84,7 @@ ENIGMA2_OPTIONAL = " \
 	${@base_contains("MACHINE_FEATURES", "dreambox", "", "enigma2-plugin-extensions-backupsuite", d)} \
 	dvb-usb-drivers-meta \
 	cdfs cdtextinfo \
+	meta-enigma2-dvdburn \
 	"
 
 DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"
