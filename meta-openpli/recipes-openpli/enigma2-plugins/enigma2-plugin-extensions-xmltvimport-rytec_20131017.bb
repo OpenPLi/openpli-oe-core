@@ -6,13 +6,10 @@ require conf/license/openpli-gplv2.inc
 
 inherit allarch
 
-PR = "r0"
-
 SRC_URI = "http://www.rytec.be/tools/rytec.sources.xml.${PV}.zip"
 
 S = "${WORKDIR}"
 
-DEPENDS = "enigma2-plugin-extensions-xmltvimport"
 PACKAGES = "${PN}"
 
 FILES_${PN} = "/etc/epgimport"
