@@ -54,6 +54,7 @@ OPTIONAL_PACKAGES += " \
 	tcpdump \
 	tmux \
 	transmission \
+	udpxy \
 	vim \
 	xfsprogs \
 	zeroconf \
