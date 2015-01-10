@@ -33,7 +33,6 @@ RRECOMMENDS_${PN} = " \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
 	${GST_UGLY_RDEPS} \
-	gst-plugin-libxt \
 	"
 
 PYTHON_RDEPS = " \
