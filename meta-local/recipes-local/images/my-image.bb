@@ -5,7 +5,7 @@
 
 require ../../../meta-openpli/recipes-openpli/images/openpli-enigma2-image.bb
 
-IMAGE_INSTALL += "enigma2-plugin-softcams-cccam \
+IMAGE_INSTALL += "enigma2-plugin-softcams-oscam \
 	enigma2-plugin-extensions-xmltvimport \
 	enigma2-plugin-extensions-autotimer \
 	enigma2-plugin-extensions-moviecut \
