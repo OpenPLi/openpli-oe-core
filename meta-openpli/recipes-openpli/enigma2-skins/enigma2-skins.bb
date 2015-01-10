@@ -12,6 +12,7 @@ PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
 PR = "r2"
 BRANCH = "3.2"
+SRCREV = "${AUTOREV}"
 
 SRC_URI = "git://schwerkraft.elitedvb.net/enigma2-skins/enigma2-skins.git;protocol=git;branch=${BRANCH}"
 

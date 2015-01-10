@@ -3,6 +3,8 @@ MAINTAINER = "MiLo @ pli-images.org"
 
 require conf/license/openpli-gplv2.inc
 
+SRCREV = "1c710647f257493bdbe07ab5afe41295c18d52f2"
+
 inherit gitpkgv
 
 PV = "1.0+git${SRCPV}"

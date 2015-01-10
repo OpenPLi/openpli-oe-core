@@ -8,6 +8,7 @@ RDEPENDS_${PN} = "tuxterm"
 PV = "0.2+svn${SRCPV}"
 PR = "r1"
 
+SRCREV = "335"
 SRC_URI = "${PLISVNURL}/${PLISVNBRANCH}/external;module=tuxterm-enigma2-plugin"
 
 S = "${WORKDIR}/tuxterm-enigma2-plugin"

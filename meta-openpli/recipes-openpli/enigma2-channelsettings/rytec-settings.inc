@@ -4,6 +4,9 @@ LICENSE = "CLOSED"
 
 PR = "r1"
 
+RYTECSETTINGS_SRCDATE = "20120614"
+SRCDATE = "${RYTECSETTINGS_SRCDATE}"
+
 PACKAGES = "${PN}"
 
 SRC_URI = "http://www.rytec.be/tools/Rytec_E2_${SATNAMES}_${RYTECSETTINGS_SRCDATE}.zip"
@@ -19,4 +22,3 @@ do_install() {
 		install -m 644 ${f} ${D}/etc/enigma2/${f}
 	done
 }
-

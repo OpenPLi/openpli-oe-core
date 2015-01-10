@@ -1,8 +1,9 @@
 LICENSE = "CLOSED"
 
+SRCREV = "fc273f3eda11c34085a4f88f04ca88829b96cb47"
+
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r0"
 
 SRC_URI = "git://github.com/OpenPLi/HenksatSettings.git;protocol=git"
 S = "${WORKDIR}/git"

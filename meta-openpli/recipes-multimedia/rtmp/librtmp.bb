@@ -7,6 +7,8 @@ DEPENDS = "openssl zlib"
 
 inherit gitpkgv
 
+SRCREV = "a1900c3e152085406ecb87c1962c55ec9c6e4016"
+
 PKGV = "2.4+git${GITPKGV}"
 PV = "2.4+git${SRCPV}"
 PR = "r1"

@@ -3,6 +3,8 @@ MAINTAINER = "Mike Looijmans"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
+SRCREV = "dbb47d7c663783427fa0bb89de1149f46887509d"
+
 inherit gitpkgv
 
 PV = "1.0+git${SRCPV}"
