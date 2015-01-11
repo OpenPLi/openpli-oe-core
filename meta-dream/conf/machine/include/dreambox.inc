@@ -3,7 +3,6 @@
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 OPTIONAL_BSP_PACKAGES += "dreambox-buildimage"
-OPTIONAL_BSP_ENIGMA2_PACKAGES += "enigma2-plugin-extensions-backupsuite"
 
 EXTRA_IMAGEDEPENDS += "dreambox-secondstage-${MACHINE}"
 
