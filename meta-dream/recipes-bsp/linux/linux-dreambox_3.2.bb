@@ -50,6 +50,6 @@ SRC_URI[dmm-patch.sha256sum] = "576356545de7f587d164d1cee2cb17b6c1ce3efbe2e01ff7
 SRC_URI[unionfs.md5sum] = "06e7c9f6cafd49b72184be851116c511"
 SRC_URI[unionfs.sha256sum] = "ce6ffa3c17a11dcca24196c11f6efc95c59b65a5b99958e73e8d4cc8e4b1f1ef"
 
-S = "${WORKDIR}/linux-3.2"
-
 require linux-dreambox.inc
+
+S = "${WORKDIR}/linux-3.2"

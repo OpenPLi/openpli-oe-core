@@ -1,6 +1,10 @@
-require linux.inc
-
+SUMMARY = "Linux Kernel"
+SECTION = "kernel"
+LICENSE = "GPLv2"
+LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 INC_PR = "19"
+
+inherit kernel siteinfo machine_kernel_pr
 
 PACKAGES_DYNAMIC = "kernel-*"
 
@@ -111,3 +115,25 @@ CMDLINE = "${@base_contains('IMAGE_FSTYPES', 'ubi.nfi', '${CMDLINE_UBI}', '${CMD
 USB_CMDLINE = "root=${USB_ROOT} rootdelay=10 rw ${CMDLINE_CONSOLE}"
 
 LOCALVERSION = "-${MACHINE}"
+
+
+do_configure_prepend() {
+
+        echo "" > ${S}/.config
+
+        echo "CONFIG_CMDLINE=\"${CMDLINE}\"" >> ${S}/.config
+
+        sed -e '/CONFIG_AEABI/d' \
+            -e '/CONFIG_OABI_COMPAT=/d' \
+            -e '/CONFIG_CMDLINE=/d' \
+            -e '/CONFIG_CPU_BIG_ENDIAN/d' \
+            -e '/CONFIG_LOGO=/d' \
+            -e '/CONFIG_LOGO_LINUX_CLUT224=/d' \
+            -e '/CONFIG_LOCALVERSION/d' \
+            -e '/CONFIG_LOCALVERSION_AUTO/d' \
+	    < '${WORKDIR}/defconfig' >>'${S}/.config'
+
+        echo 'CONFIG_LOCALVERSION="${LOCALVERSION}"' >>${S}/.config
+        echo '# CONFIG_LOCALVERSION_AUTO is not set' >>${S}/.config
+
+}
