@@ -6,10 +6,9 @@ require conf/license/openpli-gplv2.inc
 
 inherit gitpkgv
 
-SRCREV = "ff8efb3eb9bba8ee84a5ef4ffa51b86172ae3dc1"
+SRCREV = "b802cee2ab3ce161d3cbe8ea77ad2c3f914c31aa"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r3"
 RCONFLICTS_${PN} = "vuplus-transcoding vuplus-livestreamproxy vuplus-filestreamproxy enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
 RREPLACES_${PN} = "vuplus-transcoding vuplus-livestreamproxy vuplus-filestreamproxy enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
 
