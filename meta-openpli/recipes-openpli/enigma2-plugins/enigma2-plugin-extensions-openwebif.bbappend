@@ -21,8 +21,6 @@ python do_package_prepend () {
         ('vuduo2', 'duo2.jpg', 'vu_normal.png'),
         ('vuultimo', 'ultimo.jpg', 'vu_ultimo.png'),
         ('vuuno', 'uno.jpg', 'vu_normal.png'),
-        (hd1100', 'hd1100.jpg', 'hd1100.png'),
-        (hd2400', 'hd2400.jpg', 'hd2400.png'),
     ]
     import os
     top = '${D}${PLUGINPATH}/public/images/'
