@@ -52,13 +52,11 @@ OPTIONAL_PACKAGES += " \
 	smbnetfs \
 	strace \
 	tcpdump \
-	tmux \
 	transmission \
 	udpxy \
 	vim \
 	xfsprogs \
 	zeroconf \
-	zram \
 	${OPTIONAL_BSP_PACKAGES} \
 	"
 
