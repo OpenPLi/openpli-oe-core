@@ -16,6 +16,11 @@ PACKAGES += "\
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
 
+# Somehow this isn't detected
+PROVIDES += "\
+	enigma2-plugin-systemplugins-transcoding-setup \
+"
+
 inherit gitpkgv pythonnative pkgconfig
 
 PV = "experimental-git${SRCPV}"
