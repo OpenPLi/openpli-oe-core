@@ -85,6 +85,7 @@ ENIGMA2_OPTIONAL = " \
 	cdfs cdtextinfo \
 	meta-enigma2-dvdburn \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
+	enigma2-plugin-extensions-modifyplifullhd \
 	"
 
 DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"
