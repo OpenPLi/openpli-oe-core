@@ -71,6 +71,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-openuitzendinggemist \
 	enigma2-plugin-extensions-tuxcom \
 	enigma2-plugin-extensions-xmltvimport \
+	enigma2-plugin-extensions-modifyplifullhd \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
@@ -85,7 +86,6 @@ ENIGMA2_OPTIONAL = " \
 	cdfs cdtextinfo \
 	meta-enigma2-dvdburn \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
-	enigma2-plugin-extensions-modifyplifullhd \
 	"
 
 DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"
