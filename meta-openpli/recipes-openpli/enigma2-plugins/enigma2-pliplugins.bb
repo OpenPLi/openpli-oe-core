@@ -14,6 +14,8 @@ DEPENDS = "ushare"
 DESCRIPTION_enigma2-plugin-extensions-ushare = "UPnP media server"
 RDEPENDS_enigma2-plugin-extensions-ushare = "ushare"
 
+RDEPENDS_enigma2-plugin-extensions-openuitzendinggemist = "python-argparse"
+
 inherit gitpkgv
 
 SRCREV = "${AUTOREV}"
