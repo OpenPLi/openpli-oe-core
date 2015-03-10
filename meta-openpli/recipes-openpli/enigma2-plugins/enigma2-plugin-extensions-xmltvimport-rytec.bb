@@ -6,7 +6,7 @@ require conf/license/openpli-gplv2.inc
 
 inherit allarch
 
-PV = "20150224"
+PV = "20150310"
 SRC_URI = "http://home.scarlet.be/epgalfasite/rytec.sources.xml.gz"
 
 S = "${WORKDIR}"
