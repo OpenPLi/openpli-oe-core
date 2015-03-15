@@ -8,9 +8,9 @@ DEPENDS = "ncurses"
 
 PR = "r3"
 
-SRC_URI += "http://dreamboxupdate.com/download/opendreambox/2.0.0/blindscan-utils/blindscan-utils_${PV}_${PACKAGE_ARCH}.tar.bz2;name=${PACKAGE_ARCH}"
+SRC_URI += "http://dreamboxupdate.com/download/opendreambox/2.0.0/blindscan-utils/blindscan-utils_${PV}_${TUNE_PKGARCH}.tar.bz2;name=${TUNE_PKGARCH}"
 
-S = "${WORKDIR}/blindscan-utils_${PV}_${PACKAGE_ARCH}"
+S = "${WORKDIR}/blindscan-utils_${PV}_${TUNE_PKGARCH}"
 
 PACKAGES = "${PN}"
 
