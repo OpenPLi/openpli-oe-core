@@ -6,7 +6,7 @@ RPROVIDES_${PN} += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 
 DEPENDS = "ncurses"
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI += "http://dreamboxupdate.com/download/opendreambox/2.0.0/blindscan-utils/blindscan-utils_${PV}_${PACKAGE_ARCH}.tar.bz2;name=${PACKAGE_ARCH}"
 
