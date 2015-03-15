@@ -15,6 +15,12 @@ PACKAGES += "\
 	"
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
+RDEPENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
+
+# Somehow this isn't detected
+PROVIDES += "\
+	enigma2-plugin-systemplugins-transcoding-setup \
+"
 
 inherit gitpkgv pythonnative pkgconfig
 

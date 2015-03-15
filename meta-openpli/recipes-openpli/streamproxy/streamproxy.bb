@@ -7,10 +7,9 @@ require conf/license/openpli-gplv2.inc
 inherit gitpkgv
 
 SRCREV = "b802cee2ab3ce161d3cbe8ea77ad2c3f914c31aa"
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
-RCONFLICTS_${PN} = "vuplus-transcoding vuplus-livestreamproxy vuplus-filestreamproxy enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
-RREPLACES_${PN} = "vuplus-transcoding vuplus-livestreamproxy vuplus-filestreamproxy enigma2-transtreamproxy-util enigma2-plugin-systemplugins-transcodingsetup"
+PV = "2+git${SRCPV}"
+PKGV = "2+git${GITPKGV}"
+RDEPENDS_${PN} = "enigma2-plugin-systemplugins-transcodingsetup"
 
 SRC_URI = "git://github.com/eriksl/streamproxy.git;protocol=git"
 FILES_${PN} = "/usr/bin/streamproxy /etc/init.d/streamproxy.sh /etc/enigma2/streamproxy.conf"
