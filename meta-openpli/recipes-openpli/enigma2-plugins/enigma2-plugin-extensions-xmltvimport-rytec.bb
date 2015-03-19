@@ -6,7 +6,7 @@ require conf/license/openpli-gplv2.inc
 
 inherit allarch
 
-PV = "20150312"
+PV = "20150318"
 SRC_URI = "http://home.scarlet.be/epgalfasite/rytec.sources.xml.${PV}.gz"
 
 S = "${WORKDIR}"
@@ -20,5 +20,5 @@ do_install() {
 	install -m 644 ${S}/rytec.sources.xml.${PV} ${D}/etc/epgimport/rytec.sources.xml
 }
 
-SRC_URI[md5sum] = "6dca3b8604cff44818775d975cc37119"
-SRC_URI[sha256sum] = "57089e9dd0f3964ed381dad3f59dd7350016e98b4167a572003bd71095682277"
+SRC_URI[md5sum] = "742f5154cf254534fb24bc3d1b05139f"
+SRC_URI[sha256sum] = "d922b0599a309f18c420e48ae1806e98c7faf730ba8f064b04ad536fa6ec9987"
