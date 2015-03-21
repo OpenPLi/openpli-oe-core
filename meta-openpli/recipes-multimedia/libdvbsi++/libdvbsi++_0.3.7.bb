@@ -10,7 +10,7 @@ SRCREV = "bf0c2bb7b326b93713629dbf74f63a0a54ffe59d"
 SRC_URI = "http://www.saftware.de/${PN}/${P}.tar.bz2 \
 	file://fix_section_len_check.patch \
 	"
-SRC_URI[md5sum] = "4e9fb95c3ab8bb31ff051ed1aa98c8c5"
-SRC_URI[sha256sum] = "7f9a8fc7bed9372784ecb101fc45042dcb36dcd4949c57aa524365366f71ebf2"
+SRC_URI[md5sum] = "7eb50352c06b17c499a6d51e18e99ec5"
+SRC_URI[sha256sum] = "f8d412fbe7385e63fa4f02976d3ecae9a87a3936806f20e82ea67f351cae434f"
 
 inherit autotools pkgconfig
