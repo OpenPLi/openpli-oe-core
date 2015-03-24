@@ -2,7 +2,7 @@ HOMEPAGE = "http://www.linuxtv.org"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
-SRC_URI = "http://linuxtv.org/downloads/linuxtv-dvb-apps-${PV}.tar.bz2 \
+SRC_URI = "http://linuxtv.org/downloads/legacy/linuxtv-dvb-apps-${PV}.tar.bz2 \
            file://update-to-trunk.diff \
            file://update-to-tip.diff"
 

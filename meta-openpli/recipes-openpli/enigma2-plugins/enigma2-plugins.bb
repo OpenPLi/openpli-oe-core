@@ -19,7 +19,7 @@ RDEPENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
 
 # Somehow this isn't detected
 PROVIDES += "\
-	enigma2-plugin-systemplugins-transcoding-setup \
+	enigma2-plugin-systemplugins-transcodingsetup \
 "
 
 inherit gitpkgv pythonnative pkgconfig

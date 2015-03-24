@@ -1,0 +1,59 @@
+From ae65103fdf3fe7cba8a69df0fbe7940f5a3239be Mon Sep 17 00:00:00 2001
+From: Athanasios Oikonomou <athoik@gmail.com>
+Date: Sun, 2 Nov 2014 09:50:56 +0200
+Subject: [PATCH] librtmp: set timeout for send operations too
+
+timeout parameter now works for send and receive operations
+
+diff --git a/librtmp/rtmp.c b/librtmp/rtmp.c
+index 60f251c..587a086 100644
+--- a/librtmp/rtmp.c
++++ b/librtmp/rtmp.c
+@@ -910,6 +910,24 @@ RTMP_Connect0(RTMP *r, struct sockaddr * service)
+   r->m_sb.sb_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+   if (r->m_sb.sb_socket != -1)
+     {
++      /* set timeout */
++      {
++        SET_RCVTIMEO(tv, r->Link.timeout);
++        if (setsockopt
++            (r->m_sb.sb_socket, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(tv)))
++          {
++            RTMP_Log(RTMP_LOGERROR, "%s, Setting socket receive timeout to %ds failed!",
++	        __FUNCTION__, r->Link.timeout);
++          }
++        if (setsockopt
++            (r->m_sb.sb_socket, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv, sizeof(tv)))
++          {
++            RTMP_Log(RTMP_LOGERROR, "%s, Setting socket send timeout to %ds failed!",
++	        __FUNCTION__, r->Link.timeout);
++          }
++      }
++      setsockopt(r->m_sb.sb_socket, IPPROTO_TCP, TCP_NODELAY, (char *) &on, sizeof(on));
++
+       if (connect(r->m_sb.sb_socket, service, sizeof(struct sockaddr)) < 0)
+ 	{
+ 	  int err = GetSockError();
+@@ -937,19 +955,6 @@ RTMP_Connect0(RTMP *r, struct sockaddr * service)
+       return FALSE;
+     }
+ 
+-  /* set timeout */
+-  {
+-    SET_RCVTIMEO(tv, r->Link.timeout);
+-    if (setsockopt
+-        (r->m_sb.sb_socket, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(tv)))
+-      {
+-        RTMP_Log(RTMP_LOGERROR, "%s, Setting socket timeout to %ds failed!",
+-	    __FUNCTION__, r->Link.timeout);
+-      }
+-  }
+-
+-  setsockopt(r->m_sb.sb_socket, IPPROTO_TCP, TCP_NODELAY, (char *) &on, sizeof(on));
+-
+   return TRUE;
+ }
+ 
+-- 
+1.7.10.4
+
