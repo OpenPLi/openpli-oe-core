@@ -1,13 +1,8 @@
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 
-# we cannot use PACKAGES_DYNAMIC = "enigma2-plugin-.*"  here, because enigma2-plugins already has it,
-# so we only publish enigma2-plugin-pli-.* here (as a result, only those can occur in any RDEPENDS)
-
-PACKAGES_DYNAMIC = "enigma2-plugin-pli-.*"
-
-# add custom PROVIDES for plugins which do not match PACKAGES_DYNAMIC
-PROVIDES += "enigma2-plugin-extensions-openuitzendinggemist enigma2-plugin-extensions-ushare"
+# we cannot use PACKAGES_DYNAMIC = "enigma2-plugin-.*"  here, because enigma2-plugins already has it.
+PACKAGES_DYNAMIC = "enigma2-plugin-(pli-.*|extensions-openuitzendinggemist|extensions-ushare)"
 
 DEPENDS = "ushare"
 
@@ -35,7 +30,7 @@ EXTRA_OECONF = "LIBDIR=${libdir}"
 python populate_packages_prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
 
-    do_split_packages(d, enigma2_plugindir, '(.*?/.*?)/.*', 'enigma2-plugin-%s', '%s ', recursive=True, match_path=True, prepend=True, extra_depends = "enigma2")
+    do_split_packages(d, enigma2_plugindir, '(.*?/.*?)/.*', 'enigma2-plugin-%s', '%s ', recursive=True, match_path=True, prepend=True, extra_depends='')
 
     # we have to perform some tricks to get non-standard files in the plugin packages,
     # unfortunately FILES_append doesn't work
