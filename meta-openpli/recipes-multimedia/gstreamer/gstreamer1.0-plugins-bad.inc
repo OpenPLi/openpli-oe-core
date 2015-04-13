@@ -2,7 +2,7 @@ require gstreamer1.0-plugins.inc
 
 LICENSE = "GPLv2+ & LGPLv2+ & LGPLv2.1+ "
 
-DEPENDS += "gstreamer1.0-plugins-base bzip2 libpng jpeg"
+DEPENDS += "gstreamer1.0-plugins-base bzip2 libpng jpeg libdca"
 
 S = "${WORKDIR}/gst-plugins-bad-${PV}"
 
@@ -22,6 +22,7 @@ PACKAGECONFIG ??= " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)} \
     orc curl uvch264 neon sndfile \
     hls sbc dash bz2 smoothstreaming \
+    faac faad libmms dash webp rtmp \
     "
 
 # dash = Dynamic Adaptive Streaming over HTTP
@@ -53,7 +54,7 @@ PACKAGECONFIG[bluez]           = "--enable-bluez,--disable-bluez,bluez4"
 PACKAGECONFIG[rsvg]            = "--enable-rsvg,--disable-rsvg,librsvg"
 PACKAGECONFIG[sndfile]         = "--enable-sndfile,--disable-sndfile,libsndfile1"
 PACKAGECONFIG[webp]            = "--enable-webp,--disable-webp,libwebp"
-PACKAGECONFIG[rtmp]            = "--enable-rtmp,--disable-rtmp,rtmpdump"
+PACKAGECONFIG[rtmp]            = "--enable-rtmp,--disable-rtmp,librtmp"
 PACKAGECONFIG[libssh2]         = "--enable-libssh2,--disable-libssh2,libssh2"
 
 # these plugins have not been ported to 1.0 (yet):
@@ -74,6 +75,8 @@ EXTRA_OECONF += " \
     --enable-shm \
     --enable-fbdev \
     --enable-decklink \
+    --enable-dts \
+    --enable-mpegdemux \
     --disable-acm \
     --disable-android_media \
     --disable-apexsink \
@@ -86,7 +89,6 @@ EXTRA_OECONF += " \
     --disable-direct3d \
     --disable-directdraw \
     --disable-directsound \
-    --disable-dts \
     --disable-gme \
     --disable-gsettings \
     --disable-gsm \
