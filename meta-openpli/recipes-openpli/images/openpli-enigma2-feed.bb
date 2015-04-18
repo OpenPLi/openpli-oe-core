@@ -48,6 +48,7 @@ OPTIONAL_PACKAGES += " \
 	rsync \
 	rtorrent \
 	sabnzbd \
+	sshpass \
 	smartmontools \
 	smbnetfs \
 	strace \
