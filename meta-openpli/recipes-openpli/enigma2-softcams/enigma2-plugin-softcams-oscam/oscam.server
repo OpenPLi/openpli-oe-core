@@ -17,7 +17,7 @@ ecmunique                     = 1
 
 [reader]
 label                         = upper_card
-enable                        = 0
+enable                        = 1
 protocol                      = internal
 device                        = /dev/sci1
 detect                        = cd

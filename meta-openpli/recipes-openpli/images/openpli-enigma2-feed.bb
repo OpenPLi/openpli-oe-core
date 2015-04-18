@@ -68,7 +68,6 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-ambx \
 	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
-	enigma2-plugin-extensions-openuitzendinggemist \
 	enigma2-plugin-extensions-tuxcom \
 	enigma2-plugin-extensions-xmltvimport \
 	enigma2-plugin-extensions-modifyplifullhd \
