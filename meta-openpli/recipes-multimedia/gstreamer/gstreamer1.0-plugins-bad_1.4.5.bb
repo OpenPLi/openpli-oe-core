@@ -14,4 +14,3 @@ SRC_URI[sha256sum] = "152fad7250683d72f9deb36c5685428338365fe4a4c87ffe15e38783b1
 
 S = "${WORKDIR}/gst-plugins-bad-${PV}"
 
-PR = "r1"

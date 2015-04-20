@@ -10,12 +10,11 @@ SRC_URI += " \
 	file://get-caps-from-src-pad-when-query-caps.patch \
 	file://taglist-not-send-to-down-stream-if-all-the-frame-cor.patch \
 	file://0001-riff-media-added-fourcc-to-all-mpeg4-video-caps.patch \
+	file://subparse-avoid-false-negatives-dealing-with-UTF-8.patch \
 "
 
 SRC_URI[md5sum] = "357165af625c0ca353ab47c5d843920e"
 SRC_URI[sha256sum] = "77bd8199e7a312d3d71de9b7ddf761a3b78560a2c2a80829d0815ca39cbd551d"
 
 S = "${WORKDIR}/gst-plugins-base-${PV}"
-
-PR = "r1"
 
