@@ -6,7 +6,7 @@ HOMEPAGE = "http://rg3.github.io/youtube-dl/"
 SECTION = "devel/python"
 LICENSE = "PD"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7246f848faa4e9c9fc0ea91122d6e680"
-DEPENDS = "libxml2"
+DEPENDS = "libxml2 python-html"
 SRCREV = "3220c50f9af3a1df239656025aebfe00fec00e45"
 PV = "2015.04.17"
 
