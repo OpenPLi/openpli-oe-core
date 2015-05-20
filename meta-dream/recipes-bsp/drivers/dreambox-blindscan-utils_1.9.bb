@@ -6,18 +6,16 @@ RPROVIDES_${PN} += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 
 DEPENDS = "ncurses"
 
-PR = "r3"
-
 SRC_URI += "http://dreamboxupdate.com/download/opendreambox/2.0.0/blindscan-utils/blindscan-utils_${PV}_${TUNE_PKGARCH}.tar.bz2;name=${TUNE_PKGARCH}"
 
 S = "${WORKDIR}/blindscan-utils_${PV}_${TUNE_PKGARCH}"
 
 PACKAGES = "${PN}"
 
-SRC_URI[mips32el-nf.md5sum] = "428d439eab7c300c1842be5564c07e70"
-SRC_URI[mips32el-nf.sha256sum] = "190f2264f11cbe70169f3d94688320067a049fd6d670658a5157fc53bd1371a5"
-SRC_URI[mips32el.md5sum] = "6a1a681f65e3ba302aaa20e4155140cb"
-SRC_URI[mips32el.sha256sum] = "1664be1afa512bed1ff120693a997c564add49a97bac8e013dc8b90ed4eaced1"
+SRC_URI[mips32el-nf.md5sum] = "143cb7253132af1ecd3aafa3679c6109"
+SRC_URI[mips32el-nf.sha256sum] = "53d2760e3aa19eab6e19edabe8b9dd840c693ca30c43495904241e52fd40ea32"
+SRC_URI[mips32el.md5sum] = "1dd11bc63e8a638f240689e9a00969e4"
+SRC_URI[mips32el.sha256sum] = "a87d8b6440c1dab6c7e3e56bdb483f2089185ff55cb64df6321750092b4bd6e0"
 
 do_install() {
 	cp -r * ${D}
