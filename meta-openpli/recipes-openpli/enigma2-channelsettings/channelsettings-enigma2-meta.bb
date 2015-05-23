@@ -15,6 +15,7 @@ DEPENDS = "\
 	enigma2-plugin-settings-henksat-13e-19e-23e-28e-42e-7e \
 	enigma2-plugin-settings-henksat-upc-regio-amsterdam \
 	enigma2-plugin-settings-henksat-upc-regio-zevenaar \
+	enigma2-plugin-settings-henksat-ziggo \
 	enigma2-plugin-settings-henksat-ziggo-1111 \
 	enigma2-plugin-settings-henksat-ziggo-5555 \
 	enigma2-plugin-settings-ziggo-casema-west \
