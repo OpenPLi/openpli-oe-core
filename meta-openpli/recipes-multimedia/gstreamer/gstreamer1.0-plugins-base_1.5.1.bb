@@ -6,15 +6,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c54ce9345727175ff66d17b67ff51f58 \
                    "
 
 SRC_URI += " \
-	file://do-not-change-eos-event-to-gap-event-if.patch \
 	file://get-caps-from-src-pad-when-query-caps.patch \
 	file://taglist-not-send-to-down-stream-if-all-the-frame-cor.patch \
 	file://0001-riff-media-added-fourcc-to-all-mpeg4-video-caps.patch \
 	file://subparse-avoid-false-negatives-dealing-with-UTF-8.patch \
 "
 
-SRC_URI[md5sum] = "357165af625c0ca353ab47c5d843920e"
-SRC_URI[sha256sum] = "77bd8199e7a312d3d71de9b7ddf761a3b78560a2c2a80829d0815ca39cbd551d"
+SRC_URI[md5sum] = "138bedbfdd16eaebb8f57e52a7688e97"
+SRC_URI[sha256sum] = "b1355ee5300ed64126cc69d7f84750a4e00027d05dff89391fed3657d2b27e9a"
 
 S = "${WORKDIR}/gst-plugins-base-${PV}"
 
