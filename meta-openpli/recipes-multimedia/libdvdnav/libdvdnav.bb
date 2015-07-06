@@ -7,5 +7,5 @@ PV = "5.0.2"
 
 inherit autotools pkgconfig git-project
 
-SRCREV = "0a0b2ff7f1f71433c6dba5fd3d447d0a7a2c6885"
+SRCREV = "5fb919774444aa382f6e02cb63801c82f2c38325"
 SRC_URI = "git://git.videolan.org/libdvdnav.git"
