@@ -13,7 +13,8 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r1"
 
-SRC_URI = "git://git.code.sf.net/p/openpli/aio-grab;protocol=git"
+GITHUB_URI ?= "git://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 S = "${WORKDIR}/git"
 

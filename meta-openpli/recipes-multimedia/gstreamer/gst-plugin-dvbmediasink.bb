@@ -8,7 +8,8 @@ DEPENDS = "gstreamer gst-plugins-base libdca"
 
 SRCREV = "8179f8e60fb937de64c1e5004980e6ef3fc99a59"
 
-SRC_URI = "git://git.code.sf.net/p/openpli/${PN}"
+GITHUB_URI ?= "git://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 S = "${WORKDIR}/git"
 
