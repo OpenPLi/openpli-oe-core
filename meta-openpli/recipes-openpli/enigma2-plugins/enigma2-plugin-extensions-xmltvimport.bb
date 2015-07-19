@@ -11,9 +11,8 @@ SRCREV = "f15c140fbba89614518d47d0ddb4b5712cbd403a"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-OPENPLI_GIT ?= "git://git.code.sf.net/p/openpli"
-SRC_URI = "${OPENPLI_GIT}/plugin-xmltvimport;protocol=git"
-
+GITHUB_URI ?= "git://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 S = "${WORKDIR}/git/src"
 

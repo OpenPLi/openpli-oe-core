@@ -20,8 +20,8 @@ DESCRIPTION_font-valis-enigma = "Valis enigma font"
 PACKAGES = "${PN} font-valis-enigma"
 PROVIDES += "font-valis-enigma"
 
-OPENPLI_GIT ?= "git://git.code.sf.net/p/openpli"
-SRC_URI = "${OPENPLI_GIT}/skin-magic;protocol=git"
+GITHUB_URI ?= "git://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 FILES_${PN} = "/usr/share/enigma2/Magic"
 FILES_font-valis-enigma = "/usr/share/fonts/valis_enigma.ttf"
