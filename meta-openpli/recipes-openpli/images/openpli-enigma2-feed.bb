@@ -67,7 +67,6 @@ ENIGMA2_OPTIONAL = " \
 	channelsettings-enigma2-meta \
 	enigma2-pliplugins \
 	enigma2-plugin-drivers-usbserial \
-	enigma2-plugin-extensions-ambx \
 	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-tuxcom \
