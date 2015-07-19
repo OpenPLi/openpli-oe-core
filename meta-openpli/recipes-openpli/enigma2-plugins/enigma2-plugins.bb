@@ -28,7 +28,8 @@ PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
 
 SRCREV = "${AUTOREV}"
-SRC_URI="git://git.code.sf.net/p/openpli/plugins-enigma2"
+GITHUB_URI ?= "git://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \
