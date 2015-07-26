@@ -39,11 +39,6 @@ INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron"
 FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
 RDEPENDS_${PN}-cron += "${PN}"
 
-# We provide modprobe and friends
-PROVIDES += "module-init-tools"
-RPROVIDES_${PN} += "module-init-tools kmod"
-
-
 do_install_append() {
 	if grep -q "CONFIG_CRONTAB=y" ${WORKDIR}/defconfig; then
 		install -d ${D}${sysconfdir}/cron/crontabs
