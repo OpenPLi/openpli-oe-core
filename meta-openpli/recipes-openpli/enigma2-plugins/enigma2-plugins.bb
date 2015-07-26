@@ -37,6 +37,7 @@ EXTRA_OECONF = " \
 	STAGING_INCDIR=${STAGING_INCDIR} \
 	STAGING_LIBDIR=${STAGING_LIBDIR} \
 	--without-debug \
+	${@base_contains("GST_VERSION", "1.0", "--with-gstversion=1.0", "", d)} \
 "
 
 CONFFILES_${PN} += "${sysconfdir}/enigma2/movietags"
