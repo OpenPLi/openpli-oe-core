@@ -14,7 +14,10 @@ PKGV = "1.0+git${GITPKGV}"
 PR = "r1"
 
 GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
+SRC_URI = " \
+        ${GITHUB_URI}/OpenPLi/${BPN}.git \
+	files://001-add-cable-chipset.patch \
+"
 
 S = "${WORKDIR}/git"
 
