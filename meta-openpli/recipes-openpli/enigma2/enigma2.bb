@@ -13,7 +13,7 @@ DEPENDS = " \
 	gst-plugins-base gstreamer \
 	hotplug-e2-helper \
 	jpeg \
-	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-1.2 giflib libxml2 libxmlccwrap \
+	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-1.2 giflib libxml2 \
 	openssl \
 	python python-imaging python-twisted python-wifi \
 	swig-native \
