@@ -24,6 +24,8 @@ OPTIONAL_PACKAGES += " \
 	dvbsnoop \
 	dvdfs \
 	evtest \
+	exfat-utils \
+	fuse-exfat \
 	gdb \
 	hddtemp \
 	hdparm \
