@@ -24,6 +24,8 @@ OPTIONAL_PACKAGES += " \
 	dvbsnoop \
 	dvdfs \
 	evtest \
+	exfat-utils \
+	fuse-exfat \
 	gdb \
 	hddtemp \
 	hdparm \
@@ -70,6 +72,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-xmltvimport \
+	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-extensions-modifyplifullhd \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
