@@ -31,3 +31,15 @@ ratelimittime                 = 9000
 srvidholdtime                 = 2000
 ecmunique                     = 1
 
+[reader]
+label                         = CCcam-share
+enable                        = 0
+protocol                      = cccam
+device                        = ip_adress_server,port
+user                          = user
+password                      = password
+group                         = 1
+cccversion                    = 2.3.0
+cccmaxhops                    = 2
+ccckeepalive                  = 1
+audisabled                    = 1
