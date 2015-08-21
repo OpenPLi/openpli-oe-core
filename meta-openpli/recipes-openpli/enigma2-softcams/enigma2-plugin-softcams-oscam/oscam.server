@@ -11,8 +11,9 @@ mhz                           = 357
 cardmhz                       = 2700
 ratelimitecm                  = 4
 ratelimittime                 = 9000
-srvidholdtime                 = 2000
 ecmunique                     = 1
+srvidholdtime                 = 2000
+cooldown                      = 30,600
 
 
 [reader]
@@ -28,11 +29,13 @@ mhz                           = 357
 cardmhz                       = 2700
 ratelimitecm                  = 4
 ratelimittime                 = 9000
-srvidholdtime                 = 2000
 ecmunique                     = 1
+srvidholdtime                 = 2000
+cooldown                      = 30,600
+
 
 [reader]
-label                         = CCcam-share
+label                         = CCcam-server
 enable                        = 0
 protocol                      = cccam
 device                        = ip_adress_server,port
