@@ -1,0 +1,37 @@
+From ed5a93254f48c6e5e75232896b9b9d1e46fba693 Mon Sep 17 00:00:00 2001
+From: Mike Looijmans <milo-software@users.sourceforge.net>
+Date: Sat, 22 Aug 2015 19:28:35 +0200
+Subject: [PATCH] Remove endless and pointless loop in ServiceChange
+
+see:
+http://forums.openpli.org/topic/38666-lcd4linux-bug-kan-instabiliteit-in-image-veroorzaken
+---
+ usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py b/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py
+index a06eb1c..4eb5a82 100755
+--- a/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py
++++ b/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py
+@@ -7847,16 +7847,12 @@ class UpdateStatus(Screen):
+ 				if audio:
+ 					self.LaudioTracks = audio.getNumberOfTracks()
+ 					self.LaudioCurrentTrack = audio.getCurrentTrack()
+-					if self.LaudioCurrentTrack>=0 and self.LaudioCurrentTrack is not None:	
++					if (self.LaudioCurrentTrack is not None) and (self.LaudioCurrentTrack >= 0):
+ 						i = audio.getTrackInfo(self.LaudioCurrentTrack)
+ 						self.Laudiodescription = i.getDescription()
+ 						L4logE("Audio activ %d" % self.LaudioCurrentTrack, self.Laudiodescription)
+ 					else:
+-						idx = 0
+-						while idx < self.LaudioTracks:
+-							i = audio.getTrackInfo(idx)
+-							self.Laudiodescription = i.getDescription()
+-							L4logE("Audio %d" % idx, self.Laudiodescription)
++						self.Laudiodescription = None
+ 			self.Levent_begin0, self.Levent_end0, self.Lduration0, self.Levent_name0 = getServiceInfo(self,0)
+ 			self.Levent_begin1, self.Levent_end1, self.Lduration1, self.Levent_name1 = getServiceInfo(self,1)
+ 
+-- 
+2.1.0
+
