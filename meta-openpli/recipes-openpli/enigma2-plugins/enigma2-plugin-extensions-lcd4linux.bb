@@ -5,13 +5,12 @@ MAINTAINER = "PLi team"
 LICENSE = "NPOSL-3.0"
 LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/LICENSE;md5=a06300d1389bd32f84faeb97b6f6771f"
 DEPENDS = "libusb"
-PKGVERSION = "4.5-r5"
+PKGVERSION = "4.6-r0"
 PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
-SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git \
-	file://0001-Remove-endless-and-pointless-loop-in-ServiceChange.patch"
-SRCREV = "49274e81064a3c6a49c452b0f36c8a4dd0b25b36"
+SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
+SRCREV = "fe325f8b08853e1ebee3cd4a2221f884b6236935"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv pythonnative
