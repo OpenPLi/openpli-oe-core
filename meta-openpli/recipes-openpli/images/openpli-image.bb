@@ -6,7 +6,6 @@ IMAGE_INSTALL = " \
 	${ROOTFS_PKGMANAGE} \
 	3rd-party-feed-configs \
 	avahi-daemon \
-	cifs \
 	distro-feed-configs \
 	dropbear \
 	e2fsprogs-e2fsck \
@@ -20,7 +19,7 @@ IMAGE_INSTALL = " \
 	opkg \
 	packagegroup-base \
 	packagegroup-core-boot \
-	sambaserver \
+	samba \
 	sdparm \
 	tuxbox-common \
 	tuxbox-links \
@@ -52,5 +51,8 @@ zap_root_password () {
 ssh_allow_empty_password () {
 	true
 }
+license_create_manifest() {
+}
 
 ROOTFS_POSTPROCESS_COMMAND += "rootfsremoveopkgleftovers;"
+
