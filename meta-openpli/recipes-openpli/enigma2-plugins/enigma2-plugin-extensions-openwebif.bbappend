@@ -40,6 +40,9 @@ python do_package_prepend () {
                 exception = 'et6500'
             elif x[0] == 'et7x00':
                 exception = 'et7500'
+            elif x[0] == 'dm8000':
+                dir = '${D}${PLUGINPATH}/public/static/remotes'
+                os.system('cp %s/dmm1.html %s/dmm.html' % (dir, dir))
             break
     for root, dirs, files in os.walk(top + 'boxes', topdown=False):
         for name in files:
