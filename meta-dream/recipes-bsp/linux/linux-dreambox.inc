@@ -62,6 +62,7 @@ do_install_append() {
 # The vmlinux package gets priority over the kernel-image, so make it empty so that
 # kernel-image gets those files.
 FILES_kernel-vmlinux = ""
+ALLOW_EMPTY_kernel-vmlinux = "1"
 FILES_kernel-image += "\
 	/${KERNEL_IMAGEDEST}/autoexec*.bat \
 	"

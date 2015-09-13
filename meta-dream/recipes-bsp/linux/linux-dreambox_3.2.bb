@@ -38,6 +38,9 @@ SRC_URI = " \
 			file://dvb-usb-smsdvb_fix_frontend.patch \
 			file://0001-it913x-backport-changes-to-3.2-kernel.patch \
 			file://0001-linuxtv-api-DMM-drivers-are-now-ready-for-linux-tv-a.patch \
+			file://rtl8712-fix-warnings.patch \
+			file://fix-build-with-gcc5.patch \
+			file://fixme-hardfloat.patch \
 			file://defconfig \
 "
 
