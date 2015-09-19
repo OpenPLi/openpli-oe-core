@@ -33,7 +33,6 @@ OPTIONAL_PACKAGES += " \
 	iperf \
 	joe \
 	mc \
-	mpd \
 	mtd-utils \
 	nano \
 	ntfs-3g \
