@@ -32,3 +32,6 @@
 [submodule "meta-dags"]
 	path = meta-dags
 	url = https://github.com/pli3/meta-dags.git
+[submodule "meta-xsarius"]
+	path = meta-xsarius
+	url = https://github.com/pli3/meta-xsarius.git
