@@ -36,6 +36,7 @@ OPTIONAL_PACKAGES += " \
 	mpd \
 	mtd-utils \
 	nano \
+	net-tools \
 	ntfs-3g \
 	ntp \
 	ofgwrite \
