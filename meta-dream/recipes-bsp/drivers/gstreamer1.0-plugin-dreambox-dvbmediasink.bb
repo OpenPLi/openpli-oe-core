@@ -14,7 +14,7 @@ DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base libdca"
 GSTVERSION = "1.0"
 
 SRC_URI = "git://github.com/openpli/gst-plugin-dvbmediasink;branch=gst-1.0"
-SRC_URL += "file://dmm.patch"
+SRC_URI += "file://dmm.patch"
 SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
