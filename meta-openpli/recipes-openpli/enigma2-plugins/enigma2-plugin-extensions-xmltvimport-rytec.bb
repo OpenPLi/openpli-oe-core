@@ -7,7 +7,7 @@ require conf/license/openpli-gplv2.inc
 inherit allarch
 
 PV = "20150629"
-SRC_URI = "http://home.scarlet.be/epgalfasite/rytec.sources.29062015.zip"
+SRC_URI = "http://epgalfasite.dyndns.tv/rytec.sources.29062015.zip"
 
 S = "${WORKDIR}"
 
