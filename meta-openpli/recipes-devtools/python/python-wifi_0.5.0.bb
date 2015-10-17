@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://README;beginline=56;endline=57;md5=31ebd3ff22b6f3c016
 RDEPENDS_${PN} = "python-ctypes python-datetime"
 PR = "r1"
 
-SRC_URI = "http://downloads.sourceforge.net/project/pythonwifi.berlios/${P}.tar.bz2"
+SRC_URI = "http://pkgs.fedoraproject.org/repo/pkgs/${PN}/${P}.tar.bz2/8fe7fd0a4edce1f9bedaff4acb7fd500/${P}.tar.bz2"
 SRC_URI[md5sum] = "8fe7fd0a4edce1f9bedaff4acb7fd500"
 SRC_URI[sha256sum] = "3e3f645d37ab20450f60c785cec5f21b330f28a6c46c7c1b0898305dd7a34b26"
 
