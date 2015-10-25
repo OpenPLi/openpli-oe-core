@@ -2,7 +2,6 @@ DESCRIPTION = "Skin-PD1LOI-Full-HD"
 MAINTAINER = "PD1LOI"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://usr/share/enigma2/PD1LOI-Full-HD/skin.xml;beginline=3;endline=7;md5=6e6317a4c7d7da7fe3b079ab6f0c9a67"
-require skins-pli-pd1loi-hd.inc
 
 inherit gitpkgv allarch
 
@@ -26,4 +25,3 @@ do_install() {
 	cp -rp ${S}/usr/share/* ${D}/usr/share/
 	chmod -R a+rX ${D}/usr/share/enigma2/
 }
-
