@@ -4,24 +4,48 @@ Date: Thu, 6 Nov 2014 14:03:57 +0100
 Subject: [PATCH] riff-media: added fourcc to all mpeg4 video caps
 
 ---
- gst-libs/gst/riff/riff-media.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
 diff --git a/gst-libs/gst/riff/riff-media.c b/gst-libs/gst/riff/riff-media.c
-index 8217d79..48034bf 100644
+index 8c01892..74c7706 100644
 --- a/gst-libs/gst/riff/riff-media.c
 +++ b/gst-libs/gst/riff/riff-media.c
-@@ -487,6 +487,10 @@ gst_riff_create_video_caps (guint32 codec_fcc,
+@@ -456,12 +456,18 @@ gst_riff_create_video_caps (guint32 codec_fcc,
+     case GST_MAKE_FOURCC ('F', 'M', 'P', '4'):
+     case GST_MAKE_FOURCC ('U', 'M', 'P', '4'):
+     case GST_MAKE_FOURCC ('F', 'F', 'D', 'S'):
++    {
        caps = gst_caps_new_simple ("video/mpeg",
            "mpegversion", G_TYPE_INT, 4,
            "systemstream", G_TYPE_BOOLEAN, FALSE, NULL);
-+      {gchar *fstr = g_strdup_printf ("%" GST_FOURCC_FORMAT,
++      gchar *fstr = g_strdup_printf ("%" GST_FOURCC_FORMAT,
 +          GST_FOURCC_ARGS (codec_fcc));
 +      gst_caps_set_simple (caps, "fourcc", G_TYPE_STRING, fstr, NULL);
-+      g_free (fstr);}
++      g_free (fstr);
+       if (codec_name)
+         *codec_name = g_strdup ("FFmpeg MPEG-4");
+       break;
++    }
+ 
+     case GST_MAKE_FOURCC ('3', 'I', 'V', '1'):
+     case GST_MAKE_FOURCC ('3', 'I', 'V', '2'):
+@@ -484,12 +490,18 @@ gst_riff_create_video_caps (guint32 codec_fcc,
+     case GST_MAKE_FOURCC ('M', 'P', '4', 'V'):
+     case GST_MAKE_FOURCC ('m', 'p', '4', 'v'):
+     case GST_MAKE_FOURCC ('R', 'M', 'P', '4'):
++    {
+       caps = gst_caps_new_simple ("video/mpeg",
+           "mpegversion", G_TYPE_INT, 4,
+           "systemstream", G_TYPE_BOOLEAN, FALSE, NULL);
++      gchar *fstr = g_strdup_printf ("%" GST_FOURCC_FORMAT,
++          GST_FOURCC_ARGS (codec_fcc));
++      gst_caps_set_simple (caps, "fourcc", G_TYPE_STRING, fstr, NULL);
++      g_free (fstr);
        if (codec_name)
          *codec_name = g_strdup ("MPEG-4");
        break;
--- 
++    }
+ 
+     case GST_MAKE_FOURCC ('3', 'i', 'v', 'd'):
+     case GST_MAKE_FOURCC ('3', 'I', 'V', 'D'):
+---
 2.1.0
 
