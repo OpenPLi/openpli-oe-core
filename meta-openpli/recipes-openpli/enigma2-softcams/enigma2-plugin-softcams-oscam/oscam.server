@@ -35,6 +35,16 @@ cooldown                      = 30,600
 
 
 [reader]
+label                         = Hoofdbox
+enable			      = 0
+protocol                      = cs378x
+device                        = ip_adress_hoofdbox,12005
+user                          = slaapkamer
+password                      = slaapkamer
+group                         = 1
+
+
+[reader]
 label                         = CCcam-server
 enable                        = 0
 protocol                      = cccam
