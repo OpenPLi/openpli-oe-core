@@ -19,7 +19,6 @@ IMAGE_INSTALL = " \
 	opkg \
 	packagegroup-base \
 	packagegroup-core-boot \
-	samba \
 	sdparm \
 	tuxbox-common \
 	tuxbox-links \
