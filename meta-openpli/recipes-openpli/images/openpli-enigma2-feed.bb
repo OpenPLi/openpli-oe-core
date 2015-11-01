@@ -33,6 +33,7 @@ OPTIONAL_PACKAGES += " \
 	iperf \
 	joe \
 	mc \
+	minisatip \
 	mpd \
 	mtd-utils \
 	nano \
@@ -52,6 +53,7 @@ OPTIONAL_PACKAGES += " \
 	rsync \
 	rtorrent \
 	sabnzbd \
+	satipclient \
 	sshpass \
 	smartmontools \
 	smbnetfs \
@@ -78,6 +80,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
+	enigma2-plugin-skins-pli-pd1loi-hd \
 	enigma2-plugins \
 	enigma2-skins \
 	picons-enigma2-meta \

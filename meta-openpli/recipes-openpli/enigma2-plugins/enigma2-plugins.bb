@@ -17,9 +17,8 @@ RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
 RDEPENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
 
-# Somehow this isn't detected
 PROVIDES += "\
-	enigma2-plugin-systemplugins-transcodingsetup \
+	${@base_contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
 "
 
 inherit gitpkgv pythonnative pkgconfig

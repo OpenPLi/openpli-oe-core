@@ -4,3 +4,9 @@ pwd 			=
 disabled 		= 0
 group 			= 1
 au 			= 1
+
+[account]
+user                          = slaapkamer
+pwd                           = slaapkamer
+group                         = 1
+
