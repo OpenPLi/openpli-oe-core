@@ -1,8 +1,8 @@
 diff --git a/gstdvbaudiosink.c b/gstdvbaudiosink.c
-index 80ace1c..247c81a 100644
+index 27c3e86..862a7f6 100644
 --- a/gstdvbaudiosink.c
 +++ b/gstdvbaudiosink.c
-@@ -1171,6 +1171,10 @@ GstFlowReturn gst_dvbaudiosink_push_buffer(GstDVBAudioSink *self, GstBuffer *buf
+@@ -1217,6 +1217,10 @@ GstFlowReturn gst_dvbaudiosink_push_buffer(GstDVBAudioSink *self, GstBuffer *buf
  		if (self->codec_data)
  		{
  			size_t payload_len = size;
@@ -13,7 +13,7 @@ index 80ace1c..247c81a 100644
  			pes_header[pes_header_len++] = (payload_len >> 24) & 0xff;
  			pes_header[pes_header_len++] = (payload_len >> 16) & 0xff;
  			pes_header[pes_header_len++] = (payload_len >> 8) & 0xff;
-@@ -1197,6 +1201,10 @@ GstFlowReturn gst_dvbaudiosink_push_buffer(GstDVBAudioSink *self, GstBuffer *buf
+@@ -1243,6 +1247,10 @@ GstFlowReturn gst_dvbaudiosink_push_buffer(GstDVBAudioSink *self, GstBuffer *buf
  		if (self->codec_data && codec_data_size >= 18)
  		{
  			size_t payload_len = size;
@@ -45,10 +45,10 @@ index a83be80..c52b687 100644
  
  struct _GstDVBAudioSink
 diff --git a/gstdvbvideosink.c b/gstdvbvideosink.c
-index d3f6cf8..268c5cf 100644
+index a472106..209c229 100644
 --- a/gstdvbvideosink.c
 +++ b/gstdvbvideosink.c
-@@ -1644,15 +1644,20 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
+@@ -1774,15 +1774,20 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
  					codec_data_pointer = codecdatamap.data;
  					codec_size = codecdatamap.size;
  #endif
@@ -75,7 +75,7 @@ index d3f6cf8..268c5cf 100644
  #endif
  				}
  			}
-@@ -1678,10 +1683,20 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
+@@ -1808,10 +1813,20 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
  					if (codec_size > 4) codec_size = 4;
  					gst_structure_get_int(structure, "width", &width);
  					gst_structure_get_int(structure, "height", &height);
@@ -100,7 +100,7 @@ index d3f6cf8..268c5cf 100644
  					/* width */
  					*(data++) = (width >> 8) & 0xff;
  					*(data++) = width & 0xff;
-@@ -1689,10 +1704,9 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
+@@ -1819,10 +1834,9 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
  					*(data++) = (height >> 8) & 0xff;
  					*(data++) = height & 0xff;
  					if (codec_data && codec_size) memcpy(data, codec_data_pointer, codec_size);
@@ -113,10 +113,10 @@ index d3f6cf8..268c5cf 100644
  				}
  			}
 diff --git a/gstdvbvideosink.h b/gstdvbvideosink.h
-index 8cf1dc2..646db8d 100644
+index c889e24..01249fd 100644
 --- a/gstdvbvideosink.h
 +++ b/gstdvbvideosink.h
-@@ -71,14 +71,14 @@ typedef enum {
+@@ -71,9 +71,9 @@ typedef enum {
  	STREAMTYPE_MPEG2 = 0,
  	STREAMTYPE_MPEG4_H264 = 1,
  	STREAMTYPE_H263 = 2,
@@ -126,11 +126,5 @@ index 8cf1dc2..646db8d 100644
 -	STREAMTYPE_VC1_SM = 5,
 +	STREAMTYPE_VC1_SM = 17,
  	STREAMTYPE_MPEG1 = 6,
+ 	STREAMTYPE_MPEG4_H265 = 7,
  	STREAMTYPE_XVID = 10,
- 	STREAMTYPE_DIVX311 = 13,
- 	STREAMTYPE_DIVX4 = 14,
--	STREAMTYPE_DIVX5 = 15
-+	STREAMTYPE_DIVX5 = 15,
- } t_stream_type;
- 
- struct _GstDVBVideoSink
