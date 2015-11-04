@@ -19,11 +19,11 @@ IMAGE_INSTALL = " \
 	opkg \
 	packagegroup-base \
 	packagegroup-core-boot \
+	parted \
 	sdparm \
 	tuxbox-common \
 	tuxbox-links \
 	tzdata \
-	util-linux-sfdisk \
 	volatile-media \
 	vsftpd \
 	"
