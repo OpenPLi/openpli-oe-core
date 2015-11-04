@@ -4,7 +4,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-SRCREV = "d0836ce813d056489f3b6fdb40828b1182472ccc"
+SRCREV = "218e800de4f04ef5e345bddffadfc924f93f9c12"
 
 SRC_URI = "git://github.com/haroo/HansSettings.git"
 S = "${WORKDIR}/git"
