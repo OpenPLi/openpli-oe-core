@@ -1,0 +1,11 @@
+--- a/Lib/httplib.py	2014-12-10 17:59:36.000000000 +0200
++++ b/Lib/httplib.py	2015-05-04 16:58:48.259621676 +0300
+@@ -1193,7 +1193,7 @@
+             self.key_file = key_file
+             self.cert_file = cert_file
+             if context is None:
+-                context = ssl._create_default_https_context()
++                context = ssl._create_unverified_context()
+             if key_file or cert_file:
+                 context.load_cert_chain(cert_file, key_file)
+             self._context = context
