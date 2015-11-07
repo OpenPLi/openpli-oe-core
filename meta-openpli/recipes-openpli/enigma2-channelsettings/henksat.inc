@@ -1,6 +1,6 @@
 LICENSE = "CLOSED"
 
-SRCREV = "1df4ad35eefd40d8b4eb3cb7fefcc72d85fc8da2"
+SRCREV = "397c2e6e0035a7d3416e1198e163313a1d910949"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
