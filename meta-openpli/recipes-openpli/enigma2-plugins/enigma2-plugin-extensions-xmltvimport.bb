@@ -35,7 +35,6 @@ DISTUTILS_INSTALL_ARGS = "\
     "
 
 do_install_append() {
-	mv ${D}${libdir}/enigma2/python/Plugins/Extensions/*.so ${D}/usr/lib/enigma2/python/Plugins/Extensions/${PLUGIN}
 	rm ${D}${libdir}/enigma2/python/Plugins/Extensions/*.egg-info
 	# Remove files we don't want to deploy
 	rm -r ${D}${libdir}/${PYTHON_DIR}
