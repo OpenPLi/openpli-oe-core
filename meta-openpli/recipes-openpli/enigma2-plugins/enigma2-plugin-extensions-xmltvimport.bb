@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://../etc/epgimport/readme.txt;startline=1;endline=4;md5
 
 inherit gitpkgv
 
-SRCREV = "d82886a9f5831ba11a49a842c4a225ba5468a25e"
+SRCREV = "83cbd81d14843fd8093fcd16a9fea0779d54d04f"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
@@ -35,7 +35,6 @@ DISTUTILS_INSTALL_ARGS = "\
     "
 
 do_install_append() {
-	mv ${D}${libdir}/enigma2/python/Plugins/Extensions/*.so ${D}/usr/lib/enigma2/python/Plugins/Extensions/${PLUGIN}
 	rm ${D}${libdir}/enigma2/python/Plugins/Extensions/*.egg-info
 	# Remove files we don't want to deploy
 	rm -r ${D}${libdir}/${PYTHON_DIR}
