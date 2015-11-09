@@ -23,9 +23,10 @@ RDEPENDS_${PN} = "python-compression python-shell"
 RRECOMMENDS_${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN}"
 
+PLUGIN = "EPGImport"
 
-FILES_${PN} = "/usr/bin /usr/lib/enigma2/python"
-FILES_${PN}-dbg = "/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/.debug /usr/src/debug"
+FILES_${PN} = "/usr/lib/enigma2/python"
+FILES_${PN}-dbg = "/usr/lib/enigma2/python/Plugins/Extensions/${PLUGIN}/.debug /usr/src/debug"
 
 pkg_postinst_${PN}() {
 
