@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://../etc/epgimport/readme.txt;startline=1;endline=4;md5
 
 inherit gitpkgv
 
-SRCREV = "83cbd81d14843fd8093fcd16a9fea0779d54d04f"
+SRCREV = "e05b02f3a2c51b7b475179692ad4bfd83083ac94"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
@@ -16,7 +16,7 @@ SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 S = "${WORKDIR}/git/src"
 
-inherit distutils
+inherit distutils-openplugins
 
 DEPENDS = "python"
 RDEPENDS_${PN} = "python-compression python-shell"
@@ -25,25 +25,8 @@ PACKAGES = "${PN}-dbg ${PN}"
 
 PLUGIN = "EPGImport"
 
-FILES_${PN} = "/usr/bin /usr/lib/enigma2/python"
+FILES_${PN} = "/usr/lib/enigma2/python"
 FILES_${PN}-dbg = "/usr/lib/enigma2/python/Plugins/Extensions/${PLUGIN}/.debug /usr/src/debug"
-
-DISTUTILS_INSTALL_ARGS = "\
-    --root=${D} \
-    --install-data=${datadir} \
-    --install-lib=${libdir}/enigma2/python/Plugins/Extensions \
-    "
-
-do_install_append() {
-	rm ${D}${libdir}/enigma2/python/Plugins/Extensions/*.egg-info
-	# Remove files we don't want to deploy
-	rm -r ${D}${libdir}/${PYTHON_DIR}
-}
-
-# skip this!
-install_egg_info() {
-}
-
 
 pkg_postinst_${PN}() {
 
