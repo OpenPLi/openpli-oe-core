@@ -18,6 +18,7 @@ SRC_URI = " \
         file://add-3.14-support.patch \
         file://0001-add-3.16-support.patch \
         file://add-4.0-support.patch \
+        file://add-4.2-support.patch \
 "
 SRC_URI[md5sum] = "ac64c014a90e3c488394832ea29605b3"
 SRC_URI[sha256sum] = "d034f6c6d9578fe2addfaeceaa101584a4a1fc9f27d825c340baebd345d8d724"
@@ -26,10 +27,10 @@ inherit module machine_kernel_pr
 
 do_compile() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-        oe_runmake -C "${STAGING_KERNEL_DIR}" SUBDIRS="${S}" modules
+        oe_runmake -C "${STAGING_KERNEL_BUILDDIR}" SUBDIRS="${S}" modules
 }
 
 do_install() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-        oe_runmake -C "${STAGING_KERNEL_DIR}" SUBDIRS="${S}" DEPMOD=echo INSTALL_MOD_PATH="${D}" modules_install
+        oe_runmake -C "${STAGING_KERNEL_BUILDDIR}" SUBDIRS="${S}" DEPMOD=echo INSTALL_MOD_PATH="${D}" modules_install
 }
