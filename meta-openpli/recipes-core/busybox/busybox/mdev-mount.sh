@@ -52,14 +52,14 @@ case "$ACTION" in
 		# first allow fstab to determine the mountpoint
 		if ! mount /dev/$MDEV > /dev/null 2>&1 ; then
 			# no fstab entry, use automatic mountpoint
-			REMOVABLE=`cat /sys/block/$DEVBASE/removable`
-			readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci'
-			EXTERNAL=$?
-			if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
-				# mount the first non-removable internal device on /media/hdd
-				DEVICETYPE="hdd"
-			else
-				if [ -z "${LABEL}" ] ; then
+			if [ -z "${LABEL}" ] ; then
+				REMOVABLE=`cat /sys/block/$DEVBASE/removable`
+				readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci'
+				EXTERNAL=$?
+				if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
+					# mount the first non-removable internal device on /media/hdd
+					DEVICETYPE="hdd"
+				else
 					MODEL=`cat /sys/block/$DEVBASE/device/model`
 					if [ "$MODEL" == "USB CF Reader   " ]; then
 						DEVICETYPE="cf"
@@ -82,9 +82,9 @@ case "$ACTION" in
 					else
 						DEVICETYPE="usb"
 					fi
-				else
-					DEVICETYPE="${LABEL}"
 				fi
+			else
+				DEVICETYPE="${LABEL}"
 			fi
 			# Use mkdir as 'atomic' action, failure means someone beat us to the punch
 			MOUNTPOINT="/media/$DEVICETYPE"
