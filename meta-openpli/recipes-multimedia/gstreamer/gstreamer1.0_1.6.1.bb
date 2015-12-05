@@ -7,6 +7,7 @@ SRC_URI = " \
     http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${PV}.tar.xz \
     file://0001-Fix-crash-with-gst-inspect.patch \
     file://0001-revert-use-new-gst-adapter-get-buffer.patch \
+    file://0001-baseparse-post-tag-list-when-avg-bitrate-changes-at-.patch \
 "
 
 SRC_URI[md5sum] = "e72e2dc2ee06bfc045bb6010c89de520"
