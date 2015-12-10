@@ -5,6 +5,7 @@
 
 BACKUPDIR=/media/hdd
 INSTALLED=/etc/installed
+LOGFILE=/var/log/autoinstall.log
 MACADDR=`cat /sys/class/net/eth0/address | cut -b 1,2,4,5,7,8,10,11,13,14,16,17`
 
 if [ -f /tmp/backupdir ]
@@ -27,6 +28,7 @@ else
 			fi
 		fi
 	done
+	LOGFILE=${BACKUPDIR}/backup/autoinstall.log
 fi
 
 if [ -f ${BACKUPDIR}/backup/autoinstall${MACADDR} ]
@@ -46,10 +48,10 @@ chmod 444 ${INSTALLED}
 
 if [ -f ${AUTOINSTALL} ]
 then
-	${IPKG} update
+	${IPKG} update 2>&1 | tee ${LOGFILE}
 	sed 's/,/ /g' $AUTOINSTALL | while read packagefile packageoption ; do
 		$IPKG install ${packageoption} $packagefile
-	done
+	done 2>&1 | tee -a ${LOGFILE}
 fi
 
 # done, unbind the console
