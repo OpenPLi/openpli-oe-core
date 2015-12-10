@@ -1,8 +1,8 @@
-PV = "20131229"
+PV = "20151205"
 SRC_URI = "file://*"
 DESCRIPTION = "Autorecover settings and install packages at first boot from /media/*/backup"
 PACKAGES = "${PN}"
-MAINTAINER = "MiLo"
+MAINTAINER = "MiLo@OpenPLi"
 
 require conf/license/openpli-gplv2.inc
 
