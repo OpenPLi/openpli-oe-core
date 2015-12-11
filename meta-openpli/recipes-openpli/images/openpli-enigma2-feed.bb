@@ -87,7 +87,7 @@ ENIGMA2_OPTIONAL = " \
 	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
 	${@base_contains("MACHINE_FEATURES", "dreambox", "", "enigma2-plugin-extensions-backupsuite", d)} \
 	dvb-usb-drivers-meta \
-	cdfs cdtextinfo \
+	cdtextinfo \
 	meta-enigma2-dvdburn \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"
