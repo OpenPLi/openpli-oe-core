@@ -20,6 +20,7 @@ IMAGE_INSTALL = " \
 	packagegroup-base \
 	packagegroup-core-boot \
 	parted \
+	samba \
 	sdparm \
 	tuxbox-common \
 	tuxbox-links \
