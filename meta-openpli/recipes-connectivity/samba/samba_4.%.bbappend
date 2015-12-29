@@ -12,6 +12,7 @@ EXTRA_OECONF += " \
                  --without-profiling-data \
                  --with-sockets-dir=${localstatedir}/run \
                  --with-logfilebase=${localstatedir}/log \
+                 --nopyc \
                 "
 
 EXTRA_OECONF_remove = " \
@@ -52,3 +53,5 @@ inherit update-rc.d
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
+# workaround to get rid of perl dependency
+RDEPENDS_${PN}_remove = "perl"
