@@ -5,8 +5,9 @@ DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
-SRC_URI = "git://github.com/OpenPLi-GitHub/gstsubsink.git;branch=gst-1.0"
-SRCREV = "${AUTOREV}"
+SRCREV = "2c4288bb29e0781f27aecc25c941b6e441630f8d"
+GITHUB_URI ?= "git://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/gst-plugin-subsink.git"
 
 S = "${WORKDIR}/git"
 
@@ -16,14 +17,8 @@ GSTVERSION = "1.0"
 
 PV = "${GSTVERSION}+git${SRCPV}"
 PKGV = "${GSTVERSION}+git${GITPKGV}"
-PR = "r0"
 
 EXTRA_OECONF = "--with-gstversion=${GSTVERSION}"
-
-do_configure_prepend() {
-        sed -i 's/AC_INIT.*$/AC_INIT(gst-plugin-subsink, 1.0.0, @pli4)/' ${S}/configure.ac
-        sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
-}
 
 inherit autotools pkgconfig
 
