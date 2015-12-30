@@ -9,18 +9,13 @@ inherit gitpkgv
 
 PV = "0.10.0+git${SRCPV}"
 PKGV = "0.10.0+git${GITPKGV}"
-PR = "r2"
 
-SRCREV = "0cb20d602414f25edd8d139627b8e0b2b58aae33"
+SRCREV = "d239267be720224019805765376a05f57d643204"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 S = "${WORKDIR}/git"
 
-do_configure_prepend() {
-	sed -i 's/AC_INIT.*$/AC_INIT(gst-plugin-subsink, 0.10.0, @pli4)/' ${S}/configure.ac
-	sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
-}
 inherit autotools pkgconfig
 
 FILES_${PN} = "${libdir}/gstreamer-0.10/*.so*"
