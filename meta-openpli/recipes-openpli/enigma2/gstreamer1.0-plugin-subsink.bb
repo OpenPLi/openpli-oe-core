@@ -27,4 +27,3 @@ FILES_${PN}-dev += "${libdir}/gstreamer-${GSTVERSION}/*.la"
 FILES_${PN}-staticdev += "${libdir}/gstreamer-${GSTVERSION}/*.a"
 FILES_${PN}-dbg += "${libdir}/gstreamer-${GSTVERSION}/.debug"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
