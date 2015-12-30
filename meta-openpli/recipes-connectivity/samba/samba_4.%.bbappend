@@ -54,4 +54,5 @@ inherit update-rc.d
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 # workaround to get rid of perl dependency
+DEPENDS_remove = "perl"
 RDEPENDS_${PN}_remove = "perl"
