@@ -89,8 +89,7 @@ IMAGE_INSTALL += " \
 	${@base_contains("MACHINE_FEATURES", "extrakernelwifi", "${EXTRA_KERNEL_WIFI_DRIVERS}", "", d)} \
 	${@base_contains("MACHINE_FEATURES", "externalwifi", "${EXTERNAL_WIFI_DRIVERS}", "", d)} \
 	\
-	${@base_contains('OPENPLI_FEATURES', 'dvd', 'cdfs cdtextinfo kernel-module-isofs kernel-module-udf', '', d)} \
+	${@base_contains('OPENPLI_FEATURES', 'dvd', 'cdtextinfo', '', d)} \
 	"
-
 
 export IMAGE_BASENAME = "openpli-enigma2"

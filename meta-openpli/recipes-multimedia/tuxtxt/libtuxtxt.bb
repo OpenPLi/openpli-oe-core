@@ -15,7 +15,7 @@ PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
 PR = "r0"
 
-EXTRA_OECONF = "--with-boxtype=generic"
+EXTRA_OECONF = "--with-boxtype=generic DVB_API_VERSION=5"
 
 inherit autotools pkgconfig
 

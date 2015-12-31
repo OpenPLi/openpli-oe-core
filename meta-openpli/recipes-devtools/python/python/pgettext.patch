@@ -1,7 +1,7 @@
-diff --git a/Lib/gettext.py b/Lib/gettext.py
-index 3f47580..ca3b8cb 100644
---- a/Lib/gettext.py
-+++ b/Lib/gettext.py
+Index: Python-2.7.9/Lib/gettext.py
+===================================================================
+--- Python-2.7.9.orig/Lib/gettext.py
++++ Python-2.7.9/Lib/gettext.py
 @@ -53,6 +53,7 @@ from errno import ENOENT
  __all__ = ['NullTranslations', 'GNUTranslations', 'Catalog',
             'find', 'translation', 'install', 'textdomain', 'bindtextdomain',
@@ -203,7 +203,7 @@ index 3f47580..ca3b8cb 100644
  def dngettext(domain, msgid1, msgid2, n):
      try:
          t = translation(domain, _localedirs.get(domain, None),
-@@ -551,6 +662,17 @@ def dngettext(domain, msgid1, msgid2, n):
+@@ -551,6 +662,17 @@ def dngettext(domain, msgid1, msgid2, n)
              return msgid2
      return t.ngettext(msgid1, msgid2, n)
  
@@ -221,7 +221,7 @@ index 3f47580..ca3b8cb 100644
  def ldngettext(domain, msgid1, msgid2, n):
      try:
          t = translation(domain, _localedirs.get(domain, None),
-@@ -562,18 +684,41 @@ def ldngettext(domain, msgid1, msgid2, n):
+@@ -562,18 +684,41 @@ def ldngettext(domain, msgid1, msgid2, n
              return msgid2
      return t.lngettext(msgid1, msgid2, n)
  
@@ -263,10 +263,10 @@ index 3f47580..ca3b8cb 100644
  # dcgettext() has been deemed unnecessary and is not implemented.
  
  # James Henstridge's Catalog constructor from GNOME gettext.  Documented usage
-diff --git a/Tools/i18n/msgfmt.py b/Tools/i18n/msgfmt.py
-index 5dd5430..510ecda 100755
---- a/Tools/i18n/msgfmt.py
-+++ b/Tools/i18n/msgfmt.py
+Index: Python-2.7.9/Tools/i18n/msgfmt.py
+===================================================================
+--- Python-2.7.9.orig/Tools/i18n/msgfmt.py
++++ Python-2.7.9/Tools/i18n/msgfmt.py
 @@ -6,7 +6,8 @@
  
  This program converts a textual Uniforum-style message catalog (.po file) into
@@ -277,7 +277,7 @@ index 5dd5430..510ecda 100755
  
  Usage: msgfmt.py [OPTIONS] filename.po
  
-@@ -31,7 +32,7 @@ import getopt
+@@ -32,7 +33,7 @@ import getopt
  import struct
  import array
  
@@ -286,7 +286,7 @@ index 5dd5430..510ecda 100755
  
  MESSAGES = {}
  
-@@ -45,11 +46,14 @@ def usage(code, msg=''):
+@@ -46,11 +47,14 @@ def usage(code, msg=''):
  
  
  
@@ -303,7 +303,7 @@ index 5dd5430..510ecda 100755
  
  
  
-@@ -99,6 +103,7 @@ def generate():
+@@ -100,6 +104,7 @@ def generate():
  def make(filename, outfile):
      ID = 1
      STR = 2
@@ -311,7 +311,7 @@ index 5dd5430..510ecda 100755
  
      # Compute .mo name from .po name and arguments
      if filename.endswith('.po'):
-@@ -114,7 +119,7 @@ def make(filename, outfile):
+@@ -115,7 +120,7 @@ def make(filename, outfile):
          print >> sys.stderr, msg
          sys.exit(1)
  
@@ -320,7 +320,7 @@ index 5dd5430..510ecda 100755
      fuzzy = 0
  
      # Parse the catalog
-@@ -123,8 +128,8 @@ def make(filename, outfile):
+@@ -124,8 +129,8 @@ def make(filename, outfile):
          lno += 1
          # If we get a comment line after a msgstr, this is a new entry
          if l[0] == '#' and section == STR:
@@ -331,7 +331,7 @@ index 5dd5430..510ecda 100755
              fuzzy = 0
          # Record a fuzzy mark
          if l[:2] == '#,' and 'fuzzy' in l:
-@@ -132,10 +137,16 @@ def make(filename, outfile):
+@@ -133,10 +138,16 @@ def make(filename, outfile):
          # Skip comments
          if l[0] == '#':
              continue
@@ -351,17 +351,15 @@ index 5dd5430..510ecda 100755
              section = ID
              l = l[5:]
              msgid = msgstr = ''
-@@ -172,7 +183,9 @@ def make(filename, outfile):
-             continue
-         # XXX: Does this always follow Python escape semantics?
-         l = eval(l)
--        if section == ID:
-+        if section == CTXT:
-+            msgctxt += l
-+        elif section == ID:
+@@ -174,6 +185,8 @@ def make(filename, outfile):
+         l = ast.literal_eval(l)
+         if section == ID:
              msgid += l
++        elif section == CTXT:
++            msgctxt += l
          elif section == STR:
              msgstr += l
+         else:
 @@ -183,7 +196,7 @@ def make(filename, outfile):
              sys.exit(1)
      # Add last entry
@@ -371,6 +369,3 @@ index 5dd5430..510ecda 100755
  
      # Compute output
      output = generate()
--- 
-1.7.9.5
-
