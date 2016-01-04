@@ -1,7 +1,7 @@
 DESCRIPTION="AiO screenshot grabber"
 MAINTAINER = "PLi team"
 LICENSE = "GPL"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=8e4962322b72f5de27d3f435a55df287c72162ab"
 
 DEPENDS = "jpeg libpng zlib"
 
