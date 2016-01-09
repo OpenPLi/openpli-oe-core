@@ -31,7 +31,7 @@ do_install() {
 	install ${WORKDIR}/locale.alias ${D}${LOCALEDIR2}
 
 	install -d ${D}${LOCALEDIR}
-	cp -rp ${S}/* ${D}/${LOCALEDIR}
+	cp -r --preserve=mode,links ${S}/* ${D}/${LOCALEDIR}
 
 	install -d ${D}${LOCALEDIR}/fake/LC_MESSAGES
 	install ${WORKDIR}/SYS_LC_MESSAGES ${D}${LOCALEDIR}/fake/LC_MESSAGES/

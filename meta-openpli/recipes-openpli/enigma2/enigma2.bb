@@ -262,7 +262,7 @@ FILES_${PN}-src = "\
 	"
 do_openpli_branding() {
 	if [ -n "${BRANDINGDIR}" -a -d "${BRANDINGDIR}/enigma2" ] ; then
-		cp -rp ${BRANDINGDIR}/enigma2/* ${S}/data/
+		cp -r --preserve=mode,links ${BRANDINGDIR}/enigma2/* ${S}/data/
 	fi
 	if [ -n "${CRASHADDR}" ] ; then
 		sed "s/^#define CRASH_EMAILADDR .*/#define CRASH_EMAILADDR \"${CRASHADDR}\"/" ${S}/main/bsod.cpp > ${S}/main/bsod.cpp.new && \
