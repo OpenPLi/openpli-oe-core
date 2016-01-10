@@ -45,6 +45,7 @@ do_install_append() {
 	fi
 	install -d ${D}${sysconfdir}/mdev
 	install -m 0755 ${WORKDIR}/mdev-mount.sh ${D}${sysconfdir}/mdev
+	sed -i "/[/][s][h]*$/d" ${D}${sysconfdir}/busybox.links.nosuid
 }
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
