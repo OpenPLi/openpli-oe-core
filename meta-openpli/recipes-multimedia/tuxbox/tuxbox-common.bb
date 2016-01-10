@@ -22,9 +22,6 @@ do_compile() {
 do_install() {
 	install -d ${D}${sysconfdir}/tuxbox/
 	install -m 0644 ${S}/share/tuxbox/scart.conf ${D}${sysconfdir}/tuxbox/scart.conf
-	install -m 0644 ${S}/etc/timezone.xml ${D}${sysconfdir}/tuxbox/timezone.xml
-
-	ln -sf tuxbox/timezone.xml ${D}${sysconfdir}/timezone.xml
 
 	for i in ${TRANSPONDER_LISTS}; do
 		install -m 0644 ${S}/share/tuxbox/$i ${D}${sysconfdir}/tuxbox/$i
