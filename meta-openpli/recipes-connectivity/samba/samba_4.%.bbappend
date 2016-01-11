@@ -31,7 +31,7 @@ SRC_URI += " \
            file://samba.sh \
            "
 
-FILES_${PN} += "${sysconfdir}/init.d/samba.sh"
+FILES_${PN}-base += "${sysconfdir}/init.d/samba.sh"
 
 do_install_prepend() {
 	install -d ${D}/run/samba
@@ -50,10 +50,10 @@ do_install_append() {
 	install -m 755 ${WORKDIR}/samba.sh ${D}${sysconfdir}/init.d
 }
 
-INITSCRIPT_NAME = "samba.sh"
-INITSCRIPT_PARAMS = "defaults"
-
 inherit update-rc.d
+INITSCRIPT_PACKAGES = "${PN}-base"
+INITSCRIPT_NAME_${PN}-base = "samba.sh"
+INITSCRIPT_PARAMS_${PN}-base = "defaults"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
