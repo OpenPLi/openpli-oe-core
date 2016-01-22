@@ -46,6 +46,7 @@ OPTIONAL_PACKAGES += " \
 	parted \
 	procps \
 	pyload \
+	python-ntplib \
 	python-youtube-dl \
 	python-requests \
 	python-mechanize \
