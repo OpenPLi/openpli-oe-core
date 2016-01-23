@@ -48,7 +48,7 @@ inherit autotools-brokensep
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "enigma2 \
+DEPENDS = " \
 	python-pyopenssl \
 	python-gdata \
 	streamripper \
