@@ -25,6 +25,7 @@ inherit gitpkgv pythonnative pkgconfig
 
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
+PR = "r1"
 
 SRCREV = "${AUTOREV}"
 GITHUB_URI ?= "git://github.com"
