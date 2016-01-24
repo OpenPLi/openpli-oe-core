@@ -45,9 +45,9 @@ FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta"
 PACKAGE_ARCH = "all"
 
-PACKAGE_ARCH_enigma2-plugin-extensions-moviecut = "${MACHINE_ARCH}"
-PACKAGE_ARCH_enigma2-plugin-systemplugins-networkbrowser = "${MACHINE_ARCH}"
-PACKAGE_ARCH_enigma2-plugin-systemplugins-vps = "${MACHINE_ARCH}"
+PACKAGE_ARCH_enigma2-plugin-extensions-moviecut = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_enigma2-plugin-systemplugins-networkbrowser = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_enigma2-plugin-systemplugins-vps = "${TUNE_PKGARCH}"
 
 inherit autotools-brokensep
 
