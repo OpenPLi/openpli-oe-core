@@ -42,7 +42,11 @@ CONFFILES_${PN} += "${sysconfdir}/enigma2/movietags"
 FILES_${PN} += " /usr/share/enigma2 /usr/share/fonts "
 FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta"
-PACKAGE_ARCH = "${MACHINE_ARCH}"
+PACKAGE_ARCH = "all"
+
+PACKAGE_ARCH_enigma2-plugin-extensions-moviecut = "${MACHINE_ARCH}"
+PACKAGE_ARCH_enigma2-plugin-systemplugins-networkbrowser = "${MACHINE_ARCH}"
+PACKAGE_ARCH_enigma2-plugin-systemplugins-vps = "${MACHINE_ARCH}"
 
 inherit autotools-brokensep
 
