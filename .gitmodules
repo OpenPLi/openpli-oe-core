@@ -32,3 +32,6 @@
 [submodule "meta-xsarius"]
 	path = meta-xsarius
 	url = https://github.com/pli3/meta-xsarius.git
+[submodule "meta-xpeedc"]
+	path = meta-xpeedc
+	url = http://github.com/open-xpeedc/meta-xpeedc.git
