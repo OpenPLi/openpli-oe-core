@@ -31,6 +31,7 @@ python do_package_prepend () {
         ('hd2400', 'hd2400.jpg', 'hd2400.png'),
         ('fusionhd', 'fusionhd.jpg', 'fusionhd.png'),
         ('fusionhdse', 'fusionhdse.jpg', 'fusionhdse.png'),
+        ('wetekplay', 'wetekplay.jpg', 'wetekplay.png'),
     ]
     import os
     top = '${D}${PLUGINPATH}/public/images/'
