@@ -33,10 +33,6 @@ SRC_URI += " \
 
 FILES_${PN}-base += "${sysconfdir}/init.d/samba.sh"
 
-do_install_prepend() {
-	install -d ${D}/run/samba
-}
-
 do_install_append() {
 	rm -fR ${D}/var
 	rm -fR ${D}/run
