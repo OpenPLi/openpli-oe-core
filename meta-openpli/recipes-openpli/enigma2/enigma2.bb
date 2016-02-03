@@ -7,15 +7,13 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 SRCREV = "${AUTOREV}"
 
 DEPENDS = " \
-	ethtool \
 	freetype \
 	gettext-native \
 	${@base_contains("GST_VERSION", "1.0", "gstreamer1.0-plugins-base gstreamer1.0", "gst-plugins-base gstreamer", d)} \
-	hotplug-e2-helper \
 	jpeg \
 	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-1.2 giflib libxml2 \
 	openssl \
-	python python-imaging python-twisted python-wifi \
+	python-imaging python-twisted python-wifi \
 	swig-native \
 	tuxtxt-enigma2 \
 	"
