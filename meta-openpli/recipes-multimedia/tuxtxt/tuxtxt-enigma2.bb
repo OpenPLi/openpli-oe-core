@@ -6,7 +6,7 @@ DESCRIPTION = "tuxbox tuxtxt for enigma2"
 
 inherit gitpkgv
 
-SRCREV = "1aa27e906756a4a383a3479db180fdb933f3ac19"
+SRCREV = "96a370821555923ad34dc1ec8e029477c914e3d3"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt.git"
 

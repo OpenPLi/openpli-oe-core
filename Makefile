@@ -31,6 +31,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-formuler \
 	$(CURDIR)/meta-hd \
 	$(CURDIR)/meta-xpeedc \
+	$(CURDIR)/meta-wetek \
 	$(CURDIR)/meta-local
 
 CONFFILES = \
