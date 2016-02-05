@@ -12,10 +12,12 @@ PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
 PACKAGES += "\
 	enigma2-plugin-extensions-mosaic \
 	enigma2-plugin-extensions-fancontrol2 \
+	enigma2-plugin-extensions-bonjour \
 	"
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
 RDEPENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
+RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
 
 PROVIDES += "\
 	${@base_contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
@@ -23,8 +25,8 @@ PROVIDES += "\
 
 inherit gitpkgv pythonnative pkgconfig
 
-PV = "x-git${SRCPV}"
-PKGV = "x-git${GITPKGV}"
+PV = "y-git${SRCPV}"
+PKGV = "y-git${GITPKGV}"
 
 SRCREV = "${AUTOREV}"
 GITHUB_URI ?= "git://github.com"
@@ -54,11 +56,6 @@ CONFFILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 
 FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta"
-PACKAGE_ARCH = "all"
-
-PACKAGE_ARCH_enigma2-plugin-extensions-moviecut = "${TUNE_PKGARCH}"
-PACKAGE_ARCH_enigma2-plugin-systemplugins-networkbrowser = "${TUNE_PKGARCH}"
-PACKAGE_ARCH_enigma2-plugin-systemplugins-vps = "${TUNE_PKGARCH}"
 
 inherit autotools-brokensep
 
