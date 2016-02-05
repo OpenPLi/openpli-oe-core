@@ -122,18 +122,6 @@ RDEPENDS_${PN} += "${@base_contains("MACHINE_FEATURES", "blindscan-dvbc", "virtu
 
 DEMUXTOOL ?= "replex"
 
-# Because "dynamic" packages are next to impossible to trace to a recipe,
-# we must explicitly list packages that have extra RDEPENDS so that bb
-# knows what to build when someone requires it.
-PACKAGES += "\
-	enigma2-plugin-extensions-cutlisteditor \
-	enigma2-plugin-systemplugins-nfiflash \
-	enigma2-plugin-systemplugins-softwaremanager \
-	enigma2-plugin-systemplugins-wirelesslan \
-	enigma2-plugin-extensions-dvdburn \
-	enigma2-plugin-systemplugins-hotplug \
-"
-
 DESCRIPTION_append_enigma2-plugin-extensions-cutlisteditor = "enables you to cut your movies."
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
 DESCRIPTION_append_enigma2-plugin-extensions-graphmultiepg = "shows a graphical timeline EPG."
