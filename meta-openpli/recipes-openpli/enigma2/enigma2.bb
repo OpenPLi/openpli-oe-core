@@ -122,6 +122,18 @@ RDEPENDS_${PN} += "${@base_contains("MACHINE_FEATURES", "blindscan-dvbc", "virtu
 
 DEMUXTOOL ?= "replex"
 
+# Because "dynamic" packages are next to impossible to trace to a recipe,
+# we must explicitly list packages that have extra RDEPENDS so that bb
+# knows what to build when someone requires it.
+PACKAGES += "\
+	enigma2-plugin-extensions-cutlisteditor \
+	enigma2-plugin-systemplugins-nfiflash \
+	enigma2-plugin-systemplugins-softwaremanager \
+	enigma2-plugin-systemplugins-wirelesslan \
+	enigma2-plugin-extensions-dvdburn \
+	enigma2-plugin-systemplugins-hotplug \
+"
+
 DESCRIPTION_append_enigma2-plugin-extensions-cutlisteditor = "enables you to cut your movies."
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
 DESCRIPTION_append_enigma2-plugin-extensions-graphmultiepg = "shows a graphical timeline EPG."
@@ -133,11 +145,6 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-skinselector = "shows a menu wit
 DESCRIPTION_append_enigma2-plugin-systemplugins-videomode = "selects advanced video modes"
 RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "python-twisted-web"
 RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "python-twisted-web"
-DESCRIPTION_append_enigma2-plugin-systemplugins-crashlogautosubmit = "automatically send crashlogs to Dream Multimedia"
-RDEPENDS_enigma2-plugin-systemplugins-crashlogautosubmit = "python-twisted-mail python-twisted-names python-compression python-mime python-email"
-DESCRIPTION_append_enigma2-plugin-systemplugins-cleanupwizard = "informs you on low internal memory on system startup."
-DESCRIPTION_append_enigma2-plugin-extensions-modem = "opens a menu to connect to internet via builtin modem."
-RDEPENDS_enigma2-plugin-extensions-modem = "dreambox-modem-ppp-scripts"
 DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python-wifi"
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
