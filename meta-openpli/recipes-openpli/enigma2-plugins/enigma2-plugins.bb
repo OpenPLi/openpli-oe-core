@@ -12,7 +12,6 @@ PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
 PACKAGES += "\
 	enigma2-plugin-extensions-mosaic \
 	enigma2-plugin-extensions-fancontrol2 \
-	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-blindscan", "", d)} \
 	enigma2-plugin-extensions-bonjour \
 	"
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
