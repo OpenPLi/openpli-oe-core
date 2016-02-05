@@ -30,6 +30,7 @@ RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
 	gst-plugin-subsink \
 	glib-networking \
+	hotplug-e2-helper \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
