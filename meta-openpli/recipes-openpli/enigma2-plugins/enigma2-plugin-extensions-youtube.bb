@@ -4,7 +4,7 @@ from youtube"
 HOMEPAGE = "https://github.com/Taapat/enigma2-plugin-youtube"
 SECTION = "multimedia"
 LICENSE = "PD"
-LIC_FILES_CHKSUM = "file://src/plugin.py;md5=de25dd3340919096231430c367640d9e"
+LIC_FILES_CHKSUM = "file://COPYING.GPLv2;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 SRC_URI = "git://github.com/Taapat/enigma2-plugin-youtube.git"
 S = "${WORKDIR}/git"
 
