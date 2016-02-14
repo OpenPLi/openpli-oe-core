@@ -48,7 +48,6 @@ OPTIONAL_PACKAGES += " \
 	procps \
 	pyload \
 	python-ntplib \
-	python-youtube-dl \
 	python-requests \
 	python-mechanize \
 	rsync \
