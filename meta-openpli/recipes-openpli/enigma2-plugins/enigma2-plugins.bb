@@ -63,7 +63,6 @@ S = "${WORKDIR}/git"
 
 DEPENDS = " \
 	python-pyopenssl \
-	python-gdata \
 	streamripper \
 	python-mutagen \
 	python-twisted \

@@ -3,14 +3,12 @@ MAINTAINER = "Mike Looijmans"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
-SRCREV = "dbb47d7c663783427fa0bb89de1149f46887509d"
+SRCREV = "13e5553f3e8e3644996a33299749b432d246e43b"
 
-inherit gitpkgv
+inherit gitpkgv allarch
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r2"
-PACKAGE_ARCH = "all"
 
 PV_font-valis-enigma = "2009.11.12"
 PR_font-valis-enigma = "r1"
