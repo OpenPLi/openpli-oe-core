@@ -7,7 +7,6 @@ PR = "r1"
 # NOTE: requires python-misc for webbrowser and subprocess as missing dependency of the webbrowser
 RDEPENDS_${PN} = "\
   python-core \
-  python-elementtree \
   python-logging \
   python-misc \
   python-netclient \

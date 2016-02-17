@@ -20,8 +20,8 @@ do_compile() {
 }
 
 do_install() {
-    cp -Rp "${S}/usr" "${D}"
-    cp -Rp "${S}/etc" "${D}"
+    cp -r --preserve=mode,links "${S}/usr" "${D}"
+    cp -r --preserve=mode,links "${S}/etc" "${D}"
 }
 
 RDEPENDS_${PN} += "\
