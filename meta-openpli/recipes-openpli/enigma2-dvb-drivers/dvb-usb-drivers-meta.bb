@@ -14,6 +14,7 @@ DEPENDS = "\
 	enigma2-plugin-drivers-dvb-usb-pctv452e \
 	enigma2-plugin-drivers-dvb-usb-dtt200u \
 	enigma2-plugin-drivers-dvb-usb-rtl2832 \
+	enigma2-plugin-drivers-dvb-usb-tbs \
 	"
 
-PR = "r0"
+PR = "r1"

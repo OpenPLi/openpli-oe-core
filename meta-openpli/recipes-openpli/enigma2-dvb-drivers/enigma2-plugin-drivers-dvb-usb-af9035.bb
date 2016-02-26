@@ -10,11 +10,12 @@ RRECOMMENDS_${PN} = " \
 	${DVBPROVIDER}-module-tua9001 \
 	${DVBPROVIDER}-module-mxl5007t \
 	${DVBPROVIDER}-module-tda18218 \
+	${DVBPROVIDER}-module-it913x \
 	firmware-dvb-usb-af9035-01 \
 	firmware-dvb-usb-af9035-02 \
 	firmware-dvb-usb-it913x \
 	"
 
-PV = "1.1"
+PV = "1.2"
 
 ALLOW_EMPTY_${PN} = "1"
