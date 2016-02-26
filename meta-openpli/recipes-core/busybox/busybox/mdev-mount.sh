@@ -95,6 +95,8 @@ case "$ACTION" in
 							DEVICETYPE="mmc1"
 						elif [ "$MODEL" == "MS/MS-Pro       " ]; then
 							DEVICETYPE="mmc1"
+						elif [ "$MDEV" == "mmcblk0p1" ]; then
+							DEVICETYPE="mmc1"
 						else
 							DEVICETYPE="usb"
 						fi
