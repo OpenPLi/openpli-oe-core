@@ -65,6 +65,7 @@ OPTIONAL_PACKAGES += " \
 	vim \
 	xfsprogs \
 	zeroconf \
+	zip \
 	${OPTIONAL_BSP_PACKAGES} \
 	"
 
