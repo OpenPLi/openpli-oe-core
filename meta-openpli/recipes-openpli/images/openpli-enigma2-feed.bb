@@ -33,6 +33,7 @@ OPTIONAL_PACKAGES += " \
 	inadyn-mt \
 	iperf \
 	joe \
+	libbluray \
 	mc \
 	minisatip \
 	mpd \
