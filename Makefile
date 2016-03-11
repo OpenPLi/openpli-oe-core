@@ -33,6 +33,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-xpeedc \
 	$(CURDIR)/meta-wetek \
 	$(CURDIR)/meta-zgemma \
+	$(CURDIR)/meta-miraclebox \
 	$(CURDIR)/meta-local
 
 CONFFILES = \
