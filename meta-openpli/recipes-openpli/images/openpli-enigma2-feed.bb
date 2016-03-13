@@ -82,6 +82,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-xmltvimport \
 	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-extensions-modifyplifullhd \
+	enigma2-plugin-systemplugins-mountmanager \
 	enigma2-plugin-systemplugins-signalfinder \
 	enigma2-plugin-systemplugins-extnumberzap \
 	enigma2-plugin-security-firewall \
