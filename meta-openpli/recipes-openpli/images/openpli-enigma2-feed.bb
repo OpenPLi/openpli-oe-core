@@ -52,6 +52,9 @@ OPTIONAL_PACKAGES += " \
 	python-ntplib \
 	python-requests \
 	python-mechanize \
+	python-lxml \
+	picocom \
+	ppp \
 	rsync \
 	rtorrent \
 	sabnzbd \
@@ -63,6 +66,8 @@ OPTIONAL_PACKAGES += " \
 	tcpdump \
 	transmission \
 	udpxy \
+	usb-modeswitch \
+	usb-modeswitch-data \
 	vim \
 	xfsprogs \
 	zeroconf \
