@@ -90,6 +90,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-systemplugins-mountmanager \
 	enigma2-plugin-systemplugins-signalfinder \
 	enigma2-plugin-systemplugins-extnumberzap \
+	enigma2-plugin-extensions-historyzapselector \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
