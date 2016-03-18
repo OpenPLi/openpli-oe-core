@@ -1,6 +1,7 @@
-SRC_URI += "file://sanity-check-provides.patch \
-	file://0001-reuse-the-installed_files-list-when-possible.patch \
-	file://ifmod.patch \
+SRC_URI += "\
+	file://sanity-check-provides.patch;apply=no \
+	file://0001-reuse-the-installed_files-list-when-possible.patch;apply=no \
+	file://ifmod.patch;apply=no \
 	file://modprobe \
 	file://opkg-wget \
 	"

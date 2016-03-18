@@ -15,7 +15,16 @@ case "$ACTION" in
 			# Already mounted
 			exit 0
 		fi
-		DEVBASE=`expr substr $MDEV 1 3`
+		if [ "${MDEV}" = "`readlink /dev/root`" ]; then
+			# Special case
+			exit 0
+		fi
+		DRIVER=`expr substr $MDEV 1 6`
+		if [ "$DRIVER" = "mmcblk" ]; then
+			DEVBASE=`expr substr $MDEV 1 7`
+		else
+			DEVBASE=`expr substr $MDEV 1 3`
+		fi
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
 			# blocked
@@ -54,35 +63,43 @@ case "$ACTION" in
 			# no fstab entry, use automatic mountpoint
 			if [ -z "${LABEL}" ] ; then
 				REMOVABLE=`cat /sys/block/$DEVBASE/removable`
-				readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci'
-				EXTERNAL=$?
-				if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
-					# mount the first non-removable internal device on /media/hdd
-					DEVICETYPE="hdd"
-				else
-					MODEL=`cat /sys/block/$DEVBASE/device/model`
-					if [ "$MODEL" == "USB CF Reader   " ]; then
-						DEVICETYPE="cf"
-					elif [ "$MODEL" == "Compact Flash   " ]; then
-						DEVICETYPE="cf"
-					elif [ "$MODEL" == "USB SD Reader   " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MODEL" == "USB SD  Reader  " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MODEL" == "SD/MMC          " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MODEL" == "USB MS Reader   " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MODEL" == "SM/xD-Picture   " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MODEL" == "USB SM Reader   " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MODEL" == "MS/MS-Pro       " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MDEV" == "mmcblk0p1" ]; then
-						DEVICETYPE="mmc1"
+				if [ "$DRIVER" = "mmcblk" ]; then
+					if [ "${REMOVABLE}" -eq "0" ]; then
+						DEVICETYPE="mmc"
 					else
-						DEVICETYPE="usb"
+						DEVICETYPE="SD-card"
+					fi
+				else
+					readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci'
+					EXTERNAL=$?
+					if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
+						# mount the first non-removable internal device on /media/hdd
+						DEVICETYPE="hdd"
+					else
+						MODEL=`cat /sys/block/$DEVBASE/device/model`
+						if [ "$MODEL" == "USB CF Reader   " ]; then
+							DEVICETYPE="cf"
+						elif [ "$MODEL" == "Compact Flash   " ]; then
+							DEVICETYPE="cf"
+						elif [ "$MODEL" == "USB SD Reader   " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MODEL" == "USB SD  Reader  " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MODEL" == "SD/MMC          " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MODEL" == "USB MS Reader   " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MODEL" == "SM/xD-Picture   " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MODEL" == "USB SM Reader   " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MODEL" == "MS/MS-Pro       " ]; then
+							DEVICETYPE="mmc1"
+						elif [ "$MDEV" == "mmcblk0p1" ]; then
+							DEVICETYPE="mmc1"
+						else
+							DEVICETYPE="usb"
+						fi
 					fi
 				fi
 			else

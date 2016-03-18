@@ -4,7 +4,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 # we cannot use PACKAGES_DYNAMIC = "enigma2-plugin-.*"  here, because enigma2-plugins already has it.
 PACKAGES_DYNAMIC = "enigma2-plugin-(pli-.*|extensions-openuitzendinggemist|extensions-ushare)"
 
-DEPENDS = "ushare"
 
 DESCRIPTION_enigma2-plugin-extensions-ushare = "UPnP media server"
 RDEPENDS_enigma2-plugin-extensions-ushare = "ushare"

@@ -1,0 +1,130 @@
+diff --git a/gstdvbaudiosink.c b/gstdvbaudiosink.c
+index 27c3e86..862a7f6 100644
+--- a/gstdvbaudiosink.c
++++ b/gstdvbaudiosink.c
+@@ -1217,6 +1217,10 @@ GstFlowReturn gst_dvbaudiosink_push_buffer(GstDVBAudioSink *self, GstBuffer *buf
+ 		if (self->codec_data)
+ 		{
+ 			size_t payload_len = size;
++			pes_header[pes_header_len++] = 0x42; // B
++			pes_header[pes_header_len++] = 0x43; // C
++			pes_header[pes_header_len++] = 0x4D; // M
++			pes_header[pes_header_len++] = 0x41; // A
+ 			pes_header[pes_header_len++] = (payload_len >> 24) & 0xff;
+ 			pes_header[pes_header_len++] = (payload_len >> 16) & 0xff;
+ 			pes_header[pes_header_len++] = (payload_len >> 8) & 0xff;
+@@ -1243,6 +1247,10 @@ GstFlowReturn gst_dvbaudiosink_push_buffer(GstDVBAudioSink *self, GstBuffer *buf
+ 		if (self->codec_data && codec_data_size >= 18)
+ 		{
+ 			size_t payload_len = size;
++			pes_header[pes_header_len++] = 0x42; // B
++			pes_header[pes_header_len++] = 0x43; // C
++			pes_header[pes_header_len++] = 0x4D; // M
++			pes_header[pes_header_len++] = 0x41; // A
+ 			pes_header[pes_header_len++] = (payload_len >> 24) & 0xff;
+ 			pes_header[pes_header_len++] = (payload_len >> 16) & 0xff;
+ 			pes_header[pes_header_len++] = (payload_len >> 8) & 0xff;
+diff --git a/gstdvbaudiosink.h b/gstdvbaudiosink.h
+index a83be80..c52b687 100644
+--- a/gstdvbaudiosink.h
++++ b/gstdvbaudiosink.h
+@@ -78,11 +78,11 @@ typedef enum {
+ 	AUDIOTYPE_MP3 = 0xa,
+ 	AUDIOTYPE_AAC_PLUS = 0xb,
+ 	AUDIOTYPE_DTS_HD = 0x10,
+-	AUDIOTYPE_WMA = 0x20,
+-	AUDIOTYPE_WMA_PRO = 0x21,
+-	AUDIOTYPE_AC3_PLUS = 0x22,
++	AUDIOTYPE_WMA = 0xd,
++	AUDIOTYPE_WMA_PRO = 0xe,
++	AUDIOTYPE_AC3_PLUS = 7,
+ 	AUDIOTYPE_AMR = 0x23,
+-	AUDIOTYPE_RAW = 0x30
++	AUDIOTYPE_RAW = 0xf,
+ } t_audio_type;
+ 
+ struct _GstDVBAudioSink
+diff --git a/gstdvbvideosink.c b/gstdvbvideosink.c
+index a472106..209c229 100644
+--- a/gstdvbvideosink.c
++++ b/gstdvbvideosink.c
+@@ -1774,15 +1774,20 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
+ 					codec_data_pointer = codecdatamap.data;
+ 					codec_size = codecdatamap.size;
+ #endif
+-					videocodecdata.length = 8 + codec_size;
+-					data = videocodecdata.data = (guint8*)g_malloc(videocodecdata.length);
+-					memset(data, 0, videocodecdata.length);
++#if GST_VERSION_MAJOR < 1
++					self->codec_data = gst_buffer_new_and_alloc(8 + codec_size);
++					data = GST_BUFFER_DATA(self->codec_data);
++#else
++					GstMapInfo map;
++					self->codec_data = gst_buffer_new_and_alloc(8 + codec_size);
++					gst_buffer_map(self->codec_data, &map, GST_MAP_WRITE);
++					data = map.data;
++#endif
+ 					data += 8;
+-					memcpy(data, codec_data_pointer, codec_size);
+-					ioctl(self->fd, VIDEO_SET_CODEC_DATA, &videocodecdata);
+-					g_free(videocodecdata.data);
++					if (codec_data && codec_size) memcpy(data , codec_data_pointer, codec_size);
+ #if GST_VERSION_MAJOR >= 1
+ 					gst_buffer_unmap(gst_value_get_buffer(codec_data), &codecdatamap);
++					gst_buffer_unmap(self->codec_data, &map);
+ #endif
+ 				}
+ 			}
+@@ -1808,10 +1813,20 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
+ 					if (codec_size > 4) codec_size = 4;
+ 					gst_structure_get_int(structure, "width", &width);
+ 					gst_structure_get_int(structure, "height", &height);
+-					videocodecdata.length = 33;
+-					data = videocodecdata.data = (guint8*)g_malloc(videocodecdata.length);
+-					memset(data, 0, videocodecdata.length);
+-					data += 18;
++#if GST_VERSION_MAJOR < 1
++					self->codec_data = gst_buffer_new_and_alloc(18 + codec_size);
++					data = GST_BUFFER_DATA(self->codec_data);
++#else
++					GstMapInfo map;
++					self->codec_data = gst_buffer_new_and_alloc(18 + codec_size);
++					gst_buffer_map(self->codec_data, &map, GST_MAP_WRITE);
++					data = map.data;
++#endif
++					/* pes header */
++					*(data++) = 0x00;
++					*(data++) = 0x00;
++					*(data++) = 0x01;
++					*(data++) = 0x0f;
+ 					/* width */
+ 					*(data++) = (width >> 8) & 0xff;
+ 					*(data++) = width & 0xff;
+@@ -1819,10 +1834,9 @@ static gboolean gst_dvbvideosink_set_caps(GstBaseSink *basesink, GstCaps *caps)
+ 					*(data++) = (height >> 8) & 0xff;
+ 					*(data++) = height & 0xff;
+ 					if (codec_data && codec_size) memcpy(data, codec_data_pointer, codec_size);
+-					ioctl(self->fd, VIDEO_SET_CODEC_DATA, &videocodecdata);
+-					g_free(videocodecdata.data);
+ #if GST_VERSION_MAJOR >= 1
+ 					gst_buffer_unmap(gst_value_get_buffer(codec_data), &codecdatamap);
++					gst_buffer_unmap(self->codec_data, &map);
+ #endif
+ 				}
+ 			}
+diff --git a/gstdvbvideosink.h b/gstdvbvideosink.h
+index c889e24..01249fd 100644
+--- a/gstdvbvideosink.h
++++ b/gstdvbvideosink.h
+@@ -71,9 +71,9 @@ typedef enum {
+ 	STREAMTYPE_MPEG2 = 0,
+ 	STREAMTYPE_MPEG4_H264 = 1,
+ 	STREAMTYPE_H263 = 2,
+-	STREAMTYPE_VC1 = 3,
++	STREAMTYPE_VC1 = 16,
+ 	STREAMTYPE_MPEG4_Part2 = 4,
+-	STREAMTYPE_VC1_SM = 5,
++	STREAMTYPE_VC1_SM = 17,
+ 	STREAMTYPE_MPEG1 = 6,
+ 	STREAMTYPE_MPEG4_H265 = 7,
+ 	STREAMTYPE_XVID = 10,

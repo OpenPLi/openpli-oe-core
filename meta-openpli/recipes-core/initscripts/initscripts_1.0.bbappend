@@ -1,4 +1,3 @@
-PR = "r144"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${P}:"
 
