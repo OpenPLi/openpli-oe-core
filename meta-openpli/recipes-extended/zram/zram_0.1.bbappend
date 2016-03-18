@@ -1,4 +1,3 @@
-PR = "r5"
 # Get rid of silly dependencies like util-linux
 RDEPENDS_${PN} = ""
 RRECOMMENDS_${PN} = "kernel-module-zram"

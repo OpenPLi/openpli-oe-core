@@ -23,7 +23,7 @@ FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/BackupSuite"
 
 do_install_append() {
 	install -d ${DEST}
-	cp -rp ${SRC}/* ${DEST}
+	cp -r --preserve=mode,links ${SRC}/* ${DEST}
 	# remove the files we do not want in our package
 	find ${DEST} -name '*.pyo' -exec rm {} \;
 	find ${DEST} -name '*.po' -exec rm {} \;

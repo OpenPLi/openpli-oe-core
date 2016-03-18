@@ -9,6 +9,7 @@ inherit module machine_kernel_pr
 
 SRC_URI = "http://downloads.pli-images.org/misc/rtl8188C_8192C_usb_linux_v3.4.4_4749.20121105.tar.gz \
 	file://add-3.8-support.patch \
+	file://fix-compile-with-gcc5.patch \
 	"
 
 S = "${WORKDIR}/rtl8188C_8192C_usb_linux_v3.4.4_4749.20121105"
