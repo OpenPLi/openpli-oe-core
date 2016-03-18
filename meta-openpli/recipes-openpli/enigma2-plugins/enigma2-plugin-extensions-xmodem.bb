@@ -14,9 +14,7 @@ inherit allarch distutils-openplugins
 
 RDEPENDS_${PN} = " \
 	iptables \
-	libusb-0.1-4 (>= 0.1.5) \
-	libc6 (>= 2.19) \
-	libpcap1 (>= 1.5.3) \
+	libusb-compat (>= 0.1.5) \
 	usb-modeswitch \
 	usb-modeswitch-data \
 	picocom \
