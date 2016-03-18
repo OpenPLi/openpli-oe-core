@@ -79,6 +79,7 @@ OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
 ENIGMA2_OPTIONAL = " \
 	channelsettings-enigma2-meta \
 	enigma2-pliplugins \
+	enigma2-plugin-extensions-autobouquets \
 	enigma2-plugin-extensions-automatic-fullbackup \
 	enigma2-plugin-drivers-usbserial \
 	enigma2-plugin-extensions-dlnabrowser \
@@ -87,6 +88,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-xmltvimport \
 	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-extensions-modifyplifullhd \
+	enigma2-plugin-systemplugins-autobouquetsmaker \
 	enigma2-plugin-systemplugins-mountmanager \
 	enigma2-plugin-systemplugins-signalfinder \
 	enigma2-plugin-systemplugins-extnumberzap \
