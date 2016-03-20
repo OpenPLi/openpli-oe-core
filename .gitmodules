@@ -41,3 +41,6 @@
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = http://github.com/zgemma-star/meta-zgemma.git
+[submodule "meta-edision"]
+	path = meta-edision
+	url = http://github.com/open-edision/meta-edision.git
