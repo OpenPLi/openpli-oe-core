@@ -1,0 +1,24 @@
+From ed1ba6aa14636c8e5b13e6cd5b0c8c83372f02bd Mon Sep 17 00:00:00 2001
+From: Mike Looijmans <milo@openpli.org>
+Date: Fri, 25 Mar 2016 16:39:02 +0100
+Subject: [PATCH] Set install prefix to "/usr" instead of "/usr/local"
+
+---
+ librtmp/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/librtmp/Makefile b/librtmp/Makefile
+index 2c1c790..e822602 100644
+--- a/librtmp/Makefile
++++ b/librtmp/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+ 
+-prefix=/usr/local
++prefix=/usr
+ 
+ incdir=$(prefix)/include/librtmp
+ bindir=$(prefix)/bin
+-- 
+2.1.4
+

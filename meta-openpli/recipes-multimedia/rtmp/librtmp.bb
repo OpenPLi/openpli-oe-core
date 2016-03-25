@@ -13,17 +13,16 @@ PKGV = "2.4+git${GITPKGV}"
 PV = "2.4+git${SRCPV}"
 PR = "r2"
 
-SRC_URI = "git://git.ffmpeg.org/rtmpdump;protocol=git \
+SRC_URI = "git://git.ffmpeg.org/rtmpdump \
 	file://0001-librtmp-set-timeout-for-send-operations-too.patch;striplevel=2 \
+	file://0001-Remove-bad-overrides-from-Makefile.patch;striplevel=2 \
+	file://0001-Set-install-prefix-to-usr-instead-of-usr-local.patch;striplevel=2 \
 "
 
 S = "${WORKDIR}/git/librtmp"
 
-do_compile() {
-	oe_runmake CROSS_COMPILE=${TARGET_PREFIX} CFLAGS="${CFLAGS} -fPIC" LDFLAGS="${LDFLAGS}"
-}
-
 do_install() {
 	install -d ${D}${libdir}
 	oe_runmake DESTDIR=${D} install
+	rm -rf ${D}/usr/man
 }

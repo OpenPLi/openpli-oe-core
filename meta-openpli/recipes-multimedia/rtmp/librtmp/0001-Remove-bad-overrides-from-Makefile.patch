@@ -1,0 +1,39 @@
+From 4916c00708a8ecae7a4d7f48fff1814f2dbd891b Mon Sep 17 00:00:00 2001
+From: Mike Looijmans <milo@openpli.org>
+Date: Thu, 24 Mar 2016 20:07:15 +0100
+Subject: [PATCH] Remove bad overrides from Makefile
+
+The Makefile hard-codes CC and LD, making it hard for OpenEmbedded to
+properly compile it.
+---
+ librtmp/Makefile | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/librtmp/Makefile b/librtmp/Makefile
+index 2c1c790..42b9916 100644
+--- a/librtmp/Makefile
++++ b/librtmp/Makefile
+@@ -11,9 +11,6 @@ INCDIR=$(DESTDIR)$(incdir)
+ LIBDIR=$(DESTDIR)$(libdir)
+ MANDIR=$(DESTDIR)$(mandir)
+ 
+-CC=$(CROSS_COMPILE)gcc
+-LD=$(CROSS_COMPILE)ld
+-AR=$(CROSS_COMPILE)ar
+ 
+ SYS=posix
+ CRYPTO=OPENSSL
+@@ -73,9 +70,7 @@ SO_LIB=$(SOLIB_$(SHARED))
+ SO_INST=$(SOINST_$(SHARED))
+ 
+ DEF=-DRTMPDUMP_VERSION=\"$(VERSION)\" $(CRYPTO_DEF) $(XDEF)
+-OPT=-O2
+-CFLAGS=-Wall $(XCFLAGS) $(INC) $(DEF) $(OPT) $(SO_DEF)
+-LDFLAGS=$(XLDFLAGS)
++CFLAGS+=$(INC) $(DEF) $(SO_DEF)
+ 
+ 
+ OBJS=rtmp.o log.o amf.o hashswf.o parseurl.o
+-- 
+2.1.4
+
