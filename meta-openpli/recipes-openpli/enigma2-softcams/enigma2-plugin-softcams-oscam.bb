@@ -37,6 +37,7 @@ EXTRA_OECMAKE += "\
 	-DHAVE_LIBUSB=1 \
 	-DSTATIC_LIBUSB=1 \
 	-DWITH_SSL=1 \
+	-DIPV6SUPPORT=1 \
 	-DHAVE_PCSC=0"
 
 do_install() {
