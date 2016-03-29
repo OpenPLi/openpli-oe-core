@@ -64,7 +64,12 @@
 # "OpenPli based" and does not refer to the the OpenPli support
 # sites (unless you requested and arranged an OpenPli subforum.)
 #
-
+#
+# PLEASE NOTE that OpenPLi artwork, including the mvi files 
+# mentioned above, are licensed CC BY-NC-ND 4.0, which means you
+# are allowed to compile your own image using OpenPLi artwork,
+# but you are EXPLICITLY NOT allowed to redistribute that image! 
+#
 DISTRO_NAME = "my-openpli-image"
 DISTRO_FEED_URI = "http://myhost/feeds/${FEED_NAME}/${MACHINE}"
 BRANDINGDIR = "/openpli/branding"
