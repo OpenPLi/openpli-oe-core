@@ -2,8 +2,7 @@ DESCRIPTION = "OpenPLi bootlogo"
 SECTION = "base"
 PRIORITY = "required"
 MAINTAINER = "PLi team"
-
-require conf/license/openpli-gplv2.inc
+LICENSE = "CC BY-NC-ND 4.0"
 
 RDEPENDS_${PN} += "showiframe"
 
