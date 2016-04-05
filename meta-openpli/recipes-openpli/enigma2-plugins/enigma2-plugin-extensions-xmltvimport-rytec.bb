@@ -6,9 +6,8 @@ require conf/license/openpli-gplv2.inc
 
 inherit allarch
 
-PV = "20160308"
-# http://epgalfasite.dyndns.tv/ resolves to:
-SRC_URI = "http://rytecepg.ipservers.eu/epg_data/rytec.sources.xml.${PV}.gz"
+PV = "20160328"
+SRC_URI = "http://www.milosoftware.com/sat/rytec.sources.xml.${PV}.gz"
 S = "${WORKDIR}"
 
 PACKAGES = "${PN}"
@@ -20,6 +19,6 @@ do_install() {
 	install -m 644 ${S}/rytec.sources.xml.${PV} ${D}/etc/epgimport/rytec.sources.xml
 }
 
-SRC_URI[md5sum] = "e23973ddadc095828c9fc0d0a1581ab4"
-SRC_URI[sha256sum] = "bace6cd1dd9696e927e831ab46c58bbc18a9029714343caabd83c5470dea80c3"
+SRC_URI[md5sum] = "7b279de913911a22a32b088c174df7d5"
+SRC_URI[sha256sum] = "c14f9bb2a21a64e2ad34afa743c9607917bf47eb275111a774cced280867942d"
 
