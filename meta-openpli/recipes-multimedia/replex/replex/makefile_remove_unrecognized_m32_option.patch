@@ -1,0 +1,14 @@
+diff --git a/Makefile b/Makefile
+index 3c9ad72..a8fa3bc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,8 +2,7 @@ VERSION = 0.1.6.8
+ DISTNAME = replex-$(VERSION)
+ TARNAME = $(DISTNAME).tar.gz	
+ INCS   = -I..
+-CFLAGS =  -g -m32 -Wall -O6 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DVERSION=\"$(VERSION)\"
+-LDFLAGS = -m32
++CFLAGS =  -g -Wall -O6 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DVERSION=\"$(VERSION)\"
+ LIBS   = -L. 
+ MFLAG  = -M
+ OBJS = element.o pes.o mpg_common.o ts.o ringbuffer.o avi.o multiplex.o
