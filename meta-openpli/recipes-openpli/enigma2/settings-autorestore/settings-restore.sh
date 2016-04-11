@@ -6,7 +6,7 @@
 if [ $(find /media -maxdepth 2 -iname nobackup) ]
 then
     echo abort settings restore
-    rm -f /etc/rc?.d/S*autoinstall*
+    rm -f /etc/rc?.d/S*settingsrestore*
     exit 0
 fi
 
