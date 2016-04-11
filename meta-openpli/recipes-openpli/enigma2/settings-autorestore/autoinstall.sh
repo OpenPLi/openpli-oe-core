@@ -3,6 +3,13 @@
 # It installs the things from /hdd/backup/autoinstall
 # or from wherever the settings were restored
 
+if [ $(find /media -maxdepth 2 -iname nobackup) ]
+then
+    echo abort autoinstall
+    rm -f /etc/rc?.d/S*autoinstall*
+    exit 0
+fi
+
 BACKUPDIR=/media/hdd
 INSTALLED=/etc/installed
 LOGFILE=/var/log/autoinstall.log
