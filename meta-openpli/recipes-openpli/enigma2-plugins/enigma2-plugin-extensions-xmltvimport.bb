@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://../etc/epgimport/readme.txt;startline=1;endline=4;md5
 
 inherit gitpkgv
 
-SRCREV = "db6e79648963ba8364af2b27fb7ac0b5c8e5c75c"
+SRCREV = "b0ee752984380c682cf813bc1f717ae9322e4901"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
