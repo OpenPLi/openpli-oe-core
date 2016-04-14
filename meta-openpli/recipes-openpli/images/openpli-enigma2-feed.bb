@@ -70,6 +70,7 @@ OPTIONAL_PACKAGES += " \
 	usb-modeswitch-data \
 	v4l-utils \
 	vim \
+	wscan \
 	xfsprogs \
 	zeroconf \
 	zip \

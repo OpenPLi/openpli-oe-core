@@ -1,8 +1,14 @@
 #! /bin/sh
 # This script is run once when your box boots for the first time. You can run
 # it again later, but that may destroy settings that you did.
-
 # Restore files from backup dir with the most recent timestamp
+
+if [ $(find /media -maxdepth 2 -iname nobackup) ]
+then
+    echo abort settings restore
+    rm -f /etc/rc?.d/S*settingsrestore*
+    exit 0
+fi
 
 BACKUPDIR=/media/hdd
 MACADDR=`cat /sys/class/net/eth0/address | cut -b 1,2,4,5,7,8,10,11,13,14,16,17`
