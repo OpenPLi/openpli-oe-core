@@ -3,6 +3,7 @@ DESCRIPTION = "meta file for USB DVB drivers"
 require conf/license/openpli-gplv2.inc
 
 DEPENDS = "\
+	enigma2-plugin-drivers-atsc-usb-hauppauge \
 	enigma2-plugin-drivers-dvb-usb-dib0700 \
 	enigma2-plugin-drivers-dvb-usb-af9015 \
 	enigma2-plugin-drivers-dvb-usb-af9035 \
@@ -17,4 +18,4 @@ DEPENDS = "\
 	enigma2-plugin-drivers-dvb-usb-tbs \
 	"
 
-PR = "r1"
+PR = "r2"
