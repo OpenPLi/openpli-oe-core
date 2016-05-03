@@ -94,8 +94,7 @@ case "$ACTION" in
 				MOUNTPOINT="/media/$MDEV"
 				mkdir -p "${MOUNTPOINT}"
 			fi
-			FLAG="-o noatime"
-			if ! mount -t auto $FLAG /dev/$MDEV "${MOUNTPOINT}" ; then
+			if ! mount -t auto -o noatime /dev/$MDEV "${MOUNTPOINT}" ; then
 				rmdir "${MOUNTPOINT}"
 			fi
 		fi
