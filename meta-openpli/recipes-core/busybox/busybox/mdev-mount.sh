@@ -111,7 +111,7 @@ case "$ACTION" in
 				MOUNTPOINT="/media/$MDEV"
 				mkdir -p "${MOUNTPOINT}"
 			fi
-			if ! mount -t auto /dev/$MDEV "${MOUNTPOINT}" ; then
+			if ! mount -t auto -o noatime /dev/$MDEV "${MOUNTPOINT}" ; then
 				rmdir "${MOUNTPOINT}"
 			fi
 		fi
