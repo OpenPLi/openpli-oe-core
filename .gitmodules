@@ -46,4 +46,4 @@
 	url = http://github.com/open-edision/meta-edision.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = https://github.com/miraclebox-git/meta-miraclebox.git
+	url = http://github.com/miraclebox-git/meta-miraclebox.git
