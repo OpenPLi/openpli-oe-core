@@ -35,6 +35,7 @@ OPTIONAL_PACKAGES += " \
 	iperf \
 	joe \
 	libbluray \
+	libudfread \
 	mc \
 	minisatip \
 	mpd \

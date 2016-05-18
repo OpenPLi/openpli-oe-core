@@ -47,3 +47,6 @@
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
 	url = http://github.com/miraclebox-git/meta-miraclebox.git
+[submodule "meta-spycat"]
+	path = meta-spycat
+	url = https://github.com/open-spycat/meta-spycat.git
