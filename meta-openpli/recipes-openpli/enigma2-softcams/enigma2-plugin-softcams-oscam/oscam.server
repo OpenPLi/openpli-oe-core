@@ -39,8 +39,8 @@ label                         = Hoofdbox
 enable			      = 0
 protocol                      = cs378x
 device                        = ip_adress_hoofdbox,12005
-user                          = slaapkamer
-password                      = slaapkamer
+user                          = tweede_box
+password                      = tweede_box
 group                         = 1
 
 

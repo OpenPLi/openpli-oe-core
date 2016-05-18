@@ -6,7 +6,7 @@ group 			= 1
 au 			= 1
 
 [account]
-user                          = slaapkamer
-pwd                           = slaapkamer
+user                          = tweede_box
+pwd                           = tweede_box
 group                         = 1
 
