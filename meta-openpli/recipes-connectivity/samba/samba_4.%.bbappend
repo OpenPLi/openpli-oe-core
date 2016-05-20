@@ -4,10 +4,10 @@ PACKAGECONFIG = "${@base_contains('DISTRO_FEATURES', 'pam', 'pam', '', d)} \
                  ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', '${SYSVINITTYPE}', '', d)} \
                  ${@base_contains('DISTRO_FEATURES', 'systemd', 'systemd', '', d)} \
                  ${@base_contains('DISTRO_FEATURES', 'zeroconf', 'zeroconf', '', d)} \
-                 aio \
                 "
 
 EXTRA_OECONF += " \
+		 --without-ads \
                  --without-cluster-support \
                  --without-profiling-data \
                  --with-sockets-dir=${localstatedir}/run \
@@ -20,10 +20,6 @@ EXTRA_OECONF_remove = " \
                        --with-profiling-data \
                        --with-sockets-dir=${localstatedir}/run/samba \
                       "
-
-# Fix typos
-PACKAGECONFIG[acl] = "--with-acl-support,--without-acl-support,acl"
-PACKAGECONFIG[aio] = "--with-aio-support,--without-aio-support,libaio"
 
 # Remove unused, add own config, init script
 SRC_URI += " \
