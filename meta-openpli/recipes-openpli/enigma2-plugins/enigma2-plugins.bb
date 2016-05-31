@@ -20,6 +20,7 @@ RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
 
 RRECOMMENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
 RRECOMMENDS_enigma2-plugin-systemplugins-systemtime = "ntpdate"
+RRECOMMENDS_enigma2-plugin-extensions-transmission = "transmission transmission-client"
 
 PROVIDES += "\
 	${@base_contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
