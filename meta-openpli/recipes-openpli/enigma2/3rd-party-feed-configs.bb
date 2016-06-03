@@ -1,5 +1,5 @@
 DESCRIPTION = "Configuration files for 3rd-party feeds"
-PR = "r2"
+PR = "r3"
 
 require conf/license/openpli-gplv2.inc
 
@@ -8,10 +8,13 @@ require conf/license/openpli-gplv2.inc
 DISTRO_HOST = "downloads.pli-images.org"
 FEEDS = "3rd-party 3rd-party-${MACHINE}"
 
+# allow the complete 3rd party feed to be overridden
+DISTRO_THIRD_PARTY_FEED_URI ?= "${DISTRO_FEED_URI}"
+
 do_compile() {
     [ ! -d ${S}/${sysconfdir}/opkg ] && mkdir -p ${S}/${sysconfdir}/opkg
     for feed in ${FEEDS}; do
-        echo "src/gz ${DISTRO_FEED_PREFIX}-${feed} ${DISTRO_FEED_URI}/${feed}" > ${S}/${sysconfdir}/opkg/${feed}-feed.conf
+        echo "src/gz ${DISTRO_FEED_PREFIX}-${feed} ${DISTRO_THIRD_PARTY_FEED_URI}/${feed}" > ${S}/${sysconfdir}/opkg/${feed}-feed.conf
     done
 }
 do_install () {
