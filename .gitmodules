@@ -50,3 +50,6 @@
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
+[submodule "meta-gi"]
+	path = meta-gi
+	url = http://github.com/galaxyinnovations/meta-gi.git
