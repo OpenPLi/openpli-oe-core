@@ -37,6 +37,9 @@ python do_package_prepend () {
         ('spycatmini', 'spycat.jpg', 'spycat.png'),
         ('wetekplay', 'wetekplay.jpg', 'wetekplay.png'),
         ('xpeedc', 'xpeedlx.jpg', 'xpeedlx.png'),
+        ('mbtwinplus', 'miraclebox.jpg', 'miraclebox.png'),
+        ('mbmicro', 'miraclebox2.jpg', 'miraclebox2.png'),
+        
     ]
     import os
     top = '${D}${PLUGINPATH}/public/images/'
