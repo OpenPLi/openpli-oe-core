@@ -5,13 +5,12 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 
 DEPENDS = "jpeg libpng zlib"
 
-SRCREV = "009fd8b71d3fd974df4048cc4de038dcb94a778f"
+SRCREV = "e2cf98d67d4a5238a999c7f69e3106bd7c07552f"
 
 inherit gitpkgv
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r1"
 
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
