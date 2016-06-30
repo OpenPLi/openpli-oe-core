@@ -1,0 +1,20 @@
+diff --git a/cdfs.h b/cdfs.h
+index d95c048..e436871 100644
+--- a/cdfs.h
++++ b/cdfs.h
+@@ -12,6 +12,15 @@
+ #define OLD_KERNEL
+ #endif
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,6,0)
++#define PAGE_CACHE_SHIFT		PAGE_SHIFT
++#define PAGE_CACHE_SIZE		PAGE_SIZE
++#define PAGE_CACHE_MASK		PAGE_MASK
++#define PAGE_CACHE_ALIGN(addr)		(((addr)+PAGE_CACHE_SIZE-1)&PAGE_CACHE_MASK)
++#define page_cache_get(page)		get_page(page)
++#define page_cache_release(page)	put_page(page)
++#endif
++
+ #ifndef CONFIG_CDFS_VERSION
+ #define CONFIG_CDFS_VERSION "2.6.27"
+ #endif
