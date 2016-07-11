@@ -39,6 +39,7 @@ python do_package_prepend () {
         ('xpeedc', 'xpeedlx.jpg', 'xpeedlx.png'),
         ('mbtwinplus', 'mbtwinplus.jpg', 'miraclebox.png'),
         ('mbmicro', 'mbmicro.jpg', 'miraclebox2.png'),
+	('et7000mini', 'et7000mini.jpg', 'et7000mini.png'),
         
     ]
     import os
