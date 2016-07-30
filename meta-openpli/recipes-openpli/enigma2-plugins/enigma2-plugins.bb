@@ -84,11 +84,11 @@ python populate_packages_prepend () {
     def getControlLines(mydir, d, package):
         import os
         try:
-            src = open(mydir + package + "/CONTROL/control").read()
-        except Exception, ex:
-            bb.note("Failed to get control lines for package '%s': %s" % (package, ex))
+            src = open(mydir + package + "/CONTROL/control")
+        except:
+            bb.note("Failed to get control lines for package '%s'" % (package))
             return
-        for line in src.split("\n"):
+        for line in src:
             full_package = "enigma2-plugin-extensions-" + package
             if line.startswith('Package: '):
                 full_package = line[9:]
