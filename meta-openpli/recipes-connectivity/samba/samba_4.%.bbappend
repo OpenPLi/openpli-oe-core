@@ -1,13 +1,8 @@
 
 # Remove acl, cups etc. support.
-PACKAGECONFIG = "${@base_contains('DISTRO_FEATURES', 'pam', 'pam', '', d)} \
-                 ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', '${SYSVINITTYPE}', '', d)} \
-                 ${@base_contains('DISTRO_FEATURES', 'systemd', 'systemd', '', d)} \
-                 ${@base_contains('DISTRO_FEATURES', 'zeroconf', 'zeroconf', '', d)} \
-                "
+PACKAGECONFIG_remove = "acl cups"
 
 EXTRA_OECONF += " \
-		 --without-ads \
                  --without-cluster-support \
                  --without-profiling-data \
                  --with-sockets-dir=${localstatedir}/run \
