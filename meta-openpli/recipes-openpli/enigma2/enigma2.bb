@@ -9,7 +9,7 @@ SRCREV = "${AUTOREV}"
 DEPENDS = " \
 	freetype \
 	gettext-native \
-	${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugins-base gstreamer1.0", "gst-plugins-base gstreamer", d)} \
+	gstreamer1.0-plugins-base gstreamer1.0 \
 	jpeg \
 	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-1.2 giflib libxml2 \
 	openssl \
@@ -28,7 +28,7 @@ RDEPENDS_${PN} = " \
 
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
-	${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0-plugin-subsink", "gst-plugin-subsink", d)} \
+	gstreamer1.0-plugin-subsink \
 	glib-networking \
 	hotplug-e2-helper \
 	${GST_BASE_RDEPS} \
@@ -58,7 +58,7 @@ PYTHON_RDEPS = " \
 	python-zopeinterface \
 	"
 
-GST_BASE_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+GST_BASE_RDEPS = "\
 	gstreamer1.0-plugins-base-alsa \
 	gstreamer1.0-plugins-base-app \
 	gstreamer1.0-plugins-base-audioconvert \
@@ -69,21 +69,9 @@ GST_BASE_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	gstreamer1.0-plugins-base-subparse \
 	gstreamer1.0-plugins-base-typefindfunctions \
 	gstreamer1.0-plugins-base-vorbis \
-	', ' \
-	gst-plugins-base-alsa \
-	gst-plugins-base-app \
-	gst-plugins-base-audioconvert \
-	gst-plugins-base-audioresample \
-	gst-plugins-base-decodebin \
-	gst-plugins-base-decodebin2 \
-	gst-plugins-base-ogg \
-	gst-plugins-base-playbin \
-	gst-plugins-base-subparse \
-	gst-plugins-base-typefindfunctions \
-	gst-plugins-base-vorbis \
-	', d)}"
+	"
 
-GST_GOOD_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+GST_GOOD_RDEPS = "\
 	gstreamer1.0-plugins-good-apetag \
 	gstreamer1.0-plugins-good-audioparsers \
 	gstreamer1.0-plugins-good-autodetect \
@@ -100,26 +88,9 @@ GST_GOOD_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	gstreamer1.0-plugins-good-souphttpsrc \
 	gstreamer1.0-plugins-good-udp \
 	gstreamer1.0-plugins-good-wavparse \
-	', ' \
-	gst-plugins-good-apetag \
-	gst-plugins-good-audioparsers \
-	gst-plugins-good-autodetect \
-	gst-plugins-good-avi \
-	gst-plugins-good-flac \
-	gst-plugins-good-flv \
-	gst-plugins-good-icydemux \
-	gst-plugins-good-id3demux \
-	gst-plugins-good-isomp4 \
-	gst-plugins-good-matroska \
-	gst-plugins-good-rtp \
-	gst-plugins-good-rtpmanager \
-	gst-plugins-good-rtsp \
-	gst-plugins-good-souphttpsrc \
-	gst-plugins-good-udp \
-	gst-plugins-good-wavparse \
-	', d)}"
+	"
 
-GST_BAD_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+GST_BAD_RDEPS = "\
 	gstreamer1.0-plugins-bad-dashdemux \
 	gstreamer1.0-plugins-bad-mms \
 	gstreamer1.0-plugins-bad-mpegpsdemux \
@@ -129,33 +100,16 @@ GST_BAD_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
 	gstreamer1.0-plugins-bad-faad \
 	gstreamer1.0-plugins-bad-fragmented \
 	gstreamer1.0-plugins-bad-videoparsersbad \
-	', ' \
-	gst-plugins-bad-cdxaparse \
-	gst-plugins-bad-mms \
-	gst-plugins-bad-mpegdemux \
-	gst-plugins-bad-rtmp \
-	gst-plugins-bad-vcdsrc \
-	gst-plugins-bad-fragmented \
-	gst-plugins-bad-faad \
-	', d)}"
+	"
 
-GST_UGLY_RDEPS = "${@bb.utils.contains('GST_VERSION', '1.0', ' \
+GST_UGLY_RDEPS = "\
 	gstreamer1.0-plugins-ugly-amrnb \
 	gstreamer1.0-plugins-ugly-amrwbdec \
 	gstreamer1.0-plugins-ugly-asf \
 	gstreamer1.0-plugins-ugly-cdio \
 	gstreamer1.0-plugins-ugly-dvdsub \
 	gstreamer1.0-plugins-ugly-mad \
-	', ' \
-	gst-plugins-ugly-amrnb \
-	gst-plugins-ugly-amrwbdec \
-	gst-plugins-ugly-asf \
-	gst-plugins-ugly-cdio \
-	gst-plugins-ugly-dvdsub \
-	gst-plugins-ugly-mad \
-	gst-plugins-ugly-mpegaudioparse \
-	gst-plugins-ugly-mpegstream \
-	', d)}"
+	"
 
 # DVD playback is integrated, we need the libraries
 RDEPENDS_${PN} += "libdreamdvd"
@@ -206,7 +160,7 @@ SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git;branch=${ENIGMA2_BRANCH}"
 
 SRC_URI += "file://0001-picload.cpp-adapt-to-newer-giflib-version.patch"
 
-LDFLAGS_prepend = "${@bb.utils.contains('GST_VERSION', '1.0', ' -lxml2 ', '', d)}"
+LDFLAGS_prepend = " -lxml2 "
 
 S = "${WORKDIR}/git"
 
@@ -229,7 +183,7 @@ EXTRA_OECONF = "\
 	--with-libsdl=no --with-boxtype=${MACHINE} \
 	--enable-dependency-tracking \
 	ac_cv_prog_c_openmp=-fopenmp \
-	${@bb.utils.contains("GST_VERSION", "1.0", "--with-gstversion=1.0", "", d)} \
+	--with-gstversion=1.0 \
 	${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	BUILD_SYS=${BUILD_SYS} \
 	HOST_SYS=${HOST_SYS} \
