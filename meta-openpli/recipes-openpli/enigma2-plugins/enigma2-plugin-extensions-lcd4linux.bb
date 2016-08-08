@@ -10,10 +10,10 @@ PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
-SRCREV = "d381b2bdd61cf09bde114fe63b1da33852f33d53"
+SRCREV = "c4b24cf002ff8342c72b86a362d5fe773578cbe4"
 S = "${WORKDIR}/git"
 
-inherit gitpkgv pythonnative
+inherit gitpkgv pythonnative allarch
 
 do_compile() {
 	python -m compileall ${S}/usr/lib
