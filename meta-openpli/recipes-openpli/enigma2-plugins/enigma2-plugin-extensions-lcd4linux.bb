@@ -5,12 +5,12 @@ MAINTAINER = "PLi team"
 LICENSE = "NPOSL-3.0"
 LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/LICENSE;md5=a06300d1389bd32f84faeb97b6f6771f"
 DEPENDS = "libusb"
-PKGVERSION = "4.6-r0"
+PKGVERSION = "4.7-r3"
 PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
-SRCREV = "fe325f8b08853e1ebee3cd4a2221f884b6236935"
+SRCREV = "d381b2bdd61cf09bde114fe63b1da33852f33d53"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv pythonnative
