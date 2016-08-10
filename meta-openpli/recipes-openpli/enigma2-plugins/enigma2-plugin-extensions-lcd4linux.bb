@@ -33,5 +33,3 @@ FILES_${PN} = "\
 	/etc/enigma2/lcd4config"
 
 CONFFILES_${PN} = "/etc/enigma2/lcd4config"
-
-FILES_${PN}-dbg = "usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/.debug/dpflib.so"
