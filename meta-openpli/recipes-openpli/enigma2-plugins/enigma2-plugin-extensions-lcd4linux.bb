@@ -20,29 +20,16 @@ do_compile() {
 }
 
 do_install() {
-    cp -Rp "${S}/usr" "${D}"
-    cp -Rp "${S}/etc" "${D}"
+	cp -Rp "${S}/usr" "${D}"
+	cp -Rp "${S}/etc" "${D}"
+	rm "${D}/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/dpflib.so"
 }
 
-RDEPENDS_${PN} += "\
-	python-codecs \
-    python-datetime \
-    python-imaging \
-    python-textutils \
-    python-shell \
-    python-ctypes \
-    python-mutagen \
-    python-zlib \
-    python-email \
-    python-subprocess \
-    python-simplejson \
-    python-pyusb \
-    png-util"
-
-FILES_${PN} = "/usr/lib/python2.7 \
-    /usr/lib/python2.7/site-packages \
-    /usr/lib/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
-    /usr/lib/enigma2/python/Plugins/Extensions/LCD4linux \
+FILES_${PN} = "\
+	/usr/lib/python2.7 \
+	/usr/lib/python2.7/site-packages \
+	/usr/lib/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
+	/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux \
 	/etc/enigma2/lcd4config"
 
 CONFFILES_${PN} = "/etc/enigma2/lcd4config"
