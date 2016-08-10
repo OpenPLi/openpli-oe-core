@@ -10,7 +10,7 @@ PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
-SRCREV = "1e4303e6ff900cf4f03819e7598d66949a01f930"
+SRCREV = "ccccf143c67c70eb5f5bdc9dfd0de6dd254d8318"
 
 DEPENDS += "\
 	libusb \
@@ -46,7 +46,6 @@ do_compile() {
 do_install() {
 	cp -Rp "${S}/usr" "${D}"
 	cp -Rp "${S}/etc" "${D}"
-	rm "${D}/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/dpflib.so"
 }
 
 FILES_${PN} = "\
