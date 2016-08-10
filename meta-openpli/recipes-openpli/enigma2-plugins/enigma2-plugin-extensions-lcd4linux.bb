@@ -10,7 +10,7 @@ PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
-SRCREV = "c4b24cf002ff8342c72b86a362d5fe773578cbe4"
+SRCREV = "1e4303e6ff900cf4f03819e7598d66949a01f930"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv pythonnative allarch
