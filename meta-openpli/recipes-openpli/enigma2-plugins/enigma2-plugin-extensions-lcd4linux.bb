@@ -4,13 +4,37 @@ HOMEPAGE = "http://www.i-have-a-dreambox.com/wbb2/thread.php?threadid=165337"
 MAINTAINER = "PLi team"
 LICENSE = "NPOSL-3.0"
 LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/LICENSE;md5=a06300d1389bd32f84faeb97b6f6771f"
-DEPENDS = "libusb"
+
 PKGVERSION = "4.7-r3"
 PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
 SRCREV = "1e4303e6ff900cf4f03819e7598d66949a01f930"
+
+DEPENDS += "\
+	libusb \
+	python-simplejson \
+	png-util \
+	python-pyusb \
+"
+
+RDEPENDS_${PN} += "\
+	python-codecs \
+	python-datetime \
+	python-imaging \
+	python-textutils \
+	python-shell \
+	python-ctypes \
+	python-mutagen \
+	python-zlib \
+	python-email \
+	python-subprocess \
+	python-simplejson \
+	python-pyusb \
+	png-util \
+"
+
 S = "${WORKDIR}/git"
 
 inherit gitpkgv pythonnative allarch
