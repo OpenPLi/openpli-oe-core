@@ -72,6 +72,7 @@ DEPENDS += " \
 	enigma2 \
 	enigma2-pliplugins \
 	enigma2-plugins \
+	rtl8192eu \
 	"
 
 IMAGE_INSTALL += " \
