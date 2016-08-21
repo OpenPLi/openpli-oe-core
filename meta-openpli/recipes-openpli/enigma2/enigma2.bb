@@ -186,6 +186,15 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL}"
 RDEPENDS_enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
 
+# Fake package that doesn't actually get built, but allows OE to detect
+# the RDEPENDS for the plugins above, preventing [build-deps] warnings.
+RDEPENDS_${PN}-build-dependencies = "\
+	aio-grab \
+	dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL} \
+	wpa-supplicant wireless-tools python-wifi \
+	python-twisted-web \
+	"
+
 inherit gitpkgv pythonnative
 
 PV = "2.7+git${SRCPV}"
@@ -202,7 +211,7 @@ S = "${WORKDIR}/git"
 FILES_${PN} += "${datadir}/keymaps"
 FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES =+ "${PN}-src"
-PACKAGES += "${PN}-meta"
+PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit autotools pkgconfig
