@@ -13,6 +13,9 @@ PACKAGES += "\
 	enigma2-plugin-extensions-mosaic \
 	enigma2-plugin-extensions-fancontrol2 \
 	enigma2-plugin-extensions-bonjour \
+	enigma2-plugin-extensions-transmission \
+	enigma2-plugin-systemplugins-systemtime \
+	enigma2-plugin-systemplugins-blindscan \
 	"
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
@@ -58,7 +61,7 @@ FILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 CONFFILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 
 FILES_${PN}-meta = "${datadir}/meta"
-PACKAGES += "${PN}-meta"
+PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 
 inherit autotools-brokensep
 
