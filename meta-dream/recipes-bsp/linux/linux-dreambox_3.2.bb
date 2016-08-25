@@ -39,6 +39,7 @@ SRC_URI = " \
 			file://0001-it913x-backport-changes-to-3.2-kernel.patch \
 			file://0001-linuxtv-api-DMM-drivers-are-now-ready-for-linux-tv-a.patch;apply=no \
 			file://0001-correctly-initiate-nand-flash-ecc-config-when-old-2n.patch \
+			file://kernel-gcc6.patch \
 			file://defconfig \
 "
 
