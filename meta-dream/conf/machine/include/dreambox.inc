@@ -35,7 +35,7 @@ PREFERRED_VERSION_linux-dreambox = "3.2"
 KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "${KERNEL_IMAGETYPE}"
 KERNEL_OUTPUT_DIR = "."
-KERNEL_CONSOLE = "${@base_contains('OPENPLI_FEATURES', 'usbconsole', 'ttyS0,115200', 'null', d)}"
+KERNEL_CONSOLE = "${@bb.utils.contains('OPENPLI_FEATURES', 'usbconsole', 'ttyS0,115200', 'null', d)}"
 
 DREAMBOX_BUILDIMAGE = "buildimage --arch ${MACHINE} ${EXTRA_BUILDCMD} \
 	--erase-block-size ${DREAMBOX_ERASE_BLOCK_SIZE} \
