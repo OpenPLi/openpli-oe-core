@@ -1,7 +1,6 @@
 SUMMARY = "USB DVB driver for Vuplus Tuner Turbo"
 
-require conf/license/license-gplv2.inc
-inherit allarch
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RRECOMMENDS_${PN} = " \
     kernel-module-dvb-usb \
