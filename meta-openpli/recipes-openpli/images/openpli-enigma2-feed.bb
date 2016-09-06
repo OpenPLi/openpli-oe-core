@@ -48,6 +48,7 @@ OPTIONAL_PACKAGES += " \
 	openresolv \
 	openssh \
 	openvpn \
+	openmultiboot \
 	parted \
 	procps \
 	pyload \
