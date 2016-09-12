@@ -5,7 +5,7 @@ DEPENDS = "gtk+ gnutls openssl gettext libtool intltool-native curl glib-2.0-nat
 LICENSE = "GPLv2 & GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=0dd9fcdc1416ff123c41c785192a1895"
 
-SRC_URI = "http://download.transmissionbt.com/files/transmission-${PV}.tar.xz;name=archive \
+SRC_URI = "https://github.com/transmission/transmission-releases/raw/master/transmission-${PV}.tar.xz;name=archive \
            file://init \
            file://config"
 
