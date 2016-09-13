@@ -15,9 +15,9 @@ case "$1" in
     ;;
   stop)
     echo -n "Stopping Samba: smbd"
-    start-stop-daemon --stop --quiet --pidfile /var/run/smbd.pid
+    start-stop-daemon --stop --quiet --pidfile /run/smbd.pid
     echo -n " nmbd"
-    start-stop-daemon --stop --quiet --pidfile /var/run/nmbd.pid
+    start-stop-daemon --stop --quiet --pidfile /run/nmbd.pid
     echo "."
     ;;
   reload|force-reload)
@@ -25,11 +25,7 @@ case "$1" in
     start-stop-daemon --stop --quiet --signal 1 --exec $nmbd
     ;;
   restart)
-    echo -n "Stopping Samba: smbd"
-    start-stop-daemon --stop --quiet --pidfile /var/run/smbd.pid
-    echo -n " nmbd"
-    start-stop-daemon --stop --quiet --pidfile /var/run/nmbd.pid
-    echo ""
+    $0 stop
     echo -n "Waiting for samba processes to die off"
     for i in 1 2 3 ;
     do
@@ -37,11 +33,7 @@ case "$1" in
         echo -n "."
     done
     echo ""
-    echo -n "Starting Samba: smbd"
-    start-stop-daemon --start --quiet --exec $smbd
-    echo -n " nmbd"
-    start-stop-daemon --start --quiet --exec $nmbd
-    echo "."
+    $0 start
     ;;
   *)
     echo "Usage: /etc/init.d/samba {start|stop|reload|restart|force-reload}"
