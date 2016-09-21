@@ -16,6 +16,7 @@ OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_BSP_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
+	astra-sm \
 	autofs \
 	autossh \
 	ctorrent \
@@ -23,6 +24,7 @@ OPTIONAL_PACKAGES += " \
 	djmount \
 	dosfstools \
 	dvb-apps \
+	dvblast \
 	dvbsnoop \
 	dvdfs \
 	evtest \
