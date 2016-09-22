@@ -1,1 +1,1 @@
-PACKAGECONFIG += "faac faad libmms rtmp"
+PACKAGECONFIG_append = " faac faad libmms rtmp"

@@ -1,1 +1,1 @@
-PACKAGECONFIG += "amrnb amrwb cdio dvdread mad"
+PACKAGECONFIG_append = " amrnb amrwb cdio dvdread mad"
