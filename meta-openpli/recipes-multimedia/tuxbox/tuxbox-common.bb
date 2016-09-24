@@ -13,7 +13,7 @@ S = "${WORKDIR}/git/cdk/cdk/root"
 
 FILES_${PN} = "${sysconfdir}"
 
-TRANSPONDER_LISTS = "satellites.xml terrestrial.xml"
+TRANSPONDER_LISTS = "satellites.xml terrestrial.xml atsc.xml"
 
 do_compile() {
 	true
