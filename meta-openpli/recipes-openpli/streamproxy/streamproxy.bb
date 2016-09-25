@@ -6,7 +6,7 @@ require conf/license/openpli-gplv2.inc
 
 inherit gitpkgv
 
-SRCREV = "56b9b76a33fe934fc514ab5bc2777a032cb9633c"
+SRCREV = "133455dc33ef82dea76c386bd3ecec99513709dc"
 PV = "2+git${SRCPV}"
 PKGV = "2+git${GITPKGV}"
 RDEPENDS_${PN} = "enigma2-plugin-systemplugins-transcodingsetup"
