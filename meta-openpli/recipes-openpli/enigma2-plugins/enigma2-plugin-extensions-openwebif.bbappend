@@ -18,6 +18,7 @@ python do_package_prepend () {
         ('et8500', 'et8500.jpg', 'et8000.png'),
         ('et10000', 'et10000.jpg', 'et8000.png'),
         ('xp1000', 'xp1000.jpg', 'xp_rc14_normal.png'),
+        ('osmega', 'osmega.jpg', 'osmini.png'),
         ('osmini', 'osmini.jpg', 'osmini.png'),
         ('osminiplus', 'osminiplus.jpg', 'osmini.png'),
         ('vuduo', 'duo.jpg', 'vu_normal.png'),
