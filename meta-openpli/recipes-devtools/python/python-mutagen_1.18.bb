@@ -8,13 +8,11 @@ PR = "r1"
 DEPENDS = "python"
 RDEPENDS_${PN} = "python-shell"
 
-MD5SUM = "0c2cd954e4bacd79fadd45afc4acce4c"
-
-SRC_URI = "http://pkgs.fedoraproject.org/repo/pkgs/${PN}/${SRCNAME}.tar.gz/${MD5SUM}/${SRCNAME}.tar.gz \
+SRC_URI = "http://pkgs.fedoraproject.org/repo/pkgs/${PN}/${SRCNAME}.tar.gz/0c2cd954e4bacd79fadd45afc4acce4c/${SRCNAME}.tar.gz \
 	file://patch.diff \
 "
 
-SRC_URI[md5sum] = "${MD5SUM}"
+SRC_URI[md5sum] = "0c2cd954e4bacd79fadd45afc4acce4c"
 SRC_URI[sha256sum] = "30b6147baf59ab3609939acf49a1a1c73b15d8b1c637a01bfee89da7feea0d6c"
 
 S = "${WORKDIR}/${SRCNAME}"
