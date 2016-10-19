@@ -1,0 +1,11 @@
+--- a/src/omb_utils.c
++++ b/src/omb_utils.c
+@@ -383,7 +383,7 @@
+ 	system(OMB_MDEV_BIN);
+ 	
+ 	// we really need this sleep?? :( - (wait for mdev to finalize)
+-	sleep(2);
++	sleep(5);
+ }
+ 
+ /*
