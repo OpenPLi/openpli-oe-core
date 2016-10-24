@@ -8,9 +8,6 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 echo "[umountfs] Deactivating swap..."
 swapoff -a
 
-# Sleep give epg time to save 
-sleep 3
-
 # We leave /proc mounted.
 echo "[umountfs] Unmounting local filesystems..."
 grep -q /mnt/ram /proc/mounts && mount -o remount,ro /mnt/ram
