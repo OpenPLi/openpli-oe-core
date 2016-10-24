@@ -9,7 +9,7 @@ echo "[umountfs] Deactivating swap..."
 swapoff -a
 
 # Sleep give epg time to save 
-sleep 5
+sleep 3
 
 # We leave /proc mounted.
 echo "[umountfs] Unmounting local filesystems..."
