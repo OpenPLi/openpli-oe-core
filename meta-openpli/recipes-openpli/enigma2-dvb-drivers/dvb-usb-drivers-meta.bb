@@ -4,19 +4,22 @@ require conf/license/openpli-gplv2.inc
 
 DEPENDS = "\
 	enigma2-plugin-drivers-atsc-usb-hauppauge \
-	enigma2-plugin-drivers-atsc-950q-usb-hauppauge \
-	enigma2-plugin-drivers-atsc-955q-usb-hauppauge \
-	enigma2-plugin-drivers-dvb-usb-dib0700 \
+	enigma2-plugin-drivers-atsc-usb-hauppauge-950q \
+	enigma2-plugin-drivers-atsc-usb-hauppauge-955q \
+	enigma2-plugin-drivers-ct2-usb-dvbsky-t330 \
+	enigma2-plugin-drivers-ct2-usb-geniatech-t230 \
+	enigma2-plugin-drivers-s2-usb-dvbsky-s960 \
 	enigma2-plugin-drivers-dvb-usb-af9015 \
 	enigma2-plugin-drivers-dvb-usb-af9035 \
-	enigma2-plugin-drivers-dvb-usb-siano \
-	enigma2-plugin-drivers-dvb-usb-em28xx \
-	enigma2-plugin-drivers-dvb-usb-dw2102 \
 	enigma2-plugin-drivers-dvb-usb-as102 \
+	enigma2-plugin-drivers-dvb-usb-dib0700 \
+	enigma2-plugin-drivers-dvb-usb-dtt200u \
+	enigma2-plugin-drivers-dvb-usb-dw2102 \
+	enigma2-plugin-drivers-dvb-usb-em28xx \
 	enigma2-plugin-drivers-dvb-usb-it913x \
 	enigma2-plugin-drivers-dvb-usb-pctv452e \
-	enigma2-plugin-drivers-dvb-usb-dtt200u \
 	enigma2-plugin-drivers-dvb-usb-rtl2832 \
+	enigma2-plugin-drivers-dvb-usb-siano \
 	enigma2-plugin-drivers-dvb-usb-tbs \
 	"
 
