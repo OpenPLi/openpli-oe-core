@@ -42,6 +42,7 @@ SRC_URI = " \
 			file://fixme-hardfloat.patch \
 			file://0001-correctly-initiate-nand-flash-ecc-config-when-old-2n.patch \
 			file://kernel-gcc6.patch \
+			file://0001-misc-latin1-to-utf8-conversions.patch \
 			file://defconfig \
 "
 
