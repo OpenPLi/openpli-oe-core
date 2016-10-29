@@ -6,8 +6,10 @@ LIC_FILES_CHKSUM="file://COPYING;md5=435ed639f84d4585d93824e7da3d85da"
 
 DEPENDS = "libxml2"
 
-SRC_URI = "git://git.videolan.org/libbluray.git;branch=master;protocol=git"
-SRCREV="eefd7c6a192b5243ec9b25676944fcb87cfa3c2e"
+SRC_URI = "gitsm://git.videolan.org/libbluray.git \
+    file://expose_clip_id_in_BLURAY_CLIP_INFO.patch \
+"
+SRCREV="efcde25b3bd58eee9cb96f151b79a585a52a09ff"
 
 inherit gitpkgv autotools-brokensep pkgconfig
 
@@ -21,7 +23,6 @@ EXTRA_OECONF = " \
     --disable-bdjava-jar \
     --disable-doxygen-doc \
     --disable-doxygen-dot \
-    --disable-udf \
     --without-freetype \
     --without-fontconfig \
 "
