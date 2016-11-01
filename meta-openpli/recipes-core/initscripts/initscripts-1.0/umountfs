@@ -20,12 +20,8 @@ umount -f -a -r > /dev/null 2>&1
 
 # Add an extra delay of 5 sec to make sure even a problematic HDD has enough time to go to park-position.
 if [ "$RUNLEVEL" = "0" ]; then
-	REMOVABLE="1"
-	for D in /sys/block/sd*; do [ `cat $D/removable` == "0" ] && REMOVABLE="0" ; done
-	if [ "$REMOVABLE" = "0" ]; then
-		sdparm --command=stop /dev/sd?
-		sleep 5
-	fi
+  sdparm --command=stop /dev/sd?
+  sleep 5
 fi
 
 echo "[umountfs] Good Bye..."
