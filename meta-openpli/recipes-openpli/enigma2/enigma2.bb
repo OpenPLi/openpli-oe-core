@@ -12,7 +12,7 @@ DEPENDS = " \
 	gstreamer1.0-plugins-base gstreamer1.0 \
 	jpeg \
 	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-1.2 giflib libxml2 \
-	openssl \
+	openssl libudfread \
 	python-imaging python-twisted python-wifi \
 	swig-native \
 	tuxtxt-enigma2 \
@@ -111,8 +111,8 @@ GST_UGLY_RDEPS = "\
 	gstreamer1.0-plugins-ugly-mad \
 	"
 
-# DVD playback is integrated, we need the libraries
-RDEPENDS_${PN} += "libdreamdvd"
+# DVD and iso playback is integrated, we need the libraries
+RDEPENDS_${PN} += "libdreamdvd libudfread"
 RRECOMMENDS_${PN} += "libdvdcss"
 
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
