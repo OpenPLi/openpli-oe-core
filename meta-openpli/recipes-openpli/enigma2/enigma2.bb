@@ -31,6 +31,7 @@ RRECOMMENDS_${PN} = " \
 	gstreamer1.0-plugin-subsink \
 	glib-networking \
 	hotplug-e2-helper \
+	glibc-gconv-utf-16 \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
