@@ -72,3 +72,8 @@ python do_package_prepend () {
             if target_remote != name and name != 'ow_remote.png' and (exception + '.png' != name):
                 os.remove(os.path.join(root, name))
 }
+
+PACKAGES =+ "${PN}-vxg"
+DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
+FILES_${PN}-vxg = "/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/public/js/media_player.pexe"
+RDEPENDS_${PN}-vxg =+ "${PN}"
