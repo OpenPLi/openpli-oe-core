@@ -75,7 +75,6 @@ OPTIONAL_PACKAGES += " \
 	v4l-utils \
 	vim \
 	wscan \
-	xfsprogs \
 	zeroconf \
 	zip \
 	${OPTIONAL_BSP_PACKAGES} \
