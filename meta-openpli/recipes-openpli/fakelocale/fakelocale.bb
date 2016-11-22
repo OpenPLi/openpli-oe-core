@@ -23,7 +23,7 @@ RPROVIDES_${PN} = "virtual-locale-ar virtual-locale-bg virtual-locale-ca virtual
 	virtual-locale-et virtual-locale-fa virtual-locale-fi virtual-locale-fr virtual-locale-fy \
 	virtual-locale-he virtual-locale-hr virtual-locale-hu virtual-locale-is virtual-locale-it \
 	virtual-locale-lt virtual-locale-lv virtual-locale-nl virtual-locale-no virtual-locale-pl \
-	virtual-locale-pt virtual-locale-ru virtual-locale-sk virtual-locale-sl \
+	virtual-locale-pt virtual-locale-ru virtual-locale-sk virtual-locale-sl virtual-locale-id \
 	virtual-locale-sr virtual-locale-sv virtual-locale-th virtual-locale-tr virtual-locale-uk"
 
 do_install() {
