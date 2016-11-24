@@ -52,6 +52,7 @@ OPTIONAL_PACKAGES += " \
 	parted \
 	procps \
 	pyload \
+	python-ipaddress \
 	python-ntplib \
 	python-requests \
 	python-mechanize \
