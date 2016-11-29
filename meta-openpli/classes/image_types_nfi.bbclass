@@ -1,5 +1,3 @@
-inherit image_types
-
 IMAGE_CMD_jffs2nfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
