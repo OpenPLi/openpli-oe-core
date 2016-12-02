@@ -13,6 +13,8 @@ SRC_URI = "http://sources.dreamboxupdate.com/download/7020/secondstage-${MACHINE
 
 PACKAGES = "${PN}"
 
+do_populate_sysroot[depends] = "dreambox-secondstage-${MACHINE}:do_package"
+
 S = "${WORKDIR}"
 
 do_install() {
