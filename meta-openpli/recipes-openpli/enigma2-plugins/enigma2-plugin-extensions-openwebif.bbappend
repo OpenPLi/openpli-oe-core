@@ -77,5 +77,5 @@ do_populate_sysroot[depends] = "enigma2-plugin-extensions-openwebif:do_package"
 
 PACKAGES =+ "${PN}-vxg"
 DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
-FILES_${PN}-vxg = "/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/public/js/media_player.pexe"
+FILES_${PN}-vxg = "/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/public/vxg"
 RDEPENDS_${PN}-vxg =+ "${PN}"
