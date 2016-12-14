@@ -47,9 +47,6 @@ do_install_append() {
 	fi
 	install -d ${D}${sysconfdir}/mdev
 	install -m 0755 ${WORKDIR}/mdev-mount.sh ${D}${sysconfdir}/mdev
-	if [ "$MACHINE" == "hd51" ] || [ "$MACHINE" == "uno4k" ] || [ "$MACHINE" == "solo4k" ] || [ "$MACHINE" == "ultimo4k" ] ; then
-		install -m 0644 ${D}${sysconfdir}/mdev/mmc-blacklist
-	fi
 }
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
