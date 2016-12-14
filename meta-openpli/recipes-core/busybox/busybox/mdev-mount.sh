@@ -15,9 +15,8 @@ case "$ACTION" in
 			# Already mounted
 			exit 0
 		fi
-		# blacklisted uno4k/solo4k/ultimo4k/hd51 internal mmc
-		DEVCHECK=`expr substr $MDEV 1 7`
-		if [ $DEVCHECK == "mmcblk0" ] && [ -f /etc/mdev/mmc-blacklist ]; then
+		# blacklisted internal mmc
+		if [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
 			exit 0
 		fi
 		DEVBASE=`expr substr $MDEV 1 3`
