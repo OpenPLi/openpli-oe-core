@@ -15,16 +15,11 @@ case "$ACTION" in
 			# Already mounted
 			exit 0
 		fi
-		if [ "${MDEV}" = "`readlink /dev/root`" ]; then
-			# Special case
+		# blacklisted internal mmc
+		if [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
 			exit 0
 		fi
-		DRIVER=`expr substr $MDEV 1 6`
-		if [ "$DRIVER" = "mmcblk" ]; then
-			DEVBASE=`expr substr $MDEV 1 7`
-		else
-			DEVBASE=`expr substr $MDEV 1 3`
-		fi
+		DEVBASE=`expr substr $MDEV 1 3`
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
 			# blocked
