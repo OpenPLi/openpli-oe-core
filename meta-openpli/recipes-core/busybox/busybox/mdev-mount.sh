@@ -16,7 +16,8 @@ case "$ACTION" in
 			exit 0
 		fi
 		# blacklisted internal mmc
-		if [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
+		DEVCHECK=`expr substr $MDEV 1 7`
+		if [ $DEVCHECK == "mmcblk0" ] && [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
 			exit 0
 		fi
 		DEVBASE=`expr substr $MDEV 1 3`
