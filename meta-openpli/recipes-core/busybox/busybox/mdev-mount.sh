@@ -65,7 +65,7 @@ case "$ACTION" in
 						DEVICETYPE="SD-card"
 					fi
 				else
-					readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci'
+					readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
 					EXTERNAL=$?
 					if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
 						# mount the first non-removable internal device on /media/hdd
