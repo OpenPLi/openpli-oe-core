@@ -25,11 +25,13 @@ python do_package_prepend () {
         ('vusolo', 'solo.jpg', 'vu_normal.png'),
         ('vusolose', 'solose.jpg', 'vu_normal.png'),
         ('vusolo2', 'solo2.jpg', 'vu_normal.png'),
-        ('vusolo4k', 'solo4k.jpg', 'vu_normal.png'),
         ('vuduo2', 'duo2.jpg', 'vu_duo2.png'),
         ('vuultimo', 'ultimo.jpg', 'vu_ultimo.png'),
         ('vuuno', 'uno.jpg', 'vu_normal.png'),
         ('vuzero', 'zero.jpg', 'vu_normal.png'),
+        ('vusolo4k', 'solo4k.jpg', 'vu_normal.png'),
+        ('vuuno4k', 'uno4k.jpg', 'vu_normal.png'),
+        ('vuultimo4k', 'ultimo4k.jpg', 'vu_normal.png'),
         ('hd1100', 'hd1100.jpg', 'hd1x00.png'),
         ('hd1200', 'hd1200.jpg', 'hd1x00.png'),
         ('hd2400', 'hd2400.jpg', 'hd2400.png'),
@@ -73,7 +75,9 @@ python do_package_prepend () {
                 os.remove(os.path.join(root, name))
 }
 
+do_populate_sysroot[depends] = "enigma2-plugin-extensions-openwebif:do_package"
+
 PACKAGES =+ "${PN}-vxg"
 DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
-FILES_${PN}-vxg = "/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/public/js/media_player.pexe"
+FILES_${PN}-vxg = "/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/public/vxg"
 RDEPENDS_${PN}-vxg =+ "${PN}"

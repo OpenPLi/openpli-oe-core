@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 SRCREV = "${AUTOREV}"
 
 DEPENDS = " \
+	avahi \
 	freetype \
 	gettext-native \
 	gstreamer1.0-plugins-base gstreamer1.0 \
