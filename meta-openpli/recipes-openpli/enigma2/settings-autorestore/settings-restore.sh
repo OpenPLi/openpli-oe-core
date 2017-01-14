@@ -64,9 +64,6 @@ else
     exit 1
 fi
 
-# restart network interfaces based on the parameters from settings-restore
-/etc/init.d/networking restart
-
 echo ${BACKUPDIR} > /tmp/backupdir
 
 if [ -s /tmp/fstab ]
