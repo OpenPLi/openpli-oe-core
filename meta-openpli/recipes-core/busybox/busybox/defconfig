@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.24.1
-# Thu Dec 31 14:58:40 2015
+# Sun Jan 15 12:54:41 2017
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -746,7 +746,7 @@ CONFIG_FEATURE_HDPARM_HDIO_GETSET_DMA=y
 # CONFIG_MOUNTPOINT is not set
 # CONFIG_MT is not set
 # CONFIG_RAIDAUTORUN is not set
-# CONFIG_READAHEAD is not set
+CONFIG_READAHEAD=y
 # CONFIG_RUNLEVEL is not set
 # CONFIG_RX is not set
 CONFIG_SETSID=y
@@ -946,7 +946,7 @@ CONFIG_UPTIME=y
 CONFIG_FUSER=y
 CONFIG_KILL=y
 CONFIG_KILLALL=y
-# CONFIG_KILLALL5 is not set
+CONFIG_KILLALL5=y
 # CONFIG_PGREP is not set
 # CONFIG_PIDOF is not set
 # CONFIG_FEATURE_PIDOF_SINGLE is not set
