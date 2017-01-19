@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3 \
 
 inherit gitpkgv
 
-SRCREV = "638302c06807b8e4f21e52e885ef6465b7e6aea9"
+SRCREV = "6f77e99efc1ac292c3f473ff86848fe79d0aee79"
 PKGV = "3.x+git${GITPKGV}"
 
 SRC_URI = "git://github.com/oe-alliance/ofgwrite.git"
