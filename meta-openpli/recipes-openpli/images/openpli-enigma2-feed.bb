@@ -37,6 +37,8 @@ OPTIONAL_PACKAGES += " \
 	inadyn-mt \
 	inetutils \
 	iperf \
+	iproute2 \
+	iputils \
 	joe \
 	less \
 	libbluray \
