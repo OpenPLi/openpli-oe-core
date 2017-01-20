@@ -184,6 +184,7 @@ EXTRA_OECONF = "\
 	ac_cv_prog_c_openmp=-fopenmp \
 	${@base_contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	${@base_contains("MACHINE_FEATURES", "7segment", "--with-7segment" , "", d)} \
+	${@base_contains("MACHINE_FEATURES", "7seg", "--with-7segment" , "", d)} \
 	BUILD_SYS=${BUILD_SYS} \
 	HOST_SYS=${HOST_SYS} \
 	STAGING_INCDIR=${STAGING_INCDIR} \
