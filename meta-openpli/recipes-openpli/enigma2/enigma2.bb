@@ -121,7 +121,7 @@ RRECOMMENDS_${PN} += "libdvdcss"
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
 RDEPENDS_${PN} += "font-valis-enigma"
 
-RDEPENDS_${PN} += "${@base_contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual/blindscan-dvbc" , "", d)}"
+RDEPENDS_${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual/blindscan-dvbc" , "", d)}"
 
 DEMUXTOOL ?= "replex"
 
@@ -182,9 +182,9 @@ EXTRA_OECONF = "\
 	--with-libsdl=no --with-boxtype=${MACHINE} \
 	--enable-dependency-tracking \
 	ac_cv_prog_c_openmp=-fopenmp \
-	${@base_contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
-	${@base_contains("MACHINE_FEATURES", "7segment", "--with-7segment" , "", d)} \
-	${@base_contains("MACHINE_FEATURES", "7seg", "--with-7segment" , "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "7segment", "--with-7segment" , "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "7seg", "--with-7segment" , "", d)} \
 	BUILD_SYS=${BUILD_SYS} \
 	HOST_SYS=${HOST_SYS} \
 	STAGING_INCDIR=${STAGING_INCDIR} \
