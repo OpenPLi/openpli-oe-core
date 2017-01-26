@@ -16,6 +16,7 @@ OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_BSP_PACKAGES ?= ""
 OPTIONAL_PACKAGES += " \
+	astra-sm \
 	autofs \
 	autossh \
 	ctorrent \
@@ -24,6 +25,7 @@ OPTIONAL_PACKAGES += " \
 	djmount \
 	dosfstools \
 	dvb-apps \
+	dvblast \
 	dvbsnoop \
 	dvdfs \
 	evtest \
@@ -43,7 +45,6 @@ OPTIONAL_PACKAGES += " \
 	libudfread \
 	mc \
 	minisatip \
-	mpd \
 	mtd-utils \
 	nano \
 	net-tools \
@@ -81,7 +82,6 @@ OPTIONAL_PACKAGES += " \
 	v4l-utils \
 	vim \
 	wscan \
-	xfsprogs \
 	zeroconf \
 	zip \
 	zsh \
@@ -122,7 +122,7 @@ ENIGMA2_OPTIONAL = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "dreambox", "", "enigma2-plugin-extensions-backupsuite", d)} \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
 	dvb-usb-drivers-meta \
-	cdfs cdtextinfo \
+	cdtextinfo \
 	meta-enigma2-dvdburn \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"

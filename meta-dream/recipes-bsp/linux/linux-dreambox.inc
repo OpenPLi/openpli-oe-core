@@ -62,6 +62,7 @@ do_install_append() {
 # The vmlinux package gets priority over the kernel-image, so make it empty so that
 # kernel-image gets those files.
 FILES_kernel-vmlinux = ""
+ALLOW_EMPTY_kernel-vmlinux = "1"
 FILES_kernel-image += "\
 	/${KERNEL_IMAGEDEST}/autoexec*.bat \
 	"
@@ -111,7 +112,7 @@ pkg_postrm_kernel () {
 
 CMDLINE_JFFS2 = "root=/dev/mtdblock3 rootfstype=jffs2 rw ${CMDLINE_CONSOLE}"
 CMDLINE_UBI = "ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw ${CMDLINE_CONSOLE}"
-CMDLINE = "${@base_contains('IMAGE_FSTYPES', 'ubi.nfi', '${CMDLINE_UBI}', '${CMDLINE_JFFS2}', d)}"
+CMDLINE = "${@bb.utils.contains('IMAGE_FSTYPES', 'ubinfi', '${CMDLINE_UBI}', '${CMDLINE_JFFS2}', d)}"
 USB_CMDLINE = "root=${USB_ROOT} rootdelay=10 rw ${CMDLINE_CONSOLE}"
 
 LOCALVERSION = "-${MACHINE}"

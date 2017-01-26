@@ -1,0 +1,1147 @@
+From 5b3d883790949e8e6f429d0060c4a73deae9b897 Mon Sep 17 00:00:00 2001
+From: Al Viro <viro@zeniv.linux.org.uk>
+Date: Thu, 29 Dec 2011 17:09:01 -0500
+Subject: [PATCH] misc latin1 to utf8 conversions
+
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+
+diff --git a/Documentation/ABI/testing/sysfs-driver-hid-logitech-lg4ff b/Documentation/ABI/testing/sysfs-driver-hid-logitech-lg4ff
+index 9aec8ef..167d903 100644
+--- a/Documentation/ABI/testing/sysfs-driver-hid-logitech-lg4ff
++++ b/Documentation/ABI/testing/sysfs-driver-hid-logitech-lg4ff
+@@ -1,7 +1,7 @@
+ What:		/sys/module/hid_logitech/drivers/hid:logitech/<dev>/range.
+ Date:		July 2011
+ KernelVersion:	3.2
+-Contact:	Michal Malý <madcatxster@gmail.com>
++Contact:	Michal MalÃ½ <madcatxster@gmail.com>
+ Description:	Display minimum, maximum and current range of the steering
+ 		wheel. Writing a value within min and max boundaries sets the
+ 		range of the wheel.
+diff --git a/Documentation/vgaarbiter.txt b/Documentation/vgaarbiter.txt
+index b7d401e..014423e 100644
+--- a/Documentation/vgaarbiter.txt
++++ b/Documentation/vgaarbiter.txt
+@@ -177,7 +177,7 @@ II. Credits
+ 
+ Benjamin Herrenschmidt (IBM?) started this work when he discussed such design
+ with the Xorg community in 2005 [1, 2]. In the end of 2007, Paulo Zanoni and
+-Tiago Vignatti (both of C3SL/Federal University of Paraná) proceeded his work
++Tiago Vignatti (both of C3SL/Federal University of ParanÃ¡) proceeded his work
+ enhancing the kernel code to adapt as a kernel module and also did the
+ implementation of the user space side [3]. Now (2009) Tiago Vignatti and Dave
+ Airlie finally put this work in shape and queued to Jesse Barnes' PCI tree.
+diff --git a/drivers/gpu/drm/i915/intel_sdvo_regs.h b/drivers/gpu/drm/i915/intel_sdvo_regs.h
+index 4aa6f34..6b7b22f 100644
+--- a/drivers/gpu/drm/i915/intel_sdvo_regs.h
++++ b/drivers/gpu/drm/i915/intel_sdvo_regs.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright © 2006-2007 Intel Corporation
++ * Copyright Â© 2006-2007 Intel Corporation
+  *
+  * Permission is hereby granted, free of charge, to any person obtaining a
+  * copy of this software and associated documentation files (the "Software"),
+diff --git a/drivers/hid/hid-pl.c b/drivers/hid/hid-pl.c
+index 070f93a..47ed74c 100644
+--- a/drivers/hid/hid-pl.c
++++ b/drivers/hid/hid-pl.c
+@@ -9,10 +9,10 @@
+  *   - contains two reports, one for each port (HID_QUIRK_MULTI_INPUT)
+  *
+  *  0e8f:0003 "GreenAsia Inc.    USB Joystick     "
+- *   - tested with König Gaming gamepad
++ *   - tested with KÃ¶nig Gaming gamepad
+  *
+  *  0e8f:0003 "GASIA USB Gamepad"
+- *   - another version of the König gamepad
++ *   - another version of the KÃ¶nig gamepad
+  *
+  *  Copyright (c) 2007, 2009 Anssi Hannula <anssi.hannula@gmail.com>
+  */
+diff --git a/drivers/hid/hid-twinhan.c b/drivers/hid/hid-twinhan.c
+index c40afc5..f23456b 100644
+--- a/drivers/hid/hid-twinhan.c
++++ b/drivers/hid/hid-twinhan.c
+@@ -3,7 +3,7 @@
+  *
+  * Based on hid-gyration.c
+  *
+- * Copyright (c) 2009 Bruno Prémont <bonbons@linux-vserver.org>
++ * Copyright (c) 2009 Bruno PrÃ©mont <bonbons@linux-vserver.org>
+  */
+ 
+ /*
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index 4bb68f3..ac083a2 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -426,7 +426,7 @@ static void xiic_process(struct xiic_i2c *i2c)
+ 			xiic_wakeup(i2c, STATE_ERROR);
+ 
+ 	} else if (pend & (XIIC_INTR_TX_EMPTY_MASK | XIIC_INTR_TX_HALF_MASK)) {
+-		/* Transmit register/FIFO is empty or ½ empty */
++		/* Transmit register/FIFO is empty or Â½ empty */
+ 
+ 		clr = pend &
+ 			(XIIC_INTR_TX_EMPTY_MASK | XIIC_INTR_TX_HALF_MASK);
+diff --git a/drivers/isdn/hisax/enternow_pci.c b/drivers/isdn/hisax/enternow_pci.c
+index 26264ab..f55d29d 100644
+--- a/drivers/isdn/hisax/enternow_pci.c
++++ b/drivers/isdn/hisax/enternow_pci.c
+@@ -333,7 +333,7 @@ static void __devinit en_cs_init(struct IsdnCard *card,
+ 	cs->hw.njet.isac = cs->hw.njet.base + 0xC0; // Fenster zum AMD
+ 
+ 	/* Reset an */
+-	cs->hw.njet.ctrl_reg = 0x07;  // geändert von 0xff
++	cs->hw.njet.ctrl_reg = 0x07;  // geÃ¤ndert von 0xff
+ 	outb(cs->hw.njet.ctrl_reg, cs->hw.njet.base + NETJET_CTRL);
+ 	/* 20 ms Pause */
+ 	mdelay(20);
+diff --git a/drivers/media/rc/winbond-cir.c b/drivers/media/rc/winbond-cir.c
+index 13f54b5..e7f7a57 100644
+--- a/drivers/media/rc/winbond-cir.c
++++ b/drivers/media/rc/winbond-cir.c
+@@ -1176,6 +1176,6 @@ wbcir_exit(void)
+ module_init(wbcir_init);
+ module_exit(wbcir_exit);
+ 
+-MODULE_AUTHOR("David Härdeman <david@hardeman.nu>");
++MODULE_AUTHOR("David HÃ¤rdeman <david@hardeman.nu>");
+ MODULE_DESCRIPTION("Winbond SuperI/O Consumer IR Driver");
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/misc/ibmasm/command.c b/drivers/misc/ibmasm/command.c
+index 5c766b4..7d56f45 100644
+--- a/drivers/misc/ibmasm/command.c
++++ b/drivers/misc/ibmasm/command.c
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/dot_command.c b/drivers/misc/ibmasm/dot_command.c
+index 3dd2dfb..d7b2ca3 100644
+--- a/drivers/misc/ibmasm/dot_command.c
++++ b/drivers/misc/ibmasm/dot_command.c
+@@ -17,7 +17,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/dot_command.h b/drivers/misc/ibmasm/dot_command.h
+index 6cbba1a..fc9fc9d 100644
+--- a/drivers/misc/ibmasm/dot_command.h
++++ b/drivers/misc/ibmasm/dot_command.h
+@@ -17,7 +17,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/event.c b/drivers/misc/ibmasm/event.c
+index 76bfda1..8e540f4 100644
+--- a/drivers/misc/ibmasm/event.c
++++ b/drivers/misc/ibmasm/event.c
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/heartbeat.c b/drivers/misc/ibmasm/heartbeat.c
+index 1bc4306..9074637 100644
+--- a/drivers/misc/ibmasm/heartbeat.c
++++ b/drivers/misc/ibmasm/heartbeat.c
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/i2o.h b/drivers/misc/ibmasm/i2o.h
+index bf2c738..2e9566d 100644
+--- a/drivers/misc/ibmasm/i2o.h
++++ b/drivers/misc/ibmasm/i2o.h
+@@ -17,7 +17,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/ibmasm.h b/drivers/misc/ibmasm/ibmasm.h
+index 4d8a4e2..9b08344 100644
+--- a/drivers/misc/ibmasm/ibmasm.h
++++ b/drivers/misc/ibmasm/ibmasm.h
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/ibmasmfs.c b/drivers/misc/ibmasm/ibmasmfs.c
+index 8994772..3536175 100644
+--- a/drivers/misc/ibmasm/ibmasmfs.c
++++ b/drivers/misc/ibmasm/ibmasmfs.c
+@@ -17,7 +17,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/lowlevel.c b/drivers/misc/ibmasm/lowlevel.c
+index 4b2398e..5319ea2 100644
+--- a/drivers/misc/ibmasm/lowlevel.c
++++ b/drivers/misc/ibmasm/lowlevel.c
+@@ -17,7 +17,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/lowlevel.h b/drivers/misc/ibmasm/lowlevel.h
+index 7667665..e97848f 100644
+--- a/drivers/misc/ibmasm/lowlevel.h
++++ b/drivers/misc/ibmasm/lowlevel.h
+@@ -17,7 +17,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/module.c b/drivers/misc/ibmasm/module.c
+index a234d96..1ccedb7 100644
+--- a/drivers/misc/ibmasm/module.c
++++ b/drivers/misc/ibmasm/module.c
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  * This driver is based on code originally written by Pete Reynolds
+  * and others.
+diff --git a/drivers/misc/ibmasm/r_heartbeat.c b/drivers/misc/ibmasm/r_heartbeat.c
+index 2de487a..232034f 100644
+--- a/drivers/misc/ibmasm/r_heartbeat.c
++++ b/drivers/misc/ibmasm/r_heartbeat.c
+@@ -16,7 +16,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/misc/ibmasm/remote.h b/drivers/misc/ibmasm/remote.h
+index 00dbf1d..a7729ef 100644
+--- a/drivers/misc/ibmasm/remote.h
++++ b/drivers/misc/ibmasm/remote.h
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  * Originally written by Pete Reynolds
+  */
+diff --git a/drivers/misc/ibmasm/uart.c b/drivers/misc/ibmasm/uart.c
+index 93baa35..1dcb9ae 100644
+--- a/drivers/misc/ibmasm/uart.c
++++ b/drivers/misc/ibmasm/uart.c
+@@ -18,7 +18,7 @@
+  *
+  * Copyright (C) IBM Corporation, 2004
+  *
+- * Author: Max Asböck <amax@us.ibm.com>
++ * Author: Max AsbÃ¶ck <amax@us.ibm.com>
+  *
+  */
+ 
+diff --git a/drivers/mmc/host/omap.c b/drivers/mmc/host/omap.c
+index 2dba999..887c0e5 100644
+--- a/drivers/mmc/host/omap.c
++++ b/drivers/mmc/host/omap.c
+@@ -2,7 +2,7 @@
+  *  linux/drivers/mmc/host/omap.c
+  *
+  *  Copyright (C) 2004 Nokia Corporation
+- *  Written by Tuukka Tikkanen and Juha Yrjölä<juha.yrjola@nokia.com>
++ *  Written by Tuukka Tikkanen and Juha YrjÃ¶lÃ¤<juha.yrjola@nokia.com>
+  *  Misc hacks here and there by Tony Lindgren <tony@atomide.com>
+  *  Other hacks (DMA, SD, etc) by David Brownell
+  *
+@@ -1634,4 +1634,4 @@ module_exit(mmc_omap_exit);
+ MODULE_DESCRIPTION("OMAP Multimedia Card driver");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:" DRIVER_NAME);
+-MODULE_AUTHOR("Juha Yrjölä");
++MODULE_AUTHOR("Juha YrjÃ¶lÃ¤");
+diff --git a/drivers/scsi/jazz_esp.c b/drivers/scsi/jazz_esp.c
+index 08e26d4..27cfb0c 100644
+--- a/drivers/scsi/jazz_esp.c
++++ b/drivers/scsi/jazz_esp.c
+@@ -1,6 +1,6 @@
+ /* jazz_esp.c: ESP front-end for MIPS JAZZ systems.
+  *
+- * Copyright (C) 2007 Thomas Bogendörfer (tsbogend@alpha.frankende)
++ * Copyright (C) 2007 Thomas BogendÃ¶rfer (tsbogend@alpha.frankende)
+  */
+ 
+ #include <linux/kernel.h>
+diff --git a/drivers/scsi/sni_53c710.c b/drivers/scsi/sni_53c710.c
+index 9acc2b2..cf51432 100644
+--- a/drivers/scsi/sni_53c710.c
++++ b/drivers/scsi/sni_53c710.c
+@@ -51,7 +51,7 @@
+ 
+ #include "53c700.h"
+ 
+-MODULE_AUTHOR("Thomas Bogendörfer");
++MODULE_AUTHOR("Thomas BogendÃ¶rfer");
+ MODULE_DESCRIPTION("SNI RM 53c710 SCSI Driver");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:snirm_53c710");
+diff --git a/drivers/staging/bcm/target_params.h b/drivers/staging/bcm/target_params.h
+index 2d8b8a3..1487638 100644
+--- a/drivers/staging/bcm/target_params.h
++++ b/drivers/staging/bcm/target_params.h
+@@ -72,8 +72,8 @@ typedef struct _TARGET_PARAMS
+ 	// removed SHUT down related 'unused' params from here to sync 4.x and 5.x CFG files..
+ 
+     //BAMC Related Parameters
+-    //Bit 0-15 Band AMC signaling configuration: Bit 1 = 1 – Enable Band AMC signaling.
+-    //bit 16-31 Band AMC Data configuration: Bit 16 = 1 – Band AMC 2x3 support.
++    //Bit 0-15 Band AMC signaling configuration: Bit 1 = 1 Â– Enable Band AMC signaling.
++    //bit 16-31 Band AMC Data configuration: Bit 16 = 1 Â– Band AMC 2x3 support.
+ 	B_UINT32 m_u32BandAMCEnable;
+ 
+ } stTargetParams,TARGET_PARAMS,*PTARGET_PARAMS, STARGETPARAMS, *PSTARGETPARAMS;
+diff --git a/drivers/staging/keucr/smilmain.c b/drivers/staging/keucr/smilmain.c
+index 31f7813..cc49038 100644
+--- a/drivers/staging/keucr/smilmain.c
++++ b/drivers/staging/keucr/smilmain.c
+@@ -148,7 +148,7 @@ int Media_D_ReadSector(struct us_data *us, DWORD start,WORD count,BYTE *buf)
+ {
+ 	WORD len, bn;
+ 
+-	//if (Check_D_MediaPower())        ; ¦b 6250 don't care
++	//if (Check_D_MediaPower())        ; Â¦b 6250 don't care
+ 	//    return(ErrCode);
+ 	//if (Check_D_MediaFmt(fdoExt))    ;
+ 	//    return(ErrCode);
+@@ -594,7 +594,7 @@ int Media_D_OneSectWriteFlush(PFDO_DEVICE_EXTENSION fdoExt)
+ //    if (Check_D_CardStsChg())
+ //        MediaChange = ERROR;
+ //    //usleep(56*1024);
+-//    if ((!Check_D_CntPower())&&(!MediaChange))  // ¦³ power & Media ¨S³Q change, «h return success
++//    if ((!Check_D_CntPower())&&(!MediaChange))  // Â¦Â³ power & Media Â¨SÂ³Q change, Â«h return success
+ //        return(SMSUCCESS);
+ //    //usleep(56*1024);
+ //
+diff --git a/drivers/staging/wlags49_h2/debug.h b/drivers/staging/wlags49_h2/debug.h
+index 8d5dddf..811698f 100644
+--- a/drivers/staging/wlags49_h2/debug.h
++++ b/drivers/staging/wlags49_h2/debug.h
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/dhfcfg.h b/drivers/staging/wlags49_h2/dhfcfg.h
+index 75c279f..147f4c8 100644
+--- a/drivers/staging/wlags49_h2/dhfcfg.h
++++ b/drivers/staging/wlags49_h2/dhfcfg.h
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/hcf.c b/drivers/staging/wlags49_h2/hcf.c
+index 7dc176a..b008773 100644
+--- a/drivers/staging/wlags49_h2/hcf.c
++++ b/drivers/staging/wlags49_h2/hcf.c
+@@ -32,9 +32,9 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * COPYRIGHT © 1994 - 1995   by AT&T.                All Rights Reserved
+- * COPYRIGHT © 1996 - 2000 by Lucent Technologies.   All Rights Reserved
+- * COPYRIGHT © 2001 - 2004   by Agere Systems Inc.   All Rights Reserved
++ * COPYRIGHT Â© 1994 - 1995   by AT&T.                All Rights Reserved
++ * COPYRIGHT Â© 1996 - 2000 by Lucent Technologies.   All Rights Reserved
++ * COPYRIGHT Â© 2001 - 2004   by Agere Systems Inc.   All Rights Reserved
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/hcf.h b/drivers/staging/wlags49_h2/hcf.h
+index 0009947..95527b5 100644
+--- a/drivers/staging/wlags49_h2/hcf.h
++++ b/drivers/staging/wlags49_h2/hcf.h
+@@ -40,9 +40,9 @@
+ * software indicates your acceptance of these terms and conditions.  If you do
+ * not agree with these terms and conditions, do not use the software.
+ *
+-* COPYRIGHT © 1994 - 1995	by AT&T.				All Rights Reserved
+-* COPYRIGHT © 1996 - 2000 by Lucent Technologies.	All Rights Reserved
+-* COPYRIGHT © 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
++* COPYRIGHT Â© 1994 - 1995	by AT&T.				All Rights Reserved
++* COPYRIGHT Â© 1996 - 2000 by Lucent Technologies.	All Rights Reserved
++* COPYRIGHT Â© 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
+ * All rights reserved.
+ *
+ * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/hcfcfg.h b/drivers/staging/wlags49_h2/hcfcfg.h
+index 7545bc5..ef60da8 100644
+--- a/drivers/staging/wlags49_h2/hcfcfg.h
++++ b/drivers/staging/wlags49_h2/hcfcfg.h
+@@ -64,9 +64,9 @@
+ * software indicates your acceptance of these terms and conditions.  If you do
+ * not agree with these terms and conditions, do not use the software.
+ *
+-* COPYRIGHT © 1994 - 1995	by AT&T.				All Rights Reserved
+-* COPYRIGHT © 1996 - 2000 by Lucent Technologies.	All Rights Reserved
+-* COPYRIGHT © 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
++* COPYRIGHT Â© 1994 - 1995	by AT&T.				All Rights Reserved
++* COPYRIGHT Â© 1996 - 2000 by Lucent Technologies.	All Rights Reserved
++* COPYRIGHT Â© 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
+ * All rights reserved.
+ *
+ * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/hcfdef.h b/drivers/staging/wlags49_h2/hcfdef.h
+index a62b53a..30744e1 100644
+--- a/drivers/staging/wlags49_h2/hcfdef.h
++++ b/drivers/staging/wlags49_h2/hcfdef.h
+@@ -33,9 +33,9 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * COPYRIGHT © 1994 - 1995   by AT&T.                All Rights Reserved
+- * COPYRIGHT © 1996 - 2000 by Lucent Technologies.   All Rights Reserved
+- * COPYRIGHT © 2001 - 2004   by Agere Systems Inc.   All Rights Reserved
++ * COPYRIGHT Â© 1994 - 1995   by AT&T.                All Rights Reserved
++ * COPYRIGHT Â© 1996 - 2000 by Lucent Technologies.   All Rights Reserved
++ * COPYRIGHT Â© 2001 - 2004   by Agere Systems Inc.   All Rights Reserved
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/mdd.h b/drivers/staging/wlags49_h2/mdd.h
+index b02e3ea..5f951ef 100644
+--- a/drivers/staging/wlags49_h2/mdd.h
++++ b/drivers/staging/wlags49_h2/mdd.h
+@@ -33,9 +33,9 @@
+ * software indicates your acceptance of these terms and conditions.  If you do
+ * not agree with these terms and conditions, do not use the software.
+ *
+-* COPYRIGHT © 1994 - 1995	by AT&T.				All Rights Reserved
+-* COPYRIGHT © 1996 - 2000 by Lucent Technologies.	All Rights Reserved
+-* COPYRIGHT © 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
++* COPYRIGHT Â© 1994 - 1995	by AT&T.				All Rights Reserved
++* COPYRIGHT Â© 1996 - 2000 by Lucent Technologies.	All Rights Reserved
++* COPYRIGHT Â© 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
+ * All rights reserved.
+ *
+ * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/mmd.c b/drivers/staging/wlags49_h2/mmd.c
+index de138c4..c8f5210 100644
+--- a/drivers/staging/wlags49_h2/mmd.c
++++ b/drivers/staging/wlags49_h2/mmd.c
+@@ -35,7 +35,7 @@
+ * software indicates your acceptance of these terms and conditions.  If you do
+ * not agree with these terms and conditions, do not use the software.
+ *
+-* COPYRIGHT © 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
++* COPYRIGHT Â© 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
+ * All rights reserved.
+ *
+ * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/mmd.h b/drivers/staging/wlags49_h2/mmd.h
+index 06890c1..9149525 100644
+--- a/drivers/staging/wlags49_h2/mmd.h
++++ b/drivers/staging/wlags49_h2/mmd.h
+@@ -33,7 +33,7 @@
+ * software indicates your acceptance of these terms and conditions.  If you do
+ * not agree with these terms and conditions, do not use the software.
+ *
+-* COPYRIGHT © 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
++* COPYRIGHT Â© 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
+ * All rights reserved.
+ *
+ * Redistribution and use in source or binary forms, with or without
+diff --git a/drivers/staging/wlags49_h2/wl_cs.h b/drivers/staging/wlags49_h2/wl_cs.h
+index 21f17be..a7ab579 100644
+--- a/drivers/staging/wlags49_h2/wl_cs.h
++++ b/drivers/staging/wlags49_h2/wl_cs.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_enc.c b/drivers/staging/wlags49_h2/wl_enc.c
+index 26cf548..4c6f776 100644
+--- a/drivers/staging/wlags49_h2/wl_enc.c
++++ b/drivers/staging/wlags49_h2/wl_enc.c
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_enc.h b/drivers/staging/wlags49_h2/wl_enc.h
+index b4f54d8..46629f3 100644
+--- a/drivers/staging/wlags49_h2/wl_enc.h
++++ b/drivers/staging/wlags49_h2/wl_enc.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_if.h b/drivers/staging/wlags49_h2/wl_if.h
+index ed2b413..6a26130 100644
+--- a/drivers/staging/wlags49_h2/wl_if.h
++++ b/drivers/staging/wlags49_h2/wl_if.h
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_internal.h b/drivers/staging/wlags49_h2/wl_internal.h
+index 5753408..553601f 100644
+--- a/drivers/staging/wlags49_h2/wl_internal.h
++++ b/drivers/staging/wlags49_h2/wl_internal.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_main.c b/drivers/staging/wlags49_h2/wl_main.c
+index 483eee1..dab603e 100644
+--- a/drivers/staging/wlags49_h2/wl_main.c
++++ b/drivers/staging/wlags49_h2/wl_main.c
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_main.h b/drivers/staging/wlags49_h2/wl_main.h
+index d593ae5..3b5acdf 100644
+--- a/drivers/staging/wlags49_h2/wl_main.h
++++ b/drivers/staging/wlags49_h2/wl_main.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_netdev.c b/drivers/staging/wlags49_h2/wl_netdev.c
+index 5a2b334..9c16f54 100644
+--- a/drivers/staging/wlags49_h2/wl_netdev.c
++++ b/drivers/staging/wlags49_h2/wl_netdev.c
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_netdev.h b/drivers/staging/wlags49_h2/wl_netdev.h
+index 632ab2e..61f040f 100644
+--- a/drivers/staging/wlags49_h2/wl_netdev.h
++++ b/drivers/staging/wlags49_h2/wl_netdev.h
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_pci.c b/drivers/staging/wlags49_h2/wl_pci.c
+index 28ae9dd..1f1d986 100644
+--- a/drivers/staging/wlags49_h2/wl_pci.c
++++ b/drivers/staging/wlags49_h2/wl_pci.c
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_pci.h b/drivers/staging/wlags49_h2/wl_pci.h
+index cea04c4..86831f1 100644
+--- a/drivers/staging/wlags49_h2/wl_pci.h
++++ b/drivers/staging/wlags49_h2/wl_pci.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_priv.c b/drivers/staging/wlags49_h2/wl_priv.c
+index 260d4f0..f30e5ee 100644
+--- a/drivers/staging/wlags49_h2/wl_priv.c
++++ b/drivers/staging/wlags49_h2/wl_priv.c
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_priv.h b/drivers/staging/wlags49_h2/wl_priv.h
+index 9b02544..b647bfd 100644
+--- a/drivers/staging/wlags49_h2/wl_priv.h
++++ b/drivers/staging/wlags49_h2/wl_priv.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_profile.c b/drivers/staging/wlags49_h2/wl_profile.c
+index a459e48..b8c96cf 100644
+--- a/drivers/staging/wlags49_h2/wl_profile.c
++++ b/drivers/staging/wlags49_h2/wl_profile.c
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_profile.h b/drivers/staging/wlags49_h2/wl_profile.h
+index 81db8e8..f81df51 100644
+--- a/drivers/staging/wlags49_h2/wl_profile.h
++++ b/drivers/staging/wlags49_h2/wl_profile.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_util.c b/drivers/staging/wlags49_h2/wl_util.c
+index 3b6f5a5..b748a3f 100644
+--- a/drivers/staging/wlags49_h2/wl_util.c
++++ b/drivers/staging/wlags49_h2/wl_util.c
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_util.h b/drivers/staging/wlags49_h2/wl_util.h
+index 2661bcd..946b1b6 100644
+--- a/drivers/staging/wlags49_h2/wl_util.h
++++ b/drivers/staging/wlags49_h2/wl_util.h
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_version.h b/drivers/staging/wlags49_h2/wl_version.h
+index fd37040..3deacfa 100644
+--- a/drivers/staging/wlags49_h2/wl_version.h
++++ b/drivers/staging/wlags49_h2/wl_version.h
+@@ -23,7 +23,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -44,7 +44,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_wext.c b/drivers/staging/wlags49_h2/wl_wext.c
+index 8ac5e10..7ff0a10 100644
+--- a/drivers/staging/wlags49_h2/wl_wext.c
++++ b/drivers/staging/wlags49_h2/wl_wext.c
+@@ -18,7 +18,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -39,7 +39,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/staging/wlags49_h2/wl_wext.h b/drivers/staging/wlags49_h2/wl_wext.h
+index a713058..029da52 100644
+--- a/drivers/staging/wlags49_h2/wl_wext.h
++++ b/drivers/staging/wlags49_h2/wl_wext.h
+@@ -22,7 +22,7 @@
+  * software indicates your acceptance of these terms and conditions.  If you do
+  * not agree with these terms and conditions, do not use the software.
+  *
+- * Copyright © 2003 Agere Systems Inc.
++ * Copyright Â© 2003 Agere Systems Inc.
+  * All rights reserved.
+  *
+  * Redistribution and use in source or binary forms, with or without
+@@ -43,7 +43,7 @@
+  *
+  * Disclaimer
+  *
+- * THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * THIS SOFTWARE IS PROVIDED Â“AS ISÂ” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+  * INCLUDING, BUT NOT LIMITED TO, INFRINGEMENT AND THE IMPLIED WARRANTIES OF
+  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  ANY
+  * USE, MODIFICATION OR DISTRIBUTION OF THIS SOFTWARE IS SOLELY AT THE USERS OWN
+diff --git a/drivers/usb/gadget/s3c2410_udc.c b/drivers/usb/gadget/s3c2410_udc.c
+index b864377..fac4c65 100644
+--- a/drivers/usb/gadget/s3c2410_udc.c
++++ b/drivers/usb/gadget/s3c2410_udc.c
+@@ -3,7 +3,7 @@
+  *
+  * Samsung S3C24xx series on-chip full speed USB device controllers
+  *
+- * Copyright (C) 2004-2007 Herbert Pötzl - Arnaud Patard
++ * Copyright (C) 2004-2007 Herbert PÃ¶tzl - Arnaud Patard
+  *	Additional cleanups by Ben Dooks <ben-linux@fluff.org>
+  *
+  * This program is free software; you can redistribute it and/or modify
+@@ -51,7 +51,7 @@
+ 
+ #define DRIVER_DESC	"S3C2410 USB Device Controller Gadget"
+ #define DRIVER_VERSION	"29 Apr 2007"
+-#define DRIVER_AUTHOR	"Herbert Pötzl <herbert@13thfloor.at>, " \
++#define DRIVER_AUTHOR	"Herbert PÃ¶tzl <herbert@13thfloor.at>, " \
+ 			"Arnaud Patard <arnaud.patard@rtp-net.org>"
+ 
+ static const char		gadget_name[] = "s3c2410_udc";
+diff --git a/drivers/usb/gadget/s3c2410_udc.h b/drivers/usb/gadget/s3c2410_udc.h
+index a48f619..1653bae 100644
+--- a/drivers/usb/gadget/s3c2410_udc.h
++++ b/drivers/usb/gadget/s3c2410_udc.h
+@@ -2,7 +2,7 @@
+  * linux/drivers/usb/gadget/s3c2410_udc.h
+  * Samsung on-chip full speed USB device controllers
+  *
+- * Copyright (C) 2004-2007 Herbert Pötzl - Arnaud Patard
++ * Copyright (C) 2004-2007 Herbert PÃ¶tzl - Arnaud Patard
+  *	Additional cleanups by Ben Dooks <ben-linux@fluff.org>
+  *
+  * This program is free software; you can redistribute it and/or modify
+diff --git a/drivers/usb/serial/ftdi_sio_ids.h b/drivers/usb/serial/ftdi_sio_ids.h
+index 055b64e..df1d7da 100644
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -2,7 +2,7 @@
+  * vendor/product IDs (VID/PID) of devices using FTDI USB serial converters.
+  * Please keep numerically sorted within individual areas, thanks!
+  *
+- * Philipp Gühring - pg@futureware.at - added the Device ID of the USB relais
++ * Philipp GÃ¼hring - pg@futureware.at - added the Device ID of the USB relais
+  * from Rudolf Gugler
+  *
+  */
+@@ -78,7 +78,7 @@
+  */
+ #define FTDI_ASK_RDR400_PID	0xC991	/* ASK RDR 400 series card reader */
+ 
+-/* www.starting-point-systems.com µChameleon device */
++/* www.starting-point-systems.com ÂµChameleon device */
+ #define FTDI_MICRO_CHAMELEON_PID	0xCAA0	/* Product Id */
+ 
+ /*
+@@ -291,7 +291,7 @@
+ 
+ /*
+  * Teratronik product ids.
+- * Submitted by O. Wölfelschneider.
++ * Submitted by O. WÃ¶lfelschneider.
+  */
+ #define FTDI_TERATRONIK_VCP_PID	 0xEC88	/* Teratronik device (preferring VCP driver on windows) */
+ #define FTDI_TERATRONIK_D2XX_PID 0xEC89	/* Teratronik device (preferring D2XX driver on windows) */
+diff --git a/drivers/usb/storage/isd200.c b/drivers/usb/storage/isd200.c
+index ffc4193..7019273 100644
+--- a/drivers/usb/storage/isd200.c
++++ b/drivers/usb/storage/isd200.c
+@@ -61,7 +61,7 @@
+ #include "scsiglue.h"
+ 
+ MODULE_DESCRIPTION("Driver for In-System Design, Inc. ISD200 ASIC");
+-MODULE_AUTHOR("Björn Stenberg <bjorn@haxx.se>");
++MODULE_AUTHOR("BjÃ¶rn Stenberg <bjorn@haxx.se>");
+ MODULE_LICENSE("GPL");
+ 
+ static int isd200_Initialization(struct us_data *us);
+diff --git a/drivers/usb/storage/unusual_devs.h b/drivers/usb/storage/unusual_devs.h
+index 24caba7..856ad92 100644
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -1914,7 +1914,7 @@ UNUSUAL_DEV(  0x1b1c, 0x1ab5, 0x0200, 0x0200,
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_INITIAL_READ10 ),
+ 
+-/* Patch by Richard Schütz <r.schtz@t-online.de>
++/* Patch by Richard SchÃ¼tz <r.schtz@t-online.de>
+  * This external hard drive enclosure uses a JMicron chip which
+  * needs the US_FL_IGNORE_RESIDUE flag to work properly. */
+ UNUSUAL_DEV(  0x1e68, 0x001b, 0x0000, 0x0000,
+diff --git a/drivers/video/omap/rfbi.c b/drivers/video/omap/rfbi.c
+index 0c6981f..2c1a340 100644
+--- a/drivers/video/omap/rfbi.c
++++ b/drivers/video/omap/rfbi.c
+@@ -2,7 +2,7 @@
+  * OMAP2 Remote Frame Buffer Interface support
+  *
+  * Copyright (C) 2005 Nokia Corporation
+- * Author: Juha Yrjölä <juha.yrjola@nokia.com>
++ * Author: Juha YrjÃ¶lÃ¤ <juha.yrjola@nokia.com>
+  *	   Imre Deak <imre.deak@nokia.com>
+  *
+  * This program is free software; you can redistribute it and/or modify it
+diff --git a/drivers/video/omap/sossi.c b/drivers/video/omap/sossi.c
+index 8fb7c70..f79c137 100644
+--- a/drivers/video/omap/sossi.c
++++ b/drivers/video/omap/sossi.c
+@@ -2,7 +2,7 @@
+  * OMAP1 Special OptimiSed Screen Interface support
+  *
+  * Copyright (C) 2004-2005 Nokia Corporation
+- * Author: Juha Yrjölä <juha.yrjola@nokia.com>
++ * Author: Juha YrjÃ¶lÃ¤ <juha.yrjola@nokia.com>
+  *
+  * This program is free software; you can redistribute it and/or modify it
+  * under the terms of the GNU General Public License as published by the
+diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wdt.c
+index dd5d675..576a388 100644
+--- a/drivers/watchdog/w83627hf_wdt.c
++++ b/drivers/watchdog/w83627hf_wdt.c
+@@ -4,7 +4,7 @@
+  *	(c) Copyright 2007 Vlad Drukker <vlad@storewiz.com>
+  *		added support for W83627THF.
+  *
+- *	(c) Copyright 2003,2007 Pádraig Brady <P@draigBrady.com>
++ *	(c) Copyright 2003,2007 PÃ¡draig Brady <P@draigBrady.com>
+  *
+  *	Based on advantechwdt.c which is based on wdt.c.
+  *	Original copyright messages:
+@@ -401,6 +401,6 @@ module_init(wdt_init);
+ module_exit(wdt_exit);
+ 
+ MODULE_LICENSE("GPL");
+-MODULE_AUTHOR("Pádraig Brady <P@draigBrady.com>");
++MODULE_AUTHOR("PÃ¡draig  Brady <P@draigBrady.com>");
+ MODULE_DESCRIPTION("w83627hf/thf WDT driver");
+ MODULE_ALIAS_MISCDEV(WATCHDOG_MINOR);
+diff --git a/drivers/zorro/zorro.ids b/drivers/zorro/zorro.ids
+index de24e3d..119abea 100644
+--- a/drivers/zorro/zorro.ids
++++ b/drivers/zorro/zorro.ids
+@@ -351,7 +351,7 @@
+ 	0200  EGS 28/24 Spectrum [Graphics Card]
+ 0892  Apollo
+ 	0100  A1200 [FPU and RAM Expansion]
+-0893  Ingenieurbüro Helfrich
++0893  IngenieurbÃ¼ro Helfrich
+ 	0500  Piccolo RAM [Graphics Card]
+ 	0600  Piccolo [Graphics Card]
+ 	0700  PeggyPlus MPEG [Video Card]
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 58690af..2b6065e 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4,7 +4,7 @@
+  *  Copyright (C) 2008 Thomas Gleixner <tglx@linutronix.de>
+  *  Copyright (C) 2008-2011 Red Hat, Inc., Ingo Molnar
+  *  Copyright (C) 2008-2011 Red Hat, Inc., Peter Zijlstra <pzijlstr@redhat.com>
+- *  Copyright  ©  2009 Paul Mackerras, IBM Corp. <paulus@au1.ibm.com>
++ *  Copyright  Â©  2009 Paul Mackerras, IBM Corp. <paulus@au1.ibm.com>
+  *
+  * For licensing details see kernel-base/COPYING
+  */
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index 7f3011c..6ddaba4 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -4,7 +4,7 @@
+  *  Copyright (C) 2008 Thomas Gleixner <tglx@linutronix.de>
+  *  Copyright (C) 2008-2011 Red Hat, Inc., Ingo Molnar
+  *  Copyright (C) 2008-2011 Red Hat, Inc., Peter Zijlstra <pzijlstr@redhat.com>
+- *  Copyright  ©  2009 Paul Mackerras, IBM Corp. <paulus@au1.ibm.com>
++ *  Copyright  Â©  2009 Paul Mackerras, IBM Corp. <paulus@au1.ibm.com>
+  *
+  * For licensing details see kernel-base/COPYING
+  */
+diff --git a/tools/testing/ktest/sample.conf b/tools/testing/ktest/sample.conf
+index dbedfa1..553c06b 100644
+--- a/tools/testing/ktest/sample.conf
++++ b/tools/testing/ktest/sample.conf
+@@ -950,7 +950,7 @@
+ #   TEST_START
+ #   TEST_TYPE = config_bisect
+ #   CONFIG_BISECT_TYPE = build
+-#   CONFIG_BISECT = /home/test/¢onfig-bad
++#   CONFIG_BISECT = /home/test/config-bad
+ #   MIN_CONFIG = /home/test/config-min
+ #   BISECT_MANUAL = 1
+ #
+-- 
+2.1.4
+
