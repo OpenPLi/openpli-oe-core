@@ -6,10 +6,9 @@ LIC_FILES_CHKSUM="file://COPYING;md5=435ed639f84d4585d93824e7da3d85da"
 
 DEPENDS = "libxml2"
 
-SRC_URI = "gitsm://git.videolan.org/libbluray.git \
-    file://expose_clip_id_in_BLURAY_CLIP_INFO.patch \
-"
-SRCREV="efcde25b3bd58eee9cb96f151b79a585a52a09ff"
+SRC_URI = "gitsm://git.videolan.org/libbluray.git"
+
+SRCREV="60e3d2600e8aaba3ca01df73569424befd9ed6fb"
 
 inherit gitpkgv autotools-brokensep pkgconfig
 
