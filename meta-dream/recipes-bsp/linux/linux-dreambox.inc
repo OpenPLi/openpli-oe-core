@@ -59,9 +59,8 @@ do_install_append() {
         echo "/boot/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}.gz ${USB_CMDLINE}" >> ${D}/${KERNEL_IMAGEDEST}/autoexec_${MACHINE}.bat
 }
 
-# The vmlinux package gets priority over the kernel-image, so make it empty so that
-# kernel-image gets those files.
-FILES_kernel-vmlinux = ""
+# Set FILES for vmlinux package, so that kernel-image gets those files.
+FILES_kernel-vmlinux = "boot/vmlinux-3.2-${MACHINE}.gz"
 ALLOW_EMPTY_kernel-vmlinux = "1"
 FILES_kernel-image += "\
 	/${KERNEL_IMAGEDEST}/autoexec*.bat \
