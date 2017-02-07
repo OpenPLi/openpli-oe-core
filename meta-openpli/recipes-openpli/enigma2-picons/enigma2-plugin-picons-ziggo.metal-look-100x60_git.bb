@@ -1,4 +1,4 @@
-DESCRIPTION = "Ziggo picons metal look 100x60"
+DESCRIPTION = "Ziggo Metal look 100x60 picons"
 MAINTAINER = "Stefan"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://LICENSE;beginline=3;endline=8;md5=17213e93942fd27819359eebdf0341b7"
