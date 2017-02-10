@@ -14,7 +14,6 @@ IMAGE_INSTALL += "enigma2-plugin-softcams-oscam \
 
 # To get things in the local feed, like settings
 DEPENDS += "\
-	enigma2-plugin-settings-henksat-19e-23e-28e \
 	enigma2-plugin-settings-hans-19e-23e-28e \
 	"
 
