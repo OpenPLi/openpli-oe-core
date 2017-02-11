@@ -9,11 +9,6 @@ MACADDR=`cat /sys/class/net/eth0/address | cut -b 1,2,4,5,7,8,10,11,13,14,16,17`
 if [ "$1x" == "startx" ] || [ -z "$1" ]
 then
 
-# When the current smb.conf in the image comes from a pre Openpli-5 image keep it in a .bak file
-if ! grep -q "netbios name = %h" ${SAMBACONF}; then
-  cp ${SAMBACONF} ${SAMBACONF}.tmp
-fi
-
 # Best candidate:
 #  If a MAC Address dependent backup was found, use that
 #  Always use the latest version
@@ -103,17 +98,6 @@ then
 		cp /tmp/passwds /etc/passwd
 	fi
 	rm -f /tmp/passwds
-fi
-
-# When a smb.conf file from >= openpli5 is stored in a .bak file restore it when the restored smb.conf file comes from a pre OpenPLi-5 image
-if [-f ${SAMBACONF}.tmp ]
-then
-    if grep -q "netbios name = %h" ${SAMBACONF}
-    then
-        mv ${SAMBACONF}.tmp ${SAMBACONF}
-    else
-        rm ${SAMBACONF}.tmp
-    if
 fi
 
 rm -f /tmp/crontab /tmp/passwd /tmp/fstab
