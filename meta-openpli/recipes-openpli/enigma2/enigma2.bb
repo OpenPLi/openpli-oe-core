@@ -19,6 +19,10 @@ DEPENDS = " \
 	tuxtxt-enigma2 \
 	"
 
+# SoftcamSetup is integrated now
+RREPLACES_${PN} = "enigma2-plugin-pli-softcamsetup"
+RCONFLICTS_${PN} = "enigma2-plugin-pli-softcamsetup"
+
 RDEPENDS_${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
