@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 PACKAGES = "enigma2-plugin-extensions-openuitzendinggemist"
 RDEPENDS_enigma2-plugin-extensions-openuitzendinggemist = "python-argparse"
 
-inherit allarch gitpkgv
+inherit allarch pythonnative gitpkgv autotools-brokensep
 
 SRCREV = "${AUTOREV}"
 
@@ -15,8 +15,6 @@ GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
 S = "${WORKDIR}/git"
-
-inherit autotools-brokensep
 
 EXTRA_OECONF = "LIBDIR=${libdir}"
 
