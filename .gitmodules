@@ -53,3 +53,6 @@
 [submodule "meta-xtrend"]
 	path = meta-xtrend
 	url = http://github.com/XTrendTeam/meta-xtrend.git
+[submodule "meta-qt5"]
+	path = meta-qt5
+	url = http://github.com/meta-qt5/meta-qt5.git
