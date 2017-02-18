@@ -19,7 +19,7 @@
 	url = https://github.com/formuler/meta-formuler.git
 [submodule "meta-hd"]
 	path = meta-hd
-	url = https://github.com/HD-Digital/meta-hd.git
+	url = https://github.com/OpenPLi/meta-hd.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
 	url = http://github.com/vu-plus/meta-vuplus.git
