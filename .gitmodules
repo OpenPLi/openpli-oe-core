@@ -56,3 +56,6 @@
 [submodule "meta-gi"]
 	path = meta-gi
 	url = http://github.com/GIDeveloperTeam/meta-gi.git
+[submodule "meta-gfutures"]
+	path = meta-gfutures
+	url = http://github.com/HD-Digital/meta-gfutures.git
