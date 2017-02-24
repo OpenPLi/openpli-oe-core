@@ -47,9 +47,9 @@
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
-[submodule "meta-gi"]
-	path = meta-gi
-	url = http://github.com/galaxyinnovations/meta-gi.git
 [submodule "meta-xtrend"]
 	path = meta-xtrend
 	url = http://github.com/XTrendTeam/meta-xtrend.git
+[submodule "meta-gi"]
+	path = meta-gi
+	url = http://github.com/GIDeveloperTeam/meta-gi.git
