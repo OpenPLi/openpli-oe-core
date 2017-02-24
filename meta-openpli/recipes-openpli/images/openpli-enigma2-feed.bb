@@ -20,6 +20,7 @@ OPTIONAL_PACKAGES += " \
 	autossh \
 	ctorrent \
 	cups \
+	diffutils \
 	djmount \
 	dosfstools \
 	dvb-apps \
@@ -32,8 +33,12 @@ OPTIONAL_PACKAGES += " \
 	hddtemp \
 	hdparm \
 	inadyn-mt \
+	inetutils \
 	iperf \
+	iproute2 \
+	iputils \
 	joe \
+	less \
 	libbluray \
 	libudfread \
 	mc \
@@ -79,6 +84,7 @@ OPTIONAL_PACKAGES += " \
 	xfsprogs \
 	zeroconf \
 	zip \
+	zsh \
 	${OPTIONAL_BSP_PACKAGES} \
 	"
 
@@ -112,8 +118,8 @@ ENIGMA2_OPTIONAL = " \
 	picons-enigma2-meta \
 	softcams-enigma2-meta \
 	packagegroup-openplugins \
-	${@base_contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
-	${@base_contains("MACHINE_FEATURES", "dreambox", "", "enigma2-plugin-extensions-backupsuite", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "dreambox", "", "enigma2-plugin-extensions-backupsuite", d)} \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
 	dvb-usb-drivers-meta \
 	cdfs cdtextinfo \

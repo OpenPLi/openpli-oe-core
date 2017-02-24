@@ -20,9 +20,6 @@
 [submodule "meta-hd"]
 	path = meta-hd
 	url = https://github.com/HD-Digital/meta-hd.git
-[submodule "meta-xtrend"]
-	path = meta-xtrend
-	url = https://github.com/Xtrend-Official/meta-xtrend.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
 	url = http://github.com/vu-plus/meta-vuplus.git
@@ -50,6 +47,9 @@
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
+[submodule "meta-xtrend"]
+	path = meta-xtrend
+	url = http://github.com/XTrendTeam/meta-xtrend.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = http://github.com/galaxyinnovations/meta-gi.git
+	url = http://github.com/GIDeveloperTeam/meta-gi.git

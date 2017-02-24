@@ -15,6 +15,10 @@ case "$ACTION" in
 			# Already mounted
 			exit 0
 		fi
+		# blacklisted internal mmc
+		if [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
+			exit 0
+		fi
 		DEVBASE=`expr substr $MDEV 1 3`
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
@@ -54,7 +58,7 @@ case "$ACTION" in
 			# no fstab entry, use automatic mountpoint
 			if [ -z "${LABEL}" ] ; then
 				REMOVABLE=`cat /sys/block/$DEVBASE/removable`
-				readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci'
+				readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
 				EXTERNAL=$?
 				if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
 					# mount the first non-removable internal device on /media/hdd
