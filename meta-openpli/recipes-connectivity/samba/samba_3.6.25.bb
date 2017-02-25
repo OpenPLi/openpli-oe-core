@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://../COPYING;md5=d32239bcb673463ab874e80d47fae504"
 SECTION = "console/network"
 DEPENDS = "readline virtual/libiconv zlib popt talloc attr avahi"
 
-PR = "r0"
+PR = "r1"
 
 inherit autotools-brokensep update-rc.d
 
@@ -246,7 +246,7 @@ FILES_sambaserver      = "${sbindir}/samba_multicall ${sbindir}/smbd ${sbindir}/
                           ${sbindir}/smbpasswd ${sysconfdir}/init.d/sambaserver \
                           ${sbindir}/testparm ${libdir}/charset/*.so ${libdir}/samba/*.dat \
                           ${sysconfdir}/samba/smb.conf ${sysconfdir}/samba/private"
-#RRECOMMENDS_sambaserver += "wsdd"
+RRECOMMENDS_sambaserver += "wsdd"
 RDEPENDS_cifs = "cifs-utils"
 
 FILES_libtalloc = "${libdir}/libtalloc.so.*"
