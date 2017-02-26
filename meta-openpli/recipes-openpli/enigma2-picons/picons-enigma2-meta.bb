@@ -3,9 +3,6 @@
 require conf/license/openpli-gplv2.inc
 
 DEPENDS = " \
-		enigma2-plugin-picons-sat \
-		enigma2-plugin-picons-ziggo.tvhome \
-		enigma2-plugin-picons-ziggo.casema \
 		enigma2-plugin-picons-ziggo.metal-look-100x60 \
 		enigma2-plugin-picons-ziggo.metal-look-220x132 \
 		enigma2-plugin-picons-ziggo.metal-stamp-100x60 \
