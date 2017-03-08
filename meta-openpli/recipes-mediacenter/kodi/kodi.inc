@@ -78,6 +78,7 @@ PACKAGECONFIG[vaapi] = "--enable-vaapi,--disable-vaapi,libva"
 PACKAGECONFIG[vdpau] = "--enable-vdpau,--disable-vdpau,libvdpau"
 PACKAGECONFIG[mysql] = "--enable-mysql,--disable-mysql,mysql5"
 PACKAGECONFIG[x11] = "--enable-x11,--disable-x11,libxinerama libxmu libxrandr libxtst"
+PACKAGECONFIG[pulseaudio] = "--enable-pulse,--disable-pulse,pulseaudio"
 PACKAGECONFIG[lcms] = "--enable-lcms2,--disable-lcms2,lcms"
 
 EXTRA_OECONF_append_rpi = " --disable-openmax --enable-player=omxplayer --with-platform=raspberry-pi2"
@@ -107,7 +108,7 @@ FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O3 -
 FULL_OPTIMIZATION_armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O3 -ffast-math"
 BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
-EXTRA_OECONF_append = "LIBTOOL=${STAGING_BINDIR_CROSS}/${HOST_SYS}-libtool"
+EXTRA_OECONF_append = " LIBTOOL=${STAGING_BINDIR_CROSS}/${HOST_SYS}-libtool"
 
 # for python modules
 export HOST_SYS
@@ -117,9 +118,9 @@ export STAGING_INCDIR
 export PYTHON_DIR
 
 def enable_glew(bb, d):
-	if bb.utils.contains('PACKAGECONFIG', 'x11', True, False, d) and bb.utils.contains('DISTRO_FEATURES', 'opengl', True, False, d):
-		return "glew"
-	return ""
+     if bb.utils.contains('PACKAGECONFIG', 'x11', True, False, d) and bb.utils.contains('DISTRO_FEATURES', 'opengl', True, False, d):
+          return "glew"
+     return ""
 
 do_configure() {
 	( for i in $(find ${S} -name "configure.*" ) ; do
@@ -130,6 +131,16 @@ do_configure() {
 	BOOTSTRAP_STANDALONE=1 make -f bootstrap.mk JSON_BUILDER="${STAGING_BINDIR_NATIVE}/JsonSchemaBuilder"
 	BOOTSTRAP_STANDALONE=1 make -f codegenerator.mk JSON_BUILDER="${STAGING_BINDIR_NATIVE}/JsonSchemaBuilder"
 	oe_runconf
+}
+
+do_compile_prepend() {
+	for i in $(find . -name "Makefile") ; do
+		sed -i -e 's:I/usr/include:I${STAGING_INCDIR}:g' $i
+	done
+
+	for i in $(find . -name "*.mak*" -o    -name "Makefile") ; do
+		sed -i -e 's:I/usr/include:I${STAGING_INCDIR}:g' -e 's:-rpath \$(libdir):-rpath ${libdir}:g' $i
+	done
 }
 
 INSANE_SKIP_${PN} = "rpaths"
@@ -146,6 +157,7 @@ FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi
 RRECOMMENDS_${PN}_append = " \
 	libcec \
 	python \
+	python-ctypes \
 	python-lang \
 	python-re \
 	python-netclient \
