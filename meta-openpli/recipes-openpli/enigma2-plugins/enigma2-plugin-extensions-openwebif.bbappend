@@ -45,6 +45,7 @@ python do_package_prepend () {
         ('mbtwinplus', 'mbtwinplus.jpg', 'miraclebox.png'),
         ('mbmicro', 'mbmicro.jpg', 'miraclebox2.png'),
         ('et7000mini', 'et7000mini.jpg', 'et7000mini.png'),
+        ('vs1500', 'vs1500.jpg', 'vs1x00.png'),
     ]
     import os
     top = '${D}${PLUGINPATH}/public/images/'
