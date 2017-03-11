@@ -227,8 +227,7 @@ do_openpli_branding() {
 		cp -rp ${BRANDINGDIR}/enigma2/* ${S}/data/
 	fi
 	if [ -n "${CRASHADDR}" ] ; then
-		sed "s/^#define CRASH_EMAILADDR .*/#define CRASH_EMAILADDR \"${CRASHADDR}\"/" ${S}/main/bsod.cpp > ${S}/main/bsod.cpp.new && \
-		mv ${S}/main/bsod.cpp.new ${S}/main/bsod.cpp
+		EXTRA_OECONF += "-DCRASH_EMAILADDR=\"${CRASHADDR}\""
 	fi
 }
 
