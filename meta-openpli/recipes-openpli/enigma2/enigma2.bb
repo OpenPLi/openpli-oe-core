@@ -226,12 +226,17 @@ do_openpli_branding() {
 	if [ -n "${BRANDINGDIR}" -a -d "${BRANDINGDIR}/enigma2" ] ; then
 		cp -rp ${BRANDINGDIR}/enigma2/* ${S}/data/
 	fi
-	if [ -n "${CRASHADDR}" ] ; then
-		EXTRA_OECONF += "-DCRASH_EMAILADDR=\"${CRASHADDR}\""
-	fi
 }
 
 addtask openpli_branding after do_unpack before do_configure
+
+def get_crashaddr(d):
+    if d.getVar('CRASHADDR', True):
+        return '--with-crashlogemail="${CRASHADDR}"'
+    else:
+        return ''
+
+EXTRA_OECONF += "${@get_crashaddr(d)}"
 
 do_install_append() {
 	install -d ${D}/usr/share/keymaps
