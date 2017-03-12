@@ -186,11 +186,18 @@ PKGV_enigma2-fonts = "${PV_enigma2-fonts}"
 PKGR_enigma2-fonts = "${PR_enigma2-fonts}"
 FILES_enigma2-fonts = "${datadir}/fonts"
 
+def get_crashaddr(d):
+    if d.getVar('CRASHADDR', True):
+        return '--with-crashlogemail="${CRASHADDR}"'
+    else:
+        return ''
+
 EXTRA_OECONF = "\
 	--with-libsdl=no --with-boxtype=${MACHINE} \
 	--enable-dependency-tracking \
 	ac_cv_prog_c_openmp=-fopenmp \
 	--with-gstversion=1.0 \
+	${@get_crashaddr(d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "7segment", "--with-7segment" , "", d)} \
 	BUILD_SYS=${BUILD_SYS} \
@@ -233,14 +240,6 @@ do_openpli_branding() {
 }
 
 addtask openpli_branding after do_unpack before do_configure
-
-def get_crashaddr(d):
-    if d.getVar('CRASHADDR', True):
-        return '--with-crashlogemail="${CRASHADDR}"'
-    else:
-        return ''
-
-EXTRA_OECONF += "${@get_crashaddr(d)}"
 
 do_install_append() {
 	install -d ${D}/usr/share/keymaps
