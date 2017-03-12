@@ -16,3 +16,4 @@ EXTRA_OECONF += " \
 	--with-platform=v3d \
 	"
 
+DEPENDS_remove = "libsdl-mixer"
