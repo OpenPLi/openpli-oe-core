@@ -1,37 +1,8 @@
-From 1ff2169f36196fa0876196b3969547d4afb599b5 Mon Sep 17 00:00:00 2001
-From: Taejong Yoo <yoo.taejong@gmail.com>
-Date: Tue, 20 Dec 2016 21:44:22 +0900
-Subject: [PATCH 1/2] Krypton V3D support
-
----
- configure.ac                                       |  59 +++++++-
- lib/libdvd/Makefile.in                             |  14 +-
- m4/xbmc_arch.m4                                    |   4 +
- system/playercorefactory.xml                       |  12 ++
- tools/Linux/kodi.sh.in                             |  37 +++--
- tools/depends/target/ffmpeg/autobuild.sh           |  14 ++
- tools/depends/target/libdvdcss/Makefile            |   4 +-
- tools/depends/target/libdvdnav/Makefile            |   4 +-
- tools/depends/target/libdvdread/Makefile           |   4 +-
- xbmc/GUIInfoManager.cpp                            |   4 +
- .../AudioEngine/Engines/ActiveAE/ActiveAESink.cpp  |   2 +-
- xbmc/input/InputManager.cpp                        |  12 ++
- xbmc/input/linux/LinuxInputDevices.cpp             |  33 ++++-
- xbmc/platform/xbmc.cpp                             |   9 ++
- xbmc/utils/CPUInfo.cpp                             |  33 +++++
- xbmc/windowing/egl/EGLNativeTypeV3D.cpp            | 161 +++++++++++++++++++++
- xbmc/windowing/egl/EGLNativeTypeV3D.h              |  59 ++++++++
- xbmc/windowing/egl/EGLWrapper.cpp                  |   7 +-
- xbmc/windowing/egl/Makefile.in                     |   3 +
- 19 files changed, 442 insertions(+), 33 deletions(-)
- create mode 100644 xbmc/windowing/egl/EGLNativeTypeV3D.cpp
- create mode 100644 xbmc/windowing/egl/EGLNativeTypeV3D.h
-
 diff --git a/configure.ac b/configure.ac
-index 9b8b889..8ef9d0a 100644
+index d2186cb..1ada4ed 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -681,6 +681,25 @@ case $use_platform in
+@@ -681,6 +681,24 @@ case $use_platform in
       use_neon=yes
       use_cpu=cortex-a7
       ;;
@@ -45,7 +16,6 @@ index 9b8b889..8ef9d0a 100644
 +     use_x11=no
 +     use_wayland=no
 +     use_pulse=no
-+     use_alsa=no
 +     use_joystick=no
 +     use_optical_drive=no
 +     USE_STATIC_FFMPEG=1
@@ -57,7 +27,7 @@ index 9b8b889..8ef9d0a 100644
  esac
  
  if test "$target_platform" = "target_raspberry_pi" ; then
-@@ -951,6 +970,9 @@ if test "$use_gles" = "yes"; then
+@@ -951,6 +969,9 @@ if test "$use_gles" = "yes"; then
        AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
        LIBS="$LIBS -lEGL -lGLESv2 -lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
      else
@@ -67,7 +37,7 @@ index 9b8b889..8ef9d0a 100644
        AC_CHECK_LIB([EGL],   [main],, AC_MSG_ERROR($missing_library))
        AC_CHECK_LIB([GLESv2],[main],, AC_MSG_ERROR($missing_library))
      fi
-@@ -1039,6 +1061,8 @@ if test "$use_mysql" = "yes"; then
+@@ -1039,6 +1060,8 @@ if test "$use_mysql" = "yes"; then
    AC_CHECK_LIB([mysqlclient], [main],, AC_MSG_ERROR($missing_library))
  fi
  
@@ -76,7 +46,7 @@ index 9b8b889..8ef9d0a 100644
  
  AC_LANG_PUSH([C++])
  PKG_CHECK_MODULES([TINYXML], [tinyxml >= 2.6.2],
-@@ -1056,7 +1080,7 @@ int main() {
+@@ -1056,7 +1079,7 @@ int main() {
    )])
  AC_LANG_POP([C++])
  
@@ -85,7 +55,7 @@ index 9b8b889..8ef9d0a 100644
    PKG_CHECK_MODULES([UUID], [uuid],, AC_MSG_ERROR(libuuid not found))
  fi
  
-@@ -1556,7 +1580,21 @@ if test "${USE_STATIC_FFMPEG}" = "1"; then
+@@ -1556,7 +1579,21 @@ if test "${USE_STATIC_FFMPEG}" = "1"; then
        pkg_cfg_prefix=${SYSROOT}
    fi
  
@@ -108,7 +78,7 @@ index 9b8b889..8ef9d0a 100644
      if test "$use_debug" != "yes"; then
        FFMPEG_OPTS="-r"
      fi
-@@ -1589,14 +1627,18 @@ if test "${USE_STATIC_FFMPEG}" = "1"; then
+@@ -1589,14 +1626,18 @@ if test "${USE_STATIC_FFMPEG}" = "1"; then
        if test "$with_ffmpeg" = "yes" || test "$FFMPEG_FOUND" = "false"; then
          # ffmpeg not found with pkg-config, lets install it
          AC_MSG_NOTICE("Installing FFmpeg")
@@ -129,7 +99,7 @@ index 9b8b889..8ef9d0a 100644
        export PKG_CONFIG_PATH="${ffmpeg_build}/ffmpeg-install/lib/pkgconfig:$PKG_CONFIG_PATH"
  
      elif test "$with_ffmpeg" != "no"; then
-@@ -1609,13 +1651,17 @@ fi
+@@ -1609,13 +1650,17 @@ fi
  
  if test "$FFMPEG_FOUND" != "true"; then
    PKG_CHECK_MODULES([FFMPEG], [$FFMPEG_LIBNAMES],
@@ -149,7 +119,7 @@ index 9b8b889..8ef9d0a 100644
    GNUTLS_ALL_LIBS=$(${PKG_CONFIG} --static --libs-only-l --silence-errors gnutls)
  
    # check if static libs are available
-@@ -2329,6 +2375,7 @@ AC_SUBST(HAVE_SSE4)
+@@ -2329,6 +2374,7 @@ AC_SUBST(HAVE_SSE4)
  AC_SUBST(USE_MMAL)
  AC_SUBST(USE_X11)
  AC_SUBST(USE_OPTICAL_DRIVE)
@@ -199,14 +169,14 @@ index d28f263..78bf56f 100644
 +fi
  ])
 diff --git a/system/playercorefactory.xml b/system/playercorefactory.xml
-index be6b721..7633fff 100644
+index be6b721..862b584 100644
 --- a/system/playercorefactory.xml
 +++ b/system/playercorefactory.xml
 @@ -8,8 +8,20 @@
      <player name="VideoPlayer" /> placeholder for MPlayer
      <player name="PAPlayer" audio="true" />
      -->
-+    <player name="E2Player" type="ExternalPlayer" audio="true" video="true">
++    <player name="E2Player" type="ExternalPlayer" audio="false" video="true">
 +      <filename>kodiext</filename>
 +      <args>-U "{1}" -S "{3}" -P "$PPID"</args>
 +      <filenamemeta>/tmp/kodiextin.json</filenamemeta>
@@ -383,19 +353,6 @@ index d683351..ed34586 100644
    }
  
    std::string text;
-diff --git a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
-index 2ad960c..6a060a6 100644
---- a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
-+++ b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
-@@ -673,7 +673,7 @@ void CActiveAESink::EnumerateSinkList(bool force)
-   if (!m_sinkInfoList.empty() && !force)
-     return;
- 
--  unsigned int c_retry = 4;
-+  unsigned int c_retry = 1;
-   m_sinkInfoList.clear();
-   CAESinkFactory::EnumerateEx(m_sinkInfoList);
-   while(m_sinkInfoList.empty() && c_retry > 0)
 diff --git a/xbmc/input/InputManager.cpp b/xbmc/input/InputManager.cpp
 index 80c89f0..3fa4066 100644
 --- a/xbmc/input/InputManager.cpp
@@ -887,6 +844,27 @@ index 68f7862..4eed1dc 100644
  SRCS+= EGLWrapper.cpp
  
  LIB = windowing_egl.a
--- 
-1.9.1
-
+diff -Nur a/addons/skin.estouchy/xml/Home.xml b/addons/skin.estouchy/xml/Home.xml
+--- a/addons/skin.estouchy/xml/Home.xml	2017-02-01 19:47:32.000000000 +0100
++++ b/addons/skin.estouchy/xml/Home.xml	2017-01-27 16:00:05.000000000 +0100
+@@ -181,7 +181,7 @@
+ 				<content>
+ 					<item>
+ 						<label>13012</label>
+-						<onclick>Shutdown</onclick>
++						<onclick>XBMC.Quit()</onclick>
+ 						<icon>icon_button_shutdown.png</icon>
+ 					</item>
+ 					<item>
+diff -Nur a/addons/skin.estuary/xml/Home.xml b/addons/skin.estuary/xml/Home.xml
+--- a/addons/skin.estuary/xml/Home.xml	2017-02-01 19:47:32.000000000 +0100
++++ b/addons/skin.estuary/xml/Home.xml	2017-01-27 16:01:17.000000000 +0100
+@@ -915,7 +915,7 @@
+ 					<align>justify</align>
+ 					<include content="IconButton">
+ 						<param name="control_id" value="804" />
+-						<param name="onclick" value="ActivateWindow(shutdownmenu)" />
++						<param name="onclick" value="XBMC.Quit()" />
+ 						<param name="icon" value="icons/power.png" />
+ 						<param name="label" value="$LOCALIZE[33060]" />
+ 					</include>
