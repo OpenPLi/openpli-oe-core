@@ -16,4 +16,5 @@ EXTRA_OECONF += " \
 	--with-platform=v3d \
 	"
 
+DEPENDS += "bluez5"
 DEPENDS_remove = "libsdl-mixer"
