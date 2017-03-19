@@ -19,7 +19,11 @@ case "$ACTION" in
 		if [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
 			exit 0
 		fi
-		DEVBASE=`expr substr $MDEV 1 3`
+		# get the device base (f.e. sd[a-z] or mmcblk[0-9])
+		DEVBASE=`expr substr $MDEV 1 7`
+		if [ ! -d /sys/block/${DEVBASE} ]; then
+			DEVBASE=`expr substr $MDEV 1 3`
+		fi
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
 			# blocked
@@ -70,21 +74,21 @@ case "$ACTION" in
 					elif [ "$MODEL" == "Compact Flash   " ]; then
 						DEVICETYPE="cf"
 					elif [ "$MODEL" == "USB SD Reader   " ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
 					elif [ "$MODEL" == "USB SD  Reader  " ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
 					elif [ "$MODEL" == "SD/MMC          " ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
 					elif [ "$MODEL" == "USB MS Reader   " ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
 					elif [ "$MODEL" == "SM/xD-Picture   " ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
 					elif [ "$MODEL" == "USB SM Reader   " ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
 					elif [ "$MODEL" == "MS/MS-Pro       " ]; then
-						DEVICETYPE="mmc1"
-					elif [ "$MDEV" == "mmcblk0p1" ]; then
-						DEVICETYPE="mmc1"
+						DEVICETYPE="mmc"
+					elif [ "$DEVBASE" == "mmcblk0" ]; then
+						DEVICETYPE="mmc"
 					else
 						DEVICETYPE="usb"
 					fi
