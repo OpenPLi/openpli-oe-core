@@ -68,29 +68,32 @@ case "$ACTION" in
 					# mount the first non-removable internal device on /media/hdd
 					DEVICETYPE="hdd"
 				else
-					MODEL=`cat /sys/block/$DEVBASE/device/model`
-					if [ "$MODEL" == "USB CF Reader   " ]; then
-						DEVICETYPE="cf"
-					elif [ "$MODEL" == "Compact Flash   " ]; then
-						DEVICETYPE="cf"
-					elif [ "$MODEL" == "USB SD Reader   " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$MODEL" == "USB SD  Reader  " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$MODEL" == "SD/MMC          " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$MODEL" == "USB MS Reader   " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$MODEL" == "SM/xD-Picture   " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$MODEL" == "USB SM Reader   " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$MODEL" == "MS/MS-Pro       " ]; then
-						DEVICETYPE="mmc"
-					elif [ "$DEVBASE" == "mmcblk0" ]; then
+					# mount mmc block devices on /media/mcc
+					if [ "$DEVBASE" == "mmcblk0" ]; then
 						DEVICETYPE="mmc"
 					else
-						DEVICETYPE="usb"
+						MODEL=`cat /sys/block/$DEVBASE/device/model`
+						if [ "$MODEL" == "USB CF Reader   " ]; then
+							DEVICETYPE="cf"
+						elif [ "$MODEL" == "Compact Flash   " ]; then
+							DEVICETYPE="cf"
+						elif [ "$MODEL" == "USB SD Reader   " ]; then
+							DEVICETYPE="mmc"
+						elif [ "$MODEL" == "USB SD  Reader  " ]; then
+							DEVICETYPE="mmc"
+						elif [ "$MODEL" == "SD/MMC          " ]; then
+							DEVICETYPE="mmc"
+						elif [ "$MODEL" == "USB MS Reader   " ]; then
+							DEVICETYPE="mmc"
+						elif [ "$MODEL" == "SM/xD-Picture   " ]; then
+							DEVICETYPE="mmc"
+						elif [ "$MODEL" == "USB SM Reader   " ]; then
+							DEVICETYPE="mmc"
+						elif [ "$MODEL" == "MS/MS-Pro       " ]; then
+							DEVICETYPE="mmc"
+						else
+							DEVICETYPE="usb"
+						fi
 					fi
 				fi
 			else
