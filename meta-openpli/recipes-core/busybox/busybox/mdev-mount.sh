@@ -20,21 +20,22 @@ case "$ACTION" in
 			exit 0
 		fi
 		# get the device base (f.e. sd[a-z] or mmcblk[0-9])
-		DEVBASE=`expr substr $MDEV 1 7`
+		DEVBASE=${MDEV:0:7}
 		if [ ! -d /sys/block/${DEVBASE} ]; then
-			DEVBASE=`expr substr $MDEV 1 3`
+			DEVBASE=${MDEV:0:3}
 		fi
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
 			# blocked
 			exit 0
 		fi
-		# Run the result of blkid as a shell command
+		# run the result of blkid as a shell command
 		eval `blkid /dev/${MDEV} | grep ${MDEV} | cut -d ':' -f 2`
 		if [ -z "$TYPE" ] ; then
 			notify
 			exit 0
 		fi
+		# activate swap space
 		if [ $TYPE == swap ] ; then
 			if ! grep -q "^/dev/${MDEV} " /proc/swaps ; then
 				swapon /dev/${MDEV}
@@ -43,7 +44,7 @@ case "$ACTION" in
 		fi
 		# check for full-disk partition
 		if [ "${DEVBASE}" == "${MDEV}" ] ; then
-			if [ -d /sys/block/${DEVBASE}/${DEVBASE}1 ] ; then
+			if [ -d /sys/block/${DEVBASE}/${DEVBASE}*1 ] ; then
 				# Partition detected, just tell and quit
 				notify
 				exit 0
@@ -69,7 +70,7 @@ case "$ACTION" in
 					DEVICETYPE="hdd"
 				else
 					# mount mmc block devices on /media/mcc
-					if [ "$DEVBASE" == "mmcblk0" ]; then
+					if [ ${DEVBASE:0:6} = "mmcblk" ]; then
 						DEVICETYPE="mmc"
 					else
 						MODEL=`cat /sys/block/$DEVBASE/device/model`
