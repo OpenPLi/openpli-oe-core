@@ -31,7 +31,7 @@
 	url = https://github.com/pli3/meta-xsarius.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
-	url = http://github.com/open-xpeedc/meta-xpeedc.git
+	url = http://github.com/XpeedDeveloperTeam/meta-xpeedc.git
 [submodule "meta-wetek"]
 	path = meta-wetek
 	url = http://github.com/wetek-enigma/meta-wetek.git
