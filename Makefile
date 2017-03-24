@@ -27,7 +27,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-vuplus \
 	$(CURDIR)/meta-xsarius \
 	$(CURDIR)/meta-xp \
-	$(CURDIR)/meta-xtrend \
+	$(CURDIR)/meta-xtrend-4 \
 	$(CURDIR)/meta-formuler \
 	$(CURDIR)/meta-hd \
 	$(CURDIR)/meta-xpeedc \
