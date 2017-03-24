@@ -1,0 +1,25 @@
+From cdda42bcbfaaa78b0ae61f1380a155be0bbbb67e Mon Sep 17 00:00:00 2001
+From: tux <tux@tux.com>
+Date: Wed, 15 Feb 2017 22:41:40 +0100
+Subject: [PATCH] make transparant
+
+---
+ src/plugin/plugin.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/plugin/plugin.py b/src/plugin/plugin.py
+index c566a71..8d9157a 100644
+--- a/src/plugin/plugin.py
++++ b/src/plugin/plugin.py
+@@ -399,7 +399,7 @@ class E2KodiExtServer(UDSServer):
+         self.subtitles = []
+ 
+ class KodiLauncher(Screen):
+-    skin = """<screen position="fill" backgroundColor="#00000000" flags="wfNoBorder" title=" "></screen>"""
++    skin = """<screen position="fill" backgroundColor="#FF000000" flags="wfNoBorder" title=" "></screen>"""
+ 
+     def __init__(self, session):
+         Screen.__init__(self, session)
+-- 
+2.7.4
+
