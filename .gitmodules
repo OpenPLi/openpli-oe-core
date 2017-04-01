@@ -53,3 +53,6 @@
 [submodule "meta-xpeedc-4"]
 	path = meta-xpeedc-4
 	url = http://github.com/XpeedDeveloperTeam/meta-xpeedc-4.git
+[submodule "meta-sab"]
+	path = meta-sab
+	url = http://github.com/mariner2/meta-sab.git
