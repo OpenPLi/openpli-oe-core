@@ -37,6 +37,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-miraclebox \
 	$(CURDIR)/meta-spycat \
 	$(CURDIR)/meta-gi \
+	$(CURDIR)/meta-sab \
 	$(CURDIR)/meta-local \
 	$(CURDIR)/meta-qt5
 
