@@ -26,9 +26,6 @@
 [submodule "meta-xp"]
 	path = meta-xp
 	url = https://github.com/XP-Master/meta-xp.git
-[submodule "meta-xsarius"]
-	path = meta-xsarius
-	url = https://github.com/pli3/meta-xsarius.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = http://github.com/XpeedDeveloperTeam/meta-xpeedc.git
@@ -62,3 +59,6 @@
 [submodule "meta-sab"]
 	path = meta-sab
 	url = http://github.com/mariner2/meta-sab.git
+[submodule "meta-xsarius.pli5"]
+	path = meta-xsarius.pli5
+	url = http://github.com/pli3/meta-xsarius.pli5.git
