@@ -165,8 +165,6 @@ ENIGMA2_BRANCH ?= "develop"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git;branch=${ENIGMA2_BRANCH}"
 
-SRC_URI += "file://0001-picload.cpp-adapt-to-newer-giflib-version.patch"
-
 LDFLAGS_prepend = " -lxml2 "
 
 S = "${WORKDIR}/git"
