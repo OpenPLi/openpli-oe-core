@@ -5,7 +5,7 @@ DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
-SRCREV = "2c4288bb29e0781f27aecc25c941b6e441630f8d"
+SRCREV = "${AUTOREV}"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/gst-plugin-subsink.git"
 

@@ -10,7 +10,7 @@ PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
-SRCREV = "9e6df17507c553cb33f49f4e5176d3fc266bc40a"
+SRCREV = "${AUTOREV}"
 
 DEPENDS += "\
 	libusb \
