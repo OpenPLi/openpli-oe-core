@@ -12,7 +12,7 @@ DEPENDS = " \
 	gettext-native \
 	gstreamer1.0-plugins-base gstreamer1.0 \
 	jpeg \
-	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-1.2 giflib libxml2 \
+	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-2.0 giflib libxml2 \
 	openssl libudfread \
 	python-imaging python-twisted python-wifi \
 	swig-native \
