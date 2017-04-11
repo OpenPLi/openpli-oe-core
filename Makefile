@@ -32,7 +32,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-hd \
 	$(CURDIR)/meta-xpeedc-4 \
 	$(CURDIR)/meta-wetek \
-	$(CURDIR)/meta-zgemma \
+	$(CURDIR)/meta-zgemma-4 \
 	$(CURDIR)/meta-edision \
 	$(CURDIR)/meta-miraclebox \
 	$(CURDIR)/meta-spycat \

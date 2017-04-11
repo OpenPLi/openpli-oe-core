@@ -32,9 +32,6 @@
 [submodule "meta-wetek"]
 	path = meta-wetek
 	url = http://github.com/wetek-enigma/meta-wetek.git
-[submodule "meta-zgemma"]
-	path = meta-zgemma
-	url = http://github.com/zgemma-star/meta-zgemma.git
 [submodule "meta-edision"]
 	path = meta-edision
 	url = http://github.com/open-edision/meta-edision.git
@@ -56,3 +53,6 @@
 [submodule "meta-sab"]
 	path = meta-sab
 	url = http://github.com/mariner2/meta-sab.git
+[submodule "meta-zgemma-4"]
+	path = meta-zgemma-4
+	url = http://github.com/zgemma-star/meta-zgemma-4.git
