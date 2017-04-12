@@ -3,7 +3,7 @@ MAINTAINER = "Pavel V. Cherenkov"
 SECTION = "multimedia"
 PRIORITY = "optional"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://README;md5=bfc66ea360954327e12d62343a0ce644"
+LIC_FILES_CHKSUM = "file://README;md5=b0c7b851d6d40e5194e73ca66db0e257"
 
 inherit gitpkgv
 SRCREV = "${AUTOREV}"
