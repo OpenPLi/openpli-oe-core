@@ -9,7 +9,7 @@ DEPENDS = "enigma2 uchardet openssl"
 RDEPENDS_${PN} = "enigma2 uchardet openssl"
 
 SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/mx3L/serviceapp.git;branch=master"
+SRC_URI = "git://github.com/mx3L/serviceapp.git;branch=develop"
 
 S = "${WORKDIR}/git"
 
