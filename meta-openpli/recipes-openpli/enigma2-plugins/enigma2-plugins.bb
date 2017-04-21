@@ -33,7 +33,6 @@ inherit gitpkgv pythonnative pkgconfig
 PV = "y-git${SRCPV}"
 PKGV = "y-git${GITPKGV}"
 
-SRCREV = "${AUTOREV}"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
