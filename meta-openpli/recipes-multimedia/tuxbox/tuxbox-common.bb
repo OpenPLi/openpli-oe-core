@@ -4,7 +4,6 @@ MAINTAINER = "PLi team"
 
 inherit allarch gitpkgv
 
-SRCREV = "${AUTOREV}"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 SRC_URI = "git://github.com/OpenPLi/OpenPLi-1.git"

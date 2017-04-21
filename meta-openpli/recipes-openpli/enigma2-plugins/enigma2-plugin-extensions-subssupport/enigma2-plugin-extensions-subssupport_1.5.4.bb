@@ -7,7 +7,6 @@ PR = "r0"
 
 RDEPENDS_${PN} = "python-xmlrpc python-compression python-codecs python-zlib python-difflib unrar"
 
-SRCREV = "9fd957962509f4ad4a2328cc3f9969230ef20a2a"
 SRC_URI = "git://github.com/mx3L/subssupport;protocol=git;branch=master"
 
 S = "${WORKDIR}/git"

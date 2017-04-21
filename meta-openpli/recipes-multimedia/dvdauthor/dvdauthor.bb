@@ -2,9 +2,8 @@ SUMMARY = "create DVD-Video file system"
 SECTION = "console/multimedia"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-DEPENDS = "freetype libdvdread libfribidi libpng libxml2 zlib fontconfig" 
+DEPENDS = "freetype libdvdread libfribidi libpng libxml2 zlib fontconfig"
 
-SRCREV = "aa423d7013e37418d2888210a973c5ebd6d869f1"
 SRC_URI = "git://github.com/ldo/dvdauthor file://fix-build.patch"
 
 inherit gitpkgv

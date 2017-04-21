@@ -5,7 +5,6 @@ DEPENDS = "libpng freetype zlib"
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt.git"
 

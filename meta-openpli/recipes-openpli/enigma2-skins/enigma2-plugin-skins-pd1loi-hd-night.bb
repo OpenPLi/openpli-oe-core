@@ -8,8 +8,6 @@ PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 PR = "r0"
 
-SRCREV = "${AUTOREV}"
-
 SRC_URI = "https://github.com/PD1LOI/Pd1loi-HD-night-skin"
 
 FILES_${PN} = "/usr/share/enigma2/"

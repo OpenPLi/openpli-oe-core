@@ -8,8 +8,6 @@ DEPENDS = "libxml2"
 
 SRC_URI = "gitsm://git.videolan.org/libbluray.git"
 
-SRCREV="60e3d2600e8aaba3ca01df73569424befd9ed6fb"
-
 inherit gitpkgv autotools-brokensep pkgconfig
 
 # Set PV and PKGV manualy on OE before https://github.com/openembedded/meta-openembedded/commit/22004e5281a913818a94bcd160ad3135a9ecd314

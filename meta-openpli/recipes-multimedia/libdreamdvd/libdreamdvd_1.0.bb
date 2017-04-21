@@ -6,5 +6,4 @@ PR = "r3"
 
 inherit autotools pkgconfig git-project
 
-SRCREV = "93f5820499805b4993420eea5d0acb34b61f75a6"
 SRC_URI = "git://github.com/mirakels/libdreamdvd.git"

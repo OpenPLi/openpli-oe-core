@@ -9,8 +9,6 @@ PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 PR = "r1"
 
-SRCREV = "${AUTOREV}"
-
 SRC_URI = "git://github.com/littlesat/skin-PLiHD.git"
 
 FILES_${PN} = "/usr/share/enigma2/"

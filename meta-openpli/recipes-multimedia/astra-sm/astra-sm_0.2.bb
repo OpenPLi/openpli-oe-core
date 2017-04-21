@@ -4,7 +4,7 @@ DESCRIPTION = "Astra (Advanced Streamer) is a professional software to organize 
 SECTION = "multimedia"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
-SRCREV = "1c45755761e10f96318f2fffb29bb5466e00bcfc"
+
 DEPENDS = "libaio"
 
 SRC_URI = "git://gitlab.com/berdyansk/astra-sm.git;protocol=http \

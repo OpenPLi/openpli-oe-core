@@ -9,8 +9,6 @@ SRC_URI = "git://github.com/Mange/rtl8192eu-linux-driver.git \
     file://rtl8192eu-gcc5.patch \
     "
 
-SRCREV = "0c80da7f67607bf5916a9def05cfc4099c098057"
-
 S = "${WORKDIR}/git"
 
 inherit module siteinfo
@@ -22,7 +20,7 @@ do_configure() {
 }
 do_compile() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-        oe_runmake -C "${STAGING_KERNEL_DIR}" M="${S}" modules 
+        oe_runmake -C "${STAGING_KERNEL_DIR}" M="${S}" modules
 }
 
 do_install() {

@@ -6,8 +6,6 @@ RDEPENDS_enigma2-plugin-extensions-openuitzendinggemist = "python-argparse"
 
 inherit allarch pythonnative gitpkgv autotools-brokensep
 
-SRCREV = "${AUTOREV}"
-
 PV = "2+git${SRCPV}"
 PKGV = "2+git${GITPKGV}"
 
