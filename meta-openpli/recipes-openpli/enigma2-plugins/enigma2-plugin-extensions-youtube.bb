@@ -9,7 +9,6 @@ SRC_URI = "git://github.com/Taapat/enigma2-plugin-youtube.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

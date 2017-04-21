@@ -8,7 +8,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 DEPENDS = "enigma2 uchardet openssl"
 RDEPENDS_${PN} = "enigma2 uchardet openssl"
 
-SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/mx3L/serviceapp.git;branch=develop"
 
 S = "${WORKDIR}/git"

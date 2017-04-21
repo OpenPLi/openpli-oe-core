@@ -5,8 +5,6 @@ LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/BackupSuite
 
 SRC_URI = "git://github.com/Pedro-Newbie/BackupSuite.git"
 
-SRCREV = "${AUTOREV}"
-
 inherit gitpkgv
 
 S = "${WORKDIR}/git"
