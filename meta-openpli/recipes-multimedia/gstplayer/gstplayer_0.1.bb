@@ -20,5 +20,5 @@ do_compile() {
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${S}/gstplayer/gst-1.0/gstplayer_gst-1.0 ${D}${bindir}
+    install -m 0755 ${S}/gstplayer/gst-1.0/gstplayer_gst-1.0 ${D}${bindir}/gstplayer
 }
