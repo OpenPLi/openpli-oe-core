@@ -10,7 +10,7 @@ RCONFLICTS_${PN} = "${OLDPKG}"
 inherit gitpkgv
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 
 DEPENDS += "enigma2"
 
