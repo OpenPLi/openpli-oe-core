@@ -8,3 +8,5 @@ PACKAGES = "${PN}"
 FILES_${PN} += "${base_libdir}/firmware"
 
 PACKAGE_ARCH = "all"
+
+PR = "r2"
