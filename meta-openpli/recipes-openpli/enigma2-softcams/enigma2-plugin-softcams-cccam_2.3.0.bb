@@ -1,7 +1,5 @@
 DESCRIPTION = "CCcam ${PV} softcam"
 
-PR = "r0"
-
 SRC_URI = "http://downloads.pli-images.org/softcams/CCcam-${PV}.zip \
 	file://CCcam.xml"
 

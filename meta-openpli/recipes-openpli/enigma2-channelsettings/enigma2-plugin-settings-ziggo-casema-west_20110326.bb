@@ -5,8 +5,6 @@ require conf/license/openpli-gplv2.inc
 
 SRC_URI = "file://*"
 
-PR = "r0"
-
 PACKAGES = "${PN}"
 PROVIDES="virtual/enigma2-settings"
 

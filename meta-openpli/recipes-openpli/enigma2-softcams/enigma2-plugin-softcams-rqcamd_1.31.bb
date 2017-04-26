@@ -1,8 +1,6 @@
 CAMNAME = "rqcamd"
 DESCRIPTION = "${CAMNAME} ${PV} softcam"
 
-PR = "r0"
-
 SRC_URI = "http://downloads.pli-images.org/softcams/${CAMNAME}-${PV}-binaries.tar.gz"
 
 S = "${WORKDIR}/"

@@ -13,7 +13,6 @@ DEST = "${D}/usr/lib/enigma2/python/Plugins/Extensions/BackupSuite"
 
 PV = "20+git${SRCPV}"
 PKGV = "20+git${GITPKGV}"
-PR = "r0"
 
 RDEPENDS_${PN} = "mtd-utils mtd-utils-ubifs ofgwrite"
 

@@ -1,5 +1,4 @@
 DESCRIPTION = "Configuration files for 3rd-party feeds"
-PR = "r3"
 
 require conf/license/openpli-gplv2.inc
 

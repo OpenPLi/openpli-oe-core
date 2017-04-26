@@ -8,7 +8,6 @@ inherit allarch
 PACKAGES = "${PN}"
 
 PV = "1.0"
-PR = "r0"
 
 INITSCRIPT_NAME = "cardserver"
 INITSCRIPT_PARAMS = "start 45 S ."

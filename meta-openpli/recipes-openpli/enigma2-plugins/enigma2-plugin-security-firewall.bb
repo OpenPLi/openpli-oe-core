@@ -8,7 +8,6 @@ RDEPENDS_${PN} = "iptables kernel-module-ip-tables kernel-module-ip-conntrack ke
 SRC_URI = "file://firewall.sh file://firewall.users"
 
 PV = "1.0"
-PR = "r3"
 
 S = "${WORKDIR}"
 
