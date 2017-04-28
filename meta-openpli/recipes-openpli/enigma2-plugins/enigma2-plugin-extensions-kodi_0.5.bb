@@ -13,5 +13,3 @@ S = "${WORKDIR}/git"
 
 FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext"
-
-PACKAGE_ARCH = "${MACHINE_ARCH}"
