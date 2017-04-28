@@ -14,7 +14,7 @@ S = "${WORKDIR}"
 INITSCRIPT_NAME = "firewall"
 INITSCRIPT_PARAMS = "defaults"
 
-inherit update-rc.d
+inherit update-rc.d allarch
 
 do_install() {
 	install -d ${D}/etc/init.d

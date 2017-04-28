@@ -1,6 +1,5 @@
 DESCRIPTION = "Rytec's sources and channels for the XMLTV importer"
 MAINTAINER = "MiLo, rytec @ pli-images.org"
-PACKAGE_ARCH = "all"
 
 require conf/license/openpli-gplv2.inc
 
