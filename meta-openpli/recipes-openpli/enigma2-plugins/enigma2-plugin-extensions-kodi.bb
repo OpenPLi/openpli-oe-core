@@ -11,5 +11,8 @@ SRC_URI = "git://github.com/mx3L/kodiext;protocol=git;branch=master"
 
 S = "${WORKDIR}/git"
 
+PV = "0.5+git${SRCPV}"
+PKGV = "0.5+git${GITPKGV}"
+
 FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext"
