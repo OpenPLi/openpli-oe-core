@@ -1,3 +1,5 @@
+inherit gitpkgv autotools
+
 DESCRIPTION = "Enigma2 plugin to launch and play media from Kodi"
 AUTHOR = "Maroš Ondrášek <mx3ldev@gmail.com>"
 LICENSE = "GPLv2"
@@ -11,7 +13,5 @@ S = "${WORKDIR}/git"
 
 FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext"
-
-inherit autotools
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

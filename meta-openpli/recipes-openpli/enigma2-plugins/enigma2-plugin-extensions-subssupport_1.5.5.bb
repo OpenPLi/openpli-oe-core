@@ -1,3 +1,5 @@
+inherit gitpkgv autotools-brokensep
+
 SUMMARY = "Collection of enigma2 subtitles plugins"
 HOMEPAGE = "https://github.com/mx3L/subssupport"
 AUTHOR = "Maroš Ondrášek <mx3ldev@gmail.com>"
@@ -12,8 +14,6 @@ S = "${WORKDIR}/git"
 
 FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/SubsSupport \
 ${localstatedir}/lib/subssupport"
-
-inherit autotools-brokensep
 
 do_install_append() {
     install -d ${D}${localstatedir}/lib/subssupport

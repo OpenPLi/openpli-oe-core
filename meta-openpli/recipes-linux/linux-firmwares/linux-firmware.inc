@@ -1,4 +1,4 @@
-inherit allarch
+inherit gitpkgv allarch
 
 LICENSE = "CLOSED"
 PACKAGES = "${PN}"
