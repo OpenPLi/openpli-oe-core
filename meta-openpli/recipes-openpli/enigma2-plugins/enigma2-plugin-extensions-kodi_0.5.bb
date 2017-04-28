@@ -13,3 +13,5 @@ FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext"
 
 inherit autotools
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
