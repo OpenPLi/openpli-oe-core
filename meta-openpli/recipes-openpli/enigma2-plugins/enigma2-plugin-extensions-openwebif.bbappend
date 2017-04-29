@@ -1,7 +1,7 @@
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-python do_package_prepend () {
+python do_cleanup () {
     boxtypes = [
         ('formuler1', 'formuler1.jpg', 'formuler1.png'),
         ('formuler3', 'formuler3.jpg', 'formuler1.png'),
@@ -48,12 +48,13 @@ python do_package_prepend () {
         ('vs1500', 'vs1500.jpg', 'vs1x00.png'),
     ]
     import os
-    top = '${D}${PLUGINPATH}/public/images/'
+    pluginpath = "%s%s" % (d.getVar('D', True), d.getVar('PLUGINPATH', True))
+    top = "%s/public/images/" % pluginpath
     target_box = 'unknown.jpg'
     target_remote = 'ow_remote.png'
     exception = ''
     for x in boxtypes:
-        if x[0] == '${MACHINE}':
+        if x[0] == d.getVar('MACHINE', True):
             target_box = x[1]
             target_remote = x[2]
             if x[0] == 'et6x00':
@@ -63,7 +64,7 @@ python do_package_prepend () {
             elif x[0] == 'xpeedc':
                 exception = 'xpeedlx'
             elif x[0] == 'dm8000':
-                dir = '${D}${PLUGINPATH}/public/static/remotes'
+                dir = '%s/public/static/remotes' % pluginpath
                 os.system('cp %s/dmm1.html %s/dmm.html' % (dir, dir))
             break
     for root, dirs, files in os.walk(top + 'boxes', topdown=False):
@@ -76,7 +77,7 @@ python do_package_prepend () {
                 os.remove(os.path.join(root, name))
 }
 
-do_populate_sysroot[depends] = "enigma2-plugin-extensions-openwebif:do_package"
+addtask do_cleanup after do_install before do_package
 
 PACKAGES =+ "${PN}-vxg"
 DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
