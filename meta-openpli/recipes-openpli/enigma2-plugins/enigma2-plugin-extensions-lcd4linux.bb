@@ -11,27 +11,21 @@ PKGV = "${PKGVERSION}-${GITPKGV}"
 
 SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
 
-DEPENDS += "\
-	libusb \
-	python-simplejson \
-	png-util \
-	python-pyusb \
-"
-
 RDEPENDS_${PN} += "\
-	python-codecs \
-	python-datetime \
-	python-imaging \
-	python-textutils \
-	python-shell \
-	python-ctypes \
-	python-mutagen \
-	python-zlib \
-	python-email \
-	python-subprocess \
-	python-simplejson \
-	python-pyusb \
+	libusb \
 	png-util \
+	python-codecs \
+	python-ctypes \
+	python-datetime \
+	python-email \
+	python-imaging \
+	python-mutagen \
+	python-pyusb \
+	python-shell \
+	python-simplejson \
+	python-subprocess \
+	python-textutils \
+	python-zlib \
 "
 
 S = "${WORKDIR}/git"
