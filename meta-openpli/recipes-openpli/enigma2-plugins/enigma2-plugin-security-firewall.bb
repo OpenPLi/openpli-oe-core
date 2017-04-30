@@ -2,7 +2,6 @@ DESCRIPTION = "Firewall"
 
 require conf/license/openpli-gplv2.inc
 
-DEPENDS = "iptables virtual/kernel"
 RDEPENDS_${PN} = "iptables kernel-module-ip-tables kernel-module-ip-conntrack kernel-module-ipt-reject kernel-module-ipt-state kernel-module-iptable-filter"
 
 SRC_URI = "file://firewall.sh file://firewall.users"
