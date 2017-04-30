@@ -16,6 +16,7 @@ FILES_${PN} = "/usr/bin /etc"
 PACKAGES = "${PN}"
 
 RDEPENDS_${PN} += "softcam-support"
+INSANE_SKIP_${PN} += "already-stripped"
 
 CAMLINK = "$D/etc/init.d/softcam"
 CAMPATH = "/etc/init.d/softcam.${CAMNAME}"
