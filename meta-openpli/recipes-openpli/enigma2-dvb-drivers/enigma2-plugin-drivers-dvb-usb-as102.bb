@@ -1,8 +1,6 @@
 DESCRIPTION = "USB DVB driver for AS102 chipset"
 
-require conf/license/openpli-gplv2.inc
-
-inherit allarch
+require dvb-usb-drivers-meta.inc
 
 RRECOMMENDS_${PN} = " \
 	firmware-as102-data1-st \
@@ -12,5 +10,3 @@ RRECOMMENDS_${PN} = " \
 	"
 
 PV = "1.1"
-
-ALLOW_EMPTY_${PN} = "1"

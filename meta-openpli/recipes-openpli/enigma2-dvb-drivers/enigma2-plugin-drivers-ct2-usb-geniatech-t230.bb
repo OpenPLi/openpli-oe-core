@@ -1,8 +1,6 @@
 DESCRIPTION = "USB geniatech driver for T230"
 
-require conf/license/openpli-gplv2.inc
-
-inherit allarch
+require dvb-usb-drivers-meta.inc
 
 RRECOMMENDS_${PN} = " \
 	kernel-module-dvb-usb-cxusb \
@@ -12,5 +10,3 @@ RRECOMMENDS_${PN} = " \
 	"
 
 PV = "1.0"
-
-ALLOW_EMPTY_${PN} = "1"

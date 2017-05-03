@@ -1,8 +1,6 @@
 DESCRIPTION = "USB DVB driver for pctv292e chipsets"
 
-require conf/license/license-gplv2.inc
-
-inherit allarch
+require dvb-usb-drivers-meta.inc
 
 RRECOMMENDS_${PN} = " \
 	firmware-dvb-demod-si2168-b40 \
@@ -14,5 +12,3 @@ RRECOMMENDS_${PN} = " \
 	"
 
 PV = "1.0"
-
-ALLOW_EMPTY_${PN} = "1"

@@ -1,8 +1,6 @@
 DESCRIPTION = "USB DVB driver for af9035 devices"
 
-require conf/license/openpli-gplv2.inc
-
-inherit allarch
+require dvb-usb-drivers-meta.inc
 
 RRECOMMENDS_${PN} = " \
 	firmware-dvb-usb-af9035-01 \
@@ -17,5 +15,3 @@ RRECOMMENDS_${PN} = " \
 	"
 
 PV = "1.3"
-
-ALLOW_EMPTY_${PN} = "1"

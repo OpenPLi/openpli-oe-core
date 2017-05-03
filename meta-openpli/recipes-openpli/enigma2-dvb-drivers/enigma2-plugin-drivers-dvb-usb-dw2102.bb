@@ -1,8 +1,6 @@
 DESCRIPTION = "USB DVB driver for DW210x/DW310x chipset"
 
-require conf/license/openpli-gplv2.inc
-
-inherit allarch
+require dvb-usb-drivers-meta.inc
 
 RRECOMMENDS_${PN} = " \
 	kernel-module-dvb-usb-dw2102 \
@@ -13,5 +11,3 @@ RRECOMMENDS_${PN} = " \
 	"
 
 PV = "1.1"
-
-ALLOW_EMPTY_${PN} = "1"
