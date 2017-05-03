@@ -1,0 +1,19 @@
+--- vtuner.h
++++ vtuner.h
+@@ -25,6 +25,7 @@
+ 
+ #define VTUNER_PIDLIST_LEN 30 // from usbtunerhelper
+ 
++#include <linux/ioctl.h>
+ #include <linux/dvb/version.h>
+ #include <linux/dvb/frontend.h>
+ #include <linux/dvb/dmx.h>
+@@ -135,7 +136,7 @@
+ #endif
+ 
+ 
+-#if VMSG_TYPE2
++#if _IOC_NONE == 0
+ #define VTUNER_GET_MESSAGE  11
+ #define VTUNER_SET_RESPONSE 12
+ #define VTUNER_SET_NAME     13
