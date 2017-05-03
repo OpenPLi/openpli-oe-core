@@ -1,8 +1,6 @@
 DESCRIPTION = "meta file for USB DVB drivers"
 
-require conf/license/openpli-gplv2.inc
-
-inherit allarch
+require dvb-usb-drivers-meta.inc
 
 DEPENDS = "\
 	enigma2-plugin-drivers-atsc-usb-hauppauge \
