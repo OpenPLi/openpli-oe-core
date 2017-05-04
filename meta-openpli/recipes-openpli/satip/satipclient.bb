@@ -28,5 +28,4 @@ do_install_append() {
 
 EXTRA_OECONF = " \
     --with-boxtype=${MACHINE} \
-    --with-machinebuild="${MACHINEBUILD}" \
     "
