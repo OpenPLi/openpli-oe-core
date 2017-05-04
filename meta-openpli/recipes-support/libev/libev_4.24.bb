@@ -6,9 +6,8 @@ SRC_URI = "http://dist.schmorp.de/libev/libev-${PV}.tar.gz"
 
 inherit autotools
 
-SRC_URI[md5sum] = "f1dbf786ead8307e0d4f5f68f2f8526c"
-SRC_URI[sha256sum] = "c7fe743e0c3b50dd34bf222ebdba4e8acac031d41ce174f17890f8f84eeddd7a"
-
+SRC_URI[md5sum] = "94459a5a22db041dec6f98424d6efe54"
+SRC_URI[sha256sum] = "973593d3479abdf657674a55afe5f78624b0e440614e2b8cb3a07f16d4d7f821"
 
 do_compile_prepend() {
 	sed -i 's#include_HEADERS = ev.h ev++.h event.h#include_HEADERS = ev.h ev++.h#' ${S}/Makefile.*
