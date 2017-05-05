@@ -1,20 +1,31 @@
-DESCRIPTION = "SAT>IP client"
-MAINTAINER = "PLi team"
-require conf/license/openpli-gplv2.inc
+SUMMARY = "satip client using vtuner"
+LICENSE = "GPLv2"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=2c1c00f9d3ed9e24fa69b932b7e7aff2"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit gitpkgv
+SRCREV = "${AUTOREV}"
+PV = "1.0+git${SRCPV}"
+PKGV = "1.0+git${GITPKGV}"
+PR = "r0"
 
-PV = "1+git${SRCPV}"
-PKGV = "1+git${GITPKGV}"
+SRC_URI = " \
+    git://github.com/oe-alliance/satip-client.git;protocol=git;branch=mis \
+    file://satipclient.sh \
+"
+#SRC_URI += "file://auto-detect-and-avoi-ioct-conflicts.patch"
 
-SRC_URI = "git://github.com/eriksl/satip-client.git;protocol=git"
-FILES_${PN} = "/usr/sbin/satip-client"
 S = "${WORKDIR}/git"
-BUILD = "${WORKDIR}/build"
 
-inherit autotools
+inherit gitpkgv autotools update-rc.d
 
-do_install() {
-	install -m 755 -d ${D}/usr/sbin
-	install -m 755 ${BUILD}/satip_client ${D}/usr/sbin/satip-client
+INITSCRIPT_NAME = "satipclient"
+INITSCRIPT_PARAMS = "defaults"
+
+do_install_append() {
+    install -d ${D}/etc/init.d
+    install -m 0755 ${WORKDIR}/satipclient.sh ${D}/etc/init.d/satipclient
 }
+
+EXTRA_OECONF = " \
+    --with-boxtype=${MACHINE} \
+    "
