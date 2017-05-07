@@ -69,6 +69,7 @@ OPTIONAL_PACKAGES += " \
 	rtorrent \
 	sabnzbd \
 	satipclient \
+	screen \
 	sshpass \
 	smartmontools \
 	smbnetfs \
