@@ -3,104 +3,116 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 python do_cleanup () {
     boxtypes = [
-        ('dm500hd', 'dm500hd.png', 'dm_normal.png'),
-        ('dm7020hd', 'dm7020hd.png', 'dmm2.png'),
-        ('dm8000', 'dm8000.png', 'dmm1.png'),
-        ('dm800se', 'dm800se.png', 'dm_normal.png'),
-        ('osmega', 'osmega.png', 'osmini.png'),
-        ('osmini', 'osmini.png', 'osmini.png'),
-        ('osminiplus', 'osminiplus.png', 'osmini.png'),
-        ('formuler1', 'formuler1.png', 'formuler1.png'),
-        ('formuler3', 'formuler3.png', 'formuler1.png'),
-        ('formuler4', 'formuler4.png', 'formuler1.png'),
-        ('formuler4turbo', 'formuler4turbo.png', 'formuler1.png'),
-        ('hd11', 'hd11.png', 'hd1x00.png'),
-        ('hd1100', 'hd1100.png', 'hd1x00.png'),
-        ('hd1200', 'hd1200.png', 'hd1x00.png'),
-        ('hd1265', 'hd1265.png', 'hd1x00.png'),
-        ('hd1500', 'hd1500.png', 'hd1x00.png'),
-        ('hd2400', 'hd2400.png', 'hd2400.png'),
-        ('hd500c', 'hd500c.png', 'hd1x00.png'),
-        ('hd51', 'hd51.png', 'hd1x00.png'),
-        ('hd530c', 'hd530c.png', 'hd1x00.png'),
-        ('vs1000', 'vs1000.png', 'vs1x00.png'),
-        ('vs1500', 'vs1500.png', 'vs1x00.png'),
-        ('et1x000', 'et11000.png', 'et7000mini.png'),
-        ('et7000mini', 'et7000mini.png', 'et7000mini.png'),
-        ('mbmicro', 'mbmicro.png', 'miraclebox2.png'),
-        ('mbmicrov2', 'mbmicrov2.png', 'miraclebox2.png'),
-        ('mbtwinplus', 'mbtwinplus.png', 'miraclebox2.png'),
-        ('alphatriplehd', 'alphatriplehd.png', 'alphatriplehd.png'),
-        ('spycat', 'spycat.png', 'spycat.png'),
-        ('spycat4kmini', 'spycat4kmini.png', 'spycat.png'),
-        ('spycatmini', 'spycatmini.png', 'spycat.png'),
-        ('spycatminiplus', 'spycatminiplus.png', 'spycat.png'),
-        ('vuduo', 'duo.png', 'vu_normal.png'),
-        ('vuduo2', 'duo2.png', 'vu_duo2.png'),
-        ('vusolo', 'solo.png', 'vu_normal.png'),
-        ('vusolo2', 'solo2.png', 'vu_normal.png'),
-        ('vusolo4k', 'solo4k.png', 'vu_normal.png'),
-        ('vusolose', 'solose.png', 'vu_normal.png'),
-        ('vuultimo', 'ultimo.png', 'vu_ultimo.png'),
-        ('vuultimo4k', 'ultimo4k.png', 'vu_normal.png'),
-        ('vuuno', 'uno.png', 'vu_normal.png'),
-        ('vuuno4k', 'uno4k.png', 'vu_normal.png'),
-        ('vuzero', 'zero.png', 'vu_normal.png'),
-        ('wetekplay', 'wetekplay.png', 'wetekplay.png'),
-        ('xp1000', 'xp1000.png', 'xp_rc14_normal.png'),
-        ('xpeedc', 'xpeedlx.png', 'xpeedlx.png'),
-        ('fusionhd', 'fusionhd.png', 'fusionhd.png'),
-        ('fusionhdse', 'fusionhdse.png', 'fusionhdse.png'),
-        ('galaxy4k', 'galaxy4k.png', 'galaxy4k.png'),
-        ('purehd', 'purehd.png', 'purehd.png'),
-        ('revo4k', 'revo4k.png', 'revo4k.png'),
-        ('et10000', 'et10000.png', 'et8000.png'),
-        ('et4x00', 'et4x00.png', 'et_rc13_normal.png'),
-        ('et5x00', 'et5x00.png', 'et_rc5_normal.png'),
-        ('et6x00', 'et6x00.png', 'et_rc5_normal.png'),
-        ('et7x00', 'et7x00.png', 'et7x00.png'),
-        ('et9x00', 'et9x00.png', 'et_rc7_normal.png'),
-        ('et6500', 'et6500.png', 'et_rc5_normal.png'),
-        ('et7000', 'et7000.png', 'et7x00.png'),
-        ('et7500', 'et7000.png', 'et7x00.png'),
-        ('et8000', 'et8000.png', 'et8000.png'),
-        ('et8500', 'et8500.png', 'et8000.png'),
-        ('h3', 'h3.png', 'h3.png'),
-        ('h5', 'h5.png', 'h5.png'),
-        ('h7', 'h7.png', 'h5.png'),
-        ('i55', 'i55.png', 'h5.png'),
-        ('lc', 'lc.png', 'h3.png'),
-        ('sh1', 'sh1.png', 'h3.png'),
+        ('dm500hd', 'dm500hd.png', 'dm_normal.png', 'dmm.html'),
+        ('dm7020hd', 'dm7020hd.png', 'dmm2.png', 'dmm2.html'),
+        ('dm8000', 'dm8000.png', 'dmm1.png', 'dmm1.html'),
+        ('dm800se', 'dm800se.png', 'dm_normal.png', 'dmm.html'),
+        ('osmega', 'osmega.png', 'osmini.png', 'osmini.html'),
+        ('osmini', 'osmini.png', 'osmini.png', 'osmini.html'),
+        ('osminiplus', 'osminiplus.png', 'osmini.png', 'osmini.html'),
+        ('formuler1', 'formuler1.png', 'formuler1.png', 'formuler1.html'),
+        ('formuler3', 'formuler3.png', 'formuler1.png', 'formuler1.html'),
+        ('formuler4', 'formuler4.png', 'formuler1.png', 'formuler1.html'),
+        ('formuler4turbo', 'formuler4turbo.png', 'formuler1.png', 'formuler1.html'),
+        ('hd11', 'hd11.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd1100', 'hd1100.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd1200', 'hd1200.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd1265', 'hd1265.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd1500', 'hd1500.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd2400', 'hd2400.png', 'hd2400.png', 'hd2400.html'),
+        ('hd500c', 'hd500c.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd51', 'hd51.png', 'hd1x00.png', 'hd1x00.html'),
+        ('hd530c', 'hd530c.png', 'hd1x00.png', 'hd1x00.html'),
+        ('vs1000', 'vs1000.png', 'vs1x00.png', 'vs1x00.html'),
+        ('vs1500', 'vs1500.png', 'vs1x00.png', 'vs1x00.html'),
+        ('et1x000', 'et11000.png', 'et7000mini.png', 'et7000mini.html'),
+        ('et7000mini', 'et7000mini.png', 'et7000mini.png', 'et7000mini.html),
+        ('mbmicro', 'mbmicro.png', 'miraclebox2.png', 'miraclebox2.html'),
+        ('mbmicrov2', 'mbmicrov2.png', 'miraclebox2.png', 'miraclebox2.html'),
+        ('mbtwinplus', 'mbtwinplus.png', 'miraclebox2.png', 'miraclebox2.html'),
+        ('alphatriplehd', 'alphatriplehd.png', 'alphatriplehd.png', 'alphatriplehd.html'),
+        ('spycat', 'spycat.png', 'spycat.png', 'spycat.html'),
+        ('spycat4kmini', 'spycat4kmini.png', 'spycat.png', 'spycat.html'),
+        ('spycatmini', 'spycatmini.png', 'spycat.png', 'spycat.html'),
+        ('spycatminiplus', 'spycatminiplus.png', 'spycat.png', 'spycat.html'),
+        ('vuduo', 'duo.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vuduo2', 'duo2.png', 'vu_duo2.png', 'vu_duo2.html'),
+        ('vusolo', 'solo.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vusolo2', 'solo2.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vusolo4k', 'solo4k.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vusolose', 'solose.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vuultimo', 'ultimo.png', 'vu_ultimo.png', 'vu_ultimo.html'),
+        ('vuultimo4k', 'ultimo4k.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vuuno', 'uno.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vuuno4k', 'uno4k.png', 'vu_normal.png', 'vu_normal.html'),
+        ('vuzero', 'zero.png', 'vu_normal.png', 'vu_normal.html'),
+        ('wetekplay', 'wetekplay.png', 'wetekplay.png', 'wetekplay.html'),
+        ('xp1000', 'xp1000.png', 'xp_rc14_normal.png', 'xp1000.html'),
+        ('xpeedc', 'xpeedlx.png', 'xpeedlx.png', 'xpeedlx.html'),
+        ('fusionhd', 'fusionhd.png', 'fusionhd.png', 'fusionhd.html'),
+        ('fusionhdse', 'fusionhdse.png', 'fusionhdse.png', 'fusionhdse.html'),
+        ('galaxy4k', 'galaxy4k.png', 'galaxy4k.png', 'galaxy4k.html'),
+        ('purehd', 'purehd.png', 'purehd.png', 'purehd.html'),
+        ('revo4k', 'revo4k.png', 'revo4k.png', 'revo4k.html'),
+        ('et10000', 'et10000.png', 'et8000.png', 'et8000.html'),
+        ('et4x00', 'et4x00.png', 'et_rc13_normal.png', 'et4x00.html'),
+        ('et5x00', 'et5x00.png', 'et_rc5_normal.png', 'et5x00.html'),
+        ('et6x00', 'et6x00.png', 'et_rc5_normal.png', 'et5x00.html'),
+        ('et7x00', 'et7x00.png', 'et7x00.png', 'et7x00.html'),
+        ('et9x00', 'et9x00.png', 'et_rc7_normal.png', 'et9x00.html'),
+        ('et6500', 'et6500.png', 'et6500.png', 'et6500.html'),
+        ('et7000', 'et7000.png', 'et7x00.png', 'et7x00.html'),
+        ('et7500', 'et7000.png', 'et7x00.png', 'et7x00.html),
+        ('et8000', 'et8000.png', 'et8000.png', 'et8000.html'),
+        ('et8500', 'et8500.png', 'et8000.png', 'et8000.html),
+        ('h3', 'h3.png', 'h3.png', 'h3.html'),
+        ('h5', 'h5.png', 'h3.png', 'h3.html'),
+        ('h7', 'h7.png', 'h3.png', 'h3.html'),
+        ('i55', 'i55.png', 'i55.png', 'i55.html'),
+        ('lc', 'lc.png', 'sh1.png', 'sh1.html'),
+        ('sh1', 'sh1.png', 'sh1.png', 'sh1.html'),
     ]
 
     import os
 
     pluginpath = "%s%s" % (d.getVar('D', True), d.getVar('PLUGINPATH', True))
-    top = "%s/public/images/" % pluginpath
+    images = "%s/public/images/" % pluginpath
+    keymaps = "%s/public/static/" % pluginpath
+
     target_box = 'unknown.png'
     target_remote = 'ow_remote.png'
+    target_keymap = ''
     exception = ''
+
     for x in boxtypes:
         if x[0] == d.getVar('MACHINE', True):
             target_box = x[1]
             target_remote = x[2]
+            target_keymap = x[3]
             if x[0] == 'et6x00':
-                exception = 'et6500'
+                exception = 'et6500.png'
             elif x[0] == 'et7x00':
-                exception = 'et7500'
+                exception = 'et7500.png'
             elif x[0] == 'xpeedc':
-                exception = 'xpeedlx'
+                exception = 'xpeedlx.png'
             elif x[0] == 'dm8000':
                 dir = '%s/public/static/remotes' % pluginpath
                 os.system('cp %s/dmm1.html %s/dmm.html' % (dir, dir))
             break
-    for root, dirs, files in os.walk(top + 'boxes', topdown=False):
+
+    for root, dirs, files in os.walk(images + 'boxes', topdown=False):
         for name in files:
-            if target_box != name and name != 'unknown.png' and (exception + '.png' != name):
+            if target_box != name and name != 'unknown.png' and exception != name:
                 os.remove(os.path.join(root, name))
-    for root, dirs, files in os.walk(top + 'remotes', topdown=False):
+
+    for root, dirs, files in os.walk(images + 'remotes', topdown=False):
         for name in files:
-            if target_remote != name and name != 'ow_remote.png' and (exception + '.png' != name):
+            if target_remote != name and name != 'ow_remote.png' and exception != name:
+                os.remove(os.path.join(root, name))
+
+    for root, dirs, files in os.walk(keymaps + 'remotes', topdown=False):
+        for name in files:
+            if target_keymap != name:
                 os.remove(os.path.join(root, name))
 }
 
