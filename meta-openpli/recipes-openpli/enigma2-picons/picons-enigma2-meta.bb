@@ -2,6 +2,9 @@
 
 require conf/license/openpli-gplv2.inc
 
+inherit allarch
+ALLOW_EMPTY_${PN} = "1"
+
 DEPENDS = " \
 		enigma2-plugin-picons-ziggo.metal-look-100x60 \
 		enigma2-plugin-picons-ziggo.metal-look-220x132 \
