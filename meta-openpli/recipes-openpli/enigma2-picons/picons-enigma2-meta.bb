@@ -1,4 +1,7 @@
 # meta package for enigma2 picon sets
+inherit allarch
+PACKAGES = "${PN}"
+ALLOW_EMPTY_${PN} = "1"
 
 require conf/license/openpli-gplv2.inc
 
