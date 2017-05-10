@@ -13,6 +13,7 @@ SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-sour
 
 RDEPENDS_${PN} += "\
 	png-util \
+	pydpflib \
 	python-codecs \
 	python-ctypes \
 	python-datetime \
