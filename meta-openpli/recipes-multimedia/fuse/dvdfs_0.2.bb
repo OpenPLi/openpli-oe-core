@@ -1,5 +1,5 @@
 DESCRIPTION = "mounts a DVD using libdvdread"
-LICENSE = "GPL"
+LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 HOMEPAGE = "http://www.jspenguin.org/software/dvdfs/"
@@ -10,7 +10,7 @@ SRC_URI = "http://www.jspenguin.org/software/${PN}/${PN}-${PV}.tar.gz \
 	file://crosscompile.patch \
 	file://defaultdevicesr0.patch \
 	"
-
+TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_install() {
 	install -d ${D}/usr/bin
