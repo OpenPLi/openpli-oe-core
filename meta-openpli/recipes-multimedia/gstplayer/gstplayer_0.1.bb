@@ -22,3 +22,7 @@ do_install() {
     install -d ${D}${bindir}
     install -m 0755 ${S}/gstplayer/gst-1.0/gstplayer_gst-1.0 ${D}${bindir}/gstplayer
 }
+
+pkg_postinst_${PN}() {
+    ln -s gstplayer $D${bindir}/gstplayer_gst-1.0
+}
