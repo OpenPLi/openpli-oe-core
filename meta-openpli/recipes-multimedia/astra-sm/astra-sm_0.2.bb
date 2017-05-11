@@ -28,6 +28,8 @@ do_install_append() {
 FILES_${PN} += "/etc/init.d/"
 FILES_${PN}-dev += "${datadir}"
 
+CONFFILES_${PN} = "${sysconfdir}/astra/astra.conf"
+
 INITSCRIPT_NAME = "astra-sm"
 INITSCRIPT_PARAMS = "defaults"
 
