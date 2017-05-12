@@ -45,6 +45,6 @@ FILES_${PN} = "\
 	/usr/lib/python2.7/site-packages \
 	/usr/lib/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
 	/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux \
-	/etc/enigma2/lcd4config"
+	/etc/enigma2/lcd4config*"
 
 CONFFILES_${PN} = "/etc/enigma2/lcd4config"
