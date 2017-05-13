@@ -18,7 +18,7 @@ SRC_URI = "git://github.com/ims21/ModifyPliFullHD.git;protocol=git"
 
 S="${WORKDIR}/git"
 
-SRCREV = "${AUTOREV}"
+SRCREV = "f904ea9711c86094441eab9d401574581a58d851"
 
 inherit distutils-openplugins
 

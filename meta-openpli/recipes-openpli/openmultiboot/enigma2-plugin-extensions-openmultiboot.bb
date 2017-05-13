@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/pli-openmultibootmanager.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "906ac87676dcf4266ce8645dac8f244d6ed96ead"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

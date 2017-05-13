@@ -9,7 +9,7 @@ PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 PR = "r0"
 
-SRCREV = "${AUTOREV}"
+SRCREV = "8d28517b28f19b6ae7014a2c83789d307e824a1a"
 
 SRC_URI = "git://github.com/littlesat/PLi-HD-FullNight.git"
 

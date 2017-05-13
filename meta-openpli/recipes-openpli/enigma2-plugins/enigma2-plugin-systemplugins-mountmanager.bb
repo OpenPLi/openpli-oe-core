@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/enigma2-plugin-mountmanager.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "1aef8244c77035a3ef6b2601a1aae5042ab5c99b"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

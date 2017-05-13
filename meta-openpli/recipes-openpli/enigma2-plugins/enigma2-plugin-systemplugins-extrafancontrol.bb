@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/enigma2-plugin-systemplugins-extrafancontrol.
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "6e77b17108230342d72e68fd35b9f693fdb23d99"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

@@ -13,7 +13,7 @@ RDEPENDS_enigma2-plugin-extensions-openuitzendinggemist = "python-argparse"
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
+SRCREV = "84d68642c2da3f3d8af47e68c0b6a795a7971be9"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"

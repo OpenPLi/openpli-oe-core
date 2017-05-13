@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/enigma2-plugin-extensions-tmbd.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "ffac1d5a4035fc7129d00fcbdf85f5102b206c8b"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

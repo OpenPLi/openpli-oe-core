@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
+SRCREV = "82dd6a3b454fdd60f0a3573f36e2f919c83f6a5d"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 

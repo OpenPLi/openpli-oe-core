@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/enigma2-plugin-extensions-xmodem.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "b606f42f26d47c9694918cee9ec3ff3903bdcb07"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

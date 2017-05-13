@@ -9,7 +9,7 @@ PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 PR = "r1"
 
-SRCREV = "${AUTOREV}"
+SRCREV = "a6f35c78b6174c9ccc4f0cd85bead4089081a087"
 
 SRC_URI = "git://github.com/littlesat/skin-PLiHD.git"
 

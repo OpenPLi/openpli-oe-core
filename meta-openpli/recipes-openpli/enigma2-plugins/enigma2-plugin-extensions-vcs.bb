@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/vcs.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "bddf7d4a7087428f7ee1daf8b9e2351d13dfb75c"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

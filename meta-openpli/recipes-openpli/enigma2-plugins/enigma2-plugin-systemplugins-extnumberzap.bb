@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/Extended-NumberZap.git"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+SRCREV = "7af25663fabbd6edc9f53c42240e465960138aba"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 

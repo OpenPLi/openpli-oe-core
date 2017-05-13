@@ -18,7 +18,7 @@ SRC_URI = "git://github.com/ims21/RefreshBouquet.git;protocol=git"
 
 S="${WORKDIR}/git"
 
-SRCREV = "${AUTOREV}"
+SRCREV = "da9035f7e1f639a6d697f2887906b4c3a9419124"
 
 inherit distutils-openplugins
 
