@@ -23,5 +23,3 @@ SRCREV = "${AUTOREV}"
 inherit distutils-openplugins
 
 PACKAGE_ARCH = "all"
-
-
