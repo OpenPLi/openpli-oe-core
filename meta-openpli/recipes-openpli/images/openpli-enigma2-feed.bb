@@ -30,8 +30,10 @@ OPTIONAL_PACKAGES += " \
 	dvdfs \
 	evtest \
 	exfat-utils \
+	exteplayer3 \
 	fuse-exfat \
 	gdb \
+	gstplayer \
 	hddtemp \
 	hdparm \
 	inadyn-mt \
@@ -108,6 +110,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-systemplugins-mountmanager \
 	enigma2-plugin-systemplugins-signalfinder \
 	enigma2-plugin-systemplugins-extnumberzap \
+	enigma2-plugin-systemplugins-serviceapp \
 	enigma2-plugin-extensions-historyzapselector \
 	enigma2-plugin-extensions-lcd4linux \
 	enigma2-plugin-extensions-tmbd \
