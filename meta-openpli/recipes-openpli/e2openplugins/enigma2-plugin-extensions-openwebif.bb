@@ -26,7 +26,7 @@ require openplugins-distutils.inc
 # Just a quick hack to "compile" it
 do_compile() {
 	cheetah-compile -R --nobackup ${S}/plugin
-	python -O -m compileall ${S}
+	python -O -m compileall -d ${PLUGINPATH} ${S}/plugin
 }
 
 PLUGINPATH = "/usr/lib/enigma2/python/Plugins/Extensions/${MODULE}"
@@ -36,4 +36,7 @@ do_install_append() {
 	chmod a+rX ${D}${PLUGINPATH}
 }
 
+PACKAGES =+ "${PN}-src"
+FILES_${PN}-src = "${PLUGINPATH}/*.py ${PLUGINPATH}/*/*.py ${PLUGINPATH}/*/*/*.py ${PLUGINPATH}/*/*/*/*.py ${PLUGINPATH}/*/*/*/*/*.py \
+		${PLUGINPATH}/controllers/views/*.tmpl ${PLUGINPATH}/controllers/views/*/*.tmpl ${PLUGINPATH}/controllers/views/*/*/*.tmpl"
 FILES_${PN} = "${PLUGINPATH}"
