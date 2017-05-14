@@ -9,8 +9,9 @@ inherit gitpkgv
 SRCREV = "92204d863c283cf3f14bd1546104449d10b3fe0e"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
+BRANCH = "openpli"
 
-SRC_URI = "git://github.com/Taapat/enigma2-plugin-blurayplayer.git"
+SRC_URI = "git://github.com/Taapat/enigma2-plugin-blurayplayer.git;branch=${BRANCH}"
 
 S = "${WORKDIR}/git"
 
