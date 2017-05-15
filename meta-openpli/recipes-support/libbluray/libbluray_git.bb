@@ -20,7 +20,6 @@ PKGV = "v0.9.3+git2490+efcde25"
 S="${WORKDIR}/git"
 
 EXTRA_OECONF = " \
-    --disable-bdjava \
     --disable-bdjava-jar \
     --disable-doxygen-doc \
     --disable-doxygen-dot \
