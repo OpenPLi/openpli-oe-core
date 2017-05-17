@@ -79,6 +79,7 @@ OPTIONAL_PACKAGES += " \
 	smbnetfs \
 	strace \
 	tcpdump \
+	tmux \
 	transmission \
 	udpxy \
 	usb-modeswitch \
