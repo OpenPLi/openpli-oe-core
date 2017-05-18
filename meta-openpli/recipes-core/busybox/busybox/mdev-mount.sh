@@ -20,6 +20,10 @@ case "$ACTION" in
 			exit 0
 		fi
 		DEVBASE=`expr substr $MDEV 1 3`
+		# for mmcblk[0-9]p[0-9] change to mmcblk[0-9]
+		if [ "${DEVBASE}" == "mmc" ] ; then
+			DEVBASE=`expr substr $MDEV 1 7`
+		fi
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
 			# blocked
@@ -55,6 +59,7 @@ case "$ACTION" in
 		fi
 		# first allow fstab to determine the mountpoint
 		if ! mount /dev/$MDEV > /dev/null 2>&1 ; then
+			DEVICETYPE="usb"
 			# no fstab entry, use automatic mountpoint
 			if [ -z "${LABEL}" ] ; then
 				REMOVABLE=`cat /sys/block/$DEVBASE/removable`
@@ -63,6 +68,10 @@ case "$ACTION" in
 				if [ "${REMOVABLE}" -eq "0" -a $EXTERNAL -eq 0 ] ; then
 					# mount the first non-removable internal device on /media/hdd
 					DEVICETYPE="hdd"
+				elif [ ! -e /sys/block/$DEVBASE/device/model ]; then
+					if [ ${#DEVBASE} == 7 ]; then
+						DEVICETYPE="mmc1"
+					fi
 				else
 					MODEL=`cat /sys/block/$DEVBASE/device/model`
 					if [ "$MODEL" == "USB CF Reader   " ]; then
@@ -85,8 +94,6 @@ case "$ACTION" in
 						DEVICETYPE="mmc1"
 					elif [ "$MDEV" == "mmcblk0p1" ]; then
 						DEVICETYPE="mmc1"
-					else
-						DEVICETYPE="usb"
 					fi
 				fi
 			else
