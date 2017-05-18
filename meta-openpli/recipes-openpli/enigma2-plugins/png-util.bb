@@ -17,7 +17,7 @@ inherit distutils
 do_compile() {
 	swig -python -c++ ${WORKDIR}/png_util.i
 	${CXX} -O2 -c -fPIC ${WORKDIR}/png_util.cpp ${WORKDIR}/png_util_wrap.cxx -I${STAGING_INCDIR}/${PYTHON_DIR}
-	${CXX} -shared ${S}/png_util.o ${S}/png_util_wrap.o -o _png_util.so -L${STAGING_LIBDIR} -lpng -fPIC
+	${CXX} -shared ${S}/png_util.o ${S}/png_util_wrap.o -o _png_util.so -L${STAGING_LIBDIR} -lpng -fPIC ${LDFLAGS}
 	mv ${WORKDIR}/png_util.py ${S}
 }
 

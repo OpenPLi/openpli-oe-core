@@ -7,6 +7,8 @@ SRC_URI = "http://www.harding.motd.ca/autossh/${P}.tgz"
 
 inherit autotools-brokensep
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 # Install target is broken (attempts to install in /usr/ and ignores
 # DESTDIR environment)
 do_install() {
