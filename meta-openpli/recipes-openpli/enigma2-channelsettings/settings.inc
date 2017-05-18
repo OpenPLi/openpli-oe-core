@@ -9,6 +9,8 @@ python do_remove_tarball() {
 		pass
 }
 
+inherit allarch
+
 addtask remove_tarball before do_fetch
 
 python do_convert_bouquets() {
@@ -40,5 +42,4 @@ do_install() {
 	install -m 0644 ${S}/var/tuxbox/config/enigma/services ${D}/etc/enigma2/lamedb
 }
 
-PACKAGE_ARCH = "all"
 FILES_${PN} = "/"
