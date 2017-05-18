@@ -36,3 +36,4 @@ DRIVERDATE = "${@'${PV}'.split('-')[-1]}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/dreambox-dvb-modules:"
 
 FILES_${PN} += "${sysconfdir}/modules-load.d/${PN}.conf"
+FILES_${PN} += "/lib/modules/${DM_LOCALVERSION}/extra/LICENSE"
