@@ -11,4 +11,4 @@ SRC_URI = "git://github.com/ims21/RefreshBouquet.git;protocol=git"
 
 S="${WORKDIR}/git"
 
-inherit distutils-openplugins allarch
+inherit distutils-openplugins
