@@ -11,4 +11,4 @@ SRC_URI[sha256sum] = "3a21c5a15f433710aaa26f1ae174b615973a25182006ae7f9c26de151c
 
 S = "${WORKDIR}/ipaddress-${PV}"
 
-inherit allarch setuptools
+inherit setuptools
