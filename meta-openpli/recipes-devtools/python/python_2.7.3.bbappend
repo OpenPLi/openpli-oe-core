@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PR = "r5.3"
+PR = "r5.4"
 
 SRC_URI += " \
 			file://04-default-is-optimized.patch \
@@ -11,6 +11,7 @@ SRC_URI += " \
 			file://ctypes-error-handling-fix.patch \
 			file://setuptweaks-2.patch \
 			file://pgettext.patch \
+			file://python-2.7.3-tlssni.patch \
 "
 
 EXTRA_OECONF += " \

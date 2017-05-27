@@ -1,0 +1,162 @@
+diff --git a/Lib/httplib.py b/Lib/httplib.py
+index 19bcd1b..94dd3c3 100644
+--- a/Lib/httplib.py
++++ b/Lib/httplib.py
+@@ -1149,6 +1149,7 @@ else:
+                                     source_address)
+             self.key_file = key_file
+             self.cert_file = cert_file
++            self.host = host
+ 
+         def connect(self):
+             "Connect to a host on a given (SSL) port."
+@@ -1158,7 +1159,7 @@ else:
+             if self._tunnel_host:
+                 self.sock = sock
+                 self._tunnel()
+-            self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file)
++            self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file, server_hostname=self.host)
+ 
+     __all__.append("HTTPSConnection")
+ 
+diff --git a/Lib/ssl.py b/Lib/ssl.py
+index 1951a62..c52c624 100644
+--- a/Lib/ssl.py
++++ b/Lib/ssl.py
+@@ -106,6 +106,7 @@ class SSLSocket(socket):
+     def __init__(self, sock, keyfile=None, certfile=None,
+                  server_side=False, cert_reqs=CERT_NONE,
+                  ssl_version=PROTOCOL_SSLv23, ca_certs=None,
++                 server_hostname=None,
+                  do_handshake_on_connect=True,
+                  suppress_ragged_eofs=True, ciphers=None):
+         socket.__init__(self, _sock=sock._sock)
+@@ -138,6 +139,7 @@ class SSLSocket(socket):
+             self._sslobj = _ssl.sslwrap(self._sock, server_side,
+                                         keyfile, certfile,
+                                         cert_reqs, ssl_version, ca_certs,
++                                        server_hostname,
+                                         ciphers)
+             if do_handshake_on_connect:
+                 self.do_handshake()
+@@ -146,6 +148,7 @@ class SSLSocket(socket):
+         self.cert_reqs = cert_reqs
+         self.ssl_version = ssl_version
+         self.ca_certs = ca_certs
++        self.server_hostname = server_hostname
+         self.ciphers = ciphers
+         self.do_handshake_on_connect = do_handshake_on_connect
+         self.suppress_ragged_eofs = suppress_ragged_eofs
+@@ -311,7 +314,7 @@ class SSLSocket(socket):
+             raise ValueError("attempt to connect already-connected SSLSocket!")
+         self._sslobj = _ssl.sslwrap(self._sock, False, self.keyfile, self.certfile,
+                                     self.cert_reqs, self.ssl_version,
+-                                    self.ca_certs, self.ciphers)
++                                    self.ca_certs, self.server_hostname, self.ciphers)
+         try:
+             socket.connect(self, addr)
+             if self.do_handshake_on_connect:
+@@ -349,6 +352,7 @@ class SSLSocket(socket):
+                           cert_reqs=self.cert_reqs,
+                           ssl_version=self.ssl_version,
+                           ca_certs=self.ca_certs,
++                          server_hostname=None,
+                           ciphers=self.ciphers,
+                           do_handshake_on_connect=self.do_handshake_on_connect,
+                           suppress_ragged_eofs=self.suppress_ragged_eofs),
+@@ -371,11 +375,13 @@ def wrap_socket(sock, keyfile=None, certfile=None,
+                 server_side=False, cert_reqs=CERT_NONE,
+                 ssl_version=PROTOCOL_SSLv23, ca_certs=None,
+                 do_handshake_on_connect=True,
+-                suppress_ragged_eofs=True, ciphers=None):
++                suppress_ragged_eofs=True, ciphers=None,
++                server_hostname=None):
+ 
+     return SSLSocket(sock, keyfile=keyfile, certfile=certfile,
+                      server_side=server_side, cert_reqs=cert_reqs,
+                      ssl_version=ssl_version, ca_certs=ca_certs,
++                     server_hostname=server_hostname,
+                      do_handshake_on_connect=do_handshake_on_connect,
+                      suppress_ragged_eofs=suppress_ragged_eofs,
+                      ciphers=ciphers)
+@@ -460,7 +466,7 @@ def sslwrap_simple(sock, keyfile=None, certfile=None):
+         sock = sock._sock
+ 
+     ssl_sock = _ssl.sslwrap(sock, 0, keyfile, certfile, CERT_NONE,
+-                            PROTOCOL_SSLv23, None)
++                            PROTOCOL_SSLv23, None, None, None)
+     try:
+         sock.getpeername()
+     except socket_error:
+diff --git a/Modules/_ssl.c b/Modules/_ssl.c
+index e692b5d..1cfecf0 100644
+--- a/Modules/_ssl.c
++++ b/Modules/_ssl.c
+@@ -265,7 +265,7 @@ newPySSLObject(PySocketSockObject *Sock, char *key_file, char *cert_file,
+                enum py_ssl_server_or_client socket_type,
+                enum py_ssl_cert_requirements certreq,
+                enum py_ssl_version proto_version,
+-               char *cacerts_file, char *ciphers)
++               char *cacerts_file, char *server_hostname, char *ciphers)
+ {
+     PySSLObject *self;
+     char *errstr = NULL;
+@@ -370,7 +370,7 @@ newPySSLObject(PySocketSockObject *Sock, char *key_file, char *cert_file,
+ 
+     /* ssl compatibility */
+     SSL_CTX_set_options(self->ctx,
+-                        SSL_OP_ALL & ~SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS);
++                        (SSL_OP_ALL & ~SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS) | SSL_OP_NO_SSLv3);
+ 
+     verification_mode = SSL_VERIFY_NONE;
+     if (certreq == PY_SSL_CERT_OPTIONAL)
+@@ -383,6 +383,14 @@ newPySSLObject(PySocketSockObject *Sock, char *key_file, char *cert_file,
+ 
+     PySSL_BEGIN_ALLOW_THREADS
+     self->ssl = SSL_new(self->ctx); /* New ssl struct */
++#if OPENSSL_VERSION_NUMBER >= 0x0090806fL && !defined(OPENSSL_NO_TLSEXT)
++    /* If SNI isn't supported, we just don't call it and fail silently,
++     * as there's not much else we can do.
++     */
++    if ((socket_type == PY_SSL_CLIENT) &&
++             (proto_version != PY_SSL_VERSION_SSL2) && server_hostname)
++        SSL_set_tlsext_host_name(self->ssl, server_hostname);
++#endif
+     PySSL_END_ALLOW_THREADS
+     SSL_set_fd(self->ssl, Sock->sock_fd);       /* Set the socket for SSL */
+ #ifdef SSL_MODE_AUTO_RETRY
+@@ -425,15 +433,16 @@ PySSL_sslwrap(PyObject *self, PyObject *args)
+     char *key_file = NULL;
+     char *cert_file = NULL;
+     char *cacerts_file = NULL;
++    char *server_hostname = NULL;
+     char *ciphers = NULL;
+ 
+-    if (!PyArg_ParseTuple(args, "O!i|zziizz:sslwrap",
++    if (!PyArg_ParseTuple(args, "O!i|zziizzz:sslwrap",
+                           PySocketModule.Sock_Type,
+                           &Sock,
+                           &server_side,
+                           &key_file, &cert_file,
+                           &verification_mode, &protocol,
+-                          &cacerts_file, &ciphers))
++                          &cacerts_file, &server_hostname, &ciphers))
+         return NULL;
+ 
+     /*
+@@ -446,13 +455,13 @@ PySSL_sslwrap(PyObject *self, PyObject *args)
+ 
+     return (PyObject *) newPySSLObject(Sock, key_file, cert_file,
+                                        server_side, verification_mode,
+-                                       protocol, cacerts_file,
++                                       protocol, cacerts_file, server_hostname,
+                                        ciphers);
+ }
+ 
+ PyDoc_STRVAR(ssl_doc,
+ "sslwrap(socket, server_side, [keyfile, certfile, certs_mode, protocol,\n"
+-"                              cacertsfile, ciphers]) -> sslobject");
++"                              cacertsfile, ciphers, server_hostname]) -> sslobject");
+ 
+ /* SSL object methods */
+ 
