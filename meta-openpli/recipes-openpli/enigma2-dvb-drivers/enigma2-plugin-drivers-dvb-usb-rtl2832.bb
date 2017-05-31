@@ -11,6 +11,7 @@ RRECOMMENDS_${PN} = " \
 	kernel-module-mt2266 \
 	kernel-module-r820t \
 	kernel-module-rtl2832 \
+	firmware-dvb-demod-mn88473-01 \
 	firmware-dvb-usb-af9015 \
 	firmware-dvb-usb-af9035-01 \
 	firmware-dvb-usb-af9035-02 \
