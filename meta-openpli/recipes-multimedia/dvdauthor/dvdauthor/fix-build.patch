@@ -12,14 +12,14 @@ diff --git a/configure.ac b/configure.ac
 index 68301e3..d6cd07d 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -78,22 +78,12 @@ PKG_CHECK_MODULES([FRIBIDI], [fribidi], [AC_DEFINE(HAVE_FRIBIDI, 1, [whether Fri
+@@ -84,22 +84,12 @@ PKG_CHECK_MODULES([FRIBIDI], [fribidi], [AC_DEFINE(HAVE_FRIBIDI, 1, [whether Fri
  AC_SUBST(FRIBIDI_CFLAGS)
  AC_SUBST(FRIBIDI_LIBS)
  
 -AC_CHECK_PROGS(FREETYPECONFIG, [freetype-config])
 -if test -n "$FREETYPECONFIG"; then
 -    FREETYPE_CPPFLAGS="`$FREETYPECONFIG --cflags`"
--    FREETYPE_LIBS="`$FREETYPECONFIG --libs`"
+-    FREETYPE_LIBS="`$FREETYPECONFIG --libs $config_static`"
 -    AC_DEFINE(HAVE_FREETYPE, 1, [Whether FreeType is available])
 -
 -    ac_save_CPPFLAGS="$CPPFLAGS"
@@ -41,7 +41,7 @@ index 68301e3..d6cd07d 100644
  
  AC_ARG_ENABLE([default-video-format],
  AS_HELP_STRING([--enable-default-video-format=format], [specify a default video format, either NTSC or PAL, to be used if no configuration or input setting is given]),
-@@ -136,4 +126,4 @@ ifdef([AM_PATH_XML2],
+@@ -142,4 +132,4 @@ ifdef([AM_PATH_XML2],
  
  AC_CHECK_DECLS(O_BINARY, , , [ #include <fcntl.h> ] )
  
@@ -55,8 +55,8 @@ index 5ef90c3..3cec718 100644
  nodist_bin_SCRIPTS = dvddirdel
  
  AM_CPPFLAGS = -DSYSCONFDIR="\"$(sysconfdir)\"" \
--    @XML_CPPFLAGS@ @MAGICK_CFLAGS@ @FREETYPE_CPPFLAGS@ @FRIBIDI_CFLAGS@ @FONTCONFIG_CFLAGS@
-+    @XML_CPPFLAGS@ @MAGICK_CFLAGS@ @FREETYPE_CFLAGS@ @FRIBIDI_CFLAGS@ @FONTCONFIG_CFLAGS@
+-    @XML_CPPFLAGS@ @MAGICK_CPPFLAGS@ @MAGICK_CFLAGS@ @FREETYPE_CPPFLAGS@ @FRIBIDI_CFLAGS@ @FONTCONFIG_CFLAGS@
++    @XML_CPPFLAGS@ @MAGICK_CPPFLAGS@ @MAGICK_CFLAGS@ @FREETYPE_CFLAGS@ @FRIBIDI_CFLAGS@ @FONTCONFIG_CFLAGS@
  AM_CFLAGS = -Wall
  
  dvdauthor_SOURCES = dvdauthor.c common.h dvdauthor.h da-internal.h \
