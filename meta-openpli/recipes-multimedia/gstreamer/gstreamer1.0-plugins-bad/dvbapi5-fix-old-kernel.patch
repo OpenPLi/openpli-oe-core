@@ -1,0 +1,12 @@
+--- a/sys/dvb/gstdvbsrc.c	2016-12-16 21:52:42.691458624 +0100
++++ b/sys/dvb/gstdvbsrc.c	2016-12-16 21:54:05.192216253 +0100
+@@ -306,7 +306,9 @@
+     {APSK_16, "16APSK", "16apsk"},
+     {APSK_32, "32APSK", "32apsk"},
+     {DQPSK, "DQPSK", "dqpsk"},
++#if HAVE_V5_MINOR(7)
+     {QAM_4_NR, "QAM 4 NR", "qam-4-nr"},
++#endif
+     {0, NULL, NULL},
+   };
+ 

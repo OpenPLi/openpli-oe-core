@@ -89,7 +89,7 @@ GST_GOOD_RDEPS = "\
 	gstreamer1.0-plugins-good-rtp \
 	gstreamer1.0-plugins-good-rtpmanager \
 	gstreamer1.0-plugins-good-rtsp \
-	gstreamer1.0-plugins-good-souphttpsrc \
+	gstreamer1.0-plugins-good-soup \
 	gstreamer1.0-plugins-good-udp \
 	gstreamer1.0-plugins-good-wavparse \
 	"
