@@ -8,12 +8,10 @@ S = "${WORKDIR}/git"
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 
-SRCREV = "da5b0d7ad3a55b958a4203659f9ff2ab270bcc91"
-SRCREV_common = "29046b89d80bbca22eb222c18820fb40a4ac5bde"
 SRCREV_FORMAT = "base"
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=master \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=master;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://configure-allow-to-disable-libssh2.patch \
 	file://0001-Makefile.am-don-t-hardcode-libtool-name-when-running-pbad.patch \

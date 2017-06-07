@@ -24,8 +24,6 @@ CFLAGS_append = " -Wno-deprecated-declarations "
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 
-SRCREV = "011dc043c8253c3c56caf2f34542e76bcb1f7dba"
-SRCREV_common = "29046b89d80bbca22eb222c18820fb40a4ac5bde"
 SRCREV_FORMAT = "base"
 
 inherit gitpkgv

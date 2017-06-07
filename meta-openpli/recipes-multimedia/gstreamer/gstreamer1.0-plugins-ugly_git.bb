@@ -7,12 +7,10 @@ S = "${WORKDIR}/git"
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 
-SRCREV = "d2374716e2cf8d7ecf9b478e5c13e2461cab0a4d"
-SRCREV_common = "29046b89d80bbca22eb222c18820fb40a4ac5bde"
 SRCREV_FORMAT = "base"
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-ugly;branch=master \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-ugly;branch=master;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 "
 

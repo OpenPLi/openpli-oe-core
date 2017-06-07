@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6762ed442b3822387a51c92d928ead0d \
 "
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gstreamer;branch=master \
+	git://anongit.freedesktop.org/gstreamer/gstreamer;branch=master;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://0001-revert-use-new-gst-adapter-get-buffer.patch \
 	file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
@@ -15,8 +15,6 @@ S = "${WORKDIR}/git"
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 
-SRCREV = "7854a6597868eeb91bca7518ad73adcb3107f56d"
-SRCREV_common = "29046b89d80bbca22eb222c18820fb40a4ac5bde"
 SRCREV_FORMAT = "base"
 
 inherit gitpkgv
