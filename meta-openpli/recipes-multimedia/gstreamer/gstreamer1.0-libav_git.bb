@@ -15,12 +15,7 @@ SRC_URI = " \
 	file://0001-Disable-yasm-for-libav-when-disable-yasm.patch \
 "
 
-
 S = "${WORKDIR}/git"
-
-DEPENDS =+ "ffmpeg"
-PACKAGECONFIG = "orc libav"
-CFLAGS_append = " -Wno-deprecated-declarations "
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 
@@ -30,21 +25,8 @@ inherit gitpkgv
 PV = "1.12.00+git${SRCPV}"
 PKGV = "1.12.00+git${GITPKGV}"
 
-MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', ' --disable-mipsfpu', ' --enable-mipsfpu', d)}"
-
-LIBAV_EXTRA_CONFIGURE_COMMON_ARG = "--target-os=linux \
-  --cc='${CC}' --as='${CC}' --ld='${CC}' --nm='${NM}' --ar='${AR}' \
-  --ranlib='${RANLIB}' \
-  ${@bb.utils.contains("TARGET_ARCH", "arm", "", " \
-  --disable-mipsdsp \
-  --disable-mipsdspr0 \
-  ${MIPSFPU}", d)} \
-  ${GSTREAMER_1_0_DEBUG} \
-  --cross-prefix='${HOST_PREFIX}'"
-
 do_configure_prepend() {
 	cd ${S}
 	./autogen.sh --noconfigure
 	cd ${B}
 }
-

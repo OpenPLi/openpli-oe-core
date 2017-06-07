@@ -2,9 +2,7 @@ require gstreamer1.0-plugins.inc
 
 LICENSE = "GPLv2+ & LGPLv2+ & LGPLv2.1+ "
 
-DEPENDS += "gstreamer1.0-plugins-base bzip2 libpng jpeg libdca"
-
-S = "${WORKDIR}/gst-plugins-bad-${PV}"
+DEPENDS += "gstreamer1.0-plugins-base libpng jpeg libdca"
 
 inherit gettext bluetooth
 
