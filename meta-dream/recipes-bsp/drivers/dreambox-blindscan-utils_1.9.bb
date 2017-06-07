@@ -5,6 +5,7 @@ PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_${PN} += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 
 DEPENDS = "ncurses"
+INSANE_SKIP_${PN} += "already-stripped"
 
 SRC_URI += "http://dreamboxupdate.com/download/opendreambox/2.0.0/blindscan-utils/blindscan-utils_${PV}_${TUNE_PKGARCH}.tar.bz2;name=${TUNE_PKGARCH}"
 
