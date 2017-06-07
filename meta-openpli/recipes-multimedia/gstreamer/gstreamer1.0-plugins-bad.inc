@@ -66,25 +66,31 @@ PACKAGECONFIG[voamrwbenc]      = "--enable-voamrwbenc,--disable-voamrwbenc,vo-am
 PACKAGECONFIG[wayland]         = "--enable-wayland,--disable-wayland,wayland-native wayland wayland-protocols"
 PACKAGECONFIG[webp]            = "--enable-webp,--disable-webp,libwebp"
 
-
 # these plugins have not been ported to 1.0 (yet):
-#   apexsink dc1394 lv2 linsys musepack nas timidity teletextdec sdl xvid wininet
-#   acm gsettings sndio cdxaparse dccp faceoverlay hdvparse tta mve nuvdemux
-#   patchdetect real sdi videomeasure gsettings
+#   apexsink linsys nas timidity sdl xvid wininet
+#   sndio cdxaparse dccp faceoverlay hdvparse tta mve nuvdemux
+#   patchdetect sdi videomeasure
 
 # these plugins have no corresponding library in OE-core or meta-openembedded:
-#   openni2 winks direct3d directsound winscreencap
-#   apple_media android_media avc bs2b chromaprint daala dts gme gsm kate ladspa
-#   libde265 mimic mpeg2enc mplex ofa openh264 opensles pvr soundtouch spandsp
-#   spc vdpau wasapi x265 zbar
+#   openni2 winks direct3d directsound winscreencap acm apple_media
+#   android_media avc bs2b chromaprint daala dts fdkaac gme gsm kate ladspa libde265
+#   lv2 mimic mpeg2enc mplex musepack nvenc ofa openh264 opensles pvr soundtouch spandsp
+#   spc teletextdec tinyalsa vdpau vulkan wasapi x265 zbar
+
+# qt5 support is disabled, because it is not present in OE core, and requires more work than
+# just adding a packageconfig (it requires access to moc, uic, rcc, and qmake paths).
+# This is better done in a separate qt5 layer (which then should add a "qt5" packageconfig
+# in a gstreamer1.0-plugins-bad bbappend).
 
 EXTRA_OECONF += " \
     --enable-decklink \
     --enable-dvb \
     --enable-fbdev \
+    --enable-mpegdemux \
     --enable-netsim \
     --enable-shm \
     --enable-vcd \
+    --enable-dts \
     --disable-acm \
     --disable-android_media \
     --disable-apple_media \
