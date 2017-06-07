@@ -7,12 +7,10 @@ S = "${WORKDIR}/git"
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 
-SRCREV = "27f40eca4dee0417aa477896b98ebcf4e7c349ce"
-SRCREV_common = "29046b89d80bbca22eb222c18820fb40a4ac5bde"
 SRCREV_FORMAT = "base"
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-good;branch=master \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-good;branch=master;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://0001-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch \
 "
@@ -29,3 +27,11 @@ do_configure_prepend() {
 	cd ${B}
 }
 
+
+PACKAGESPLITFUNCS_append = " handle_soup_rename "
+
+python handle_soup_rename () {
+    d.setVar('RPROVIDES_gstreamer1.0-plugins-good-soup', 'gstreamer1.0-plugins-good-souphttpsrc')
+    d.setVar('RREPLACES_gstreamer1.0-plugins-good-soup', 'gstreamer1.0-plugins-good-souphttpsrc')
+    d.setVar('RCONFLICTS_gstreamer1.0-plugins-good-soup', 'gstreamer1.0-plugins-good-souphttpsrc')
+}

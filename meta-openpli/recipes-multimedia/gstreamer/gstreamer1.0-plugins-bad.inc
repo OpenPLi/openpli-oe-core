@@ -19,67 +19,78 @@ PACKAGECONFIG ??= " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)} \
     orc curl neon sndfile \
     hls sbc dash bz2 smoothstreaming \
-    faac faad libmms dash dtls rsvg uvch264 webp rtmp opus \
+    faac faad libmms dash dtls rsvg uvch264 webp rtmp opusparse \
     "
 
-# dash = Dynamic Adaptive Streaming over HTTP
 PACKAGECONFIG[assrender]       = "--enable-assrender,--disable-assrender,libass"
-PACKAGECONFIG[curl]            = "--enable-curl,--disable-curl,curl"
-PACKAGECONFIG[gles2]           = "--enable-gles2 --enable-egl,--disable-gles2 --disable-egl,virtual/libgles2 virtual/egl"
-PACKAGECONFIG[opengl]          = "--enable-opengl,--disable-opengl,virtual/libgl libglu"
-PACKAGECONFIG[dc1394]          = "--enable-dc1394,--disable-dc1394,libdc1394"
-PACKAGECONFIG[faac]            = "--enable-faac,--disable-faac,faac"
-PACKAGECONFIG[faad]            = "--enable-faad,--disable-faad,faad2"
-PACKAGECONFIG[libmms]          = "--enable-libmms,--disable-libmms,libmms"
-PACKAGECONFIG[modplug]         = "--enable-modplug,--disable-modplug,libmodplug"
-PACKAGECONFIG[opus]            = "--enable-opus,--disable-opus,libopus"
-PACKAGECONFIG[flite]           = "--enable-flite,--disable-flite,flite-alsa"
-PACKAGECONFIG[opencv]          = "--enable-opencv,--disable-opencv,opencv"
-PACKAGECONFIG[wayland]         = "--enable-wayland,--disable-wayland,wayland-native wayland"
-PACKAGECONFIG[uvch264]         = "--enable-uvch264,--disable-uvch264,libusb1 udev"
-PACKAGECONFIG[directfb]        = "--enable-directfb,--disable-directfb,directfb"
-PACKAGECONFIG[neon]            = "--enable-neon,--disable-neon,neon"
-PACKAGECONFIG[openal]          = "--enable-openal,--disable-openal,openal-soft"
-PACKAGECONFIG[hls]             = "--enable-hls,--disable-hls,gnutls"
-PACKAGECONFIG[sbc]             = "--enable-sbc,--disable-sbc,sbc"
-PACKAGECONFIG[dash]            = "--enable-dash,--disable-dash,libxml2"
-PACKAGECONFIG[bz2]             = "--enable-bz2,--disable-bz2,bzip2"
-PACKAGECONFIG[fluidsynth]      = "--enable-fluidsynth,--disable-fluidsynth,fluidsynth"
-PACKAGECONFIG[schroedinger]    = "--enable-schro,--disable-schro,schroedinger"
-PACKAGECONFIG[smoothstreaming] = "--enable-smoothstreaming,--disable-smoothstreaming,libxml2"
 PACKAGECONFIG[bluez]           = "--enable-bluez,--disable-bluez,${BLUEZ}"
-PACKAGECONFIG[rsvg]            = "--enable-rsvg,--disable-rsvg,librsvg"
-PACKAGECONFIG[sndfile]         = "--enable-sndfile,--disable-sndfile,libsndfile1"
-PACKAGECONFIG[webp]            = "--enable-webp,--disable-webp,libwebp"
-PACKAGECONFIG[rtmp]            = "--enable-rtmp,--disable-rtmp,rtmpdump"
+PACKAGECONFIG[bz2]             = "--enable-bz2,--disable-bz2,bzip2"
+PACKAGECONFIG[curl]            = "--enable-curl,--disable-curl,curl"
+PACKAGECONFIG[dash]            = "--enable-dash,--disable-dash,libxml2"
+PACKAGECONFIG[dc1394]          = "--enable-dc1394,--disable-dc1394,libdc1394"
+PACKAGECONFIG[directfb]        = "--enable-directfb,--disable-directfb,directfb"
 PACKAGECONFIG[dtls]            = "--enable-dtls,--disable-dtls,openssl"
 PACKAGECONFIG[egl]             = "--enable-egl,--disable-egl,virtual/egl"
+PACKAGECONFIG[faac]            = "--enable-faac,--disable-faac,faac"
+PACKAGECONFIG[faad]            = "--enable-faad,--disable-faad,faad2"
+PACKAGECONFIG[flite]           = "--enable-flite,--disable-flite,flite-alsa"
+PACKAGECONFIG[fluidsynth]      = "--enable-fluidsynth,--disable-fluidsynth,fluidsynth"
+PACKAGECONFIG[gles2]           = "--enable-gles2,--disable-gles2,virtual/libgles2"
 PACKAGECONFIG[gtk]             = "--enable-gtk3,--disable-gtk3,gtk+3"
+# ensure OpenSSL is used for HLS AES description instead of nettle
+# (OpenSSL is a shared dependency with dtls)
+PACKAGECONFIG[hls]             = "--enable-hls --with-hls-crypto=openssl,--disable-hls,openssl"
+PACKAGECONFIG[kms]             = "--enable-kms,--disable-kms,libdrm"
+PACKAGECONFIG[libmms]          = "--enable-libmms,--disable-libmms,libmms"
+PACKAGECONFIG[libssh2]         = "--enable-libssh2,--disable-libssh2,libssh2"
+PACKAGECONFIG[modplug]         = "--enable-modplug,--disable-modplug,libmodplug"
+PACKAGECONFIG[neon]            = "--enable-neon,--disable-neon,neon"
+PACKAGECONFIG[openal]          = "--enable-openal,--disable-openal,openal-soft"
+PACKAGECONFIG[opencv]          = "--enable-opencv,--disable-opencv,opencv"
+PACKAGECONFIG[opengl]          = "--enable-opengl,--disable-opengl,virtual/libgl libglu"
+PACKAGECONFIG[openjpeg]        = "--enable-openjpeg,--disable-openjpeg,openjpeg"
+# the opus encoder/decoder elements are now in the -base package,
+# but the opus parser remains in -bad
+PACKAGECONFIG[opusparse]       = "--enable-opus,--disable-opus,libopus"
+PACKAGECONFIG[resindvd]        = "--enable-resindvd,--disable-resindvd,libdvdread libdvdnav"
+PACKAGECONFIG[rsvg]            = "--enable-rsvg,--disable-rsvg,librsvg"
+PACKAGECONFIG[rtmp]            = "--enable-rtmp,--disable-rtmp,rtmpdump"
+PACKAGECONFIG[sbc]             = "--enable-sbc,--disable-sbc,sbc"
+PACKAGECONFIG[schroedinger]    = "--enable-schro,--disable-schro,schroedinger"
+PACKAGECONFIG[smoothstreaming] = "--enable-smoothstreaming,--disable-smoothstreaming,libxml2"
+PACKAGECONFIG[sndfile]         = "--enable-sndfile,--disable-sndfile,libsndfile1"
 PACKAGECONFIG[srtp]            = "--enable-srtp,--disable-srtp,libsrtp"
+PACKAGECONFIG[uvch264]         = "--enable-uvch264,--disable-uvch264,libusb1 libgudev"
 PACKAGECONFIG[voaacenc]        = "--enable-voaacenc,--disable-voaacenc,vo-aacenc"
 PACKAGECONFIG[voamrwbenc]      = "--enable-voamrwbenc,--disable-voamrwbenc,vo-amrwbenc"
-PACKAGECONFIG[resindvd]        = "--enable-resindvd,--disable-resindvd,libdvdread libdvdnav"
-PACKAGECONFIG[openjpeg]        = "--enable-openjpeg,--disable-openjpeg,openjpeg"
+PACKAGECONFIG[wayland]         = "--enable-wayland,--disable-wayland,wayland-native wayland wayland-protocols"
+PACKAGECONFIG[webp]            = "--enable-webp,--disable-webp,libwebp"
 
 # these plugins have not been ported to 1.0 (yet):
-#   apexsink dc1394 lv2 linsys musepack nas timidity teletextdec sdl xvid wininet
-#   acm gsettings sndio cdxaparse dccp faceoverlay hdvparse tta mve nuvdemux
-#   patchdetect real sdi videomeasure gsettings
+#   apexsink linsys nas timidity sdl xvid wininet
+#   sndio cdxaparse dccp faceoverlay hdvparse tta mve nuvdemux
+#   patchdetect sdi videomeasure
 
 # these plugins have no corresponding library in OE-core or meta-openembedded:
-#   openni2 winks direct3d directsound winscreencap
-#   apple_media android_media avc bs2b chromaprint daala dts gme gsm kate ladspa
-#   libde265 mimic mpeg2enc mplex ofa openh264 opensles pvr soundtouch spandsp
-#   spc vdpau wasapi x265 zbar
+#   openni2 winks direct3d directsound winscreencap acm apple_media
+#   android_media avc bs2b chromaprint daala dts fdkaac gme gsm kate ladspa libde265
+#   lv2 mimic mpeg2enc mplex musepack nvenc ofa openh264 opensles pvr soundtouch spandsp
+#   spc teletextdec tinyalsa vdpau vulkan wasapi x265 zbar
+
+# qt5 support is disabled, because it is not present in OE core, and requires more work than
+# just adding a packageconfig (it requires access to moc, uic, rcc, and qmake paths).
+# This is better done in a separate qt5 layer (which then should add a "qt5" packageconfig
+# in a gstreamer1.0-plugins-bad bbappend).
 
 EXTRA_OECONF += " \
-    --enable-dvb \
-    --enable-shm \
-    --enable-fbdev \
     --enable-decklink \
+    --enable-dvb \
+    --enable-fbdev \
+    --enable-mpegdemux \
+    --enable-netsim \
+    --enable-shm \
     --enable-vcd \
     --enable-dts \
-    --enable-mpegdemux \
     --disable-acm \
     --disable-android_media \
     --disable-apple_media \
@@ -90,16 +101,20 @@ EXTRA_OECONF += " \
     --disable-daala \
     --disable-direct3d \
     --disable-directsound \
+    --disable-fdk_aac \
     --disable-gme \
     --disable-gsm \
     --disable-kate \
     --disable-ladspa \
+    --disable-libde265 \
     --disable-lv2 \
     --disable-mpeg2enc \
     --disable-mplex \
     --disable-musepack \
+    --disable-nvenc \
     --disable-ofa \
     --disable-openexr \
+    --disable-openh264 \
     --disable-openni2 \
     --disable-opensles \
     --disable-qt \
@@ -107,18 +122,22 @@ EXTRA_OECONF += " \
     --disable-spandsp \
     --disable-spc \
     --disable-teletextdec \
+    --disable-tinyalsa \
     --disable-vdpau \
+    --disable-vulkan \
     --disable-wasapi \
     --disable-wildmidi \
+    --disable-winks \
     --disable-winscreencap \
     --disable-x265 \
     --disable-zbar \
-    "
+    ${@bb.utils.contains("TUNE_FEATURES", "mx32", "--disable-yadif", "", d)} \
+"
 
-OPENCV_PREFIX="${STAGING_DIR_TARGET}${prefix}"
-export OPENCV_PREFIX
+export OPENCV_PREFIX = "${STAGING_DIR_TARGET}${prefix}"
 
-ARM_INSTRUCTION_SET = "arm"
+ARM_INSTRUCTION_SET_armv4 = "arm"
+ARM_INSTRUCTION_SET_armv5 = "arm"
 
 FILES_${PN}-opencv += "${datadir}/gst-plugins-bad/${LIBV}/opencv*"
 FILES_${PN}-freeverb += "${datadir}/gstreamer-${LIBV}/presets/GstFreeverb.prs"

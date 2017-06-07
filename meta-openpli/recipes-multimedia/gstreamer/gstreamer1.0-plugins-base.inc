@@ -12,8 +12,8 @@ PACKAGES_DYNAMIC =+ "^libgst.*"
 
 #pango gio-unix-2.0
 PACKAGECONFIG ??= " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
     orc ivorbis ogg theora vorbis cdparanoia pango opus \
     "
 
@@ -29,7 +29,7 @@ PACKAGECONFIG[vorbis]       = "--enable-vorbis,--disable-vorbis,libvorbis"
 PACKAGECONFIG[pango]        = "--enable-pango,--disable-pango,pango"
 PACKAGECONFIG[visual]       = "--enable-libvisual,--disable-libvisual,libvisual"
 PACKAGECONFIG[cdparanoia]   = "--enable-cdparanoia,--disable-cdparanoia,cdparanoia"
-PACKAGECONFIG[opus]			= "--enable-opus,--disable-opus,libopus"
+PACKAGECONFIG[opus]         = "--enable-opus,--disable-opus,libopus"
 
 EXTRA_OECONF += " \
     --enable-zlib \
