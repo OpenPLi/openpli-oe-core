@@ -28,8 +28,6 @@ EXTRA_OECONF = " \
     --disable-examples \
 "
 
-SRC_URI_append = " file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch "
-
 delete_pkg_m4_file() {
 	# This m4 file is out of date and is missing PKG_CONFIG_SYSROOT_PATH tweaks which we need for introspection
 	rm "${S}/common/m4/pkg.m4" || true
@@ -48,6 +46,6 @@ patch_gtk_doc_makefiles() {
            ${S}/common/gtk-doc*mak
 }
 
-do_configure[prefuncs] += " delete_pkg_m4_file patch_gtk_doc_makefiles"
+do_configure[prefuncs] += " delete_pkg_m4_file patch_gtk_doc_makefiles "
 
 PACKAGES_DYNAMIC = "^${PN}-.*"

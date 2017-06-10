@@ -12,7 +12,7 @@ SRC_URI = "file://showiframe.c"
 S = "${WORKDIR}"
 
 do_compile() {
-	${CC} -o showiframe showiframe.c
+	${CC} -o showiframe showiframe.c ${LDFLAGS}
 }
 
 do_install() {
