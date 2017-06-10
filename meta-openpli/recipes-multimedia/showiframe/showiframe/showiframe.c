@@ -14,8 +14,6 @@
 # include <linux/dvb/video.h>
 #endif
 
-
-
 #ifdef HAVE_AMLOGIC
 static codec_para_t v_codec_para;
 static codec_para_t *pcodec, *vpcodec;
@@ -185,4 +183,3 @@ int main(int argc, char **argv)
 #endif
 	return 0;
 }
-
