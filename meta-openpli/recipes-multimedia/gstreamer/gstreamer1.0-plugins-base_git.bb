@@ -17,6 +17,7 @@ SRC_URI = " \
 	file://0002-Makefile.am-prefix-calls-to-pkg-config-with-PKG_CONF.patch \
 	file://0003-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-caps.patch \
 	file://0004-rtsp-drop-incorrect-reference-to-gstreamer-sdp-in-Ma.patch \
+	file://subparse-avoid-false-negatives-dealing-with-UTF-8.patch \
 "
 
 inherit gitpkgv
