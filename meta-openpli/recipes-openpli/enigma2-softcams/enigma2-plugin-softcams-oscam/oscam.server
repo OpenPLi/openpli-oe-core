@@ -3,6 +3,8 @@ label                         = lower_card
 enable                        = 1
 protocol                      = internal
 device                        = /dev/sci0
+#ecmwhitelist                  = 0100@00006A:64
+#ecmheaderwhitelist            = 800061006A00075C00,800061006A01075C00,803061006A00075C00,803061006A01075C00,810061006A00075C00,810061006A01075C00,813061006A00075C00,813061006A01075C00
 detect                        = cd
 group                         = 1
 emmcache                      = 1,3,15
@@ -10,7 +12,7 @@ audisabled                    = 0
 mhz                           = 357
 cardmhz                       = 2700
 ratelimitecm                  = 4
-ratelimittime                 = 9000
+ratelimittime                 = 10000
 ecmunique                     = 1
 srvidholdtime                 = 2000
 cooldown                      = 30,600
@@ -21,6 +23,8 @@ label                         = upper_card
 enable                        = 1
 protocol                      = internal
 device                        = /dev/sci1
+#ecmwhitelist                  = 0100@00006A:64
+#ecmheaderwhitelist            = 800061006A00075C00,800061006A01075C00,803061006A00075C00,803061006A01075C00,810061006A00075C00,810061006A01075C00,813061006A00075C00,813061006A01075C00
 detect                        = cd
 group                         = 1
 emmcache                      = 1,3,15
@@ -28,19 +32,19 @@ audisabled                    = 0
 mhz                           = 357
 cardmhz                       = 2700
 ratelimitecm                  = 4
-ratelimittime                 = 9000
+ratelimittime                 = 10000
 ecmunique                     = 1
 srvidholdtime                 = 2000
 cooldown                      = 30,600
 
 
 [reader]
-label                         = Hoofdbox
+label                         = Mainreceiver
 enable			      = 0
 protocol                      = cs378x
-device                        = ip_adress_hoofdbox,12005
-user                          = tweede_box
-password                      = tweede_box
+device                        = ip_adress_mainreceiver,12005
+user                          = 2nd_box
+password                      = 2nd_box
 group                         = 1
 
 
