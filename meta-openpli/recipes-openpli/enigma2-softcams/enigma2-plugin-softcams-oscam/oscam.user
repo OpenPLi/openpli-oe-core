@@ -6,7 +6,7 @@ group 			= 1
 au 			= 1
 
 [account]
-user                          = tweede_box
-pwd                           = tweede_box
+user                          = 2nd_box
+pwd                           = 2nd_box
 group                         = 1
 
