@@ -14,16 +14,13 @@ inherit autotools pkgconfig gettext upstream-version-is-even gobject-introspecti
 # (it has a custom INTROSPECTION_INIT macro, and so must be used instead of our common introspection.m4 file)
 acpaths = "-I ${S}/common/m4 -I ${S}/m4"
 
-SRC_URI_append = " \
-    file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
-"
-
 PACKAGECONFIG ??= ""
 
 PACKAGECONFIG[debug] = "--enable-debug,--disable-debug"
 PACKAGECONFIG[tests] = "--enable-tests,--disable-tests"
 PACKAGECONFIG[valgrind] = "--enable-valgrind,--disable-valgrind,valgrind,"
 PACKAGECONFIG[gst-tracer-hooks] = "--enable-gst-tracer-hooks,--disable-gst-tracer-hooks,"
+PACKAGECONFIG[unwind] = "--with-unwind,--without-unwind,libunwind"
 
 EXTRA_OECONF = " \
     --disable-dependency-tracking \

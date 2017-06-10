@@ -53,3 +53,9 @@ EXTRA_OECONF += " \
 "
 
 FILES_${PN}-equalizer += "${datadir}/gstreamer-1.0/presets/*.prs"
+
+PACKAGESPLITFUNCS_append = " handle_soup_rename "
+
+python handle_soup_rename () {
+    d.setVar('RREPLACES_gstreamer1.0-plugins-good-soup', 'gstreamer1.0-plugins-good-souphttpsrc')
+}
