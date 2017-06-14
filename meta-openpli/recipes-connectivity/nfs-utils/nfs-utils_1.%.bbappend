@@ -2,7 +2,7 @@
 # bash into our system, which we definitely don't want to happen. This
 # bbappend basically reverses that commit.
 #
-RDEPENDS_${PN}-client = "rpcbind"
+RDEPENDS_${PN}-client = "rpcbind bash"
 RDEPENDS_${PN} = "${PN}-client"
 
 # The startup script does a check that doesn't work, replace it. It's
