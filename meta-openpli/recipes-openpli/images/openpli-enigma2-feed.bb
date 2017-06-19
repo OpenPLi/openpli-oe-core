@@ -67,6 +67,7 @@ OPTIONAL_PACKAGES += " \
 	python-requests \
 	python-mechanize \
 	python-lxml \
+	python-js2py \
 	picocom \
 	ppp \
 	rsync \
