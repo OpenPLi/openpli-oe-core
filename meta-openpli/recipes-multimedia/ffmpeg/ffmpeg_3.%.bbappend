@@ -8,8 +8,9 @@ DEPENDS =+ " libxml2 "
 
 PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,rtmpdump"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
+PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 
-PACKAGECONFIG = "avdevice avfilter avcodec avformat swresample swscale postproc \
+PACKAGECONFIG = "avdevice avfilter avcodec avformat swresample swscale postproc libfreetype \
 		bzlib gpl theora x264 openssl avresample libvorbis vpx librtmp libbluray"
 
 PACKAGES =+ " libavcodec53 libavformat53 libav "
@@ -56,9 +57,26 @@ EXTRA_FFCONF = " \
     --disable-fast-unaligned \
     --disable-muxers \
     --enable-muxer=mpeg1video \
+    --enable-muxer=h264 \
+    --enable-muxer=mp4 \
+    --enable-muxer=image2 \
+    --enable-muxer=mjpeg \
+    --enable-muxer=rawvideo \
+    --enable-muxer=mpeg2video \
+    --enable-muxer=matroska \
+    --enable-muxer=m4v \
+    --enable-muxer=image2pipe \
+    --enable-muxer=apng \
+    --enable-muxer=mpegts \
     --enable-encoders \
     --enable-encoder=mpeg1video \
     --enable-encoder=png \
+    --enable-encoder=libx264 \
+    --enable-encoder=ljpeg \
+    --enable-encoder=mpeg4 \
+    --enable-encoder=jpeg2000 \
+    --enable-encoder=jpegls \
+    --enable-encoder=rawvideo \
     --disable-decoders \
     --enable-decoder=alac \
     --enable-decoder=ape \
@@ -80,6 +98,10 @@ EXTRA_FFCONF = " \
     --enable-decoder=mace6 \
     --enable-decoder=metasound \
     --enable-decoder=mjpeg \
+    --enable-decoder=h264 \
+    --enable-decoder=mpeg4 \
+    --enable-decoder=jpeg2000 \
+    --enable-decoder=jpegls \
     --enable-decoder=mlp \
     --enable-decoder=mp1 \
     --enable-decoder=mp3 \
@@ -181,7 +203,6 @@ EXTRA_FFCONF = " \
     --disable-demuxer=ea \
     --disable-demuxer=ea_cdata \
     --disable-demuxer=frm \
-    --disable-demuxer=gif \
     --disable-demuxer=gsm \
     --disable-demuxer=gxf \
     --disable-demuxer=hnm \
@@ -199,7 +220,6 @@ EXTRA_FFCONF = " \
     --disable-demuxer=rsd \
     --disable-demuxer=rso \
     --disable-demuxer=siff \
-    --disable-demuxer=smjpeg \
     --disable-demuxer=smush \
     --disable-demuxer=sol \
     --disable-demuxer=thp \
@@ -223,8 +243,29 @@ EXTRA_FFCONF = " \
     --disable-demuxer=image_sgi_pipe \
     --disable-demuxer=image_sunrast_pipe \
     --enable-demuxer=image2 \
+    --enable-demuxer=image2pipe \
+    --enable-demuxer=m4v \
+    --enable-demuxer=mpegts \
+    --enable-demuxer=apng \
+    --enable-demuxer=image_jpeg_pipe \
+    --enable-demuxer=image_jpegls_pipe \
+    --enable-demuxer=image_png_pipe \
+    --enable-demuxer=realtext \
+    --enable-demuxer=rawvideo \
+    --enable-demuxer=ffmetadata \
+    --enable-demuxer=image_bmp_pipe \
+    --enable-demuxer=matroska \
+    --enable-demuxer=mp4 \
+    --enable-demuxer=h264 \
+    --enable-demuxer=mpegvideo \
+    --enable-parser=h264 \
+    --enable-parser=mjpeg \
+    --enable-parser=mpeg4video \
+    --enable-parser=mpegvideo \
+    --enable-parser=png \
     --disable-filters \
     --enable-filter=scale \
+    --enable-filter=drawtext \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "", "${MIPSFPU}", d)} \
     --disable-debug \
     --pkg-config="pkg-config" \
