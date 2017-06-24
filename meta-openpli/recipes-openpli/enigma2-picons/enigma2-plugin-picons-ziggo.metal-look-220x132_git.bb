@@ -5,6 +5,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;beginline=3;endline=8;md5=17213e93942fd278193
 
 require enigma2-plugin-picons-ziggo.inc
 
-SRCREV = "8408984a29f8fb586406365b9e03896ff3dea349"
+SRCREV = "f0d510f5307c0c0fcc42a1429d0f9d9f02bff3f6"
 
 SRC_URI = "git://github.com/Stevie-v/srp.220x132.metal-look-ziggo"
