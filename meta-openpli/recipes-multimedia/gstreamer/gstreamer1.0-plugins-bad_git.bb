@@ -11,7 +11,7 @@ UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 SRCREV_FORMAT = "base"
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=master;name=base \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=1.12;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://configure-allow-to-disable-libssh2.patch \
 	file://0001-Makefile.am-don-t-hardcode-libtool-name-when-running-pbad.patch \
@@ -24,8 +24,8 @@ SRC_URI = " \
 "
 
 inherit gitpkgv
-PV = "1.12.00+git${SRCPV}"
-PKGV = "1.12.00+git${GITPKGV}"
+PV = "1.12.1+git${SRCPV}"
+PKGV = "1.12.1+git${GITPKGV}"
 
 EXTRA_OECONF += " \
     --disable-openjpeg \

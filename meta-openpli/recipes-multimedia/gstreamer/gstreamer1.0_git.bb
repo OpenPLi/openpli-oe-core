@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6762ed442b3822387a51c92d928ead0d \
 "
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gstreamer;branch=master;name=base \
+	git://anongit.freedesktop.org/gstreamer/gstreamer;branch=1.12;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://deterministic-unwind.patch \
 	file://0001-revert-use-new-gst-adapter-get-buffer.patch \
@@ -19,8 +19,8 @@ UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 SRCREV_FORMAT = "base"
 
 inherit gitpkgv
-PV = "1.12.00+git${SRCPV}"
-PKGV = "1.12.00+git${GITPKGV}"
+PV = "1.12.1+git${SRCPV}"
+PKGV = "1.12.1+git${GITPKGV}"
 
 do_configure_prepend() {
 	cd ${S}

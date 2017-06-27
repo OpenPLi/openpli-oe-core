@@ -10,15 +10,15 @@ UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 SRCREV_FORMAT = "base"
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-good;branch=master;name=base \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-good;branch=1.12;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://0001-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch \
 	file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
 "
 
 inherit gitpkgv
-PV = "1.12.00+git${SRCPV}"
-PKGV = "1.12.00+git${GITPKGV}"
+PV = "1.12.1+git${SRCPV}"
+PKGV = "1.12.1+git${GITPKGV}"
 
 CFLAGS_append += " -Wno-maybe-uninitialized -Wno-uninitialized "
 

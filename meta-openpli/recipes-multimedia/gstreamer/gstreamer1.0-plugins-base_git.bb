@@ -11,7 +11,7 @@ UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 SRCREV_FORMAT = "base"
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-base;branch=master;name=base \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-base;branch=1.12;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://0001-Makefile.am-don-t-hardcode-libtool-name-when-running.patch \
 	file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
@@ -22,8 +22,8 @@ SRC_URI = " \
 "
 
 inherit gitpkgv
-PV = "1.12.00+git${SRCPV}"
-PKGV = "1.12.00+git${GITPKGV}"
+PV = "1.12.1+git${SRCPV}"
+PKGV = "1.12.1+git${GITPKGV}"
 
 
 do_configure_prepend() {
