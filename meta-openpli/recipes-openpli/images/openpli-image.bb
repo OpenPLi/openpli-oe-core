@@ -13,6 +13,7 @@ IMAGE_INSTALL = "\
 	e2fsprogs-mke2fs \
 	e2fsprogs-tune2fs \
 	fakelocale \
+	glibc-binary-localedata-en-gb \
 	kernel-params \
 	modutils-loadscript \
 	nfs-utils-client \
