@@ -2,7 +2,7 @@ require conf/license/openpli-gplv2.inc
 
 inherit image
 
-IMAGE_INSTALL = " \
+IMAGE_INSTALL = "\
 	${ROOTFS_PKGMANAGE} \
 	3rd-party-feed-configs \
 	avahi-daemon \
@@ -31,13 +31,11 @@ IMAGE_INSTALL = " \
 	tzdata \
 	volatile-media \
 	vsftpd \
-	"
+"
 
 export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""
-
 IMAGE_FEATURES += "package-management"
-
 
 # Remove the mysterious var/lib/opkg/lists that appears to be the result
 # of the installer that populates the rootfs. I wanted to call this
@@ -59,11 +57,12 @@ rootfs_speedup_dropbearkey() {
 zap_root_password () {
 	true
 }
+
 ssh_allow_empty_password () {
 	true
 }
+
 license_create_manifest() {
 }
 
 ROOTFS_POSTPROCESS_COMMAND += "rootfs_removeopkgleftovers; rootfs_speedup_dropbearkey; "
-
