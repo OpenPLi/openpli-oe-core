@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
 # and remove the ffmpeg sources from SRC_URI below. However, first note the
 # warnings in gstreamer1.0-libav.inc
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-libav;name=base \
+	git://anongit.freedesktop.org/gstreamer/gst-libav;branch=1.12;name=base \
 	git://anongit.freedesktop.org/gstreamer/common;destsuffix=git/common;name=common \
 	file://0001-Disable-yasm-for-libav-when-disable-yasm.patch \
 "
@@ -22,8 +22,8 @@ UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>(\d+(\.\d+)+))"
 SRCREV_FORMAT = "base"
 
 inherit gitpkgv
-PV = "1.12.00+git${SRCPV}"
-PKGV = "1.12.00+git${GITPKGV}"
+PV = "1.12.1+git${SRCPV}"
+PKGV = "1.12.1+git${GITPKGV}"
 
 do_configure_prepend() {
 	cd ${S}
