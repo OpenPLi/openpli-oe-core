@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=73a5855a8119deb017f5f13cf327095d \
 "
 
 SRC_URI = " \
-	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=1.12;name=base \
+	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=${GST_BRANCH};name=base \
 	file://configure-allow-to-disable-libssh2.patch \
 	file://0001-Makefile.am-don-t-hardcode-libtool-name-when-running-pbad.patch \
 	file://0001-rtmp-fix-seeking-and-potential-segfault.patch \

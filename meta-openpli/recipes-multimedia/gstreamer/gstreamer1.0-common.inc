@@ -12,6 +12,8 @@ inherit gitpkgv
 PV = "1.12.1+git${SRCPV}"
 PKGV = "1.12.1+git${GITPKGV}"
 
+GST_BRANCH ?= "1.12"
+
 do_configure_prepend() {
 	cd ${S}
 	./autogen.sh --noconfigure
