@@ -2,18 +2,15 @@ RSUGGESTS_${PN} = ""
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PROVIDES =+ " libavcodec53 libavformat53 "
-RDEPENDS_${PN} =+ " libbluray rtmpdump libxml2 openssl "
-DEPENDS =+ " libxml2 "
+DEPENDS = "alsa-lib libxml2"
 
 PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,rtmpdump"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
 PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 
-PACKAGECONFIG = "avdevice avfilter avcodec avformat swresample swscale postproc libfreetype \
-		bzlib gpl theora x264 openssl avresample libvorbis vpx librtmp libbluray"
+PACKAGECONFIG = "avdevice avfilter avcodec avformat avresample swscale swresample \
+		bzlib gpl x264 openssl libbluray libfreetype librtmp"
 
-PACKAGES =+ " libavcodec53 libavformat53 libav "
 
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
