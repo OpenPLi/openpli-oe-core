@@ -1,1 +1,1 @@
-export LC_ALL="C.UTF8"
+export LC_ALL="en_GB.utf8"
