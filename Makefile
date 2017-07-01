@@ -104,6 +104,8 @@ all: init
 	@echo
 	@echo "	or, if you want to build not just the image, but the optional packages in the feed as well:"
 	@echo
+	@echo " MACHINE=... make feed"
+	@echo "	or:"
 	@echo " MACHINE=... bitbake openpli-enigma2-feed"
 	@echo
 
@@ -117,6 +119,10 @@ init: $(BBLAYERS) $(CONFFILES)
 image: init
 	@echo 'Building image for $(MACHINE)'
 	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake openpli-enigma2-image
+
+feed: init
+	@echo 'Building feed for $(MACHINE)'
+	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake openpli-enigma2-feed
 
 update:
 	@echo 'Updating Git repositories...'
