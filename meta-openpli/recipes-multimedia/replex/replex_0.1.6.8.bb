@@ -13,7 +13,7 @@ SRC_URI[sha256sum] = "68718d6671570815e8576b6e0b595195f5cea435194209ee5528721cb8
 S = "${WORKDIR}/${PN}-${PV}"
 
 do_install() {
-  install -d 0755 ${D}/${bindir}
+  install -d -m 0755 ${D}/${bindir}
   install -m 0755 ${S}/replex ${D}/${bindir}
 }
 
