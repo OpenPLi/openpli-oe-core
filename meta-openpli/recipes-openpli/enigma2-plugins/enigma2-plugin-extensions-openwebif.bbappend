@@ -3,10 +3,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 python do_cleanup () {
     boxtypes = [
-        ('dm500hd', 'dm500hd.png', 'dm_normal.png', 'dmm.html'),
-        ('dm7020hd', 'dm7020hd.png', 'dmm2.png', 'dmm2.html'),
         ('dm8000', 'dm8000.png', 'dmm1.png', 'dmm1.html'),
-        ('dm800se', 'dm800se.png', 'dm_normal.png', 'dmm.html'),
         ('osmega', 'osmega.png', 'osmini.png', 'osmini.html'),
         ('osmini', 'osmini.png', 'osmini.png', 'osmini.html'),
         ('osminiplus', 'osminiplus.png', 'osmini.png', 'osmini.html'),
@@ -122,3 +119,4 @@ PACKAGES =+ "${PN}-vxg"
 DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
 FILES_${PN}-vxg = "/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/public/vxg"
 RDEPENDS_${PN}-vxg =+ "${PN}"
+
