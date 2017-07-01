@@ -23,6 +23,10 @@ S = "${WORKDIR}/git"
 
 DEPENDS = "enigma2"
 
+RDEPENDS_${PN} = " \
+    python-argparse \
+    "
+
 do_compile() {
     python -O -m compileall ${S}
 }
