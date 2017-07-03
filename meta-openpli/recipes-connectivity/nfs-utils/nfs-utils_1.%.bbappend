@@ -3,7 +3,6 @@
 # bbappend basically reverses that commit.
 #
 RDEPENDS_${PN}-client = "rpcbind"
-RDEPENDS_${PN} = "${PN}-client"
 
 # The startup script does a check that doesn't work, replace it. It's
 # also overly complex, so simplified it too.
