@@ -1,23 +1,3 @@
-IMAGE_CMD_jffs2nfi = " \
-	mkfs.jffs2 \
-		--root=${IMAGE_ROOTFS}/boot \
-		--compression-mode=none \
-		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
-		${EXTRA_IMAGECMD}; \
-	rm -rf ${IMAGE_ROOTFS}/boot/*; \
-	mkfs.jffs2 \
-		--root=${IMAGE_ROOTFS} \
-		--disable-compressor=lzo \
-		--compression-mode=size \
-		--output=${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.jffs2 \
-		${EXTRA_IMAGECMD}; \
-	${DREAMBOX_BUILDIMAGE} \
-		--boot-partition ${DREAMBOX_PART0_SIZE}:${DEPLOY_DIR_IMAGE}/secondstage-${MACHINE}.bin \
-		--data-partition ${DREAMBOX_PART1_SIZE}:${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.boot.jffs2 \
-		--data-partition ${DREAMBOX_PART2_SIZE}:${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.jffs2 \
-		> ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.nfi; \
-"
-
 IMAGE_CMD_ubinfi = " \
 	mkfs.jffs2 \
 		--root=${IMAGE_ROOTFS}/boot \
@@ -59,10 +39,8 @@ IMAGE_CMD_ubinfi = " \
 		> ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.nfi; \
 "
 
-EXTRA_IMAGECMD_jffs2nfi ?= "-e ${DREAMBOX_ERASE_BLOCK_SIZE} -n -l"
 EXTRA_IMAGECMD_ubinfi ?= "-e ${DREAMBOX_ERASE_BLOCK_SIZE} -n -l"
 
-IMAGE_DEPENDS_jffs2nfi = "${IMAGE_DEPENDS_jffs2} dreambox-buildimage-native"
 IMAGE_DEPENDS_ubinfi = "${IMAGE_DEPENDS_ubi} ${IMAGE_DEPENDS_ubifs} dreambox-buildimage-native"
 
-IMAGE_TYPES += "jffs2nfi ubinfi"
+IMAGE_TYPES += "jffs2 ubifs"
