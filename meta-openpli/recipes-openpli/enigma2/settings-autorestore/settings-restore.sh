@@ -6,20 +6,21 @@
 BACKUPDIR=/media/hdd
 MACADDR=`cat /sys/class/net/eth0/address | cut -b 1,2,4,5,7,8,10,11,13,14,16,17`
 SAMBACONF=/etc/samba/smb.conf
+SAMBACONFTMP=/tmp/smb.conf
 
 if [ "$1x" == "startx" ] || [ -z "$1" ]
 then
 
-# When the current smb.conf in the image comes from a pre Openpli-5 image keep it in a .bak file
-if ! grep -q "netbios name = %h" ${SAMBACONF}
+# Make a safety backup of the smb.conf, we may need that later
+if [ -f ${SAMBACONF} ]
 then
-	cp ${SAMBACONF} ${SAMBACONF}.tmp
+   cp ${SAMBACONF} ${SAMBACONFTMP}
 fi
 
 # Best candidate:
 #  If a MAC Address dependent backup was found, use that
 #  Always use the latest version
-#  Prefer an older MAC address dependent backup to a newer one without it 
+#  Prefer an older MAC address dependent backup to a newer one without it
 for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
    if [ -d ${candidate}/backup ]
@@ -43,7 +44,7 @@ do
           BACKUPDIR=${candidate}
         fi
      fi
-   fi    
+   fi
 done
 
 if  [ ! -f ${BACKUPDIR}/backup/.timestamp ]
@@ -107,14 +108,17 @@ then
 	rm -f /tmp/passwds
 fi
 
-# When a smb.conf file from >= openpli5 is stored in a .bak file restore it when the restored smb.conf file comes from a pre OpenPLi-5 image
-if [ -f ${SAMBACONF}.tmp ]
+if [ -f ${SAMBACONFTMP} ]
 then
-	if grep -q "netbios name = %h" ${SAMBACONF}
+    # if we have an smb.conf from Samba 3.x
+	if grep -q "netbios name" ${SAMBACONF}
 	then
-		mv ${SAMBACONF}.tmp ${SAMBACONF}
+	    # , save it and restore the default Samba 4.x config
+		mv ${SAMBACONF} ${SAMBACONF}.old
+		mv ${SAMBACONFTMP} ${SAMBACONF}
 	else
-		rm ${SAMBACONF}.tmp
+		# delete the safety copy
+		rm ${SAMBACONFTMP}
 	fi
 fi
 
