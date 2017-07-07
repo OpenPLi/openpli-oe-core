@@ -71,6 +71,7 @@ OPTIONAL_PACKAGES += " \
 	picocom \
 	ppp \
 	rsync \
+	rtl8192eu \
 	rtorrent \
 	sabnzbd \
 	satipclient \
