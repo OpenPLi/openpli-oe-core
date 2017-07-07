@@ -28,7 +28,7 @@ do_install_append() {
 	rm -fR ${D}/var
 	rm -fR ${D}/run
 	rm -fR ${D}${bindir}
-	rm -fR ${D}${libdir}/tmpfiles.d
+	rm -fR ${D}${sysconfdir}/tmpfiles.d
 	rm -fR ${D}${sysconfdir}/sysconfig
 	install -d ${D}/var/lib/samba/private
 	install -d ${D}${sysconfdir}/samba
