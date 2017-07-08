@@ -10,11 +10,8 @@ SAMBACONF=/etc/samba/smb.conf
 if [ "$1x" == "startx" ] || [ -z "$1" ]
 then
 
-# When the current smb.conf in the image comes from a pre Openpli-5 image keep it in a .bak file
-if ! grep -q "netbios name = %h" ${SAMBACONF}
-then
-	cp ${SAMBACONF} ${SAMBACONF}.tmp
-fi
+# Make a safety backup of the smb.conf, we may need that later
+cp ${SAMBACONF} ${SAMBACONF}.tmp
 
 # Best candidate:
 #  If a MAC Address dependent backup was found, use that
@@ -107,15 +104,13 @@ then
 	rm -f /tmp/passwds
 fi
 
-# When a smb.conf file from >= openpli5 is stored in a .bak file restore it when the restored smb.conf file comes from a pre OpenPLi-5 image
-if [ -f ${SAMBACONF}.tmp ]
+# When we restore a smb.conf from from Samba 3.x
+if grep -q "netbios name" ${SAMBACONF}
 then
-	if grep -q "netbios name = %h" ${SAMBACONF}
-	then
-		mv ${SAMBACONF}.tmp ${SAMBACONF}
-	else
-		rm ${SAMBACONF}.tmp
-	fi
+    mv ${SAMBACONF} ${SAMBACONF}.old
+    mv ${SAMBACONF}.tmp ${SAMBACONF}
+else
+	rm ${SAMBACONF}.tmp
 fi
 
 rm -f /tmp/crontab /tmp/passwd /tmp/fstab
