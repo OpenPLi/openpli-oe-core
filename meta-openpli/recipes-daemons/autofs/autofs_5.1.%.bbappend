@@ -4,6 +4,8 @@ EXTRA_OECONF += "--with-confdir=/etc/default"
 
 SRC_URI += " file://99_autofs"
 
+CONFFILES = "/etc/auto.master /etc/auto.net"
+
 # Remove and change configuration files
 do_install_append() {
 	echo "/media/net /etc/auto.net --ghost" > ${D}/etc/auto.master
