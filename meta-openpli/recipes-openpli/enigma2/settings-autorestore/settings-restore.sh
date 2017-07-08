@@ -19,69 +19,69 @@ cp ${SAMBACONF} ${SAMBACONF}.tmp
 #  Prefer an older MAC address dependent backup to a newer one without it 
 for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
-   if [ -d ${candidate}/backup ]
-   then
-     if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
-     then
-     	BACKUPDIR=${candidate}
-     elif [ -f ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
-     then
-        if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+    if [ -d ${candidate}/backup ]
+    then
+        if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
         then
-          BACKUPDIR=${candidate}
-        elif [ ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz -nt ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+            BACKUPDIR=${candidate}
+        elif [ -f ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
         then
-          BACKUPDIR=${candidate}
+            if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+            then
+                BACKUPDIR=${candidate}
+            elif [ ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz -nt ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+            then
+                BACKUPDIR=${candidate}
+            fi
+        elif [ ${candidate}/backup/.timestamp -nt ${BACKUPDIR}/backup/.timestamp ]
+        then
+            if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+            then
+                BACKUPDIR=${candidate}
+            fi
         fi
-     elif [ ${candidate}/backup/.timestamp -nt ${BACKUPDIR}/backup/.timestamp ]
-     then
-        if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
-        then
-          BACKUPDIR=${candidate}
-        fi
-     fi
-   fi    
+   fi
 done
 
 if  [ ! -f ${BACKUPDIR}/backup/.timestamp ]
 then
-    echo "No valid backup location, aborting auto-restore"
-    exit 0
+	echo "No valid backup location, aborting auto-restore"
+	exit 0
 fi
 
 else
-    # if first arg isn't 'start', its a directory name
-    BACKUPDIR=$1
+	# if first arg isn't 'start', its a directory name
+	BACKUPDIR=$1
 fi
 
 if [ -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
 then
-    echo "Restoring from: ${BACKUPDIR}/backup/ for ${MACADDR}"
-    tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz -C /
+	echo "Restoring from: ${BACKUPDIR}/backup/ for ${MACADDR}"
+	tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz -C /
 elif [ -f ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz ]
 then
-    echo "Restoring from: ${BACKUPDIR}/backup/"
-    tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz -C /
+	echo "Restoring from: ${BACKUPDIR}/backup/"
+	tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz -C /
 else
-    echo "PLi-AutoBackup.tar.gz not found, attempting old backup"
-    exec /etc/init.d/settings-restore.old.sh ${BACKUPDIR}
-    exit 1
+	echo "PLi-AutoBackup.tar.gz not found, attempting old backup"
+	exec /etc/init.d/settings-restore.old.sh ${BACKUPDIR}
+	exit 1
 fi
 
 echo ${BACKUPDIR} > /tmp/backupdir
 
 if [ -s /tmp/fstab ]
 then
-        awk '!a[$0]++' /tmp/fstab /etc/fstab >/tmp/fstab.merged
-        mv /tmp/fstab.merged /etc/fstab
+	awk '!a[$0]++' /tmp/fstab /etc/fstab >/tmp/fstab.merged
+	mv /tmp/fstab.merged /etc/fstab
 	grep '/media/' /tmp/fstab | while read entry
 	do
-	        # echo splits entry on whitespace, cut to get the second entry
+		# echo splits entry on whitespace, cut to get the second entry
 		path=`echo $entry | cut -d ' ' -f 2`
 		if [ ! -d $path ]
 		then
 			echo 'Creating:' $path
-		        mkdir -p $path
+			mkdir -p $path
 		fi
 	done
 fi
@@ -107,8 +107,8 @@ fi
 # When we restore a smb.conf from from Samba 3.x
 if grep -q "netbios name" ${SAMBACONF}
 then
-    mv ${SAMBACONF} ${SAMBACONF}.old
-    mv ${SAMBACONF}.tmp ${SAMBACONF}
+	mv ${SAMBACONF} ${SAMBACONF}.old
+	mv ${SAMBACONF}.tmp ${SAMBACONF}
 else
 	rm ${SAMBACONF}.tmp
 fi
