@@ -57,6 +57,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 # remove libnetapi package witch contains a lot of cross dependencies from libsamba-base
 PACKAGES_remove = "libnetapi"
 
+# move config file to samba-base
+FILES_${PN}-base += "${sysconfdir}/samba/smb.conf"
+
 # update libsamba-base libraries for samba 4.4.5 to fix circular dependencies
 FILES_lib${PN}-base = "\
                     ${libdir}/libdcerpc-binding.so.0.0.1 \
