@@ -1,6 +1,6 @@
-MACHINE_KERNEL_PR_append = ".${INC_PR}.51"
+MACHINE_KERNEL_PR_append = ".${INC_PR}.52"
 
-COMPATIBLE_MACHINE = "dm[0-9]+.*"
+COMPATIBLE_MACHINE = "dm8000"
 
 PATCHREV = "3c7230bc0819495db75407c365f4d1db70008044"
 PATCHLEVEL = "68"
@@ -9,7 +9,7 @@ SRC_URI = " \
 			${KERNELORG_MIRROR}/linux/kernel/v3.x/linux-3.2.tar.bz2;name=kernel \
 			${KERNELORG_MIRROR}/linux/kernel/v3.x/patch-3.2.${PATCHLEVEL}.xz;apply=yes;name=kernel-patch \
 			http://sources.dreamboxupdate.com/download/kernel-patches/${P}-${PATCHREV}.patch.bz2;name=dmm-patch \
-			http://download.filesystems.org/unionfs/unionfs-2.x/unionfs-2.5.11_for_3.2.2.diff.gz;name=unionfs \
+			http://download.filesystems.org/unionfs/unionfs-2.x-latest/unionfs-2.6_for_3.2.62.diff.gz;name=unionfs \
 			file://clear_sublevel.patch \
 			file://0001-Revert-MIPS-Fix-potencial-corruption.patch \
 			file://fadvise_dontneed_change.patch \
@@ -52,8 +52,8 @@ SRC_URI[kernel-patch.md5sum] = "8ba205b73dcd6aa6748d916af294b6f0"
 SRC_URI[kernel-patch.sha256sum] = "77368e2ab9d8d9282ff6e00973fe0ba7948e6b519f2efcab3b008c59526f1bd3"
 SRC_URI[dmm-patch.md5sum] = "9bce4d986a4bfcccdc4b2fecd849269d"
 SRC_URI[dmm-patch.sha256sum] = "8914df36eb1f6a270d2b32c46d93cb81bbaae02604fba6135a9b1509e1ec1d84"
-SRC_URI[unionfs.md5sum] = "06e7c9f6cafd49b72184be851116c511"
-SRC_URI[unionfs.sha256sum] = "ce6ffa3c17a11dcca24196c11f6efc95c59b65a5b99958e73e8d4cc8e4b1f1ef"
+SRC_URI[unionfs.md5sum] = "348e5021d5340f12e2968ff4eb74d45d"
+SRC_URI[unionfs.sha256sum] = "c0c449a445e9e07c5b1ba8e8c40013c0e40a5948c30a7190677d19ba7358c11a"
 
 require linux-dreambox.inc
 
