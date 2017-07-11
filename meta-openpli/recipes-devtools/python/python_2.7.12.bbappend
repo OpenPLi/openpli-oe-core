@@ -22,6 +22,13 @@ RDEPENDS_{PN}-src = "${PN}"
 FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*.py"
 FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*/*.py"
 FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*/*/*.py"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*.exe"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*/*.exe"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*/*/*.exe"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*.whl"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*/*.whl"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/*/*/*.whl"
+FILES_${PN}-src += "${libdir}/python${PYTHON_MAJMIN}/config/*"
 
 # some additional tests
 FILES_${PN}-tests += "${libdir}/python${PYTHON_MAJMIN}/*/test* ${libdir}/python${PYTHON_MAJMIN}/*/*/test*"
