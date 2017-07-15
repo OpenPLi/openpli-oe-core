@@ -5,7 +5,7 @@ MAINTAINER = "PLi team"
 LICENSE = "NPOSL-3.0"
 LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/LICENSE;md5=a06300d1389bd32f84faeb97b6f6771f"
 
-PKGVERSION = "4.8-r2"
+PKGVERSION = "4.9-r0"
 PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
