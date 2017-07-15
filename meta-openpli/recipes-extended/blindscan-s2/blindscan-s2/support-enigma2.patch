@@ -1,13 +1,3 @@
-diff --git a/Makefile b/Makefile
-index cf39b4d..4e54054 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1,4 +1,4 @@
--CC=gcc 
-+CC?=gcc
- CFLG=-O -g -W
- SRC=diseqc.c blindscan-s2.c
- HED=diseqc.h blindscan-s2.h
 diff --git a/blindscan-s2.c b/blindscan-s2.c
 index 0579ad5..c126a0b 100644
 --- a/blindscan-s2.c
