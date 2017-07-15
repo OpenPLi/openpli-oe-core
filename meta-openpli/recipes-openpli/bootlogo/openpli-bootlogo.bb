@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/meta-openpli/licenses/CC-BY-NC-ND-4.0
 
 RDEPENDS_${PN} += "showiframe"
 
-PV = "4.0"
+PV = "4.1"
 
 S = "${WORKDIR}/"
 
