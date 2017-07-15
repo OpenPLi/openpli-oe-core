@@ -32,7 +32,7 @@ do_install() {
 	install -d ${D}/boot
 	install -d ${D}/usr/share
 	for i in ${MVI}; do
-		install -m 0755 ${S}/$i ${D}/usr/share/
+		install ${S}/$i ${D}/usr/share/
 		ln -sf /usr/share/$i ${D}/boot/$i
 	done
 	for i in ${MVISYMLINKS}; do
