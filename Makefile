@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 #
 # Copyright (c) 2010-2012 Dream Multimedia GmbH, Germany
-#                         http://www.dream-multimedia-tv.de/
+#                         http://www.dream-multimedia-tv.de
 # Copyright (c) 2012-2017 PLi Association, The Netherlands
-#                         http://openpli.org
+#                         https://openpli.org
 # Authors:
 #   Andreas Oberritter <obi@opendreambox.org>
 #   OpenPLi development team
@@ -91,13 +91,11 @@ hash = $(shell echo $(1) | $(XSUM) | awk '{print $$1}')
 .DEFAULT_GOAL := all
 all: init
 	@echo
-	@echo "Openembedded for the OpenPLi 4 environment has been initialized"
+	@echo "Openembedded for the OpenPLi 6 environment has been initialized"
 	@echo "properly. Now you can start building your image, by doing either:"
 	@echo
 	@echo " MACHINE=... make image"
-	@echo
 	@echo "	or:"
-	@echo
 	@echo " cd $(BUILD_DIR)"
 	@echo " source env.source"
 	@echo " MACHINE=... bitbake openpli-enigma2-image"
