@@ -6,8 +6,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a23a74b3f4caf9616230789d94217acb"
 
 inherit autotools-brokensep gitpkgv pythonnative
 
-PV = "1.2+git${SRCPV}"
-PKGV = "1.2+git${GITPKGV}"
+PV = "2.1+git${SRCPV}"
+PKGV = "2.1+git${GITPKGV}"
 PR = "r0"
 
 SRC_URI = "git://github.com/OpenViX/PlexDVRAPI.git;protocol=git"
