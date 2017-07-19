@@ -10,7 +10,7 @@ RRECOMMENDS_${PN} = " \
         kernel-module-dvb-usb-af9035 \
         kernel-module-dvb-usb-it913x \
         kernel-module-it913x \
-        kernel-module-module-it913x-fe \
+        kernel-module-it913x-fe \
 	"
 
-PV = "1.1"
+PV = "1.2"
