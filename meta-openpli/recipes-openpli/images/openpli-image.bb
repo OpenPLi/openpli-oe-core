@@ -28,7 +28,6 @@ IMAGE_INSTALL = "\
 	samba-base \
 	sdparm \
 	tuxbox-common \
-	tuxbox-links \
 	tzdata \
 	volatile-media \
 	vsftpd \
