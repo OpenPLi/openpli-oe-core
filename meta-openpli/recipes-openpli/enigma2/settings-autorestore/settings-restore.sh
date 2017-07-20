@@ -110,10 +110,7 @@ then
 	mv ${SAMBACONF} ${SAMBACONF}.old
 	mv ${SAMBACONF}.tmp ${SAMBACONF}
 else
-    if [ -f ${SAMBACONF}.tmp ]
-    then
-	rm ${SAMBACONF}.tmp
-    fi
+	rm -f ${SAMBACONF}.tmp 2> /dev/null
 fi
 
 rm -f /tmp/crontab /tmp/passwd /tmp/fstab
