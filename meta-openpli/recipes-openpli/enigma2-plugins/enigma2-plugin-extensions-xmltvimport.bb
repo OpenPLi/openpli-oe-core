@@ -18,7 +18,7 @@ inherit distutils-openplugins
 
 DEPENDS = "python"
 RDEPENDS_${PN} = "python-compression python-shell"
-RRECOMMENDS_${PN} = "${PN}-rytec"
+RRECOMMENDS_${PN} = "${PN}-rytec python-lzma"
 PACKAGES = "${PN}-dbg ${PN}"
 
 PLUGIN = "EPGImport"
