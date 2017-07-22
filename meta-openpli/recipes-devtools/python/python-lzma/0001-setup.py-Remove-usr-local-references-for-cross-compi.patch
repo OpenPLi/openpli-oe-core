@@ -1,0 +1,35 @@
+From a04c844bcb51bb7d9f245d56b1a0917b3335ab6a Mon Sep 17 00:00:00 2001
+From: Mike Looijmans <milo@openpli.org>
+Date: Sat, 22 Jul 2017 19:35:00 +0200
+Subject: [PATCH] setup.py: Remove /usr/local references for cross-compiling
+
+Hard-coded /usr/... paths are bad when cross-compiling, so remove
+them.
+
+Signed-off-by: Mike Looijmans <milo@openpli.org>
+---
+ setup.py | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 55c6847..00342ef 100644
+--- a/setup.py
++++ b/setup.py
+@@ -36,14 +36,10 @@ extens = [Extension('backports/lzma/_lzma',
+                     include_dirs = [
+                         os.path.join(prefix, 'include'),
+                         os.path.join(home, 'include'),
+-                        '/opt/local/include',
+-                        '/usr/local/include'
+                     ],
+                     library_dirs = [
+                         os.path.join(prefix, 'lib'),
+                         os.path.join(home, 'lib'),
+-                        '/opt/local/lib',
+-                        '/usr/local/lib'
+                     ]
+                     )]
+ 
+-- 
+2.7.4
+
