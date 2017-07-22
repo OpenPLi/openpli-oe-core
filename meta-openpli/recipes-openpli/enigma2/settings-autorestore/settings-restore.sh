@@ -14,36 +14,36 @@ then
 cp ${SAMBACONF} ${SAMBACONF}.tmp
 
 # Best candidate:
-#  If a MAC Address dependent backup was found, use that
-#  Always use the latest version
-#  Prefer an older MAC address dependent backup to a newer one without it 
+#	If a MAC Address dependent backup was found, use that
+#	Always use the latest version
+#	Prefer an older MAC address dependent backup to a newer one without it 
 for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
-    if [ -d ${candidate}/backup ]
-    then
-        if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
-        then
-            BACKUPDIR=${candidate}
-        elif [ -f ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
-        then
-            if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
-            then
-                BACKUPDIR=${candidate}
-            elif [ ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz -nt ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
-            then
-                BACKUPDIR=${candidate}
-            fi
-        elif [ ${candidate}/backup/.timestamp -nt ${BACKUPDIR}/backup/.timestamp ]
-        then
-            if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
-            then
-                BACKUPDIR=${candidate}
-            fi
-        fi
-   fi
+	if [ -d ${candidate}/backup ]
+	then
+		if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
+		then
+			BACKUPDIR=${candidate}
+		elif [ -f ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+		then
+			if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+			then
+				BACKUPDIR=${candidate}
+			elif [ ${candidate}/backup/PLi-AutoBackup${MACADDR}.tar.gz -nt ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+			then
+				BACKUPDIR=${candidate}
+			fi
+		elif [ ${candidate}/backup/.timestamp -nt ${BACKUPDIR}/backup/.timestamp ]
+		then
+			if [ ! -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]
+			then
+				BACKUPDIR=${candidate}
+			fi
+		fi
+	fi
 done
 
-if  [ ! -f ${BACKUPDIR}/backup/.timestamp ]
+if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
 then
 	echo "No valid backup location, aborting auto-restore"
 	exit 0
