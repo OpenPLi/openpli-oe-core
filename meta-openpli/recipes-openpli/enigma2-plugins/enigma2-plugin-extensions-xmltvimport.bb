@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://../etc/epgimport/readme.txt;startline=1;endline=4;md5
 
 inherit gitpkgv
 
-SRCREV = "127feaf35990540f3bc2d091fc6e732587be8946"
+SRCREV = "33cf6785d73cb217c8897b9f7d3168f5908c2a18"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
@@ -19,8 +19,8 @@ S = "${WORKDIR}/git/src"
 inherit distutils-openplugins
 
 DEPENDS = "python"
-RDEPENDS_${PN} = "python-compression python-shell"
-RRECOMMENDS_${PN} = "${PN}-rytec python-lzma"
+RDEPENDS_${PN} = "python-compression python-shell python-lzma"
+RRECOMMENDS_${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN}"
 
 PLUGIN = "EPGImport"
