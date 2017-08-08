@@ -17,8 +17,8 @@ S = "${WORKDIR}/git/src"
 inherit distutils-openplugins
 
 DEPENDS = "python"
-RDEPENDS_${PN} = "python-compression python-shell"
-RRECOMMENDS_${PN} = "${PN}-rytec python-lzma"
+RDEPENDS_${PN} = "python-compression python-shell python-lzma"
+RRECOMMENDS_${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN}"
 
 PLUGIN = "EPGImport"
