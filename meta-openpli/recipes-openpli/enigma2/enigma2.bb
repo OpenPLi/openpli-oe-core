@@ -204,7 +204,7 @@ EXTRA_OECONF = "\
 
 # pass the enigma branch to automake
 EXTRA_OEMAKE = "\
-	ENIGMA2_BRANCH=${ENIGMA2_BRANCH}
+	ENIGMA2_BRANCH=${ENIGMA2_BRANCH} \
 	"
 
 # Swig generated 200k enigma.py file has no purpose for end users
