@@ -202,6 +202,11 @@ EXTRA_OECONF = "\
 	STAGING_LIBDIR=${STAGING_LIBDIR} \
 	"
 
+# pass the enigma branch to automake
+EXTRA_OEMAKE = "\
+	ENIGMA2_BRANCH=${ENIGMA2_BRANCH}
+	"
+
 # Swig generated 200k enigma.py file has no purpose for end users
 FILES_${PN}-dbg += "\
 	/usr/lib/enigma2/python/enigma.py \
