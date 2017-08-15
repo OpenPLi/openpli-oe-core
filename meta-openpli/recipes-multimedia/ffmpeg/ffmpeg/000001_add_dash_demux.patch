@@ -1,6 +1,6 @@
-diff -uNr ffmpeg-3.2.2_orig/configure ffmpeg-3.2.2_dash_demux/configure
---- ffmpeg-3.2.2_orig/configure	2017-08-08 21:01:10.616080967 +0200
-+++ ffmpeg-3.2.2_dash_demux/configure	2017-08-08 21:02:07.616083400 +0200
+diff -uNr ffmpeg-3.3_orig/configure ffmpeg-3.3_dash_demux/configure
+--- ffmpeg-3.3_orig/configure	2017-08-08 21:01:10.616080967 +0200
++++ ffmpeg-3.3_dash_demux/configure	2017-08-08 21:02:07.616083400 +0200
 @@ -294,6 +294,7 @@
                             on OSX if openssl and gnutls are not used [autodetect]
    --enable-x11grab         enable X11 grabbing (legacy) [no]
@@ -26,16 +26,17 @@ diff -uNr ffmpeg-3.2.2_orig/configure ffmpeg-3.2.2_dash_demux/configure
  dts_demuxer_select="dca_parser"
  dtshd_demuxer_select="dca_parser"
 @@ -5637,6 +5640,7 @@
- disabled  zlib || check_lib   zlib.h      zlibVersion -lz   || disable  zlib
- disabled bzlib || check_lib2 bzlib.h BZ2_bzlibVersion -lbz2 || disable bzlib
- disabled  lzma || check_lib2  lzma.h lzma_version_number -llzma || disable lzma
+ disabled  zlib || check_lib  zlib.h      zlibVersion    -lz    || disable  zlib
+ disabled bzlib || check_lib bzlib.h BZ2_bzlibVersion    -lbz2  || disable bzlib
+ disabled  lzma || check_lib  lzma.h lzma_version_number -llzma || disable lzma
 +disabled  xml2 || check_lib libxml/xmlversion.h xmlCheckVersion -lxml2 || disable xml2
- 
+
  check_lib math.h sin -lm && LIBM="-lm"
- disabled crystalhd || check_lib libcrystalhd/libcrystalhd_if.h DtsCrystalHDVersion -lcrystalhd || disable crystalhd
-diff -uNr ffmpeg-3.2.2_orig/libavformat/allformats.c ffmpeg-3.2.2_dash_demux/libavformat/allformats.c
---- ffmpeg-3.2.2_orig/libavformat/allformats.c	2017-08-08 21:01:10.708080970 +0200
-+++ ffmpeg-3.2.2_dash_demux/libavformat/allformats.c	2017-08-08 21:02:07.616083400 +0200
+ disabled crystalhd || check_lib "stdint.h libcrystalhd/libcrystalhd_if.h" DtsCrystalHDVersion -lcrystalhd || disable crystalhd
+
+diff -uNr ffmpeg-3.3_orig/libavformat/allformats.c ffmpeg-3.3_dash_demux/libavformat/allformats.c
+--- ffmpeg-3.3_orig/libavformat/allformats.c	2017-08-08 21:01:10.708080970 +0200
++++ ffmpeg-3.3_dash_demux/libavformat/allformats.c	2017-08-08 21:02:07.616083400 +0200
 @@ -100,7 +100,7 @@
      REGISTER_DEMUXER (CINE,             cine);
      REGISTER_DEMUXER (CONCAT,           concat);
@@ -45,9 +46,9 @@ diff -uNr ffmpeg-3.2.2_orig/libavformat/allformats.c ffmpeg-3.2.2_dash_demux/lib
      REGISTER_MUXDEMUX(DATA,             data);
      REGISTER_MUXDEMUX(DAUD,             daud);
      REGISTER_DEMUXER (DCSTR,            dcstr);
-diff -uNr ffmpeg-3.2.2_orig/libavformat/dashdec.c ffmpeg-3.2.2_dash_demux/libavformat/dashdec.c
---- ffmpeg-3.2.2_orig/libavformat/dashdec.c	1970-01-01 01:00:00.000000000 +0100
-+++ ffmpeg-3.2.2_dash_demux/libavformat/dashdec.c	2017-08-09 22:33:57.545772700 +0200
+diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavformat/dashdec.c
+--- ffmpeg-3.3_orig/libavformat/dashdec.c	1970-01-01 01:00:00.000000000 +0100
++++ ffmpeg-3.3_dash_demux/libavformat/dashdec.c	2017-08-09 22:33:57.545772700 +0200
 @@ -0,0 +1,2061 @@
 +/*
 + * Dynamic Adaptive Streaming over HTTP demux
@@ -70,7 +71,7 @@ diff -uNr ffmpeg-3.2.2_orig/libavformat/dashdec.c ffmpeg-3.2.2_dash_demux/libavf
 + * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 + */
 + 
-+ /* Code prepared for ffmpeg 2.8.9 and then ported to ffmpeg 3.2.2
++ /* Code prepared for ffmpeg 2.8.9 and then ported to ffmpeg 3.3
 +  * At now it allow to play one selected representation for audio and video components.
 +  * 
 +  */
@@ -2110,9 +2111,9 @@ diff -uNr ffmpeg-3.2.2_orig/libavformat/dashdec.c ffmpeg-3.2.2_dash_demux/libavf
 +    .read_seek      = dash_read_seek,
 +    .flags          = AVFMT_NO_BYTE_SEEK,
 +};
-diff -uNr ffmpeg-3.2.2_orig/libavformat/Makefile ffmpeg-3.2.2_dash_demux/libavformat/Makefile
---- ffmpeg-3.2.2_orig/libavformat/Makefile	2017-08-08 21:01:10.708080970 +0200
-+++ ffmpeg-3.2.2_dash_demux/libavformat/Makefile	2017-08-08 21:02:07.624083401 +0200
+diff -uNr ffmpeg-3.3_orig/libavformat/Makefile ffmpeg-3.3_dash_demux/libavformat/Makefile
+--- ffmpeg-3.3_orig/libavformat/Makefile	2017-08-08 21:01:10.708080970 +0200
++++ ffmpeg-3.3_dash_demux/libavformat/Makefile	2017-08-08 21:02:07.624083401 +0200
 @@ -134,6 +134,7 @@
  OBJS-$(CONFIG_DATA_DEMUXER)              += rawdec.o
  OBJS-$(CONFIG_DATA_MUXER)                += rawdec.o
