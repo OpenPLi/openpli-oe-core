@@ -17,7 +17,7 @@ S = "${WORKDIR}/git/src"
 inherit distutils-openplugins
 
 DEPENDS = "python"
-RDEPENDS_${PN} = "python-compression python-shell python-lzma"
+RDEPENDS_${PN} = "python-compression python-shell python-lzma python-pkgutil"
 RRECOMMENDS_${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN}"
 
