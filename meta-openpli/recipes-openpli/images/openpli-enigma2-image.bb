@@ -80,6 +80,7 @@ IMAGE_INSTALL += " \
 	libavahi-client \
 	settings-autorestore \
 	tuxbox-common \
+	ofgwrite \
 	${ENIGMA2_PLUGINS} \
 	\
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
