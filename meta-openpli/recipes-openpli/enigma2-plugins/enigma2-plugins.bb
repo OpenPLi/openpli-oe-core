@@ -65,9 +65,9 @@ inherit autotools-brokensep
 
 S = "${WORKDIR}/git"
 
+#	streamripper # disabled for the moment, breaks the build
 DEPENDS = " \
 	python-pyopenssl \
-	streamripper \
 	python-mutagen \
 	python-twisted \
 	python-daap \
