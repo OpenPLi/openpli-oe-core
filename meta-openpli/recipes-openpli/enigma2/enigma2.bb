@@ -127,7 +127,7 @@ RDEPENDS_${PN} += "libdreamdvd libudfread"
 RRECOMMENDS_${PN} += "libdvdcss"
 
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
-RDEPENDS_${PN} += "font-valis-enigma"
+#RDEPENDS_${PN} += "font-valis-enigma"
 
 RDEPENDS_${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual/blindscan-dvbc" , "", d)}"
 
