@@ -41,6 +41,7 @@ RRECOMMENDS_${PN} = " \
 	${GST_UGLY_RDEPS} \
 	"
 
+#	python-utf8-hack # disabled because it breaks the build
 PYTHON_RDEPS = " \
 	python-numbers \
 	python-codecs \
@@ -56,7 +57,6 @@ PYTHON_RDEPS = " \
 	python-threading \
 	python-twisted-core \
 	python-twisted-web \
-	python-utf8-hack \
 	python-xml \
 	python-zlib \
 	python-zopeinterface \
