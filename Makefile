@@ -86,13 +86,14 @@ GIT ?= git
 GIT_REMOTE := $(shell $(GIT) remote)
 GIT_USER_NAME := $(shell $(GIT) config user.name)
 GIT_USER_EMAIL := $(shell $(GIT) config user.email)
+GIT_BRANCH := $(shell $(GIT) symbolic-ref -q --short HEAD)
 
 hash = $(shell echo $(1) | $(XSUM) | awk '{print $$1}')
 
 .DEFAULT_GOAL := all
 all: init
 	@echo
-	@echo "Openembedded for the OpenPLi 4 environment has been initialized"
+	@echo "Openembedded for the OpenPLi $(GIT_BRANCH) environment has been initialized"
 	@echo "properly. Now you can start building your image, by doing either:"
 	@echo
 	@echo " MACHINE=... make image"
