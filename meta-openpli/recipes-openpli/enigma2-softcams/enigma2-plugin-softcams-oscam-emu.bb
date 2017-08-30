@@ -11,6 +11,8 @@ PV = "svn${SRCPV}"
 PKGV = "${PV}"
 SRC_URI = "svn://www.streamboard.tv/svn/oscam;protocol=http;module=trunk;scmdata=keep"
 
+do_fetch[depends] += "enigma2-plugin-softcams-oscam:do_fetch"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
 SRC_URI += "https://raw.githubusercontent.com/oscam-emu/oscam-emu/fb79f6c3c0846df3a308d4f45da0585f4891c078/oscam-emu.patch;name=emu;striplevel=0"
 SRC_URI[emu.md5sum] = "223bb152859d900eae368e1320e7cb2a"
