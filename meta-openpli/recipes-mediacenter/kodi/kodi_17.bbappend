@@ -1,11 +1,13 @@
 PROVIDES += "virtual/kodi"
 RPROVIDES_${PN} += "virtual/kodi"
+PACKAGE_ARCH = "${MACHINE}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI_append += "\
 	file://kodi-platform-support.patch \
 	file://brcmstb-settings.patch \
+	file://input-devices.patch \
 	file://e2player.patch \
 	${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://EGLNativeTypeV3D-nxpl.patch', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://EGLNativeTypeMali.patch', '', d)} \

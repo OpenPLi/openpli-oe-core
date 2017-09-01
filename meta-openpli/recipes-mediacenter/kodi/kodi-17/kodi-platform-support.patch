@@ -1,16 +1,17 @@
-From fb3c27576e5d555876d0739a1c4c53a31bd61a90 Mon Sep 17 00:00:00 2001
-From: GF <support@gfutures.net>
-Date: Fri, 25 Aug 2017 16:27:53 +0200
-Subject: [PATCH] platform support
+From 05a0dcc3d8eb6aebc3272490f75d32b6424212b8 Mon Sep 17 00:00:00 2001
+From:  GF <support@gfutures.net>
+Date: Fri, 1 Sep 2017 21:10:52 +0200
+Subject: [PATCH] kodi platform support
 
 ---
- configure.ac                      | 73 +++++++++++++++++++++++++++++++--------
- xbmc/windowing/egl/EGLWrapper.cpp | 10 ++++++
- xbmc/windowing/egl/Makefile.in    |  6 ++++
- 3 files changed, 74 insertions(+), 15 deletions(-)
+ configure.ac                      | 82 ++++++++++++++++++++++++++++++++-------
+ xbmc/platform/xbmc.cpp            |  9 +++++
+ xbmc/windowing/egl/EGLWrapper.cpp | 10 +++++
+ xbmc/windowing/egl/Makefile.in    |  6 +++
+ 4 files changed, 92 insertions(+), 15 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 5bfd1ea..ca8e065 100644
+index 973277f..8e02d90 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -486,6 +486,12 @@ AC_ARG_ENABLE([libav-compat],
@@ -60,14 +61,23 @@ index 5bfd1ea..ca8e065 100644
       ;;
    *)
       AC_MSG_ERROR(unsupported host ($host))
-@@ -696,6 +703,18 @@ if test "$target_platform" = "target_raspberry_pi" ; then
+@@ -696,6 +703,27 @@ if test "$target_platform" = "target_raspberry_pi" ; then
       CXXFLAGS="$CXXFLAGS"
  fi
  
-+if test "$with_gpu" = "v3d" || test "$with_gpu" = "v3dplatform" ; then
++if test "$with_gpu" = "v3d"; then
 +     use_openmax=no
 +     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
 +     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
++fi
++
++if test "$with_gpu" = "v3dplatform"; then
++     use_openmax=no
++     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
++     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
++     AC_DEFINE([HAS_V3DVISABLE], [1], [Whether to use EGLNative visable workaround.])
 +fi
 +
 +if test "$with_gpu" = "mali"; then
@@ -79,7 +89,7 @@ index 5bfd1ea..ca8e065 100644
  if test "$host_vendor" = "apple"; then
    use_avahi=no
    use_alsa=no
-@@ -912,6 +931,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
+@@ -912,6 +940,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
          [Define to 1 if your compiler supports the __sync_val_compare_and_swap() intrinsic.])
  fi
  
@@ -89,7 +99,7 @@ index 5bfd1ea..ca8e065 100644
  # Check for u16string/u32string declarations
  AC_LANG_PUSH([C++])
  AC_CHECK_TYPES([std::u16string, std::u32string], [], [], [[#include <string>]])
-@@ -944,16 +966,29 @@ if test "$use_gles" = "yes"; then
+@@ -944,16 +975,29 @@ if test "$use_gles" = "yes"; then
      AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
      AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
      AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
@@ -128,7 +138,7 @@ index 5bfd1ea..ca8e065 100644
    fi
  else
    if test "$use_gl" = "yes"; then
-@@ -1058,6 +1093,12 @@ AC_LANG_POP([C++])
+@@ -1058,6 +1102,12 @@ AC_LANG_POP([C++])
  
  if test "${target_platform}" = "target_linux" || test "${target_platform}" = "target_raspberry_pi" || test "${target_platform}" = "target_android"; then
    PKG_CHECK_MODULES([UUID], [uuid],, AC_MSG_ERROR(libuuid not found))
@@ -141,7 +151,7 @@ index 5bfd1ea..ca8e065 100644
  fi
  
  AC_MSG_CHECKING("for libcrossguid")
-@@ -2330,6 +2371,8 @@ AC_SUBST(HAVE_SSE4)
+@@ -2330,6 +2380,8 @@ AC_SUBST(HAVE_SSE4)
  AC_SUBST(USE_MMAL)
  AC_SUBST(USE_X11)
  AC_SUBST(USE_OPTICAL_DRIVE)
@@ -150,6 +160,33 @@ index 5bfd1ea..ca8e065 100644
  
  # pushd and popd are not available in other shells besides bash, so implement
  # our own pushd/popd functions
+diff --git a/xbmc/platform/xbmc.cpp b/xbmc/platform/xbmc.cpp
+index 34e5ea6..8281857 100644
+--- a/xbmc/platform/xbmc.cpp
++++ b/xbmc/platform/xbmc.cpp
+@@ -25,6 +25,11 @@
+ #include "linux/RBP.h"
+ #endif
+
++#ifdef HAS_V3DVISABLE
++#include <v3dplatform.h>
++  V3D_PlatformHandle g_v3dPlatformHandle;
++#endif
++
+ #ifdef TARGET_WINDOWS
+ #include <mmdeviceapi.h>
+ #include "platform/win32/IMMNotificationClient.h"
+@@ -55,6 +60,10 @@ extern "C" int XBMC_Run(bool renderGUI, CFileItemList &playlist)
+     return status;
+   }
+
++#ifdef HAS_V3DVISABLE
++  V3D_RegisterDisplayPlatform(&g_v3dPlatformHandle, NULL);
++#endif
++
+ #ifdef TARGET_RASPBERRY_PI
+   if(!g_RBP.Initialize())
+     return false;
 diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
 index 30f5757..03e9a55 100644
 --- a/xbmc/windowing/egl/EGLWrapper.cpp
@@ -196,4 +233,4 @@ index 68f7862..ffbe781 100644
  
  LIB = windowing_egl.a
 -- 
-1.9.1
+2.7.4
