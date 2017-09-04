@@ -1,7 +1,7 @@
 SUMMARY = "Driver for Realtek USB wireless device 8192eu"
 HOMEPAGE = "http://www.realtek.com/"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://README.md;md5=3b1253962406cee850f565b2c0f8adc0"
+LIC_FILES_CHKSUM = "file://README.md;md5=141a037f426cbdd37485cdd88d12698f"
 
 SRC_URI = "git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
     file://rtl8192eu-makefile.patch \
