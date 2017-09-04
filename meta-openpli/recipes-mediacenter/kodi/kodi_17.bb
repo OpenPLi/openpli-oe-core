@@ -59,7 +59,10 @@ DEPENDS = " \
 
 PROVIDES = "xbmc"
 
-PV = "17.1+gitr${SRCPV}"
+inherit gitpkgv
+PV = "17.5+gitr${SRCPV}"
+PKGV = "17.5+gitr${GITPKGV}"
+
 SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Krypton \
            file://0003-configure-don-t-try-to-run-stuff-to-find-tinyxml.patch \
            file://0004-handle-SIGTERM.patch \
