@@ -1,13 +1,16 @@
 PROVIDES += "virtual/kodi"
 RPROVIDES_${PN} += "virtual/kodi"
+PACKAGE_ARCH = "${MACHINE}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI_append += "\
-	file://v3d-platform.patch \
+	file://kodi-platform-support.patch \
 	file://brcmstb-settings.patch \
+	file://input-devices.patch \
 	file://e2player.patch \
 	${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://EGLNativeTypeV3D-nxpl.patch', '', d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://EGLNativeTypeMali.patch', '', d)} \
 	"
 
 SRC_URI_append_osmega += "file://EGLNativeTypeV3D-platform.patch"
@@ -20,22 +23,9 @@ DEPENDS += " \
 	libupnp \
 	"
 
-EXTRA_OECONF_hd51 += " \
-	--with-platform=v3d-cortexa15 \
-	--with-ffmpeg=v3d \
-	"
-
-EXTRA_OECONF_vs1500 += " \
-	--with-platform=v3d-cortexa15 \
-	--with-ffmpeg=v3d \
-	"
-
-EXTRA_OECONF_hd2400 += " \
-	--with-platform=v3d-mipsel \
-	--with-ffmpeg=v3d \
-	"
-
-EXTRA_OECONF_osmega += " \
-	--with-platform=v3d-xcore-mipsel \
-	--with-ffmpeg=v3d \
-	"
+EXTRA_OECONF_hd51 += "--with-gpu=v3d"
+EXTRA_OECONF_vs1500 += "--with-gpu=v3d"
+EXTRA_OECONF_hd2400 += "--with-gpu=v3d"
+EXTRA_OECONF_h7 += "--with-gpu=v3d"
+EXTRA_OECONF_osmega += "--with-gpu=v3dplatform"
+EXTRA_OECONF_wetekplay += "--with-gpu=mali"

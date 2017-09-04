@@ -1,0 +1,236 @@
+From 05a0dcc3d8eb6aebc3272490f75d32b6424212b8 Mon Sep 17 00:00:00 2001
+From:  GF <support@gfutures.net>
+Date: Fri, 1 Sep 2017 21:10:52 +0200
+Subject: [PATCH] kodi platform support
+
+---
+ configure.ac                      | 82 ++++++++++++++++++++++++++++++++-------
+ xbmc/platform/xbmc.cpp            |  9 +++++
+ xbmc/windowing/egl/EGLWrapper.cpp | 10 +++++
+ xbmc/windowing/egl/Makefile.in    |  6 +++
+ 4 files changed, 92 insertions(+), 15 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 973277f..8e02d90 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -486,6 +486,12 @@ AC_ARG_ENABLE([libav-compat],
+   [use_libav_hacks=$enableval],
+   [use_libav_hacks=no])
+ 
++AC_ARG_WITH([gpu],
++  [AS_HELP_STRING([--with-gpu],
++  [enable Graphics card (default is yes)])],
++  [use_gpu=$with_gpu],
++  [use_gpu=yes])
++
+ ### End of external library options
+ 
+ if test "x$host_vendor" != "xapple"; then
+@@ -619,7 +625,7 @@ case $host in
+      use_neon=yes
+      use_gles=yes
+      use_gl=no
+-     USE_STATIC_FFMPEG=1
++     USE_STATIC_FFMPEG=0
+      ;;
+   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*)
+      target_platform=target_linux
+@@ -633,7 +639,7 @@ case $host in
+        use_gl=no
+        use_gles=yes
+      fi
+-     USE_STATIC_FFMPEG=1
++     USE_STATIC_FFMPEG=0
+      ;;
+   arm*-*linux-android*)
+      target_platform=target_android
+@@ -652,10 +658,11 @@ case $host in
+      CORE_SYSTEM_NAME=linux
+      ARCH="mips"
+      use_arch="mips"
+-     use_gles=no
+-     use_gl=yes
+-     use_sdl=yes
+-     USE_STATIC_FFMPEG=1
++     use_neon=yes
++     use_gles=yes
++     use_gl=no
++     use_sdl=no
++     USE_STATIC_FFMPEG=0
+      ;;
+   *)
+      AC_MSG_ERROR(unsupported host ($host))
+@@ -696,6 +703,27 @@ if test "$target_platform" = "target_raspberry_pi" ; then
+      CXXFLAGS="$CXXFLAGS"
+ fi
+ 
++if test "$with_gpu" = "v3d"; then
++     use_openmax=no
++     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
++     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
++fi
++
++if test "$with_gpu" = "v3dplatform"; then
++     use_openmax=no
++     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
++     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
++     AC_DEFINE([HAS_V3DVISABLE], [1], [Whether to use EGLNative visable workaround.])
++fi
++
++if test "$with_gpu" = "mali"; then
++     use_openmax=no
++     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
++     USE_MALI=1; AC_DEFINE([HAS_MALI],[1],["Define to 1 if Mali GPU"])
++fi
++
+ if test "$host_vendor" = "apple"; then
+   use_avahi=no
+   use_alsa=no
+@@ -912,6 +940,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
+         [Define to 1 if your compiler supports the __sync_val_compare_and_swap() intrinsic.])
+ fi
+ 
++# check if libatomic is available
++AC_CHECK_LIB([atomic], [__atomic_add_fetch_8], [LIBS="$LIBS -latomic"],)
++
+ # Check for u16string/u32string declarations
+ AC_LANG_PUSH([C++])
+ AC_CHECK_TYPES([std::u16string, std::u32string], [], [], [[#include <string>]])
+@@ -944,16 +975,29 @@ if test "$use_gles" = "yes"; then
+     AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
+     AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
+     AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
++  elif test "$target_platform" = "target_raspberry_pi"; then
++    AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
++    AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
++    AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
++    LIBS="$LIBS -lEGL -lGLESv2 -lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
++  elif test "$with_gpu" = "mali"; then
++    AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
++    AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
++    AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
++    LIBS="$LIBS -lEGL -lGLESv2"
++  elif test "$with_gpu" = "v3d"; then
++    AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
++    AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
++    AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
++    LIBS="$LIBS -lEGL -lGLESv2 -lnxpl -lnexus"
++  elif test "$with_gpu" = "v3dplatform"; then
++    AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
++    AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
++    AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
++    LIBS="$LIBS -lEGL -lGLESv2 -lv3dplatform"
+   else
+-    if test "$target_platform" = "target_raspberry_pi"; then
+-      AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
+-      AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
+-      AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
+-      LIBS="$LIBS -lEGL -lGLESv2 -lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+-    else
+-      AC_CHECK_LIB([EGL],   [main],, AC_MSG_ERROR($missing_library))
+-      AC_CHECK_LIB([GLESv2],[main],, AC_MSG_ERROR($missing_library))
+-    fi
++    AC_CHECK_LIB([EGL],   [main],, AC_MSG_ERROR($missing_library))
++    AC_CHECK_LIB([GLESv2],[main],, AC_MSG_ERROR($missing_library))
+   fi
+ else
+   if test "$use_gl" = "yes"; then
+@@ -1058,6 +1102,12 @@ AC_LANG_POP([C++])
+ 
+ if test "${target_platform}" = "target_linux" || test "${target_platform}" = "target_raspberry_pi" || test "${target_platform}" = "target_android"; then
+   PKG_CHECK_MODULES([UUID], [uuid],, AC_MSG_ERROR(libuuid not found))
++  PKG_CHECK_MODULES([AVFORMAT], [libavformat],, AC_MSG_ERROR(libavformat not found))
++  PKG_CHECK_MODULES([AVFILTER], [libavfilter],, AC_MSG_ERROR(libavfilter not found))
++  PKG_CHECK_MODULES([AVUTIL], [libavutil],, AC_MSG_ERROR(libavutil not found))
++  PKG_CHECK_MODULES([POSTPROC], [libpostproc],, AC_MSG_ERROR(libpostproc not found))
++  PKG_CHECK_MODULES([SWSCALE], [libswscale],, AC_MSG_ERROR(libswscale not found))
++  PKG_CHECK_MODULES([SWRESAMPLE], [libswresample],, AC_MSG_ERROR(libswresample not found))
+ fi
+ 
+ AC_MSG_CHECKING("for libcrossguid")
+@@ -2330,6 +2380,8 @@ AC_SUBST(HAVE_SSE4)
+ AC_SUBST(USE_MMAL)
+ AC_SUBST(USE_X11)
+ AC_SUBST(USE_OPTICAL_DRIVE)
++AC_SUBST(USE_MALI)
++AC_SUBST(USE_V3D)
+ 
+ # pushd and popd are not available in other shells besides bash, so implement
+ # our own pushd/popd functions
+diff --git a/xbmc/platform/xbmc.cpp b/xbmc/platform/xbmc.cpp
+index 34e5ea6..8281857 100644
+--- a/xbmc/platform/xbmc.cpp
++++ b/xbmc/platform/xbmc.cpp
+@@ -25,6 +25,11 @@
+ #include "linux/RBP.h"
+ #endif
+
++#ifdef HAS_V3DVISABLE
++#include <v3dplatform.h>
++  V3D_PlatformHandle g_v3dPlatformHandle;
++#endif
++
+ #ifdef TARGET_WINDOWS
+ #include <mmdeviceapi.h>
+ #include "platform/win32/IMMNotificationClient.h"
+@@ -55,6 +60,10 @@ extern "C" int XBMC_Run(bool renderGUI, CFileItemList &playlist)
+     return status;
+   }
+
++#ifdef HAS_V3DVISABLE
++  V3D_RegisterDisplayPlatform(&g_v3dPlatformHandle, NULL);
++#endif
++
+ #ifdef TARGET_RASPBERRY_PI
+   if(!g_RBP.Initialize())
+     return false;
+diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
+index 30f5757..03e9a55 100644
+--- a/xbmc/windowing/egl/EGLWrapper.cpp
++++ b/xbmc/windowing/egl/EGLWrapper.cpp
+@@ -31,6 +31,12 @@
+ #if defined(TARGET_RASPBERRY_PI)
+   #include "EGLNativeTypeRaspberryPI.h"
+ #endif
++#if defined(HAS_MALI)
++  #include "EGLNativeTypeMali.h"
++#endif
++#if defined(HAS_V3D)
++  #include "EGLNativeTypeV3D.h"
++#endif
+ #if defined(HAS_IMXVPU)
+   #include "EGLNativeTypeIMX.h"
+ #endif
+@@ -97,6 +103,10 @@ bool CEGLWrapper::Initialize(const std::string &implementation)
+       (nativeGuess = CreateEGLNativeType<CEGLNativeTypeAndroid>(implementation))
+ #elif defined(TARGET_RASPBERRY_PI)
+       (nativeGuess = CreateEGLNativeType<CEGLNativeTypeRaspberryPI>(implementation))
++#elif defined(HAS_MALI)
++      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeMali>(implementation))
++#elif defined(HAS_V3D)
++      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeV3D>(implementation))
+ #elif defined(HAS_IMXVPU)
+       (nativeGuess = CreateEGLNativeType<CEGLNativeTypeIMX>(implementation))
+ #elif defined(TARGET_LINUX) && defined(HAS_LIBAMCODEC)
+diff --git a/xbmc/windowing/egl/Makefile.in b/xbmc/windowing/egl/Makefile.in
+index 68f7862..ffbe781 100644
+--- a/xbmc/windowing/egl/Makefile.in
++++ b/xbmc/windowing/egl/Makefile.in
+@@ -12,6 +12,12 @@ endif
+ ifeq (@USE_IMXVPU@,1)
+ SRCS+= EGLNativeTypeIMX.cpp
+ endif
++ifeq (@USE_MALI@,1)
++SRCS+= EGLNativeTypeMali.cpp
++endif
++ifeq (@USE_V3D@,1)
++SRCS+= EGLNativeTypeV3D.cpp
++endif
+ SRCS+= EGLWrapper.cpp
+ 
+ LIB = windowing_egl.a
+-- 
+2.7.4

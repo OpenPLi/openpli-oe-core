@@ -8,7 +8,7 @@ PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,rtmpdump"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
 PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 
-PACKAGECONFIG = "avdevice avfilter avcodec avformat avresample swscale swresample \
+PACKAGECONFIG = "avdevice avfilter avcodec avformat avresample swscale swresample postproc \
 		bzlib gpl x264 openssl libbluray libfreetype librtmp"
 
 
