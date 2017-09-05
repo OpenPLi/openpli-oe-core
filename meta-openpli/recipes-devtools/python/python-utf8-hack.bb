@@ -15,7 +15,7 @@ PACKAGES="${PN}"
 FILES_${PN} = "${libdir}/${PYTHON_DIR}/site-packages/*.py*"
 
 do_compile() {
-	python -O -m compileall ${WORKDIR}
+	python -O -m compileall -l ${WORKDIR}
 }
 
 do_install() {
