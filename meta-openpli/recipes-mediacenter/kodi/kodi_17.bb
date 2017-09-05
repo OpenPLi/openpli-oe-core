@@ -63,7 +63,7 @@ PKGV = "17.5+gitr${GITPKGV}"
 
 SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Krypton \
            file://0003-configure-don-t-try-to-run-stuff-to-find-tinyxml.patch \
-           file://0004-handle-SIGTERM.patch \
+           file://0004-handle-SIGTERM.patch;apply=no \
            file://0005-add-support-to-read-frequency-output-if-using-intel-.patch \
            file://0006-Disable-DVD-support.patch \
            file://0007-Always-compile-libcpluff-as-PIC.patch \
