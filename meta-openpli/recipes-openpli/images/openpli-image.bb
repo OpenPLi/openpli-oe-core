@@ -2,6 +2,10 @@ require conf/license/openpli-gplv2.inc
 
 inherit image
 
+DEPENDS += " \
+	zip-native \
+"
+
 IMAGE_INSTALL = "\
 	${ROOTFS_PKGMANAGE} \
 	3rd-party-feed-configs \
