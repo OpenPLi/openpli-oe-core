@@ -183,10 +183,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit autotools pkgconfig
 
 PACKAGES =+ "enigma2-fonts"
-PV_enigma2-fonts = "2017.04.30"
-PR_enigma2-fonts = "r0"
-PKGV_enigma2-fonts = "${PV_enigma2-fonts}"
-PKGR_enigma2-fonts = "${PR_enigma2-fonts}"
+PKGV_enigma2-fonts = "2017.04.30"
 FILES_enigma2-fonts = "${datadir}/fonts"
 
 def get_crashaddr(d):
