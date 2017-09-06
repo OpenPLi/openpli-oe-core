@@ -6,6 +6,7 @@ inherit allarch
 ALLOW_EMPTY_${PN} = "1"
 
 DEPENDS = " \
+		enigma2-plugin-picons-delta.dark-on-white-220x132 \
 		enigma2-plugin-picons-ziggo.metal-look-100x60 \
 		enigma2-plugin-picons-ziggo.metal-look-220x132 \
 		enigma2-plugin-picons-ziggo.metal-stamp-100x60 \
