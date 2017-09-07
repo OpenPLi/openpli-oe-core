@@ -5,12 +5,10 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
 inherit gitpkgv allarch
 
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
+PV = "1.2+git${SRCPV}"
+PKGV = "1.2+git${GITPKGV}"
 
-PV_font-valis-enigma = "2009.11.12"
-PR_font-valis-enigma = "r1"
-PKGV_font-valis-enigma = "${PV_font-valis-enigma}"
+PKGV_font-valis-enigma = "2009.11.12"
 DESCRIPTION_font-valis-enigma = "Valis enigma font"
 
 PACKAGES = "${PN} font-valis-enigma"
