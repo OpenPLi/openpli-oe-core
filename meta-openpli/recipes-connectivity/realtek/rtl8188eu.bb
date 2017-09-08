@@ -10,7 +10,7 @@ inherit module machine_kernel_pr
 SRC_URI = "git://github.com/lwfinger/rtl8188eu.git;branch=master \
 	"
 
-S = "${WORKDIR}/rtl8188eu"
+S = "${WORKDIR}/git"
 
 MACHINE_KERNEL_PR_append = ".0"
 
