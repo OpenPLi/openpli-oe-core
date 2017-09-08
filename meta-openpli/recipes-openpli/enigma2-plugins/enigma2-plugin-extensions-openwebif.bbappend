@@ -116,7 +116,7 @@ python do_cleanup () {
                 os.remove(os.path.join(root, name))
 }
 
-addtask do_cleanup after do_install before do_package
+addtask do_cleanup after do_populate_sysroot before do_package
 
 PACKAGES =+ "${PN}-vxg"
 DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
