@@ -21,6 +21,7 @@ OPTIONAL_PACKAGES += " \
 	autossh \
 	ctorrent \
 	cups \
+	davfs2 \
 	diffutils \
 	djmount \
 	dosfstools \
