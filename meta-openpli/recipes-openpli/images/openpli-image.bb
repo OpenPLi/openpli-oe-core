@@ -2,6 +2,15 @@ require conf/license/openpli-gplv2.inc
 
 inherit image
 
+# Delete the rootfs source before running do_rootfs,
+# not directly after. this leaves the rootfs directory
+# present for the different do_image tasks to use
+do_rootfs_prepend() {
+    bb.utils.remove("${WORKDIR}/rootfs", True)
+    bb.utils.mkdirhier("${WORKDIR}/rootfs")
+}
+rm_work_rootfs[cleandirs] = ""
+
 IMAGE_INSTALL = "\
 	${ROOTFS_PKGMANAGE} \
 	3rd-party-feed-configs \
