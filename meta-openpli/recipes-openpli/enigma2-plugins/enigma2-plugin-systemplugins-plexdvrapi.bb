@@ -8,7 +8,7 @@ inherit autotools-brokensep gitpkgv pythonnative
 
 PV = "2.2+git${SRCPV}"
 PKGV = "2.2+git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "git://github.com/OpenViX/PlexDVRAPI.git;protocol=git"
 
