@@ -5,9 +5,10 @@ inherit image
 # Delete the rootfs source before running do_rootfs,
 # not directly after. this leaves the rootfs directory
 # present for the different do_image tasks to use
-do_rootfs_prepend() {
-    bb.utils.remove("${WORKDIR}/rootfs", True)
-    bb.utils.mkdirhier("${WORKDIR}/rootfs")
+python do_rootfs_prepend() {
+    workdir = d.expand("${WORKDIR}/rootfs")
+    bb.utils.remove(workdir, True)
+    bb.utils.mkdirhier(workdir)
 }
 rm_work_rootfs[cleandirs] = ""
 
