@@ -15,12 +15,12 @@ def devshell_emit_env(o, d, all=False, funcwhitelist=None):
     env = bb.data.keys(d)
 
     for e in env:
-        if d.getVarFlag(e, "func"):
+        if d.getVarFlag(e, "func", True):
             continue
         bb.data.emit_var(e, o, d, all) and o.write('\n')
 
     for e in env:
-        if not d.getVarFlag(e, "func"):
+        if not d.getVarFlag(e, "func", True):
             continue
         if not funcwhitelist:
             bb.data.emit_var(e, o, d) and o.write('\n')
