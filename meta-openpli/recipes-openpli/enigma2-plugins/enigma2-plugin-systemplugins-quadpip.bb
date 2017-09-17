@@ -15,6 +15,6 @@ PACKAGES = "${PN}"
 
 do_install() {
 	install -d "${D}/${DST}"
-	install -m 0644 "${S}/QuadPiP"/* "${D}/${DST}"
+	install -m 0644 "${S}"/* "${D}/${DST}"
 	python -O -m compileall "${D}/${DST}"
 }
