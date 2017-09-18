@@ -1,5 +1,6 @@
 SUMMARY = "Driver for Realtek USB wireless device 8192eu"
 HOMEPAGE = "http://www.realtek.com/"
+
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://README.md;md5=141a037f426cbdd37485cdd88d12698f"
 
@@ -26,4 +27,3 @@ do_install() {
         install -d ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
         install -m 0644 ${S}/8192eu.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
 }
-
