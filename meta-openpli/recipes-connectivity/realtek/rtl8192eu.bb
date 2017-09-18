@@ -1,7 +1,8 @@
 SUMMARY = "Driver for Realtek USB wireless device 8192eu"
 HOMEPAGE = "http://www.realtek.com/"
+
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://README.md;md5=141a037f426cbdd37485cdd88d12698f"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 
 SRC_URI = "git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
     file://rtl8192eu-makefile.patch \
@@ -26,4 +27,3 @@ do_install() {
         install -d ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
         install -m 0644 ${S}/8192eu.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
 }
-
