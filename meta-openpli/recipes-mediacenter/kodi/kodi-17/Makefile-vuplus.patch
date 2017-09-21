@@ -1,0 +1,28 @@
+commit cf63c713d53b08aa254c42980f1a527bc93c490d
+Author: Athanasios Oikonomou <athoik@gmail.com>
+Date:   Thu Sep 21 21:59:19 2017 +0300
+
+    makefile-vuplus
+
+diff --git a/Makefile.in b/Makefile.in
+index 3c5de7c..50adbb2 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -423,6 +423,8 @@ MAINOBJS+=xbmc/platform/darwin/osx/sdlmain.a
+ endif
+ endif # USE_ANDROID
+ 
++VUPLUS_SUPPORT=$(shell cd ../xbmc-support; pwd)
++VUPLUS_EXTLIBS= xbmc/windowing/egl/gles_init.a -ldvb_base -lnxpl -ldvb_client -L$(VUPLUS_SUPPORT) -lxbmc_base
+ 
+ OBJSXBMC =$(DIRECTORY_ARCHIVES)
+ OBJSXBMC:=$(filter-out $(DYNOBJSXBMC), $(OBJSXBMC))
+@@ -450,7 +452,7 @@ endif
+ ifeq ($(findstring osx,@ARCH@), osx)
+ 	$(SILENT_LD) $(CXX) $(LDFLAGS) -o @APP_NAME_LC@.bin $(MAINOBJS) -Wl,-all_load,-ObjC $(MAINOBJS) $(DYNOBJSXBMC) $(NWAOBJSXBMC) $(OBJSXBMC) $(LIBS) -rdynamic
+ else
+-	$(SILENT_LD) $(CXX) $(CXXFLAGS) $(LDFLAGS) -o @APP_NAME_LC@.bin $(MAINOBJS) -Wl,--start-group $(MAINOBJS) $(DYNOBJSXBMC) $(OBJSXBMC) -Wl,--end-group $(NWAOBJSXBMC) $(LIBS) -rdynamic
++	$(SILENT_LD) $(CXX) $(CXXFLAGS) $(LDFLAGS) -o @APP_NAME_LC@.bin $(MAINOBJS) -Wl,--start-group $(MAINOBJS) $(DYNOBJSXBMC) $(OBJSXBMC) -Wl,--end-group $(NWAOBJSXBMC) $(LIBS) -rdynamic $(VUPLUS_EXTLIBS)
+ endif
+ 
+ @APP_NAME_LC@-xrandr: xbmc-xrandr.c
