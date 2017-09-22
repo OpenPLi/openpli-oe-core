@@ -14,7 +14,6 @@ SRC_URI_append += "\
 	"
 
 SRC_URI_append_osmega += "file://EGLNativeTypeV3D-platform.patch"
-RDEPENDS_${PN}_osmega += "v3d-libgles-osmega"
 
 DEPENDS += " \
 	bluez5 \
