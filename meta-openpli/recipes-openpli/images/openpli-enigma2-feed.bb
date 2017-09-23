@@ -19,6 +19,7 @@ OPTIONAL_PACKAGES += " \
 	astra-sm \
 	autofs \
 	autossh \
+	ccid \
 	ctorrent \
 	cups \
 	davfs2 \
