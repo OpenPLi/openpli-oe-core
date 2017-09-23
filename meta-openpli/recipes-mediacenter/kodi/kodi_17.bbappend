@@ -2,7 +2,7 @@ PROVIDES += "virtual/kodi"
 RPROVIDES_${PN} += "virtual/kodi"
 PACKAGE_ARCH = "${MACHINE}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-17:"
 
 SRC_URI_append += "\
 	file://kodi-platform-support.patch \
