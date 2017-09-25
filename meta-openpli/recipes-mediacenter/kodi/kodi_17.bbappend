@@ -30,7 +30,10 @@ EXTRA_OECONF_osmega += "--with-gpu=v3dplatform"
 EXTRA_OECONF_wetekplay += "--with-gpu=mali"
 
 EXTRA_KODI ?= "empty"
+EXTRA_KODI_vuduo2 = "vuplus"
+EXTRA_KODI_vusolo2 = "vuplus"
 EXTRA_KODI_vusolo4k = "vuplus"
+EXTRA_KODI_vusolose = "vuplus"
 EXTRA_KODI_vuultimo4k = "vuplus"
 EXTRA_KODI_vuuno4k = "vuplus"
 require kodi-${EXTRA_KODI}.inc
