@@ -1,17 +1,8 @@
-From 6a4bc48c5db228ac1d9d00efe02a7c2e292bd62f Mon Sep 17 00:00:00 2001
-From: GF <support@gfutures.net>
-Date: Tue, 21 Mar 2017 19:00:39 +0100
-Subject: Input Devices
-
----
- xbmc/input/linux/LinuxInputDevices.cpp   |  2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
 diff --git a/xbmc/input/linux/LinuxInputDevices.cpp b/xbmc/input/linux/LinuxInputDevices.cpp
-index 3875138..d3084f2 100644
+index ef0d494..122d517 100644
 --- a/xbmc/input/linux/LinuxInputDevices.cpp
 +++ b/xbmc/input/linux/LinuxInputDevices.cpp
-@@ -276,6 +278,8 @@ KeyMap keyMap[] = {
+@@ -276,6 +276,8 @@ KeyMap keyMap[] = {
    { 378               , XBMCK_RIGHT       }, // Green
    { 381               , XBMCK_UP          }, // Yellow
    { 366               , XBMCK_DOWN        }, // Blue
@@ -20,6 +11,16 @@ index 3875138..d3084f2 100644
  };
  
  typedef enum
--- 
-2.7.4
-
+@@ -858,6 +860,12 @@ XBMC_Event CLinuxInputDevice::ReadEvent()
+         break;
+       }
+ 
++#if defined(HAS_V3D)
++      if (access("/tmp/playing.lock", F_OK) == 0) {
++        break;
++      }
++#endif
++
+       //printf("read event readlen = %d device name %s m_fileName %s\n", readlen, m_deviceName, m_fileName.c_str());
+ 
+       // sanity check if we realy read the event
