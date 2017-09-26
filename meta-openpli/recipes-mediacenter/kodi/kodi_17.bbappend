@@ -9,6 +9,7 @@ SRC_URI_append += "\
 	file://brcmstb-settings.patch \
 	file://input-devices.patch \
 	file://e2player.patch \
+	file://quit.patch \
 	${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://EGLNativeTypeV3D-nxpl.patch', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://EGLNativeTypeMali.patch', '', d)} \
 	"
