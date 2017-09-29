@@ -9,8 +9,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=5f30f0716dfdd0d91eb439ebec522ec2"
 SECTION = "libs"
 DEPENDS = "glib-2.0 intltool-native openssl"
 
-SRC_URI[archive.md5sum] = "3331bc78aed330d993716fe636a939b6"
-SRC_URI[archive.sha256sum] = "1a381fce3a932f66ff3d6acab40b6153f8fe4db7371834fae182aec7cc8b62ae"
+SRC_URI[archive.md5sum] = "bd4746fcd00bf338af538bd765413a5b"
+SRC_URI[archive.sha256sum] = "0211c118b86aec228d2b7d2606bba9637d5bb5d60694cc7ccb6d2920f02866bc"
 
 inherit gnomebase gettext upstream-version-is-even gio-module-cache
 
