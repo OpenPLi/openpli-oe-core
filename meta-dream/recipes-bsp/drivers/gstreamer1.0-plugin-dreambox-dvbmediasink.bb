@@ -9,7 +9,7 @@ RPROVIDES_${PN} = "gst-plugin-dreambox-dvbmediasink"
 RREPLACES_${PN} = "gst-plugin-dreambox-dvbmediasink"
 RCONFLICTS_${PN} = "gst-plugin-dreambox-dvbmediasink"
 
-DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base libdca"
+DEPENDS = "glib-2.0-native gstreamer1.0 gstreamer1.0-plugins-base libdca"
 
 GSTVERSION = "1.0"
 
