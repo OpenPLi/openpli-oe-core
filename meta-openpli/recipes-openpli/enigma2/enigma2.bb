@@ -35,6 +35,7 @@ RRECOMMENDS_${PN} = " \
 	glib-networking \
 	hotplug-e2-helper \
 	glibc-gconv-utf-16 \
+	python-sendfile \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
