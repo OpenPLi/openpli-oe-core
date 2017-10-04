@@ -1,10 +1,8 @@
-require linux-firmware-local.inc
+require linux-firmware.inc
 
 DESCRIPTION = "Firmware for TBS 5980"
-S = "${WORKDIR}"
 
 FW = "dvb-usb-tbsqbox-id5980.fw"
-SRC_URI = "file://${FW}"
 
 do_install() {
         install -d ${D}${base_libdir}/firmware
