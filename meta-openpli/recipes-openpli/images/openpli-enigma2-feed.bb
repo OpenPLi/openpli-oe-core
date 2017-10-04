@@ -118,6 +118,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-systemplugins-serviceapp \
 	enigma2-plugin-systemplugins-plexdvrapi \
 	enigma2-plugin-systemplugins-quadpip \
+	enigma2-plugin-systemplugins-extrafancontrol \
 	enigma2-plugin-extensions-historyzapselector \
 	enigma2-plugin-extensions-lcd4linux \
 	enigma2-plugin-extensions-tmbd \
@@ -142,4 +143,4 @@ ENIGMA2_OPTIONAL = " \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"
 
-DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"
+DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"	
