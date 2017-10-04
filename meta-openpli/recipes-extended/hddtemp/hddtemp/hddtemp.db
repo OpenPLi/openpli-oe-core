@@ -526,6 +526,7 @@
 "ST3300622AS"      194  C "Seagate Barracuda 7200.9 SATA2.5 300GB"
 "ST3300831A"      194  C "Seagate Barracuda 7200.8 PATA 300GB"
 "ST95005620AS"      194  C "Seagate Momentus XT ST95005620AS 500 GB"
+"ST9500325AS"      194  C "Seagate Momentus 5400.6 ST95005620AS 500 GB"
 
 ########################################
 ############# SSD drives
