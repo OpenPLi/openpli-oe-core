@@ -1,5 +1,5 @@
-DESCRIPTION = "Imports xmltv files into the EPG cache of enigma2"
-MAINTAINER = "MiLo, rytec @ pli-images.org"
+DESCRIPTION = "Imports XMLTV and epg.dat files into the EPG cache of enigma2"
+MAINTAINER = "OpenPLi team"
 
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://../etc/epgimport/readme.txt;startline=1;endline=4;md5=c162054328d930d453543efef81be1d8"
@@ -20,6 +20,9 @@ DEPENDS = "python"
 RDEPENDS_${PN} = "python-compression python-shell python-lzma python-pkgutil"
 RRECOMMENDS_${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN}"
+
+RREPLACES_${PN} = "enigma2-plugin-extensions-xmltvimport"
+CONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport"
 
 PLUGIN = "EPGImport"
 
