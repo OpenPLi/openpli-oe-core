@@ -66,6 +66,7 @@ python do_cleanup () {
         ('et8000', 'et8000.png', 'et8000.png', 'et8000.html'),
         ('et8500', 'et8500.png', 'et8000.png', 'et8000.html'),
         ('h3', 'h3.png', 'h3.png', 'h3.html'),
+        ('h4', 'h4.png', 'h3.png', 'h3.html'),
         ('h5', 'h5.png', 'h3.png', 'h3.html'),
         ('h7', 'h7.png', 'h3.png', 'h3.html'),
         ('i55', 'i55.png', 'i55.png', 'i55.html'),
