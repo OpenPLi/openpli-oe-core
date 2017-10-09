@@ -8,7 +8,6 @@ inherit gitpkgv distutils-openplugins
 
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
-PR = "r1"
 
 SRC_URI = "git://github.com/OpenViX/PlexDVRAPI.git;protocol=git"
 
