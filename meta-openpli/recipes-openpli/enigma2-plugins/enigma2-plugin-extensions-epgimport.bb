@@ -22,7 +22,7 @@ RRECOMMENDS_${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN}"
 
 RREPLACES_${PN} = "enigma2-plugin-extensions-xmltvimport"
-CONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport"
+RCONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport"
 
 PLUGIN = "EPGImport"
 
