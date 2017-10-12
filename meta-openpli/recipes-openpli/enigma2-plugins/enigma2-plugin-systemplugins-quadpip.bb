@@ -16,6 +16,6 @@ PACKAGES = "${PN}"
 
 do_install() {
 	install -d "${D}/${DST}"
-	install -m 0644 "${S}"/* "${D}/${DST}"
+	cp -r "${S}"/* "${D}/${DST}"
 	python -O -m compileall "${D}/${DST}"
 }
