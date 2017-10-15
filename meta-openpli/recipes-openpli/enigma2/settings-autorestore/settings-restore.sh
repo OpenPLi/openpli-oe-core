@@ -16,7 +16,7 @@ cp ${SAMBACONF} ${SAMBACONF}.tmp
 # Best candidate:
 #	If a MAC Address dependent backup was found, use that
 #	Always use the latest version
-#	Prefer an older MAC address dependent backup to a newer one without it 
+#	Prefer an older MAC address dependent backup to a newer one without it
 for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
 	if [ -d ${candidate}/backup ]
@@ -84,6 +84,7 @@ then
 			mkdir -p $path
 		fi
 	done
+	mount -a
 fi
 [ -s /tmp/crontab ] && crontab /tmp/crontab
 
