@@ -5,4 +5,5 @@ vfat
 fat
 btrfs
 ntfs-3g
+exfat-fuse
 *

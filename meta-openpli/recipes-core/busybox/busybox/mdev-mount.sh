@@ -106,6 +106,9 @@ case "$ACTION" in
 				MOUNTPOINT="/media/$MDEV"
 				mkdir -p "${MOUNTPOINT}"
 			fi
+			if [ $TYPE == exfat ] && [ -f /usr/sbin/mount.exfat ] && mount.exfat -o noatime /dev/$MDEV "${MOUNTPOINT}" ; then
+				exit 0
+			fi
 			if ! mount -t auto -o noatime /dev/$MDEV "${MOUNTPOINT}" ; then
 				rmdir "${MOUNTPOINT}"
 			fi
