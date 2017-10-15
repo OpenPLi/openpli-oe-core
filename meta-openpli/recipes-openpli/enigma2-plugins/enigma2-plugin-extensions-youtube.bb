@@ -5,7 +5,8 @@ HOMEPAGE = "https://github.com/Taapat/enigma2-plugin-youtube"
 SECTION = "multimedia"
 LICENSE = "PD"
 LIC_FILES_CHKSUM = "file://COPYING.GPLv2;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-SRC_URI = "git://github.com/Taapat/enigma2-plugin-youtube.git"
+BRANCH = "release-6.0"
+SRC_URI = "git://github.com/Taapat/enigma2-plugin-youtube.git;branch=${BRANCH}"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
