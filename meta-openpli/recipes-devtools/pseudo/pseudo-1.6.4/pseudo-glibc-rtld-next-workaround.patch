@@ -1,0 +1,16 @@
+Index: pseudo-1.6.4/pseudo_wrappers.c
+===================================================================
+--- pseudo-1.6.4.orig/pseudo_wrappers.c
++++ pseudo-1.6.4/pseudo_wrappers.c
+@@ -119,9 +119,9 @@ pseudo_init_one_wrapper(pseudo_function
+ 			return;
+ 		}
+ #else
+-		if (e != NULL) {
++		/*if (e != NULL) {
+ 			pseudo_diag("No real function for %s: %s\n", func->name, e);
+-		}
++		}*/
+ #endif
+ 	}
+ }
