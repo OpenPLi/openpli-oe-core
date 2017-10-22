@@ -18,7 +18,7 @@ PACKAGES = "${PN}"
 RDEPENDS_${PN} += "softcam-support"
 INSANE_SKIP_${PN} += "already-stripped"
 
-CAMLINK = "$D/etc/init.d/softcam"
+CAMLINK = "/etc/init.d/softcam"
 CAMPATH = "/etc/init.d/softcam.${CAMNAME}"
 
 CAMSTART ?= "exec start-stop-daemon -S -x /usr/bin/${CAMNAME}"
@@ -69,7 +69,7 @@ do_install_append () {
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
 pkg_postinst_${PN}_append () {
-	if [ ! -e "${CAMLINK}" ] || [ "$D/etc/init.d/softcam.None" = "`readlink -f ${CAMLINK}`" ]
+	if [ ! -e "${CAMLINK}" ] || [ "/etc/init.d/softcam.None" = "`readlink -f ${CAMLINK}`" ]
 	then
 		rm -f "${CAMLINK}"
 		ln -s "softcam.${CAMNAME}" "${CAMLINK}"
