@@ -1,6 +1,6 @@
 diff -uNr ffmpeg-3.3_orig/configure ffmpeg-3.3_dash_demux/configure
---- ffmpeg-3.3_orig/configure	2017-08-08 21:01:10.616080967 +0200
-+++ ffmpeg-3.3_dash_demux/configure	2017-08-08 21:02:07.616083400 +0200
+--- ffmpeg-3.3_orig/configure	2016-12-06 00:28:58.000000000 +0100
++++ ffmpeg-3.3_dash_demux/configure	2017-10-22 14:30:41.170550486 +0200
 @@ -294,6 +294,7 @@
                             on OSX if openssl and gnutls are not used [autodetect]
    --enable-x11grab         enable X11 grabbing (legacy) [no]
@@ -33,10 +33,9 @@ diff -uNr ffmpeg-3.3_orig/configure ffmpeg-3.3_dash_demux/configure
 
  check_lib math.h sin -lm && LIBM="-lm"
  disabled crystalhd || check_lib "stdint.h libcrystalhd/libcrystalhd_if.h" DtsCrystalHDVersion -lcrystalhd || disable crystalhd
-
 diff -uNr ffmpeg-3.3_orig/libavformat/allformats.c ffmpeg-3.3_dash_demux/libavformat/allformats.c
---- ffmpeg-3.3_orig/libavformat/allformats.c	2017-08-08 21:01:10.708080970 +0200
-+++ ffmpeg-3.3_dash_demux/libavformat/allformats.c	2017-08-08 21:02:07.616083400 +0200
+--- ffmpeg-3.3_orig/libavformat/allformats.c	2016-12-06 00:28:54.000000000 +0100
++++ ffmpeg-3.3_dash_demux/libavformat/allformats.c	2017-10-22 14:30:41.170550486 +0200
 @@ -100,7 +100,7 @@
      REGISTER_DEMUXER (CINE,             cine);
      REGISTER_DEMUXER (CONCAT,           concat);
@@ -48,8 +47,8 @@ diff -uNr ffmpeg-3.3_orig/libavformat/allformats.c ffmpeg-3.3_dash_demux/libavfo
      REGISTER_DEMUXER (DCSTR,            dcstr);
 diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavformat/dashdec.c
 --- ffmpeg-3.3_orig/libavformat/dashdec.c	1970-01-01 01:00:00.000000000 +0100
-+++ ffmpeg-3.3_dash_demux/libavformat/dashdec.c	2017-08-09 22:33:57.545772700 +0200
-@@ -0,0 +1,2061 @@
++++ ffmpeg-3.3_dash_demux/libavformat/dashdec.c	2017-10-22 16:09:40.837356820 +0200
+@@ -0,0 +1,2065 @@
 +/*
 + * Dynamic Adaptive Streaming over HTTP demux
 + * Copyright (c) 2017 samsamsam@o2.pl based on HLS demux
@@ -766,6 +765,7 @@ diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavforma
 +        xmlNodePtr root_element = NULL;
 +        xmlNodePtr node = NULL;
 +        xmlNodePtr periodNode = NULL;
++        xmlNodePtr periodSegmentListNode = NULL;
 +        xmlNodePtr mpdBaseUrlNode = NULL;
 +        xmlNodePtr periodBaseUrlNode = NULL;
 +        xmlNodePtr adaptionSetNode = NULL;
@@ -874,6 +874,8 @@ diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavforma
 +        while (adaptionSetNode) {
 +            if (!xmlStrcmp(adaptionSetNode->name, (const xmlChar *)"BaseURL")) {
 +                periodBaseUrlNode = adaptionSetNode;
++            } else if (!xmlStrcmp(adaptionSetNode->name, (const xmlChar *)"SegmentList")) {
++                periodSegmentListNode = adaptionSetNode;
 +            } else if (!xmlStrcmp(adaptionSetNode->name, (const xmlChar *)"AdaptationSet")) {
 +                xmlNodePtr segmentTemplateNode = NULL;
 +                xmlNodePtr contentComponentNode = NULL;
@@ -982,10 +984,10 @@ diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavforma
 +                               // TODO: https://www.brendanlong.com/the-structure-of-an-mpeg-dash-mpd.html
 +                               // http://www-itec.uni-klu.ac.at/dash/ddash/mpdGenerator.php?segmentlength=15&type=full
 +                                xmlNodePtr segmentUrlNode = NULL;
-+                                xmlNodePtr segmentListTab[2] = {representationSegmentListNode, adaptionSetSegmentListNode};
-+                                xmlChar *duration_val        = get_val_from_nodes_tab(segmentListTab,  2, "duration");
-+                                xmlChar *startNumber_val     = get_val_from_nodes_tab(segmentListTab,  2, "startNumber");
-+                                xmlChar *timescale_val       = get_val_from_nodes_tab(segmentListTab,  2, "timescale");
++                                xmlNodePtr segmentListTab[3] = {representationSegmentListNode, adaptionSetSegmentListNode, periodSegmentListNode};
++                                xmlChar *duration_val        = get_val_from_nodes_tab(segmentListTab,  3, "duration");
++                                xmlChar *startNumber_val     = get_val_from_nodes_tab(segmentListTab,  3, "startNumber");
++                                xmlChar *timescale_val       = get_val_from_nodes_tab(segmentListTab,  3, "timescale");
 +                                
 +                                if (duration_val) {
 +                                    rep->segmentDuration = (int64_t) atoll((const char *)duration_val);
@@ -1187,13 +1189,14 @@ diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavforma
 +
 +        free_segment_list(rep_dest);
 +        
-+        if (rep_src->start_number > (rep_dest->start_number + rep_dest->n_segments))
++        if (rep_src->start_number > (rep_dest->start_number + rep_dest->cur_seq_no))
 +            rep_dest->cur_seq_no = 0;
 +        else
-+            rep_dest->cur_seq_no += rep_src->start_number - rep_dest->start_number;
++            rep_dest->cur_seq_no = rep_src->n_segments - ((rep_src->start_number + rep_src->n_segments) - (rep_dest->start_number + rep_dest->cur_seq_no));
 +        
 +        rep_dest->segments    = rep_src->segments;
 +        rep_dest->n_segments  = rep_src->n_segments;
++        rep_dest->start_number = rep_src->start_number;
 +        
 +        rep_dest->last_seq_no = calc_max_seg_no(rep_dest, c);
 +        
@@ -2112,8 +2115,8 @@ diff -uNr ffmpeg-3.3_orig/libavformat/dashdec.c ffmpeg-3.3_dash_demux/libavforma
 +    .flags          = AVFMT_NO_BYTE_SEEK,
 +};
 diff -uNr ffmpeg-3.3_orig/libavformat/Makefile ffmpeg-3.3_dash_demux/libavformat/Makefile
---- ffmpeg-3.3_orig/libavformat/Makefile	2017-08-08 21:01:10.708080970 +0200
-+++ ffmpeg-3.3_dash_demux/libavformat/Makefile	2017-08-08 21:02:07.624083401 +0200
+--- ffmpeg-3.3_orig/libavformat/Makefile	2016-12-06 00:28:54.000000000 +0100
++++ ffmpeg-3.3_dash_demux/libavformat/Makefile	2017-10-22 14:30:41.170550487 +0200
 @@ -134,6 +134,7 @@
  OBJS-$(CONFIG_DATA_DEMUXER)              += rawdec.o
  OBJS-$(CONFIG_DATA_MUXER)                += rawdec.o
