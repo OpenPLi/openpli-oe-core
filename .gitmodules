@@ -65,3 +65,6 @@
 [submodule "meta-gigablue"]
 	path = meta-gigablue
 	url = https://github.com/GigaBlue-STB/meta-gigablue
+[submodule "meta-amiko"]
+	path = meta-amiko
+	url = https://github.com/open-amiko/meta-amiko.git
