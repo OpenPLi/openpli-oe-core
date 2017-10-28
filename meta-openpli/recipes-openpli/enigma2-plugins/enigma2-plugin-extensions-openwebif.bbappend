@@ -10,6 +10,7 @@ python do_cleanup () {
         ('osmega', 'osmega.png', 'osmini.png', 'osmini.html'),
         ('osmini', 'osmini.png', 'osmini.png', 'osmini.html'),
         ('osminiplus', 'osminiplus.png', 'osmini.png', 'osmini.html'),
+        ('osnino', 'osnino.png', 'edision1.png', 'edision1.html'),
         ('formuler1', 'formuler1.png', 'formuler1.png', 'formuler1.html'),
         ('formuler3', 'formuler3.png', 'formuler1.png', 'formuler1.html'),
         ('formuler4', 'formuler4.png', 'formuler1.png', 'formuler1.html'),
