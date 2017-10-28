@@ -35,9 +35,6 @@
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = http://github.com/zgemma-star/meta-zgemma.git
-[submodule "meta-edision"]
-	path = meta-edision
-	url = http://github.com/open-edision/meta-edision.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
 	url = http://github.com/miraclebox-git/meta-miraclebox.git
@@ -68,3 +65,6 @@
 [submodule "meta-amiko"]
 	path = meta-amiko
 	url = https://github.com/open-amiko/meta-amiko.git
+[submodule "meta-edision"]
+	path = meta-edision
+	url = http://github.com/edision-open/meta-edision.git
