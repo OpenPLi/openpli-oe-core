@@ -62,6 +62,7 @@ FILES_${PN} = "                                          \
                 ${datadir}/zoneinfo/CST6CDT              \
                 ${datadir}/zoneinfo/EST                  \
                 ${datadir}/zoneinfo/EST5EDT              \
+                ${datadir}/zoneinfo/Europe/Athens        \
                 ${datadir}/zoneinfo/Europe/Dublin        \
                 ${datadir}/zoneinfo/Europe/Istanbul      \
                 ${datadir}/zoneinfo/Europe/Moscow        \
