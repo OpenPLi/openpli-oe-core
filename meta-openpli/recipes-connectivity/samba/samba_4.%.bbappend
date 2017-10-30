@@ -61,7 +61,7 @@ PACKAGES_remove = "libnetapi"
 FILES_${PN}-base += "${sysconfdir}/samba/smb.conf"
 
 # update libsamba-base libraries for samba 4.4.5 to fix circular dependencies
-FILES_lib${BPN}-base = "\
+FILES_lib${PN}-base = "\
                     ${libdir}/libdcerpc-binding.so.0.0.1 \
                     ${libdir}/libndr-krb5pac.so.0.0.1 \
                     ${libdir}/libndr-nbt.so.0.0.1 \
