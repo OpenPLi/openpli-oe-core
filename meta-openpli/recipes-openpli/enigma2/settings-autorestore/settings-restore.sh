@@ -19,6 +19,7 @@ cp ${SAMBACONF} ${SAMBACONF}.tmp
 #	Prefer an older MAC address dependent backup to a newer one without it
 for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
+    candidate="${candidate//\\040/\\ }"
 	if [ -d ${candidate}/backup ]
 	then
 		if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
