@@ -2,6 +2,14 @@ diff --git a/lib/python/Plugins/Extensions/DLNABrowser/plugin.py b/lib/python/Pl
 index 884b5a0..3ffdfa7 100644
 --- a/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
 +++ b/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
+@@ -1,5 +1,7 @@
+ from Plugins.Plugin import PluginDescriptor
+
++from Plugins.Extensions.PicturePlayer.ui import *
++
+ import os
+ from enigma import gFont, eTimer, eConsoleAppContainer, ePicLoad, getDesktop, eServiceReference, iPlayableService, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER
+  
 @@ -903,6 +903,13 @@ class DLNADeviceBrowser(Screen):
  
  def main(session, **kwargs):
