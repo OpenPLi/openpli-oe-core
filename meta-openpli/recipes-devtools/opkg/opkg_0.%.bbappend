@@ -15,4 +15,8 @@ do_install_prepend() {
 	install -m 755 ${WORKDIR}/modprobe ${D}${datadir}/opkg/intercept/
 	install -d ${D}${bindir}
 	install -m 755 ${WORKDIR}/opkg-wget ${D}${bindir}/
+	# get rid of a race condition that may add duplicate option lines
+	if [ -f ${WORKDIR}/opkg.conf ]; then
+		awk -i inplace '!x[$0]++' ${WORKDIR}/opkg.conf
+	fi
 }
