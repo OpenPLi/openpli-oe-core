@@ -2,6 +2,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 python do_cleanup () {
+    # contains: MACHINE, box image, remote image, remote map
     boxtypes = [
         ('dm500hd', 'dm500hd.png', 'dm_normal.png', 'dmm.html'),
         ('dm7020hd', 'dm7020hd.png', 'dmm2.png', 'dmm2.html'),
@@ -48,7 +49,7 @@ python do_cleanup () {
         ('vuuno', 'uno.png', 'vu_normal.png', 'vu_normal.html'),
         ('vuuno4k', 'uno4k.png', 'vu_normal.png', 'vu_normal.html'),
         ('vuzero', 'zero.png', 'vu_normal.png', 'vu_normal.html'),
-        ('vuuno4kse', 'vuuno4kse.png', 'uno4kse.png', 'vuuno4kse.html'),
+        ('vuuno4kse', 'uno4kse.png', 'vuuno4kse.png', 'vuuno4kse.html'),
         ('wetekplay', 'wetekplay.png', 'wetekplay.png', 'wetekplay.html'),
         ('xp1000', 'xp1000.png', 'xp_rc14_normal.png', 'xp1000.html'),
         ('xpeedc', 'xpeedlx.png', 'xpeedlx.png', 'xpeedlx.html'),
