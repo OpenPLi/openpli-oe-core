@@ -29,9 +29,6 @@
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = http://github.com/XpeedDeveloperTeam/meta-xpeedc.git
-[submodule "meta-wetek"]
-	path = meta-wetek
-	url = http://github.com/wetek-enigma/meta-wetek.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = http://github.com/zgemma-star/meta-zgemma.git
