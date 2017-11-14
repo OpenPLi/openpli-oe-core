@@ -118,7 +118,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-systemplugins-signalfinder \
 	enigma2-plugin-systemplugins-extnumberzap \
 	enigma2-plugin-systemplugins-serviceapp \
-	enigma2-plugin-systemplugins-plexdvrapi \
+	enigma2-plugin-systemplugins-hrtunerproxy \
 	enigma2-plugin-systemplugins-quadpip \
 	enigma2-plugin-systemplugins-extrafancontrol \
 	enigma2-plugin-extensions-historyzapselector \
