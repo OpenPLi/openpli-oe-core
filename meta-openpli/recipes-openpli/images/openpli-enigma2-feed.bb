@@ -53,6 +53,7 @@ OPTIONAL_PACKAGES += " \
 	mtools \
 	nano \
 	net-tools \
+	nodejs \
 	ntfs-3g \
 	ntp \
 	ofgwrite \
@@ -70,6 +71,7 @@ OPTIONAL_PACKAGES += " \
 	python-mechanize \
 	python-lxml \
 	python-js2py \
+	python-pyexecjs \
 	picocom \
 	ppp \
 	rsync \
