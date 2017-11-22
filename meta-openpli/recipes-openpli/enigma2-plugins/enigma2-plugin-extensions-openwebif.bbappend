@@ -72,6 +72,7 @@ python do_cleanup () {
         ('h3', 'h3.png', 'h3.png', 'h3.html'),
         ('h4', 'h4.png', 'h3.png', 'h3.html'),
         ('h5', 'h5.png', 'h3.png', 'h3.html'),
+        ('h6', 'h5.png', 'h3.png', 'h3.html'),
         ('h7', 'h7.png', 'h3.png', 'h3.html'),
         ('i55', 'i55.png', 'i55.png', 'i55.html'),
         ('lc', 'lc.png', 'sh1.png', 'sh1.html'),
