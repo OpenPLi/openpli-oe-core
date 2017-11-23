@@ -1,0 +1,39 @@
+From cb2b7ce505701fd6c10c2700eb1c515f094544e8 Mon Sep 17 00:00:00 2001
+From: Athanasios Oikonomou <athoik@gmail.com>
+Date: Sat, 18 Nov 2017 07:57:35 +0200
+Subject: [PATCH] ac3_descriptor: check if header is larger than descriptor
+
+It seems another broadcaster got it wrong.
+
+6A     Tag 0x6A: AC-3_descriptor
+02     Tag Length: 0x02
+CF 00
+
+In above case the descriptor length is 2 and header lenght is 3.
+The ASSERT_MIN_DLEN fails and ac3 fails to parse.
+Set sane defaults in this case too.
+
+diff --git a/src/ac3_descriptor.cpp b/src/ac3_descriptor.cpp
+index c7b28b2..fec8c31 100644
+--- a/src/ac3_descriptor.cpp
++++ b/src/ac3_descriptor.cpp
+@@ -31,6 +31,16 @@ Ac3Descriptor::Ac3Descriptor(const uint8_t * const buffer) : Descriptor(buffer)
+ 	asvcFlag = (buffer[2] >> 4) & 0x01;
+ 
+ 	size_t headerLength = 1 + ac3TypeFlag + bsidFlag + mainidFlag + asvcFlag;
++
++	// broadcasters got it wrong again...
++	if (headerLength > descriptorLength) {
++		ac3TypeFlag = 0;
++		bsidFlag = 0;
++		mainidFlag = 0;
++		asvcFlag = 0;
++		return;
++	}
++
+ 	ASSERT_MIN_DLEN(headerLength);
+ 
+ 	size_t i = 3;
+-- 
+2.1.4
+
