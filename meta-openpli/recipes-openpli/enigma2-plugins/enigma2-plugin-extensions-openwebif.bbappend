@@ -77,6 +77,8 @@ python do_cleanup () {
         ('i55', 'i55.png', 'i55.png', 'i55.html'),
         ('lc', 'lc.png', 'sh1.png', 'sh1.html'),
         ('sh1', 'sh1.png', 'sh1.png', 'sh1.html'),
+        ('vipercombo', 'vipercombo', 'amiko.png', 'amiko.html'),
+        ('vipert2c', 'vipert2c', 'amiko.png', 'amiko.html'),
     ]
 
     import os
