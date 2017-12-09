@@ -14,7 +14,6 @@ EXTRA_OECONF += " \
                  --without-quotas \
                  --without-winbind \
                  --without-syslog \
-                 --disable-python \
                 "
 
 EXTRA_OECONF_remove = " \
@@ -27,10 +26,13 @@ EXTRA_OECONF_remove = " \
 SRC_URI += " \
            file://smb.conf \
            file://samba.sh \
-           file://22-disable-python.patch \
            "
 
 FILES_${PN}-base += "${sysconfdir}/init.d/samba.sh"
+
+do_install_prepend() {
+	install -d ${D}${sysconfdir}/sudoers.d
+}
 
 do_install_append() {
 	rm -fR ${D}/var

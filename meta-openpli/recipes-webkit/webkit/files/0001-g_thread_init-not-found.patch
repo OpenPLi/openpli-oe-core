@@ -1,0 +1,10 @@
+--- a/configure.ac	2017-11-19 19:29:44.436892317 +0100
++++ b/configure.ac	2017-11-26 16:33:25.749837149 +0100
+@@ -111,6 +111,7 @@
+ AC_CHECK_HEADERS([pthread.h],
+                  AC_DEFINE([HAVE_PTHREAD_H],[1],[Define if pthread exists]),
+                  AC_MSG_ERROR([pthread support is required to build WebKit]))
++AC_CHECK_LIB(gthread-2.0, g_thread_init)
+ fi
+ 
+ # check for libjpeg the way Gtk does it.

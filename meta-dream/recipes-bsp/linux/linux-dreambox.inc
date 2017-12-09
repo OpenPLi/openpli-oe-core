@@ -24,7 +24,7 @@ KERNEL_BUILTIN_MODULES_dm8000 = "\
 	kernel-module-sr-mod \
 	kernel-module-isofs \
 	kernel-module-udf \
-	kernel-module-stv0299 \
+	kernel-module-stv0299-3.2-dm8000 \
 	"
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
