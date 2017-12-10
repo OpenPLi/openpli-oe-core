@@ -16,5 +16,5 @@ do_install() {
 	install -m 0755 ${B}/autossh ${D}${bindir}/autossh
 }
 
-SRC_URI[md5sum] = "26520eea934f296be0783dabe7fcfd28"
-SRC_URI[sha256sum] = "6fcaba6a409a46bdf832086736bb8f09d245ebce11027f41d39588a95dc7fd1d"
+SRC_URI[md5sum] = "f86684b96e99d22b2e9d35dc63b0aa29"
+SRC_URI[sha256sum] = "9e8e10a59d7619176f4b986e256f776097a364d1be012781ea52e08d04679156"
