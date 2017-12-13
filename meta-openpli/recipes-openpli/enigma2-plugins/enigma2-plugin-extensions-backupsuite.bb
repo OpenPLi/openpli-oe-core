@@ -1,8 +1,8 @@
 DESCRIPTION = "Backup Suite"
-LICENSE = "GPLv2"
+LICENSE = "GPLv3"
 MAINTAINER = "Persian Professionals"
 AUTHOR = "Pedro Newbie <pedro.newbie@gmail.com>"
-LIC_FILES_CHKSUM = "file://usr/lib/enigma2/python/Plugins/Extensions/BackupSuite/GNU_LICENSE.txt;md5=8aab2037d6ccded90e5a3a3849bc60dc"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 SRC_URI = "git://github.com/persianpros/BackupSuite.git;protocol=git"
 
