@@ -67,7 +67,6 @@ OPTIONAL_PACKAGES += " \
 	openmultiboot \
 	parted \
 	procps \
-	pyload \
 	python-ipaddress \
 	python-ntplib \
 	python-pip \
