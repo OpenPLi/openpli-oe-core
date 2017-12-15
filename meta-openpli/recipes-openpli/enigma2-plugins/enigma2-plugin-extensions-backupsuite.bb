@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 SRC_URI = "git://github.com/persianpros/BackupSuite.git;protocol=git"
 
-inherit gitpkgv
+inherit gitpkgv gettext
 
 S = "${WORKDIR}/git"
 SRC = "${S}/usr/lib/enigma2/python/Plugins/Extensions/BackupSuite"
