@@ -1,6 +1,8 @@
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
+SRC_URI_append_dm8000 += " file://get-rid-of-orgdream-check.patch"
+
 python do_cleanup () {
     # contains: MACHINE, box image, remote image, remote map
     boxtypes = [
