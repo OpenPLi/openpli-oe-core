@@ -22,29 +22,29 @@ index 13ddebe80569..6f49d655dae2 100644
  	tools/hciattach_qualcomm.c tools/hciattach_intel.c \
 -	tools/hciattach_bcm43xx.c
 +	tools/hciattach_bcm43xx.c tools/hciattach_rtk.c
- @TOOLS_TRUE@am_tools_hciattach_OBJECTS = tools/hciattach.$(OBJEXT) \
- @TOOLS_TRUE@	tools/hciattach_st.$(OBJEXT) \
- @TOOLS_TRUE@	tools/hciattach_ti.$(OBJEXT) \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@am_tools_hciattach_OBJECTS =  \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@	tools/hciattach.$(OBJEXT) \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@	tools/hciattach_st.$(OBJEXT) \
 @@ -1243,7 +1243,8 @@ am__tools_hciattach_SOURCES_DIST = tools/hciattach.c tools/hciattach.h \
- @TOOLS_TRUE@	tools/hciattach_ath3k.$(OBJEXT) \
- @TOOLS_TRUE@	tools/hciattach_qualcomm.$(OBJEXT) \
- @TOOLS_TRUE@	tools/hciattach_intel.$(OBJEXT) \
--@TOOLS_TRUE@	tools/hciattach_bcm43xx.$(OBJEXT)
+ @DEPRECATED_TRUE@@TOOLS_TRUE@	tools/hciattach_ath3k.$(OBJEXT) \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@	tools/hciattach_qualcomm.$(OBJEXT) \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@	tools/hciattach_intel.$(OBJEXT) \
+-@DEPRECATED_TRUE@@TOOLS_TRUE@	tools/hciattach_bcm43xx.$(OBJEXT)
 +@TOOLS_TRUE@	tools/hciattach_bcm43xx.$(OBJEXT) \
 +@TOOLS_TRUE@	tools/hciattach_rtk.$(OBJEXT)
  tools_hciattach_OBJECTS = $(am_tools_hciattach_OBJECTS)
- @TOOLS_TRUE@tools_hciattach_DEPENDENCIES =  \
- @TOOLS_TRUE@	lib/libbluetooth-internal.la
+ @DEPRECATED_TRUE@@TOOLS_TRUE@tools_hciattach_DEPENDENCIES =  \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@	lib/libbluetooth-internal.la
 @@ -2581,7 +2582,8 @@ unit_tests = $(am__append_35) unit/test-eir unit/test-uuid \
- @TOOLS_TRUE@						tools/hciattach_ath3k.c \
- @TOOLS_TRUE@						tools/hciattach_qualcomm.c \
- @TOOLS_TRUE@						tools/hciattach_intel.c \
--@TOOLS_TRUE@						tools/hciattach_bcm43xx.c
+ @DEPRECATED_TRUE@@TOOLS_TRUE@						tools/hciattach_ath3k.c \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@						tools/hciattach_qualcomm.c \
+ @DEPRECATED_TRUE@@TOOLS_TRUE@						tools/hciattach_intel.c \
+-@DEPRECATED_TRUE@@TOOLS_TRUE@						tools/hciattach_bcm43xx.c
 +@TOOLS_TRUE@						tools/hciattach_bcm43xx.c \
 +@TOOLS_TRUE@						tools/hciattach_rtk.c
  
- @TOOLS_TRUE@tools_hciattach_LDADD = lib/libbluetooth-internal.la
- @TOOLS_TRUE@tools_hciconfig_SOURCES = tools/hciconfig.c tools/csr.h tools/csr.c
+ @DEPRECATED_TRUE@@TOOLS_TRUE@tools_hciattach_LDADD = lib/libbluetooth-internal.la
+ @DEPRECATED_TRUE@@TOOLS_TRUE@tools_hciconfig_SOURCES = tools/hciconfig.c tools/csr.h tools/csr.c
 @@ -4702,6 +4704,8 @@ tools/hciattach_intel.$(OBJEXT): tools/$(am__dirstamp) \
  	tools/$(DEPDIR)/$(am__dirstamp)
  tools/hciattach_bcm43xx.$(OBJEXT): tools/$(am__dirstamp) \
@@ -517,4 +517,3 @@ index 000000000000..6ad6c225d1c4
 +}
 -- 
 2.10.2
-
