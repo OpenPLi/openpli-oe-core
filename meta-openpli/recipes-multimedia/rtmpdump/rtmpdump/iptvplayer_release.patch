@@ -1,0 +1,26 @@
+diff -Naur git.orig/librtmp/Makefile git/librtmp/Makefile
+--- git.orig/librtmp/Makefile	2017-12-11 15:07:47.917678758 +0100
++++ git/librtmp/Makefile	2017-12-11 15:15:06.051854703 +0100
+@@ -1,4 +1,4 @@
+-VERSION=v2.4
++VERSION='v2.4, KSV patch 2015-12-15'
+ 
+ prefix=/usr/local
+ 
+@@ -115,6 +115,7 @@
+ 	cp librtmp.3 $(MANDIR)/man3
+ 
+ install_so:	librtmp$(SO_EXT)
++	-mkdir -p $(SODIR)
+ 	cp librtmp$(SO_EXT) $(SODIR)
+ 	$(INSTALL_IMPLIB)
+ 	cd $(SODIR); ln -sf librtmp$(SO_EXT) librtmp.$(SOX)
+diff -Naur git.orig/Makefile git/Makefile
+--- git.orig/Makefile	2017-12-11 15:07:47.570688123 +0100
++++ git/Makefile	2017-12-11 15:13:36.293277043 +0100
+@@ -1,4 +1,4 @@
+-VERSION=v2.4
++VERSION='2.4, KSV patch 2015-12-15'
+ 
+ prefix=/usr/local
+ 
