@@ -106,9 +106,6 @@ python do_cleanup () {
                 exception = 'et7500.png'
             elif x[0] == 'xpeedc':
                 exception = 'xpeedlx.png'
-            elif x[0] == 'dm8000':
-                dir = '%s/public/static/remotes' % pluginpath
-                os.system('cp %s/dmm1.html %s/dmm.html' % (dir, dir))
             break
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
