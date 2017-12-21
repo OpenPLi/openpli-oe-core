@@ -13,4 +13,8 @@ S = "${WORKDIR}/git"
 PV = "22+git${SRCPV}"
 PKGV = "22+git${GITPKGV}"
 
+do_install_append() {
+	chmod a+x ${D}/usr/lib/enigma2/python/Plugins/*/*/*.sh
+}
+
 RDEPENDS_${PN} = "mtd-utils mtd-utils-ubifs ofgwrite"
