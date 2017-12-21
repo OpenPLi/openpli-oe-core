@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 SRC_URI = "git://github.com/persianpros/BackupSuite.git;protocol=git"
 
-inherit gitpkgv allarch distutils-openplugins
+inherit gitpkgv allarch distutils-openplugins gettext
 
 S = "${WORKDIR}/git"
 
