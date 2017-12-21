@@ -8,6 +8,8 @@ SRC_URI = "git://github.com/persianpros/BackupSuite.git;protocol=git"
 
 inherit gitpkgv allarch distutils-openplugins gettext
 
+DEPENDS = "gettext-native"
+
 S = "${WORKDIR}/git"
 
 PV = "22+git${SRCPV}"
