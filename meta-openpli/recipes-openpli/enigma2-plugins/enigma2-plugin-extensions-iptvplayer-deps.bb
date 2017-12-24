@@ -15,6 +15,7 @@ RRECOMMENDS_${PN} = " \
 	iptvsubparser \
 	rtmpdump \
 	duktape \
+	uchardet \
 	"
 
 PV = "1.0"
