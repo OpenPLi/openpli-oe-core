@@ -28,8 +28,8 @@ do_compile() {
 }
 
 do_install() {
-    install -d ${D}${libdir}/enigma2/python/Plugins/Extensions/IPTVPlayer/bin
-    install -m 0755 ${S}/hlsdl ${D}${libdir}/enigma2/python/Plugins/Extensions/IPTVPlayer/bin/
+    install -d ${D}${bindir}
+    install -m 0755 ${S}/hlsdl ${D}${bindir}/
 }
 
-FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/IPTVPlayer/bin"
+FILES_${PN} = "${bindir}"
