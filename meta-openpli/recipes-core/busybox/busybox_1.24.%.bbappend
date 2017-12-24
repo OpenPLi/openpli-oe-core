@@ -40,7 +40,7 @@ FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
 RDEPENDS_${PN}-cron += "${PN}"
 
 pkg_prerm_${PN}_append () {
-	ln -s ${base_bindir}/busybox wget
+	ln -s ${base_bindir}/busybox $tmpdir/wget
 }
 
 do_install_append() {
