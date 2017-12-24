@@ -39,7 +39,7 @@ INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron"
 FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
 RDEPENDS_${PN}-cron += "${PN}"
 
-pkg_prerm-${PN}_append () {
+pkg_prerm_${PN}_append () {
 	ln -s ${base_bindir}/busybox wget
 }
 
