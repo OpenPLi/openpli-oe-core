@@ -24,7 +24,6 @@ OPTIONAL_PACKAGES += " \
 	cups \
 	davfs2 \
 	diffutils \
-	djmount \
 	dosfstools \
 	dvblast \
 	dvbsnoop \
@@ -106,7 +105,6 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-pliplugins \
 	enigma2-plugin-extensions-automatic-fullbackup \
 	enigma2-plugin-drivers-usbserial \
-	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-blurayplayer \
 	enigma2-plugin-extensions-epgimport \
