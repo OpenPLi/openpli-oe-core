@@ -41,6 +41,6 @@ IMAGE_CMD_ubinfi = " \
 
 EXTRA_IMAGECMD_ubinfi ?= "-e ${DREAMBOX_ERASE_BLOCK_SIZE} -n -l"
 
-IMAGE_DEPENDS_ubinfi = "${IMAGE_DEPENDS_ubi} ${IMAGE_DEPENDS_ubifs} dreambox-buildimage-native"
+do_image_ubi[depends] += "dreambox-buildimage-native:do_populate_sysroot"
 
-IMAGE_TYPES += "jffs2 ubifs"
+IMAGE_TYPES += "ubifs"
