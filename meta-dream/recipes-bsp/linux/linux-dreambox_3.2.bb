@@ -43,6 +43,7 @@ SRC_URI = " \
 			file://0001-correctly-initiate-nand-flash-ecc-config-when-old-2n.patch \
 			file://kernel-add-support-for-gcc7.patch \
 			file://0001-misc-latin1-to-utf8-conversions.patch \
+			file://fix-build-with-gcc7.patch \
 			file://defconfig \
 "
 
