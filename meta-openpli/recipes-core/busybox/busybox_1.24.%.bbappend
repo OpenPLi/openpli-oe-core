@@ -39,6 +39,10 @@ INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron"
 FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
 RDEPENDS_${PN}-cron += "${PN}"
 
+pkg_prerm_${PN}_append () {
+	ln -s ${base_bindir}/busybox $tmpdir/wget
+}
+
 do_install_append() {
 	if grep -q "CONFIG_CRONTAB=y" ${WORKDIR}/defconfig; then
 		install -d ${D}${sysconfdir}/cron/crontabs
@@ -49,4 +53,3 @@ do_install_append() {
 }
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-
