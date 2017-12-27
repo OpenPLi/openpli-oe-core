@@ -5,8 +5,8 @@ require conf/license/openpli-gplv2.inc
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/OpenPLi/enigma2-plugin-systemplugins-quadpip.git;protocol=http"
 
-inherit allarch
-inherit gitpkgv
+inherit gitpkgv allarch
+
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 DST = "/usr/lib/enigma2/python/Plugins/SystemPlugins/QuadPiP"
