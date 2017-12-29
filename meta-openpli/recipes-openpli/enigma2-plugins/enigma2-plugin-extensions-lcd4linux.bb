@@ -30,7 +30,7 @@ RDEPENDS_${PN} += "\
 
 S = "${WORKDIR}/git"
 
-inherit gitpkgv pythonnative allarch
+inherit gitpkgv pythonnative
 
 do_compile() {
 	python -m compileall ${S}/usr/lib
