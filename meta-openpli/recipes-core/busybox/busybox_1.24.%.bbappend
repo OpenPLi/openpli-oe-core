@@ -39,6 +39,10 @@ INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron"
 FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
 RDEPENDS_${PN}-cron += "${PN}"
 
+pkg_postinst_${PN}_append () {
+	update-alternatives --install /bin/sh sh /bin/busybox.nosuid 50
+}
+
 pkg_prerm_${PN}_append () {
 	ln -s ${base_bindir}/busybox $tmpdir/wget
 }
