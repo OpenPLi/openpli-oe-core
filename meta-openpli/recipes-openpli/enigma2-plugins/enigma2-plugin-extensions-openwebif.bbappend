@@ -81,6 +81,7 @@ python do_cleanup () {
         ('lc', 'lc.png', 'sh1.png', 'sh1.html'),
         ('sh1', 'sh1.png', 'sh1.png', 'sh1.html'),
         ('vipercombo', 'vipercombo.png', 'amiko.png', 'amiko.html'),
+        ('vipercombohdd', 'vipercombo.png', 'amiko.png', 'amiko.html'),
         ('vipert2c', 'vipert2c.png', 'amiko.png', 'amiko.html'),
     ]
 
