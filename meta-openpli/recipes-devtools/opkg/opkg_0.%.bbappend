@@ -1,3 +1,8 @@
+# The external solver disables the "list-upgradables" command, so remove it until
+# that has been fixed. Just to be on the safe side, specify the package config
+# explicitly here so we don't get future surprises.
+PACKAGECONFIG = ""
+
 SRC_URI += "\
 	file://sanity-check-provides.patch;apply=no \
 	file://0001-reuse-the-installed_files-list-when-possible.patch;apply=no \
