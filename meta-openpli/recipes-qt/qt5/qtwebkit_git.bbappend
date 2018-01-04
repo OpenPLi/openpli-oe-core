@@ -3,3 +3,5 @@ SRC_URI += " \
 "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/qtwebkit-git:"
+
+PACKAGE_ARCH := "${MACHINE_ARCH}"
