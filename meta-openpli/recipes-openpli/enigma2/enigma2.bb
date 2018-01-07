@@ -36,6 +36,7 @@ RRECOMMENDS_${PN} = " \
 	hotplug-e2-helper \
 	glibc-gconv-utf-16 \
 	python-sendfile \
+	ofgwrite \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
