@@ -13,8 +13,8 @@ RDEPENDS_${PN} = "mtd-utils mtd-utils-ubifs ofgwrite"
 
 S = "${WORKDIR}/git"
 
-PV = "23+git${SRCPV}"
-PKGV = "23+git${GITPKGV}"
+PV = "24+git${SRCPV}"
+PKGV = "24+git${GITPKGV}"
 
 do_install_append() {
 	find "${D}" -name '*.sh' -exec chmod a+x '{}' ';'
