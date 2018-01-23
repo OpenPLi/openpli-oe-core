@@ -35,7 +35,9 @@ do_install() {
 	install -m 0755 ${S}/qthbbtv ${D}${bindir}
 	install -d ${D}${libdir}/mozilla/plugins
 	install -m 0755 ${S}/libnpapihbbtvplugin.so ${D}${libdir}/mozilla/plugins
-	ln -s /usr/share/fonts ${D}${libdir}/fonts
+	install -d ${D}/usr/lib
+	cd ${D}/usr/lib
+	ln -sf ../share/fonts fonts
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"

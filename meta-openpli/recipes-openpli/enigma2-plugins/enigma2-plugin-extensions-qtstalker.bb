@@ -35,7 +35,9 @@ do_install() {
 	install -m 0755 ${S}/plugin/stalker.png ${D}/usr/lib/${QtStalker}
 	install -d ${D}/${bindir}
 	install -m 0755 ${S}/stalker ${D}/${bindir}
-	ln -s /usr/share/fonts ${D}${libdir}/fonts
+	install -d ${D}/usr/lib
+	cd ${D}/usr/lib
+	ln -sf ../share/fonts fonts
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
