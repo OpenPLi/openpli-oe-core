@@ -7,13 +7,20 @@ LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/meta-openpli/licenses/CC-BY-NC-ND-4.0
 
 RDEPENDS_${PN} += "showiframe"
 
-PV = "4.1"
+PKGV = "${DATE}"
 
-S = "${WORKDIR}/"
+# required in bitbake 1.32-
+PKGV[vardepsexclude] += "DATE"
+
+# switch to this in bitbake 1.34+
+BB_HASH_IGNORE_MISMATCH = "1"
+
+S = "${WORKDIR}"
 
 INITSCRIPT_NAME = "bootlogo"
 INITSCRIPT_PARAMS = "start 21 S ."
 
+# don't add allarch, it doesn't work due to RDEPENDS on showiframe
 inherit update-rc.d
 
 # This needs a small explanation; when the machine has 'switchoff' support, it switches itself off, so we don't need switchoff.mvi...
@@ -59,5 +66,13 @@ do_install() {
 	install -m 0755 ${S}/bootlogo.sh ${D}/${sysconfdir}/init.d/bootlogo
 }
 
-PACKAGE_ARCH := "${MACHINE_ARCH}"
 FILES_${PN} = "/boot /usr/share /etc/init.d"
+
+do_compile[nostamp] = "1"
+do_install[nostamp] = "1"
+do_package[nostamp] = "1"
+do_packagedata[nostamp] = "1"
+do_package_write[nostamp] = "1"
+do_populate_sysroot[nostamp] = "1"
+do_strip[nostamp] = "1"
+do_deploy[nostamp] = "1"
