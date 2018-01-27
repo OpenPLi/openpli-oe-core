@@ -6,7 +6,7 @@ SRC_URI = "git://github.com/Dima73/enigma2-plugin-extensions-historyzapselector.
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "12caa2f7f8c424abd6496090634d18a49a5f0043"
+SRCREV = "024437481bb4d4310a234e7e964f0d049b0108b0"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 
