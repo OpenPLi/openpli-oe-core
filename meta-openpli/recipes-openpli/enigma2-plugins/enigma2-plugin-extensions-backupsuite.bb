@@ -9,7 +9,12 @@ SRC_URI = "git://github.com/PLi-metas/BackupSuite.git;protocol=git"
 # don't inherit allarch, it can't work with arch-dependent RDEPENDS
 inherit gitpkgv distutils-openplugins gettext
 
-RDEPENDS_${PN} = "mtd-utils mtd-utils-ubifs ofgwrite"
+RDEPENDS_${PN} = " \
+	mtd-utils \
+	mtd-utils-ubifs \
+	ofgwrite \
+	${@bb.utils.contains("IMAGE_FSTYPES", "tar.bz2", "bzip2" , "", d)} \
+	"
 
 S = "${WORKDIR}/git"
 
