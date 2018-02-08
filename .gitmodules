@@ -65,3 +65,6 @@
 [submodule "meta-edision"]
 	path = meta-edision
 	url = http://github.com/edision-open/meta-edision.git
+[submodule "meta-qviart"]
+	path = meta-qviart
+	url = https://github.com/pli3/meta-qviart-5.git
