@@ -54,6 +54,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-dream \
 	$(CURDIR)/meta-vuplus \
 	$(CURDIR)/meta-xsarius.pli5 \
+	$(CURDIR)/meta-qviart \
 	$(CURDIR)/meta-xp \
 	$(CURDIR)/meta-xtrend \
 	$(CURDIR)/meta-formuler \
