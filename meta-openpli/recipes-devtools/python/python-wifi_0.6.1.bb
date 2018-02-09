@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://README;beginline=54;endline=55;md5=31ebd3ff22b6f3c016
 RDEPENDS_${PN} = "python-ctypes python-datetime"
 PR = "r1"
 
-SRC_URI = "https://pypi.python.org/packages/bc/ab/c49f97516f78c2b0cacb4f45873abc4ca9872942a9c4c19ded8052c8edda/python-wifi-0.6.1.tar.bz2"
+SRC_URI = "https://pypi.python.org/packages/bc/ab/c49f97516f78c2b0cacb4f45873abc4ca9872942a9c4c19ded8052c8edda/python-wifi-${PV}.tar.bz2"
 
 SRC_URI[md5sum] = "033227169230286a63b9c059e7465c77"
 SRC_URI[sha256sum] = "7bff6afbc03b1cb13f987e5cf3b597b8821a1b86e5b34182406d98657f1b2c91"
@@ -19,13 +19,13 @@ SRC_URI[sha256sum] = "7bff6afbc03b1cb13f987e5cf3b597b8821a1b86e5b34182406d98657f
 inherit setuptools
 
 do_install_append() {
-        install -d ${D}${docdir}/${PN}
-        mv ${D}${datadir}/README ${D}${docdir}/${PN}
-        mv ${D}${datadir}/docs/* ${D}${docdir}/${PN}
-        rmdir ${D}${datadir}/docs
-        install -d ${D}${sbindir}
-        mv ${D}${datadir}/examples/* ${D}${sbindir}
-        rmdir ${D}${datadir}/examples
+		install -d ${D}${docdir}/${PN}
+		mv ${D}${datadir}/README ${D}${docdir}/${PN}
+		mv ${D}${datadir}/docs/* ${D}${docdir}/${PN}
+		rmdir ${D}${datadir}/docs
+		install -d ${D}${sbindir}
+		mv ${D}${datadir}/examples/* ${D}${sbindir}
+		rmdir ${D}${datadir}/examples
 }
 
 PACKAGES =+ "${PN}-examples"
