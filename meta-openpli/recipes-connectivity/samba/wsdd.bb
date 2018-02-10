@@ -16,6 +16,8 @@ PV = "1.0"
 
 S = "${WORKDIR}"
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 do_compile() {
     make -f Makefile
 }
