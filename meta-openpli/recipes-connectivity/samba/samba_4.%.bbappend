@@ -14,6 +14,7 @@ EXTRA_OECONF += " \
                  --without-quotas \
                  --without-winbind \
                  --without-syslog \
+                 --disable-python \
                 "
 
 EXTRA_OECONF_remove = " \
@@ -26,6 +27,22 @@ EXTRA_OECONF_remove = " \
 SRC_URI += " \
            file://smb.conf \
            file://samba.sh \
+           file://0001-waf-disable-python-add-option-globally-to-build-syst.patch \
+           file://0002-waf-disable-python-configuration-adjustments.patch \
+           file://0003-waf-disable-python-align-talloc-s-wscript.patch \
+           file://0004-waf-disable-python-align-ldb-s-wscript.patch \
+           file://0005-waf-disable-python-align-tevent-wscript.patch \
+           file://0006-waf-disable-python-align-tdb-s-wscript.patch \
+           file://0007-waf-disable-python-don-t-build-python.patch \
+           file://0008-waf-disable-python-don-t-build-PROVISION-pyparam_uti.patch \
+           file://0009-waf-disable-python-don-t-build-pyrpc_util-dcerpc.py.patch \
+           file://0010-waf-disable-python-don-t-build-samba-net.patch \
+           file://0011-waf-disable-python-don-t-build-samba-policy.patch \
+           file://0012-waf-disable-python-don-t-build-torture-bits.patch \
+           file://0013-autobuild-Add-nopython-environment-to-test-disable-p.patch \
+           file://0014-waf-disable-python-don-t-include-python.h-in-test_he.patch \
+           file://0015-waf-disable-python-fix-ctdb-configuration.patch \
+           file://0016-waf-disable-python-don-t-build-third_party.patch \
            "
 
 FILES_${PN}-base += "${sysconfdir}/init.d/samba.sh \
