@@ -9,7 +9,7 @@ test -r /etc/default/nfsd && . /etc/default/nfsd
 # Startup and shutdown functions.
 start_mountd(){
 	echo -n 'starting mountd: '
-	start-stop-daemon --start --exec "$NFS_MOUNTD" -- "-f /etc/exports $@"
+	start-stop-daemon --start --exec "$NFS_MOUNTD" -- "$@"
 	echo done
 }
 stop_mountd(){
