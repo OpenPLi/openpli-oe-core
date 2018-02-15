@@ -1,4 +1,4 @@
-DEPENDS += "openssl"
+PACKAGECONFIG = "openssl"
 
 FILES_wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
 
@@ -11,7 +11,6 @@ SRC_URI += " \
 "
 
 do_configure_append() {
-        sed -e '/^CONFIG_TLS = gnutls/d' -i wpa_supplicant/.config
         echo "CONFIG_DEBUG_SYSLOG=y" >> wpa_supplicant/.config
 }
 do_install_append() {
