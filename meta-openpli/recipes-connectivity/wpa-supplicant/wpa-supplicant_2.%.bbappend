@@ -11,7 +11,7 @@ SRC_URI += " \
 "
 
 do_configure_append() {
-        sed -i 's/^CONFIG_DRIVER_RALINK=/d' wpa_supplicant/.config
+        sed -i '/^CONFIG_DRIVER_RALINK=/d' wpa_supplicant/.config
         echo "CONFIG_DRIVER_RALINK=y" >> wpa_supplicant/.config
         echo "CONFIG_DEBUG_SYSLOG=y" >> wpa_supplicant/.config
 }
