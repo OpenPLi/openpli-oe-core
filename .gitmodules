@@ -10,10 +10,6 @@
 	path = bitbake
 	url = git://git.openembedded.org/bitbake
 	ignore = dirty
-[submodule "meta-openpli/recipes-openpli/e2openplugins"]
-	path = meta-openpli/recipes-openpli/e2openplugins
-	url = git://github.com/E2OpenPlugins/e2openplugins.git
-	ignore = dirty
 [submodule "meta-formuler"]
 	path = meta-formuler
 	url = https://github.com/formuler/meta-formuler.git
