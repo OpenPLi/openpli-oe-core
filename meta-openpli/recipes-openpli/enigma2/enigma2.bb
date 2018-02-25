@@ -215,7 +215,7 @@ EXTRA_OEMAKE = "\
 	"
 
 # Swig generated 200k enigma.py file has no purpose for end users
-FILES_${PN}-dbg += "\
+FILES_${PN}-src += "\
 	/usr/lib/enigma2/python/enigma.py \
 	"
 
