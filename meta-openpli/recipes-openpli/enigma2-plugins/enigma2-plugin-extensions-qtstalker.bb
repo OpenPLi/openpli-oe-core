@@ -12,7 +12,7 @@ VER ?= "${@bb.utils.contains('MACHINE_FEATURES', 'hisil', '-v2', '', d)}"
 SRC_URI = "git://github.com/zgemma-star/e2plugins.git;protocol=git"
 
 PACKAGES = "${PN}"
-RDEPENDS_${PN}  = "qtwebkit"
+RDEPENDS_${PN}  = "qtwebkit ntpd-helper"
 
 S = "${WORKDIR}/git/qtstalker${VER}"
 
