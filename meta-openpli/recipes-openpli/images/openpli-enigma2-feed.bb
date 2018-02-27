@@ -26,6 +26,7 @@ OPTIONAL_PACKAGES += " \
 	diffutils \
 	djmount \
 	dosfstools \
+	dvb-apps \
 	dvblast \
 	dvbsnoop \
 	dvdfs \
@@ -39,7 +40,7 @@ OPTIONAL_PACKAGES += " \
 	hdparm \
 	inadyn-mt \
 	inetutils \
-	iperf3 \
+	iperf \
 	iproute2 \
 	iputils \
 	joe \
@@ -80,6 +81,7 @@ OPTIONAL_PACKAGES += " \
 	screen \
 	sshpass \
 	smartmontools \
+	smbnetfs \
 	strace \
 	tcpdump \
 	tmux \
@@ -97,9 +99,6 @@ OPTIONAL_PACKAGES += " \
 	zsh \
 	${OPTIONAL_BSP_PACKAGES} \
 	"
-
-# dvb-apps was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/130603/ 
-# smbnetfs was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/132827/
 
 OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
 ENIGMA2_OPTIONAL = " \
