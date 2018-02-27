@@ -21,10 +21,11 @@ QtStalker = "enigma2/python/Plugins/Extensions/QtStalker"
 do_compile () {
 }
 
-FILES_${PN} =  "/${bindir} \
-	/usr/lib/mozilla/plugins \
+FILES_${PN} =  " \
+	/${bindir} \
 	/usr/lib/${QtStalker} \
-	"
+	/usr/lib/fonts \
+"
 
 do_install() {
 	install -d ${D}/usr/lib/${QtStalker}
