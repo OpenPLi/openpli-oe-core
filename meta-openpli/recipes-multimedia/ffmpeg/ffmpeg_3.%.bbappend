@@ -2,7 +2,7 @@ RSUGGESTS_${PN} = ""
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-DEPENDS += "libxml2"
+DEPENDS = "alsa-lib libxml2"
 
 PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,rtmpdump"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
@@ -13,16 +13,15 @@ PACKAGECONFIG = "avdevice avfilter avcodec avformat avresample swscale swresampl
 
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
-SRC_URI_append += " \
-	file://01_dashdec_improvements.patch \
-	file://02_fix_mpegts.patch \
-	file://03_allow_to_choose_rtmp_impl_at_runtime.patch \
-	file://04_hls_replace_key_uri.patch \
-	file://05_chunked_transfer_fix_eof.patch \
-	file://06_optimize_aac.patch \
-	file://07_increase_buffer_size.patch \
-	file://08_recheck_discard_flags.patch \
-	"
+SRC_URI_append = " \
+    file://ffmpeg-fix-hls.patch \
+    file://ffmpeg-buffer-size.patch \
+    file://ffmpeg-aac.patch \
+    file://ffmpeg-fix-mpegts.patch \
+    file://000003_allow_to_choose_rtmp_impl_at_runtime.patch \
+    file://ffmpeg-fix-edit-list-parsing.patch \
+    file://000001_add_dash_demux.patch \
+"
 
 EXTRA_FFCONF = " \
     --disable-static \
