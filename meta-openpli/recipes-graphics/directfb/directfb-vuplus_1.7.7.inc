@@ -1,24 +1,29 @@
 GFXPR ?= ""
 
-GFXPR_vusolo4k = "20160310.r0"
+GFXPR_vusolo4k = "20180125.r0"
 
-SRC_URI[gfxdriver.vusolo4k.md5sum] = "8b11fb5d296c79f881c13f443d738cbf"
-SRC_URI[gfxdriver.vusolo4k.sha256sum] = "42832063c22b0e669d25747139eaf858cbba2196b2d83c6d0378fa5a0bb62a0d"
+SRC_URI[gfxdriver.vusolo4k.md5sum] = "d885a3e2eee35b9e60a10a76a14640fa"
+SRC_URI[gfxdriver.vusolo4k.sha256sum] = "8bd439ca04f7b6cd6e9e1ddb0cb5845fc4b170a33930f6488583f97ceee01d82"
 
-GFXPR_vuultimo4k = "20160524.r0"
+GFXPR_vuultimo4k = "20180125.r1"
 
-SRC_URI[gfxdriver.vuultimo4k.md5sum] = "872bd359ab6b585e75b3dcb5f818640a"
-SRC_URI[gfxdriver.vuultimo4k.sha256sum] = "dda575c986010a1411399431b82039090f641a56aa9ee7700ca05e60c41f6d22"
+SRC_URI[gfxdriver.vuultimo4k.md5sum] = "bc545a50f5f6530b31e87fc16a789ca4"
+SRC_URI[gfxdriver.vuultimo4k.sha256sum] = "bcb314b3e1467d25d84058810c1b33faf4a5852248be5d18a589cb1c2811b591"
 
-GFXPR_vuuno4k = "20160525.r0"
+GFXPR_vuuno4k = "20180125.r0"
 
-SRC_URI[gfxdriver.vuuno4k.md5sum] = "8d47ad05f4af32e9bfc8cd36543c4941"
-SRC_URI[gfxdriver.vuuno4k.sha256sum] = "e164f190f6396e492cce19dc107a38711e69486ac1ddf6ee784be80d28d8770a"
+SRC_URI[gfxdriver.vuuno4k.md5sum] = "6ed86cf7c5647ebd5e0824055743c403"
+SRC_URI[gfxdriver.vuuno4k.sha256sum] = "01d97a3bf079c99ba1d23c5ec4673e044604c5584a541310a5dd40e2c74114c2"
 
-GFXPR_vuuno4kse = "20170831.r4"
+GFXPR_vuuno4kse = "20180125.r0"
 
-SRC_URI[gfxdriver.vuuno4kse.md5sum] = "a2ed9ee48a6cc959d4223a24a35d2287"
-SRC_URI[gfxdriver.vuuno4kse.sha256sum] = "6dd4c7c15afbda75d1ce0f6807b1e607388eb13dd78425dfb18720573100819e"
+SRC_URI[gfxdriver.vuuno4kse.md5sum] = "ff1a7c17a646da7c28f4271785161d81"
+SRC_URI[gfxdriver.vuuno4kse.sha256sum] = "49b1d98900ef2a75bbbd07c2f304fd688ae08c4aa8439cadae7bbda5c960166b"
+
+GFXPR_vuzero4k = "20180125.r0"
+
+SRC_URI[gfxdriver.vuzero4k.md5sum] = "661c62263192b59bdaccad0111dbf381"
+SRC_URI[gfxdriver.vuzero4k.sha256sum] = "1be55ae35f7eaa5151a94be69a10c9f6d914e72057c52cd4b9a82090f5f9f9b3"
 
 GFX_FILE = "directfb_1.7-7_gfxdriver_${MACHINE}_${GFXPR}.tar.gz"
 
