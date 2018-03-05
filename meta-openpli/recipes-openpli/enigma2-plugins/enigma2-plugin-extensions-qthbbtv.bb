@@ -44,6 +44,9 @@ do_install() {
 	ln -sf ../share/fonts fonts
 }
 
+do_package_qa() {
+}
+
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 # prevent 'double stripping' our binaries, which will break them
