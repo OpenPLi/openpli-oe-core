@@ -25,10 +25,14 @@ FILES_${PN} =  " \
 	/${bindir} \
 	/usr/lib/${QtStalker} \
 	/usr/lib/fonts \
+	/usr/share/stalker \
 "
 
 do_install() {
 	install -d ${D}/usr/lib/${QtStalker}
+	install -d ${D}/usr/share/stalker
+	cp -rp ${S}/usr/share/stalker/* ${D}/usr/share/stalker/
+	chmod -R a+rX ${D}/usr/share/stalker/
 	install -m 0755 ${S}/plugin/__init__.py ${D}/usr/lib/${QtStalker}
 	install -m 0755 ${S}/plugin/browser.py ${D}/usr/lib/${QtStalker}
 	install -m 0755 ${S}/plugin/datasocket.py ${D}/usr/lib/${QtStalker}
@@ -40,6 +44,9 @@ do_install() {
 	install -d ${D}/usr/lib
 	cd ${D}/usr/lib
 	ln -sf ../share/fonts fonts
+}
+
+do_package_qa() {
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
