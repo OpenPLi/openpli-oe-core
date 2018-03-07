@@ -4,6 +4,7 @@ DESCRIPTION = "biTStream is a set of C headers allowing a simpler access to bina
 SECTION = "multimedia"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7decd8ef15ab16ed5436851272b61cf7"
+CLEANBROKEN = "1"
 
 inherit gitpkgv
 
