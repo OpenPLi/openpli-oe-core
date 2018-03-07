@@ -43,33 +43,33 @@ TMPDIR = $(TOPDIR)/tmp
 DEPDIR = $(TOPDIR)/.deps
 
 BBLAYERS ?= \
-	$(CURDIR)/meta-openembedded/meta-oe \
+	$(CURDIR)/meta-amiko \
+	$(CURDIR)/meta-dream \
+	$(CURDIR)/meta-edision \
+	$(CURDIR)/meta-formuler \
+	$(CURDIR)/meta-gfutures \
+	$(CURDIR)/meta-gi \
+	$(CURDIR)/meta-gigablue \
+	$(CURDIR)/meta-local \
+	$(CURDIR)/meta-miraclebox \
 	$(CURDIR)/meta-openembedded/meta-filesystems \
 	$(CURDIR)/meta-openembedded/meta-multimedia \
 	$(CURDIR)/meta-openembedded/meta-networking \
+	$(CURDIR)/meta-openembedded/meta-oe \
 	$(CURDIR)/meta-openembedded/meta-python \
 	$(CURDIR)/meta-openembedded/meta-webserver \
-	$(CURDIR)/openembedded-core/meta \
 	$(CURDIR)/meta-openpli \
-	$(CURDIR)/meta-dream \
-	$(CURDIR)/meta-vuplus \
-	$(CURDIR)/meta-xsarius.pli5 \
+	$(CURDIR)/meta-qt5 \
 	$(CURDIR)/meta-qviart \
-	$(CURDIR)/meta-xp \
-	$(CURDIR)/meta-xtrend \
-	$(CURDIR)/meta-formuler \
-	$(CURDIR)/meta-gfutures \
-	$(CURDIR)/meta-xpeedc \
-	$(CURDIR)/meta-zgemma \
-	$(CURDIR)/meta-edision \
-	$(CURDIR)/meta-miraclebox \
-	$(CURDIR)/meta-spycat \
-	$(CURDIR)/meta-gi \
 	$(CURDIR)/meta-sab \
-	$(CURDIR)/meta-gigablue \
-	$(CURDIR)/meta-amiko \
-	$(CURDIR)/meta-local \
-	$(CURDIR)/meta-qt5
+	$(CURDIR)/meta-spycat \
+	$(CURDIR)/meta-vuplus \
+	$(CURDIR)/meta-xp \
+	$(CURDIR)/meta-xpeedc \
+	$(CURDIR)/meta-xsarius.pli5 \
+	$(CURDIR)/meta-xtrend \
+	$(CURDIR)/meta-zgemma \
+	$(CURDIR)/openembedded-core/meta
 
 CONFFILES = \
 	$(TOPDIR)/env.source \
