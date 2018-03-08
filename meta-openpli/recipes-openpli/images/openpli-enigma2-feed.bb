@@ -34,6 +34,7 @@ OPTIONAL_PACKAGES += " \
 	exteplayer3 \
 	fuse-exfat \
 	gdb \
+	grep \
 	gstplayer \
 	hddtemp \
 	hdparm \
