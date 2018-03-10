@@ -19,7 +19,7 @@ python do_cleanup () {
         ('formuler3', 'formuler3.png', 'formuler1.png', 'formuler1.html'),
         ('formuler4', 'formuler4.png', 'formuler1.png', 'formuler1.html'),
         ('formuler4turbo', 'formuler4turbo.png', 'formuler1.png', 'formuler1.html'),
-        ('gbquad4k', 'gb7252.png', 'gb7252.png', 'gb7252.html'),
+        ('gbquad4k', 'gbquad4k.png', 'gb7252.png', 'gb7252.html'),
         ('hd11', 'hd11.png', 'hd1x00.png', 'hd1x00.html'),
         ('hd1100', 'hd1100.png', 'hd1x00.png', 'hd1x00.html'),
         ('hd1200', 'hd1200.png', 'hd1x00.png', 'hd1x00.html'),
