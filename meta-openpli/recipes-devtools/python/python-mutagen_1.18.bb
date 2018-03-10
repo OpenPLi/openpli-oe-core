@@ -8,7 +8,7 @@ PR = "r1"
 DEPENDS = "python"
 RDEPENDS_${PN} = "python-shell"
 
-SRC_URI = "http://pkgs.fedoraproject.org/repo/pkgs/${PN}/${SRCNAME}.tar.gz/0c2cd954e4bacd79fadd45afc4acce4c/${SRCNAME}.tar.gz \
+SRC_URI = "https://github.com/quodlibet/mutagen/releases/download/release-${PV}/${SRCNAME}.tar.gz \
 	file://patch.diff \
 "
 
