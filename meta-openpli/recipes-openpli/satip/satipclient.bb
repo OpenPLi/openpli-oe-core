@@ -12,7 +12,12 @@ SRC_URI = " \
     git://github.com/oe-alliance/satip-client.git;protocol=git;branch=mis \
     file://satipclient.sh \
 "
-#SRC_URI += "file://auto-detect-and-avoi-ioct-conflicts.patch"
+
+SRC_URI_arm = " \
+    git://github.com/oe-alliance/satip-client.git;protocol=git;branch=mis \
+    file://satipclient.sh \
+    file://0001-auto-detect-and-avoid-ioctl-conflicts.patch \
+"
 
 S = "${WORKDIR}/git"
 
@@ -28,4 +33,5 @@ do_install_append() {
 
 EXTRA_OECONF = " \
     --with-boxtype=${MACHINE} \
+    --with-machinebuild="${MACHINEBUILD}" \
     "
