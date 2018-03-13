@@ -9,52 +9,22 @@ PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disabl
 PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 
 PACKAGECONFIG = "avdevice avfilter avcodec avformat avresample swscale swresample postproc \
-		bzlib gpl lzma theora x264 openssl libbluray libfreetype librtmp"
+		bzlib gpl x264 openssl libbluray libfreetype librtmp"
+
 
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
+SRC_URI_append = " \
+    file://ffmpeg-fix-hls.patch \
+    file://ffmpeg-buffer-size.patch \
+    file://ffmpeg-aac.patch \
+    file://ffmpeg-fix-mpegts.patch \
+    file://000003_allow_to_choose_rtmp_impl_at_runtime.patch \
+    file://ffmpeg-fix-edit-list-parsing.patch \
+    file://000001_add_dash_demux.patch \
+"
+
 EXTRA_FFCONF = " \
-    --enable-protocol=file \
-    --enable-protocol=http \
-    --enable-protocol=httpsex \
-    --enable-protocol=httpproxy \
-    --enable-protocol=tlsex \
-    --enable-protocol=rtsp \
-    --enable-protocol=mms \
-    --enable-protocol=mmst \
-    --enable-protocol=mmsh \
-    --enable-protocol=mmsu \
-    --enable-protocol=ffrtmphttp \
-    --enable-protocol=ffrtmpcrypt \
-    --enable-protocol=rtmp \
-    --enable-protocol=rtmpe \
-    --enable-protocol=rtmps \
-    --enable-protocol=rtmpt \
-    --enable-protocol=rtmpte \
-    --enable-protocol=bluray \
-    --enable-protocol=lpcmhttp \
-    --enable-protocol=lpcmfile \
-    --enable-protocol=hls \
-    --enable-protocol=tls_openssl \
-    --enable-protocol=crypto \
-    --disable-indevs \
-    --disable-outdevs \
-    --disable-devices \
-    --disable-filters \
-    --disable-avfilter \
-    --disable-hwaccels \
-    --disable-bsfs \
-    --disable-swresample \
-    --disable-ffplay \
-    --disable-static \
-    --disable-ffserver \
-    --disable-ffmpeg \
-    --disable-ffprobe \
-    --disable-encoders \
-    --disable-avdevice \
-    --disable-muxers \
-    --disable-debug  \
-    --disable-demuxer=str \
     --disable-static \
     --disable-runtime-cpudetect \
     --enable-ffprobe \
@@ -77,12 +47,12 @@ EXTRA_FFCONF = " \
     --disable-armv5te \
     --disable-armv6 \
     --disable-armv6t2 \
+    --disable-vfp \
+    --disable-neon \
     --disable-inline-asm \
     --disable-yasm \
     --disable-fast-unaligned \
     --disable-muxers \
-    ${@bb.utils.contains("TARGET_ARCH", "arm", "", "--enable-vfp --enable-neon", d)} \
-    ${@bb.utils.contains("TARGET_ARCH", "mips", "", "--disable-vfp --disable-neon", d)} \
     --enable-muxer=mpeg1video \
     --enable-muxer=h264 \
     --enable-muxer=mp4 \
@@ -105,75 +75,37 @@ EXTRA_FFCONF = " \
     --enable-encoder=jpegls \
     --enable-encoder=rawvideo \
     --disable-decoders \
-    --enable-decoder=aac \
-    --enable-decoder=aac_latm \
-    --enable-decoder=ac3 \
-    --enable-decoder=adpcm_ima_ws \
-    --enable-decoder=adpcm_4xm \
-    --enable-decoder=adpcm_adx \
-    --enable-decoder=adpcm_ct \
-    --enable-decoder=adpcm_ea \
-    --enable-decoder=adpcm_ea_maxis_xa \
-    --enable-decoder=adpcm_ea_r1 \
-    --enable-decoder=adpcm_ea_r2 \
-    --enable-decoder=adpcm_ea_r3 \
-    --enable-decoder=adpcm_ea_xas \
-    --enable-decoder=adpcm_g726 \
-    --enable-decoder=adpcm_ima_amv \
-    --enable-decoder=adpcm_ima_dk3 \
-    --enable-decoder=adpcm_ima_dk4 \
-    --enable-decoder=adpcm_ima_ea_eacs \
-    --enable-decoder=adpcm_ima_ea_sead \
-    --enable-decoder=adpcm_ima_iss \
-    --enable-decoder=adpcm_ima_qt \
-    --enable-decoder=adpcm_ima_smjpeg \
-    --enable-decoder=adpcm_ima_wav \
-    --enable-decoder=adpcm_ima_ws \
-    --enable-decoder=adpcm_ms \
-    --enable-decoder=adpcm_sbpro_2 \
-    --enable-decoder=adpcm_sbpro_3 \
-    --enable-decoder=adpcm_sbpro_4 \
-    --enable-decoder=adpcm_swf \
-    --enable-decoder=adpcm_thp \
-    --enable-decoder=adpcm_xa \
-    --enable-decoder=adpcm_yamaha \
     --enable-decoder=alac \
     --enable-decoder=ape \
-    --enable-decoder=amrnb \
-    --enable-decoder=amrwb \
     --enable-decoder=atrac1 \
     --enable-decoder=atrac3 \
-    --enable-decoder=cavs \
+    --enable-decoder=atrac3p \
     --enable-decoder=cook \
     --enable-decoder=dca \
+    --enable-decoder=dsd_lsbf \
+    --enable-decoder=dsd_lsbf_planar \
+    --enable-decoder=dsd_msbf \
+    --enable-decoder=dsd_msbf_planar \
     --enable-decoder=eac3 \
-    --enable-decoder=flac \
-    --enable-decoder=h263 \
+    --enable-decoder=evrc \
     --enable-decoder=h264 \
-    --enable-decoder=hevc \
-    --enable-decoder=huffyuv \
-    --enable-decoder=indeo3 \
-    --enable-decoder=indeo4 \
-    --enable-decoder=indeo5 \
-    --enable-decoder=jpeg2000 \
-    --enable-decoder=jpegls \
+    --enable-decoder=iac \
+    --enable-decoder=imc \
     --enable-decoder=mace3 \
     --enable-decoder=mace6 \
     --enable-decoder=metasound \
     --enable-decoder=mjpeg \
+    --enable-decoder=h264 \
+    --enable-decoder=mpeg4 \
+    --enable-decoder=jpeg2000 \
+    --enable-decoder=jpegls \
     --enable-decoder=mlp \
     --enable-decoder=mp1 \
-    --enable-decoder=mp2 \
     --enable-decoder=mp3 \
-    --enable-decoder=mpegvideo \
+    --enable-decoder=mp3adu \
+    --enable-decoder=mp3on4 \
     --enable-decoder=mpeg1video \
-    --enable-decoder=mpeg2video \
-    --enable-decoder=mpeg4 \
-    --enable-decoder=mpc7 \
-    --enable-decoder=mpc8 \
-    --enable-decoder=opus \
-    --enable-decoder=qcelp \
-    --enable-decoder=qdm2 \
+    --enable-decoder=nellymoser \
     --enable-decoder=pcm_alaw \
     --enable-decoder=pcm_bluray \
     --enable-decoder=pcm_dvd \
@@ -181,16 +113,21 @@ EXTRA_FFCONF = " \
     --enable-decoder=pcm_f32le \
     --enable-decoder=pcm_f64be \
     --enable-decoder=pcm_f64le \
+    --enable-decoder=pcm_lxf \
     --enable-decoder=pcm_mulaw \
     --enable-decoder=pcm_s16be \
+    --enable-decoder=pcm_s16be_planar \
     --enable-decoder=pcm_s16le \
     --enable-decoder=pcm_s16le_planar \
     --enable-decoder=pcm_s24be \
     --enable-decoder=pcm_s24daud \
     --enable-decoder=pcm_s24le \
+    --enable-decoder=pcm_s24le_planar \
     --enable-decoder=pcm_s32be \
     --enable-decoder=pcm_s32le \
+    --enable-decoder=pcm_s32le_planar \
     --enable-decoder=pcm_s8 \
+    --enable-decoder=pcm_s8_planar \
     --enable-decoder=pcm_u16be \
     --enable-decoder=pcm_u16le \
     --enable-decoder=pcm_u24be \
@@ -199,40 +136,49 @@ EXTRA_FFCONF = " \
     --enable-decoder=pcm_u32le \
     --enable-decoder=pcm_u8 \
     --enable-decoder=pcm_zork \
-    --enable-decoder=pgssub \
-    --enable-decoder=rv10 \
-    --enable-decoder=rv20 \
-    --enable-decoder=rv30 \
-    --enable-decoder=rv40 \
+    --enable-decoder=png \
+    --enable-decoder=ra_144 \
+    --enable-decoder=ra_288 \
+    --enable-decoder=ralf \
+    --enable-decoder=s302m \
+    --enable-decoder=shorten \
     --enable-decoder=sipr \
-    --enable-decoder=svq1 \
-    --enable-decoder=svq3 \
-    --enable-decoder=targa \
-    --enable-decoder=theora \
+    --enable-decoder=sonic \
+    --enable-decoder=tak \
     --enable-decoder=truehd \
-    --enable-decoder=vc1 \
-    --enable-decoder=vorbis \
-    --enable-decoder=vp3 \
-    --enable-decoder=vp5 \
-    --enable-decoder=vp6 \
-    --enable-decoder=vp6a \
-    --enable-decoder=vp6f \
-    --enable-decoder=vp7 \
-    --enable-decoder=vp8 \
-    --enable-decoder=vp9 \
-    --enable-decoder=wavpack \
+    --enable-decoder=truespeech \
+    --enable-decoder=tta \
     --enable-decoder=wmalossless \
     --enable-decoder=wmapro \
     --enable-decoder=wmav1 \
     --enable-decoder=wmav2 \
     --enable-decoder=wmavoice \
-    --enable-decoder=wmv1 \
-    --enable-decoder=wmv2 \
-    --enable-decoder=wmv3 \
-    --enable-decoder=bmp \
-    --enable-decoder=gif \
-    --enable-decoder=png \
-    --enable-decoder=tiff \
+    --enable-decoder=aac \
+    --enable-decoder=aac_latm \
+    --enable-decoder=libfdk_aac \
+    --enable-decoder=adpcm_ct \
+    --enable-decoder=adpcm_g722 \
+    --enable-decoder=adpcm_g726 \
+    --enable-decoder=adpcm_g726le \
+    --enable-decoder=adpcm_ima_amv \
+    --enable-decoder=adpcm_ima_oki \
+    --enable-decoder=adpcm_ima_qt \
+    --enable-decoder=adpcm_ima_rad \
+    --enable-decoder=adpcm_ima_wav \
+    --enable-decoder=adpcm_ms \
+    --enable-decoder=adpcm_sbpro_2 \
+    --enable-decoder=adpcm_sbpro_3 \
+    --enable-decoder=adpcm_sbpro_4 \
+    --enable-decoder=adpcm_swf \
+    --enable-decoder=adpcm_yamaha \
+    --enable-decoder=flac \
+    --enable-decoder=g723_1 \
+    --enable-decoder=g729 \
+    --enable-decoder=opus \
+    --enable-decoder=qcelp \
+    --enable-decoder=qdm2 \
+    --enable-decoder=vorbis \
+    --enable-decoder=wavpack \
     --disable-demuxer=adp \
     --disable-demuxer=adx \
     --disable-demuxer=afc \
@@ -309,12 +255,10 @@ EXTRA_FFCONF = " \
     --enable-demuxer=mp4 \
     --enable-demuxer=h264 \
     --enable-demuxer=mpegvideo \
-    --enable-demuxer=webm \
     --enable-parser=h264 \
     --enable-parser=mjpeg \
     --enable-parser=mpeg4video \
     --enable-parser=mpegvideo \
-    --enable-parser=bmp \
     --enable-parser=png \
     --disable-filters \
     --enable-filter=scale \
