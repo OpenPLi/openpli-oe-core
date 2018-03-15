@@ -52,7 +52,7 @@ fi
 
 pkg_postrm_${PN}() {
 #!/bin/sh
-rm /sbin/init
+rm -rf /sbin/init
 ln -s /sbin/init.sysvinit /sbin/init
 rm -rf /sbin/open-multiboot-branding-helper.py
 exit 0
