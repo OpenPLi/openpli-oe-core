@@ -66,4 +66,4 @@
 	url = https://github.com/pli3/meta-qviart-5.git
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
-	url = git@github.com:Axas-UHD/meta-axasuhd.git
+	https://github.com/Axas-UHD/meta-axasuhd.git
