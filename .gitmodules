@@ -18,40 +18,40 @@
 	url = https://github.com/HD-Digital/meta-hd.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
-	url = http://github.com/vu-plus/meta-vuplus.git
+	url = https://github.com/vu-plus/meta-vuplus.git
 [submodule "meta-xp"]
 	path = meta-xp
 	url = https://github.com/XP-Master/meta-xp.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
-	url = http://github.com/XpeedDeveloperTeam/meta-xpeedc.git
+	url = https://github.com/XpeedDeveloperTeam/meta-xpeedc.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
-	url = http://github.com/zgemma-star/meta-zgemma.git
+	url = https://github.com/zgemma-star/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = http://github.com/miraclebox-git/meta-miraclebox.git
+	url = https://github.com/miraclebox-git/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
 [submodule "meta-xtrend"]
 	path = meta-xtrend
-	url = http://github.com/XTrendTeam/meta-xtrend.git
+	url = https://github.com/XTrendTeam/meta-xtrend.git
 [submodule "meta-qt5"]
 	path = meta-qt5
-	url = http://github.com/meta-qt5/meta-qt5.git
+	url = https://github.com/meta-qt5/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = http://github.com/GIDeveloperTeam/meta-gi.git
+	url = https://github.com/GIDeveloperTeam/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
-	url = http://github.com/HD-Digital/meta-gfutures.git
+	url = https://github.com/HD-Digital/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
-	url = http://github.com/mariner2/meta-sab.git
+	url = https://github.com/mariner2/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
-	url = http://github.com/pli3/meta-xsarius.pli5.git
+	url = https://github.com/pli3/meta-xsarius.pli5.git
 [submodule "meta-gigablue"]
 	path = meta-gigablue
 	url = https://github.com/GigaBlue-STB/meta-gigablue
@@ -60,10 +60,10 @@
 	url = https://github.com/open-amiko/meta-amiko.git
 [submodule "meta-edision"]
 	path = meta-edision
-	url = http://github.com/edision-open/meta-edision.git
+	url = https://github.com/edision-open/meta-edision.git
 [submodule "meta-qviart"]
 	path = meta-qviart
 	url = https://github.com/pli3/meta-qviart-5.git
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
-	url = git@github.com:Axas-UHD/meta-axasuhd.git
+	url = https://github.com/Axas-UHD/meta-axasuhd.git
