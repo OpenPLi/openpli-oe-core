@@ -12,7 +12,7 @@ VER ?= "${@bb.utils.contains('MACHINE_FEATURES', 'hisil', '-v2', '', d)}"
 SRC_URI = "git://github.com/zgemma-star/e2plugins.git;protocol=git"
 
 PACKAGES = "${PN}"
-RDEPENDS_${PN}  = "qtwebkit"
+RDEPENDS_${PN}  = "qtwebkit ntpd-helper"
 
 S = "${WORKDIR}/git/qtstalker${VER}"
 
@@ -21,13 +21,18 @@ QtStalker = "enigma2/python/Plugins/Extensions/QtStalker"
 do_compile () {
 }
 
-FILES_${PN} =  "/${bindir} \
-	/usr/lib/mozilla/plugins \
+FILES_${PN} =  " \
+	/${bindir} \
 	/usr/lib/${QtStalker} \
-	"
+	/usr/lib/fonts \
+	/usr/share/stalker \
+"
 
 do_install() {
 	install -d ${D}/usr/lib/${QtStalker}
+	install -d ${D}/usr/share/stalker
+	cp -rp ${S}/usr/share/stalker/* ${D}/usr/share/stalker/
+	chmod -R a+rX ${D}/usr/share/stalker/
 	install -m 0755 ${S}/plugin/__init__.py ${D}/usr/lib/${QtStalker}
 	install -m 0755 ${S}/plugin/browser.py ${D}/usr/lib/${QtStalker}
 	install -m 0755 ${S}/plugin/datasocket.py ${D}/usr/lib/${QtStalker}
@@ -39,6 +44,9 @@ do_install() {
 	install -d ${D}/usr/lib
 	cd ${D}/usr/lib
 	ln -sf ../share/fonts fonts
+}
+
+do_package_qa() {
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
