@@ -1,9 +1,12 @@
 DESCRIPTION = "CCcam ${PV} softcam"
 
 SRC_URI = " \
-	http://downloads.openpli.org/softcams/CCcam-${PV}.zip \
-	http://downloads.openpli.org/softcams/CCcam.xml \
+	http://downloads.openpli.org/softcams/CCcam-${PV}.zip;name=softcam \
+	http://downloads.openpli.org/softcams/CCcam.xml;name=ppanel \
 	"
+
+SRC_URI[ppanel.md5sum] = "6d9c1964e0f65278b8f3024772b69d13"
+SRC_URI[ppanel.sha256sum] = "bd4e0b2b088a4a977d431ae1bb85fae142020f7b6f88baba06f9757f1b1cd9e2"
 
 CAMNAME = "CCcam${CCCAMVER}"
 
