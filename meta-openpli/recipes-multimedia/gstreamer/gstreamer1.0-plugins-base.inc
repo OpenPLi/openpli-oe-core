@@ -9,7 +9,13 @@ inherit gettext
 
 PACKAGES_DYNAMIC =+ "^libgst.*"
 
+# opengl packageconfig factored out to make it easy for distros
+# and BSP layers to pick either (desktop) opengl, gles2, or no GL
+PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gles2', '', d)}"
+
 PACKAGECONFIG ??= " \
+    ${PACKAGECONFIG_GL} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland egl', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
     orc ivorbis ogg theora vorbis cdparanoia pango opus \
@@ -29,6 +35,10 @@ PACKAGECONFIG[theora]       = "--enable-theora,--disable-theora,libtheora"
 PACKAGECONFIG[visual]       = "--enable-libvisual,--disable-libvisual,libvisual"
 PACKAGECONFIG[vorbis]       = "--enable-vorbis,--disable-vorbis,libvorbis"
 PACKAGECONFIG[x11]          = "${X11ENABLEOPTS},${X11DISABLEOPTS},${X11DEPENDS}"
+PACKAGECONFIG[gles2]        = "--enable-gles2,--disable-gles2,virtual/libgles2"
+PACKAGECONFIG[egl]          = "--enable-egl,--disable-egl,virtual/egl"
+PACKAGECONFIG[opengl]       = "--enable-opengl,--disable-opengl,virtual/libgl libglu"
+PACKAGECONFIG[wayland]      = "--enable-wayland,--disable-wayland,wayland-native wayland wayland-protocols"
 
 EXTRA_OECONF += " \
     --enable-zlib \
