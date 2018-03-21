@@ -15,6 +15,7 @@ SRC_URI = " \
 	file://fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch \
 	file://dvbapi5-fix-old-kernel.patch \
 	file://hls-main-thread-block.patch \
+	file://06-Revert-disable-all-ipcpipeline-tests.patch \
 "
 
 EXTRA_OECONF += " \
