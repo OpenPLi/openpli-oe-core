@@ -1,36 +1,25 @@
-From cb42f72318e284519cf155292f948a93383c09c6 Mon Sep 17 00:00:00 2001
-From: christophecvr <stefansat@telenet.be>
-Date: Fri, 24 Feb 2017 14:34:33 +0100
-Subject: [PATCH] Try-out continu in hls to avoid blocking of main thread.
-
- Looks like the error self was false,
- If we just continue it retries,and
- the media just continues to play ok.
- The main advantage is that we avoid a 
- main e2 thread blocked with stb freeze
- as result. Even if the media would stop,
- We do not have a frozen stb.
-
-	modified:   ext/hls/m3u8.c
----
- ext/hls/m3u8.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/ext/hls/m3u8.c b/ext/hls/m3u8.c
-index e85592e..5feef75 100644
---- a/ext/hls/m3u8.c
-+++ b/ext/hls/m3u8.c
-@@ -365,8 +365,8 @@ gst_m3u8_update_check_consistent_media_seqnums (GstM3U8 * self,
-           }
-         } else if (g_str_equal (f1->uri, f2->uri)) {
-           /* Same URIs but different sequences, this is bad! */
--          GST_ERROR ("Media sequences inconsistent, ignoring");
--          return FALSE;
-+          GST_ERROR ("Media sequences inconsistent, ignoring, but try anyway");
-+          //return FALSE;
-         } else {
-           /* Not same URI, not same sequence but by construction sequence
-            * must be higher in the new one. All good in that case, if it
--- 
-2.7.4
-
+diff -Naur gst-plugins-bad.orig/ext/hls/m3u8.c gst-plugins-bad/ext/hls/m3u8.c
+--- gst-plugins-bad.orig/ext/hls/m3u8.c	2018-03-21 13:45:50.831077787 +0100
++++ gst-plugins-bad/ext/hls/m3u8.c	2018-03-21 13:58:05.979982489 +0100
+@@ -358,17 +358,17 @@
+ 
+     if (f1->sequence == f2->sequence && !g_str_equal (f1->uri, f2->uri)) {
+       /* Same sequence, different URI. This is bad! */
+-      GST_ERROR ("Media URIs inconsistent (sequence %" G_GINT64_FORMAT
++      GST_ERROR ("Media URIs inconsistent, continue anyways (sequence %" G_GINT64_FORMAT
+           "): had '%s', got '%s'", f1->sequence, f2->uri, f1->uri);
+-      return FALSE;
++      //return FALSE;
+     } else if (f1->sequence < f2->sequence) {
+       /* Not same sequence but by construction sequence must be higher in the
+        * new one. All good in that case, if it isn't then this means that
+        * sequence numbers are decreasing or files were inserted */
+-      GST_ERROR ("Media sequences inconsistent: %" G_GINT64_FORMAT " < %"
++      GST_ERROR ("Media sequences inconsistent, continue anyways: %" G_GINT64_FORMAT " < %"
+           G_GINT64_FORMAT ": URIs new '%s' old '%s'", f1->sequence,
+           f2->sequence, f1->uri, f2->uri);
+-      return FALSE;
++      //return FALSE;
+     }
+   }
+ 
