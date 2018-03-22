@@ -1,17 +1,17 @@
 From 045a3b23ca0f392207c7f726ce486928223c563f Mon Sep 17 00:00:00 2001
 From: GF <support@gfutures.net>
-Date: Fri, 24 Feb 2017 10:52:26 +0100
+Date: Fri, 13 mar 2018 10:23:21 +0100
 Subject: e2player
 
 ---
- system/playercorefactory.xml | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ system/playercorefactory.xml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/system/playercorefactory.xml b/system/playercorefactory.xml
 index be6b721..862b584 100644
 --- a/system/playercorefactory.xml
 +++ b/system/playercorefactory.xml
-@@ -8,8 +8,20 @@
+@@ -8,8 +8,16 @@
      <player name="VideoPlayer" /> placeholder for MPlayer
      <player name="PAPlayer" audio="true" />
      -->
@@ -25,10 +25,6 @@ index be6b721..862b584 100644
 +    </player>
    </players>
  
-+  <rules action="prepend">
-+    <rule video="true" player="E2Player" />
-+  </rules>
-+
    <rules name="system rules">
      <rule name="mms/udp" protocols="mms|mmsh|udp" player="VideoPlayer" />
      <rule name="lastfm/shout" protocols="lastfm|shout" player="PAPlayer" />

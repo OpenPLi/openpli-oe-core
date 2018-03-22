@@ -49,7 +49,7 @@ index 5bfd1ea..e4faea9 100644
       ;;
    *)
       AC_MSG_ERROR(unsupported host ($host))
-@@ -696,6 +703,34 @@ if test "$target_platform" = "target_raspberry_pi" ; then
+@@ -696,6 +703,38 @@ if test "$target_platform" = "target_raspberry_pi" ; then
       CXXFLAGS="$CXXFLAGS"
  fi
  
@@ -57,6 +57,7 @@ index 5bfd1ea..e4faea9 100644
 +     use_openmax=no
 +     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
 +     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     USE_E2_REMOTE=1; AC_DEFINE([HAS_E2_REMOTE],[1],["Define to 1 if use E2 REMOTE CONTROLLER"])
 +     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
 +fi
 +
@@ -64,6 +65,7 @@ index 5bfd1ea..e4faea9 100644
 +     use_openmax=no
 +     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
 +     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     USE_E2_REMOTE=1; AC_DEFINE([HAS_E2_REMOTE],[1],["Define to 1 if use E2 REMOTE CONTROLLER"])
 +     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
 +     AC_DEFINE([HAS_V3DVISABLE], [1], [Whether to use EGLNative visable workaround.])
 +fi
@@ -72,6 +74,7 @@ index 5bfd1ea..e4faea9 100644
 +     use_openmax=no
 +     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
 +     USE_V3D=1; AC_DEFINE([HAS_V3D],[1],["Define to 1 if V3D GPU"])
++     USE_E2_REMOTE=1; AC_DEFINE([HAS_E2_REMOTE],[1],["Define to 1 if use E2 REMOTE CONTROLLER"])
 +     AC_DEFINE([HAS_BRCMCPU], [1], [Whether to use Broadcom platform workaround.])
 +fi
 +
@@ -79,6 +82,7 @@ index 5bfd1ea..e4faea9 100644
 +     use_openmax=no
 +     USE_OMXLIB=0; AC_DEFINE([HAVE_OMXLIB],[0],["Define to 1 if OMX libs is enabled"])
 +     USE_MALI=1; AC_DEFINE([HAS_MALI],[1],["Define to 1 if Mali GPU"])
++     USE_E2_REMOTE=1; AC_DEFINE([HAS_E2_REMOTE],[1],["Define to 1 if use E2 REMOTE CONTROLLER"])
 +fi
 +
  if test "$host_vendor" = "apple"; then
@@ -151,12 +155,13 @@ index 5bfd1ea..e4faea9 100644
  fi
  
  AC_MSG_CHECKING("for libcrossguid")
-@@ -2330,6 +2392,8 @@ AC_SUBST(HAVE_SSE4)
+@@ -2330,6 +2392,9 @@ AC_SUBST(HAVE_SSE4)
  AC_SUBST(USE_MMAL)
  AC_SUBST(USE_X11)
  AC_SUBST(USE_OPTICAL_DRIVE)
 +AC_SUBST(USE_MALI)
 +AC_SUBST(USE_V3D)
++AC_SUBST(USE_E2_REMOTE)
  
  # pushd and popd are not available in other shells besides bash, so implement
  # our own pushd/popd functions
