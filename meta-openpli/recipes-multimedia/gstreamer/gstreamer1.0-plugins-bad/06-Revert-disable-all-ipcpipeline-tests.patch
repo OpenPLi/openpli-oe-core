@@ -1,0 +1,20 @@
+diff --git a/tests/check/Makefile.am b/tests/check/Makefile.am
+index 0713dd4..775ba75 100644
+--- a/tests/check/Makefile.am
++++ b/tests/check/Makefile.am
+@@ -230,7 +230,6 @@ VALGRIND_TESTS_DISABLE = \
+ noinst_PROGRAMS = \
+ 	pipelines/streamheader \
+ 	$(check_dash_demux) \
+-	$(check_ipcpipeline) \
+ 	$(check_neon)
+ 
+ check_PROGRAMS = \
+@@ -280,6 +282,7 @@ check_PROGRAMS = \
+ 	elements/rtponviftimestamp \
+ 	elements/id3mux \
+ 	pipelines/mxf \
++	$(check_ipcpipeline) \
+ 	libs/isoff \
+ 	libs/mpegvideoparser \
+ 	libs/mpegts \
