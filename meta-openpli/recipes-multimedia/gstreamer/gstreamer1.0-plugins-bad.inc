@@ -7,12 +7,11 @@ DEPENDS += "gstreamer1.0-plugins-base libpng jpeg libdca"
 inherit gettext bluetooth
 
 PACKAGECONFIG ??= " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland', '', d)} \
+    ${GSTREAMER_ORC} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)} \
-    orc curl neon sndfile \
-    hls sbc dash bz2 smoothstreaming \
-    faac faad libmms dash dtls rsvg uvch264 webp rtmp opusparse \
+    ${@bb.utils.filter('DISTRO_FEATURES', 'directfb vulkan wayland', d)} \
+    bz2 curl dash dtls hls rsvg sbc smoothstreaming sndfile uvch264 webp \
+    neon dash faac faad libmms rtmp opusparse \
     "
 
 PACKAGECONFIG[assrender]       = "--enable-assrender,--disable-assrender,libass"
@@ -27,8 +26,6 @@ PACKAGECONFIG[faac]            = "--enable-faac,--disable-faac,faac"
 PACKAGECONFIG[faad]            = "--enable-faad,--disable-faad,faad2"
 PACKAGECONFIG[flite]           = "--enable-flite,--disable-flite,flite-alsa"
 PACKAGECONFIG[fluidsynth]      = "--enable-fluidsynth,--disable-fluidsynth,fluidsynth"
-# ensure OpenSSL is used for HLS AES description instead of nettle
-# (OpenSSL is a shared dependency with dtls)
 PACKAGECONFIG[hls]             = "--enable-hls --with-hls-crypto=openssl,--disable-hls,openssl"
 PACKAGECONFIG[kms]             = "--enable-kms,--disable-kms,libdrm"
 PACKAGECONFIG[libmms]          = "--enable-libmms,--disable-libmms,libmms"
@@ -51,19 +48,15 @@ PACKAGECONFIG[srtp]            = "--enable-srtp,--disable-srtp,libsrtp"
 PACKAGECONFIG[uvch264]         = "--enable-uvch264,--disable-uvch264,libusb1 libgudev"
 PACKAGECONFIG[voaacenc]        = "--enable-voaacenc,--disable-voaacenc,vo-aacenc"
 PACKAGECONFIG[voamrwbenc]      = "--enable-voamrwbenc,--disable-voamrwbenc,vo-amrwbenc"
-PACKAGECONFIG[wayland]         = "--enable-wayland,--disable-wayland,wayland-native wayland wayland-protocols"
+PACKAGECONFIG[vulkan]          = "--enable-vulkan,--disable-vulkan,vulkan"
+PACKAGECONFIG[wayland]         = "--enable-wayland,--disable-wayland,wayland-native wayland wayland-protocols libdrm"
 PACKAGECONFIG[webp]            = "--enable-webp,--disable-webp,libwebp"
 
-# these plugins have not been ported to 1.0 (yet):
-#   apexsink linsys nas timidity sdl xvid wininet
-#   sndio cdxaparse dccp faceoverlay hdvparse tta mve nuvdemux
-#   patchdetect sdi videomeasure
-
 # these plugins have no corresponding library in OE-core or meta-openembedded:
-#   openni2 winks direct3d directsound winscreencap acm apple_media
+#   openni2 winks direct3d directsound winscreencap acm apple_media iqa
 #   android_media avc bs2b chromaprint daala dts fdkaac gme gsm kate ladspa libde265
-#   lv2 mimic mpeg2enc mplex musepack nvenc ofa openh264 opensles pvr soundtouch spandsp
-#   spc teletextdec tinyalsa vdpau vulkan wasapi x265 zbar
+#   lv2 mpeg2enc mplex msdk musepack nvenc ofa openh264 opensles soundtouch spandsp
+#   spc teletextdec tinyalsa vdpau wasapi x265 zbar webrtcdsp
 
 # qt5 support is disabled, because it is not present in OE core, and requires more work than
 # just adding a packageconfig (it requires access to moc, uic, rcc, and qmake paths).
@@ -74,11 +67,9 @@ EXTRA_OECONF += " \
     --enable-decklink \
     --enable-dvb \
     --enable-fbdev \
-    --enable-mpegdemux \
     --enable-netsim \
     --enable-shm \
     --enable-vcd \
-    --enable-dts \
     --disable-acm \
     --disable-android_media \
     --disable-apple_media \
@@ -88,15 +79,19 @@ EXTRA_OECONF += " \
     --disable-daala \
     --disable-direct3d \
     --disable-directsound \
+    --enable-dts \
+    --enable-mpegdemux \
     --disable-fdk_aac \
     --disable-gme \
     --disable-gsm \
+    --disable-iqa \
     --disable-kate \
     --disable-ladspa \
     --disable-libde265 \
     --disable-lv2 \
     --disable-mpeg2enc \
     --disable-mplex \
+    --disable-msdk \
     --disable-musepack \
     --disable-nvenc \
     --disable-ofa \
@@ -110,8 +105,8 @@ EXTRA_OECONF += " \
     --disable-teletextdec \
     --disable-tinyalsa \
     --disable-vdpau \
-    --disable-vulkan \
     --disable-wasapi \
+    --disable-webrtcdsp \
     --disable-wildmidi \
     --disable-winks \
     --disable-winscreencap \
@@ -125,7 +120,11 @@ export OPENCV_PREFIX = "${STAGING_DIR_TARGET}${prefix}"
 ARM_INSTRUCTION_SET_armv4 = "arm"
 ARM_INSTRUCTION_SET_armv5 = "arm"
 
-FILES_${PN}-opencv += "${datadir}/gst-plugins-bad/${LIBV}/opencv*"
-FILES_${PN}-freeverb += "${datadir}/gstreamer-${LIBV}/presets/GstFreeverb.prs"
-FILES_${PN}-voamrwbenc += "${datadir}/gstreamer-${LIBV}/presets/GstVoAmrwbEnc.prs"
 FILES_${PN}-dev += "${libdir}/gstreamer-${LIBV}/include/gst/gl/gstglconfig.h"
+FILES_${PN}-freeverb += "${datadir}/gstreamer-${LIBV}/presets/GstFreeverb.prs"
+FILES_${PN}-opencv += "${datadir}/gst-plugins-bad/${LIBV}/opencv*"
+FILES_${PN}-voamrwbenc += "${datadir}/gstreamer-${LIBV}/presets/GstVoAmrwbEnc.prs"
+
+do_compile_prepend() {
+    export GIR_EXTRA_LIBS_PATH="${B}/gst-libs/gst/allocators/.libs"
+}

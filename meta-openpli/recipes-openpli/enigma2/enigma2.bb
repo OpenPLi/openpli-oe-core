@@ -93,6 +93,7 @@ GST_GOOD_RDEPS = "\
 	gstreamer1.0-plugins-good-id3demux \
 	gstreamer1.0-plugins-good-isomp4 \
 	gstreamer1.0-plugins-good-matroska \
+	gstreamer1.0-plugins-good-mpg123 \
 	gstreamer1.0-plugins-good-rtp \
 	gstreamer1.0-plugins-good-rtpmanager \
 	gstreamer1.0-plugins-good-rtsp \
@@ -122,7 +123,6 @@ GST_UGLY_RDEPS = "\
 	gstreamer1.0-plugins-ugly-asf \
 	gstreamer1.0-plugins-ugly-cdio \
 	gstreamer1.0-plugins-ugly-dvdsub \
-	gstreamer1.0-plugins-ugly-mpg123 \
 	"
 
 # DVD and iso playback is integrated, we need the libraries

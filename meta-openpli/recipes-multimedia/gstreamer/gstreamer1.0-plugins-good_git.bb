@@ -8,7 +8,11 @@ SRC_URI = " \
 	git://anongit.freedesktop.org/gstreamer/gst-plugins-good;branch=${GST_BRANCH};name=base \
 	file://0001-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch \
 	file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
+	file://avoid-including-sys-poll.h-directly.patch \
+	file://ensure-valid-sentinel-for-gst_structure_get.patch \
 "
 
-CFLAGS_append += " -Wno-maybe-uninitialized -Wno-uninitialized "
+CFLAGS_append += " -Wno-maybe-uninitialized -Wno-uninitialized -Wno-incompatible-pointer-types "
 
+RPROVIDES_${PN}-pulseaudio += "${PN}-pulse"
+RPROVIDES_${PN}-soup += "${PN}-souphttpsrc"

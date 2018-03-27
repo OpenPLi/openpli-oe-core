@@ -9,9 +9,8 @@ inherit gettext
 
 #cairo gdk-pixbuf gudev v4l2
 PACKAGECONFIG ??= " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
-    orc flac jpeg libpng soup speex taglib vpx wavpack libv4l2 v4l2 \
+    ${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio x11', d)} \
+    cairo flac gdk-pixbuf gudev jpeg libpng orc soup speex taglib vpx wavpack libv4l2 v4l2 \
     lame mpg123 \
     "
 
