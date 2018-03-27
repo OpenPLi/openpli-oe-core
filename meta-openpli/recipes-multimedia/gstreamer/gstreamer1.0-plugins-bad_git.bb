@@ -7,13 +7,16 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=73a5855a8119deb017f5f13cf327095d \
 
 SRC_URI = " \
 	git://anongit.freedesktop.org/gstreamer/gst-plugins-bad;branch=${GST_BRANCH};name=base \
+	file://avoid-including-sys-poll.h-directly.patch \
 	file://configure-allow-to-disable-libssh2.patch \
-	file://0001-Makefile.am-don-t-hardcode-libtool-name-when-running-pbad.patch \
+	file://0001-Makefile.am-don-t-hardcode-libtool-name-when-running.patch \
 	file://0001-rtmp-fix-seeking-and-potential-segfault.patch \
 	file://0004-rtmp-hls-tsdemux-fix.patch \
 	file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
+	file://0001-Prepend-PKG_CONFIG_SYSROOT_DIR-to-pkg-config-output.patch \
 	file://fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch \
 	file://dvbapi5-fix-old-kernel.patch \
+	file://ensure-valid-sentinels-for-gst_structure_get-etc.patch \
 	file://hls-main-thread-block.patch \
 "
 

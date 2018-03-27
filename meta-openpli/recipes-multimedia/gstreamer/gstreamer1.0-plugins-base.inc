@@ -15,9 +15,9 @@ PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gles2', 
 
 PACKAGECONFIG ??= " \
     ${PACKAGECONFIG_GL} \
+    ${GSTREAMER_ORC} \
+    ${@bb.utils.filter('DISTRO_FEATURES', 'alsa x11', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland egl', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
     orc ivorbis ogg theora vorbis cdparanoia pango opus \
     "
 

@@ -11,7 +11,10 @@ SRC_URI = " \
 	file://0001-introspection.m4-prefix-pkgconfig-paths-with-PKG_CON.patch \
 	file://0002-Makefile.am-prefix-calls-to-pkg-config-with-PKG_CONF.patch \
 	file://0003-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-caps.patch \
+	file://0003-riff-add-missing-include-directories-when-calling-in.patch \
 	file://0004-rtsp-drop-incorrect-reference-to-gstreamer-sdp-in-Ma.patch \
+	file://0004-subparse-set-need_segment-after-sink-pad-received-GS.patch \
 	file://subparse-avoid-false-negatives-dealing-with-UTF-8.patch \
+	file://get-caps-from-src-pad-when-query-caps.patch \
 "
 
