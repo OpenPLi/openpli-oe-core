@@ -1,20 +1,21 @@
-From c782a30482908a4b4dd9cd4abff9f9bc4016698f Mon Sep 17 00:00:00 2001
+From 51169f365033c5ea8177aefb140b51079a096f4c Mon Sep 17 00:00:00 2001
 From: Song Bing <b06498@freescale.com>
 Date: Tue, 5 Aug 2014 14:40:46 +0800
-Subject: [PATCH] gstrtpmp4gpay: set dafault value for MPEG4 without codec
- data in caps.
+Subject: [PATCH] gstrtpmp4gpay: set dafault value for MPEG4 without codec data
+ in caps.
 
 https://bugzilla.gnome.org/show_bug.cgi?id=734263
 
-Upstream Status: Submitted
+Upstream-Status: Submitted
 
 Signed-off-by: Song Bing <b06498@freescale.com>
+
 ---
- gst/rtp/gstrtpmp4gpay.c |   19 ++++++++++++++++++-
+ gst/rtp/gstrtpmp4gpay.c | 19 ++++++++++++++++++-
  1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/gst/rtp/gstrtpmp4gpay.c b/gst/rtp/gstrtpmp4gpay.c
-index 7913d9a..1749d39 100644
+index 7333b49..35f2c8c 100644
 --- a/gst/rtp/gstrtpmp4gpay.c
 +++ b/gst/rtp/gstrtpmp4gpay.c
 @@ -390,6 +390,7 @@ gst_rtp_mp4g_pay_setcaps (GstRTPBasePayload * payload, GstCaps * caps)
@@ -57,6 +58,3 @@ index 7913d9a..1749d39 100644
    }
    if (media_type == NULL)
      goto config_failed;
--- 
-1.7.9.5
-

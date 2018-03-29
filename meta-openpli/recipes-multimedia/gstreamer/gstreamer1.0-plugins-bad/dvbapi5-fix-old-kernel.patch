@@ -1,6 +1,16 @@
---- a/sys/dvb/gstdvbsrc.c	2016-12-16 21:52:42.691458624 +0100
-+++ b/sys/dvb/gstdvbsrc.c	2016-12-16 21:54:05.192216253 +0100
-@@ -306,7 +306,9 @@
+From 344b6a92bb2138d81be002dd8846979a5f648ada Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Sat, 24 Dec 2016 21:48:54 +0100
+
+---
+ sys/dvb/gstdvbsrc.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/sys/dvb/gstdvbsrc.c b/sys/dvb/gstdvbsrc.c
+index 2edd9fa..0b38c8b 100644
+--- a/sys/dvb/gstdvbsrc.c
++++ b/sys/dvb/gstdvbsrc.c
+@@ -306,7 +306,9 @@ gst_dvbsrc_modulation_get_type (void)
      {APSK_16, "16APSK", "16apsk"},
      {APSK_32, "32APSK", "32apsk"},
      {DQPSK, "DQPSK", "dqpsk"},
