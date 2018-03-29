@@ -16,5 +16,6 @@ SRC_URI = " \
 	file://0004-subparse-set-need_segment-after-sink-pad-received-GS.patch \
 	file://subparse-avoid-false-negatives-dealing-with-UTF-8.patch \
 	file://get-caps-from-src-pad-when-query-caps.patch \
+	file://make-gio_unix_2_0-dependency-configurable.patch \
 "
 

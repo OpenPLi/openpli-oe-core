@@ -18,7 +18,7 @@ PACKAGECONFIG ??= " \
     ${GSTREAMER_ORC} \
     ${@bb.utils.filter('DISTRO_FEATURES', 'alsa x11', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland egl', '', d)} \
-    orc ivorbis ogg theora vorbis cdparanoia pango opus \
+    orc gio-unix-2.0 ivorbis ogg theora vorbis cdparanoia pango opus \
     "
 
 X11DEPENDS = "virtual/libx11 libsm libxrender libxv"
@@ -27,6 +27,7 @@ X11DISABLEOPTS = "--disable-x --disable-xvideo --disable-xshm"
 
 PACKAGECONFIG[alsa]         = "--enable-alsa,--disable-alsa,alsa-lib"
 PACKAGECONFIG[cdparanoia]   = "--enable-cdparanoia,--disable-cdparanoia,cdparanoia"
+PACKAGECONFIG[gio-unix-2.0] = "--enable-gio_unix_2_0,--disable-gio_unix_2_0,glib-2.0"
 PACKAGECONFIG[ivorbis]      = "--enable-ivorbis,--disable-ivorbis,tremor"
 PACKAGECONFIG[ogg]          = "--enable-ogg,--disable-ogg,libogg"
 PACKAGECONFIG[opus]         = "--enable-opus,--disable-opus,libopus"
