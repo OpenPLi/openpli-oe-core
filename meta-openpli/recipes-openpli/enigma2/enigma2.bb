@@ -8,7 +8,6 @@ DEPENDS = " \
 	avahi \
 	freetype \
 	gettext-native \
-	gstreamer1.0-plugins-base gstreamer1.0 \
 	jpeg \
 	libdreamdvd libdvbsi++ libfribidi libmad libpng libsigc++-2.0 giflib libxml2 \
 	openssl libudfread \
@@ -31,16 +30,10 @@ RDEPENDS_${PN} = " \
 
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
-	gstreamer1.0-plugin-subsink \
-	glib-networking \
 	hotplug-e2-helper \
 	glibc-gconv-utf-16 \
 	python-sendfile \
 	ofgwrite \
-	${GST_BASE_RDEPS} \
-	${GST_GOOD_RDEPS} \
-	${GST_BAD_RDEPS} \
-	${GST_UGLY_RDEPS} \
 	"
 
 PYTHON_RDEPS = " \
@@ -63,66 +56,6 @@ PYTHON_RDEPS = " \
 	python-xml \
 	python-zlib \
 	python-zopeinterface \
-	"
-
-GST_BASE_RDEPS = "\
-	gstreamer1.0-plugins-base-alsa \
-	gstreamer1.0-plugins-base-app \
-	gstreamer1.0-plugins-base-audioconvert \
-	gstreamer1.0-plugins-base-audioresample \
-	gstreamer1.0-plugins-base-audiorate \
-	gstreamer1.0-plugins-base-videoconvert \
-	gstreamer1.0-plugins-base-ivorbisdec \
-	gstreamer1.0-plugins-base-ogg \
-	gstreamer1.0-plugins-base-opus \
-	gstreamer1.0-plugins-base-playback \
-	gstreamer1.0-plugins-base-subparse \
-	gstreamer1.0-plugins-base-typefindfunctions \
-	gstreamer1.0-plugins-base-vorbis \
-	gstreamer1.0-plugins-base-rawparse \
-	"
-
-GST_GOOD_RDEPS = "\
-	gstreamer1.0-plugins-good-apetag \
-	gstreamer1.0-plugins-good-audioparsers \
-	gstreamer1.0-plugins-good-autodetect \
-	gstreamer1.0-plugins-good-avi \
-	gstreamer1.0-plugins-good-flac \
-	gstreamer1.0-plugins-good-flv \
-	gstreamer1.0-plugins-good-icydemux \
-	gstreamer1.0-plugins-good-id3demux \
-	gstreamer1.0-plugins-good-isomp4 \
-	gstreamer1.0-plugins-good-matroska \
-	gstreamer1.0-plugins-good-mpg123 \
-	gstreamer1.0-plugins-good-rtp \
-	gstreamer1.0-plugins-good-rtpmanager \
-	gstreamer1.0-plugins-good-rtsp \
-	gstreamer1.0-plugins-good-soup \
-	gstreamer1.0-plugins-good-udp \
-	gstreamer1.0-plugins-good-wavparse \
-	gstreamer1.0-plugins-good-wavpack \
-	"
-
-GST_BAD_RDEPS = "\
-	gstreamer1.0-plugins-bad-autoconvert \
-	gstreamer1.0-plugins-bad-dashdemux \
-	gstreamer1.0-plugins-bad-mms \
-	gstreamer1.0-plugins-bad-mpegpsdemux \
-	gstreamer1.0-plugins-bad-mpegtsdemux \
-	gstreamer1.0-plugins-bad-rtmp \
-	gstreamer1.0-plugins-bad-smoothstreaming \
-	gstreamer1.0-plugins-bad-faad \
-	gstreamer1.0-plugins-bad-hls \
-	gstreamer1.0-plugins-bad-opusparse \
-	gstreamer1.0-plugins-bad-videoparsersbad \
-	"
-
-GST_UGLY_RDEPS = "\
-	gstreamer1.0-plugins-ugly-amrnb \
-	gstreamer1.0-plugins-ugly-amrwbdec \
-	gstreamer1.0-plugins-ugly-asf \
-	gstreamer1.0-plugins-ugly-cdio \
-	gstreamer1.0-plugins-ugly-dvdsub \
 	"
 
 # DVD and iso playback is integrated, we need the libraries
@@ -198,7 +131,6 @@ EXTRA_OECONF = "\
 	--with-libsdl=no --with-boxtype=${MACHINE} \
 	--enable-dependency-tracking \
 	ac_cv_prog_c_openmp=-fopenmp \
-	--with-gstversion=1.0 \
 	${@get_crashaddr(d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "7segment", "--with-7segment" , "", d)} \
