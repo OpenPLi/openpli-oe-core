@@ -76,6 +76,7 @@ RDEPENDS_${PN} = "\
 RRECOMMENDS_${PN} = "\
 	glib-networking \
 	gstreamer${GST_VERSION}-plugin-subsink \
+	virtual/gstreamer${GST_VERSION}-dvbmediasink \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \

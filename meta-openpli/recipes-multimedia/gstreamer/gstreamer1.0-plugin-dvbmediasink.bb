@@ -9,6 +9,9 @@ RPROVIDES_${PN} = "gst-plugin-dvbmediasink"
 RREPLACES_${PN} = "gst-plugin-dvbmediasink"
 RCONFLICTS_${PN} = "gst-plugin-dvbmediasink"
 
+PROVIDES += "virtual/gstreamer1.0-mediasink"
+RPROVIDES_${PN} += "virtual/gstreamer1.0-dvbmediasink"
+
 DEPENDS = "glib-2.0-native gstreamer1.0 gstreamer1.0-plugins-base libdca"
 
 GSTVERSION = "1.0"
