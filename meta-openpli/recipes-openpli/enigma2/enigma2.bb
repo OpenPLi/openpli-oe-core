@@ -34,6 +34,7 @@ RRECOMMENDS_${PN} = " \
 	glibc-gconv-utf-16 \
 	python-sendfile \
 	ofgwrite \
+	virtual/enigma2-mediaservice \
 	"
 
 PYTHON_RDEPS = " \
