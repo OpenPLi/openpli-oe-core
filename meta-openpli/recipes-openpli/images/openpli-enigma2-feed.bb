@@ -49,6 +49,7 @@ OPTIONAL_PACKAGES += " \
 	libbluray \
 	libudfread \
 	mc \
+	pv \
 	minisatip \
 	mtd-utils \
 	mtools \
