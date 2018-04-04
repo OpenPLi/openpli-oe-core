@@ -51,6 +51,7 @@ output/writer/sh4/pcm.c \
 output/writer/sh4/vc1.c \
 output/writer/sh4/wma.c \
 output/writer/sh4/wmv.c ", " \
+output/linuxdvb_buffering.c \
 output/linuxdvb_mipsel.c \
 output/writer/mipsel/writer.c \
 output/writer/mipsel/aac.c \
