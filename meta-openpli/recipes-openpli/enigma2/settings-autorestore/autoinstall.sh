@@ -45,7 +45,12 @@ if [ -f ${AUTOINSTALL} ]
 then
 	${IPKG} update 2>&1 | tee ${LOGFILE}
 	sed 's/,/ /g' $AUTOINSTALL | while read packagefile packageoption ; do
-		$IPKG install ${packageoption} $packagefile
+		if ! $IPKG list_installed | grep -q $packagefile
+		then
+			$IPKG install ${packageoption} $packagefile
+		else
+			echo skipped already installed package $packagefile
+		fi
 	done 2>&1 | tee -a ${LOGFILE}
 fi
 
