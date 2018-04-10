@@ -60,7 +60,6 @@ python do_cleanup () {
         ('fusionhdse', 'fusionhdse.png', 'fusionhdse.png', 'fusionhdse.html'),
         ('galaxy4k', 'galaxy4k.png', 'galaxy4k.png', 'galaxy4k.html'),
         ('purehd', 'purehd.png', 'purehd.png', 'purehd.html'),
-        ('purehdse', 'purehd.png', 'purehd.png', 'purehd.html'),
         ('revo4k', 'revo4k.png', 'revo4k.png', 'revo4k.html'),
         ('et10000', 'et10000.png', 'et8000.png', 'et8000.html'),
         ('et4x00', 'et4x00.png', 'et_rc13_normal.png', 'et4x00.html'),
