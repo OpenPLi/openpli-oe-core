@@ -1,27 +1,21 @@
 require conf/license/openpli-gplv2.inc
 require softcam.inc
 inherit cmake
+inherit gitpkgv
 
 DESCRIPTION = "OScam-emu ${PV} Open Source Softcam"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-PV = "svn${SRCPV}"
-PKGV = "${PV}"
-SRC_URI = "svn://www.streamboard.tv/svn/oscam;protocol=http;module=trunk;scmdata=keep"
-
-do_fetch[depends] += "enigma2-plugin-softcams-oscam:do_fetch"
-
 FILESEXTRAPATHS_prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
-PATCHREV = "cf93ca3bbc883f756e93dd861cb0a83167ab0ce0"
-PR = "r769"
-SRC_URI += "https://raw.githubusercontent.com/oscam-emu/oscam-emu/${PATCHREV}/oscam-emu.patch?${PATCHREV};downloadfilename=oscam-emu.${PATCHREV}.patch;name=emu;striplevel=0"
-SRC_URI[emu.md5sum] = "452884015140e28ee89c29f1a6ce00e3"
-SRC_URI[emu.sha256sum] = "0ce234c9807c350e8019c8571ebd6b0bae4d4ebfc720b9f4e48b574e54b1312d"
+
+PV = "git${SRCPV}"
+PKGV = "git${GITPKGV}"
+SRC_URI = "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
 
 DEPENDS = "libusb openssl"
 
-S = "${WORKDIR}/trunk"
+S = "${WORKDIR}/git"
 B = "${S}"
 CAMNAME = "oscam-emu"
 CAMSTART = "/usr/bin/oscam-emu --config-dir /etc/tuxbox/config/oscam-emu --daemon --pidfile /tmp/oscam-emu.pid --restart 2 --utf8"
