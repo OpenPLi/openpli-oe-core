@@ -28,6 +28,7 @@
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = https://github.com/zgemma-star/meta-zgemma.git
+	branch = release-6.2
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
 	url = https://github.com/miraclebox-git/meta-miraclebox.git
