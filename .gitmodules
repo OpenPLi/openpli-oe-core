@@ -37,7 +37,7 @@
 	url = https://github.com/open-spycat/meta-spycat.git
 [submodule "meta-xtrend"]
 	path = meta-xtrend
-	url = https://github.com/XTrendTeam/meta-xtrend.git
+	url = https://github.com/nextv-xtrend/meta-xtrend.git
 [submodule "meta-qt5"]
 	path = meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
