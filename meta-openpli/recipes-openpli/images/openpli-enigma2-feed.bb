@@ -137,6 +137,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
+	enigma2-plugin-skins-simple-gray-hd \
 	enigma2-plugins \
 	enigma2-skins \
 	picons-enigma2-meta \
