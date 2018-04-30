@@ -7,6 +7,7 @@ test -x "$nmbd" || exit 0
 
 case "$1" in
   start)
+    [ -d /var/lib/samba/msg.lock ] && rm -rf /var/lib/samba/msg.lock
     echo -n "Starting Samba: smbd"
     start-stop-daemon --start --quiet --exec $smbd
     echo -n " nmbd"
