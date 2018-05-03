@@ -150,6 +150,7 @@ ENIGMA2_OPTIONAL = " \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
 	dvb-usb-drivers-meta \
 	cdtextinfo \
 	meta-enigma2-dvdburn \
