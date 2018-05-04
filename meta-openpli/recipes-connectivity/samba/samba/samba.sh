@@ -10,7 +10,9 @@ test -x "$wsdd" && WSDD_DISABLED="No"
 
 case "$1" in
   start)
-    [ -d /var/lib/samba/msg.lock ] && rm -rf /var/lib/samba/msg.lock
+    if [ -d /var/lib/samba/msg.lock ]; then
+        rm -rf /var/lib/samba/msg.lock
+    fi
     echo -n "Starting Samba: smbd"
     start-stop-daemon --start --quiet --exec $smbd
     echo -n " nmbd"
