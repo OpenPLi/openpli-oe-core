@@ -1,3 +1,7 @@
+# make the package version depend on the name/version of the distro
+# this is required for release-to-release upgrades.
+
+do_install_basefilesissue[vardeps] += "DISTRO_NAME DISTRO_VERSION"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
