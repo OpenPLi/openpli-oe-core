@@ -89,21 +89,33 @@ then
 fi
 [ -s /tmp/crontab ] && crontab /tmp/crontab
 
-mergerootpwd()
-{
-	grep "^root:" /tmp/passwd
-	grep -v "^root:" /etc/passwd
-}
-
-if [ -f /tmp/passwd ]
+if [ -f /tmp/passwd ] && [ -f /tmp/shadow ]
 then
-	mergerootpwd > /tmp/passwds
-	# QA check - we don't want a passwd file without root entry
-	if grep -q "^root:" /tmp/passwds
+	# add any newly introduced users to the backup
+	cut -d':' -f1 /etc/passwd | while read user
+	do
+		if ! grep "^${user}:" /tmp/passwd && ! grep "^${user}:" /tmp/shadow
+		then
+			grep  "^${user}:" /etc/passwd >> /tmp/passwd
+			grep  "^${user}:" /etc/shadow >> /tmp/shadow
+		fi
+	done
+
+	# make sure we have root entries
+	if ! grep "^root:" /tmp/passwd || ! grep "^root:" /tmp/shadow
 	then
-		cp /tmp/passwds /etc/passwd
+		grep -v  "^root:" /tmp/passwd >> /tmp/newpasswd
+		grep -v  "^root:" /tmp/shadow >> /tmp/newshadow
+		grep "^root:" /etc/passwd >> /tmp/newpasswd
+		grep "^root:" /etc/shadow >> /tmp/newshadow
+		mv /tmp/newpasswd /etc/passwd
+		mv /tmp/newshadow /etc/shadow
+		rm -f /tmp/passwd
+		rm -f /tmp/shadow
+	else
+		mv /tmp/passwd /etc/passwd
+		mv /tmp/shadow /etc/shadow
 	fi
-	rm -f /tmp/passwds
 fi
 
 # When we restore a smb.conf from from Samba 3.x
@@ -115,4 +127,4 @@ else
 	rm -f ${SAMBACONF}.tmp 2> /dev/null
 fi
 
-rm -f /tmp/crontab /tmp/passwd /tmp/fstab
+rm -f /tmp/crontab /tmp/fstab
