@@ -4,7 +4,7 @@ S="${WORKDIR}/git"
 
 PACKAGES =+ "${PN}-src"
 
-inherit autotools pkgconfig
+inherit pkgconfig
 
 FILES_${PN}-dbg += "\
     /usr/lib/enigma2/python/Plugins/*/*/.debug \
