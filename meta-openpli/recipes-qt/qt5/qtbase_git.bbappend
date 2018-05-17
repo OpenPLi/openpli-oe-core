@@ -1,2 +1,2 @@
-# Qt packages are machine specific
-QT_PACKAGES_ARCH = "${MACHINE_ARCH}"
+# package is machine specific
+PACKAGE_ARCH := "${MACHINE_ARCH}"
