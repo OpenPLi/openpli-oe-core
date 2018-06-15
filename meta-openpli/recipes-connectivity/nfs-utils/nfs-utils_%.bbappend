@@ -5,6 +5,8 @@
 RDEPENDS_${PN}-client_remove = "bash"
 RDEPENDS_${PN}_remove = "bash"
 
+INSANE_SKIP_${PN} = "file-rdeps"
+
 # The startup script does a check that doesn't work, replace it. It's
 # also overly complex, so simplified it too.
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
