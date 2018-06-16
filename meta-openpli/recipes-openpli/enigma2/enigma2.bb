@@ -45,6 +45,7 @@ PYTHON_RDEPS = " \
 	python-fcntl \
 	python-importlib \
 	python-lang \
+	python-logging \
 	python-netclient \
 	python-netserver \
 	python-pickle \
