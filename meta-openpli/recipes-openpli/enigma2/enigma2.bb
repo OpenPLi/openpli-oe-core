@@ -44,6 +44,7 @@ PYTHON_RDEPS = " \
 	python-fcntl \
 	python-importlib \
 	python-lang \
+	python-logging \
 	python-mmap \
 	python-netclient \
 	python-netifaces \
