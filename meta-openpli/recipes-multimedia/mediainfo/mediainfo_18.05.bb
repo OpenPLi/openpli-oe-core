@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/meta-openpli/licenses/MEDIAINFO;md5=3
 
 inherit autotools
 
+DEPENDS = "zlib"
+
 SRC_URI="http://mediaarea.net/download/binary/mediainfo/${PV}/MediaInfo_CLI_${PV}_GNU_FromSource.tar.bz2"
 
 SRC_URI[md5sum] = "6b699ee634d77f40cbc905c667be9d7b"
@@ -35,6 +37,9 @@ do_compile_prepend () {
 }
 
 do_install_prepend () {
+    install -d ${D}${libdir}
+    oe_libinstall -so -C ${WORKDIR}/MediaInfo_CLI_GNU_FromSource/ZenLib/Project/GNU/Library/ libzen ${D}${libdir}
+    oe_libinstall -so -C ${WORKDIR}/MediaInfo_CLI_GNU_FromSource/MediaInfoLib/Project/GNU/Library/ libmediainfo ${D}${libdir}
     #install media info
     cd ${S}
 }
