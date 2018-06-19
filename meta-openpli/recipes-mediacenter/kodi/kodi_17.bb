@@ -157,7 +157,7 @@ do_compile_prepend() {
     done
 }
 
-INSANE_SKIP_${PN} = "rpaths"
+INSANE_SKIP_${PN} = "rpaths file-rdeps"
 
 FILES_${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc"
 FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
