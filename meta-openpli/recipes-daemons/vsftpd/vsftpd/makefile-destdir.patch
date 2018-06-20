@@ -8,7 +8,7 @@ diff --git a/Makefile b/Makefile
 --- a/Makefile
 +++ b/Makefile
 @@ -24,21 +24,21 @@
- 	$(CC) -o vsftpd $(OBJS) $(LINK) $(LIBS)
+ 	$(CC) -o vsftpd $(OBJS) $(LINK) $(LDFLAGS) $(LIBS)
  
  install:
 -	if [ -x /usr/local/sbin ]; then \
