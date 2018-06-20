@@ -10,12 +10,12 @@ Signed-off-by: Paul Eggleton <paul.eggleton@linux.intel.com>
 diff --git a/Makefile b/Makefile
 --- a/Makefile
 +++ b/Makefile
-@@ -5,7 +5,7 @@
- #CFLAGS = -g
- CFLAGS	=	-O2 -Wall -W -Wshadow #-pedantic -Werror -Wconversion
+@@ -8,7 +8,7 @@
+ 	-D_FORTIFY_SOURCE=2 \
+ 	#-pedantic -Wconversion
  
 -LIBS	=	`./vsf_findlibs.sh`
 +LIBS	=	-lssl -lcrypto -lnsl -lresolv
  LINK	=	-Wl,-s
+ LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
  
- OBJS	=	main.o utility.o prelogin.o ftpcmdio.o postlogin.o privsock.o \
