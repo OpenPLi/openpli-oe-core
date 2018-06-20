@@ -1,7 +1,8 @@
 --- cdparanoia-III-alpha9.8/configure.in	2000-03-26 00:33:22.000000000 -0700
 +++ cdparanoia-III-alpha9.8.new/configure.in	2004-12-23 16:34:04.072846728 -0700
-@@ -1,7 +1,7 @@
- AC_INIT(interface/interface.c)
+@@ -3,8 +3,8 @@
+ VERSION="10.3pre" 
+ AC_SUBST(VERSION) 
  
 -cp $srcdir/configure.guess $srcdir/config.guess
 -cp $srcdir/configure.sub $srcdir/config.sub
@@ -12,7 +13,7 @@
  
 --- cdparanoia-III-alpha9.8/interface/scan_devices.c	2001-03-25 22:44:01.000000000 -0700
 +++ cdparanoia-III-alpha9.8.new/interface/scan_devices.c	2004-12-23 16:38:47.128815680 -0700
-@@ -19,6 +19,10 @@
+@@ -22,6 +22,10 @@
  #include "common_interface.h"
  #include "utils.h"
  
