@@ -22,7 +22,7 @@ index 5bfd1ea..e4faea9 100644
 -     USE_STATIC_FFMPEG=1
 +     USE_STATIC_FFMPEG=0
       ;;
-   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*)
+   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*|aarch64*-*-linux-musl*)
       target_platform=target_linux
 @@ -633,7 +639,7 @@ case $host in
         use_gl=no
@@ -48,8 +48,8 @@ index 5bfd1ea..e4faea9 100644
 +     USE_STATIC_FFMPEG=0
       ;;
    *)
-      AC_MSG_ERROR(unsupported host ($host))
-@@ -696,6 +703,38 @@ if test "$target_platform" = "target_raspberry_pi" ; then
+     ARCH=$host_cpu"-"$host_os
+@@ -697,6 +704,38 @@ if test "$target_platform" = "target_raspberry_pi" ; then
       CXXFLAGS="$CXXFLAGS"
  fi
  
@@ -88,7 +88,7 @@ index 5bfd1ea..e4faea9 100644
  if test "$host_vendor" = "apple"; then
    use_avahi=no
    use_alsa=no
-@@ -912,6 +947,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
+@@ -913,6 +948,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
          [Define to 1 if your compiler supports the __sync_val_compare_and_swap() intrinsic.])
  fi
  
@@ -98,7 +98,7 @@ index 5bfd1ea..e4faea9 100644
  # Check for u16string/u32string declarations
  AC_LANG_PUSH([C++])
  AC_CHECK_TYPES([std::u16string, std::u32string], [], [], [[#include <string>]])
-@@ -944,16 +982,34 @@ if test "$use_gles" = "yes"; then
+@@ -945,16 +983,34 @@ if test "$use_gles" = "yes"; then
      AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
      AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
      AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
@@ -142,7 +142,7 @@ index 5bfd1ea..e4faea9 100644
    fi
  else
    if test "$use_gl" = "yes"; then
-@@ -1058,6 +1114,12 @@ AC_LANG_POP([C++])
+@@ -1059,6 +1115,12 @@ AC_LANG_POP([C++])
  
  if test "${target_platform}" = "target_linux" || test "${target_platform}" = "target_raspberry_pi" || test "${target_platform}" = "target_android"; then
    PKG_CHECK_MODULES([UUID], [uuid],, AC_MSG_ERROR(libuuid not found))
@@ -155,7 +155,7 @@ index 5bfd1ea..e4faea9 100644
  fi
  
  AC_MSG_CHECKING("for libcrossguid")
-@@ -2330,6 +2392,9 @@ AC_SUBST(HAVE_SSE4)
+@@ -2331,6 +2393,9 @@ AC_SUBST(HAVE_SSE4)
  AC_SUBST(USE_MMAL)
  AC_SUBST(USE_X11)
  AC_SUBST(USE_OPTICAL_DRIVE)
