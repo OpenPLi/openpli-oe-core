@@ -36,7 +36,7 @@ index 71e942b..b6d39a3 100644
 -     USE_STATIC_FFMPEG=1
 +     USE_STATIC_FFMPEG=0
       ;;
-   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*)
+   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*|aarch64*-*-linux-musl*)
       target_platform=target_linux
 @@ -633,7 +639,7 @@ case $host in
         use_gl=no
