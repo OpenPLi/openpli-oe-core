@@ -9,7 +9,7 @@ index 884b5a0..3ffdfa7 100644
 +
  import os
  from enigma import gFont, eTimer, eConsoleAppContainer, ePicLoad, getDesktop, eServiceReference, iPlayableService, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER
-  
+ 
 @@ -903,6 +903,13 @@ class DLNADeviceBrowser(Screen):
  
  def main(session, **kwargs):
