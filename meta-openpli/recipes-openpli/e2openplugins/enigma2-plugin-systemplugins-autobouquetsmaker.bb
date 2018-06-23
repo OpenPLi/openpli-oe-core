@@ -14,7 +14,8 @@ PV = "2.1+git${SRCPV}"
 PKGV = "2.1+git${GITPKGV}"
 PR = "r2"
 
-SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=git"
+SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=git \
+    file://0001-add-missing-defs.patch"
 
 EXTRA_OECONF = " \
     BUILD_SYS=${BUILD_SYS} \
@@ -39,8 +40,8 @@ pkg_preinst_${PN}_prepend() {
 #!/bin/sh
 echo "Checking for an ABM cache file"
 
-if [ -f /usr/lib/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/providers/providers.cache ]; then
-	rm -f /usr/lib/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/providers/providers.cache > /dev/null 2>&1
+if [ -f ${libdir}/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/providers/providers.cache ]; then
+	rm -f ${libdir}/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/providers/providers.cache > /dev/null 2>&1
 	echo "Cache file has been removed"
 else
 	echo "No cache file found"
