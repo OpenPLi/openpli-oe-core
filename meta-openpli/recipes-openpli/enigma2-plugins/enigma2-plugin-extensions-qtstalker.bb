@@ -22,27 +22,27 @@ do_compile () {
 }
 
 FILES_${PN} =  " \
-	/${bindir} \
-	/usr/lib/${QtStalker} \
-	/usr/lib/fonts \
-	/usr/share/stalker \
+	${bindir} \
+	${libdir}/${QtStalker} \
+	${libdir}/fonts \
+	${datadir}/stalker \
 "
 
 do_install() {
-	install -d ${D}/usr/lib/${QtStalker}
-	install -d ${D}/usr/share/stalker
-	cp -rp ${S}/usr/share/stalker/* ${D}/usr/share/stalker/
-	chmod -R a+rX ${D}/usr/share/stalker/
-	install -m 0755 ${S}/plugin/__init__.py ${D}/usr/lib/${QtStalker}
-	install -m 0755 ${S}/plugin/browser.py ${D}/usr/lib/${QtStalker}
-	install -m 0755 ${S}/plugin/datasocket.py ${D}/usr/lib/${QtStalker}
-	install -m 0755 ${S}/plugin/plugin.py ${D}/usr/lib/${QtStalker}
-	install -m 0755 ${S}/plugin/stalker.py ${D}/usr/lib/${QtStalker}
-	install -m 0755 ${S}/plugin/stalker.png ${D}/usr/lib/${QtStalker}
+	install -d ${D}${libdir}/${QtStalker}
+	install -d ${D}${datadir}/stalker
+	cp -rp ${S}${datadir}/stalker/* ${D}${datadir}/stalker/
+	chmod -R a+rX ${D}${datadir}/stalker/
+	install -m 0755 ${S}/plugin/__init__.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/browser.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/datasocket.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/plugin.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/stalker.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/stalker.png ${D}${libdir}/${QtStalker}
 	install -d ${D}/${bindir}
 	install -m 0755 ${S}/stalker ${D}/${bindir}
-	install -d ${D}/usr/lib
-	cd ${D}/usr/lib
+	install -d ${D}${libdir}
+	cd ${D}${libdir}
 	ln -sf ../share/fonts fonts
 }
 

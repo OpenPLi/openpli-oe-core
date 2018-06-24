@@ -17,15 +17,15 @@ PROVIDES += "font-valis-enigma"
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
 
-FILES_${PN} = "/usr/share/enigma2/Magic"
-FILES_font-valis-enigma = "/usr/share/fonts/valis_enigma.ttf"
+FILES_${PN} = "${datadir}/enigma2/Magic"
+FILES_font-valis-enigma = "${datadir}/fonts/valis_enigma.ttf"
 
 RDEPENDS_${PN} = "font-valis-enigma"
 S = "${WORKDIR}/git"
 
 do_install() {
-	install -d ${D}/usr/share
-	cp -r --preserve=mode,links ${S}/usr/share/* ${D}/usr/share/
-	chmod -R a+rX ${D}/usr/share/enigma2/
-	chmod 644 ${D}/usr/share/fonts/*.ttf
+	install -d ${D}${datadir}
+	cp -r --preserve=mode,links ${S}${datadir}/* ${D}${datadir}/
+	chmod -R a+rX ${D}${datadir}/enigma2/
+	chmod 644 ${D}${datadir}/fonts/*.ttf
 }

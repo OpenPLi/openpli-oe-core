@@ -22,25 +22,25 @@ do_compile () {
 }
 
 FILES_${PN} =  " \
-	/${bindir} \
-	/usr/lib/mozilla/plugins \
-	/usr/lib/${QtHbbtv} \
-	/usr/lib/fonts \
+	${bindir} \
+	${libdir}/mozilla/plugins \
+	${libdir}/${QtHbbtv} \
+	${libdir}/fonts \
 "
 
 do_install() {
-	install -d ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/__init__.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/browser.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/datasocket.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/hbbtv.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/plugin.py ${D}/usr/lib/${QtHbbtv}
+	install -d ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/__init__.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/browser.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/datasocket.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/hbbtv.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/plugin.py ${D}${libdir}/${QtHbbtv}
 	install -d ${D}${bindir}
 	install -m 0755 ${S}/qthbbtv ${D}${bindir}
 	install -d ${D}${libdir}/mozilla/plugins
 	install -m 0755 ${S}/libnpapihbbtvplugin.so ${D}${libdir}/mozilla/plugins
-	install -d ${D}/usr/lib
-	cd ${D}/usr/lib
+	install -d ${D}${libdir}
+	cd ${D}${libdir}
 	ln -sf ../share/fonts fonts
 }
 

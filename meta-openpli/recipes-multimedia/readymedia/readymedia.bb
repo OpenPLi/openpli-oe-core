@@ -24,7 +24,7 @@ do_configure_prepend() {
 		sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
 }
 
-CONFFILES_${PN} = "/etc/minidlna.conf"
+CONFFILES_${PN} = "${sysconfdir}/minidlna.conf"
 
 inherit autotools-brokensep pkgconfig gettext update-rc.d
 
@@ -32,9 +32,9 @@ INITSCRIPT_NAME = "readymedia.sh"
 INITSCRIPT_PARAMS = "stop 00 0 6 ."
 
 do_install_append() {
-	install -m 755 -d ${D}/etc/
-	install -m 644 ${WORKDIR}/minidlna.conf ${D}/etc/
-	install -m 755 -d ${D}/etc/init.d/
-	install -m 755 ${WORKDIR}/readymedia.sh ${D}/etc/init.d/
-	install -m 755 -d ${D}/var/lib/readymedia/
+	install -m 755 -d ${D}${sysconfdir}
+	install -m 644 ${WORKDIR}/minidlna.conf ${D}${sysconfdir}/
+	install -m 755 -d ${D}${sysconfdir}/init.d/
+	install -m 755 ${WORKDIR}/readymedia.sh ${D}${sysconfdir}/init.d/
+	install -m 755 -d ${D}${localstatedir}/lib/readymedia/
 }

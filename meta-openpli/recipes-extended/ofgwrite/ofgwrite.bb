@@ -16,8 +16,8 @@ S = "${WORKDIR}/git"
 EXTRA_OEMAKE=""
 
 do_install() {
-    install -d ${D}/usr/bin
-    install -m 755 ${S}/ofgwrite ${D}/usr/bin
-    install -m 755 ${S}/ofgwrite_bin ${D}/usr/bin
-    install -m 755 ${S}/ofgwrite_test ${D}/usr/bin
+    install -d ${D}${bindir}
+    install -m 755 ${S}/ofgwrite ${D}${bindir}
+    install -m 755 ${S}/ofgwrite_bin ${D}${bindir}
+    install -m 755 ${S}/ofgwrite_test ${D}${bindir}
 }

@@ -15,8 +15,8 @@ SRC_URI = "http://www.jspenguin.org/software/${PN}/${PN}-${PV}.tar.gz \
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_install() {
-	install -d ${D}/usr/bin
-	install -m 755 ${S}/${PN} ${D}/usr/bin/${PN}
+	install -d ${D}${bindir}
+	install -m 755 ${S}/${PN} ${D}${bindir}/${PN}
 }
 
 SRC_URI[md5sum] = "dc771ef0114fcad783df180f1ebfa66b"

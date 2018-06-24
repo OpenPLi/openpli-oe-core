@@ -12,9 +12,9 @@ SRC_URI[tar.sha256sum] = "618541584054093d53be8a2d9e81c97174f30f00af91cb8700a97e
 
 inherit autotools gettext
 
-FILES_${PN} += "/usr/share/misc/hddtemp.db"
+FILES_${PN} += "${datadir}/misc/hddtemp.db"
 
 do_install_append() {
-	install -d ${D}/usr/share/misc/
-	install -m 0644 ${WORKDIR}/hddtemp.db ${D}/usr/share/misc/hddtemp.db
+	install -d ${D}${datadir}/misc/
+	install -m 0644 ${WORKDIR}/hddtemp.db ${D}${datadir}/misc/hddtemp.db
 }

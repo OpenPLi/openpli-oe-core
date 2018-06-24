@@ -11,17 +11,17 @@ PKGV = "2+git${GITPKGV}"
 RDEPENDS_${PN} = "enigma2-plugin-systemplugins-transcodingsetup"
 
 SRC_URI = "git://github.com/eriksl/streamproxy.git;protocol=git"
-FILES_${PN} = "/usr/bin/streamproxy /etc/init.d/streamproxy.sh /etc/enigma2/streamproxy.conf"
-CONFFILES_${PN} = "/etc/enigma2/streamproxy.conf"
+FILES_${PN} = "${bindir}/streamproxy ${sysconfdir}/init.d/streamproxy.sh ${sysconfdir}/enigma2/streamproxy.conf"
+CONFFILES_${PN} = "${sysconfdir}/enigma2/streamproxy.conf"
 S = "${WORKDIR}/git"
 
 inherit autotools
 
 do_install_append() {
-	install -m 755 -d ${D}/etc/init.d/
-	install -m 755 ${S}/src/streamproxy.sh ${D}/etc/init.d/
-	install -m 755 -d ${D}/etc/enigma2/
-	install -m 644 ${S}/src/streamproxy.conf ${D}/etc/enigma2/
+	install -m 755 -d ${D}${sysconfdir}/init.d/
+	install -m 755 ${S}/src/streamproxy.sh ${D}${sysconfdir}/init.d/
+	install -m 755 -d ${D}${sysconfdir}/enigma2/
+	install -m 644 ${S}/src/streamproxy.conf ${D}${sysconfdir}/enigma2/
 }
 
 INITSCRIPT_NAME = "streamproxy.sh"

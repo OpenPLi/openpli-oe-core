@@ -9,7 +9,7 @@ inherit gitpkgv allarch
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
-DST = "/usr/lib/enigma2/python/Plugins/SystemPlugins/QuadPiP"
+DST = "${libdir}/enigma2/python/Plugins/SystemPlugins/QuadPiP"
 
 FILES_${PN} = "${DST}/*"
 PACKAGES = "${PN}"

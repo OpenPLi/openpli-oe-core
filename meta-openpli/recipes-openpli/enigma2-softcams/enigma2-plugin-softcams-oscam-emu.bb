@@ -28,9 +28,9 @@ SRC_URI += " \
 	file://oscam.user \
 	file://oscam.provid"
 
-CONFFILES = "/etc/tuxbox/config/oscam-emu/oscam.conf /etc/tuxbox/config/oscam-emu/oscam.server /etc/tuxbox/config/oscam-emu/oscam.srvid /etc/tuxbox/config/oscam-emu/oscam.user /etc/tuxbox/config/oscam-emu/oscam.provid"
+CONFFILES = "${sysconfdir}/tuxbox/config/oscam-emu/oscam.conf ${sysconfdir}/tuxbox/config/oscam-emu/oscam.server ${sysconfdir}/tuxbox/config/oscam-emu/oscam.srvid ${sysconfdir}/tuxbox/config/oscam-emu/oscam.user ${sysconfdir}/tuxbox/config/oscam-emu/oscam.provid"
 
-FILES_${PN} = "/usr/bin/oscam-emu /etc/tuxbox/config/oscam-emu/* /etc/init.d/softcam.oscam-emu"
+FILES_${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \
@@ -44,8 +44,8 @@ EXTRA_OECMAKE += "\
 	-DHAVE_PCSC=0"
 
 do_install() {
-	install -d ${D}/etc/tuxbox/config/oscam-emu
-	install -m 0644 ${WORKDIR}/oscam.* ${D}/etc/tuxbox/config/oscam-emu
-	install -d ${D}/usr/bin
-	install -m 0755 ${B}/oscam ${D}/usr/bin/oscam-emu
+	install -d ${D}${sysconfdir}/tuxbox/config/oscam-emu
+	install -m 0644 ${WORKDIR}/oscam.* ${D}${sysconfdir}/tuxbox/config/oscam-emu
+	install -d ${D}${bindir}
+	install -m 0755 ${B}/oscam ${D}${bindir}/oscam-emu
 }

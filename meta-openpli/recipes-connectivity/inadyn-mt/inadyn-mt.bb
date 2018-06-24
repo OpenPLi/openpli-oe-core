@@ -19,7 +19,7 @@ S = "${WORKDIR}/inadyn-mt.${PV}"
 inherit autotools-brokensep update-rc.d
 
 INITSCRIPT_NAME = "inadyn-mt"
-CONFFILES_${PN} = "/etc/inadyn.conf"
+CONFFILES_${PN} = "${sysconfdir}/inadyn.conf"
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 
@@ -28,10 +28,10 @@ do_compile() {
 }
 
 do_install() {
-	install -d ${D}/usr/bin
-	install -m 755 ${B}/bin/linux/inadyn-mt ${D}/usr/bin
-	install -d ${D}/etc
-	install -m 644 ${WORKDIR}/inadyn.conf ${D}/etc/
-	install -d ${D}/etc/init.d
-	install -m 755 ${WORKDIR}/inadyn-mt.sh ${D}/etc/init.d/inadyn-mt
+	install -d ${D}${bindir}
+	install -m 755 ${B}/bin/linux/inadyn-mt ${D}${bindir}
+	install -d ${D}${sysconfdir}
+	install -m 644 ${WORKDIR}/inadyn.conf ${D}${sysconfdir}
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/inadyn-mt.sh ${D}${sysconfdir}/init.d/inadyn-mt
 }
