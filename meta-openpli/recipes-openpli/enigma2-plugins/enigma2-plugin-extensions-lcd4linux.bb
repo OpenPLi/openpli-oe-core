@@ -42,10 +42,10 @@ do_install() {
 }
 
 FILES_${PN} = "\
-	/usr/lib/python2.7 \
-	/usr/lib/python2.7/site-packages \
-	/usr/lib/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
-	/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux \
-	/etc/enigma2/lcd4config*"
+	${libdir}/python2.7 \
+	${libdir}/python2.7/site-packages \
+	${libdir}/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
+	${libdir}/enigma2/python/Plugins/Extensions/LCD4linux \
+	${sysconfdir}/enigma2/lcd4config*"
 
-CONFFILES_${PN} = "/etc/enigma2/lcd4config"
+CONFFILES_${PN} = "${sysconfdir}/enigma2/lcd4config"

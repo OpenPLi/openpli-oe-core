@@ -37,5 +37,5 @@ do_install_prepend () {
 do_install_append () {
         mkdir -p ${D}${sysconfdir}/default/volatiles
         install -m 644 ${WORKDIR}/volatiles ${D}${sysconfdir}/default/volatiles/10_davfs2
-        rm -rf ${D}/usr/share/davfs2
+        rm -rf ${D}${datadir}/davfs2
 }
