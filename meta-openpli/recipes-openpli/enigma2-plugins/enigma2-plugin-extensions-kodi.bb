@@ -22,10 +22,10 @@ PKGV = "0.5+git${GITPKGV}"
 FILES_${PN} = " \
     ${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext \
-    /usr/share/kodi/system \
+    ${datadir}/kodi/system \
     "
 
 do_install_append() {
-	install -d ${D}/usr/share/kodi/system
-	install -m 0755 ${WORKDIR}/advancedsettings.xml ${D}/usr/share/kodi/system
+	install -d ${D}${datadir}/kodi/system
+	install -m 0755 ${WORKDIR}/advancedsettings.xml ${D}${datadir}/kodi/system
 }

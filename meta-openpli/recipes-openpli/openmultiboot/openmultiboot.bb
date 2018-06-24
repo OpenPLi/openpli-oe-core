@@ -33,13 +33,13 @@ EXTRA_OEMAKE = " \
     "
 
 do_install() {
-    install -d ${D}/sbin
-    install -m 755 ${S}/src/open_multiboot ${D}/sbin
+    install -d ${D}${base_sbindir}
+    install -m 755 ${S}/src/open_multiboot ${D}${base_sbindir}
 }
 
 pkg_preinst_${PN}() {
 #!/bin/sh
-if mountpoint -q /usr/lib/enigma2/python/Plugins/Extensions/OpenMultiboot; then
+if mountpoint -q ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot; then
     echo "openMultiBoot will only install on main image."
     echo "Child image is running - canceling installation!"
     sleep 3
