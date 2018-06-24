@@ -45,7 +45,7 @@
 	url = https://github.com/GIDeveloperTeam/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
-	url = https://github.com/HD-Digital/meta-gfutures.git
+	url = https://github.com/OpenPLi/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
 	url = https://github.com/mariner2/meta-sab.git
