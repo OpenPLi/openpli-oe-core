@@ -157,7 +157,7 @@ FILES_${PN}-dbg += "\
 	"
 
 # Save some space by not installing sources (mytest.py must remain)
-FILES_${PN}-src = "\
+FILES_${PN}-src += "\
 	${libdir}/enigma2/python/GlobalActions.py \
 	${libdir}/enigma2/python/Navigation.py \
 	${libdir}/enigma2/python/NavigationInstance.py \
