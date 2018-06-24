@@ -148,32 +148,33 @@ EXTRA_OEMAKE = "\
 
 # some plugins contain so's, their stripped symbols should not end up in the enigma2 package
 FILES_${PN}-dbg += "\
-	/usr/lib/enigma2/python/Plugins/*/*/.debug \
+	${libdir}/enigma2/python/Plugins/*/*/.debug \
 	"
 
 # Swig generated 200k enigma.py file has no purpose for end users
 # Save some space by not installing sources (mytest.py must remain)
-FILES_${PN}-src = "\
-	/usr/lib/enigma2/python/GlobalActions.py \
-	/usr/lib/enigma2/python/Navigation.py \
-	/usr/lib/enigma2/python/NavigationInstance.py \
-	/usr/lib/enigma2/python/RecordTimer.py \
-	/usr/lib/enigma2/python/ServiceReference.py \
-	/usr/lib/enigma2/python/SleepTimer.py \
-	/usr/lib/enigma2/python/e2reactor.py \
-	/usr/lib/enigma2/python/enigma.py \
-	/usr/lib/enigma2/python/keyids.py \
-	/usr/lib/enigma2/python/keymapparser.py \
-	/usr/lib/enigma2/python/skin.py \
-	/usr/lib/enigma2/python/timer.py \
-	/usr/lib/enigma2/python/*/*.py \
-	/usr/lib/enigma2/python/*/*/*.py \
-	/usr/lib/enigma2/python/*/*/*/*.py \
+FILES_${PN}-src += "\
+	${libdir}/enigma2/python/enigma.py \
+	${libdir}/enigma2/python/GlobalActions.py \
+	${libdir}/enigma2/python/Navigation.py \
+	${libdir}/enigma2/python/NavigationInstance.py \
+	${libdir}/enigma2/python/RecordTimer.py \
+	${libdir}/enigma2/python/ServiceReference.py \
+	${libdir}/enigma2/python/SleepTimer.py \
+	${libdir}/enigma2/python/e2reactor.py \
+	${libdir}/enigma2/python/enigma.py \
+	${libdir}/enigma2/python/keyids.py \
+	${libdir}/enigma2/python/keymapparser.py \
+	${libdir}/enigma2/python/skin.py \
+	${libdir}/enigma2/python/timer.py \
+	${libdir}/enigma2/python/*/*.py \
+	${libdir}/enigma2/python/*/*/*.py \
+	${libdir}/enigma2/python/*/*/*/*.py \
 	"
 
 do_install_append() {
-	install -d ${D}/usr/share/keymaps
-	find ${D}/usr/lib/enigma2/python/ -name '*.pyc' -exec rm {} \;
+	install -d ${D}${datadir}/keymaps
+	find ${D}${libdir}/enigma2/python/ -name '*.pyc' -exec rm {} \;
 }
 
 python populate_packages_prepend() {
