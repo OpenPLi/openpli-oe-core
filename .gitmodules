@@ -54,7 +54,7 @@
 	url = https://github.com/pli3/meta-xsarius.pli5.git
 [submodule "meta-gigablue"]
 	path = meta-gigablue
-	url = https://github.com/GigaBlue-STB/meta-gigablue
+	url = https://github.com/OpenPLi/meta-gigablue.git
 [submodule "meta-amiko"]
 	path = meta-amiko
 	url = https://github.com/open-amiko/meta-amiko.git
