@@ -12,7 +12,7 @@ PKGV = "1.0+git${GITPKGV}"
 
 DEPENDS = "bitstream libev"
 
-SRC_URI = "git://code.videolan.org/videolan/dvblast.git;protocol=http"
+SRC_URI = "https://code.videolan.org/videolan/dvblast.git"
 
 S = "${WORKDIR}/git"
 
@@ -21,4 +21,3 @@ inherit autotools-brokensep
 do_compile_prepend() {
         sed -i 's#/usr/local#/usr#' ${S}/Makefile
 }
-
