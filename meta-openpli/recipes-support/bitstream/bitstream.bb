@@ -11,7 +11,7 @@ inherit gitpkgv
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "https://code.videolan.org/videolan/bitstream.git"
+SRC_URI = "git://code.videolan.org/videolan/bitstream.git;protocol=https"
 S = "${WORKDIR}/git"
 
 inherit autotools-brokensep pkgconfig

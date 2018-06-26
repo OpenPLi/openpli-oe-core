@@ -12,7 +12,7 @@ PKGV = "1.0+git${GITPKGV}"
 
 DEPENDS = "bitstream libev"
 
-SRC_URI = "https://code.videolan.org/videolan/dvblast.git"
+SRC_URI = "git://code.videolan.org/videolan/dvblast.git;protocol=https"
 
 S = "${WORKDIR}/git"
 
