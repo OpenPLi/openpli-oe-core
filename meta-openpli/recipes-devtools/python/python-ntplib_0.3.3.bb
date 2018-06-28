@@ -23,3 +23,4 @@ FILES_${PN}-src = " \
 	${libdir}/${PYTHON_DIR}/site-packages/*.egg-info \
 	"
 
+include python-package-split.inc
