@@ -18,4 +18,4 @@ S = "${WORKDIR}/mutagen-${PV}"
 
 inherit distutils
 
-
+include python-package-split.inc
