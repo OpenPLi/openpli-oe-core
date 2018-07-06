@@ -14,7 +14,7 @@ DEPENDS_append_mipsel = "\
 
 # other softcams
 DEPENDS += " \
-	enigma2-plugin-softcams-cccam \
+	${@bb.utils.contains("TARGET_ARCH", "aarch64", "", "enigma2-plugin-softcams-cccam", d)} \
 	enigma2-plugin-softcams-oscam \
 	enigma2-plugin-softcams-oscam-emu \
 	"
