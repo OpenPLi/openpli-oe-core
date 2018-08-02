@@ -11,5 +11,5 @@ require openplugins-distutils.inc
 # and decided that this would be good enough until someone explains how to do this properly
 # with distutils.
 do_install_append() {
-	chmod a+x ${D}/usr/lib/enigma2/python/Plugins/*/*/*.sh
+	chmod a+x ${D}${libdir}/enigma2/python/Plugins/*/*/*.sh
 }
