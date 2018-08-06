@@ -87,10 +87,6 @@ RRECOMMENDS_${PN} = "\
 	${GST_UGLY_RDEPS} \
 	"
 
-EXTRA_OECONF = "\
-	--with-gstversion=${GST_VERSION} \
-	"
-
 SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/openpli/servicemp3.git;branch=master"
 
@@ -102,6 +98,7 @@ PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
 EXTRA_OECONF = "\
+	--with-gstversion=${GST_VERSION} \
 	BUILD_SYS=${BUILD_SYS} \
 	HOST_SYS=${HOST_SYS} \
 	STAGING_INCDIR=${STAGING_INCDIR} \
