@@ -2,8 +2,8 @@ MAINTAINER = "Narcis Ilisei"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=3c34afdc3adf82d2448f12715a255122"
 
-PV = "v.02.24.44"
-PR = "r3"
+PV = "v.02.28.10"
+PR = ""
 
 SRC_URI = "https://sourceforge.net/projects/inadyn-mt/files/inadyn-mt/inadyn-mt.${PV}/inadyn-mt.${PV}.tar.gz \
 	file://inadyn-mt.sh \
@@ -11,8 +11,8 @@ SRC_URI = "https://sourceforge.net/projects/inadyn-mt/files/inadyn-mt/inadyn-mt.
 	file://remove_host_include_paths.patch \
 	"
 
-SRC_URI[md5sum] = "0652d99aab1249d6a3afe4d65861e77b"
-SRC_URI[sha256sum] = "f894b5ab92ed4ec4cae2eccc99efef1aa18c0f5f02de66025e50833cc9063c3c"
+SRC_URI[md5sum] = "96d193759d61ee620d059799119dd982"
+SRC_URI[sha256sum] = "f69bea12d96b66f9f662a8df0730c60457b24f5fb5308b109936880ebf7be5ca"
 
 S = "${WORKDIR}/inadyn-mt.${PV}"
 
