@@ -74,7 +74,7 @@ OPTIONAL_PACKAGES += " \
 	python-lxml \
 	python-js2py \
 	python-pyexecjs \
-	python-beautifulsoup \
+	python-beautifulsoup4 \
 	picocom \
 	ppp \
 	rsync \
