@@ -5,6 +5,7 @@ require conf/license/openpli-gplv2.inc
 inherit gitpkgv
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
+RDEPENDS_${PN} = "bash"
 
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/OpenPLi/enigma2-plugin-systemplugins-quadpip.git;protocol=http"
