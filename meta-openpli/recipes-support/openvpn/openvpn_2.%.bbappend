@@ -2,6 +2,6 @@
 INITSCRIPT_NAME = "openvpn"
 INITSCRIPT_PARAMS = "defaults"
 
-SRC_URI = "file://openvpn"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 inherit update-rc.d
