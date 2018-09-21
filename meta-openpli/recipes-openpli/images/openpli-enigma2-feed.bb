@@ -82,6 +82,7 @@ OPTIONAL_PACKAGES += " \
 	sabnzbd \
 	satipclient \
 	screen \
+	sed \
 	sshpass \
 	smartmontools \
 	strace \
