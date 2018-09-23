@@ -144,7 +144,6 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-skins-pd1loi-hd-night \
 	enigma2-plugins \
 	enigma2-skins \
-	picons-enigma2-meta \
 	softcams-enigma2-meta \
 	packagegroup-openplugins \
 	${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
