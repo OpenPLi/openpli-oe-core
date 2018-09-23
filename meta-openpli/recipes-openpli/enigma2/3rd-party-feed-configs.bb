@@ -8,7 +8,7 @@ DISTRO_FEED_PREXIX = "openpli"
 DISTRO_FEED_URI = "http://downloads.openpli.org/feeds/openpli-6-release"
 
 # feeds to be generated
-FEEDS = "3rd-party 3rd-party-${MACHINE}"
+FEEDS = "picons 3rd-party 3rd-party-${MACHINE}"
 
 # allow the complete 3rd party feed to be overridden
 DISTRO_THIRD_PARTY_FEED_URI ?= "${DISTRO_FEED_URI}"
