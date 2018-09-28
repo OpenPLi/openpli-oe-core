@@ -25,6 +25,7 @@ CFLAGS_append = " -I${STAGING_INCDIR}/libxml2/ -I${STAGING_INCDIR}/${PYTHON_DIR}
 INSANE_SKIP_${PN} += "already-stripped"
 
 SRC_URI = "git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=git"
+SRC_URI_append = " file://add-dummy-boxbranding.patch"
 
 S = "${WORKDIR}/git"
 
