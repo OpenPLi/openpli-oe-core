@@ -1,0 +1,24 @@
+From 7f43b7d94aee39629a3cefc5d1259abfbe19a5fe Mon Sep 17 00:00:00 2001
+Message-Id: <7f43b7d94aee39629a3cefc5d1259abfbe19a5fe.1538140989.git.wanwizard@wanwizard.eu>
+From: WanWizard <wanwizard@wanwizard.eu>
+Date: Fri, 28 Sep 2018 14:23:01 +0100
+Subject: [PATCH] added dummy boxbranding
+
+---
+ src/boxbranding.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/boxbranding.py b/src/boxbranding.py
+new file mode 100644
+index 0000000..a7d960c
+--- /dev/null
++++ b/src/boxbranding.py
+@@ -0,0 +1,4 @@
++image_brand = "openpli"
++
++def getImageDistro():
++    return image_brand
+-- 
+2.17.1
+
+

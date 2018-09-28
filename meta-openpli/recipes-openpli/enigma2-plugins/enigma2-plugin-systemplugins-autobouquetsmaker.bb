@@ -1,20 +1,18 @@
 SUMMARY = "Automatically build and update bouquets from the DVB stream."
 DESCRIPTION = "Automatically build and update bouquets from the DVB stream."
 MAINTAINER = "oe-alliance team"
-PACKAGE_ARCH = "${MACHINE_ARCH}"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 inherit autotools-brokensep gitpkgv pythonnative gettext
 
-DEPENDS += "python"
-RDEPENDS_${PN} = "enigma2"
-
-PV = "2.1+git${SRCPV}"
-PKGV = "2.1+git${GITPKGV}"
-PR = "r2"
-
+SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=git"
+SRC_URI_append = " file://add-dummy-boxbranding.patch"
+
+PV = "3.1+git${SRCPV}"
+PKGV = "3.1+git${GITPKGV}"
+PR = "r0"
 
 EXTRA_OECONF = " \
     BUILD_SYS=${BUILD_SYS} \
@@ -25,8 +23,13 @@ EXTRA_OECONF = " \
 
 S = "${WORKDIR}/git"
 
+DEPENDS = "enigma2"
+
+INSANE_SKIP_${PN} += "already-stripped ldflags"
+
 python populate_packages_prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
+    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.*$', 'enigma2-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="enigma2")
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.py$', 'enigma2-plugin-%s-src', '%s (source files)', recursive=True, match_path=True, prepend=True, extra_depends="enigma2")
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.a$', 'enigma2-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True)
@@ -42,6 +45,6 @@ if [ -f /usr/lib/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/provider
 	rm -f /usr/lib/enigma2/python/Plugins/SystemPlugins/AutoBouquetsMaker/providers/providers.cache > /dev/null 2>&1
 	echo "Cache file has been removed"
 else
-	echo "No cache file found"
+	echo "No cache file found, continuing."
 fi
 }
