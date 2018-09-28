@@ -24,7 +24,7 @@
 	url = https://github.com/XP-Master/meta-xp.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
-	url = https://github.com/XpeedDeveloperTeam/meta-xpeedc.git
+	url = https://github.com/OpenPLi/meta-xpeedc.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = https://github.com/zgemma-star/meta-zgemma.git
