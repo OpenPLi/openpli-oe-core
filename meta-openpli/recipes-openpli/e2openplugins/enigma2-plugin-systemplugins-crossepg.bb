@@ -9,11 +9,12 @@ RDEPENDS_${PN} += "libcurl enigma2 python-compression python-lzma xz"
 inherit gitpkgv
 
 SRCREV = "${AUTOREV}"
+SRC_URI = "git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=git"
+SRC_URI_append = " file://add-dummy-boxbranding.patch"
+
 PV = "0.8.6+gitr${SRCPV}"
 PKGV = "0.8.6+gitr${GITPKGV}"
 PR = "r0"
-
-PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit python-dir
 
@@ -23,9 +24,6 @@ CFLAGS_append = " -I${STAGING_INCDIR}/libxml2/ -I${STAGING_INCDIR}/${PYTHON_DIR}
 
 # prevent lots of QA warnings
 INSANE_SKIP_${PN} += "already-stripped"
-
-SRC_URI = "git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=git"
-SRC_URI_append = " file://add-dummy-boxbranding.patch"
 
 S = "${WORKDIR}/git"
 
