@@ -42,7 +42,7 @@
 	url = https://github.com/meta-qt5/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = https://github.com/GIDeveloperTeam/meta-gi.git
+	url = https://github.com/OpenPLi/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
 	url = https://github.com/HD-Digital/meta-gfutures.git
