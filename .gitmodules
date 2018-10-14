@@ -30,7 +30,7 @@
 	url = https://github.com/zgemma-star/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = https://github.com/miraclebox-git/meta-miraclebox.git
+	url = https://github.com/OpenPLi/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
