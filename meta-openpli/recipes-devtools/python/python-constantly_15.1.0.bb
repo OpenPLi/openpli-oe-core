@@ -8,3 +8,7 @@ inherit pypi setuptools
 
 SRC_URI[md5sum] = "f0762f083d83039758e53f8cf0086eef"
 SRC_URI[sha256sum] = "586372eb92059873e29eba4f9dec8381541b4d3834660707faf8ba59146dfc35"
+
+RDEPENDS_${PN} += " \
+    ${PYTHON_PN}-json \
+"
