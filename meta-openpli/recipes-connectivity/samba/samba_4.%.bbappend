@@ -10,7 +10,7 @@ EXTRA_OECONF += " \
                  --without-cluster-support \
                  --without-profiling-data \
                  --with-sockets-dir=${localstatedir}/run \
-                 --with-logfilebase=${localstatedir}/log \
+                 --with-logfilebase=${localstatedir}/log/samba \
                  --nopyc \
                  --disable-iprint \
                  --without-ads \
