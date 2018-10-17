@@ -1,3 +1,6 @@
+# version
+PR = "r1"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${P}:"
 
 # Remove acl, cups etc. support.
@@ -70,6 +73,7 @@ do_install_append() {
 	rm -fR ${D}${sysconfdir}/tmpfiles.d
 	rm -fR ${D}${sysconfdir}/sysconfig
 	rm -f ${D}${sysconfdir}/init.d/samba
+	install -d ${D}${sysconfdir}/pam.d
 	install -m 644 ${WORKDIR}/pam ${D}${sysconfdir}/pam.d/samba
 	install -d ${D}${sysconfdir}/samba
 	install -m 644 ${WORKDIR}/smb.conf ${D}${sysconfdir}/samba
