@@ -170,6 +170,3 @@ FILES_libwbclient = "${libdir}/libwbclient.so.* \
                      ${libdir}/samba/libwinbind-client-samba4.so \
                      ${libdir}/samba/libreplace-samba4.so \
 "
-
-# workaround to get rid of perl dependency
-DEPENDS_remove = "perl"
