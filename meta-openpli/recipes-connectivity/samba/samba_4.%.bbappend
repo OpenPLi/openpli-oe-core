@@ -1,5 +1,5 @@
 # version
-PR = "r2"
+PR = "r3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
@@ -53,13 +53,14 @@ SRC_URI += " \
            file://0016-waf-disable-python-don-t-build-third_party.patch \
            file://0017-Revert-pam_smbpass-REMOVE-this-PAM-module.patch \
            file://0018-Revert-source3-wscript-remove-pam_smbpass-option-as-it-was-removed.patch \
+           file://0019-dynamically-create-a-samba-account-if-needed.patch \
            "
 
 FILES_${PN}-base += " \
                     ${sysconfdir}/samba/smb.conf \
                     ${sysconfdir}/init.d/samba.sh \
                     ${bindir}/testparm \
-                    ${bindir}/smbpassw \
+                    ${bindir}/smbpasswd \
                     ${bindir}/smbstatus \
                     "
 
