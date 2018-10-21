@@ -31,10 +31,13 @@ EXTRA_OECONF_remove = " \
 
 SRC_URI += " \
            file://smb.conf \
-           file://smb.pam \
+           file://smb-secure.conf \
+           file://smb-user.conf \
+           file://pam.config \
            file://samba.sh \
            file://users.map \
            file://smbpasswd \
+           file://share.template \
            file://0001-waf-disable-python-add-option-globally-to-build-syst.patch \
            file://0002-waf-disable-python-configuration-adjustments.patch \
            file://0003-waf-disable-python-align-talloc-s-wscript.patch \
@@ -58,6 +61,8 @@ SRC_URI += " \
 
 FILES_${PN}-base += " \
                     ${sysconfdir}/samba/smb.conf \
+                    ${sysconfdir}/samba/smb-secure.conf \
+                    ${sysconfdir}/samba/shares/share.template \
                     ${sysconfdir}/init.d/samba.sh \
                     ${bindir}/testparm \
                     ${bindir}/smbpasswd \
@@ -65,7 +70,8 @@ FILES_${PN}-base += " \
                     "
 
 CONFFILES_${PN}-base += " \
-                        ${sysconfdir}/samba/smb.conf \
+                        ${sysconfdir}/samba/smb.user.conf \
+                        ${sysconfdir}/samba/shares/share.template \
                         "
 
 # move smbpass config files to samba-common
@@ -99,10 +105,15 @@ do_install_append() {
 	rm -fR ${D}${sysconfdir}/sysconfig
 	rm -f ${D}${sysconfdir}/init.d/samba
 	install -d ${D}${sysconfdir}/pam.d
-	install -m 644 ${WORKDIR}/smb.pam ${D}${sysconfdir}/pam.d/samba
+	install -m 644 ${WORKDIR}/pam.config ${D}${sysconfdir}/pam.d/samba
 	install -d ${D}${sysconfdir}/samba
 	install -m 644 ${WORKDIR}/smb.conf ${D}${sysconfdir}/samba
+	install -m 644 ${WORKDIR}/smb-secure.conf ${D}${sysconfdir}/samba
+	install -m 644 ${WORKDIR}/smb-user.conf ${D}${sysconfdir}/samba
+	touch ${D}${sysconfdir}/samba/smb-shares.conf
 	install -m 755 ${WORKDIR}/samba.sh ${D}${sysconfdir}/init.d
+	install -d ${D}${sysconfdir}/samba/shares
+	install -m 644 ${WORKDIR}/share.template ${D}${sysconfdir}/samba/shares
 	install -d ${D}${sysconfdir}/samba/private
 	install -m 644 ${WORKDIR}/users.map ${D}${sysconfdir}/samba/private
 	install -m 644 ${WORKDIR}/smbpasswd ${D}${sysconfdir}/samba/private

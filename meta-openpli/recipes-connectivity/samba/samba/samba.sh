@@ -13,6 +13,22 @@ case "$1" in
     if [ -d /var/lib/samba/msg.lock ]; then
         rm -rf /var/lib/samba/msg.lock
     fi
+    if [ -d /etc/samba/shares ]; then
+        echo -n "Activaring share definitions"
+        if [ -f /etc/samba/smb-shares.conf ]; then
+            rm /etc/samba/smb-shares.conf
+        fi
+        for FILE in /etc/samba/shares/*.conf; do
+            path=`grep "path =" $FILE`
+            path=${path##=}
+            if [ -d $path ]; then
+                echo $FILE >> /etc/samba/smb-shares.conf
+            else
+                # mountpoint no longer exists
+                rm $FILE
+            fi
+        done
+    fi
     echo -n "Starting Samba: smbd"
     start-stop-daemon --start --quiet --exec $smbd
     echo -n " nmbd"

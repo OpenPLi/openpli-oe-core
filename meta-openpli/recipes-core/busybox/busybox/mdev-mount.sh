@@ -7,6 +7,51 @@ notify() {
 	fi
 }
 
+samba_share() {
+    # process the parameters
+	local COMMAND=$1
+	local MOUNTPOINT=`basename $2`
+	local MODEL=$3
+
+	# some mountpointn name exceptions
+	if [ "$MOUNTPOINT" == "hdd" ]; then
+		MOUNTPOINT="Harddisk"
+	fi
+
+	# do we have samba installed and have a share template?
+	if [ -f /etc/samba/smb.conf -a -f /etc/samba/shares/share.template ]; then
+		# process the add/remove request
+		if [ "$COMMAND" == "ADD" ]; then
+			# generate a share config for this mountpoint
+			echo "[$MOUNTPOINT]" > /etc/samba/shares/$MOUNTPOINT.conf
+			echo "  comment = $MODEL" >> /etc/samba/shares/$MOUNTPOINT.conf
+			echo "  path = $2" >> /etc/samba/shares/$MOUNTPOINT.conf
+			grep "# include /etc/samba/smb-secure.conf" /etc/samba/smb.conf
+			if [ $? -eq 1 ]; then
+				echo "  guest ok = no" >> /etc/samba/shares/$MOUNTPOINT.conf
+			else
+				echo "  guest ok = yes" >> /etc/samba/shares/$MOUNTPOINT.conf
+			fi
+			cat /etc/samba/shares/share.template >> /etc/samba/shares/$MOUNTPOINT.conf
+		elif [ "$COMMAND" == "REMOVE" ]; then
+			if [ -f /etc/samba/shares/$MOUNTPOINT.conf ]; then
+				rm /etc/samba/shares/$MOUNTPOINT.conf
+			fi
+		else
+			# unknown command, bail out
+			return
+		fi
+
+		# do we have samba running?
+		pidof -s smbd
+		if [ $? -eq 0 ]; then
+			# restart samba
+			/etc/init.d/samba.sh restart &
+		fi
+	fi
+}
+
+
 case "$ACTION" in
 	add|"")
 		ACTION="add"
@@ -111,6 +156,8 @@ case "$ACTION" in
 			fi
 			if ! mount -t auto -o noatime /dev/$MDEV "${MOUNTPOINT}" ; then
 				rmdir "${MOUNTPOINT}"
+			else
+				samba_share ADD "${MOUNTPOINT}" "$MODEL"
 			fi
 		fi
 		;;
@@ -121,6 +168,7 @@ case "$ACTION" in
 		fi
 		umount "${MOUNTPOINT}" || umount "/dev/${MDEV}"
 		rmdir "${MOUNTPOINT}"
+		samba_share REMOVE "${MOUNTPOINT}" "$MODEL"
 		;;
 	*)
 		# Unexpected keyword
