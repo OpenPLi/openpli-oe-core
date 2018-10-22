@@ -123,6 +123,6 @@ mv ${SAMBACONF} ${SAMBACONF}.old
 mv ${SAMBACONF}.tmp ${SAMBACONF}
 
 # process the smb configuration from the backup
-python /bin/restore-smbconf.py ${SAMBACONF}.old
+python /bin/convert-smbconf.py ${SAMBACONF}.old
 
 rm -f /tmp/crontab /tmp/fstab
