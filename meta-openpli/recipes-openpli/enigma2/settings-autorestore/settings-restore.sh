@@ -19,7 +19,7 @@ cp ${SAMBACONF} ${SAMBACONF}.tmp
 #	Prefer an older MAC address dependent backup to a newer one without it
 for candidate in `cut -d ' ' -f 2 /proc/mounts | grep '^/media'`
 do
-    candidate="${candidate//\\040/\\ }"
+	candidate="${candidate//\\040/\\ }"
 	if [ -d ${candidate}/backup ]
 	then
 		if [ ! -f ${BACKUPDIR}/backup/.timestamp ]
@@ -118,13 +118,11 @@ then
 	fi
 fi
 
-# When we restore a smb.conf from from Samba 3.x
-if grep -q "netbios name" ${SAMBACONF}
-then
-	mv ${SAMBACONF} ${SAMBACONF}.old
-	mv ${SAMBACONF}.tmp ${SAMBACONF}
-else
-	rm -f ${SAMBACONF}.tmp 2> /dev/null
-fi
+# restore the original smb.conf
+mv ${SAMBACONF} ${SAMBACONF}.old
+mv ${SAMBACONF}.tmp ${SAMBACONF}
+
+# process the smb configuration from the backup
+python /bin/restore-smbconf.py ${SAMBACONF}.old
 
 rm -f /tmp/crontab /tmp/fstab

@@ -1,13 +1,16 @@
-PV = "20180509"
+PV = "20181022"
 SRC_URI = "file://*"
 DESCRIPTION = "Autorecover settings and install packages at first boot from /media/*/backup"
 PACKAGES = "${PN}"
-MAINTAINER = "MiLo@OpenPLi"
+MAINTAINER = "OpenPLi team"
 
 require conf/license/openpli-gplv2.inc
 
 # Need to tell bitbake that we have extra files installed
-FILES_${PN} = "/etc"
+FILES_${PN} = " \
+              /etc \
+              /bin \
+              "
 
 S = "${WORKDIR}"
 
@@ -16,9 +19,11 @@ S = "${WORKDIR}"
 do_install() {
 	install -d ${D}/etc/init.d
 	install -d ${D}/etc/rcS.d
+	install -d ${D}/bin
 	# run-once initialization script
+	install -m 644 ${S}/restore-smbconf.py ${D}/bin/restore-smbconf.py
 	install -m 755 ${S}/settings-restore.sh ${D}/etc/init.d/settings-restore.sh
-	install -m 755 ${S}/settings-restore.old.sh ${D}/etc/init.d/settings-restore.old.sh
+	install -m 644 ${S}/convert-smbconf.py ${D}/bin/convert-smbconf.py
 	install -m 755 ${S}/autoinstall.sh ${D}/etc/init.d/autoinstall.sh
 }
 
