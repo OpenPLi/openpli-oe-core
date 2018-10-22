@@ -249,7 +249,6 @@ def main():
 			# loop over the options and compare them
 			for (key, value) in input.items(section):
 				# only for the keys we're interested in
-				print "checking option %s=%s" % (key, value)
 				if not smbconf.has_option(section, key) or smbconf.get(section, key) != value:
 					userconf.set(section, key, value)
 
