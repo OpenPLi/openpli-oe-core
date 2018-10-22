@@ -46,7 +46,6 @@ DEPENDS = " \
             lzo \
             mpeg2dec \
             python \
-            samba \
             sqlite3 \
             taglib \
             virtual/egl \
