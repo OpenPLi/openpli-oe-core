@@ -21,7 +21,7 @@ do_install() {
 	install -d ${D}/etc/rcS.d
 	install -d ${D}/bin
 	# run-once initialization script
-	install -m 644 ${S}/restore-smbconf.py ${D}/bin/restore-smbconf.py
+	install -m 644 ${S}/convert-smbconf.py ${D}/bin/convert-smbconf.py
 	install -m 755 ${S}/settings-restore.sh ${D}/etc/init.d/settings-restore.sh
 	install -m 644 ${S}/convert-smbconf.py ${D}/bin/convert-smbconf.py
 	install -m 755 ${S}/autoinstall.sh ${D}/etc/init.d/autoinstall.sh
