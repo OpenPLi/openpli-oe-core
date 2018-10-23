@@ -81,63 +81,64 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 		cursect['__name__'] = self.TOPLEVEL
 		self._sections[self.TOPLEVEL] = cursect
 
-		for line in fp.readlines:
+		for line in fp.readlines():
+			lineno = lineno + 1
+			# we only process non-blank lines
 			line = line.strip()
-			# blank line?
 			if line:
-    			# comment line?
-    			if (line.split(None, 1)[0].lower() == 'rem' and line[0] in "rR") or line[0] in "#;":
-    				cursect['_comment_' + str(lineno)] = line
-    			else:
-    				# continuation line?
-    				if line[0].isspace() and cursect is not None and optname:
-    					if value:
-    						cursect[optname].append(value)
-    				# a section header or option header?
-    				else:
-    					# is it a section header?
-    					mo = self.SECTCRE.match(line)
-    					if mo:
-    						sectname = mo.group('header')
-    						if sectname in self._sections:
-    							cursect = self._sections[sectname]
-    						else:
-    							cursect = collections.OrderedDict()
-    							cursect['__name__'] = sectname
-    							self._sections[sectname] = cursect
-    						# So sections can't start with a continuation line
-    						optname = None
-    					# an option line?
-    					else:
-    						mo = self._optcre.match(line)
-    						if mo:
-    							optname, vi, optval = mo.group('option', 'vi', 'value')
-    							optname = self.optionxform(optname.rstrip())
-    							# This check is fine because the OPTCRE cannot
-    							# match if it would set optval to None
-    							if optval is not None:
-    								if vi in ('=', ':') and ';' in optval:
-    									# ';' is a comment delimiter only if it follows
-    									# a spacing character
-    									pos = optval.find(';')
-    									if pos != -1 and optval[pos-1].isspace():
-    										optval = optval[:pos]
-    								optval = optval.strip()
-    								# allow empty values
-    								if optval == '""':
-    									optval = ''
-    								cursect[optname] = [optval]
-    							else:
-    								# valueless option handling
-    								cursect[optname] = optval
-    						else:
-    							# a non-fatal parsing error occurred.  set up the
-    							# exception but keep going. the exception will be
-    							# raised at the end of the file and will contain a
-    							# list of all bogus lines
-    							if not e:
-    								e = ConfigParser.ParsingError(fpname)
-    							e.append(lineno, repr(line))
+				# comment line?
+				if (line.split(None, 1)[0].lower() == 'rem' and line[0] in "rR") or line[0] in "#;":
+					cursect['_comment_' + str(lineno)] = line
+				else:
+					# continuation line?
+					if line[0].isspace() and cursect is not None and optname:
+						if value:
+							cursect[optname].append(value)
+					# a section header or option header?
+					else:
+						# is it a section header?
+						mo = self.SECTCRE.match(line)
+						if mo:
+							sectname = mo.group('header')
+							if sectname in self._sections:
+								cursect = self._sections[sectname]
+							else:
+								cursect = collections.OrderedDict()
+								cursect['__name__'] = sectname
+								self._sections[sectname] = cursect
+							# So sections can't start with a continuation line
+							optname = None
+						# an option line?
+						else:
+							mo = self._optcre.match(line)
+							if mo:
+								optname, vi, optval = mo.group('option', 'vi', 'value')
+								optname = self.optionxform(optname.rstrip())
+								# This check is fine because the OPTCRE cannot
+								# match if it would set optval to None
+								if optval is not None:
+									if vi in ('=', ':') and ';' in optval:
+										# ';' is a comment delimiter only if it follows
+										# a spacing character
+										pos = optval.find(';')
+										if pos != -1 and optval[pos-1].isspace():
+											optval = optval[:pos]
+									optval = optval.strip()
+									# allow empty values
+									if optval == '""':
+										optval = ''
+									cursect[optname] = [optval]
+								else:
+									# valueless option handling
+									cursect[optname] = optval
+							else:
+								# a non-fatal parsing error occurred.  set up the
+								# exception but keep going. the exception will be
+								# raised at the end of the file and will contain a
+								# list of all bogus lines
+								if not e:
+									e = ConfigParser.ParsingError(fpname)
+								e.append(lineno, repr(line))
 
 		# if any parsing errors occurred, raise an exception
 		if e:
@@ -185,11 +186,11 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 				fp.write("%s%s = %s\n" % (" " * indent, key, str(value).replace('\n', '\n\t')))
 
 # cli help information
-def help():
+def syntax():
 	"""
 	Show syntax and usage information
 	"""
-	print '''
+	print('''
 Information:
 	restore.smconf is a script that takes an smb.conf file as input, and tries to convert
 	it into a format used by OpenPLi, which uses seperate files to configure end-user
@@ -200,7 +201,7 @@ Information:
 
 Syntax:
 	python restore-smbconf.py </some/path/smb.conf>
-	'''
+	''')
 	sys.exit()
 
 #
@@ -213,7 +214,7 @@ def main():
 
 	# check the commandline args
 	if len(sys.argv) < 2 or not os.path.exists(sys.argv[1]):
-		help()
+		syntax()
 
 	# check the environment
 	if not os.path.exists(SMBCONF):
