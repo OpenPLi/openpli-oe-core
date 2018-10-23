@@ -14,15 +14,14 @@ case "$1" in
         rm -rf /var/lib/samba/msg.lock
     fi
     if [ -d /etc/samba/shares ]; then
-        echo -n "Activaring share definitions"
+        echo "Activating share definitions"
         if [ -f /etc/samba/smb-shares.conf ]; then
             rm /etc/samba/smb-shares.conf
         fi
         for FILE in /etc/samba/shares/*.conf; do
-            path=`grep "path =" $FILE`
-            path=${path##=}
+            path=`grep "path =" $FILE | tr -d " " | tr -d "\t" | cut -d'=' -f2`
             if [ -d $path ]; then
-                echo $FILE >> /etc/samba/smb-shares.conf
+                echo include = $FILE >> /etc/samba/smb-shares.conf
             else
                 # mountpoint no longer exists
                 rm $FILE
