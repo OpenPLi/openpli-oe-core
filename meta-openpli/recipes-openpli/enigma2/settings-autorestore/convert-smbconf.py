@@ -81,68 +81,63 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 		cursect['__name__'] = self.TOPLEVEL
 		self._sections[self.TOPLEVEL] = cursect
 
-		while True:
-			line = fp.readline()
-			if not line:
-				break
-			lineno = lineno + 1
+		for line in fp.readlines:
 			line = line.strip()
 			# blank line?
-			if line == '':
-				continue
-			# comment line?
-			if (line.split(None, 1)[0].lower() == 'rem' and line[0] in "rR") or line[0] in "#;":
-				cursect['_comment_' + str(lineno)] = line
-			else:
-				# continuation line?
-				if line[0].isspace() and cursect is not None and optname:
-					if value:
-						cursect[optname].append(value)
-				# a section header or option header?
-				else:
-					# is it a section header?
-					mo = self.SECTCRE.match(line)
-					if mo:
-						sectname = mo.group('header')
-						if sectname in self._sections:
-							cursect = self._sections[sectname]
-						else:
-							cursect = collections.OrderedDict()
-							cursect['__name__'] = sectname
-							self._sections[sectname] = cursect
-						# So sections can't start with a continuation line
-						optname = None
-					# an option line?
-					else:
-						mo = self._optcre.match(line)
-						if mo:
-							optname, vi, optval = mo.group('option', 'vi', 'value')
-							optname = self.optionxform(optname.rstrip())
-							# This check is fine because the OPTCRE cannot
-							# match if it would set optval to None
-							if optval is not None:
-								if vi in ('=', ':') and ';' in optval:
-									# ';' is a comment delimiter only if it follows
-									# a spacing character
-									pos = optval.find(';')
-									if pos != -1 and optval[pos-1].isspace():
-										optval = optval[:pos]
-								optval = optval.strip()
-								# allow empty values
-								if optval == '""':
-									optval = ''
-								cursect[optname] = [optval]
-							else:
-								# valueless option handling
-								cursect[optname] = optval
-						else:
-							# a non-fatal parsing error occurred.  set up the
-							# exception but keep going. the exception will be
-							# raised at the end of the file and will contain a
-							# list of all bogus lines
-							if not e:
-								e = ConfigParser.ParsingError(fpname)
-							e.append(lineno, repr(line))
+			if line:
+    			# comment line?
+    			if (line.split(None, 1)[0].lower() == 'rem' and line[0] in "rR") or line[0] in "#;":
+    				cursect['_comment_' + str(lineno)] = line
+    			else:
+    				# continuation line?
+    				if line[0].isspace() and cursect is not None and optname:
+    					if value:
+    						cursect[optname].append(value)
+    				# a section header or option header?
+    				else:
+    					# is it a section header?
+    					mo = self.SECTCRE.match(line)
+    					if mo:
+    						sectname = mo.group('header')
+    						if sectname in self._sections:
+    							cursect = self._sections[sectname]
+    						else:
+    							cursect = collections.OrderedDict()
+    							cursect['__name__'] = sectname
+    							self._sections[sectname] = cursect
+    						# So sections can't start with a continuation line
+    						optname = None
+    					# an option line?
+    					else:
+    						mo = self._optcre.match(line)
+    						if mo:
+    							optname, vi, optval = mo.group('option', 'vi', 'value')
+    							optname = self.optionxform(optname.rstrip())
+    							# This check is fine because the OPTCRE cannot
+    							# match if it would set optval to None
+    							if optval is not None:
+    								if vi in ('=', ':') and ';' in optval:
+    									# ';' is a comment delimiter only if it follows
+    									# a spacing character
+    									pos = optval.find(';')
+    									if pos != -1 and optval[pos-1].isspace():
+    										optval = optval[:pos]
+    								optval = optval.strip()
+    								# allow empty values
+    								if optval == '""':
+    									optval = ''
+    								cursect[optname] = [optval]
+    							else:
+    								# valueless option handling
+    								cursect[optname] = optval
+    						else:
+    							# a non-fatal parsing error occurred.  set up the
+    							# exception but keep going. the exception will be
+    							# raised at the end of the file and will contain a
+    							# list of all bogus lines
+    							if not e:
+    								e = ConfigParser.ParsingError(fpname)
+    							e.append(lineno, repr(line))
 
 		# if any parsing errors occurred, raise an exception
 		if e:
@@ -231,8 +226,8 @@ def main():
 		sys.exit('Required directory %s not found' % SHAREPATH)
 
 	# read the smb.conf input passed
-	input = BetterConfigParser()
-	input.read(sys.argv[1])
+	inputfile = BetterConfigParser()
+	inputfile.read(sys.argv[1])
 
 	# read the system smb.conf
 	smbconf = BetterConfigParser()
@@ -243,11 +238,11 @@ def main():
 	userconf.read(SMBUSERCONF)
 
 	# process the sections found in the smb.conf
-	for section in input.sections():
+	for section in inputfile.sections():
 		# global samba config
 		if section == 'global':
 			# loop over the options and compare them
-			for (key, value) in input.items(section):
+			for (key, value) in inputfile.items(section):
 				# only for the keys we're interested in
 				if not smbconf.has_option(section, key) or smbconf.get(section, key) != value:
 					userconf.set(section, key, value)
@@ -267,11 +262,11 @@ def main():
 
 		# other shares that may be defined
 		else:
-			path = input.get(section, 'path')
+			path = inputfile.get(section, 'path')
 			# only create shares for paths that exist
 			if os.path.exists(path):
 				share = BetterConfigParser()
-				share.add_section(section, input.items(section))
+				share.add_section(section, inputfile.items(section))
 				share.write('%s/%s.conf' % (SHAREPATH, section.lower()))
 
 # run me
