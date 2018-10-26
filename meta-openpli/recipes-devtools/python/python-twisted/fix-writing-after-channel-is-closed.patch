@@ -1,0 +1,12 @@
+diff -Nur Twisted-17.9.0/src/twisted/web/http.py Twisted-17.9.0-fixed/src/twisted/web/http.py 
+--- Twisted-17.9.0/src/twisted/web/http.py	2017-09-23 06:52:22.000000000 +0100
++++ Twisted-17.9.0-fixed/src/twisted/web/http.py	2018-10-26 19:06:23.641253705 +0100
+@@ -1082,7 +1082,7 @@
+         if data:
+             if self.chunked:
+                 self.channel.writeSequence(toChunk(data))
+-            else:
++            elif self.channel:
+                 self.channel.write(data)
+ 
+     def addCookie(self, k, v, expires=None, domain=None, path=None,
