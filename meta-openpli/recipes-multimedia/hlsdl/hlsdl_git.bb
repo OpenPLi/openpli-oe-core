@@ -3,7 +3,7 @@ MAINTAINER = "samsamsam"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=ec892df81d7a9e0b5cd420bb5603c288"
 
-DEPENDS = "curl openssl zlib ffmpeg"
+DEPENDS = "curl openssl zlib"
 
 inherit gitpkgv
 
@@ -24,7 +24,7 @@ SOURCE_FILES =+ "src/msg.c"
 SOURCE_FILES =+ "src/mpegts.c"
 
 do_compile() {
-    ${CC} ${SOURCE_FILES} -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE=1 -DWITH_FFMPEG -Wall -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wdeprecated-declarations -Wshadow -Wpointer-arith -Wcast-qual -Wsign-compare -DPREFIX="/usr" -std=gnu99 -I${S}/src -I${D}/${libdir} -I${D}/${includedir} -lrt -lpthread -lz -lssl -lcrypto -lcurl -lavcodec -lavformat -lavutil -o hlsdl ${LDFLAGS}
+    ${CC} ${SOURCE_FILES} -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE=1 -Wall -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wno-deprecated-declarations -Wshadow -Wpointer-arith -Wcast-qual -Wsign-compare -DPREFIX="/usr" -std=gnu99 -I${S}/src -I${D}/${libdir} -I${D}/${includedir} -lrt -lpthread -lz -lssl -lcrypto -lcurl -o hlsdl ${LDFLAGS}
 }
 
 do_install() {
