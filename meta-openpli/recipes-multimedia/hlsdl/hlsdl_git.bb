@@ -16,7 +16,6 @@ SRC_URI = "git://github.com/samsamsam-iptvplayer/hlsdl.git;protocol=git"
 S = "${WORKDIR}/git/"
 
 SOURCE_FILES = "src/main.c"
-SOURCE_FILES =+ "src/aes.c"
 SOURCE_FILES =+ "src/aes_openssl.c"
 SOURCE_FILES =+ "src/curl.c"
 SOURCE_FILES =+ "src/hls.c"
