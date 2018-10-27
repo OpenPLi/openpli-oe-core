@@ -26,12 +26,6 @@ samba_share() {
 			echo "[$MOUNTPOINT]" > /etc/samba/shares/$MOUNTPOINT.conf
 			echo "  comment = $MODEL" >> /etc/samba/shares/$MOUNTPOINT.conf
 			echo "  path = $2" >> /etc/samba/shares/$MOUNTPOINT.conf
-			grep "# include /etc/samba/smb-secure.conf" /etc/samba/smb-user.conf
-			if [ $? -eq 1 ]; then
-				echo "  guest ok = no" >> /etc/samba/shares/$MOUNTPOINT.conf
-			else
-				echo "  guest ok = yes" >> /etc/samba/shares/$MOUNTPOINT.conf
-			fi
 			cat /etc/samba/shares/share.template >> /etc/samba/shares/$MOUNTPOINT.conf
 		elif [ "$COMMAND" == "REMOVE" ]; then
 			if [ -f /etc/samba/shares/$MOUNTPOINT.conf ]; then
