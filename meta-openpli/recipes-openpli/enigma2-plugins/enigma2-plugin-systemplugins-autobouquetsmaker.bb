@@ -6,7 +6,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 inherit autotools-brokensep gitpkgv pythonnative gettext
 
-SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=git"
 SRC_URI_append = " file://add-dummy-boxbranding.patch"
 

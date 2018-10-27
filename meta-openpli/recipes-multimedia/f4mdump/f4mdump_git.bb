@@ -12,7 +12,6 @@ PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
 SRC_URI = "git://gitlab.com/f4mdump/f4mdump.git;protocol=http"
-SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git/"
 

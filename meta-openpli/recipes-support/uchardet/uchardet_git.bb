@@ -11,5 +11,3 @@ inherit pkgconfig cmake gitpkgv
 
 PV = "0.0.6+git${SRCPV}"
 PKGV = "0.0.6+git${GITPKGV}"
-
-SRCREV = "${AUTOREV}"

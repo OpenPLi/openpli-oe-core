@@ -10,7 +10,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=74f65085a4958dced34e7b33cdf95eaf"
 
 DEPENDS = "krb5 libbsd libssh openssl readline glib-2.0-native"
 
-SRCREV = "98afe0ccafe3739148609a1572db6e380f3ea5b2"
 SRC_URI = "git://github.com/sebastinas/yafc.git"
 
 S = "${WORKDIR}/git"

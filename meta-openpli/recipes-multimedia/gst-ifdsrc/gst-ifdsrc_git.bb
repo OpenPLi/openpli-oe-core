@@ -11,7 +11,6 @@ PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
 SRC_URI = "git://gitlab.com/samsamsam/iptvplayer-bin-components.git;protocol=http"
-SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git/gst-ifdsrc/gst-ifdsrc"
 

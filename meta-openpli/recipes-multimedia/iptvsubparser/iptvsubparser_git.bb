@@ -11,7 +11,6 @@ PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
 SRC_URI = "git://github.com/samsamsam-iptvplayer/iptvsubparser.git;protocol=git"
-SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git/"
 

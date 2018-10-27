@@ -7,5 +7,3 @@ SRC_URI = " \
 	file://ksv.patch;striplevel=0 \
 	file://iptvplayer_release.patch \
 	"
-
-SRCREV = "3a69b314a5763c370406149dc1be456db294065a"
