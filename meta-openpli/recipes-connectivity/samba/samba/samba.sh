@@ -20,11 +20,13 @@ case "$1" in
         fi
         for FILE in /etc/samba/shares/*.conf; do
             path=`grep "path =" $FILE | tr -d " " | tr -d "\t" | cut -d'=' -f2`
-            if [ -d $path ]; then
-                echo include = $FILE >> /etc/samba/smb-shares.conf
-            else
-                # mountpoint no longer exists
-                rm $FILE
+            if [ -n "$path" ]; then
+                if [ -d "$path" ]; then
+                    echo include = $FILE >> /etc/samba/smb-shares.conf
+                else
+                    # mountpoint no longer exists
+                    rm $FILE
+                fi
             fi
         done
     fi
