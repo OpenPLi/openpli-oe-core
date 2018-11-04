@@ -79,6 +79,7 @@ OPTIONAL_PACKAGES += " \
 	ppp \
 	rsync \
 	rtorrent \
+	rtl8192eu \
 	sabnzbd \
 	satipclient \
 	screen \
