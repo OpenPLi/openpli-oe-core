@@ -79,18 +79,6 @@ OPTIONAL_PACKAGES += " \
 	ppp \
 	rsync \
 	rtorrent \
-	mt7601u \
-	mt7610u \
-	rt3573 \
-	rt5572 \
-	rt8723a \
-	rt8723bs \
-	rt8812au \
-	rt8814au \
-	rt8822bu \
-	rtl8189es \
-	rtl8192cu \
-	rtl8192eu \
 	sabnzbd \
 	satipclient \
 	screen \
