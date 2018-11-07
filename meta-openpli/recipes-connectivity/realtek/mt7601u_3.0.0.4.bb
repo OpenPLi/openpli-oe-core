@@ -19,7 +19,7 @@ FILES_${PN}_append = "${sysconfdir}/Wireless"
 
 S = "${WORKDIR}/MT7601U/"
 
-EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"
+EXTRA_OEMAKE = 'LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR} CFLAGS="${CFLAGS} -Wno-error=incompatible-pointer-types"'
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless

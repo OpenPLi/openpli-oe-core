@@ -9,6 +9,8 @@ require recipes-core/meta/package-index.bb
 # We have a GPLv2 license for this recipe...
 require conf/license/openpli-gplv2.inc
 
+MACHINE_ESSENTIAL_EXTRA_RDEPENDS ?= ""
+
 # Depend on the image, so that it gets build
 DEPENDS = "openpli-enigma2-image"
 
@@ -79,6 +81,14 @@ OPTIONAL_PACKAGES += " \
 	ppp \
 	rsync \
 	rtorrent \
+	rt8723a \
+	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs', d)} \
+	${@bb.utils.contains('MACHINE', 'dm8000', '', 'rt8812au', d)} \
+	rt8814au \
+	rt8822bu \
+	${@bb.utils.contains_any('MACHINE', 'dm8000 et5x00 et6x00 et9x00 vuduo vusolo vuuno vuultimo', '', 'rtl8189es', d)} \
+	rtl8192cu \
+	rtl8192eu \
 	sabnzbd \
 	satipclient \
 	screen \

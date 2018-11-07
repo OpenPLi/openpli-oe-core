@@ -7,19 +7,18 @@ LIC_FILES_CHKSUM = "file://iwpriv_usage.txt;md5=8876ae2c103446a442658f1cc2a01b76
 inherit module
 
 SRC_URI = " \
-          file://mt7610u_wifi_sta_v3002_dpo_20130916.tar.bz2 \
-          file://config.patch;patch=1 \
-          file://change_device_name.patch;patch=1 \
-          file://firmware_file_rename.patch;patch=1 \
-          file://new_devices.patch;patch=1 \
-          file://buildfix.patch;patch=1 \
+          git://github.com/rebrane/mt7610u.git \
+          file://0001-missing-defines.patch \
           "
-SRC_URI[md5sum] = "2b552aff1bbd4effe94185e222eb761e"
-SRC_URI[sha256sum] = "c0061b9010b80c1fc09d78786317957044bde43e2a127ecefd66d4faa12d2906"
+
+SRCREV = "bff379ecc2772dd90bc59401f0e062f309c72895"
+
+SRC_URI[md5sum] = "c46966f5356f60cff8e78bfad38bc3d8"
+SRC_URI[sha256sum] = "00c56def1267b0388b3d34352a4105ea052c69e4b511ed746b7da6ac6f96cc6d"
 
 FILES_${PN} += "${sysconfdir}/Wireless/mt7610uSTA/mt7610uSTACard.dat ${sysconfdir}/Wireless/mt7610uSTA/mt7610uSTA.dat ${sysconfdir}/Wireless/mt7610uSTA/SingleSKU.dat"
 
-S = "${WORKDIR}/mt7610u_wifi_sta_v3002_dpo_20130916"
+S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR}"
 
