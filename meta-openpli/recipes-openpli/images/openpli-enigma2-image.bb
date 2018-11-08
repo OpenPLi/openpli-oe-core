@@ -28,6 +28,8 @@ EXTRA_KERNEL_WIFI_DRIVERS = " \
 
 EXTERNAL_WIFI_DRIVERS = " \
 	firmware-rtl8192cu \
+	firmware-rtl8192eu \
+	firmware-rtl8188eu \
 	\
 	rtl8192cu \
 	rtl8188eu \
