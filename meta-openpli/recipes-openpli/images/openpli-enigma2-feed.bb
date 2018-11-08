@@ -31,6 +31,7 @@ OPTIONAL_PACKAGES += " \
 	dvblast \
 	dvbsnoop \
 	dvdfs \
+	edid-decode \
 	evtest \
 	exfat-utils \
 	exteplayer3 \
