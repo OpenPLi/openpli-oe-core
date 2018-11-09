@@ -18,6 +18,7 @@ RDEPENDS_${PN} += "\
 	python-ctypes \
 	python-datetime \
 	python-email \
+	python-image \
 	python-imaging \
 	python-mutagen \
 	python-pyusb \
