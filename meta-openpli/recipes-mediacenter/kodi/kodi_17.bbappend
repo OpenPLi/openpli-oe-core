@@ -39,5 +39,6 @@ EXTRA_KODI_vuultimo4k = "vuplus4k"
 EXTRA_KODI_vuuno4k = "vuplus4k"
 EXTRA_KODI_vuuno4kse = "vuplus4k"
 EXTRA_KODI_vuzero4k = "vuplus4k"
+EXTRA_KODI_vuduo4k = "vuplus4k"
 
 require kodi-${EXTRA_KODI}.inc
