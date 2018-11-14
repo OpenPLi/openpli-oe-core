@@ -70,7 +70,7 @@ FILES_${PN}-base += " \
                     "
 
 CONFFILES_${PN}-base += " \
-                        ${sysconfdir}/samba/smb.user.conf \
+                        ${sysconfdir}/samba/smb-user.conf \
                         ${sysconfdir}/samba/shares/share.template \
                         "
 
