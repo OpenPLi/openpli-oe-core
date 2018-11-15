@@ -70,7 +70,7 @@ FILES_${PN}-base += " \
                     "
 
 CONFFILES_${PN}-base += " \
-                        ${sysconfdir}/samba/smb.user.conf \
+                        ${sysconfdir}/samba/smb-user.conf \
                         ${sysconfdir}/samba/shares/share.template \
                         "
 
@@ -133,7 +133,7 @@ fi
 
 # add smbpass support to pam.d
 grep -v "pam_smbpass.so" $D/etc/pam.d/common-password > $D/tmp/common-password
-echo -e "password\toptional\t\t\tpam_smbpass.so nullok use_authtok use_first_pass" >> $D/tmp/common-password
+printf "password\toptional\t\t\tpam_smbpass.so nullok use_authtok use_first_pass\n" >> $D/tmp/common-password
 mv $D/tmp/common-password $D/etc/pam.d/common-password
 }
 
@@ -141,7 +141,7 @@ pkg_prerm_${BPN}-common() {
 #!/bin/sh
 
 # remove smbpass support from pam.d
-grep -v "pam_smbpass.so" common-password > /tmp/common-password
+grep -v "pam_smbpass.so" /etc/pam.d/common-password > /tmp/common-password
 mv /tmp/common-password /etc/pam.d/common-password
 }
 
