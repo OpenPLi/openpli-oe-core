@@ -82,11 +82,11 @@ OPTIONAL_PACKAGES += " \
 	ppp \
 	rsync \
 	rtorrent \
-	rt8723a \
+	rtl8723a \
 	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs', d)} \
-	${@bb.utils.contains('MACHINE', 'dm8000', '', 'rt8812au', d)} \
-	rt8814au \
-	rt8822bu \
+	${@bb.utils.contains('MACHINE', 'dm8000', '', 'rtl8812au', d)} \
+	rtl8814au \
+	rtl8822bu \
 	${@bb.utils.contains_any('MACHINE', 'dm8000 et5x00 et6x00 et9x00 vuduo vusolo vuuno vuultimo osmio4k', '', 'rtl8189es', d)} \
 	${@bb.utils.contains('MACHINE', 'osmio4k', '', 'rtl8192cu', d)} \
 	${@bb.utils.contains('MACHINE', 'osmio4k', '', 'rtl8192eu', d)} \
@@ -114,7 +114,7 @@ OPTIONAL_PACKAGES += " \
 	${OPTIONAL_BSP_PACKAGES} \
 	"
 
-# dvb-apps was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/130603/ 
+# dvb-apps was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/130603/
 # smbnetfs was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/132827/
 
 OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
@@ -171,4 +171,4 @@ ENIGMA2_OPTIONAL = " \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"
 
-DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"	
+DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"
