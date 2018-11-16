@@ -20,7 +20,6 @@ IMAGE_INSTALL = "\
 	fuse-exfat \
 	glibc-binary-localedata-en-gb \
 	kernel-params \
-	modutils-loadscript \
 	nfs-utils-client \
 	openpli-bootlogo \
 	openssh-sftp-server \
@@ -35,6 +34,7 @@ IMAGE_INSTALL = "\
 	sdparm \
 	tuxbox-common \
 	tzdata \
+	udev-extraconf \
 	volatile-media \
 	vsftpd \
 "
