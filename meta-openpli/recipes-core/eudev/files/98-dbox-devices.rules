@@ -1,2 +1,4 @@
 KERNEL=="oled0", SYMLINK+="dbox/oled0"
+KERNEL=="lcd0", SYMLINK+="dbox/lcd0"
 KERNEL=="fp0", SYMLINK+="dbox/fp0"
+KERNEL=="fpkeys0", SYMLINK+="dbox/fpkeys0"
