@@ -1,0 +1,11 @@
+--- a/plugin.py	2018-11-18 00:21:43.000000000 +0000
++++ b/plugin.py	2018-11-18 00:23:00.718787956 +0000
+@@ -274,7 +274,7 @@
+ def Plugins(**kwargs):
+ 	l = []
+ 	l.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=session_start_main))
+-	l.append(PluginDescriptor(name=_("YouTubeTV"), where=PluginDescriptor.WHERE_MENU, fnc=menu_start_youtube))
++	l.append(PluginDescriptor(name=_("YouTubeTV"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=start_youtubetv_main))
+ 	l.append(PluginDescriptor(name=_("YouTubeTV Settings"), where=PluginDescriptor.WHERE_PLUGINMENU, fnc=plugin_setting_youtube))
+ 	l.append(PluginDescriptor(name=_("ChromiumOS"), description=_("Start ChromiumOS"), where=PluginDescriptor.WHERE_PLUGINMENU, needsRestart=True, fnc=plugin_start_chromiumos))
+ 	return l
