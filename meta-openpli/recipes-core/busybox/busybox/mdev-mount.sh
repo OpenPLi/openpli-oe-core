@@ -54,14 +54,24 @@ case "$ACTION" in
 			# Already mounted
 			exit 0
 		fi
-		# blacklisted internal mmc
-		if [ -e /dev/root ] && [ $MDEV == $(readlink /dev/root) ] ; then
+		# blacklist boot device
+		BOOTDEV=$(cat /proc/cmdline | sed -e 's/^.*root=\/dev\///' -e 's/ .*$//')
+		if [ "$MDEV" == "$BOOTDEV" ] ; then
+			exit 0
+		fi
+		# blacklist partitions on the same device as the boot device
+		DEVBASE=${MDEV:0:7}
+		if [[ $BOOTDEV === $DEVBASE* ]]; then
 			exit 0
 		fi
 		# get the device base (f.e. sd[a-z] or mmcblk[0-9])
-		DEVBASE=${MDEV:0:7}
 		if [ ! -d /sys/block/${DEVBASE} ]; then
 			DEVBASE=${MDEV:0:3}
+		else
+			# if MDEV is a partion on the boot device, skip it
+			if [ "$DEVBASE" == "${BOOTDEV:0:7}" ]; then
+				exit 0
+			fi
 		fi
 		# check for "please don't mount it" file
 		if [ -f "/dev/nomount.${DEVBASE}" ] ; then
