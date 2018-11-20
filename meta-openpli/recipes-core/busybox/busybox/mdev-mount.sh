@@ -61,7 +61,7 @@ case "$ACTION" in
 		fi
 		# blacklist partitions on the same device as the boot device
 		DEVBASE=${MDEV:0:7}
-		if [[ $BOOTDEV === $DEVBASE* ]]; then
+		if [[ $BOOTDEV == $DEVBASE* ]]; then
 			exit 0
 		fi
 		# get the device base (f.e. sd[a-z] or mmcblk[0-9])
