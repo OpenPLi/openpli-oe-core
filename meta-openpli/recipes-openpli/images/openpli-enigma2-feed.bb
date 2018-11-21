@@ -35,7 +35,6 @@ OPTIONAL_PACKAGES += " \
 	evtest \
 	exfat-utils \
 	exteplayer3 \
-	fuse-exfat \
 	gdb \
 	grep \
 	gstplayer \
