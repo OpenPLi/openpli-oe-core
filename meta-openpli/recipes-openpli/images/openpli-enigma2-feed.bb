@@ -88,7 +88,6 @@ OPTIONAL_PACKAGES += " \
 	rtl8814au \
 	rtl8822bu \
 	${@bb.utils.contains_any('MACHINE', 'dm8000 et5x00 et6x00 et9x00 vuduo vusolo vuuno vuultimo osmio4k', '', 'rtl8189es', d)} \
-	${@bb.utils.contains('MACHINE', 'osmio4k', '', 'rtl8192cu', d)} \
 	${@bb.utils.contains('MACHINE', 'osmio4k', '', 'rtl8192eu', d)} \
 	sabnzbd \
 	satipclient \
@@ -165,6 +164,7 @@ ENIGMA2_OPTIONAL = " \
 	${@bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "chromium", "enigma2-plugin-extensions-chromium libcrypto-compat", "", d)} \
 	dvb-usb-drivers-meta \
 	cdtextinfo \
 	meta-enigma2-dvdburn \
