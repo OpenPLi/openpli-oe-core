@@ -22,7 +22,7 @@ do_compile () {
 }
 
 FILES_${PN} =  " \
-	/${bindir} \
+	${bindir} \
 	/usr/lib/mozilla/plugins \
 	/usr/lib/${QtHbbtv} \
 	/usr/lib/fonts \
@@ -51,3 +51,5 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 # prevent 'double stripping' our binaries, which will break them
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+
+INSANE_SKIP_${PN} += "already-stripped dev-so"
