@@ -24,7 +24,6 @@ do_compile () {
 FILES_${PN} =  " \
 	${bindir} \
 	/usr/lib/${QtStalker} \
-	/usr/lib/fonts \
 	/usr/share/stalker \
 "
 
@@ -41,9 +40,6 @@ do_install() {
 	install -m 0755 ${S}/plugin/stalker.png ${D}/usr/lib/${QtStalker}
 	install -d ${D}/${bindir}
 	install -m 0755 ${S}/stalker ${D}${bindir}
-	install -d ${D}/usr/lib
-	cd ${D}/usr/lib
-	ln -sf ../share/fonts fonts
 }
 
 do_package_qa() {

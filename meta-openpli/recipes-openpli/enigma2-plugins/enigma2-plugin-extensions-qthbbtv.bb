@@ -25,7 +25,6 @@ FILES_${PN} =  " \
 	${bindir} \
 	/usr/lib/mozilla/plugins \
 	/usr/lib/${QtHbbtv} \
-	/usr/lib/fonts \
 "
 
 do_install() {
@@ -39,9 +38,6 @@ do_install() {
 	install -m 0755 ${S}/qthbbtv ${D}${bindir}
 	install -d ${D}${libdir}/mozilla/plugins
 	install -m 0755 ${S}/libnpapihbbtvplugin.so ${D}${libdir}/mozilla/plugins
-	install -d ${D}/usr/lib
-	cd ${D}/usr/lib
-	ln -sf ../share/fonts fonts
 }
 
 do_package_qa() {
