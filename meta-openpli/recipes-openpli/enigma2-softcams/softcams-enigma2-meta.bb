@@ -14,7 +14,7 @@ DEPENDS_append_mipsel = "\
 	"
 
 # armv7 obly binary softcams
-DEPENDS_append_armv7a += " \
+DEPENDS_append_armv7 += " \
 	enigma2-plugin-softcams-cccam \
 	"
 
