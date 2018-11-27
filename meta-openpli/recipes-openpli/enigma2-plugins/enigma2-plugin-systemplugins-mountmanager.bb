@@ -13,5 +13,4 @@ inherit distutils-openplugins
 
 RDEPENDS_${PN} = " \
 	e2fsprogs-tune2fs \
-	usbutils \
 	"
