@@ -45,6 +45,17 @@ samba_share() {
 	fi
 }
 
+samba_share_mounted_by_fstab()
+{
+	DEVBASE=${MDEV:0:7}
+	if [ ! -d /sys/block/${DEVBASE} ]; then
+		DEVBASE=${MDEV:0:3}
+	fi
+	MODEL=`cat /sys/block/$DEVBASE/device/model`
+
+	MOUNTPOINT=`cat /proc/mounts | grep "/dev/$MDEV" | cut -d ' ' -f 2`
+	samba_share ADD "${MOUNTPOINT}" "$MODEL"
+}
 
 case "$ACTION" in
 	add|"")
@@ -52,6 +63,7 @@ case "$ACTION" in
 		# check if already mounted
 		if grep -q "^/dev/${MDEV} " /proc/mounts ; then
 			# Already mounted
+			samba_share_mounted_by_fstab
 			exit 0
 		fi
 		# blacklist boot device
@@ -160,6 +172,8 @@ case "$ACTION" in
 			else
 				samba_share ADD "${MOUNTPOINT}" "$MODEL"
 			fi
+		else
+			samba_share_mounted_by_fstab
 		fi
 		;;
 	remove)
