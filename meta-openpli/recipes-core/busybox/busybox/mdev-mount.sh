@@ -155,7 +155,14 @@ case "$ACTION" in
 				MOUNTPOINT="/media/$MDEV"
 				mkdir -p "${MOUNTPOINT}"
 			fi
-			if ! mount -t auto -o noatime /dev/$MDEV "${MOUNTPOINT}" ; then
+			MOUNTOPTIONS="noatime"
+			if [ ${TYPE} == "ext4" ] ; then
+				case $(uname -r) in *4.1*)
+					MOUNTOPTIONS="${MOUNTOPTIONS},nodelalloc"
+					;;
+				esac
+			fi
+			if ! mount -t auto -o "${MOUNTOPTIONS}" /dev/$MDEV "${MOUNTPOINT}" ; then
 				rmdir "${MOUNTPOINT}"
 			else
 				samba_share ADD "${MOUNTPOINT}" "$MODEL"
