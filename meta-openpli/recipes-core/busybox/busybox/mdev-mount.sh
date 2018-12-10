@@ -162,7 +162,7 @@ case "$ACTION" in
 					;;
 				esac
 			fi
-			if ! mount -t auto -o "${MOUNTOPTIONS}" /dev/$MDEV "${MOUNTPOINT}" ; then
+			if ! mount -t "${TYPE}" -o "${MOUNTOPTIONS}" /dev/$MDEV "${MOUNTPOINT}" ; then
 				rmdir "${MOUNTPOINT}"
 			else
 				samba_share ADD "${MOUNTPOINT}" "$MODEL"
