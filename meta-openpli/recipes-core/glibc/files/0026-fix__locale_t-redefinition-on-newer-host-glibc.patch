@@ -1,0 +1,19 @@
+--- a/locale/xlocale.h	2018-12-18 21:01:39.033644166 +0200
++++ b/locale/xlocale.h	2018-12-18 21:02:10.337156441 +0200
+@@ -17,6 +17,11 @@
+    License along with the GNU C Library; if not, see
+    <http://www.gnu.org/licenses/>.  */
+ 
++#ifdef HAVE_CTYPE_H
++#include_next <ctype.h>
++#endif
++
++#ifndef _BITS_TYPES___LOCALE_T_H
+ #ifndef _XLOCALE_H
+ #define _XLOCALE_H	1
+ 
+@@ -42,3 +47,4 @@
+ typedef __locale_t locale_t;
+ 
+ #endif /* xlocale.h */
++#endif
