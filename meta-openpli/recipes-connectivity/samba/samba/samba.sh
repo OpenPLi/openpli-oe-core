@@ -19,7 +19,7 @@ case "$1" in
             rm /etc/samba/smb-shares.conf
         fi
         for FILE in /etc/samba/shares/*.conf; do
-            path=`grep "path =" $FILE | tr -d " " | tr -d "\t" | cut -d'=' -f2`
+            path=`grep "path\s=\s" $FILE | tr -d "\040\011\012\015" | cut -d'=' -f 2`
             if [ -n "$path" ]; then
                 if [ -d "$path" ]; then
                     echo include = $FILE >> /etc/samba/smb-shares.conf
