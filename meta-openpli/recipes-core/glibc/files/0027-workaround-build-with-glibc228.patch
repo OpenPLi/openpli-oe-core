@@ -1,0 +1,18 @@
+--- a/argp/argp-fmtstream.c	2018-12-20 08:53:15.632427348 +0100
++++ b/argp/argp-fmtstream.c	2018-12-20 08:54:58.802412578 +0100
+@@ -45,6 +45,15 @@
+ # define __vsnprintf(s, l, f, a) _IO_vsnprintf (s, l, f, a)
+ #endif
+ 
++#ifndef _IO_fwide
++# include <stdio.h>
++int
++_IO_fwide ( __FILE *fp, int mode)
++{
++    return fp->_mode;
++}
++#endif
++
+ #define INIT_BUF_SIZE 200
+ #define PRINTF_SIZE_GUESS 150
+ 
