@@ -68,15 +68,6 @@ index 0579ad5..c126a0b 100644
  		return;
  	}
  	lvl_scale = sp_status.props[0].u.st.stat[0].scale;
-@@ -490,7 +491,7 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
- 		{ .cmd = DTV_ROLLOFF },		//[8]
- 		{ .cmd = DTV_BANDWIDTH_HZ },	//[9]  Not used for DVB-S
- 		{ .cmd = DTV_PILOT },		//[10] 0 - ON, 1 - OFF
--		{ .cmd = DTV_DVBS2_MIS_ID }	//[11]
-+		{ .cmd = DTV_STREAM_ID }	//[11]
- 	};
- 
- 	struct dtv_properties cmdseq = {
 @@ -559,36 +560,54 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
  		lastrol = currentrol;
  		lastpil = currentpil;
