@@ -139,7 +139,7 @@ samba_share() {
 	# process the add/remove request
 	if [ "$ACTION" == "add" ]; then
 		# check if we already have a share for this path
-		share=`find /etc/samba -name "*.conf" -exec grep "path\s=\s${path}" {} \;`
+		share=`find /etc/samba -name "*.conf" -exec grep "path\s*=\s*${path}" {} \;`
 		if [ -z "$share" ]; then
 			# do have a share template?
 			if [ -f /etc/samba/shares/share.template ]; then
