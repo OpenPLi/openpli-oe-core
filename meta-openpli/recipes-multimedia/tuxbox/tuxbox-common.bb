@@ -26,8 +26,8 @@ do_install() {
 
 	install -m 0644 "${S}"/*.xml "${D}/etc/tuxbox"
 
-	if [ ! -d "${D}/var/scce" ]; then ln -s "/etc/tuxbox/scce" "${D}/var/"; fi
-	if [ ! -d "${D}/var/keys" ]; then ln -s "/usr/keys"        "${D}/var/"; fi
-	if [ ! -d "${D}/var/bin" ];  then ln -s "/usr/bin"         "${D}/var/"; fi
-	if [ ! -d "${D}/var/etc" ];  then ln -s "/etc"             "${D}/var/"; fi
+	ln -s "/etc/tuxbox/scce"	"${D}/var/"
+	ln -s "/usr/keys"			"${D}/var/"
+	ln -s "/usr/bin"			"${D}/var/"
+	ln -s "/etc"				"${D}/var/"
 }
