@@ -1,7 +1,10 @@
-
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
 PACKAGECONFIG = ""
+PACKAGECONFIG[gnome-keyring] = ""
+PACKAGECONFIG[libsecret] = "--with-libsecret=yes,--with-libsecret=no,libsecret"
+
+SRCREV = "398e8169ea6d3d854af0173b1e66bf13c124f901"
 
 SRC_URI += "file://smbnetfs.common.conf file://smbnetfs.user.conf file://init"
 
@@ -18,3 +21,5 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 755 ${WORKDIR}/init ${D}${sysconfdir}/init.d/${PN}.sh
 }
+
+PNBLACKLIST[smbnetfs] = ""
