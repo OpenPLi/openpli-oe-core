@@ -10,6 +10,7 @@ SRC_URI = " \
           file://rtl8822bu-driver-1.0.0.9-20180511a.zip \
           file://0001-fix-compile-with-4-7-x-kernel.patch \
           file://add-linux-4.19-support.patch \
+          file://add-linux-4.20-support.patch \
           "
 
 SRC_URI[md5sum] = "b5c5427f41422f0195b4947f28e877f8"

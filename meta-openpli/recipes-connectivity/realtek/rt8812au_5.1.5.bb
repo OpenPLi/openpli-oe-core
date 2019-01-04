@@ -10,6 +10,7 @@ SRC_URI = " \
           file://rtl8812AU-driver-5.1.5-20170914.zip \
           file://0001-add-linux-kernel-4.15-support.patch \
           file://0001-add-linux-kernel-4.19-support.patch \
+          file://0001-add-linux-kernel-4.20-support.patch \
           "
 
 SRC_URI[md5sum] = "5bb6be1683428b09bd3e4deb1e2c7622"
