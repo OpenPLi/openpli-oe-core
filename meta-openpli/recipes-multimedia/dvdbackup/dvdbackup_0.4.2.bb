@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 DEPENDS = "libdvdread virtual/gettext"
 PR = "r2"
 
-SRC_URI = "${SOURCEFORGE_MIRROR}/${PN}/${P}.tar.xz"
+SRC_URI = "${SOURCEFORGE_MIRROR}/${BPN}/${BP}.tar.xz"
 
 SRC_URI += "file://autoconf-warnings-are-not-errors.patch"
 

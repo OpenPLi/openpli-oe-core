@@ -4,7 +4,7 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://GPL-2;md5=eb723b61539feef013de476e68b5c50a"
 PR = "r1"
 
-SRC_URI = "https://download.savannah.nongnu.org/releases/${PN}/${PN}-${PV}.tar.bz2;name=tar \
+SRC_URI = "https://download.savannah.nongnu.org/releases/${BPN}/${BPN}-${PV}.tar.bz2;name=tar \
 		file://hddtemp.db \
 		file://hddtemp-no-nls-support.patch"
 SRC_URI[tar.md5sum] = "8b829339e1ae9df701684ec239021bb8"
