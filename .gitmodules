@@ -34,7 +34,7 @@
 	url = http://github.com/wetek-enigma/meta-wetek.git
 [submodule "meta-edision"]
 	path = meta-edision
-	url = http://github.com/open-edision/meta-edision.git
+	url = http://github.com/edision-open/meta-edision.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
 	url = http://github.com/miraclebox-git/meta-miraclebox.git
