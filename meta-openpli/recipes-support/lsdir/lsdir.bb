@@ -3,15 +3,9 @@ MAINTAINER = "samsamsam"
 
 require conf/license/openpli-gplv2.inc
 
-inherit gitpkgv
+SRC_URI = "file://lsdir.tar.gz"
 
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
-PR = "r0"
-
-SRC_URI = "git://github.com/samsamsam-iptvplayer/lsdir.git;protocol=git"
-
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/lsdir/"
 
 SOURCE_FILES = "src/lsdir.c"
 
