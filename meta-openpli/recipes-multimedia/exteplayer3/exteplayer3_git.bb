@@ -8,10 +8,10 @@ DEPENDS = "ffmpeg"
 
 inherit gitpkgv
 
-PV = "36+gitr${SRCPV}"
-PKGV = "36+gitr${GITPKGV}"
+PV = "50+gitr${SRCPV}"
+PKGV = "50+gitr${GITPKGV}"
 
-SRC_URI = "git://github.com/samsamsam-iptvplayer/exteplayer3.git;branch=master"
+SRC_URI = "git://github.com/e2iplayer/exteplayer3.git;branch=master"
 
 S = "${WORKDIR}/git/"
 
@@ -27,6 +27,8 @@ SOURCE_FILES =+ "output/output_subtitle.c"
 SOURCE_FILES =+ "output/output.c"
 SOURCE_FILES =+ "output/writer/common/pes.c"
 SOURCE_FILES =+ "output/writer/common/misc.c"
+SOURCE_FILES =+ "output/writer/common/writer.c"
+SOURCE_FILES =+ "output/linuxdvb_buffering.c"
 SOURCE_FILES =+ "playback/playback.c"
 SOURCE_FILES =+ "external/ffmpeg/src/bitstream.c"
 SOURCE_FILES =+ "external/ffmpeg/src/latmenc.c"
