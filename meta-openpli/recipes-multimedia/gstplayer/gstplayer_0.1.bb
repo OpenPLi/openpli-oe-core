@@ -19,13 +19,13 @@ SRC_URI[sha256sum] = "36d44390f737a1a387c21a7ab2f7519b0f50b4d649e26cc9c92a242781
 S = "${WORKDIR}/git/"
 
 do_compile() {
-    cd ${S}/gstplayer/gst-1.0
+    cd ${S}/gst-1.0
     ${CC} *.c ../common/*.c -I../common/ `pkg-config --cflags --libs gstreamer-1.0 gstreamer-pbutils-1.0` -o gstplayer_gst-1.0 ${LDFLAGS}
 }
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${S}/gstplayer/gst-1.0/gstplayer_gst-1.0 ${D}${bindir}/gstplayer
+    install -m 0755 ${S}/gst-1.0/gstplayer_gst-1.0 ${D}${bindir}/gstplayer
 }
 
 pkg_postinst_${PN}() {
