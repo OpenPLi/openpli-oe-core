@@ -7,13 +7,13 @@ This shouldn't matter, but from my tests it looks like,
 that PTS from video is available sooner after flush than
 PTS from audio.
 ---
- gstplayer/gst-1.0/gst-backend.c | 2 +-
+ gst-1.0/gst-backend.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
+diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
 index 271a1dd..e726b7f 100644
---- a/gstplayer/gst-1.0/gst-backend.c
-+++ b/gstplayer/gst-1.0/gst-backend.c
+--- a/gst-1.0/gst-backend.c
++++ b/gst-1.0/gst-backend.c
 @@ -938,7 +938,7 @@ int backend_query_position(int64_t *mseconds)
          */
          if ( g_dvbAudioSink || g_dvbVideoSink)
