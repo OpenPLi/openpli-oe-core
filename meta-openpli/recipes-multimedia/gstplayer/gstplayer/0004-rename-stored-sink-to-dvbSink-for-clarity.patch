@@ -4,13 +4,13 @@ Date: Fri, 11 Mar 2016 12:48:50 +0100
 Subject: [PATCH 04/11] rename stored sink to dvbSink for clarity
 
 ---
- gstplayer/gst-1.0/gst-backend.c | 49 ++++++++++++++++++++---------------------
+ gst-1.0/gst-backend.c | 49 ++++++++++++++++++++---------------------
  1 file changed, 24 insertions(+), 25 deletions(-)
 
-diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
+diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
 index da2df9d..97694f6 100644
---- a/gstplayer/gst-1.0/gst-backend.c
-+++ b/gstplayer/gst-1.0/gst-backend.c
+--- a/gst-1.0/gst-backend.c
++++ b/gst-1.0/gst-backend.c
 @@ -33,8 +33,8 @@ Based on:
  #include <fcntl.h>
  

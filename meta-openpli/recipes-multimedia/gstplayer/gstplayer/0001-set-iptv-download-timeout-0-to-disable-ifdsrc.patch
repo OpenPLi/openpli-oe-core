@@ -4,13 +4,13 @@ Date: Fri, 11 Mar 2016 13:10:38 +0100
 Subject: [PATCH 01/11] set iptv download timeout 0 to disable ifdsrc
 
 ---
- gstplayer/gst-1.0/gst-backend.c | 2 +-
+ gst-1.0/gst-backend.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
+diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
 index 83a863f..f941d6d 100644
---- a/gstplayer/gst-1.0/gst-backend.c
-+++ b/gstplayer/gst-1.0/gst-backend.c
+--- a/gst-1.0/gst-backend.c
++++ b/gst-1.0/gst-backend.c
 @@ -55,7 +55,7 @@ static gint    g_buffer_size = 0;
  static StrPair_t **g_ptr_http_header_fields = NULL;
  static int  g_sfd = -1;     /* Used to wake up main loop when new message in the gst bus is available */

@@ -11,13 +11,13 @@ we have AAC and AC3. AAC is selected and running, we
 switch to AC3, no caps event with AAC caps in sink ->
 AC3 is written to decoder as AAC -> no sound.
 ---
- gstplayer/common/tracks.h | 28 ++++++++++------------------
+ common/tracks.h | 28 ++++++++++------------------
  1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/gstplayer/common/tracks.h b/gstplayer/common/tracks.h
+diff --git a/common/tracks.h b/common/tracks.h
 index 9faf494..4d766a5 100644
---- a/gstplayer/common/tracks.h
-+++ b/gstplayer/common/tracks.h
+--- a/common/tracks.h
++++ b/common/tracks.h
 @@ -139,17 +139,13 @@ static int SelectSubtitleTrack(unsigned int i)
                  ppos = 0;
              }

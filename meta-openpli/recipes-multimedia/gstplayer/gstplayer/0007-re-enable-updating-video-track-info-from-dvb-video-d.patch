@@ -10,15 +10,15 @@ It has some benefits over relying only on video-caps:
 streaming
 3. I guess decoder should have better information :)
 ---
- gstplayer/common/gst-backend.h  |  1 +
- gstplayer/common/tracks.h       | 21 ++++++++++++++++++++-
- gstplayer/gst-1.0/gst-backend.c |  5 +++--
+ common/gst-backend.h  |  1 +
+ common/tracks.h       | 21 ++++++++++++++++++++-
+ gst-1.0/gst-backend.c |  5 +++--
  3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/gstplayer/common/gst-backend.h b/gstplayer/common/gst-backend.h
+diff --git a/common/gst-backend.h b/common/gst-backend.h
 index a75b543..db6b10e 100644
---- a/gstplayer/common/gst-backend.h
-+++ b/gstplayer/common/gst-backend.h
+--- a/common/gst-backend.h
++++ b/common/gst-backend.h
 @@ -74,6 +74,7 @@ typedef struct TrackDescription_s
      unsigned int          frame_rate;
      int                   width;
@@ -27,10 +27,10 @@ index a75b543..db6b10e 100644
      
  } TrackDescription_t;
  
-diff --git a/gstplayer/common/tracks.h b/gstplayer/common/tracks.h
+diff --git a/common/tracks.h b/common/tracks.h
 index 921dc86..9faf494 100644
---- a/gstplayer/common/tracks.h
-+++ b/gstplayer/common/tracks.h
+--- a/common/tracks.h
++++ b/common/tracks.h
 @@ -82,6 +82,24 @@ void UpdateVideoTrackInf_2(const unsigned int framerate)
      }
  }
@@ -73,10 +73,10 @@ index 921dc86..9faf494 100644
          }
      }
      return track; 
-diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
+diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
 index 8167e40..271a1dd 100644
---- a/gstplayer/gst-1.0/gst-backend.c
-+++ b/gstplayer/gst-1.0/gst-backend.c
+--- a/gst-1.0/gst-backend.c
++++ b/gst-1.0/gst-backend.c
 @@ -531,14 +531,14 @@ static gboolean gstBusCall(GstBus *bus, GstMessage *msg)
                          gst_structure_get_int (msgstruct, "aspect_ratio", &aspect);
                          gst_structure_get_int (msgstruct, "width", &width);

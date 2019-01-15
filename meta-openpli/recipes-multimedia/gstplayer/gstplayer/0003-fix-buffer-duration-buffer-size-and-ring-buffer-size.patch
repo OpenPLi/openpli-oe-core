@@ -9,14 +9,14 @@ buffer-duration      - can be 0 (turned off)
                      - in seconds
 buffer-size          - can be 0 (turned off)
 ---
- gstplayer/common/gstplayer.c    | 10 +++++-----
- gstplayer/gst-1.0/gst-backend.c |  8 ++++----
+ common/gstplayer.c    | 10 +++++-----
+ gst-1.0/gst-backend.c |  8 ++++----
  2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/gstplayer/common/gstplayer.c b/gstplayer/common/gstplayer.c
+diff --git a/common/gstplayer.c b/common/gstplayer.c
 index 3ed59df..947dcdc 100644
---- a/gstplayer/common/gstplayer.c
-+++ b/gstplayer/common/gstplayer.c
+--- a/common/gstplayer.c
++++ b/common/gstplayer.c
 @@ -204,10 +204,10 @@ int main(int argc,char* argv[])
      gchar *audioSinkName = NULL;
      
@@ -47,10 +47,10 @@ index 3ed59df..947dcdc 100644
              break;
          case 'p':
              downloadBufferPath = g_strdup(optarg);
-diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
+diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
 index 2ffc675..da2df9d 100644
---- a/gstplayer/gst-1.0/gst-backend.c
-+++ b/gstplayer/gst-1.0/gst-backend.c
+--- a/gst-1.0/gst-backend.c
++++ b/gst-1.0/gst-backend.c
 @@ -555,7 +555,7 @@ int backend_play(gchar *filename, gchar *download_buffer_path, guint64 ring_buff
              }
              
