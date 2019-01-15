@@ -13,9 +13,6 @@ SRC_URI =+ "file://0001-set-iptv-download-timeout-0-to-disable-ifdsrc.patch \
             file://0009-try-to-get-PTS-from-video-sink-first.patch \
             file://0011-increase-eos-fix-timeout-to-10s.patch"
 
-SRC_URI[md5sum] = "06ff9a6164b6e793ad640e5556d6e869"
-SRC_URI[sha256sum] = "c7dadc3ba3159c1ac191e0f391e5b1e36ed721de88343ac62dfe3df115304afe"
-
 S = "${WORKDIR}/git/"
 
 do_compile() {

@@ -220,10 +220,10 @@ index 42c5ef5..3ed59df 100644
      fprintf(stderr, "{\"PLAYBACK_PLAY\":{\"file\":\"%s\", \"sts\":%d}}\n", argv[1], commandRetVal);
  
      if(0 == commandRetVal) 
-diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
+diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
 index f941d6d..2ffc675 100644
---- a/gst-1.0/gst-backend.c
-+++ b/gst-1.0/gst-backend.c
+--- a/gstplayer/gst-1.0/gst-backend.c
++++ b/gstplayer/gst-1.0/gst-backend.c
 @@ -531,7 +531,7 @@ void backend_init(int *argc, char **argv[], const int sfd)
      gst_init(argc, argv);
  }
