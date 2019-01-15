@@ -4,16 +4,16 @@ Date: Thu, 7 Apr 2016 20:03:35 +0200
 Subject: [PATCH 05/11] added basic support for plain text embedded subtitles
 
 ---
- gstplayer/common/gst-backend.h  |   2 +-
- gstplayer/common/gstplayer.c    |  16 +++--
- gstplayer/common/tracks.h       | 142 +++++++++++++++++++++++++++++++++++++++-
- gstplayer/gst-1.0/gst-backend.c | 102 ++++++++++++++++++++++++++++-
+ common/gst-backend.h  |   2 +-
+ common/gstplayer.c    |  16 +++--
+ common/tracks.h       | 142 +++++++++++++++++++++++++++++++++++++++-
+ gst-1.0/gst-backend.c | 102 ++++++++++++++++++++++++++++-
  4 files changed, 253 insertions(+), 9 deletions(-)
 
-diff --git a/gstplayer/common/gst-backend.h b/gstplayer/common/gst-backend.h
+diff --git a/common/gst-backend.h b/common/gst-backend.h
 index fa1dbe2..a75b543 100644
---- a/gstplayer/common/gst-backend.h
-+++ b/gstplayer/common/gst-backend.h
+--- a/common/gst-backend.h
++++ b/common/gst-backend.h
 @@ -79,7 +79,7 @@ typedef struct TrackDescription_s
  
  void backend_init(int *argc, char **argv[], const int sfd);
@@ -23,10 +23,10 @@ index fa1dbe2..a75b543 100644
  int  backend_stop();
  int  backend_seek(const double seconds);
  int  backend_seek_absolute(const double seconds);
-diff --git a/gstplayer/common/gstplayer.c b/gstplayer/common/gstplayer.c
+diff --git a/common/gstplayer.c b/common/gstplayer.c
 index 947dcdc..f2b8b3e 100644
---- a/gstplayer/common/gstplayer.c
-+++ b/gstplayer/common/gstplayer.c
+--- a/common/gstplayer.c
++++ b/common/gstplayer.c
 @@ -172,7 +172,7 @@ static int HandleTracks(const char *argvBuff)
          default: 
          {
@@ -92,10 +92,10 @@ index 947dcdc..f2b8b3e 100644
              {
                  HandleTracks(argvBuff);
                  break;
-diff --git a/gstplayer/common/tracks.h b/gstplayer/common/tracks.h
+diff --git a/common/tracks.h b/common/tracks.h
 index 71e69ee..4029e3f 100644
---- a/gstplayer/common/tracks.h
-+++ b/gstplayer/common/tracks.h
+--- a/common/tracks.h
++++ b/common/tracks.h
 @@ -9,10 +9,13 @@
  int tracksReady = 0;
  TrackDescription_t *g_audio_tracks = NULL;
@@ -298,10 +298,10 @@ index 71e69ee..4029e3f 100644
      return ret;
  }
  
-diff --git a/gstplayer/gst-1.0/gst-backend.c b/gstplayer/gst-1.0/gst-backend.c
+diff --git a/gst-1.0/gst-backend.c b/gst-1.0/gst-backend.c
 index 97694f6..8167e40 100644
---- a/gstplayer/gst-1.0/gst-backend.c
-+++ b/gstplayer/gst-1.0/gst-backend.c
+--- a/gst-1.0/gst-backend.c
++++ b/gst-1.0/gst-backend.c
 @@ -35,6 +35,7 @@ Based on:
  static GstElement *g_gst_playbin = NULL;
  static GstElement *g_dvbAudioSink   = NULL;

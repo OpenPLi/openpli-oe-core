@@ -7,13 +7,13 @@ if num * 1000 is bigger than MAXINT, then MAXINT is used, so
 framerate calculation is invalid.
 Make sure that aritmethic conversion is to long by using long value
 ---
- gstplayer/common/tracks.h | 2 +-
+ common/tracks.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gstplayer/common/tracks.h b/gstplayer/common/tracks.h
+diff --git a/common/tracks.h b/common/tracks.h
 index 4d766a5..2e6b53e 100644
---- a/gstplayer/common/tracks.h
-+++ b/gstplayer/common/tracks.h
+--- a/common/tracks.h
++++ b/common/tracks.h
 @@ -341,7 +341,7 @@ static void FillVideoTracks()
                              {
                                  denom = 1000;

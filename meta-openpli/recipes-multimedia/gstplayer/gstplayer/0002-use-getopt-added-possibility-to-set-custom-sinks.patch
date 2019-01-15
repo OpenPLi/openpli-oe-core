@@ -4,15 +4,15 @@ Date: Fri, 11 Mar 2016 12:37:14 +0100
 Subject: [PATCH 02/11] use getopt, added possibility to set custom sinks
 
 ---
- gstplayer/common/gst-backend.h  |   2 +-
- gstplayer/common/gstplayer.c    | 152 +++++++++++++++++++++-------------------
- gstplayer/gst-1.0/gst-backend.c |  13 +++-
+ common/gst-backend.h  |   2 +-
+ common/gstplayer.c    | 152 +++++++++++++++++++++-------------------
+ gst-1.0/gst-backend.c |  13 +++-
  3 files changed, 91 insertions(+), 76 deletions(-)
 
-diff --git a/gstplayer/common/gst-backend.h b/gstplayer/common/gst-backend.h
+diff --git a/common/gst-backend.h b/common/gst-backend.h
 index 0c8f8b0..fa1dbe2 100644
---- a/gstplayer/common/gst-backend.h
-+++ b/gstplayer/common/gst-backend.h
+--- a/common/gst-backend.h
++++ b/common/gst-backend.h
 @@ -79,7 +79,7 @@ typedef struct TrackDescription_s
  
  void backend_init(int *argc, char **argv[], const int sfd);
@@ -22,10 +22,10 @@ index 0c8f8b0..fa1dbe2 100644
  int  backend_stop();
  int  backend_seek(const double seconds);
  int  backend_seek_absolute(const double seconds);
-diff --git a/gstplayer/common/gstplayer.c b/gstplayer/common/gstplayer.c
+diff --git a/common/gstplayer.c b/common/gstplayer.c
 index 42c5ef5..3ed59df 100644
---- a/gstplayer/common/gstplayer.c
-+++ b/gstplayer/common/gstplayer.c
+--- a/common/gstplayer.c
++++ b/common/gstplayer.c
 @@ -23,6 +23,8 @@
  #include <sys/stat.h>
  #include <fcntl.h>

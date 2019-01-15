@@ -8,13 +8,13 @@ which causes that not all tracks are added in the array.
 
 So always refill them when client wants to
 ---
- gstplayer/common/tracks.h | 30 +++++++++++++++++++++++++++---
+ common/tracks.h | 30 +++++++++++++++++++++++++++---
  1 file changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/gstplayer/common/tracks.h b/gstplayer/common/tracks.h
+diff --git a/common/tracks.h b/common/tracks.h
 index 4029e3f..921dc86 100644
---- a/gstplayer/common/tracks.h
-+++ b/gstplayer/common/tracks.h
+--- a/common/tracks.h
++++ b/common/tracks.h
 @@ -17,6 +17,16 @@ int g_audio_idx = -1;
  int g_video_idx = -1;
  int g_subtitle_idx = -1;
