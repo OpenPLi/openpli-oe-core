@@ -126,7 +126,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-blurayplayer \
 	enigma2-plugin-extensions-epgimport \
 	enigma2-plugin-extensions-fontinfo \
-	enigma2-plugin-extensions-iptvplayer-deps \
+	enigma2-plugin-extensions-e2iplayer-deps \
 	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-extensions-openmultiboot \
 	enigma2-plugin-extensions-modifyplifullhd \
