@@ -1,4 +1,4 @@
-SUMMARY = "Meta package for installing all dependencies for SSS' E2iPlayer Player"
+SUMMARY = "Meta package for installing all dependencies for SSS' E2i Player"
 inherit allarch
 
 require conf/license/license-gplv2.inc
