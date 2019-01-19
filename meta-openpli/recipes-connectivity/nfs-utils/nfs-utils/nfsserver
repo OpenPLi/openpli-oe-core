@@ -12,6 +12,7 @@ start_mountd(){
 	start-stop-daemon --start --exec "$NFS_MOUNTD" -- "$@"
 	echo done
 }
+
 stop_mountd(){
 	echo -n 'stopping mountd: '
 	start-stop-daemon --stop --quiet --exec "$NFS_MOUNTD"
@@ -26,6 +27,7 @@ start_nfsd(){
 	start-stop-daemon --start --exec "$NFS_NFSD" -- "$@"
 	echo done
 }
+
 delay_nfsd(){
 	for delay in 0 1 2 3 4 5 6 7 8 9 
 	do
@@ -39,6 +41,7 @@ delay_nfsd(){
 	done
 	return 1
 }
+
 stop_nfsd(){
 	# WARNING: this kills any process with the executable
 	# name 'nfsd'.
@@ -58,24 +61,34 @@ stop_nfsd(){
 }
 
 case "$1" in
-  start)
-	start_nfsd "$NFS_SERVERS"
-	start_mountd
-	test -r /etc/exports && exportfs -a;;
-  stop)	exportfs -ua
-	stop_mountd
-	stop_nfsd;;
-  status)
-	status /usr/sbin/rpc.mountd
-	RETVAL=$?
-	status nfsd
-	rval=$?
-	[ $RETVAL -eq 0 ] && exit $rval
-	exit $RETVAL;;
-  reload)	test -r /etc/exports && exportfs -r;;
-  restart)
-	$0 stop
-	$0 start;;
-  *)	echo "Usage: $0 {start|stop|status|reload|restart}"
-	exit 1;;
+	start)
+		start_nfsd "$NFS_SERVERS"
+		start_mountd
+		test -r /etc/exports || echo "/media/hdd	*(rw,no_root_squash,sync)" > /etc/exports
+		exportfs -a
+		;;
+	stop)
+		exportfs -ua
+		stop_mountd
+		stop_nfsd
+		;;
+	status)
+		status /usr/sbin/rpc.mountd
+		RETVAL=$?
+		status nfsd
+		rval=$?
+		[ $RETVAL -eq 0 ] && exit $rval
+		exit $RETVAL
+		;;
+	reload)
+		test -r /etc/exports && exportfs -r
+		;;
+	restart)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|status|reload|restart}"
+		exit 1
+		;;
 esac
