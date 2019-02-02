@@ -26,6 +26,7 @@ RDEPENDS_${PN} += "\
 	python-subprocess \
 	python-textutils \
 	python-zlib \
+        python-image \
 "
 
 S = "${WORKDIR}/git"
