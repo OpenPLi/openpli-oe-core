@@ -8,8 +8,8 @@ DEPENDS = "ffmpeg"
 
 inherit gitpkgv
 
-PV = "55+gitr${SRCPV}"
-PKGV = "55+gitr${GITPKGV}"
+PV = "57+gitr${SRCPV}"
+PKGV = "57+gitr${GITPKGV}"
 
 SRC_URI = "git://github.com/e2iplayer/exteplayer3.git;branch=master"
 
@@ -57,13 +57,13 @@ output/linuxdvb_mipsel.c \
 output/writer/mipsel/writer.c \
 output/writer/mipsel/aac.c \
 output/writer/mipsel/ac3.c \
+output/writer/mipsel/bcma.c \
 output/writer/mipsel/mp3.c \
 output/writer/mipsel/pcm.c \
 output/writer/mipsel/lpcm.c \
 output/writer/mipsel/mjpeg.c \
 output/writer/mipsel/dts.c \
 output/writer/mipsel/amr.c \
-output/writer/mipsel/wma.c \
 output/writer/mipsel/h265.c \
 output/writer/mipsel/h264.c \
 output/writer/mipsel/mpeg2.c \
