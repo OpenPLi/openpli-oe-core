@@ -1,7 +1,7 @@
 CAMNAME = "evocamd"
 DESCRIPTION = "evocamd ${PV} softcam"
 
-SRC_URI = "http://downloads.pli-images.org/softcams/evocamd-${PV}.zip"
+SRC_URI = "http://downloads.openpli.org/softcams/evocamd-${PV}.zip"
 
 S = "${WORKDIR}/evocamd-${PV}"
 
