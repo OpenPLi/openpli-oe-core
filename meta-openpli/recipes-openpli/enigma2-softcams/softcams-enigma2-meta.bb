@@ -11,6 +11,7 @@ DEPENDS_append_mipsel = "\
 	enigma2-plugin-softcams-cccam221 \
 	enigma2-plugin-softcams-cccam230 \
 	enigma2-plugin-softcams-rqcamd \
+	enigma2-plugin-softcams-mgcamd \
 	"
 
 # armv7a only binary softcams (armv7ahf arch)
@@ -20,6 +21,7 @@ DEPENDS_append_armv7a = " \
 # armv7ve only binary softcams (cortexa15hf arch)
 DEPENDS_append_armv7ve = " \
 	enigma2-plugin-softcams-cccam \
+	enigma2-plugin-softcams-mgcamd \
 	"
 
 # softcams with source available
