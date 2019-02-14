@@ -5,7 +5,7 @@ require conf/license/openpli-gplv2.inc
 
 inherit allarch
 
-PV = "20180913"
+PV = "20190214"
 SRC_URI = "http://www.vuplus-community.net/rytec/sources/rytec.sources.xml.${PV}.gz"
 S = "${WORKDIR}"
 
@@ -21,4 +21,4 @@ do_install() {
 	install -m 644 ${S}/rytec.sources.xml.${PV} ${D}/etc/epgimport/rytec.sources.xml
 }
 
-SRC_URI[sha256sum] = "5cf6ad71935b958dc348d03dba5533c0902d095c0c1b0118fbd83d9333445620"
+SRC_URI[sha256sum] = "ba443d8bca64b719ebeca1fd57887937512c13449cd2177e5dc52877547b7177"
