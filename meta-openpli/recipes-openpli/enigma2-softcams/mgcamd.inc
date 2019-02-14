@@ -12,6 +12,8 @@ require softcam.inc
 
 INHIBIT_PACKAGE_STRIP = "1"
 
+FILES_${PN} += "/usr/keys"
+
 CONFFILES = "/usr/keys/mg_cfg /usr/keys/ignore.list /usr/keys/newcamd.list /usr/keys/priority.list /usr/keys/replace.list"
 
 do_install() {
@@ -23,4 +25,8 @@ do_install() {
 	install -m 0644 ${S}/newcamd.list.example ${D}/usr/keys/newcamd.list.example
 	install -m 0644 ${S}/priority.list.example ${D}/usr/keys/priority.list.example
 	install -m 0644 ${S}/replace.list.example ${D}/usr/keys/replace.list.example
+	touch ${D}/usr/keys/ignore.list
+	touch ${D}/usr/keys/newcamd.list
+	touch ${D}/usr/keys/priority.list
+	touch ${D}/usr/keys/replace.list
 }
