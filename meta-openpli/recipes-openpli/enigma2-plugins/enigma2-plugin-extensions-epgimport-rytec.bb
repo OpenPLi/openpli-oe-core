@@ -5,8 +5,8 @@ require conf/license/openpli-gplv2.inc
 
 inherit allarch
 
-PV = "20180913"
-SRC_URI = "http://www.vuplus-community.net/rytec/sources/rytec.sources.xml.${PV}.gz"
+PV = "20190214"
+SRC_URI = "http://rytecepg.wanwizard.eu/rytec.sources.xml.${PV}.gz"
 S = "${WORKDIR}"
 
 RREPLACES_${PN} = "enigma2-plugin-extensions-xmltvimport-rytec"
@@ -21,4 +21,4 @@ do_install() {
 	install -m 644 ${S}/rytec.sources.xml.${PV} ${D}/etc/epgimport/rytec.sources.xml
 }
 
-SRC_URI[sha256sum] = "5cf6ad71935b958dc348d03dba5533c0902d095c0c1b0118fbd83d9333445620"
+SRC_URI[sha256sum] = "9b1295a6b915de523321b81945c7ab564481a377b57571ef69862e48e3d05d60"
