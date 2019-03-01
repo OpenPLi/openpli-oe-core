@@ -2,15 +2,14 @@ diff --git a/sbin/update-ca-certificates b/sbin/update-ca-certificates
 index bdf5b27..ac59ae9 100755
 --- a/sbin/update-ca-certificates
 +++ b/sbin/update-ca-certificates
-@@ -174,9 +174,9 @@ then
-   # only run if set of files has changed
+@@ -183,9 +218,9 @@ then
+   done
    if [ "$verbose" = 0 ]
    then
 -    openssl rehash . > /dev/null
 +    c_rehash . > /dev/null
    else
--    openssl rehash .
-+    c_rehash .
+-    openssl rehash -v .
++    c_rehash  .
    fi
  fi
- 
