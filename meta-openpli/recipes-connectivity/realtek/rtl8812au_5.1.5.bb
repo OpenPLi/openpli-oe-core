@@ -11,6 +11,7 @@ SRC_URI = " \
           file://0001-add-linux-kernel-4.15-support.patch \
           file://0001-add-linux-kernel-4.19-support.patch \
           file://0001-add-linux-kernel-4.20-support.patch \
+          file://0001-add-linux-kernel-5.0-support.patch \
           "
 
 SRC_URI[md5sum] = "5bb6be1683428b09bd3e4deb1e2c7622"

@@ -18,6 +18,7 @@ SRC_URI = " \
           file://compat.patch \
           file://rt8723bs-add-4.19-support.patch \
           file://rt8723bs-add-4.20-support.patch \
+          file://rt8723bs-add-5.0-support.patch \
           "
 
 SRC_URI[md5sum] = "6003f12a873946bc56f495391705e729"
