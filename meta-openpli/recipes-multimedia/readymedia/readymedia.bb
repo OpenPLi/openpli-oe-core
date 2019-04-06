@@ -8,12 +8,12 @@ LIC_FILES_CHKSUM = "file://LICENCE.miniupnpd;md5=b0dabf9d8e0f871554e309d62ead8d2
 
 inherit gitpkgv
 
-PV = "1.1.0+git${SRCPV}"
-PKGV = "1.1.0+git${GITPKGV}"
-PR = "r0"
+PV = "1.1.6+git${SRCPV}"
+PKGV = "1.1.6+git${GITPKGV}"
+PR = "r1"
 DEPENDS = "libexif libav libjpeg-turbo libvorbis flac libid3tag sqlite3"
 
-SRC_URI = "git://github.com/NathanaelA/minidlna.git;branch=origin_master;protocol=http \
+SRC_URI = "git://github.com/OpenVisionE2/minidlna;protocol=https;branch=master \
 		file://readymedia.sh \
 		file://minidlna.conf \
 "
