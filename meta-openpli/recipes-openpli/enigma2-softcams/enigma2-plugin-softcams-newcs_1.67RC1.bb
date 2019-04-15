@@ -1,6 +1,6 @@
 DESCRIPTION = "newcs ${PV} cardserver"
 
-SRC_URI = "http://downloads.pli-images.org/softcams/newcs-${PV}.zip\
+SRC_URI = "http://downloads.openpli.org/softcams/newcs-${PV}.zip\
 	http://downloads.pli-images.org/softcams/newcs.xml;name=xml"
 
 S = "${WORKDIR}/newcs-1.67_RC1"

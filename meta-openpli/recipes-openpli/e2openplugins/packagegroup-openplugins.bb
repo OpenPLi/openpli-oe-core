@@ -43,6 +43,7 @@ DEPENDS = " \
 	enigma2-plugin-systemplugins-autobouquetsmaker \
 	enigma2-plugin-extensions-telekomsport \
 	enigma2-plugin-extensions-oscamstatus \
+	enigma2-plugin-extensions-blackoutblind \
 "
 
 require conf/license/license-gplv2.inc

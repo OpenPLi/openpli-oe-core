@@ -1,14 +1,18 @@
 SUMMARY = "LC_TIME locale support"
-LICENSE = "CLOSED"
+LICENSE = "GPLv3"
 SECTION = "base"
 PRIORITY = "required"
 MAINTAINER = "OpenPli team"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 
-SRC_URI = "file://lctimelocales.tar.gz file://locale.alias file://SYS_LC_MESSAGES"
+DEPENDS += "cross-localedef-native"
 
-S = "${WORKDIR}/locales"
+SRC_URI = "git://github.com/OpenPLi/fakelocale-locales.git \
+	file://locale.alias \
+	file://SYS_LC_MESSAGES \
+"
 
-inherit allarch
+S = "${WORKDIR}/git"
 
 LOCALEDIR = "${libdir}/locale"
 LOCALEDIR2 = "/usr/share/locale"
@@ -25,17 +29,24 @@ RPROVIDES_${PN} = "virtual-locale-ar virtual-locale-bg virtual-locale-ca virtual
 	virtual-locale-pt virtual-locale-ru virtual-locale-sk virtual-locale-sl virtual-locale-id \
 	virtual-locale-sr virtual-locale-sv virtual-locale-th virtual-locale-tr virtual-locale-uk"
 
+do_compile() {
+    install -d ${S}/output
+    cd ${S}/locales
+    for lang in ${LANGUAGES}; do
+		cross-localedef --no-archive -i ${S}/locales/${lang} -f ${S}/locales/UTF-8 ${S}/output/${lang}
+	done
+}
+
 do_install() {
 	install -d ${D}${LOCALEDIR2}
 	install ${WORKDIR}/locale.alias ${D}${LOCALEDIR2}
-
-	install -d ${D}${LOCALEDIR}
-	cp -r --preserve=mode,links ${S}/* ${D}/${LOCALEDIR}
 
 	install -d ${D}${LOCALEDIR}/fake/LC_MESSAGES
 	install ${WORKDIR}/SYS_LC_MESSAGES ${D}${LOCALEDIR}/fake/LC_MESSAGES/
 
 	for lang in ${LANGUAGES}; do
+		install -d ${D}${LOCALEDIR}/${lang}
+		cp ${S}/output/${lang}/LC_TIME ${D}${LOCALEDIR}/${lang}
 		ln -s ../fake/LC_MESSAGES ${D}${LOCALEDIR}/${lang}/LC_MESSAGES
 	done
 }

@@ -138,3 +138,6 @@ python populate_packages_prepend() {
 sysroot_stage_all() {
     :
 }
+
+do_package_qa() {
+}

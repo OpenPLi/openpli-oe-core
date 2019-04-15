@@ -1,12 +1,24 @@
-diff -Nur Twisted-17.9.0/src/twisted/web/http.py Twisted-17.9.0-fixed/src/twisted/web/http.py 
+From a0ba444d1ecc89fca43d3334166c1c118976afd1 Mon Sep 17 00:00:00 2001
+From: WanWizard <wanwizard@wanwizard.eu>
+Date: Wed, 9 Jan 2019 21:19:31 +0000
+Subject: [PATCH] twisted fix: do not write after the channel was closed
+
+---
+ http.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git Twisted-17.9.0/src/twisted/web/http.py Twisted-17.9.0-fixed/src/twisted/web/http.py 
+index cfd1cdf..5136fa0 100644
 --- Twisted-17.9.0/src/twisted/web/http.py	2017-09-23 06:52:22.000000000 +0100
 +++ Twisted-17.9.0-fixed/src/twisted/web/http.py	2018-10-26 19:06:23.641253705 +0100
-@@ -1082,7 +1082,7 @@
-         if data:
+@@ -1079,7 +1079,7 @@ class Request:
+                 return
+ 
+         self.sentLength = self.sentLength + len(data)
+-        if data:
++        if data and self.channel:
              if self.chunked:
                  self.channel.writeSequence(toChunk(data))
--            else:
-+            elif self.channel:
-                 self.channel.write(data)
- 
-     def addCookie(self, k, v, expires=None, domain=None, path=None,
+             else:
+-- 
+2.20.1

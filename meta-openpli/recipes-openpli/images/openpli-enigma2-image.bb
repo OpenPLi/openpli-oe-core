@@ -28,11 +28,9 @@ EXTRA_KERNEL_WIFI_DRIVERS = " \
 	"
 
 EXTERNAL_WIFI_DRIVERS = " \
-	firmware-rtl8192cu \
 	firmware-rtl8188eu \
 	firmware-rtl8192eu \
 	\
-	rtl8192cu \
 	rtl8188eu \
 	rtl8192eu \
 	"
@@ -86,6 +84,9 @@ IMAGE_INSTALL += " \
 	ofgwrite \
 	${ENIGMA2_PLUGINS} \
 	\
+	${@bb.utils.contains_any('MACHINE', 'vuuno vuduo vuultimo vusolo vusolo2 vuduo2 vusolose vuzero vuuno4k vuuno4kse vuzero4k vuultimo4k vusolo4k vuduo4k', 'vuplus-tuner-turbo', '', d)} \
+	\
+	${@bb.utils.contains("MACHINE_FEATURES", "chromium", "enigma2-plugin-extensions-chromium", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "enigma2-plugin-systemplugins-transcodingsetup", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "streamproxy", "streamproxy", "", d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'ctrlrc', "enigma2-plugin-systemplugins-remotecontrolcode", "", d)} \
@@ -93,7 +94,6 @@ IMAGE_INSTALL += " \
 	${@bb.utils.contains("MACHINE_FEATURES", "kernelwifi", "${KERNEL_WIFI_DRIVERS}", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "extrakernelwifi", "${EXTRA_KERNEL_WIFI_DRIVERS}", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "externalwifi", "${EXTERNAL_WIFI_DRIVERS}", "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "chromium", "enigma2-plugin-extensions-chromium libcrypto-compat", "", d)} \
 	\
 	${@bb.utils.contains('OPENPLI_FEATURES', 'dvd', 'cdtextinfo', '', d)} \
 	"

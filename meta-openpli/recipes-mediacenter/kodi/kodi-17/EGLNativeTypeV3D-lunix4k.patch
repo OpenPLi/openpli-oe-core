@@ -1,0 +1,593 @@
+commit 687b81f20311e97b1706316eac9dc8a710752a71
+Author: babel <kamase79@daum.net>
+Date:   Tue Apr 9 16:46:51 2019 +0900
+
+    EGLNativeTypeV3D Qviart4k.
+    	new file:   EGLNativeTypeV3D.cpp
+    	new file:   EGLNativeTypeV3D.h
+
+diff --git a/xbmc/windowing/egl/EGLNativeTypeV3D.cpp b/xbmc/windowing/egl/EGLNativeTypeV3D.cpp
+new file mode 100644
+index 0000000..5acc8ca
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLNativeTypeV3D.cpp
+@@ -0,0 +1,344 @@
++/*
++ *      Copyright (C) 2011-2012 Team XBMC
++ *      http://www.xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++#include "system.h"
++#include "EGLNativeTypeV3D.h"
++#include "utils/StringUtils.h"
++#include "utils/SysfsUtils.h"
++#include "utils/log.h"
++#include "guilib/gui3d.h"
++#include "linux/DllBCM.h"
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <linux/fb.h>
++#include <sys/ioctl.h>
++#include <EGL/egl.h>
++
++CEGLNativeTypeV3D::CEGLNativeTypeV3D()
++{
++  m_nativeDisplay = NULL;
++  m_nativeWindow = NULL;
++}
++
++CEGLNativeTypeV3D::~CEGLNativeTypeV3D()
++{
++}  
++
++bool CEGLNativeTypeV3D::CheckCompatibility()
++{
++  return true;
++}
++
++void CEGLNativeTypeV3D::Initialize()
++{
++}
++
++void CEGLNativeTypeV3D::Destroy()
++{
++}
++
++bool CEGLNativeTypeV3D::CreateNativeDisplay()
++{
++  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
++  return true;
++}
++
++bool CEGLNativeTypeV3D::CreateNativeWindow()
++{
++  NxClient_Join(NULL);
++
++  NXPL_RegisterNexusDisplayPlatform(&nxpl_handle, nexus_display);
++  NXPL_NativeWindowInfoEXT nativeWindow;
++
++  NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
++
++  nativeWindow.x = 0;
++  nativeWindow.y = 0;
++  nativeWindow.width = 1280;
++  nativeWindow.height = 720;
++  nativeWindow.stretch = false;
++  nativeWindow.clientID = 0;
++  nativeWindow.zOrder = 0;
++  
++  m_nativeWindow = NXPL_CreateNativeWindowEXT(&nativeWindow);
++  if (!m_nativeWindow)
++    return false;
++  return true;
++}
++
++bool CEGLNativeTypeV3D::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
++{
++  if (!nativeDisplay)	return false;
++  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
++  return true;
++}
++
++bool CEGLNativeTypeV3D::GetNativeWindow(XBNativeDisplayType **nativeWindow) const
++{
++  if (!nativeWindow)	return false;
++  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
++  return true;
++}
++
++bool CEGLNativeTypeV3D::DestroyNativeDisplay()
++{
++    m_nativeDisplay = NULL;
++    return true;
++}
++
++bool CEGLNativeTypeV3D::DestroyNativeWindow()
++{
++  NXPL_DestroyNativeWindow(m_nativeWindow);
++
++  NXPL_UnregisterNexusDisplayPlatform(nxpl_handle);
++  NxClient_Uninit();
++
++  return true;
++}
++
++bool CEGLNativeTypeV3D::GetNativeResolution(RESOLUTION_INFO *res) const
++{
++  *res = m_desktopRes;
++  return true;
++}
++
++bool CEGLNativeTypeV3D::SetNativeResolution(const RESOLUTION_INFO &res)
++{
++        m_desktopRes = res;
++        return true;
++}
++
++bool CEGLNativeTypeV3D::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
++{
++        int tmp_resolution = 0;
++        std::string mode;
++        SysfsUtils::GetString("/proc/stb/video/videomode", mode);
++
++        std::string fromMode = mode;        
++        StringUtils::Trim(fromMode);
++
++        const char types[] = { 'p', 'i', 'x' };
++        for (unsigned int i = 0; i < 3; i++) {
++                std::size_t pos = fromMode.find(types[i]);
++                if (pos == 0 || pos == std::string::npos)
++                        continue;
++                std::string t1 = fromMode.substr(0, pos);
++                if (!StringUtils::IsInteger(t1))
++                        return false;
++                tmp_resolution = StringUtils::ReturnDigits(t1);
++        }
++
++        resolutions.clear();
++
++        if ( tmp_resolution == 480 )
++                {
++                        m_desktopResAll[0].iScreen      = 0;
++                        m_desktopResAll[0].bFullScreen  = true;
++                        m_desktopResAll[0].iWidth       = 640;
++                        m_desktopResAll[0].iHeight      = 480;
++                        m_desktopResAll[0].iScreenWidth = 640;
++                        m_desktopResAll[0].iScreenHeight= 480;
++                        m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
++                        m_desktopResAll[0].fRefreshRate = 50;
++                        m_desktopResAll[0].fPixelRatio   = 1.0f;
++                        m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 640, 480);
++                        m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[0]);
++
++                        m_desktopResAll[1].iScreen      = 0;
++                        m_desktopResAll[1].bFullScreen  = true;
++                        m_desktopResAll[1].iWidth       = 640;
++                        m_desktopResAll[1].iHeight      = 480;
++                        m_desktopResAll[1].iScreenWidth = 640;
++                        m_desktopResAll[1].iScreenHeight= 480;
++                        m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
++                        m_desktopResAll[1].fRefreshRate = 50;
++                        m_desktopResAll[1].fPixelRatio   = 1.0f;
++                        m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 640, 480);
++                        m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[1]);
++
++                        m_desktopResAll[2].iScreen      = 0;
++                        m_desktopResAll[2].bFullScreen  = true;
++                        m_desktopResAll[2].iWidth       = 640;
++                        m_desktopResAll[2].iHeight      = 480;
++                        m_desktopResAll[2].iScreenWidth = 640;
++                        m_desktopResAll[2].iScreenHeight= 480;
++                        m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
++                        m_desktopResAll[2].fRefreshRate = 50;
++                        m_desktopResAll[2].fPixelRatio   = 1.0f;
++                        m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 640, 480);
++                        m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[2]);
++                }
++        else if ( tmp_resolution == 576 )
++                {
++                        m_desktopResAll[0].iScreen      = 0;
++                        m_desktopResAll[0].bFullScreen  = true;
++                        m_desktopResAll[0].iWidth       = 720;
++                        m_desktopResAll[0].iHeight      = 576;
++                        m_desktopResAll[0].iScreenWidth = 720;
++                        m_desktopResAll[0].iScreenHeight= 576;
++                        m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
++                        m_desktopResAll[0].fRefreshRate = 50;
++                        m_desktopResAll[0].fPixelRatio   = 1.0f;
++                        m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 720, 576);
++                        m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[0]);
++
++                        m_desktopResAll[1].iScreen      = 0;
++                        m_desktopResAll[1].bFullScreen  = true;
++                        m_desktopResAll[1].iWidth       = 720;
++                        m_desktopResAll[1].iHeight      = 576;
++                        m_desktopResAll[1].iScreenWidth = 720;
++                        m_desktopResAll[1].iScreenHeight= 576;
++                        m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
++                        m_desktopResAll[1].fRefreshRate = 50;
++                        m_desktopResAll[1].fPixelRatio   = 1.0f;
++                        m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 720, 576);
++                        m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[1]);
++
++                        m_desktopResAll[2].iScreen      = 0;
++                        m_desktopResAll[2].bFullScreen  = true;
++                        m_desktopResAll[2].iWidth       = 720;
++                        m_desktopResAll[2].iHeight      = 576;
++                        m_desktopResAll[2].iScreenWidth = 720;
++                        m_desktopResAll[2].iScreenHeight= 576;
++                        m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
++                        m_desktopResAll[2].fRefreshRate = 50;
++                        m_desktopResAll[2].fPixelRatio   = 1.0f;
++                        m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 720, 576);
++                        m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[2]);
++                }
++        else
++                {
++                        m_desktopResAll[0].iScreen      = 0;
++                        m_desktopResAll[0].bFullScreen  = true;
++                        m_desktopResAll[0].iWidth       = 1280;
++                        m_desktopResAll[0].iHeight      = 720;
++                        m_desktopResAll[0].iScreenWidth = 1280;
++                        m_desktopResAll[0].iScreenHeight= 720;
++                        m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
++                        m_desktopResAll[0].fRefreshRate = 50;
++                        m_desktopResAll[0].fPixelRatio   = 1.0f;
++                        m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
++                        m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[0]);
++
++                        m_desktopResAll[1].iScreen      = 0;
++                        m_desktopResAll[1].bFullScreen  = true;
++                        m_desktopResAll[1].iWidth       = 1280;
++                        m_desktopResAll[1].iHeight      = 720;
++                        m_desktopResAll[1].iScreenWidth = 1280;
++                        m_desktopResAll[1].iScreenHeight= 720;
++                        m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
++                        m_desktopResAll[1].fRefreshRate = 50;
++                        m_desktopResAll[1].fPixelRatio   = 1.0f;
++                        m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
++                        m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[1]);
++
++                        m_desktopResAll[2].iScreen      = 0;
++                        m_desktopResAll[2].bFullScreen  = true;
++                        m_desktopResAll[2].iWidth       = 1280;
++                        m_desktopResAll[2].iHeight      = 720;
++                        m_desktopResAll[2].iScreenWidth = 1280;
++                        m_desktopResAll[2].iScreenHeight= 720;
++                        m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
++                        m_desktopResAll[2].fRefreshRate = 50;
++                        m_desktopResAll[2].fPixelRatio   = 1.0f;
++                        m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
++                        m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++                        m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
++
++                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
++
++                        resolutions.push_back(m_desktopResAll[2]);
++                }
++  
++        m_desktopRes = m_desktopResAll[0];
++
++        SetDisplayResolution(tmp_resolution);
++
++        return true;
++}
++
++bool CEGLNativeTypeV3D::GetPreferredResolution(RESOLUTION_INFO *res) const
++{
++  *res = m_desktopResAll[0];
++  return true;
++}
++
++bool CEGLNativeTypeV3D::ShowWindow(bool show)
++{
++  NXPL_ShowNativeWindowEXT(m_nativeWindow, show);
++  return true;
++}
++
++bool CEGLNativeTypeV3D::SetDisplayResolution(int tmp_resolution)
++{
++        NXPL_NativeWindowInfoEXT nativeWindow;
++
++        NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
++        nativeWindow.x = nativeWindow.y = 0;
++        nativeWindow.width = m_desktopRes.iWidth;
++        nativeWindow.height = m_desktopRes.iHeight;
++
++        if (tmp_resolution == 1080 || tmp_resolution == 2160)
++                nativeWindow.stretch = true;
++        
++        NXPL_UpdateNativeWindowEXT(m_nativeWindow, &nativeWindow);
++
++        return true;
++}
+diff --git a/xbmc/windowing/egl/EGLNativeTypeV3D.h b/xbmc/windowing/egl/EGLNativeTypeV3D.h
+new file mode 100644
+index 0000000..f6e3b32
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLNativeTypeV3D.h
+@@ -0,0 +1,196 @@
++#pragma once
++
++/*
++ *      Copyright (C) 2011-2012 Team XBMC
++ *      http://www.xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "EGLNativeType.h"
++
++#include <vector>
++#include <string>
++
++#define NEXUS_DISPLAYHANDLE void*
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++typedef void *NXPL_PlatformHandle;
++
++typedef enum NEXUS_BlendFactor
++{
++    NEXUS_BlendFactor_eZero
++} NEXUS_BlendFactor;
++
++typedef struct NEXUS_BlendEquation
++{
++    NEXUS_BlendFactor a;
++    NEXUS_BlendFactor b;
++    bool              subtract_cd;
++    NEXUS_BlendFactor c;
++    NEXUS_BlendFactor d;
++    bool              subtract_e;
++    NEXUS_BlendFactor e;
++} NEXUS_BlendEquation;
++
++typedef struct
++{
++   uint32_t             width;
++   uint32_t             height;
++   uint32_t             x;
++   uint32_t             y;
++   bool                 stretch;
++   uint32_t             clientID;
++   uint32_t             zOrder;
++   NEXUS_BlendEquation  colorBlend;
++   NEXUS_BlendEquation  alphaBlend;
++   uint32_t             magic;
++} NXPL_NativeWindowInfoEXT;
++
++/* FOR NXCLINET */
++typedef unsigned NEXUS_Error;
++
++#define NXCLIENT_MAX_NAME 32
++
++/***************************************************************************
++Summary:
++Autheticated ID for client/server communication.
++
++Description:
++For non-secure environments, the certificate could be a simple ID.
++For secure environments, this should use encrypted using standard public-key cryptography.
++***************************************************************************/
++typedef struct NEXUS_Certificate
++{
++    unsigned char data[256];
++    unsigned length;
++} NEXUS_Certificate;
++
++/**
++Summary:
++Client modes
++
++See nexus/docs/Nexus_MultiProcess.pdf for full discussion of process isolation and multi-process application design.
++**/
++typedef enum NEXUS_ClientMode
++{
++    NEXUS_ClientMode_eUnprotected, /* deprecated */
++    NEXUS_ClientMode_eVerified,    /* verify handle value, but not owner. unsynchronized caller may compromise nexus settings. */
++    NEXUS_ClientMode_eProtected,   /* full handle verification. access to full API. if client crashes, server is protected. */
++    NEXUS_ClientMode_eUntrusted,   /* full handle verification. access to limited API. see nexus/build/common/tools/nexus_untrusted_api.txt. if client crashes, server is protected. */
++    NEXUS_ClientMode_eMax
++} NEXUS_ClientMode;
++
++/**
++Summary:
++Join with Nexus server application (using app ipc) and Nexus driver (using Nexus multiprocess)
++
++Description:
++This dynamically registers a client with both nexus and the server app.
++NxClient_Join can be called from multiple processes, or multiple times from the same process.
++
++NxClient_Join is reference counted within the same process. You must call NxClient_Uninit an equal
++number of times to detach from nexus and the server app.
++**/
++typedef struct NxClient_JoinSettings
++{
++    char name[NXCLIENT_MAX_NAME];
++    bool tunnelCapable; /* deprecated */
++    unsigned timeout; /* in seconds. if unable to join, try again for this number of seconds. defaults to 0. */
++    unsigned session; /* set index to choose which session in a multi-session server configuration */
++    bool ignoreStandbyRequest; /* deprecated. see NxClient_RegisterAcknowledgeStandby() instead. */
++    NEXUS_ClientMode mode; /* requested client mode. server may reject the request. */
++    NEXUS_Certificate certificate; /* allows NEXUS_ClientMode_eProtected (aka trusted) status if server requires */
++} NxClient_JoinSettings;
++
++extern void NxClient_GetDefaultJoinSettings(NxClient_JoinSettings *pSettings);
++
++extern NEXUS_Error NxClient_Join(const NxClient_JoinSettings *pSettings);
++
++extern void NxClient_Uninit(void);
++
++
++/* Register a display for exclusive use. The client application should not use the display until
++ * calling NXPL_UnregisterNexusDisplayPlatform.
++ * It will register its own memory, h/w and display APIs suitable for basic exclusive mode rendering on
++ * a Nexus display.
++ * Fills in the NXPL platform handle, which must be passed back into the unregister function.
++ */
++void NXPL_RegisterNexusDisplayPlatform(NXPL_PlatformHandle *handle, NEXUS_DISPLAYHANDLE display);
++
++/* Unregister a display for exclusive use. The client application can the use the Nexus display again. */
++void NXPL_UnregisterNexusDisplayPlatform(NXPL_PlatformHandle handle);
++
++/* Generate a default NXPL_NativeWindowInfoEXT */
++void NXPL_GetDefaultNativeWindowInfoEXT(NXPL_NativeWindowInfoEXT *info);
++
++/* Create a 'native window' of the given size. This is really just a small structure that holds the size
++ * of the window that EGL will write into. */
++void *NXPL_CreateNativeWindowEXT(const NXPL_NativeWindowInfoEXT *info);
++
++/* Destroy a 'native window' */
++void NXPL_DestroyNativeWindow(void *nativeWin);
++
++/* Show/hide a 'native window' */
++void NXPL_ShowNativeWindowEXT(void *native,bool show);
++
++/* Update a 'native window' */
++void NXPL_UpdateNativeWindowEXT(void *native, NXPL_NativeWindowInfoEXT * nativeWindow);
++
++int NEXUS_Platform_AuthenticatedJoin(const void *settings);
++#define NEXUS_Platform_Join() NEXUS_Platform_AuthenticatedJoin(NULL)
++
++#ifdef __cplusplus
++}
++#endif
++
++class CEGLNativeTypeV3D : public CEGLNativeType
++{
++public:
++  CEGLNativeTypeV3D();
++  virtual ~CEGLNativeTypeV3D();
++  virtual std::string GetNativeName() const { return "V3D"; };
++  virtual bool  CheckCompatibility();
++  virtual void  Initialize();
++  virtual void  Destroy();
++  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
++
++  virtual bool  CreateNativeDisplay();
++  virtual bool  CreateNativeWindow();
++  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
++  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
++
++  virtual bool  DestroyNativeWindow();
++  virtual bool  DestroyNativeDisplay();
++
++  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
++  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
++  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
++  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
++
++  virtual bool  ShowWindow(bool show);
++private:
++  RESOLUTION_INFO m_desktopRes;
++  RESOLUTION_INFO m_desktopResAll[4];
++
++  NXPL_PlatformHandle nxpl_handle = 0;
++  NEXUS_DISPLAYHANDLE  nexus_display = 0;
++
++  bool SetDisplayResolution(int tmp_resolution);
++};
+diff --git a/configure.ac b/configure.ac
+index 6f5eb85..69cb326 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1001,7 +1001,7 @@ if test "$use_gles" = "yes"; then
+     AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
+     AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
+     AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
+-    LIBS="$LIBS -lEGL -lGLESv2 -lnxpl -lnexus"
++    LIBS="$LIBS -lEGL -lGLESv2 -lnxpl -lnexus -lnxclient"
+   elif test "$with_gpu" = "v3dplatform"; then
+     AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
+     AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
+diff --git a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
+index 84d56db..eeac7ea 100644
+--- a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
++++ b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
+@@ -676,6 +676,7 @@ void CActiveAESink::EnumerateSinkList(bool force)
+   unsigned int c_retry = 4;
+   m_sinkInfoList.clear();
+   CAESinkFactory::EnumerateEx(m_sinkInfoList);
++#if 0 
+   while(m_sinkInfoList.empty() && c_retry > 0)
+   {
+     CLog::Log(LOGNOTICE, "No Devices found - retry: %d", c_retry);
+@@ -684,6 +685,7 @@ void CActiveAESink::EnumerateSinkList(bool force)
+     // retry the enumeration
+     CAESinkFactory::EnumerateEx(m_sinkInfoList, true);
+   }
++#endif
+   CLog::Log(LOGNOTICE, "Found %lu Lists of Devices", m_sinkInfoList.size());
+   PrintSinks();
+ }

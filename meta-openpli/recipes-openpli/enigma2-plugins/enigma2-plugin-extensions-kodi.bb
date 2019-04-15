@@ -12,6 +12,7 @@ RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport virtual/kodi"
 SRC_URI = "git://github.com/mx3L/kodiext;protocol=git;branch=master \
 	file://0001-make-transparant.patch \
 	file://advancedsettings.xml \
+	file://advancedsettings-empty.xml \
 "
 
 S = "${WORKDIR}/git"
@@ -27,5 +28,9 @@ FILES_${PN} = " \
 
 do_install_append() {
 	install -d ${D}/usr/share/kodi/system
-	install -m 0755 ${WORKDIR}/advancedsettings.xml ${D}/usr/share/kodi/system
+	if ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'false', 'true', d)}; then
+		install -m 0755 ${WORKDIR}/advancedsettings.xml ${D}/usr/share/kodi/system
+	else
+		install -m 0755 ${WORKDIR}/advancedsettings-empty.xml ${D}/usr/share/kodi/system/advancedsettings.xml
+	fi
 }

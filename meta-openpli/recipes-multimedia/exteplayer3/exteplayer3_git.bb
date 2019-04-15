@@ -8,8 +8,8 @@ DEPENDS = "ffmpeg"
 
 inherit gitpkgv
 
-PV = "50+gitr${SRCPV}"
-PKGV = "50+gitr${GITPKGV}"
+PV = "59+gitr${SRCPV}"
+PKGV = "59+gitr${GITPKGV}"
 
 SRC_URI = "git://github.com/e2iplayer/exteplayer3.git;branch=master"
 
@@ -33,6 +33,7 @@ SOURCE_FILES =+ "playback/playback.c"
 SOURCE_FILES =+ "external/ffmpeg/src/bitstream.c"
 SOURCE_FILES =+ "external/ffmpeg/src/latmenc.c"
 SOURCE_FILES =+ "external/ffmpeg/src/mpeg4audio.c"
+SOURCE_FILES =+ "external/ffmpeg/src/xiph.c"
 SOURCE_FILES =+ "external/flv2mpeg4/src/m4vencode.c"
 SOURCE_FILES =+ "external/flv2mpeg4/src/flvdecoder.c"
 SOURCE_FILES =+ "external/flv2mpeg4/src/dcprediction.c"
@@ -57,15 +58,15 @@ output/linuxdvb_mipsel.c \
 output/writer/mipsel/writer.c \
 output/writer/mipsel/aac.c \
 output/writer/mipsel/ac3.c \
+output/writer/mipsel/bcma.c \
 output/writer/mipsel/mp3.c \
 output/writer/mipsel/pcm.c \
 output/writer/mipsel/lpcm.c \
+output/writer/mipsel/mjpeg.c \
 output/writer/mipsel/dts.c \
 output/writer/mipsel/amr.c \
-output/writer/mipsel/wma.c \
 output/writer/mipsel/h265.c \
 output/writer/mipsel/h264.c \
-output/writer/mipsel/h263.c \
 output/writer/mipsel/mpeg2.c \
 output/writer/mipsel/mpeg4.c \
 output/writer/mipsel/divx3.c \
@@ -81,4 +82,3 @@ do_install() {
     install -d ${D}${bindir}
     install -m 0755 ${S}/exteplayer3 ${D}${bindir}
 }
-

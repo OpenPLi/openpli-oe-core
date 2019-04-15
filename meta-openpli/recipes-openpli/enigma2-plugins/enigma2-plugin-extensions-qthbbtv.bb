@@ -22,10 +22,9 @@ do_compile () {
 }
 
 FILES_${PN} =  " \
-	/${bindir} \
+	${bindir} \
 	/usr/lib/mozilla/plugins \
 	/usr/lib/${QtHbbtv} \
-	/usr/lib/fonts \
 "
 
 do_install() {
@@ -39,9 +38,6 @@ do_install() {
 	install -m 0755 ${S}/qthbbtv ${D}${bindir}
 	install -d ${D}${libdir}/mozilla/plugins
 	install -m 0755 ${S}/libnpapihbbtvplugin.so ${D}${libdir}/mozilla/plugins
-	install -d ${D}/usr/lib
-	cd ${D}/usr/lib
-	ln -sf ../share/fonts fonts
 }
 
 do_package_qa() {
@@ -51,3 +47,5 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 # prevent 'double stripping' our binaries, which will break them
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+
+INSANE_SKIP_${PN} += "already-stripped dev-so"

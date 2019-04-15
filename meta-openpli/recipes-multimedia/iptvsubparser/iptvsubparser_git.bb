@@ -6,8 +6,8 @@ DEPENDS = "python"
 
 inherit gitpkgv
 
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
+PV = "1.1+git${SRCPV}"
+PKGV = "1.1+git${GITPKGV}"
 PR = "r0"
 
 SRC_URI = "git://github.com/e2iplayer/e2isubparser.git;protocol=git"
@@ -23,9 +23,10 @@ SOURCE_FILES =+ "src/expat-2.2.0/xmltok.c"
 SOURCE_FILES =+ "src/expat-2.2.0/xmltok_impl.c"
 SOURCE_FILES =+ "src/expat-2.2.0/xmltok_ns.c"
 SOURCE_FILES =+ "src/ttml/src/ttmlparser.c"
+SOURCE_FILES =+ "src/html/src/htmlcleaner.c"
 
 do_compile() {
-    ${CC} ${SOURCE_FILES} -shared -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE=1 -DNDEBUG -Os -shared -Wall -Wstrict-prototypes -fPIC -DMAJOR_VERSION=0 -DMINOR_VERSION=2 -DHAVE_EXPAT_CONFIG_H -I${S}/src -I${S}/src/vlc/include -I${S}/src/ffmpeg/include -I${S}/src/expat-2.2.0 -I${S}/src/ttml/include -I${D}/${libdir} -I${D}/${includedir} -I${STAGING_DIR_TARGET}/${includedir}/python2.7 -lm -lpython2.7 -o _subparser.so -Wl,--gc-sections ${LDFLAGS}
+    ${CC} ${SOURCE_FILES} -shared -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE=1 -DNDEBUG -Os -shared -Wall -Wstrict-prototypes -fPIC -DMAJOR_VERSION=0 -DMINOR_VERSION=2 -DHAVE_EXPAT_CONFIG_H -I${S}/src -I${S}/src/vlc/include -I${S}/src/ffmpeg/include -I${S}/src/expat-2.2.0 -I${S}/src/ttml/include -I${S}/src/html/include -I${D}/${libdir} -I${D}/${includedir} -I${STAGING_DIR_TARGET}/${includedir}/python2.7 -lm -lpython2.7 -o _subparser.so -Wl,--gc-sections ${LDFLAGS}
 }
 
 do_install() {

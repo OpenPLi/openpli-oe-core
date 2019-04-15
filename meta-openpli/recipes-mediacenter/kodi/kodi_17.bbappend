@@ -8,13 +8,17 @@ SRC_URI_append += "\
 	file://kodi-platform-support.patch \
 	file://brcmstb-settings.patch \
 	file://input-devices.patch \
-	file://e2player.patch \
+	file://HiPlayer.patch \
+	file://HiPlayer-Subs.patch \
 	file://quit.patch \
+	file://Apply-workaround-for-scratchy-sound-with-FFmpeg-3.4.patch \
+	${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer-defaultplayer.patch', 'file://e2player.patch', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://EGLNativeTypeV3D-nxpl.patch', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://EGLNativeTypeMali.patch', '', d)} \
 	"
 
 SRC_URI_append_osmega += "file://EGLNativeTypeV3D-platform.patch"
+SRC_URI_append_lunix4k += "file://EGLNativeTypeV3D-lunix4k.patch"
 
 DEPENDS += " \
 	bluez5 \

@@ -246,7 +246,11 @@ def main():
 			for (key, value) in inputfile.items(section):
 				# only for the keys we're interested in
 				if not smbconf.has_option(section, key) or smbconf.get(section, key) != value:
-					userconf.set(section, key, value)
+					if key == 'security' and value == 'share':
+						userconf.set(section, key, 'user')
+						userconf.set(section, 'map to guest', 'Bad User')
+					else:
+						userconf.set(section, key, value)
 
 			# write an updated smb-user.conf
 			userconf.write(SMBUSERCONF)
