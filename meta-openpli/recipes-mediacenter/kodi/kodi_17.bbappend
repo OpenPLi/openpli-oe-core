@@ -18,6 +18,7 @@ SRC_URI_append += "\
 	"
 
 SRC_URI_append_osmega += "file://EGLNativeTypeV3D-platform.patch"
+SRC_URI_append_lunix4k += "file://EGLNativeTypeV3D-lunix4k.patch"
 
 DEPENDS += " \
 	bluez5 \
