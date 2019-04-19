@@ -110,7 +110,7 @@ class DLNAServer(ConfigListScreen, Screen):
 			<widget name="information" position="0,250" size="600,100" valign="center" font="Regular;20" />
 		</screen>
 		"""
-	def __init__(self, session): 
+	def __init__(self, session):
                 self.session = session
 		Screen.__init__(self, session)
 
@@ -154,7 +154,7 @@ class DLNAServer(ConfigListScreen, Screen):
 	def keyExit(self):
 		config.plugins.dlnaserver.autostart.save()
 		self.close()
-	
+
 	def keyOK(self):
 		currentItem  = self.getCurrentItem()
 		if currentItem is not None:
@@ -176,7 +176,7 @@ class DLNAServer(ConfigListScreen, Screen):
 	def keyBlue(self):
 		self.menuItemServerName.value = self.oldConfig.get('friendly_name')
 		self.menuItemVideoDir.value   = self.oldConfig.get('media_dirV')
-		self.menuItemMusicDir.value   = self.oldConfig.get('media_dirA')
+		self.menuItemAudioDir.value   = self.oldConfig.get('media_dirA')
 		self.menuItemPictureDir.value = self.oldConfig.get('media_dirP')
 
 		log_level_list = self.oldConfig.get('log_level').split('=')
@@ -206,20 +206,20 @@ class DLNAServer(ConfigListScreen, Screen):
 	def saveConfigFile(self):
 		serverName = self.menuItemServerName.value
 		videoDir   = self.menuItemVideoDir.value
-		auditDir   = self.menuItemMusicDir.value
+		audioDir   = self.menuItemAudioDir.value
 		pictureDir = self.menuItemPictureDir.value
 		logDir     = self.menuItemLogDir.value
 		logLevel   = self.menuItemLogLevel.value
 		if not self.menuItemEnableLog.value:
 			logDir,logLevel = None, None
-		self.writeConfigFile(serverName=serverName, videoDir=videoDir, auditDir=auditDir, pictureDir=pictureDir, logDir=logDir, logLevel=logLevel)
+		self.writeConfigFile(serverName=serverName, videoDir=videoDir, audioDir=audioDir, pictureDir=pictureDir, logDir=logDir, logLevel=logLevel)
 
 	def getCurrentItem(self):
 		currentEntry = self["config"].getCurrent()
 		if currentEntry == self.menuEntryVideoDir:
 			return self.menuItemVideoDir
-		elif currentEntry == self.menuEntryMusicDir:
-			return self.menuItemMusicDir
+		elif currentEntry == self.menuEntryAudioDir:
+			return self.menuItemAudioDir
 		elif currentEntry == self.menuEntryPictureDir:
 			return self.menuItemPictureDir
 		elif currentEntry == self.menuEntryLogDir:
@@ -243,7 +243,7 @@ class DLNAServer(ConfigListScreen, Screen):
 			os.system('mkdir -p /media/dlna/Pictures/')
 		self.menuItemServerName = ConfigText(default=self.oldConfig.get('friendly_name'))
 		self.menuItemVideoDir   = ConfigDirectory(default = self.oldConfig.get('media_dirV'))
-		self.menuItemMusicDir   = ConfigDirectory(default = self.oldConfig.get('media_dirA'))
+		self.menuItemAudioDir   = ConfigDirectory(default = self.oldConfig.get('media_dirA'))
 		self.menuItemPictureDir = ConfigDirectory(default = self.oldConfig.get('media_dirP'))
 
 		log_level_list = self.oldConfig.get('log_level').split('=')
@@ -259,7 +259,7 @@ class DLNAServer(ConfigListScreen, Screen):
 
 		self.menuEntryServerName = getConfigListEntry(_("Server Name"), self.menuItemServerName)
 		self.menuEntryVideoDir   = getConfigListEntry(_("Video Directory"), self.menuItemVideoDir)
-		self.menuEntryMusicDir   = getConfigListEntry(_("Music Directory"), self.menuItemMusicDir)
+		self.menuEntryAudioDir   = getConfigListEntry(_("Music Directory"), self.menuItemAudioDir)
 		self.menuEntryPictureDir = getConfigListEntry(_("Picture Directory"), self.menuItemPictureDir)
 		self.menuEntryEnableLog  = getConfigListEntry(_("Enable Logging"), self.menuItemEnableLog)
 		self.menuEntryLogLevel   = getConfigListEntry(_("    - Log Level"), self.menuItemLogLevel)
@@ -271,7 +271,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		self.menulist = []
 		self.menulist.append(self.menuEntryServerName)
 		self.menulist.append(self.menuEntryVideoDir)
-		self.menulist.append(self.menuEntryMusicDir)
+		self.menulist.append(self.menuEntryAudioDir)
 		self.menulist.append(self.menuEntryPictureDir)
 		self.menulist.append(self.menuEntryEnableLog)
 		if self.menuItemEnableLog.value:
@@ -281,7 +281,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		self["config"].list = self.menulist
 		self["config"].l.setList(self.menulist)
 
-	def writeConfigFile(self, serverName=None, videoDir=None, auditDir=None, pictureDir=None, logDir=None, logLevel='error'):
+	def writeConfigFile(self, serverName=None, videoDir=None, audioDir=None, pictureDir=None, logDir=None, logLevel='error'):
 		configString = ""
 		def configDataAppend(origin, key, value):
 			if key.strip() != '' and value.strip() != '':
@@ -290,8 +290,8 @@ class DLNAServer(ConfigListScreen, Screen):
 		configString = configDataAppend(configString, "friendly_name", serverName)
 		if videoDir is not None and videoDir.strip() != '':
 			configString = configDataAppend(configString, "media_dir", "V,%s"%(videoDir))
-		if auditDir is not None and auditDir.strip() != '':
-			configString = configDataAppend(configString, "media_dir", "A,%s"%(auditDir))
+		if audioDir is not None and audioDir.strip() != '':
+			configString = configDataAppend(configString, "media_dir", "A,%s"%(audioDir))
 		if pictureDir is not None and pictureDir.strip() != '':
 			configString = configDataAppend(configString, "media_dir", "P,%s"%(pictureDir))
 		if logDir is not None and logDir.strip() != '':
@@ -333,7 +333,7 @@ class DLNAServer(ConfigListScreen, Screen):
 				if value == None or value.strip() == '':
 					self.oldConfig[key] = default
 			except: self.oldConfig[key] = default
-			
+
 		setDefault('friendly_name', '%s DLNA Server' % (socket.gethostname()))
 		setDefault('media_dirV', '/media/dlna/Videos')
 		setDefault('media_dirA', '/media/dlna/Musics')
