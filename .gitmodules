@@ -13,60 +13,80 @@
 [submodule "meta-formuler"]
 	path = meta-formuler
 	url = https://github.com/formuler/meta-formuler.git
+	shallow = true
 [submodule "meta-hd"]
 	path = meta-hd
 	url = https://github.com/HD-Digital/meta-hd.git
+	shallow = true
 [submodule "meta-vuplus"]
 	path = meta-vuplus
 	url = https://github.com/vu-plus/meta-vuplus.git
+	shallow = true
 [submodule "meta-xp"]
 	path = meta-xp
 	url = https://github.com/XP-Master/meta-xp.git
+	shallow = true
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = https://github.com/XpeedDeveloperTeam/meta-xpeedc.git
+	shallow = true
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = https://github.com/zgemma-star/meta-zgemma.git
+	shallow = true
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
 	url = https://github.com/miraclebox-git/meta-miraclebox.git
+	shallow = true
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
+	shallow = true
 [submodule "meta-xtrend"]
 	path = meta-xtrend
 	url = https://github.com/nextv-xtrend/meta-xtrend.git
+	shallow = true
 [submodule "meta-qt5"]
 	path = meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
+	shallow = true
 [submodule "meta-gi"]
 	path = meta-gi
 	url = https://github.com/GIDeveloperTeam/meta-gi.git
+	shallow = true
 [submodule "meta-gfutures"]
 	path = meta-gfutures
 	url = https://github.com/HD-Digital/meta-gfutures.git
+	shallow = true
 [submodule "meta-sab"]
 	path = meta-sab
 	url = https://github.com/mariner2/meta-sab.git
+	shallow = true
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
 	url = https://github.com/pli3/meta-xsarius.pli5.git
+	shallow = true
 [submodule "meta-gigablue"]
 	path = meta-gigablue
 	url = https://github.com/GigaBlue-STB/meta-gigablue
+	shallow = true
 [submodule "meta-amiko"]
 	path = meta-amiko
 	url = https://github.com/open-amiko/meta-amiko.git
+	shallow = true
 [submodule "meta-edision"]
 	path = meta-edision
 	url = https://github.com/edision-open/meta-edision.git
+	shallow = true
 [submodule "meta-qviart"]
 	path = meta-qviart
 	url = https://github.com/pli3/meta-qviart-5.git
+	shallow = true
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
 	url = https://github.com/Axas-UHD/meta-axasuhd.git
+	shallow = true
 [submodule "meta-maxytec"]
 	path = meta-maxytec
 	url = https://github.com/v8droide2/meta-maxytec
+	shallow = true
