@@ -144,7 +144,6 @@ class DLNAServer(ConfigListScreen, Screen):
 		if isRunning():
 			green_btm_str = 'Stop'
 		self["key_green"].setText(green_btm_str)
-		#self["information"].setText(' ')
 
 	def cbGreenTimer(self):
 		self.updateGreenTimer.stop()
@@ -156,6 +155,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		self.close()
 
 	def keyOK(self):
+		self["information"].setText("")
 		currentItem  = self.getCurrentItem()
 		if currentItem is not None:
 			self.session.openWithCallback(self.cbChangeDirectory, SelectDirectoryWindow, currentItem.value)
@@ -167,7 +167,7 @@ class DLNAServer(ConfigListScreen, Screen):
 			self.saveConfigFile()
 		rc = os.popen('/etc/init.d/readymedia.sh %s'%(args)).read()
 		self["information"].setText(rc)
-		self.updateGreenTimer.start(1000)
+		self.updateGreenTimer.start(2000)
 
 	def keyYellow(self):	# Save
 		self.saveConfigFile()
@@ -301,6 +301,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		self.menulist.append(self.menuEntryAutoStart)
 		self["config"].list = self.menulist
 		self["config"].l.setList(self.menulist)
+		self["information"].setText("")
 
 	def writeConfigFile(self, serverName=None, mediaDir=None, videoDir=None, audioDir=None, pictureDir=None, rootContainer=None, logDir=None, logLevel='error'):
 		configString = ""
