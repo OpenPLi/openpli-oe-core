@@ -5,6 +5,7 @@ from enigma import eTimer
 
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 
 from Components.Button import Button
 from Components.Label import Label
@@ -156,9 +157,13 @@ class DLNAServer(ConfigListScreen, Screen):
 
 	def keyOK(self):
 		self["information"].setText("")
-		currentItem  = self.getCurrentItem()
+		currentItem = self.getCurrentDirItem()
 		if currentItem is not None:
 			self.session.openWithCallback(self.cbChangeDirectory, SelectDirectoryWindow, currentItem.value)
+			return
+		currentItem = self.getCurrentTextItem()
+		if currentItem is not None:
+			self.session.openWithCallback(self.cbChangeText, VirtualKeyBoard, title=_("DLNA Server Name"), text=currentItem.value)
 
 	def keyGreen(self):	# Start
 		args = 'stop'
@@ -222,7 +227,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		else:
 			self.writeConfigFile(serverName=serverName, videoDir=videoDir, audioDir=audioDir, pictureDir=pictureDir, rootContainer=rootContainer, logDir=logDir, logLevel=logLevel)
 
-	def getCurrentItem(self):
+	def getCurrentDirItem(self):
 		currentEntry = self["config"].getCurrent()
 		if currentEntry == self.menuEntryMediaDir:
 			return self.menuItemMediaDir
@@ -239,9 +244,22 @@ class DLNAServer(ConfigListScreen, Screen):
 	def cbChangeDirectory(self, pathStr):
 		if pathStr is None or pathStr.strip() == '':
 			return
-		currentItem  = self.getCurrentItem()
+		currentItem = self.getCurrentDirItem()
 		if currentItem is not None:
 			currentItem.value = pathStr
+
+	def cbChangeText(self, newStr):
+		if newStr is None or newStr.strip() == '':
+			return
+		currentItem = self.getCurrentTextItem()
+		if currentItem is not None:
+			currentItem.value = newStr
+
+	def getCurrentTextItem(self):
+		currentEntry = self["config"].getCurrent()
+		if currentEntry == self.menuEntryServerName:
+			return self.menuItemServerName
+		return None
 
 	def makeMenuEntry(self):	# Make all menu entry, including invisible
 		self.readConfigFile()
