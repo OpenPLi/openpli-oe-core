@@ -111,7 +111,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		</screen>
 		"""
 	def __init__(self, session):
-                self.session = session
+		self.session = session
 		Screen.__init__(self, session)
 
 		self.oldConfig = {}
@@ -174,13 +174,13 @@ class DLNAServer(ConfigListScreen, Screen):
 		self["information"].setText('Finished saving')
 
 	def keyBlue(self):	# Reset
-		self.menuItemServerName.value     = self.oldConfig.get('friendly_name')
-		self.menuItemOneMediaDir.value    = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False
-		self.menuItemMediaDir.value       = self.oldConfig.get('media_dir')
-		self.menuItemVideoDir.value       = self.oldConfig.get('media_dirV')
-		self.menuItemAudioDir.value       = self.oldConfig.get('media_dirA')
-		self.menuItemPictureDir.value     = self.oldConfig.get('media_dirP')
-		self.menuItemRootContainer.value  = True if self.oldConfig.get('root_container') == 'B' else False
+		self.menuItemServerName.value    = self.oldConfig.get('friendly_name')
+		self.menuItemOneMediaDir.value   = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False
+		self.menuItemMediaDir.value      = self.oldConfig.get('media_dir')
+		self.menuItemVideoDir.value      = self.oldConfig.get('media_dirV')
+		self.menuItemAudioDir.value      = self.oldConfig.get('media_dirA')
+		self.menuItemPictureDir.value    = self.oldConfig.get('media_dirP')
+		self.menuItemRootContainer.value = True if self.oldConfig.get('root_container') == 'B' else False
 
 		log_level_list = self.oldConfig.get('log_level').split('=')
 		enable_log = False
@@ -236,10 +236,9 @@ class DLNAServer(ConfigListScreen, Screen):
 			return self.menuItemLogDir
 		return None
 
-        def cbChangeDirectory(self, pathStr):
+	def cbChangeDirectory(self, pathStr):
 		if pathStr is None or pathStr.strip() == '':
 			return
-
 		currentItem  = self.getCurrentItem()
 		if currentItem is not None:
 			currentItem.value = pathStr
@@ -251,13 +250,13 @@ class DLNAServer(ConfigListScreen, Screen):
 			os.system('mkdir -p /media/dlna/Videos/')
 			os.system('mkdir -p /media/dlna/Musics/')
 			os.system('mkdir -p /media/dlna/Pictures/')
-		self.menuItemServerName     = ConfigText(default=self.oldConfig.get('friendly_name'))
-		self.menuItemOneMediaDir    = ConfigYesNo(default = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False)
-		self.menuItemMediaDir       = ConfigDirectory(default = self.oldConfig.get('media_dir'))
-		self.menuItemVideoDir       = ConfigDirectory(default = self.oldConfig.get('media_dirV'))
-		self.menuItemAudioDir       = ConfigDirectory(default = self.oldConfig.get('media_dirA'))
-		self.menuItemPictureDir     = ConfigDirectory(default = self.oldConfig.get('media_dirP'))
-		self.menuItemRootContainer  = ConfigYesNo(default = True if self.oldConfig.get('root_container') == 'B' else False)
+		self.menuItemServerName    = ConfigText(default=self.oldConfig.get('friendly_name'))
+		self.menuItemOneMediaDir   = ConfigYesNo(default = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False)
+		self.menuItemMediaDir      = ConfigDirectory(default = self.oldConfig.get('media_dir'))
+		self.menuItemVideoDir      = ConfigDirectory(default = self.oldConfig.get('media_dirV'))
+		self.menuItemAudioDir      = ConfigDirectory(default = self.oldConfig.get('media_dirA'))
+		self.menuItemPictureDir    = ConfigDirectory(default = self.oldConfig.get('media_dirP'))
+		self.menuItemRootContainer = ConfigYesNo(default = True if self.oldConfig.get('root_container') == 'B' else False)
 
 		log_level_list = self.oldConfig.get('log_level').split('=')
 		enable_log = False
@@ -405,5 +404,5 @@ def autostart(reason, **kwargs):
 				os.system(cmd)
 
 def Plugins(**kwargs):
- 	return [PluginDescriptor(name="DLNA Server", description="DLNA server using ReadyMedia", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
+	return [PluginDescriptor(name="DLNA Server", description="DLNA server using ReadyMedia", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
 		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc = autostart)]
