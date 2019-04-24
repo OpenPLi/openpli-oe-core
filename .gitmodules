@@ -67,3 +67,6 @@
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
 	url = https://github.com/Axas-UHD/meta-axasuhd.git
+[submodule "meta-maxytec"]
+	path = meta-maxytec
+	url = https://github.com/v8droide2/meta-maxytec
