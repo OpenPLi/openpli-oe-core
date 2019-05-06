@@ -190,10 +190,10 @@ class DLNAServer(ConfigListScreen, Screen):
 		log_level_list = self.oldConfig.get('log_level').split('=')
 		enable_log = False
 		log_level  = log_level_list[1]
+		if log_level not in ('off', 'fatal', 'error', 'warn', 'info', 'debug'):
+			log_level = 'off'
 		if log_level != 'off':
 			enable_log = True
-		if log_level not in ('off', 'error', 'warn', 'debug'):
-			log_level = 'error'
 		self.menuItemEnableLog.value = enable_log
 		self.menuItemLogLevel.value  = log_level
 		self.menuItemLogDir.value    = self.oldConfig.get('log_dir')
@@ -221,7 +221,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		logDir        = self.menuItemLogDir.value
 		logLevel      = self.menuItemLogLevel.value
 		if not self.menuItemEnableLog.value:
-			logDir,logLevel = None, None
+			logLevel = 'off'
 		if self.menuItemOneMediaDir.value:
 			self.writeConfigFile(serverName=serverName, mediaDir=mediaDir, rootContainer=rootContainer, logDir=logDir, logLevel=logLevel)
 		else:
@@ -279,12 +279,12 @@ class DLNAServer(ConfigListScreen, Screen):
 		log_level_list = self.oldConfig.get('log_level').split('=')
 		enable_log = False
 		log_level  = log_level_list[1]
+		if log_level not in ('off', 'fatal', 'error', 'warn', 'info', 'debug'):
+			log_level = 'off'
 		if log_level != 'off':
 			enable_log = True
-		if log_level not in ('off', 'error', 'warn', 'debug'):
-			log_level = 'error'
 		self.menuItemEnableLog = ConfigYesNo(default = enable_log)
-		self.menuItemLogLevel  = ConfigSelection(default = log_level, choices = [("off", _("off")), ("error", _("error")), ("warn", _("warn")), ("debug", _("debug"))])
+		self.menuItemLogLevel  = ConfigSelection(default = log_level if enable_log else 'warn', choices = [("fatal", _("fatal")), ("error", _("error")), ("warn", _("warn")), ("info", _("info")), ("debug", _("debug"))])
 		self.menuItemLogDir    = ConfigDirectory(default = self.oldConfig.get('log_dir'))
 
 		self.menuEntryServerName    = getConfigListEntry(_("Server Name"), self.menuItemServerName)
@@ -320,7 +320,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		self["config"].l.setList(self.menulist)
 		self["information"].setText("")
 
-	def writeConfigFile(self, serverName=None, mediaDir=None, videoDir=None, audioDir=None, pictureDir=None, rootContainer=None, logDir=None, logLevel='error'):
+	def writeConfigFile(self, serverName=None, mediaDir=None, videoDir=None, audioDir=None, pictureDir=None, rootContainer=None, logDir=None, logLevel=None):
 		configString = ""
 		def configDataAppend(origin, key, value):
 			if key.strip() != '' and value.strip() != '':
@@ -339,6 +339,7 @@ class DLNAServer(ConfigListScreen, Screen):
 			configString = configDataAppend(configString, "root_container", rootContainer)
 		if logDir is not None and logDir.strip() != '':
 			configString = configDataAppend(configString, "log_dir", logDir)
+		if logLevel is not None and logLevel.strip() != '':
 			configString = configDataAppend(configString, "log_level", "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=%s"%(logLevel))
 		configString = configDataAppend(configString, "port", self.oldConfig.get('port'))
 		configString = configDataAppend(configString, "db_dir", self.oldConfig.get('db_dir'))
@@ -393,7 +394,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		setDefault('media_dirP', '/media/dlna/Pictures/')
 		setDefault('root_container', '.')
 		setDefault('log_dir', '/media/dlna/.minidlnalog/')
-		setDefault('log_level', 'general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=error')
+		setDefault('log_level', 'general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=off')
 		setDefault('port', '8200')
 		setDefault('db_dir', '/var/cache/minidlna/')
 		setDefault('album_art_names', 'Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg')
