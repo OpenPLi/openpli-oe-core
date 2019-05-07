@@ -328,7 +328,7 @@ case "$ACTION" in
 
 		# unmount the device and remove the mountpoint
 		log ">" "MOUNTPOINT = $MOUNTPOINT"
-		umount "$MOUNTPOINT" || umount "/dev/${MDEV}"
+		umount -l "$MOUNTPOINT" || umount -l "/dev/${MDEV}"
 		rmdir "$MOUNTPOINT"
 		;;
 	*)

@@ -1,0 +1,40 @@
+diff --git a/gio/gdbusauth.c b/gio/gdbusauth.c
+index 1f8ea80570cf910a45f3c7f4bb678789145b5d33..752ec23fccaec4b67ec470a9f04c1f2ce99e9809 100644
+--- a/gio/gdbusauth.c
++++ b/gio/gdbusauth.c
+@@ -1272,9 +1272,9 @@ _g_dbus_auth_run_server (GDBusAuth              *auth,
+                                                     &line_length,
+                                                     cancellable,
+                                                     error);
+-          debug_print ("SERVER: WaitingForBegin, read '%s'", line);
+           if (line == NULL)
+             goto out;
++          debug_print ("SERVER: WaitingForBegin, read '%s'", line);
+           if (g_strcmp0 (line, "BEGIN") == 0)
+             {
+               /* YAY, done! */
+diff --git a/gio/gdbusmessage.c b/gio/gdbusmessage.c
+index 3221b925d3ef4eff0b063f5f56cc0629131faf42..3a1a1f9e9101a3773620403d2cb6faf6209a1b64 100644
+--- a/gio/gdbusmessage.c
++++ b/gio/gdbusmessage.c
+@@ -2731,7 +2731,6 @@ g_dbus_message_to_blob (GDBusMessage          *message,
+   if (message->body != NULL)
+     {
+       gchar *tupled_signature_str;
+-      tupled_signature_str = g_strdup_printf ("(%s)", signature_str);
+       if (signature == NULL)
+         {
+           g_set_error (error,
+@@ -2739,10 +2738,10 @@ g_dbus_message_to_blob (GDBusMessage          *message,
+                        G_IO_ERROR_INVALID_ARGUMENT,
+                        _("Message body has signature “%s” but there is no signature header"),
+                        signature_str);
+-          g_free (tupled_signature_str);
+           goto out;
+         }
+-      else if (g_strcmp0 (tupled_signature_str, g_variant_get_type_string (message->body)) != 0)
++      tupled_signature_str = g_strdup_printf ("(%s)", signature_str);
++      if (g_strcmp0 (tupled_signature_str, g_variant_get_type_string (message->body)) != 0)
+         {
+           g_set_error (error,
+                        G_IO_ERROR,
