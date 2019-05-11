@@ -263,11 +263,6 @@ class DLNAServer(ConfigListScreen, Screen):
 
 	def makeMenuEntry(self):	# Make all menu entry, including invisible
 		self.readConfigFile()
-		if not os.path.exists('/media/dlna'):
-			os.system('mkdir -p /media/dlna/.minidlna/')
-			os.system('mkdir -p /media/dlna/Videos/')
-			os.system('mkdir -p /media/dlna/Musics/')
-			os.system('mkdir -p /media/dlna/Pictures/')
 		self.menuItemServerName    = ConfigText(default=self.oldConfig.get('friendly_name'))
 		self.menuItemOneMediaDir   = ConfigYesNo(default = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False)
 		self.menuItemMediaDir      = ConfigDirectory(default = self.oldConfig.get('media_dir'))
@@ -386,17 +381,17 @@ class DLNAServer(ConfigListScreen, Screen):
 					self.oldConfig[key] = default
 			except: self.oldConfig[key] = default
 
-		setDefault('friendly_name', '%s DLNA Server' % (socket.gethostname()))
+		setDefault('friendly_name', '%s' % (socket.gethostname()))
 		setDefault('VAPmediadirExists', 'False')		# Flag for this plugin code, this is not a configuration value in the config file.
 		setDefault('media_dir', '/media/')
-		setDefault('media_dirV', '/media/dlna/Videos/')
-		setDefault('media_dirA', '/media/dlna/Musics/')
-		setDefault('media_dirP', '/media/dlna/Pictures/')
-		setDefault('root_container', '.')
-		setDefault('log_dir', '/media/dlna/.minidlnalog/')
+		setDefault('media_dirV', '/media/')
+		setDefault('media_dirA', '/media/')
+		setDefault('media_dirP', '/media/')
+		setDefault('root_container', 'B')
+		setDefault('log_dir', '/tmp/')
 		setDefault('log_level', 'general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=off')
 		setDefault('port', '8200')
-		setDefault('db_dir', '/var/cache/minidlna/')
+		setDefault('db_dir', '/var/lib/minidlna/')
 		setDefault('album_art_names', 'Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg')
 		setDefault('inotify', 'yes')
 		setDefault('enable_tivo', 'no')
@@ -430,5 +425,5 @@ def autostart(reason, **kwargs):
 				os.system(cmd)
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(name="DLNA Server", description="DLNA server using ReadyMedia", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
+	return [PluginDescriptor(name="DLNA Server", description="DLNA server using ReadyMedia (minidlna)", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
 		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc = autostart)]
