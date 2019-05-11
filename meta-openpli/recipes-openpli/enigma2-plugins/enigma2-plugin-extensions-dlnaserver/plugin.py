@@ -165,7 +165,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		if currentItem is not None:
 			self.session.openWithCallback(self.cbChangeText, VirtualKeyBoard, title=_("DLNA Server Name"), text=currentItem.value)
 
-	def keyGreen(self):	# Start
+	def keyGreen(self):     # Start
 		args = 'stop'
 		if self["key_green"].getText().strip() == 'Start':
 			args = 'start'
@@ -174,33 +174,25 @@ class DLNAServer(ConfigListScreen, Screen):
 		self["information"].setText(rc)
 		self.updateGreenTimer.start(2000)
 
-	def keyYellow(self):	# Save
+	def keyYellow(self):    # Save
 		self.saveConfigFile()
 		self["information"].setText('Finished saving')
 
-	def keyBlue(self):	# Reset
+	def keyBlue(self):      # Reset, to reasonable default values
 		self.menuItemServerName.value    = self.oldConfig.get('friendly_name')
-		self.menuItemOneMediaDir.value   = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False
-		self.menuItemMediaDir.value      = self.oldConfig.get('media_dir')
-		self.menuItemVideoDir.value      = self.oldConfig.get('media_dirV')
-		self.menuItemAudioDir.value      = self.oldConfig.get('media_dirA')
-		self.menuItemPictureDir.value    = self.oldConfig.get('media_dirP')
-		self.menuItemRootContainer.value = True if self.oldConfig.get('root_container') == 'B' else False
-
-		log_level_list = self.oldConfig.get('log_level').split('=')
-		enable_log = False
-		log_level  = log_level_list[1]
-		if log_level not in ('off', 'fatal', 'error', 'warn', 'info', 'debug'):
-			log_level = 'off'
-		if log_level != 'off':
-			enable_log = True
-		self.menuItemEnableLog.value = enable_log
-		self.menuItemLogLevel.value  = log_level
-		self.menuItemLogDir.value    = self.oldConfig.get('log_dir')
-		config.plugins.dlnaserver.autostart.value = False
+		self.menuItemOneMediaDir.value   = True
+		self.menuItemMediaDir.value      = "/media/hdd/movie/" if os.path.exists('/media/hdd/movie') else "/media/"
+		self.menuItemVideoDir.value      = "/media/"
+		self.menuItemAudioDir.value      = "/media/"
+		self.menuItemPictureDir.value    = "/media/"
+		self.menuItemRootContainer.value = True
+		self.menuItemEnableLog.value     = False
+		self.menuItemLogLevel.value      = "off"
+		self.menuItemLogDir.value        = "/tmp/"
+		config.plugins.dlnaserver.autostart.value = True
 		self.resetMenuList()
 
-	def keyRed(self):	# Exit
+	def keyRed(self):       # Exit
 		self.keyExit()
 
 	def keyLeft(self):
