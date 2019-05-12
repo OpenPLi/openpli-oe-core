@@ -161,7 +161,6 @@ ENIGMA2_OPTIONAL = " \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi', '', d)} \
-	${@bb.utils.contains('MACHINE_FEATURES', 'colorlcd', "enigma2-plugin-extensions-lcd4linux", "", d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
 	libcrypto-compat \
