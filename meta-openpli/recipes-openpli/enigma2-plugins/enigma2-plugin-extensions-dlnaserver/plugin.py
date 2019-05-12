@@ -1,3 +1,9 @@
+# -- DLNAServer --  enigma2-plugin-extensions-dlnaserver
+#
+# This source originate from git://code.vuplus.com/git/dvbapp.git
+# and have been used in OpenPLi with patches.
+# May 2019 a copy was made into OpenPLi repo and modified.
+
 from Plugins.Plugin import PluginDescriptor
 import socket
 import os
