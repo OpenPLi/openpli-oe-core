@@ -1,5 +1,5 @@
-DESCRIPTION = "ReadyMedia DLNA server (formerly aka MiniDLNA)"
-SUMMARY = "lightweight DLNA/UPnP-AV server targeted at embedded systems"
+DESCRIPTION = "ReadyMedia DLNA server (minidlna)"
+SUMMARY = "Please use the DLNAServer plugin, enigma2-plugin-extensions-dlnaserver."
 HOMEPAGE = "http://sourceforge.net/projects/minidlna"
 SECTION = "multimedia"
 MAINTAINER = "OpenPLi"
@@ -14,6 +14,7 @@ PR = "r1"
 DEPENDS = "libexif libav libjpeg-turbo libvorbis flac libid3tag sqlite3"
 
 SRC_URI = "git://github.com/OpenVisionE2/minidlna;protocol=https;branch=master \
+		file://01-less-sql-page-cache.patch;apply=yes;striplevel=0 \
 		file://readymedia.sh \
 		file://minidlna.conf \
 "
