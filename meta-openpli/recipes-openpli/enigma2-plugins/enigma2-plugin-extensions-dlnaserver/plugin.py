@@ -343,29 +343,28 @@ class DLNAServer(ConfigListScreen, Screen):
 		confFile.close()
 
 	def readConfigFile(self):
-		if not os.path.exists(self.configFileName):
-			return
 		self.oldConfig = {}
-		listDirConfig = ('media_dir', 'media_dirV', 'media_dirA', 'media_dirP', 'log_dir', 'db_dir')
-		for line in file(self.configFileName).readlines():
-			line = line.strip()
-			if line == '' or line[0] == '#':
-				continue
-			try:
-				i   = line.find('=')
-				k,v = line[:i],line[i+1:]
-				k,v = k.strip(),v.strip()
-				# Special handling if 3 media directories
-				if k == 'media_dir' and v[1] == ',' and (v[0] in 'VAP'):
-					k += v[0]
-					v  = v[2:]
-					self.oldConfig['VAPmediadirExists'] = 'True'
-				# Directories needs to end with /, for the FileList component to work properly
-				if k in listDirConfig:
-					if v != None and v != '' and v[-1] != '/':
-						v = v + '/'
-				self.oldConfig[k] = v
-			except : pass
+		if os.path.exists(self.configFileName):
+			listDirConfig = ('media_dir', 'media_dirV', 'media_dirA', 'media_dirP', 'log_dir', 'db_dir')
+			for line in file(self.configFileName).readlines():
+				line = line.strip()
+				if line == '' or line[0] == '#':
+					continue
+				try:
+					i   = line.find('=')
+					k,v = line[:i],line[i+1:]
+					k,v = k.strip(),v.strip()
+					# Special handling if 3 media directories
+					if k == 'media_dir' and v[1] == ',' and (v[0] in 'VAP'):
+						k += v[0]
+						v  = v[2:]
+						self.oldConfig['VAPmediadirExists'] = 'True'
+					# Directories needs to end with /, for the FileList component to work properly
+					if k in listDirConfig:
+						if v != None and v != '' and v[-1] != '/':
+							v = v + '/'
+					self.oldConfig[k] = v
+				except : pass
 		def setDefault(key, default):	# If value not in config file, create it and set a default value
 			try:
 				value = self.oldConfig.get(key)
