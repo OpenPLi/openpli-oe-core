@@ -25,8 +25,8 @@ config.plugins.dlnaserver = ConfigSubsection()
 config.plugins.dlnaserver.autostart = ConfigYesNo(default = False)
 
 def isRunning():
-	ps_str = os.popen('ps | grep minidlnad | grep -v grep').read()
-	if ps_str.strip() != '':
+	ps_str = os.popen("ps | grep minidlnad | grep -v grep").read()
+	if ps_str.strip() != "":
 		return True
 	return False
 
@@ -96,7 +96,7 @@ class SelectDirectoryWindow(Screen):
 
 	def updateCurrentDirectory(self):
 		currentDir = self["filelist"].getSelection()[0]
-		if currentDir is None or currentDir.strip() == '':
+		if currentDir is None or currentDir.strip() == "":
 			currentDir = "Invalid Location"
 		self["currentDir"].setText(currentDir)
 
@@ -147,9 +147,9 @@ class DLNAServer(ConfigListScreen, Screen):
 		self.updateGreenTimer.timeout.get().append(self.cbGreenTimer)
 
 	def layoutFinished(self):
-		green_btm_str = 'Start'
+		green_btm_str = "Start"
 		if isRunning():
-			green_btm_str = 'Stop'
+			green_btm_str = "Stop"
 		self["key_green"].setText(green_btm_str)
 
 	def cbGreenTimer(self):
@@ -172,22 +172,22 @@ class DLNAServer(ConfigListScreen, Screen):
 			self.session.openWithCallback(self.cbChangeText, VirtualKeyBoard, title=_("DLNA Server Name"), text=currentItem.value)
 
 	def keyGreen(self):     # Start
-		args = 'stop'
-		if self["key_green"].getText().strip() == 'Start':
-			args = 'start'
+		args = "stop"
+		if self["key_green"].getText().strip() == "Start":
+			args = "start"
 			self.saveConfigFile()
-		rc = os.popen('/etc/init.d/readymedia.sh %s'%(args)).read()
+		rc = os.popen("/etc/init.d/readymedia.sh %s" % (args)).read()
 		self["information"].setText(rc)
 		self.updateGreenTimer.start(2000)
 
 	def keyYellow(self):    # Save
 		self.saveConfigFile()
-		self["information"].setText('Finished saving')
+		self["information"].setText("Finished saving")
 
 	def keyBlue(self):      # Reset, to reasonable default values
-		self.menuItemServerName.value    = self.oldConfig.get('friendly_name')
+		self.menuItemServerName.value    = self.oldConfig.get("friendly_name")
 		self.menuItemOneMediaDir.value   = True
-		self.menuItemMediaDir.value      = "/media/hdd/movie/" if os.path.exists('/media/hdd/movie') else "/media/"
+		self.menuItemMediaDir.value      = "/media/hdd/movie/" if os.path.exists("/media/hdd/movie") else "/media/"
 		self.menuItemVideoDir.value      = "/media/"
 		self.menuItemAudioDir.value      = "/media/"
 		self.menuItemPictureDir.value    = "/media/"
@@ -215,11 +215,11 @@ class DLNAServer(ConfigListScreen, Screen):
 		videoDir      = self.menuItemVideoDir.value
 		audioDir      = self.menuItemAudioDir.value
 		pictureDir    = self.menuItemPictureDir.value
-		rootContainer = 'B' if self.menuItemRootContainer.value else '.'
+		rootContainer = "B" if self.menuItemRootContainer.value else "."
 		logDir        = self.menuItemLogDir.value
 		logLevel      = self.menuItemLogLevel.value
 		if not self.menuItemEnableLog.value:
-			logLevel = 'off'
+			logLevel = "off"
 		if self.menuItemOneMediaDir.value:
 			self.writeConfigFile(serverName=serverName, mediaDir=mediaDir, rootContainer=rootContainer, logDir=logDir, logLevel=logLevel)
 		else:
@@ -240,14 +240,14 @@ class DLNAServer(ConfigListScreen, Screen):
 		return None
 
 	def cbChangeDirectory(self, pathStr):
-		if pathStr is None or pathStr.strip() == '':
+		if pathStr is None or pathStr.strip() == "":
 			return
 		currentItem = self.getCurrentDirItem()
 		if currentItem is not None:
 			currentItem.value = pathStr
 
 	def cbChangeText(self, newStr):
-		if newStr is None or newStr.strip() == '':
+		if newStr is None or newStr.strip() == "":
 			return
 		currentItem = self.getCurrentTextItem()
 		if currentItem is not None:
@@ -261,24 +261,24 @@ class DLNAServer(ConfigListScreen, Screen):
 
 	def makeMenuEntry(self):	# Make all menu entry, including invisible
 		self.readConfigFile()
-		self.menuItemServerName    = ConfigText(default=self.oldConfig.get('friendly_name'))
-		self.menuItemOneMediaDir   = ConfigYesNo(default = True if self.oldConfig.get('VAPmediadirExists') != 'True' else False)
-		self.menuItemMediaDir      = ConfigDirectory(default = self.oldConfig.get('media_dir'))
-		self.menuItemVideoDir      = ConfigDirectory(default = self.oldConfig.get('media_dirV'))
-		self.menuItemAudioDir      = ConfigDirectory(default = self.oldConfig.get('media_dirA'))
-		self.menuItemPictureDir    = ConfigDirectory(default = self.oldConfig.get('media_dirP'))
-		self.menuItemRootContainer = ConfigYesNo(default = True if self.oldConfig.get('root_container') == 'B' else False)
+		self.menuItemServerName    = ConfigText(default=self.oldConfig.get("friendly_name"))
+		self.menuItemOneMediaDir   = ConfigYesNo(default = True if self.oldConfig.get("VAPmediadirExists") != "True" else False)
+		self.menuItemMediaDir      = ConfigDirectory(default = self.oldConfig.get("media_dir"))
+		self.menuItemVideoDir      = ConfigDirectory(default = self.oldConfig.get("media_dirV"))
+		self.menuItemAudioDir      = ConfigDirectory(default = self.oldConfig.get("media_dirA"))
+		self.menuItemPictureDir    = ConfigDirectory(default = self.oldConfig.get("media_dirP"))
+		self.menuItemRootContainer = ConfigYesNo(default = True if self.oldConfig.get("root_container") == "B" else False)
 
-		log_level_list = self.oldConfig.get('log_level').split('=')
+		log_level_list = self.oldConfig.get("log_level").split("=")
 		enable_log = False
 		log_level  = log_level_list[1]
-		if log_level not in ('off', 'fatal', 'error', 'warn', 'info', 'debug'):
-			log_level = 'off'
-		if log_level != 'off':
+		if log_level not in ("off", "fatal", "error", "warn", "info", "debug"):
+			log_level = "off"
+		if log_level != "off":
 			enable_log = True
 		self.menuItemEnableLog = ConfigYesNo(default = enable_log)
-		self.menuItemLogLevel  = ConfigSelection(default = log_level if enable_log else 'warn', choices = [("fatal", _("fatal")), ("error", _("error")), ("warn", _("warn")), ("info", _("info")), ("debug", _("debug"))])
-		self.menuItemLogDir    = ConfigDirectory(default = self.oldConfig.get('log_dir'))
+		self.menuItemLogLevel  = ConfigSelection(default = log_level if enable_log else "warn", choices = [("fatal", _("fatal")), ("error", _("error")), ("warn", _("warn")), ("info", _("info")), ("debug", _("debug"))])
+		self.menuItemLogDir    = ConfigDirectory(default = self.oldConfig.get("log_dir"))
 
 		self.menuEntryServerName    = getConfigListEntry(_("Server Name"), self.menuItemServerName)
 		self.menuEntryOneMediaDir   = getConfigListEntry(_("Only one media directory"), self.menuItemOneMediaDir)
@@ -316,86 +316,86 @@ class DLNAServer(ConfigListScreen, Screen):
 	def writeConfigFile(self, serverName=None, mediaDir=None, videoDir=None, audioDir=None, pictureDir=None, rootContainer=None, logDir=None, logLevel=None):
 		configString = ""
 		def configDataAppend(origin, key, value):
-			if key.strip() != '' and value.strip() != '':
+			if key.strip() != "" and value.strip() != "":
 				origin += "%s=%s\n" % (key,value)
 			return origin
 		configString = configDataAppend(configString, "friendly_name", serverName)
-		if mediaDir is not None and mediaDir.strip() != '':
-			configString = configDataAppend(configString, "media_dir", "%s"%(mediaDir))
-		if videoDir is not None and videoDir.strip() != '':
-			configString = configDataAppend(configString, "media_dir", "V,%s"%(videoDir))
-		if audioDir is not None and audioDir.strip() != '':
-			configString = configDataAppend(configString, "media_dir", "A,%s"%(audioDir))
-		if pictureDir is not None and pictureDir.strip() != '':
-			configString = configDataAppend(configString, "media_dir", "P,%s"%(pictureDir))
-		if rootContainer is not None and rootContainer.strip() != '':
+		if mediaDir is not None and mediaDir.strip() != "":
+			configString = configDataAppend(configString, "media_dir", "%s" % (mediaDir))
+		if videoDir is not None and videoDir.strip() != "":
+			configString = configDataAppend(configString, "media_dir", "V,%s" % (videoDir))
+		if audioDir is not None and audioDir.strip() != "":
+			configString = configDataAppend(configString, "media_dir", "A,%s" % (audioDir))
+		if pictureDir is not None and pictureDir.strip() != "":
+			configString = configDataAppend(configString, "media_dir", "P,%s" % (pictureDir))
+		if rootContainer is not None and rootContainer.strip() != "":
 			configString = configDataAppend(configString, "root_container", rootContainer)
-		if logDir is not None and logDir.strip() != '':
+		if logDir is not None and logDir.strip() != "":
 			configString = configDataAppend(configString, "log_dir", logDir)
-		if logLevel is not None and logLevel.strip() != '':
-			configString = configDataAppend(configString, "log_level", "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=%s"%(logLevel))
-		configString = configDataAppend(configString, "port", self.oldConfig.get('port'))
-		configString = configDataAppend(configString, "db_dir", self.oldConfig.get('db_dir'))
-		configString = configDataAppend(configString, "album_art_names", self.oldConfig.get('album_art_names'))
-		configString = configDataAppend(configString, "inotify", self.oldConfig.get('inotify'))
-		configString = configDataAppend(configString, "enable_tivo", self.oldConfig.get('enable_tivo'))
-		configString = configDataAppend(configString, "strict_dlna", self.oldConfig.get('strict_dlna'))
-		configString = configDataAppend(configString, "notify_interval", self.oldConfig.get('notify_interval'))
-		configString = configDataAppend(configString, "serial", self.oldConfig.get('serial'))
-		configString = configDataAppend(configString, "model_number", self.oldConfig.get('model_number'))
+		if logLevel is not None and logLevel.strip() != "":
+			configString = configDataAppend(configString, "log_level", "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=%s" % (logLevel))
+		configString = configDataAppend(configString, "port", self.oldConfig.get("port"))
+		configString = configDataAppend(configString, "db_dir", self.oldConfig.get("db_dir"))
+		configString = configDataAppend(configString, "album_art_names", self.oldConfig.get("album_art_names"))
+		configString = configDataAppend(configString, "inotify", self.oldConfig.get("inotify"))
+		configString = configDataAppend(configString, "enable_tivo", self.oldConfig.get("enable_tivo"))
+		configString = configDataAppend(configString, "strict_dlna", self.oldConfig.get("strict_dlna"))
+		configString = configDataAppend(configString, "notify_interval", self.oldConfig.get("notify_interval"))
+		configString = configDataAppend(configString, "serial", self.oldConfig.get("serial"))
+		configString = configDataAppend(configString, "model_number", self.oldConfig.get("model_number"))
 		print configString
-		confFile = file(self.configFileName, 'w')
+		confFile = file(self.configFileName, "w")
 		confFile.write(configString)
 		confFile.close()
 
 	def readConfigFile(self):
 		self.oldConfig = {}
 		if os.path.exists(self.configFileName):
-			listDirConfig = ('media_dir', 'media_dirV', 'media_dirA', 'media_dirP', 'log_dir', 'db_dir')
+			listDirConfig = ("media_dir", "media_dirV", "media_dirA", "media_dirP", "log_dir", "db_dir")
 			for line in file(self.configFileName).readlines():
 				line = line.strip()
-				if line == '' or line[0] == '#':
+				if line == "" or line[0] == '#':
 					continue
 				try:
 					i   = line.find('=')
 					k,v = line[:i],line[i+1:]
 					k,v = k.strip(),v.strip()
 					# Special handling if 3 media directories
-					if k == 'media_dir' and v[1] == ',' and (v[0] in 'VAP'):
+					if k == "media_dir" and v[1] == ',' and (v[0] in "VAP"):
 						k += v[0]
 						v  = v[2:]
-						self.oldConfig['VAPmediadirExists'] = 'True'
+						self.oldConfig["VAPmediadirExists"] = "True"
 					# Directories needs to end with /, for the FileList component to work properly
 					if k in listDirConfig:
-						if v != None and v != '' and v[-1] != '/':
-							v = v + '/'
+						if v != None and v != "" and v[-1] != '/':
+							v = v + "/"
 					self.oldConfig[k] = v
 				except : pass
 		def setDefault(key, default):	# If value not in config file, create it and set a default value
 			try:
 				value = self.oldConfig.get(key)
-				if value == None or value.strip() == '':
+				if value == None or value.strip() == "":
 					self.oldConfig[key] = default
 			except: self.oldConfig[key] = default
 
-		setDefault('friendly_name', '%s' % (socket.gethostname()))
-		setDefault('VAPmediadirExists', 'False')		# Flag for this plugin code, this is not a configuration value in the config file.
-		setDefault('media_dir', '/media/')
-		setDefault('media_dirV', '/media/')
-		setDefault('media_dirA', '/media/')
-		setDefault('media_dirP', '/media/')
-		setDefault('root_container', 'B')
-		setDefault('log_dir', '/tmp/')
-		setDefault('log_level', 'general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=off')
-		setDefault('port', '8200')
-		setDefault('db_dir', '/var/lib/minidlna/')
-		setDefault('album_art_names', 'Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg')
-		setDefault('inotify', 'yes')
-		setDefault('enable_tivo', 'no')
-		setDefault('strict_dlna', 'no')
-		setDefault('notify_interval', '900')
-		setDefault('serial', '12345678')
-		setDefault('model_number', '1')
+		setDefault("friendly_name", "%s" % (socket.gethostname()))
+		setDefault("VAPmediadirExists", "False")		# Flag for this plugin code, this is not a configuration value in the config file.
+		setDefault("media_dir", "/media/")
+		setDefault("media_dirV", "/media/")
+		setDefault("media_dirA", "/media/")
+		setDefault("media_dirP", "/media/")
+		setDefault("root_container", "B")
+		setDefault("log_dir", "/tmp/")
+		setDefault("log_level", "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=off")
+		setDefault("port", "8200")
+		setDefault("db_dir", "/var/lib/minidlna/")
+		setDefault("album_art_names", "Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg")
+		setDefault("inotify", "yes")
+		setDefault("enable_tivo", "no")
+		setDefault("strict_dlna", "no")
+		setDefault("notify_interval", "900")
+		setDefault("serial", "12345678")
+		setDefault("model_number", "1")
 		print "Current Config : ", self.oldConfig
 
 def main(session, **kwargs):
