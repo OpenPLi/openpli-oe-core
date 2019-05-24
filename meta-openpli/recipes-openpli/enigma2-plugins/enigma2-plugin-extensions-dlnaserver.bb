@@ -3,12 +3,12 @@ MAINTAINER = "OpenPLi"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
-PV = "0.1"
+PV = "0.2"
 
 SRC_URI = "file://__init__.py \
            file://plugin.py \
 "
-RDEPENDS_${PN} = "readymedia"
+RDEPENDS_${PN} = "minidlna"
 
 S = "${WORKDIR}"
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer/*"

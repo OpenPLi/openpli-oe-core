@@ -171,14 +171,14 @@ class DLNAServer(ConfigListScreen, Screen):
 		if currentItem is not None:
 			self.session.openWithCallback(self.cbChangeText, VirtualKeyBoard, title=_("DLNA Server Name"), text=currentItem.value)
 
-	def keyGreen(self):     # Start
+	def keyGreen(self):     # Start/Stop
 		args = "stop"
 		if self["key_green"].getText().strip() == "Start":
 			args = "start"
 			self.saveConfigFile()
-		rc = os.popen("/etc/init.d/readymedia.sh %s" % (args)).read()
+		rc = os.popen("/etc/init.d/minidlna.sh %s" % (args)).read()
 		self["information"].setText(rc)
-		self.updateGreenTimer.start(2000)
+		self.updateGreenTimer.start(3000)
 
 	def keyYellow(self):    # Save
 		self.saveConfigFile()
@@ -409,7 +409,7 @@ def autostart(reason, **kwargs):
 		else:
 			args = "start"
 			is_running = False
-		cmd = "/etc/init.d/readymedia.sh " + args
+		cmd = "/etc/init.d/minidlna.sh " + args
 
 		if config.plugins.dlnaserver.autostart.value:
 			if is_running:
@@ -422,5 +422,5 @@ def autostart(reason, **kwargs):
 				os.system(cmd)
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(name="DLNA Server", description="DLNA server using ReadyMedia (minidlna)", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
+	return [PluginDescriptor(name="DLNA Server", description="DLNA server using MiniDLNA", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
 		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc = autostart)]
