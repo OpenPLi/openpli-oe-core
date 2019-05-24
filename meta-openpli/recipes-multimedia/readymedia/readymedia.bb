@@ -1,23 +1,18 @@
-DESCRIPTION = "ReadyMedia DLNA server (minidlna)"
+DESCRIPTION = "MiniDLNA a DLNA/UPnP-AV server"
 SUMMARY = "Please use the DLNAServer plugin, enigma2-plugin-extensions-dlnaserver."
-HOMEPAGE = "http://sourceforge.net/projects/minidlna"
-SECTION = "multimedia"
-MAINTAINER = "OpenPLi"
+HOMEPAGE = "http://github.com/OpenVisionE2/minidlna"
+SECTION = "network"
+MAINTAINER = "OpenVisionE2"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENCE.miniupnpd;md5=b0dabf9d8e0f871554e309d62ead8d2b"
 
 inherit gitpkgv
 
-PV = "1.1.6+git${SRCPV}"
-PKGV = "1.1.6+git${GITPKGV}"
-PR = "r1"
+PV = "1.2.2+git${SRCPV}"
+PKGV = "1.2.2+git${GITPKGV}"
 DEPENDS = "libexif libav libjpeg-turbo libvorbis flac libid3tag sqlite3"
 
-SRC_URI = "git://github.com/OpenVisionE2/minidlna;protocol=https;branch=master \
-		file://01-less-sql-page-cache.patch;apply=yes;striplevel=0 \
-		file://readymedia.sh \
-		file://minidlna.conf \
-"
+SRC_URI = "git://github.com/OpenVisionE2/minidlna;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
@@ -29,13 +24,14 @@ CONFFILES_${PN} = "/etc/minidlna.conf"
 
 inherit autotools-brokensep pkgconfig gettext update-rc.d
 
-INITSCRIPT_NAME = "readymedia.sh"
-INITSCRIPT_PARAMS = "stop 00 0 6 ."
+# DLNAServer plugin will start the service. Only stop by rc.d below.
+INITSCRIPT_NAME = "minidlna.sh"
+INITSCRIPT_PARAMS = "stop 21 0 1 6 ."
 
 do_install_append() {
-	install -m 755 -d ${D}/etc/
-	install -m 644 ${WORKDIR}/minidlna.conf ${D}/etc/
-	install -m 755 -d ${D}/etc/init.d/
-	install -m 755 ${WORKDIR}/readymedia.sh ${D}/etc/init.d/
-	install -m 755 -d ${D}/var/lib/readymedia/
+	install -m 755 -d ${D}/${sysconfdir}/
+	install -m 644 ${S}/minidlna.conf ${D}/${sysconfdir}/
+	install -m 755 -d ${D}/${sysconfdir}/init.d/
+	install -m 755 ${S}/minidlna.sh ${D}/${sysconfdir}/init.d/
+	install -m 755 -d ${D}/var/lib/minidlna/
 }
