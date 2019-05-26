@@ -39,7 +39,13 @@ EXTRA_OECMAKE += "\
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
 	-DCLOCKFIX=0 \
-	-DHAVE_PCSC=0"
+	-DHAVE_PCSC=1 \
+	-DCARDREADER_SMARGO=1 \
+	-DCARDREADER_PCSC=1 \
+	-DCW_CYCLE_CHECK=1 \
+	-DCS_CACHEEX=1 \
+	-DMODULE_CONSTCW=1 \
+	"
 
 do_install() {
 	install -d ${D}/etc/tuxbox/config/oscam
