@@ -87,7 +87,7 @@ OPTIONAL_PACKAGES += " \
 	${@bb.utils.contains('MACHINE', 'dm8000', '', 'rtl8812au', d)} \
 	rtl8814au \
 	rtl8822bu \
-	${@bb.utils.contains_any('MACHINE', 'dm8000 et5x00 et6x00 et9x00 vuduo vusolo vuuno vuultimo osmio4k', '', 'rtl8189es', d)} \
+	${@bb.utils.contains_any('MACHINE', 'dm8000 et5x00 et6x00 et9x00 vuduo vusolo vuuno vuultimo osmio4k osmio4kplus', '', 'rtl8189es', d)} \
 	sabnzbd \
 	satipclient \
 	screen \
