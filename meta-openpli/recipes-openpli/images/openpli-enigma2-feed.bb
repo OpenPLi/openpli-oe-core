@@ -78,6 +78,7 @@ OPTIONAL_PACKAGES += " \
 	python-js2py \
 	python-pyexecjs \
 	python-beautifulsoup4 \
+	python-futures \
 	picocom \
 	ppp \
 	rsync \
