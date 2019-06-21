@@ -84,6 +84,7 @@ OPTIONAL_PACKAGES += " \
 	rsync \
 	rtorrent \
 	rtl8723a \
+	rtl8723bu \
 	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs', d)} \
 	${@bb.utils.contains('MACHINE', 'dm8000', '', 'rtl8812au', d)} \
 	rtl8814au \
