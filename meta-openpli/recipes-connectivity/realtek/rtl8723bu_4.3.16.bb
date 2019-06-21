@@ -5,7 +5,7 @@ LICENSE = "GPLv2"
 
 LIC_FILES_CHKSUM = "file://README.md;md5=7c7799e38fb24c3c8a114bac8e2517de"
 
-inherit module machine_kernel_pr
+inherit module
 
 SRC_URI = " \
           git://github.com/lwfinger/rtl8723bu.git;branch=master \
