@@ -79,6 +79,11 @@ OPTIONAL_PACKAGES += " \
 	python-pyexecjs \
 	python-beautifulsoup4 \
 	python-futures \
+	python-singledispatch \
+	python-websocket \
+	python-isodate \
+	python-iso3166 \
+	python-iso639 \
 	picocom \
 	ppp \
 	rsync \
