@@ -30,9 +30,11 @@ EXTRA_KERNEL_WIFI_DRIVERS = " \
 EXTERNAL_WIFI_DRIVERS = " \
 	firmware-rtl8188eu \
 	firmware-rtl8192eu \
+	firmware-rtl8723bu \
 	\
 	rtl8188eu \
 	rtl8192eu \
+	rtl8723bu \
 	"
 
 ENIGMA2_PLUGINS = " \
