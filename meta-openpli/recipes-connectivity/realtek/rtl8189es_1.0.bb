@@ -8,6 +8,11 @@ inherit module
 
 SRC_URI = " \
           file://rtl8189es-driver-1.0-20180522.zip \
+          file://rtl8189es-kernel-3.2.patch \
+          file://rtl8189es-kernel-4.20.patch \
+          file://rtl8189es-kernel-5.0.patch \
+          file://rtl8189es-kernel-5.1.patch \
+          file://rtl8189es-kernel-5.2.patch \
           "
 
 SRC_URI[md5sum] = "df5d47702271a7bc429f893d6f044221"

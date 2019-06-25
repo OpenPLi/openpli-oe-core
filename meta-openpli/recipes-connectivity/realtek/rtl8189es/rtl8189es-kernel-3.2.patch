@@ -1,0 +1,16 @@
+diff --git a/os_dep/linux/ioctl_cfg80211.c b/os_dep/linux/ioctl_cfg80211.c
+index a54d1b6..44cc1e4 100644
+--- a/os_dep/linux/ioctl_cfg80211.c
++++ b/os_dep/linux/ioctl_cfg80211.c
+@@ -32,7 +32,11 @@
+ #endif /* Linux kernel >= 4.0.0 */
+ 
+ #include <rtw_wifi_regd.h>
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 3, 0))
++#include <linux/nl80211.h>
++#else
+ #include <uapi/linux/nl80211.h>
++#endif
+ 
+ #define RTW_MAX_MGMT_TX_CNT (8)
+ #define RTW_MAX_MGMT_TX_MS_GAS (500)
