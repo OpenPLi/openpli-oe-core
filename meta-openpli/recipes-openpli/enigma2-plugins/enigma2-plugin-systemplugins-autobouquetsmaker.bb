@@ -22,8 +22,6 @@ EXTRA_OECONF = " \
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "enigma2"
-
 INSANE_SKIP_${PN} += "already-stripped ldflags"
 
 python populate_packages_prepend() {
