@@ -3,9 +3,6 @@ PR = "r0"
 
 inherit packagegroup
 
-# disabled because it contains mips32el code that breaks the arm build.
-# enigma2-plugin-systemplugins-crossepg
-
 DEPENDS = " \
 	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-extensions-antilogo \
@@ -41,6 +38,7 @@ DEPENDS = " \
 	enigma2-plugin-extensions-analogclock \
 	enigma2-plugin-extensions-epgimportfilter \
 	enigma2-plugin-systemplugins-autobouquetsmaker \
+	enigma2-plugin-systemplugins-crossepg \
 	enigma2-plugin-extensions-telekomsport \
 	enigma2-plugin-extensions-oscamstatus \
 	enigma2-plugin-extensions-blackoutblind \
