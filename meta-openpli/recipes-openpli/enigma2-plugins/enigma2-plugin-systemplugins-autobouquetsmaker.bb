@@ -13,6 +13,8 @@ PV = "3.1+git${SRCPV}"
 PKGV = "3.1+git${GITPKGV}"
 PR = "r0"
 
+DEPENDS += "python"
+
 EXTRA_OECONF = " \
     BUILD_SYS=${BUILD_SYS} \
     HOST_SYS=${HOST_SYS} \
