@@ -13,6 +13,7 @@ SRC_URI = " \
           file://add-linux-4.20-support.patch \
           file://add-linux-5.0-support.patch \
           file://add-linux-5.1-support.patch \
+          file://add-linux-5.2-support.patch \
           "
 
 SRC_URI[md5sum] = "b5c5427f41422f0195b4947f28e877f8"

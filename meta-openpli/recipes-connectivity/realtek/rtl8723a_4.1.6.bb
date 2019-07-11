@@ -13,6 +13,7 @@ SRC_URI = " \
           file://0001-add-kernel-4.15-support.patch \
           file://0001-add-kernel-4.19-support.patch \
           file://0001-add-kernel-5.1-support.patch \
+          file://0001-add-kernel-5.2-support.patch \
           "
 
 SRC_URI[md5sum] = "922f8fb001ee8d58f87737453834e2b7"
