@@ -1,24 +1,21 @@
-DESCRIPTION = "VU+ DLNA Server plugin"
-
+DESCRIPTION = "DLNA Server plugin"
+MAINTAINER = "OpenPLi"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
-BRANCH = "vuplus_experimental"
-S = "${WORKDIR}/git"
-SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
-	file://01-minidlna.patch;striplevel=1;apply=yes \
-	file://02-readymedia.patch;striplevel=1;apply=yes \
+LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/LICENSE;md5=eb723b61539feef013de476e68b5c50a"
+
+PV = "0.2"
+
+SRC_URI = "file://__init__.py \
+           file://plugin.py \
 "
+RDEPENDS_${PN} = "minidlna"
 
-inherit gitpkgv
-PV = "git${SRCPV}"
-PKGV = "git${GITPKGV}"
-
-RDEPENDS_${PN} = "readymedia"
+S = "${WORKDIR}"
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer/*"
 PACKAGES = "${PN}"
 
 do_install() {
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer
-	install -m 0644 ${S}/lib/python/Plugins/Extensions/DLNAServer/*.py ${D}/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer
+	install -m 0644 ${S}/*.py ${D}/usr/lib/enigma2/python/Plugins/Extensions/DLNAServer/
 	python -O -m compileall ${D}/usr/lib/enigma2/python/Plugins/
 }
