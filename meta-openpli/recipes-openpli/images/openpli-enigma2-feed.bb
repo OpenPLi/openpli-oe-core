@@ -49,6 +49,7 @@ OPTIONAL_PACKAGES += " \
 	joe \
 	less \
 	libbluray \
+	libsdl2 \
 	libudfread \
 	mc \
 	mediainfo \
