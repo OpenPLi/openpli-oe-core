@@ -19,13 +19,13 @@ SRC_URI[sha256sum] = "dc83f3e2f9af2d3cd32cd02e88de7522e37b5d0732e59498b67244cca1
 
 S = "${WORKDIR}/SABnzbd-${PV}"
 
-INSTALLDIR = "/usr/lib/${PN}"
+INSTALLDIR = "${libdir}/${PN}"
 
 PACKAGES = "${PN}-doc ${PN}-src ${PN}"
 
 FILES_${PN}-src = "${INSTALLDIR}/*/*.py ${INSTALLDIR}/*/*/*.py"
 FILES_${PN}-doc = "${INSTALLDIR}/*.txt ${INSTALLDIR}/licenses ${INSTALLDIR}/interfaces/*/licenses"
-FILES_${PN} = "${INSTALLDIR} /etc/init.d/sabnzbd"
+FILES_${PN} = "${INSTALLDIR} ${sysconfdir}/init.d/sabnzbd"
 
 inherit update-rc.d
 INITSCRIPT_NAME = "sabnzbd"
@@ -38,6 +38,6 @@ do_compile() {
 do_install() {
 	install -d ${D}${INSTALLDIR}
 	cp -r . ${D}${INSTALLDIR}/
-	install -d ${D}/etc/init.d
-	install -m 755 ${WORKDIR}/sabnzbd ${D}/etc/init.d/sabnzbd
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/sabnzbd ${D}${sysconfdir}/init.d/sabnzbd
 }

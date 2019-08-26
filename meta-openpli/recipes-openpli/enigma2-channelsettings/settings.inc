@@ -36,10 +36,10 @@ python do_convert_bouquets() {
 addtask convert_bouquets after do_compile before do_install
 
 do_install() {
-	install -d ${D}/etc/enigma2
-	install -m 0644 ${S}/var/tuxbox/config/enigma/bouquets.* ${D}/etc/enigma2/
-	install -m 0644 ${S}/var/tuxbox/config/enigma/userbouquet.* ${D}/etc/enigma2/
-	install -m 0644 ${S}/var/tuxbox/config/enigma/services ${D}/etc/enigma2/lamedb
+	install -d ${D}${sysconfdir}/enigma2
+	install -m 0644 ${S}/var/tuxbox/config/enigma/bouquets.* ${D}${sysconfdir}/enigma2/
+	install -m 0644 ${S}/var/tuxbox/config/enigma/userbouquet.* ${D}${sysconfdir}/enigma2/
+	install -m 0644 ${S}/var/tuxbox/config/enigma/services ${D}${sysconfdir}/enigma2/lamedb
 }
 
 FILES_${PN} = "/"

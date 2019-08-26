@@ -38,9 +38,9 @@ LDFLAGS_append =" -lcrypt -lcap"
 EXTRA_OEMAKE = "-e "
 
 do_configure() {
-    # Fix hardcoded /usr, /etc, /var mess.
+    # Fix hardcoded /usr, ${sysconfdir}, /var mess.
     cat tunables.c|sed s:\"/usr:\"${prefix}:g|sed s:\"/var:\"${localstatedir}:g \
-    |sed s:\"${prefix}/share/empty:\"${localstatedir}/share/empty:g |sed s:\"/etc:\"${sysconfdir}:g > tunables.c.new
+    |sed s:\"${prefix}/share/empty:\"${localstatedir}/share/empty:g |sed s:\"${sysconfdir}:\"${sysconfdir}:g > tunables.c.new
     mv tunables.c.new tunables.c
 }
 

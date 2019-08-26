@@ -1,16 +1,16 @@
 # To create a softcam:
-# - install binary to /usr/bin/
+# - install binary to ${bindir}/
 # - install other stuff wherever you need it
 # - fill in (mandatory)
-#   CAMNAME: Name of softcam, preferably matches /usr/bin name
+#   CAMNAME: Name of softcam, preferably matches ${bindir} name
 # - fill in (optional)
-#   CAMSTART: Command to start the softcam, default to /usr/bin/${CAMNAME}
+#   CAMSTART: Command to start the softcam, default to ${bindir}/${CAMNAME}
 #   CAMSTOP: Command to stop the softcam, default to killall ${CAMNAME}
 # Instead of CAMSTART/CAMSTOP, you can create an init.d script called init.${CAMNAME}
 
 LICENSE = "CLOSED"
 
-FILES_${PN} = "/usr/bin /etc"
+FILES_${PN} = "${bindir} ${sysconfdir}"
 
 # no docs, locales etc.
 PACKAGES = "${PN}"
@@ -18,11 +18,11 @@ PACKAGES = "${PN}"
 RDEPENDS_${PN} += "softcam-support"
 INSANE_SKIP_${PN} += "already-stripped"
 
-CAMLINK = "/etc/init.d/softcam"
-CAMPATH = "/etc/init.d/softcam.${CAMNAME}"
+CAMLINK = "${sysconfdir}/init.d/softcam"
+CAMPATH = "${sysconfdir}/init.d/softcam.${CAMNAME}"
 
-CAMSTART ?= "exec start-stop-daemon -S -x /usr/bin/${CAMNAME}"
-CAMSTOP  ?= "exec start-stop-daemon -K -R 2 -x /usr/bin/${CAMNAME}"
+CAMSTART ?= "exec start-stop-daemon -S -x ${bindir}/${CAMNAME}"
+CAMSTOP  ?= "exec start-stop-daemon -K -R 2 -x ${bindir}/${CAMNAME}"
 
 # Generate a simplistic standard init script
 # (sorry for the sleep 1, but start-stop-daemon -R does not work as advertised)
@@ -63,13 +63,13 @@ EOF
 
 # Install routine, should be ok for most cams.
 do_install_append () {
-	install -d ${D}/etc/init.d
-	install -m 755 ${S}/init.${CAMNAME} ${D}/etc/init.d/softcam.${CAMNAME}
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${S}/init.${CAMNAME} ${D}${sysconfdir}/init.d/softcam.${CAMNAME}
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
 pkg_postinst_${PN}_append () {
-	if [ ! -e "${CAMLINK}" ] || [ "/etc/init.d/softcam.None" = "`readlink -f ${CAMLINK}`" ]
+	if [ ! -e "${CAMLINK}" ] || [ "${sysconfdir}/init.d/softcam.None" = "`readlink -f ${CAMLINK}`" ]
 	then
 		rm -f "${CAMLINK}"
 		ln -s "softcam.${CAMNAME}" "${CAMLINK}"

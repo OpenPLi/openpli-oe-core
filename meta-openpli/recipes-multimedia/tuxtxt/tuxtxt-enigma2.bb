@@ -16,20 +16,20 @@ PKGV = "2.0+git${GITPKGV}"
 PR = "r3"
 
 PACKAGES = "${PN}-src ${PN}-dbg ${PN}-dev ${PN}"
-FILES_${PN}-src = "/usr/src /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.py"
-FILES_${PN} = "/usr/lib/libtuxtxt32bpp.so.* /usr/share/fonts /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.pyo /etc/tuxtxt"
-CONFFILES_${PN} = "/etc/tuxtxt/tuxtxt2.conf"
+FILES_${PN}-src = "/usr/src ${libdir}/enigma2/python/Plugins/Extensions/Tuxtxt/*.py"
+FILES_${PN} = "${libdir}/libtuxtxt32bpp.so.* ${datadir}/fonts ${libdir}/enigma2/python/Plugins/Extensions/Tuxtxt/*.pyo ${sysconfdir}/tuxtxt"
+CONFFILES_${PN} = "${sysconfdir}/tuxtxt/tuxtxt2.conf"
 
 inherit autotools pkgconfig
 
-EXTRA_OECONF = "--with-boxtype=generic --with-configdir=/etc \
+EXTRA_OECONF = "--with-boxtype=generic --with-configdir=${sysconfdir} \
 	${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	DVB_API_VERSION=5\
 	"
 
 do_install_append() {
 	# remove unused .pyc files
-	find ${D}/usr/lib/enigma2/python/ -name '*.pyc' -exec rm {} \;
+	find ${D}${libdir}/enigma2/python/ -name '*.pyc' -exec rm {} \;
 }
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

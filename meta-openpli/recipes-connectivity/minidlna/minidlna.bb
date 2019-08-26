@@ -20,7 +20,7 @@ do_configure_prepend() {
 		sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
 }
 
-CONFFILES_${PN} = "/etc/minidlna.conf"
+CONFFILES_${PN} = "${sysconfdir}/minidlna.conf"
 
 inherit autotools-brokensep pkgconfig gettext update-rc.d
 
