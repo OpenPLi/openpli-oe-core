@@ -87,6 +87,7 @@ OPTIONAL_PACKAGES += " \
 	python-iso639 \
 	picocom \
 	ppp \
+	rclone \
 	rsync \
 	rtorrent \
 	rtl8723a \
