@@ -87,6 +87,7 @@ OPTIONAL_PACKAGES += " \
 	python-iso639 \
 	picocom \
 	ppp \
+	${@bb.utils.contains("TUNE_PKGARCH", "mip32sel-nf", "", rclone", d)}
 	rclone \
 	rsync \
 	rtorrent \
