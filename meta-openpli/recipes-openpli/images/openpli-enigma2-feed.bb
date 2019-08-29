@@ -88,7 +88,6 @@ OPTIONAL_PACKAGES += " \
 	picocom \
 	ppp \
 	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'rclone', d)} \
-	rclone \
 	rsync \
 	rtorrent \
 	rtl8723a \
