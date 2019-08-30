@@ -142,6 +142,7 @@ ENIGMA2_OPTIONAL = " \
 	enigma2-plugin-extensions-openmultiboot \
 	enigma2-plugin-extensions-modifyplifullhd \
 	enigma2-plugin-extensions-refreshbouquet \
+	enigma2-plugin-extensions-sdgradio \
 	enigma2-plugin-extensions-managerautofs \
 	enigma2-plugin-extensions-hdmitest \
 	enigma2-plugin-extensions-moviemanager \
