@@ -45,7 +45,6 @@ pkg_postinst_${PN}_append () {
 
 pkg_prerm_${PN}_append () {
 	ln -s ${base_bindir}/busybox $tmpdir/wget
-	ln -s ${base_bindir}/busybox $tmpdir/grep
 }
 
 do_install_append() {
