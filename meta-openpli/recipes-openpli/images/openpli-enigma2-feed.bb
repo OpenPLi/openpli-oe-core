@@ -115,7 +115,7 @@ OPTIONAL_PACKAGES += " \
 	python-iso639 \
 	picocom \
 	ppp \
-	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'rclone', d)} \
+	rclone \
 	rsync \
 	rtorrent \
 	sabnzbd \
