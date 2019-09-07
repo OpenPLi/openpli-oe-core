@@ -4,4 +4,8 @@ SRC_URI += " \
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/qtwebkit-git:"
 
+CXXFLAGS += "-fpermissive"
+
+INSANE_SKIP_${PN} += "file-rdeps"
+
 PACKAGE_ARCH := "${MACHINE_ARCH}"
