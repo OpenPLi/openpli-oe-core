@@ -62,6 +62,9 @@ CONFFILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 
+CFLAGS += "-I${STAGING_INCDIR}/tirpc"
+LDFLAGS += "-ltirpc"
+
 inherit autotools-brokensep
 
 S = "${WORKDIR}/git"
@@ -74,6 +77,7 @@ DEPENDS = " \
 	python-daap \
 	libcddb \
 	dvdbackup \
+	libtirpc \
 	"
 
 python populate_packages_prepend () {
