@@ -10,7 +10,7 @@ SRC_URI = "file://volatile-media.sh file://volatiles.10_media"
 
 PACKAGES = "${PN}"
 
-FILES_${PN} = "/etc"
+FILES_${PN} = "${sysconfdir}"
 
 do_compile() {
 }

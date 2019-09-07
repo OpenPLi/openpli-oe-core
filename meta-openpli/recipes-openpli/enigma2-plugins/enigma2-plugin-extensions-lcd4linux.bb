@@ -33,19 +33,19 @@ S = "${WORKDIR}/git"
 inherit gitpkgv pythonnative
 
 do_compile() {
-	python -m compileall ${S}/usr/lib
+	python -m compileall ${S}${libdir}
 }
 
 do_install() {
-	cp -r --preserve=mode,links "${S}/usr" "${D}"
-	cp -r --preserve=mode,links "${S}/etc" "${D}"
+	cp -r --preserve=mode,links "${S}${prefix}" "${D}"
+	cp -r --preserve=mode,links "${S}${sysconfdir}" "${D}"
 }
 
 FILES_${PN} = "\
-	/usr/lib/python2.7 \
-	/usr/lib/python2.7/site-packages \
-	/usr/lib/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
-	/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux \
-	/etc/enigma2/lcd4config*"
+	${libdir}/python2.7 \
+	${libdir}/python2.7/site-packages \
+	${libdir}/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
+	${libdir}/enigma2/python/Plugins/Extensions/LCD4linux \
+	${sysconfdir}/enigma2/lcd4config*"
 
-CONFFILES_${PN} = "/etc/enigma2/lcd4config"
+CONFFILES_${PN} = "${sysconfdir}/enigma2/lcd4config"

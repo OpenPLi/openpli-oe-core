@@ -31,8 +31,8 @@ do_install() {
     install -d ${D}/${docdir}/dvb-apps/szap
     chmod a+rx ${D}/${libdir}/*.so*
     if [ "${DVB_WINTV_TUNER}" = "true" ]; then
-        install -d ${D}/lib/firmware
-        install -m 0644 ${WORKDIR}/*.fw ${D}/lib/firmware/
+        install -d ${D}${base_libdir}/firmware
+        install -m 0644 ${WORKDIR}/*.fw ${D}${base_libdir}/firmware/
     fi
     cp -R --no-dereference --preserve=mode,links ${S}/util/szap/channels-conf* ${D}/${docdir}/dvb-apps/szap/
     cp -R --no-dereference --preserve=mode,links ${S}/util/szap/README   ${D}/${docdir}/dvb-apps/szap/

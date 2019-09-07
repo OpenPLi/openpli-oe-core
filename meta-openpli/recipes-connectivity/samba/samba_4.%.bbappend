@@ -83,7 +83,7 @@ do_configure_prepend() {
 }
 
 do_install_append() {
-	rm -fR ${D}/var
+	rm -fR ${D}${localstatedir}
 	rm -fR ${D}/run
 	rm -fR ${D}${sysconfdir}/tmpfiles.d
 	rm -fR ${D}${sysconfdir}/sysconfig
@@ -116,9 +116,9 @@ if [ -z "$D" ]; then
 fi
 
 # add smbpass support to pam.d
-grep -v "pam_smbpass.so" $D/etc/pam.d/common-password > $D/tmp/common-password
+grep -v "pam_smbpass.so" $D${sysconfdir}/pam.d/common-password > $D/tmp/common-password
 printf "password\toptional\t\t\tpam_smbpass.so nullok use_authtok use_first_pass\n" >> $D/tmp/common-password
-mv $D/tmp/common-password $D/etc/pam.d/common-password
+mv $D/tmp/common-password $D${sysconfdir}/pam.d/common-password
 }
 
 pkg_prerm_${BPN}-common() {
