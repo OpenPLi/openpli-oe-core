@@ -10,8 +10,8 @@ SRC_URI = "file://kodi.service"
 inherit systemd
 
 do_install() {
-	install -d ${D}/lib/systemd/system
-	install -m 0644 ${WORKDIR}/kodi.service ${D}/lib/systemd/system/ 
+	install -d ${D}${base_libdir}/systemd/system
+	install -m 0644 ${WORKDIR}/kodi.service ${D}${base_libdir}/systemd/system/ 
 }
 
 SYSTEMD_PACKAGES = "${PN}"

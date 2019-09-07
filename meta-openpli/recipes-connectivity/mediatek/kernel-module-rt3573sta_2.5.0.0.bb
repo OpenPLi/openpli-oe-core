@@ -25,9 +25,9 @@ EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"
 do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
     install -m 0644 ${S}/os/linux/rt3573sta.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
-    install -d ${D}/etc/Wireless/RT3573STA
-    install -m 0644 ${S}/RT2870STA.dat ${D}/etc/Wireless/RT3573STA/RT3573STA.dat
-    install -m 0644 ${S}/RT2870STACard.dat ${D}/etc/Wireless/RT3573STA/RT3573STACard.dat
+    install -d ${D}${sysconfdir}/Wireless/RT3573STA
+    install -m 0644 ${S}/RT2870STA.dat ${D}${sysconfdir}/Wireless/RT3573STA/RT3573STA.dat
+    install -m 0644 ${S}/RT2870STACard.dat ${D}${sysconfdir}/Wireless/RT3573STA/RT3573STACard.dat
 }
 
 

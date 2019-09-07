@@ -10,15 +10,15 @@ PKGV = "1.0+git${GITPKGV}"
 
 SRC_URI = "git://github.com/Taapat/skin-SimpleGrayHD.git"
 
-FILES_${PN} = "/usr/"
+FILES_${PN} = "${prefix}/"
 
 S = "${WORKDIR}/git"
 
 do_compile() {
-	python -O -m compileall ${S}/usr/lib/enigma2/python/Components/
+	python -O -m compileall ${S}${libdir}/enigma2/python/Components/
 }
 
 do_install() {
-	install -d ${D}/usr
-	cp -r ${S}/usr/* ${D}/usr/
+	install -d ${D}${prefix}
+	cp -r ${S}${prefix}/* ${D}${prefix}/
 }

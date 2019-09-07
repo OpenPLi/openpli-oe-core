@@ -23,17 +23,17 @@ do_compile () {
 
 FILES_${PN} =  " \
 	${bindir} \
-	/usr/lib/mozilla/plugins \
-	/usr/lib/${QtHbbtv} \
+	${libdir}/mozilla/plugins \
+	${libdir}/${QtHbbtv} \
 "
 
 do_install() {
-	install -d ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/__init__.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/browser.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/datasocket.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/hbbtv.py ${D}/usr/lib/${QtHbbtv}
-	install -m 0755 ${S}/plugin/plugin.py ${D}/usr/lib/${QtHbbtv}
+	install -d ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/__init__.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/browser.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/datasocket.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/hbbtv.py ${D}${libdir}/${QtHbbtv}
+	install -m 0755 ${S}/plugin/plugin.py ${D}${libdir}/${QtHbbtv}
 	install -d ${D}${bindir}
 	install -m 0755 ${S}/qthbbtv ${D}${bindir}
 	install -d ${D}${libdir}/mozilla/plugins

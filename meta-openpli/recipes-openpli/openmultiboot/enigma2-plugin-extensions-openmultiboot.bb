@@ -16,7 +16,7 @@ RRECOMMENDS_${PN} = "python-subprocess mtd-utils mtd-utils-ubifs kernel-module-n
 
 pkg_preinst_${PN}() {
 #!/bin/sh
-if mountpoint -q /usr/lib/enigma2/python/Plugins/Extensions/OpenMultiboot; then
+if mountpoint -q ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot; then
     echo "openMultiBoot will only install on main image."
     echo "Child image is running - canceling installation!"
     sleep 3
@@ -30,7 +30,7 @@ fi
 pkg_postrm_${PN}() {
 #!/bin/sh
 
-if mountpoint -q /usr/lib/enigma2/python/Plugins/Extensions/OpenMultiboot; then
+if mountpoint -q ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot; then
     echo "openMultiBoot will only remove on main image."
     exit 0
 else
@@ -41,8 +41,8 @@ rm -rf /sbin/init
 ln -s /sbin/init.sysvinit /sbin/init
 rm -rf /sbin/open-multiboot-branding-helper.py
 
-chown -Rh root:root /usr/lib/enigma2/python/Plugins/Extensions/OpenMultiboot
-rm -rf /usr/lib/enigma2/python/Plugins/Extensions/OpenMultiboot
+chown -Rh root:root ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot
+rm -rf ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot
 exit 0
 
 }
