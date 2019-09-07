@@ -46,7 +46,7 @@ RPROVIDES_${PN} = "resolvconf"
 
 RCONFLICTS_${PN} = "resolvconf"
 
-FILES_${PN} += "/lib/resolvconf"
+FILES_${PN} += "${base_libdir}/resolvconf"
 
 pkg_postinst_${PN}() {
 if [ -z "$D" -a -x ${sysconfdir}/init.d/populate-volatile.sh ]; then
