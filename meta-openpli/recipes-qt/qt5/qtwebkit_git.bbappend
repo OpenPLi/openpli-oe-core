@@ -4,8 +4,8 @@ SRC_URI += " \
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/qtwebkit-git:"
 
-CXXFLAGS += "-fpermissive"
-
-INSANE_SKIP_${PN} += "file-rdeps"
+INSANE_SKIP_${PN} += "file-rdeps ldflags"
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
+
+DEPENDS += " bison-native"
