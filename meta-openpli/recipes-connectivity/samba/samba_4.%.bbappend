@@ -1,6 +1,3 @@
-# version
-PR = "r3"
-
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 # Remove acl, cups etc. support.
@@ -103,7 +100,7 @@ do_install_append() {
 	install -m 644 ${WORKDIR}/smbpasswd ${D}${sysconfdir}/samba/private
 }
 
-pkg_postinst_${BPN}-common_prepend() {
+pkg_postinst_ontarget_${BPN}-common_prepend() {
 #!/bin/sh
 
 if [ -z "$D" ]; then
