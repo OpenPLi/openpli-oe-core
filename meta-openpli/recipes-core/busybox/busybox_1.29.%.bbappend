@@ -18,6 +18,7 @@ SRC_URI += " \
 			file://mdev-mount.sh \
 			file://inetd \
 			file://inetd.conf \
+			file://0001-Revert-ip-fix-ip-oneline-a.patch \
 			"
 
 # we do not really depend on mtd-utils, but as mtd-utils replaces 
