@@ -13,7 +13,7 @@ index 0c800f8..2a6588f 100644
 +++ b/Makefile
 @@ -7,6 +7,8 @@ EXTRA_CFLAGS += -O1
  #EXTRA_CFLAGS += -pedantic
- #EXTRA_CFLAGS += -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wno-implicit
+ #EXTRA_CFLAGS += -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
  
 +EXTRA_CFLAGS += -Wframe-larger-than=1536 -Wno-implicit -Wno-ignored-qualifiers
 +
@@ -27,7 +27,7 @@ index 0c800f8..2a6588f 100644
 -CONFIG_POWER_SAVING = y
 +CONFIG_POWER_SAVING = n
  CONFIG_USB_AUTOSUSPEND = n
- CONFIG_HW_PWRP_DETECTION = n
+ CONFIG_HW_PWRP_DETECTION = y
  CONFIG_WIFI_TEST = n
 -- 
 2.6.1.windows.1
