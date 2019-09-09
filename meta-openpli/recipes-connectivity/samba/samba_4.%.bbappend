@@ -71,8 +71,8 @@ CONFFILES_${BPN}-common += " \
                           ${sysconfdir}/samba/private/smbpasswd \
                           "
 
-RPROVIDES_${PN} += "pam-pluginsmbpass"
-RRECOMMENDS_${PN}-base+= "wsdd pam-pluginsmbpass"
+PACKAGES_DYNAMIC += "pam-pluginsmbpass"
+RRECOMMENDS_${PN}-base += "wsdd pam-pluginsmbpass"
 
 do_install_prepend() {
 	install -d ${D}${sysconfdir}/sudoers.d
