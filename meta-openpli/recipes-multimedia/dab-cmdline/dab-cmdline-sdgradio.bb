@@ -3,8 +3,6 @@ SECTION = "libs/multimedia"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://../license;md5=427d5433a7bd7fc1e38dc15e93cbc645"
 
-SRCREV = "${AUTOREV}"
-
 DEPENDS = "fftw libusb1 faad2 zlib rtl-sdr"
 RDEPENDS_${PN} = "rtl-sdr"
 

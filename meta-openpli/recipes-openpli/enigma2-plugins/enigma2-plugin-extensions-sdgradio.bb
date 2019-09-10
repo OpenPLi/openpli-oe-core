@@ -10,7 +10,6 @@ SRC_URI = "git://github.com/satdreamgr/SDGRadio.git;protocol=http"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 PR = "r1"
