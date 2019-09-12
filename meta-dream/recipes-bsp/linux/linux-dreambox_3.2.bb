@@ -44,6 +44,8 @@ SRC_URI = " \
 			file://kernel-add-support-for-gcc7.patch \
 			file://0001-misc-latin1-to-utf8-conversions.patch \
 			file://fix-build-with-gcc7.patch \
+			file://kernel-gcc8.patch \
+			file://0012-log2-give-up-on-gcc-constant-optimizations.patch \
 			file://defconfig \
 "
 
