@@ -12,7 +12,7 @@
 	ignore = dirty
 [submodule "meta-formuler"]
 	path = meta-formuler
-	url = https://github.com/formuler/meta-formuler.git
+	url = https://github.com/OpenPLi/meta-formuler.git
 [submodule "meta-hd"]
 	path = meta-hd
 	url = https://github.com/HD-Digital/meta-hd.git
@@ -42,7 +42,7 @@
 	url = https://github.com/meta-qt5/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = https://github.com/GIDeveloperTeam/meta-gi.git
+	url = https://github.com/OpenPLi/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
 	url = https://github.com/HD-Digital/meta-gfutures.git
@@ -57,7 +57,7 @@
 	url = https://github.com/GigaBlue-STB/meta-gigablue
 [submodule "meta-amiko"]
 	path = meta-amiko
-	url = https://github.com/open-amiko/meta-amiko.git
+	url = https://github.com/OpenPLi/meta-amiko.git
 [submodule "meta-edision"]
 	path = meta-edision
 	url = https://github.com/edision-open/meta-edision.git
