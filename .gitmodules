@@ -30,7 +30,7 @@
 	url = https://github.com/zgemma-star/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = https://github.com/miraclebox-git/meta-miraclebox.git
+	url = https://github.com/OpenPLi/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/open-spycat/meta-spycat.git
@@ -48,7 +48,7 @@
 	url = https://github.com/HD-Digital/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
-	url = https://github.com/mariner2/meta-sab.git
+	url = https://github.com/OpenPLi/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
 	url = https://github.com/pli3/meta-xsarius.pli5.git
@@ -63,7 +63,7 @@
 	url = https://github.com/edision-open/meta-edision.git
 [submodule "meta-qviart"]
 	path = meta-qviart
-	url = https://github.com/pli3/meta-qviart-5.git
+	url = https://github.com/OpenPLi/meta-qviart-5.git
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
 	url = https://github.com/Axas-UHD/meta-axasuhd.git
