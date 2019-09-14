@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://ifcfg-wlan0;md5=a84acae65af4b2d44d5035aa9f63cd85"
 
 inherit module
 
+PKG_${PN} = "kernel-module-${PN}"
+
 SRC_URI = " \
           file://rtl8189es-driver-1.0-20180522.zip \
           file://rtl8189es-kernel-3.2.patch \

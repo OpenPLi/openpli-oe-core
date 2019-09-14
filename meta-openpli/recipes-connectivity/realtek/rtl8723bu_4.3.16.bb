@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = "file://README.md;md5=7c7799e38fb24c3c8a114bac8e2517de"
 
 inherit module
 
+PKG_${PN} = "kernel-module-${PN}"
+
 SRC_URI = " \
           git://github.com/lwfinger/rtl8723bu.git;branch=master \
           file://rt8723bu-makefile.patch \

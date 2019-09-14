@@ -5,6 +5,8 @@ LIC_FILES_CHKSUM = "file://README.md;md5=be8c96073836ae962143b35bebc83551"
 
 inherit module siteinfo
 
+PKG_${PN} = "kernel-module-${PN}"
+
 SRC_URI = " \
           git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
           file://rtl8192eu-makefile.patch \

@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://iwpriv_usage.txt;md5=8876ae2c103446a442658f1cc2a01b76
 
 inherit module
 
+PKG_${PN} = "kernel-module-${PN}"
+
 SRC_URI = " \
           file://DPO_MT7601U_LinuxSTA_3.0.0.4_20130913c.zip \
           file://mt7601u.patch \

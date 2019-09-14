@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=ffa10f40b98be2c2bc9608f56827ed23"
 
 inherit module
 
+PKG_${PN} = "kernel-module-${PN}"
+
 SRC_URI = " \
           file://rtl8822bu-driver-1.0.0.9-20180511a.zip \
           file://0001-fix-compile-with-4-7-x-kernel.patch \

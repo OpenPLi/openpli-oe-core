@@ -17,6 +17,27 @@ DEPENDS = "openpli-enigma2-image"
 OPTIONAL_PACKAGES_BROKEN = "samba"
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_BSP_PACKAGES ?= ""
+
+# Out-of-tree wifi drivers
+OPTIONAL_WIFI_PACKAGES = "\
+	${@ 'mt7601u' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '4.2') < 0) else '' } \
+	${@ 'mt7610u' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '4.2') < 0) else '' } \
+	${@ 'rt3573' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '3.12') < 0) else '' } \
+	${@ 'rt5572' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '3.10') < 0) else '' } \
+	${@ 'rtl8188eu' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '3.12') < 0) else '' } \
+	rtl8723a \
+	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '4.12') < 0) else '', d)} \
+	rtl8723bu \
+	firmware-rtl8723bu \
+	rtl8812au \
+	rtl8814au \
+	rtl8822bu \
+	rtl8189es \
+	rtl8192eu \
+	"
+
+#	rtl8723bt
+
 OPTIONAL_PACKAGES += " \
 	astra-sm \
 	autofs \
@@ -90,15 +111,6 @@ OPTIONAL_PACKAGES += " \
 	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'rclone', d)} \
 	rsync \
 	rtorrent \
-	rtl8723a \
-	rtl8723bu \
-	firmware-rtl8723bu \
-	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs', d)} \
-	rtl8812au \
-	rtl8814au \
-	rtl8822bu \
-	rtl8189es \
-	rtl8192eu \
 	sabnzbd \
 	satipclient \
 	screen \
@@ -122,6 +134,7 @@ OPTIONAL_PACKAGES += " \
 	zip \
 	zsh \
 	${OPTIONAL_BSP_PACKAGES} \
+	${OPTIONAL_WIFI_PACKAGES} \
 	"
 
 # smbnetfs was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/132827/

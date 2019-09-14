@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://README.md;md5=c416860023e780aa96e0616b1cda6a49"
 
 inherit module
 
+PKG_${PN} = "kernel-module-${PN}"
+
 SRC_URI = " \
           https://github.com/anthonywong/rtl8723bs/archive/v4.4.1.tar.gz \
           file://rt8723bs-makefile.patch \
