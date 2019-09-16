@@ -121,7 +121,6 @@ OPTIONAL_PACKAGES += " \
 	screen \
 	sed \
 	sshpass \
-	smbnetfs \
 	smartmontools \
 	strace \
 	tcpdump \
