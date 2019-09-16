@@ -9,24 +9,28 @@ require recipes-core/meta/package-index.bb
 # We have a GPLv2 license for this recipe...
 require conf/license/openpli-gplv2.inc
 
-MACHINE_ESSENTIAL_EXTRA_RDEPENDS ?= ""
-
 # Depend on the image, so that it gets build
 DEPENDS = "openpli-enigma2-image"
 
-OPTIONAL_PACKAGES_BROKEN = "samba"
+MACHINE_ESSENTIAL_EXTRA_RDEPENDS ?= ""
+
 OPTIONAL_PACKAGES ?= ""
 OPTIONAL_BSP_PACKAGES ?= ""
+OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
 
-# Out-of-tree wifi drivers
+# Get the kernel version for this image, we need it below
+inherit linux-kernel-base
+KERNEL_VERSION = "${@ get_kernelversion_headers('${STAGING_KERNEL_BUILDDIR}')}"
+
+# Out-of-tree wifi drivers, build conditionally based on kernel version
 OPTIONAL_WIFI_PACKAGES = "\
-	${@ 'mt7601u' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '4.2') < 0) else '' } \
-	${@ 'mt7610u' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '4.2') < 0) else '' } \
-	${@ 'rt3573' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '3.12') < 0) else '' } \
-	${@ 'rt5572' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '3.10') < 0) else '' } \
-	${@ 'rtl8188eu' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '3.12') < 0) else '' } \
+	${@ 'mt7601u' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
+	${@ 'mt7610u' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
+	${@ 'rt3573' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
+	${@ 'rt5572' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.10') < 0) else '' } \
+	${@ 'rtl8188eu' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	rtl8723a \
-	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs' if (bb.utils.vercmp_string(d.getVar('KERNEL_VERSION') or "0", '4.12') < 0) else '', d)} \
+	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.12') < 0) else '', d)} \
 	rtl8723bu \
 	firmware-rtl8723bu \
 	rtl8812au \
@@ -36,6 +40,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	rtl8192eu \
 	"
 
+#	** TODO **
 #	rtl8723bt
 
 OPTIONAL_PACKAGES += " \
@@ -116,6 +121,7 @@ OPTIONAL_PACKAGES += " \
 	screen \
 	sed \
 	sshpass \
+	smbnetfs \
 	smartmontools \
 	strace \
 	tcpdump \
@@ -137,10 +143,7 @@ OPTIONAL_PACKAGES += " \
 	${OPTIONAL_WIFI_PACKAGES} \
 	"
 
-# smbnetfs was skipped: Recipe is blacklisted: Fails to build with RSS http://errors.yoctoproject.org/Errors/Details/132827/
-
-OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
-ENIGMA2_OPTIONAL = " \
+OPTIONAL_ENIGMA2_PACKAGES = " \
 	channelsettings-enigma2-meta \
 	enigma2-pliplugins \
 	enigma2-plugin-extensions-automatic-fullbackup \
@@ -196,4 +199,4 @@ ENIGMA2_OPTIONAL = " \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"
 
-DEPENDS += "${OPTIONAL_PACKAGES} ${ENIGMA2_OPTIONAL}"
+DEPENDS += "${OPTIONAL_PACKAGES} ${OPTIONAL_ENIGMA2_PACKAGES}"
