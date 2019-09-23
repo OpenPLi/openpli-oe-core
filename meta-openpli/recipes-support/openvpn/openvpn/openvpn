@@ -4,6 +4,7 @@
 # <rob@mars.org>, edited by iwj and cs
 # Modified for openvpn by Alberto Gonzalez Iniesta <agi@agi.as>
 # Modified for restarting / starting / stopping single tunnels by Richard Mueller <mueller@teamix.net>
+# Modified for respecting pid file on service start by Fabian Klemp <fabian.klemp@axino-group.com>
 
 test $DEBIAN_SCRIPT_DEBUG && set -v -x
 
@@ -22,10 +23,18 @@ start_vpn () {
         mknod /dev/net/tun c 10 200
         chmod 600 /dev/net/tun
     fi
-    $DAEMON --daemon --writepid /var/run/openvpn.$NAME.pid \
-            --config $CONFIG_DIR/$NAME.conf --cd $CONFIG_DIR || echo -n " FAILED->"
+
+    start-stop-daemon --start --quiet --pidfile /var/run/openvpn.$NAME.pid \
+            --exec $DAEMON -- \
+            --daemon --writepid /var/run/openvpn.$NAME.pid \
+            --config $CONFIG_DIR/$NAME.conf --cd $CONFIG_DIR || rc="$?"
+    case $rc in
+        1) echo -n " ALREADY STARTED->";;
+        3) echo -n " FAILED->";;
+    esac
     echo -n " $NAME"
 }
+
 stop_vpn () {
    kill `cat $PIDFILE` || true
   rm $PIDFILE
