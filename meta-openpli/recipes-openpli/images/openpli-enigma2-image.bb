@@ -1,5 +1,31 @@
 require openpli-image.bb
 
+WIFI_DRIVERS = " \
+	firmware-carl9170 \
+	firmware-htc7010 \
+	firmware-htc9271 \
+	firmware-mt7601u \
+	firmware-rt2870 \
+	firmware-rt73 \
+	firmware-rtl8712u \
+	firmware-rtl8188eu \
+	firmware-rtl8192cu \
+	firmware-zd1211 \
+	\
+	kernel-module-ath9k-htc \
+	kernel-module-carl9170 \
+	kernel-module-mt7601u \
+	kernel-module-r8712u \
+	kernel-module-r8188eu \
+	kernel-module-rt2500usb \
+	kernel-module-rt2800usb \
+	kernel-module-rt73usb \
+	kernel-module-rtl8187 \
+	kernel-module-rtl8192cu \
+	kernel-module-rtl8192eu \
+	kernel-module-zd1211rw \
+	"
+
 ENIGMA2_PLUGINS = " \
 	enigma2-plugin-extensions-audiosync \
 	enigma2-plugin-extensions-autobackup \
@@ -48,6 +74,8 @@ IMAGE_INSTALL += " \
 	tuxbox-common \
 	ofgwrite \
 	${ENIGMA2_PLUGINS} \
+	\
+	${WIFI_DRIVERS} \
 	\
 	${@bb.utils.contains_any('MACHINE', 'vuuno vuduo vuultimo vusolo vusolo2 vuduo2 vusolose vuzero vuuno4k vuuno4kse vuzero4k vuultimo4k vusolo4k vuduo4k', 'vuplus-tuner-turbo', '', d)} \
 	\
