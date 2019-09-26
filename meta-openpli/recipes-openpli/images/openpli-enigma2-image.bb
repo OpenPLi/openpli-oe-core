@@ -12,6 +12,7 @@ WIFI_DRIVERS = " \
 	firmware-rtl8192cu \
 	firmware-zd1211 \
 	\
+	kernel-module-8192eu \
 	kernel-module-ath9k-htc \
 	kernel-module-carl9170 \
 	kernel-module-mt7601u \
@@ -22,7 +23,6 @@ WIFI_DRIVERS = " \
 	kernel-module-rt73usb \
 	kernel-module-rtl8187 \
 	kernel-module-rtl8192cu \
-	kernel-module-rtl8192eu \
 	kernel-module-zd1211rw \
 	"
 
