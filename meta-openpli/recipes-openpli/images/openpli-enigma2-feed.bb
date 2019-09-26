@@ -28,7 +28,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	${@ 'mt7610u' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
 	${@ 'rt3573' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	${@ 'rt5572' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.10') < 0) else '' } \
-	${@ 'rtl8188eu' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
+	${@ 'r8188eu' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	rtl8723a \
 	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'rtl8723bs' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.12') < 0) else '', d)} \
 	rtl8723bu \
