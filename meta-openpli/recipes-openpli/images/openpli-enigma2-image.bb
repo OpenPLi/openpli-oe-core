@@ -78,6 +78,7 @@ IMAGE_INSTALL += " \
 	${WIFI_DRIVERS} \
 	\
 	${@bb.utils.contains_any('MACHINE', 'vuuno vuduo vuultimo vusolo vusolo2 vuduo2 vusolose vuzero vuuno4k vuuno4kse vuzero4k vuultimo4k vusolo4k vuduo4k', 'vuplus-tuner-turbo', '', d)} \
+	${@bb.utils.contains_any('MACHINE', 'vuuno4kse vuultimo4k vuduo4k', 'vuplus-hdmi-in-helper', '', d)} \
 	\
 	${@bb.utils.contains("MACHINE_FEATURES", "chromium", "enigma2-plugin-extensions-chromium", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "enigma2-plugin-systemplugins-transcodingsetup", "", d)} \
