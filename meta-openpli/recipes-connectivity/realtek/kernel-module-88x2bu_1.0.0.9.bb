@@ -4,6 +4,9 @@ SECTION = "kernel/modules"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=ffa10f40b98be2c2bc9608f56827ed23"
 
+# backward compatibility
+RPROVIDES_${PN} = "rtl8822bu"
+
 inherit module
 
 SRC_URI = " \

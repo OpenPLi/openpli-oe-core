@@ -3,6 +3,9 @@ HOMEPAGE = "http://www.realtek.com/"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://README.md;md5=be8c96073836ae962143b35bebc83551"
 
+# backward compatibility
+RPROVIDES_${PN} = "rtl8192eu"
+
 inherit module siteinfo
 
 SRC_URI = " \
