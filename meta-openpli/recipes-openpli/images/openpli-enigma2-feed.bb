@@ -30,7 +30,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	${@ 'kernel-module-rt3573sta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	${@ 'kernel-module-rt5572sta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.10') < 0) else '' } \
 	kernel-module-8723a \
-	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'kernel-module-r8723bs' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.12') < 0) else '', d)} \
+	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'rtl8723bs', '', bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'kernel-module-r8723bs' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.12') < 0) else '', d), d)} \
 	kernel-module-8723bu \
 	firmware-rtl8723bu \
 	kernel-module-8812au \

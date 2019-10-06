@@ -45,12 +45,6 @@ export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""
 IMAGE_FEATURES += "package-management"
 
-# override dependencies in BSP's
-PREFERRED_RPROVIDER_rtl8192eu = "kernel-module-8192eu"
-PREFERRED_RPROVIDER_rtl8723bu = "kernel-module-8723bu"
-PREFERRED_RPROVIDER_rtl8822bu = "kernel-module-8822bu"
-PREFERRED_RPROVIDER_rtl8723bs = "kernel-module-r8723bs"
-
 # Remove the mysterious var/lib/opkg/lists that appears to be the result
 # of the installer that populates the rootfs. I wanted to call this
 # rootfs_remove_opkg_leftovers but that fails to parse.
