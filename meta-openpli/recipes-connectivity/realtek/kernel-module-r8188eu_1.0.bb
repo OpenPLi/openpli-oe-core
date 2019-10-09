@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 inherit module
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 SRC_URI = " \
           git://github.com/lwfinger/rtl8188eu.git \
           "

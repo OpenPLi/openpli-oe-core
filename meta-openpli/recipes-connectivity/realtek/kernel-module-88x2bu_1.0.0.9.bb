@@ -9,6 +9,8 @@ RPROVIDES_${PN} = "rtl8822bu"
 
 inherit module
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 SRC_URI = " \
           file://rtl8822bu-driver-1.0.0.9-20180511a.zip \
           file://0001-fix-compile-with-4-7-x-kernel.patch \

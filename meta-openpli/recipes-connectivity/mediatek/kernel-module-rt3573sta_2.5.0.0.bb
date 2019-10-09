@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://iwpriv_usage.txt;md5=8876ae2c103446a442658f1cc2a01b76
 
 inherit module
 
-RPROVIDES_${PN} = "kernel-module-rt3573sta"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
           file://20120911_RT3573_Linux_STA_v2.5.0.0_Rev4_DPO.tar.gz \

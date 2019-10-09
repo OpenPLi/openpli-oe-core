@@ -9,6 +9,8 @@ RPROVIDES_${PN} = "rtl8723bu"
 
 inherit module
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 SRC_URI = " \
           git://github.com/lwfinger/rtl8723bu.git;branch=master \
           file://rt8723bu-makefile.patch \

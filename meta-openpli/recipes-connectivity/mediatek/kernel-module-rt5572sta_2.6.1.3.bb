@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = "file://iwpriv_usage.txt;md5=8876ae2c103446a442658f1cc2a01b76
 
 inherit module
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 SRC_URI = " \
           file://rt5572_2.6.1.4.tar.gz \
           file://remove_linux_2_4_compability.patch \
