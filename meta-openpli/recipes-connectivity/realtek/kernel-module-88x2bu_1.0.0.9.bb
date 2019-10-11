@@ -4,9 +4,12 @@ SECTION = "kernel/modules"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=ffa10f40b98be2c2bc9608f56827ed23"
 
+# backward compatibility
+RPROVIDES_${PN} = "rtl8822bu"
+
 inherit module
 
-PKG_${PN} = "kernel-module-${PN}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
           file://rtl8822bu-driver-1.0.0.9-20180511a.zip \

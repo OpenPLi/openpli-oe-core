@@ -2,12 +2,14 @@ DESCRIPTION = "Driver for Realtek USB wireless devices"
 HOMEPAGE = "http://www.realtek.com/"
 SECTION = "kernel/modules"
 LICENSE = "GPLv2"
-
 LIC_FILES_CHKSUM = "file://README.md;md5=7c7799e38fb24c3c8a114bac8e2517de"
+
+# backward compatibility
+RPROVIDES_${PN} = "rtl8723bu"
 
 inherit module
 
-PKG_${PN} = "kernel-module-${PN}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
           git://github.com/lwfinger/rtl8723bu.git;branch=master \

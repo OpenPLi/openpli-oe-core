@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://README.md;md5=c416860023e780aa96e0616b1cda6a49"
 
 inherit module
 
-PKG_${PN} = "kernel-module-${PN}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
           https://github.com/anthonywong/rtl8723bs/archive/v4.4.1.tar.gz \
@@ -31,8 +31,8 @@ SRC_URI[sha256sum] = "6a66855c3aec845e531e77efca06364b3bbc4d052eb527a002f8c801c9
 S = "${WORKDIR}/rtl8723bs-${PV}"
 
 do_install() {
-    install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/rtl8723bs
-    install -m 0644 ${S}/r8723bs.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/rtl8723bs
+    install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/r8723bs
+    install -m 0644 ${S}/r8723bs.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/r8723bs
 }
 
 python do_package_prepend() {
