@@ -18,26 +18,29 @@ OPTIONAL_PACKAGES ?= ""
 OPTIONAL_BSP_PACKAGES ?= ""
 OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
 
-# Get the kernel version for this image, we need it below
+# Get the kernel version for this image, we need it to build conditionally on kernel version
+# NB: this only works in the feed, as the kernel needs to be build before the headers are available
+
 inherit linux-kernel-base
 KERNEL_VERSION = "${@ get_kernelversion_headers('${STAGING_KERNEL_BUILDDIR}')}"
 
 # Out-of-tree wifi drivers, build conditionally based on kernel version
 OPTIONAL_WIFI_PACKAGES = "\
-	${@ 'kernel-module-mt7601usta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
 	${@ 'kernel-module-mt7610u' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
+	${@ 'kernel-module-mt7601usta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else 'no-kernel-yet' } \
 	${@ 'kernel-module-r8188eu' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	${@ 'kernel-module-rt3573sta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	${@ 'kernel-module-rt5572sta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.10') < 0) else '' } \
 	kernel-module-8723a \
 	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'rtl8723bs', '', bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'spycat-rtl8723bs', '', 'kernel-module-r8723bs' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.12') < 0) else '', d), d)} \
 	kernel-module-8723bu \
-	firmware-rtl8723bu \
 	kernel-module-8812au \
 	kernel-module-8814au \
 	kernel-module-88x2bu \
 	kernel-module-8189es \
 	kernel-module-8192eu \
+	firmware-rtl8723bu \
+	firmware-mt7601u \
 	"
 
 #	** TODO **
