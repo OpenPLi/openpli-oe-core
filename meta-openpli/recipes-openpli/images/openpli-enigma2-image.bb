@@ -1,14 +1,9 @@
 require openpli-image.bb
 
-# Get the kernel version for this image, we need it below
-inherit linux-kernel-base
-KERNEL_VERSION = "${@ get_kernelversion_headers('${STAGING_KERNEL_BUILDDIR}')}"
-
 WIFI_DRIVERS = " \
 	firmware-carl9170 \
 	firmware-htc7010 \
 	firmware-htc9271 \
-	firmware-mt7601u \
 	firmware-rt2870 \
 	firmware-rt73 \
 	firmware-rtl8712u \
@@ -16,8 +11,6 @@ WIFI_DRIVERS = " \
 	firmware-rtl8192cu \
 	firmware-zd1211 \
 	\
-	${@ 'kernel-module-mt7601usta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
-	${@ 'kernel-module-r8188eu' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
 	kernel-module-8192eu \
 	kernel-module-ath9k-htc \
 	kernel-module-carl9170 \
