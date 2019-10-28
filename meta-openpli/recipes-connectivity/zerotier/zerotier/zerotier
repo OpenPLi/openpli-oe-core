@@ -9,9 +9,6 @@ test -e $DAEMON || exit 0
 
 case "$1" in
   start)
-    if [ -d /var/lib/samba/msg.lock ]; then
-        rm -rf /var/lib/samba/msg.lock
-    fi
     echo -n "Starting $prog"
 
     # Make sure kernel module is loaded

@@ -130,6 +130,7 @@ OPTIONAL_PACKAGES += " \
 	tmux \
 	transmission \
 	udpxy \
+	unzip \
 	usb-modeswitch \
 	usb-modeswitch-data \
 	v4l-utils \
