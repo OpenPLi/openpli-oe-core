@@ -13,5 +13,7 @@ FILES_${PN} = "/etc/enigma2/"
 do_install () {
 	install -d ${D}/etc/enigma2
 	cp -r ${S}/${SETTINGS_FILENAME}/* ${D}/etc/enigma2
-	[ -e ${D}/etc/enigma2/satellites.xml ] && rm -f ${D}/etc/enigma2/satellites.xml
+	if [ -e ${D}/etc/enigma2/satellites.xml ]; then
+		rm -f ${D}/etc/enigma2/satellites.xml
+	fi
 }
