@@ -33,5 +33,5 @@ DEPENDS = "\
 	enigma2-plugin-settings-morph883-4.8e-13e \
 	enigma2-plugin-settings-morph883-9e-13e-19.2e \
 	enigma2-plugin-settings-morph883-9e-13e \
-	enigma2-plugin-settings-morph883-motor.bb \
+	enigma2-plugin-settings-morph883-motor \
 	"
