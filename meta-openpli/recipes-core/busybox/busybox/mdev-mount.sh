@@ -73,7 +73,7 @@ create_mountpoint() {
 			removable=`cat /sys/block/$DEVBASE/removable`
 			readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
 			external=$?
-			if [ "${removable}" -eq "0" -a "${external}" -eq "0" ]; then
+			if [ "${external}" -eq "0" ]; then
 				# we assume it's the internal harddisk
 				devicetype="hdd"
 			else
