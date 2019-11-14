@@ -343,7 +343,7 @@ PACKAGE_PREPROCESS_FUNCS += "openssl_package_preprocess"
 RPROVIDES_libcrypto10 ="libcrypto"
 RPROVIDES_libssl10 ="libssl"
 RPROVIDES_openssl-conf10 ="openssl-conf"
-RPROVIDES_${PN} ="openssl"
+RPROVIDES_${PN} ="openssl libcrypto libssl"
 
 RREPLACES_${PN} = "libssl libcrypto openssl-conf"
 RCONFLICTS_${PN} = "libssl libcrypto openssl-conf"
