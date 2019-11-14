@@ -345,6 +345,9 @@ RPROVIDES_libssl10 ="libssl"
 RPROVIDES_openssl-conf10 ="openssl-conf"
 RPROVIDES_${PN} ="openssl"
 
+RREPLACES_${PN} = "libssl libcrypto openssl-conf"
+RCONFLICTS_${PN} = "libssl libcrypto openssl-conf"
+
 PROVIDES += "libcrypto libssl openssl-conf openssl"
 
 # openssl 1.0 development files and executable binaries clash with openssl 1.1
