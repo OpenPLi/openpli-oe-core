@@ -20,6 +20,7 @@ DEPENDS = "\
 	enigma2-plugin-settings-morph883-13e-16e-19.2e \
 	enigma2-plugin-settings-morph883-13e-16e \
 	enigma2-plugin-settings-morph883-13e-19.2e-23.5e \
+	enigma2-plugin-settings-morph883-13e-19.2e-23.5e-28.2e \
 	enigma2-plugin-settings-morph883-13e-19.2e-28.2e \
 	enigma2-plugin-settings-morph883-13e-19.2e-42e \
 	enigma2-plugin-settings-morph883-13e-19.2e \
