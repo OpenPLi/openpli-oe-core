@@ -34,11 +34,11 @@ do_install() {
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
 pkg_postinst_${PN}_append () {
 	if [ "${TARGET_ARCH}" == "arm" ]; then
-		[ -f /lib/ld-2.25.so ] && ln -s /lib/ld-2.25.so /lib/ld-linux.so.3
+		[ -f /lib/ld-2.25.so ] && [ ! -f /lib/ld-2.25.so /lib/ld-linux.so.3 ] && ln -s /lib/ld-2.25.so /lib/ld-linux.so.3
 	fi
 }
 
 # Stop this cam (if running), and move softlink to None if we're the current cam
 pkg_prerm_${PN}_prepend () {
-	[ -f /lib/ld-linux.so.3 ] && rm -f /lib/ld-linux.so.3
+	[ -f /lib/ld-linux.so.3 ] && [ -L /lib/ld-linux.so.3 ] && rm -f /lib/ld-linux.so.3
 }
