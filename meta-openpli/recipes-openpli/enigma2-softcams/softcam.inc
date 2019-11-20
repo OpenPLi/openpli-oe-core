@@ -12,9 +12,6 @@ LICENSE = "CLOSED"
 
 FILES_${PN} = "/usr/bin /etc"
 
-# no docs, locales etc.
-PACKAGES = "${PN}"
-
 RDEPENDS_${PN} += "softcam-support"
 INSANE_SKIP_${PN} += "already-stripped"
 
