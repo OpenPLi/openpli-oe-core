@@ -350,16 +350,8 @@ RCONFLICTS_${PN} = "libssl libcrypto openssl-conf"
 
 PROVIDES += "libcrypto libssl openssl-conf openssl"
 
-# openssl 1.0 development files and executable binaries clash with openssl 1.1
-# files when installed into target rootfs. So we don't put them into
-# packages, but they continue to be provided via target sysroot for
-# cross-compilation on the host, if some software still depends on openssl 1.0.
 openssl_package_preprocess () {
         for file in `find ${PKGD} -name *.h -o -name *.pc -o -name *.so`; do
                 rm $file
         done
-        rm ${PKGD}${bindir}/openssl
-        rm ${PKGD}${bindir}/c_rehash
-        rmdir ${PKGD}${bindir}
-
 }
