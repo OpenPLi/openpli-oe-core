@@ -26,9 +26,9 @@ DEPENDS_append_armv7ve = " \
 	"
 
 # aarch64 only binary softcams (aarch64 arch)
-DEPENDS_append_aarch64 = " \
-	enigma2-plugin-softcams-mgcamd135a \
-	"
+#DEPENDS_append_aarch64 = " \
+#	enigma2-plugin-softcams-mgcamd135a \
+#	"
 
 # softcams with source available
 DEPENDS += " \
