@@ -39,7 +39,7 @@
 	url = https://github.com/nextv-xtrend/meta-xtrend.git
 [submodule "meta-qt5"]
 	path = meta-qt5
-	url = https://github.com/meta-qt5/meta-qt5.git
+	url = https://code.qt.io/cgit/yocto/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
 	url = https://github.com/OpenPLi/meta-gi.git
