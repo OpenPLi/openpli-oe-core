@@ -1,8 +1,8 @@
 SRC_URI += "\
 	file://configure-kill-intl-check.patch \
+	file://allow_the_rpc_server_to_listen_on_an_ipv6_address.patch \
 	file://configure-allow-local-network.patch \
 	file://configuration-default-download-dir.patch \
-	file://0001-transmission-build-against-openssl-1.1.0.patch \
 	"
 
 OE_EXTRACONF = "\
