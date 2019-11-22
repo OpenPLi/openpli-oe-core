@@ -21,7 +21,7 @@
 	url = https://github.com/vu-plus/meta-vuplus.git
 [submodule "meta-xp"]
 	path = meta-xp
-	url = https://github.com/OpenPLi/meta-xp.git
+	url = https://github.com/XP-Master/meta-xp.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = https://github.com/OpenPLi/meta-xpeedc.git
@@ -51,7 +51,7 @@
 	url = https://github.com/OpenPLi/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
-	url = https://github.com/OpenPLi/meta-xsarius.pli5.git
+	url = https://github.com/pli3/meta-xsarius.pli5.git
 [submodule "meta-gigablue"]
 	path = meta-gigablue
 	url = https://github.com/GigaBlue-STB/meta-gigablue
