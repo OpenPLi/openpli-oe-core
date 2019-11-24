@@ -87,6 +87,6 @@ pkg_prerm_${PN}_prepend () {
 	then
 		echo "${CAMNAME} was selected, now selecting None as softcam"
 		rm -f "${CAMLINK}"
-		ln -s "softcam.None" "${CAMLINK}"
+		ln -s "/etc/init.d/softcam.None" "${CAMLINK}"
 	fi
 }
