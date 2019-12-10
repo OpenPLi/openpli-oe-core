@@ -17,6 +17,7 @@ SRC_URI = "http://downloads.yoctoproject.org/releases/${BPN}/${BPN}-${PV}.tar.gz
            file://0001-reuse-the-installed_files-list-when-possible.patch \
            file://0001-opkg_conf-create-opkg.lock-in-run-instead-of-var-run.patch \
            file://0002-opkg-symlink-to-directory-workarounds.patch \
+           file://0003-fix-installation-sequence-errors.patch \
            file://modprobe \
 "
 
