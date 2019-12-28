@@ -158,6 +158,7 @@ $(TOPDIR)/env.source: $(DEPDIR)/.env.source.$(BITBAKE_ENV_HASH)
 	@echo 'export BB_ENV_EXTRAWHITE="MACHINE"' > $@
 	@echo 'export MACHINE' >> $@
 	@echo 'export PATH=$(CURDIR)/openembedded-core/scripts:$(CURDIR)/bitbake/bin:$${PATH}' >> $@
+	@echo 'export BUILDDIR=$(BUILD_DIR)' >> $@
 
 OPENPLI_CONF_HASH := $(call hash, \
 	'OPENPLI_CONF_VERSION = "1"' \
