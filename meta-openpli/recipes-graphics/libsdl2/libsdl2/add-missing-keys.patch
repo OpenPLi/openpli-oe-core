@@ -1,0 +1,293 @@
+--- a/src/events/SDL_keyboard.c
++++ b/src/events/SDL_keyboard.c
+@@ -251,7 +251,7 @@
+     SDLK_AUDIONEXT,
+     SDLK_AUDIOPREV,
+     SDLK_AUDIOSTOP,
+-    SDLK_AUDIOPLAY,
++    SDLK_PLAYPAUSE,
+     SDLK_AUDIOMUTE,
+     SDLK_MEDIASELECT,
+     SDLK_WWW,
+@@ -275,8 +275,28 @@
+     SDLK_SLEEP,
+     SDLK_APP1,
+     SDLK_APP2,
+-    SDLK_AUDIOREWIND,
+-    SDLK_AUDIOFASTFORWARD,
++    SDLK_REWIND,
++    SDLK_FASTFORWARD,
++    /* Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    SDLK_RECORD,
++    SDLK_EXIT,
++    SDLK_PLAY,
++    SDLK_OK,
++    SDLK_EPG,
++    SDLK_SUBTITLE,
++    SDLK_TV,
++    SDLK_RADIO,
++    SDLK_TEXT,
++    SDLK_AUDIO,
++    SDLK_VIDEO,
++    SDLK_RED,
++    SDLK_GREEN,
++    SDLK_YELLOW,
++    SDLK_BLUE,
++    SDLK_CHANNELUP,
++    SDLK_CHANNELDOWN,
++    SDLK_NEXT,
++    SDLK_PREVIOUS,
+ };
+ 
+ static const char *SDL_scancode_names[SDL_NUM_SCANCODES] = {
+@@ -487,7 +507,7 @@
+     "AudioNext",
+     "AudioPrev",
+     "AudioStop",
+-    "AudioPlay",
++    "PlayPause",
+     "AudioMute",
+     "MediaSelect",
+     "WWW",
+@@ -511,8 +531,28 @@
+     "Sleep",
+     "App1",
+     "App2",
+-    "AudioRewind",
+-    "AudioFastForward",
++    "Rewind",
++    "FastForward",
++    /*    Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    "Record",
++    "Exit",
++    "Play",
++    "Ok",
++    "Epg",
++    "Subtitle",
++    "Tv",
++    "Radio",
++    "Text",
++    "Audio",
++    "Video",
++    "Red",
++    "Green",
++    "Yellow",
++    "Blue",
++    "Channelup",
++    "Channeldown",
++    "Next",
++    "Previous",
+ };
+ 
+ /* Taken from SDL_iconv() */
+--- a/include/SDL_keycode.h
++++ b/include/SDL_keycode.h
+@@ -287,7 +287,7 @@
+     SDLK_AUDIONEXT = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIONEXT),
+     SDLK_AUDIOPREV = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIOPREV),
+     SDLK_AUDIOSTOP = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIOSTOP),
+-    SDLK_AUDIOPLAY = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIOPLAY),
++    SDLK_PLAYPAUSE = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_PLAYPAUSE),
+     SDLK_AUDIOMUTE = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIOMUTE),
+     SDLK_MEDIASELECT = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_MEDIASELECT),
+     SDLK_WWW = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_WWW),
+@@ -315,8 +315,32 @@
+     SDLK_APP1 = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_APP1),
+     SDLK_APP2 = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_APP2),
+ 
+-    SDLK_AUDIOREWIND = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIOREWIND),
+-    SDLK_AUDIOFASTFORWARD = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIOFASTFORWARD)
++    SDLK_REWIND = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_REWIND),
++    SDLK_FASTFORWARD = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_FASTFORWARD),
++
++    /* Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    SDLK_RECORD = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_RECORD),
++    SDLK_EXIT = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_EXIT),
++    SDLK_PLAY = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_PLAY),
++    SDLK_OK = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_OK),
++
++    SDLK_EPG = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_EPG),
++    SDLK_SUBTITLE = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_SUBTITLE),
++    SDLK_TV = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_TV),
++    SDLK_RADIO = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_RADIO),
++    SDLK_TEXT = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_TEXT),
++    SDLK_AUDIO = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_AUDIO),
++    SDLK_VIDEO = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_VIDEO),
++    SDLK_RED = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_RED),
++    SDLK_GREEN = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_GREEN),
++    SDLK_YELLOW = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_YELLOW),
++    SDLK_BLUE = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_BLUE),
++    SDLK_CHANNELUP = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_CHANNELUP),
++    SDLK_CHANNELDOWN = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_CHANNELDOWN),
++    SDLK_NEXT = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_NEXT),
++    SDLK_PREVIOUS = SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_PREVIOUS)
++
++
+ };
+ 
+ /**
+--- a/include/SDL_scancode.h
++++ b/include/SDL_scancode.h
+@@ -351,7 +351,7 @@
+     SDL_SCANCODE_AUDIONEXT = 258,
+     SDL_SCANCODE_AUDIOPREV = 259,
+     SDL_SCANCODE_AUDIOSTOP = 260,
+-    SDL_SCANCODE_AUDIOPLAY = 261,
++    SDL_SCANCODE_PLAYPAUSE = 261,
+     SDL_SCANCODE_AUDIOMUTE = 262,
+     SDL_SCANCODE_MEDIASELECT = 263,
+     SDL_SCANCODE_WWW = 264,
+@@ -397,12 +397,35 @@
+      */
+     /* @{ */
+ 
+-    SDL_SCANCODE_AUDIOREWIND = 285,
+-    SDL_SCANCODE_AUDIOFASTFORWARD = 286,
++    SDL_SCANCODE_REWIND = 285,
++    SDL_SCANCODE_FASTFORWARD = 286,
+ 
+     /* @} *//* Usage page 0x0C (additional media keys) */
+ 
+     /* Add any other keys here. */
++
++
++    /* Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    SDL_SCANCODE_RECORD = 287,
++    SDL_SCANCODE_EXIT = 288,
++    SDL_SCANCODE_PLAY = 289,
++    SDL_SCANCODE_OK = 290,
++    SDL_SCANCODE_EPG = 291,
++    SDL_SCANCODE_SUBTITLE = 292,
++    SDL_SCANCODE_TV = 293,
++    SDL_SCANCODE_RADIO = 294,
++    SDL_SCANCODE_TEXT = 295,
++    SDL_SCANCODE_AUDIO = 296,
++    SDL_SCANCODE_VIDEO = 297,
++    SDL_SCANCODE_RED = 298,
++    SDL_SCANCODE_GREEN = 299,
++    SDL_SCANCODE_YELLOW = 300,
++    SDL_SCANCODE_BLUE = 301,
++    SDL_SCANCODE_CHANNELUP = 302,
++    SDL_SCANCODE_CHANNELDOWN = 303,
++    SDL_SCANCODE_NEXT = 304,
++    SDL_SCANCODE_PREVIOUS = 305,
++
+ 
+     SDL_NUM_SCANCODES = 512 /**< not a key, just marks the number of scancodes
+                                  for array bounds */
+--- a/src/events/scancodes_linux.h
++++ b/src/events/scancodes_linux.h
+@@ -190,17 +190,19 @@
+     /*  161 */    SDL_SCANCODE_EJECT, /* KEY_EJECTCD */
+     /*  162 */    SDL_SCANCODE_UNKNOWN, /* KEY_EJECTCLOSECD */
+     /*  163 */    SDL_SCANCODE_AUDIONEXT, /* KEY_NEXTSONG */
+-    /*  164 */    SDL_SCANCODE_AUDIOPLAY, /* KEY_PLAYPAUSE */
++    /*  164 */    SDL_SCANCODE_PLAYPAUSE, /* KEY_PLAYPAUSE */
+     /*  165 */    SDL_SCANCODE_AUDIOPREV, /* KEY_PREVIOUSSONG */
+     /*  166 */    SDL_SCANCODE_AUDIOSTOP, /* KEY_STOPCD */
+-    /*  167 */    SDL_SCANCODE_UNKNOWN, /* KEY_RECORD */
+-    /*  168 */    SDL_SCANCODE_AUDIOREWIND, /* KEY_REWIND */
++    /* Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    /*  167 */    SDL_SCANCODE_RECORD, /* KEY_RECORD */
++    /*  168 */    SDL_SCANCODE_REWIND, /* KEY_REWIND */
+     /*  169 */    SDL_SCANCODE_UNKNOWN, /* KEY_PHONE */
+     /*  170 */    SDL_SCANCODE_UNKNOWN, /* KEY_ISO */
+     /*  171 */    SDL_SCANCODE_UNKNOWN, /* KEY_CONFIG */
+     /*  172 */    SDL_SCANCODE_AC_HOME,
+     /*  173 */    SDL_SCANCODE_AC_REFRESH,
+-    /*  174 */    SDL_SCANCODE_UNKNOWN, /* KEY_EXIT */
++    /* Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    /*  174 */    SDL_SCANCODE_EXIT, /* KEY_EXIT */ 
+     /*  175 */    SDL_SCANCODE_UNKNOWN, /* KEY_MOVE */
+     /*  176 */    SDL_SCANCODE_UNKNOWN, /* KEY_EDIT */
+     /*  177 */    SDL_SCANCODE_UNKNOWN, /* KEY_SCROLLUP */
+@@ -229,8 +231,8 @@
+     0,
+     /*  205 */    SDL_SCANCODE_UNKNOWN, /* KEY_SUSPEND */
+     /*  206 */    SDL_SCANCODE_UNKNOWN, /* KEY_CLOSE */
+-    /*  207 */    SDL_SCANCODE_UNKNOWN, /* KEY_PLAY */
+-    /*  208 */    SDL_SCANCODE_AUDIOFASTFORWARD, /* KEY_FASTFORWARD */
++    /*  207 */    SDL_SCANCODE_PLAY, /* KEY_PLAY */
++    /*  208 */    SDL_SCANCODE_FASTFORWARD, /* KEY_FASTFORWARD */
+     /*  209 */    SDL_SCANCODE_UNKNOWN, /* KEY_BASSBOOST */
+     /*  210 */    SDL_SCANCODE_UNKNOWN, /* KEY_PRINT */
+     /*  211 */    SDL_SCANCODE_UNKNOWN, /* KEY_HP */
+@@ -259,5 +261,45 @@
+     /*  234 */    SDL_SCANCODE_UNKNOWN, /* KEY_SAVE */
+     /*  235 */    SDL_SCANCODE_UNKNOWN, /* KEY_DOCUMENTS */
+     /*  236 */    SDL_SCANCODE_UNKNOWN, /* KEY_BATTERY */
++    /* Added by Marc Serdeliuc -- Missing keys for VU Solo4K remote control -- 12 Jan 2020 */
++    0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    0,
++    /*  352 */    SDL_SCANCODE_OK, /* KEY_OK */
++    0, 0, 0, 0, 0,
++    /*  358 */    SDL_SCANCODE_EPG, /* KEY_INFO */
++    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++    /*  370 */    SDL_SCANCODE_SUBTITLE, /* KEY_SUBTITLE */
++    0, 0, 0, 0, 0, 0,
++    /*  377 */    SDL_SCANCODE_TV, /* KEY_TV */
++    0, 0, 0, 0, 0, 0, 0,
++    /*  385 */    SDL_SCANCODE_RADIO, /* KEY_RADIO */
++    0, 0,
++    /*  388 */    SDL_SCANCODE_TEXT, /* KEY_TEXT */
++    0, 0, 0,
++    /*  392 */    SDL_SCANCODE_AUDIO, /* KEY_AUDIO */
++    /*  393 */    SDL_SCANCODE_VIDEO, /* KEY_VIDEO */
++    0, 0, 0, 0,
++    /*  398 */    SDL_SCANCODE_RED, /* KEY_RED */
++    /*  399 */    SDL_SCANCODE_GREEN, /* KEY_GREEN */
++    /*  400 */    SDL_SCANCODE_YELLOW, /* KEY_YELLOW */
++    /*  401 */    SDL_SCANCODE_BLUE, /* KEY_BLUE */
++    /*  402 */    SDL_SCANCODE_CHANNELUP, /* KEY_CHANNELUP */
++    /*  403 */    SDL_SCANCODE_CHANNELDOWN, /* KEY_CHANNELDOWN */
++    0, 0, 0,
++    /*  407 */    SDL_SCANCODE_NEXT, /* KEY_NEXT */
++    0, 0, 0, 0,
++    /*  412 */    SDL_SCANCODE_PREVIOUS, /* KEY_PREVIOUS) */
++
+ };
+ /* *INDENT-ON* */
+--- a/src/events/scancodes_xfree86.h
++++ b/src/events/scancodes_xfree86.h
+@@ -345,11 +345,11 @@
+     /* 161 */   SDL_SCANCODE_EJECT,
+     /* 162 */   SDL_SCANCODE_EJECT,
+     /* 163 */   SDL_SCANCODE_AUDIONEXT,
+-    /* 164 */   SDL_SCANCODE_AUDIOPLAY,
++    /* 164 */   SDL_SCANCODE_PLAYPAUSE,
+     /* 165 */   SDL_SCANCODE_AUDIOPREV,
+     /* 166 */   SDL_SCANCODE_AUDIOSTOP,
+     /* 167 */   SDL_SCANCODE_UNKNOWN,   /* XF86AudioRecord */
+-    /* 168 */   SDL_SCANCODE_AUDIOREWIND,   /* XF86AudioRewind */
++    /* 168 */   SDL_SCANCODE_REWIND,   /* XF86AudioRewind */
+     /* 169 */   SDL_SCANCODE_UNKNOWN,   /* XF86Phone */
+     /* 170 */   SDL_SCANCODE_UNKNOWN,
+     /* 171 */   SDL_SCANCODE_F13,       /* XF86Tools */
+@@ -381,14 +381,14 @@
+     /* 197 */   SDL_SCANCODE_UNKNOWN,
+     /* 198 */   SDL_SCANCODE_UNKNOWN,
+     /* 199 */   SDL_SCANCODE_UNKNOWN,
+-    /* 200 */   SDL_SCANCODE_AUDIOPLAY,
++    /* 200 */   SDL_SCANCODE_PLAYPAUSE,
+     /* 201 */   SDL_SCANCODE_UNKNOWN,   /* XF86AudioPause */
+     /* 202 */   SDL_SCANCODE_UNKNOWN,   /* XF86Launch3 */
+     /* 203 */   SDL_SCANCODE_UNKNOWN,   /* XF86Launch4 */
+     /* 204 */   SDL_SCANCODE_UNKNOWN,   /* XF86LaunchB */
+     /* 205 */   SDL_SCANCODE_UNKNOWN,   /* XF86Suspend */
+     /* 206 */   SDL_SCANCODE_UNKNOWN,   /* XF86Close */
+-    /* 207 */   SDL_SCANCODE_AUDIOPLAY,
++    /* 207 */   SDL_SCANCODE_PLAY,
+     /* 208 */   SDL_SCANCODE_AUDIONEXT,
+     /* 209 */   SDL_SCANCODE_UNKNOWN,
+     /* 210 */   SDL_SCANCODE_PRINTSCREEN,
