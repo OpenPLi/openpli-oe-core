@@ -13,7 +13,7 @@ python do_cleanup () {
         ('dm8000', 'dm8000.png', 'dmm1.png', 'dmm1.html'),
         ('dm800se', 'dm800se.png', 'dm_normal.png', 'dmm.html'),
         ('osmega', 'osmega.png', 'osmini.png', 'osmini.html'),
-        ('osmini4k', 'osmini4k.png', 'osmini4k.png', 'edision4.html'),
+        ('osmini4k', 'osmini4k.png', 'edision4.png', 'edision4.html'),
         ('osmini', 'osmini.png', 'osmini.png', 'osmini.html'),
         ('osminiplus', 'osminiplus.png', 'osmini.png', 'osmini.html'),
         ('osmio4k', 'osmio4k.png', 'edision4.png', 'edision4.html'),
