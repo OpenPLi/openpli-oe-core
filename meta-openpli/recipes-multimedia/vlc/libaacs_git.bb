@@ -6,7 +6,7 @@ DEPENDS = "libgcrypt"
 PV = "0.3.0+git${SRCPV}"
 PR = "r1"
 
-SRC_URI = "git://code.videolan.org/videolan/${PN}.git;protocol=http"
+SRC_URI = "git://code.videolan.org/videolan/${BPN}.git;protocol=http"
 
 S = "${WORKDIR}/git"
 
