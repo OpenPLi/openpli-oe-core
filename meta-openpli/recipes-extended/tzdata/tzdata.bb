@@ -11,7 +11,7 @@ RCONFLICTS_${PN} = "timezones timezone-africa timezone-america timezone-antarcti
 
 S = "${WORKDIR}"
 
-DEFAULT_TIMEZONE ?= "CET"
+DEFAULT_TIMEZONE ?= "Europe/Amsterdam"
 INSTALL_TIMEZONE_FILE ?= "1"
 
 TZONES= "africa antarctica asia australasia europe northamerica southamerica  \
