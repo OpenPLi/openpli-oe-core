@@ -18,6 +18,9 @@ SRC_URI_append += "\
 	"
 
 SRC_URI_append_osmega += "file://EGLNativeTypeV3D-platform.patch"
+SRC_URI_append_osmio4k += "file://EGLNativeTypeV3D-platform-arm.patch"
+SRC_URI_append_osmio4kplus += "file://EGLNativeTypeV3D-platform-arm.patch"
+SRC_URI_append_osmini4k += "file://EGLNativeTypeV3D-platform-arm.patch"
 SRC_URI_append_lunix4k += "file://EGLNativeTypeV3D-lunix4k.patch"
 
 DEPENDS += " \
@@ -32,6 +35,9 @@ EXTRA_OECONF_vs1500 += "--with-gpu=v3d"
 EXTRA_OECONF_hd2400 += "--with-gpu=v3d"
 EXTRA_OECONF_h7 += "--with-gpu=v3d"
 EXTRA_OECONF_osmega += "--with-gpu=v3dplatform"
+EXTRA_OECONF_osmio4k += "--with-gpu=v3dplatform"
+EXTRA_OECONF_osmio4kplus += "--with-gpu=v3dplatform"
+EXTRA_OECONF_osmini4k += "--with-gpu=v3dplatform"
 EXTRA_OECONF_wetekplay += "--with-gpu=mali"
 
 EXTRA_KODI ?= "empty"

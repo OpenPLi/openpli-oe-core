@@ -1,6 +1,6 @@
 diff --git a/xbmc/windowing/egl/EGLNativeTypeV3D.cpp b/xbmc/windowing/egl/EGLNativeTypeV3D.cpp
 new file mode 100644
-index 0000000..80e4678
+index 0000000..3023daf
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeV3D.cpp
 @@ -0,0 +1,176 @@
@@ -178,7 +178,7 @@ index 0000000..80e4678
 +
 +bool CEGLNativeTypeV3D::ShowWindow(bool show)
 +{
-+  return V3D_SetVisible(m_platformHandle, show);
++  return V3D_SetVisible(m_nativeWindow, show);
 +}
 diff --git a/xbmc/windowing/egl/EGLNativeTypeV3D.h b/xbmc/windowing/egl/EGLNativeTypeV3D.h
 new file mode 100644

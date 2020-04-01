@@ -1,8 +1,8 @@
 diff --git a/Makefile.in b/Makefile.in
-index 3c5de7c..79dda9e 100644
+index 7e8d172..4c43dd1 100644
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -211,6 +211,9 @@ endif
+@@ -210,6 +210,9 @@ endif
  ifeq (@USE_OMXPLAYER@,1)
  DIRECTORY_ARCHIVES += xbmc/cores/omxplayer/omxplayer.a
  endif
@@ -13,7 +13,7 @@ index 3c5de7c..79dda9e 100644
  LIB_DIRS=\
  	lib/libexif \
 diff --git a/configure.ac b/configure.ac
-index 71e942b..b6d39a3 100644
+index b777d73..122da8c 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -486,6 +486,12 @@ AC_ARG_ENABLE([libav-compat],
@@ -36,7 +36,7 @@ index 71e942b..b6d39a3 100644
 -     USE_STATIC_FFMPEG=1
 +     USE_STATIC_FFMPEG=0
       ;;
-   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*)
+   aarch64*-*-linux-gnu*|aarch64*-*-linux-uclibc*|aarch64*-*-linux-musl*)
       target_platform=target_linux
 @@ -633,7 +639,7 @@ case $host in
         use_gl=no
@@ -62,8 +62,8 @@ index 71e942b..b6d39a3 100644
 +     USE_STATIC_FFMPEG=0
       ;;
    *)
-      AC_MSG_ERROR(unsupported host ($host))
-@@ -696,6 +703,42 @@ if test "$target_platform" = "target_raspberry_pi" ; then
+     ARCH=$host_cpu"-"$host_os
+@@ -697,6 +704,42 @@ if test "$target_platform" = "target_raspberry_pi" ; then
       CXXFLAGS="$CXXFLAGS"
  fi
  
@@ -106,7 +106,7 @@ index 71e942b..b6d39a3 100644
  if test "$host_vendor" = "apple"; then
    use_avahi=no
    use_alsa=no
-@@ -912,6 +955,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
+@@ -913,6 +956,9 @@ if test "x$have_builtin_sync_val_compare_and_swap" = "xyes"; then
          [Define to 1 if your compiler supports the __sync_val_compare_and_swap() intrinsic.])
  fi
  
@@ -116,7 +116,7 @@ index 71e942b..b6d39a3 100644
  # Check for u16string/u32string declarations
  AC_LANG_PUSH([C++])
  AC_CHECK_TYPES([std::u16string, std::u32string], [], [], [[#include <string>]])
-@@ -944,16 +990,34 @@ if test "$use_gles" = "yes"; then
+@@ -945,16 +991,34 @@ if test "$use_gles" = "yes"; then
      AC_DEFINE([HAVE_LIBEGL],[1],["Define to 1 if you have the `EGL' library (-lEGL)."])
      AC_DEFINE([HAVE_LIBGLESV2],[1],["Define to 1 if you have the `GLESv2' library (-lGLESv2)."])
      AC_MSG_RESULT(== WARNING: OpenGLES support is assumed.)
@@ -160,7 +160,7 @@ index 71e942b..b6d39a3 100644
    fi
  else
    if test "$use_gl" = "yes"; then
-@@ -1058,6 +1122,12 @@ AC_LANG_POP([C++])
+@@ -1059,6 +1123,12 @@ AC_LANG_POP([C++])
  
  if test "${target_platform}" = "target_linux" || test "${target_platform}" = "target_raspberry_pi" || test "${target_platform}" = "target_android"; then
    PKG_CHECK_MODULES([UUID], [uuid],, AC_MSG_ERROR(libuuid not found))
@@ -173,7 +173,7 @@ index 71e942b..b6d39a3 100644
  fi
  
  AC_MSG_CHECKING("for libcrossguid")
-@@ -2330,6 +2400,10 @@ AC_SUBST(HAVE_SSE4)
+@@ -2331,6 +2401,10 @@ AC_SUBST(HAVE_SSE4)
  AC_SUBST(USE_MMAL)
  AC_SUBST(USE_X11)
  AC_SUBST(USE_OPTICAL_DRIVE)
@@ -185,7 +185,7 @@ index 71e942b..b6d39a3 100644
  # pushd and popd are not available in other shells besides bash, so implement
  # our own pushd/popd functions
 diff --git a/xbmc/cores/playercorefactory/PlayerCoreConfig.h b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
-index 15a6570..a551d14 100644
+index 15a6570..3171c85 100644
 --- a/xbmc/cores/playercorefactory/PlayerCoreConfig.h
 +++ b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
 @@ -28,6 +28,9 @@
@@ -212,7 +212,7 @@ index 15a6570..a551d14 100644
      {
        pPlayer = new CExternalPlayer(callback);
 diff --git a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
-index 896b865..1e8747b 100644
+index 896b865..993226c 100644
 --- a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
 +++ b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
 @@ -315,6 +315,12 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
@@ -271,33 +271,6 @@ index 5808f7e..6080dd1 100644
  
      Delete(WINDOW_EVENT_LOG);
    }
-diff --git a/xbmc/platform/xbmc.cpp b/xbmc/platform/xbmc.cpp
-index 34e5ea6..714af8e 100644
---- a/xbmc/platform/xbmc.cpp
-+++ b/xbmc/platform/xbmc.cpp
-@@ -25,6 +25,11 @@
- #include "linux/RBP.h"
- #endif
- 
-+#ifdef HAS_V3DVISABLE
-+#include <v3dplatform.h>
-+  V3D_PlatformHandle g_v3dPlatformHandle;
-+#endif
-+
- #ifdef TARGET_WINDOWS
- #include <mmdeviceapi.h>
- #include "platform/win32/IMMNotificationClient.h"
-@@ -55,6 +60,10 @@ extern "C" int XBMC_Run(bool renderGUI, CFileItemList &playlist)
-     return status;
-   }
- 
-+#ifdef HAS_V3DVISABLE
-+  V3D_RegisterDisplayPlatform(&g_v3dPlatformHandle, NULL);
-+#endif
-+
- #ifdef TARGET_RASPBERRY_PI
-   if(!g_RBP.Initialize())
-     return false;
 diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
 index 30f5757..03e9a55 100644
 --- a/xbmc/windowing/egl/EGLWrapper.cpp
@@ -344,7 +317,7 @@ index 68f7862..ffbe781 100644
  
  LIB = windowing_egl.a
 diff --git a/xbmc/windows/Makefile b/xbmc/windows/Makefile
-index a328db2..bc28883 100644
+index a328db2..7790dff 100644
 --- a/xbmc/windows/Makefile
 +++ b/xbmc/windows/Makefile
 @@ -13,5 +13,9 @@ SRCS=GUIMediaWindow.cpp \
@@ -358,4 +331,5 @@ index a328db2..bc28883 100644
  include ../../Makefile.include
  -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))
 -- 
-1.9.1
+2.7.4
+
