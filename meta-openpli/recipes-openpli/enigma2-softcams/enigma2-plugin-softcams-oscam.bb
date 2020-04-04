@@ -12,6 +12,7 @@ PKGV = "git${GITPKGV}"
 SRC_URI = "git://github.com/OpenVisionE2/oscam.git;protocol=https"
 
 DEPENDS = "libusb openssl"
+RDEPENDS_${PN} = "enigma2-plugin-extensions-oscamstatus"
 
 S = "${WORKDIR}/git"
 B = "${S}"
