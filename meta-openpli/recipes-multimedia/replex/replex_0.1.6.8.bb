@@ -3,7 +3,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=8ca43cbc842c2336e835926c2166c28b"
 
 SRC_URI = " \
-	http://repository.slacky.eu/slackware-12.2/multimedia/${BPN}/${PV}/src/${BPN}-${PV}.tar.gz \
+	file://${BPN}-${PV}.tar.gz \
 	file://makefile_remove_unrecognized_m32_option.patch \
 	"
 
