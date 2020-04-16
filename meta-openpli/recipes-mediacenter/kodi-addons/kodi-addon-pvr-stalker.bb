@@ -1,7 +1,7 @@
 SUMMARY = "Kodi Media Center PVR plugins"
 
-PV = "${@bb.utils.contains("MACHINE_FEATURES", "kodi18", "3.4.10+git${SRCPV}", "2.8.8+git${SRCPV}", d)}"
-PKGV = "${@bb.utils.contains("MACHINE_FEATURES", "kodi18", "3.4.10+git${GITPKGV}", "2.8.8+git${SRCPV}", d)}"
+PV = "3.4.10+git${SRCPV}"
+PKGV = "3.4.10+git${GITPKGV}"
 
 KODIADDONPLUGIN = "stalker"
 
