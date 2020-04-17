@@ -8,4 +8,6 @@ touch /dev/.udev
 
 [ -d "/sys/kernel" ] || mount sysfs /sys -t sysfs
 
+[ -d "/dev/shm" ] || mkdir /dev/shm
+
 mdev -s
