@@ -299,6 +299,10 @@ case "$ACTION" in
 			if ! mount -t auto -o "${MOUNTOPTIONS}" /dev/$MDEV "$MOUNTPOINT" ; then
 				rmdir "$MOUNTPOINT"
 				log "!" "mount failed, mountpoint removed again"
+			elif [ -d "$MOUNTPOINT/bin" -a -d "$MOUNTPOINT/etc" -a -d "$MOUNTPOINT/lib" -a -d "$MOUNTPOINT/usr" ]; then
+				umount "$MOUNTPOINT"
+				rmdir "$MOUNTPOINT"
+				log "!" "don't mount Linux rootfs"
 			else
 				samba_share "$MOUNTPOINT" "$MODEL"
 			fi
