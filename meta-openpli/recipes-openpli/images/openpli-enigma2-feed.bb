@@ -26,6 +26,7 @@ KERNEL_VERSION = "${@ get_kernelversion_headers('${STAGING_KERNEL_BUILDDIR}')}"
 
 # Out-of-tree wifi drivers, build conditionally based on kernel version
 OPTIONAL_WIFI_PACKAGES = "\
+	${@ 'wireguard-tools' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.14') >= 0) else '' } \
 	${@ 'kernel-module-mt7610u' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
 	${@ 'kernel-module-mt7601usta' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '4.2') < 0) else '' } \
 	${@ 'kernel-module-r8188eu' if (bb.utils.vercmp_string("${KERNEL_VERSION}" or "0", '3.12') < 0) else '' } \
