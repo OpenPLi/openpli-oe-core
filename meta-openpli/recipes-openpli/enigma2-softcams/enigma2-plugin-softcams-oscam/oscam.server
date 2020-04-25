@@ -1,6 +1,6 @@
 [reader]
 label                         = lower_card_CD-NL
-enable                        = 1
+enable                        = 0
 protocol                      = internal
 device                        = /dev/sci0
 ecmwhitelist                  = 0100@00006A:64
@@ -20,7 +20,7 @@ cooldown                      = 30,600
 
 [reader]
 label                         = upper_card_CD-NL
-enable                        = 1
+enable                        = 0
 protocol                      = internal
 device                        = /dev/sci1
 ecmwhitelist                  = 0100@00006A:64
@@ -78,7 +78,7 @@ cooldown                      = 30,600
 
 [reader]
 label                         = lower_card
-enable                        = 0
+enable                        = 1
 protocol                      = internal
 device                        = /dev/sci0
 detect                        = cd
@@ -96,7 +96,7 @@ cooldown                      = 30,600
 
 [reader]
 label                         = upper_card
-enable                        = 0
+enable                        = 1
 protocol                      = internal
 device                        = /dev/sci1
 detect                        = cd
