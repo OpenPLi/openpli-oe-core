@@ -12,6 +12,7 @@ SRC_URI = "git://gitlab.com/berdyansk/astra-sm.git;protocol=http \
 	file://undef_dvb_net.patch \
 	file://astra-sm \
 	file://astra.conf \
+	file://tools.patch \
 	"
 
 S = "${WORKDIR}/git"
@@ -32,5 +33,7 @@ CONFFILES_${PN} = "${sysconfdir}/astra/astra.conf"
 
 INITSCRIPT_NAME = "astra-sm"
 INITSCRIPT_PARAMS = "defaults"
+
+CFLAGS_FOR_BUILD += "-std=c99"
 
 inherit update-rc.d
