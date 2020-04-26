@@ -7,10 +7,10 @@ DEPENDS += "gstreamer1.0-plugins-base zlib bzip2 libcap"
 
 inherit gettext
 
-#cairo gdk-pixbuf gudev v4l2
+#cairo gdk-pixbuf gudev v4l2 vpx
 PACKAGECONFIG ??= " \
     ${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio x11', d)} \
-    cairo flac gdk-pixbuf gudev jpeg libpng orc soup speex taglib vpx wavpack libv4l2 v4l2 \
+    cairo flac gdk-pixbuf gudev jpeg libpng orc soup speex taglib wavpack libv4l2 v4l2 \
     lame mpg123 \
     "
 
