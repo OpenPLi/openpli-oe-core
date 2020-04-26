@@ -119,7 +119,7 @@ S = "${WORKDIR}/git"
 
 FILES_${PN} += "${datadir}/keymaps"
 FILES_${PN}-meta = "${datadir}/meta"
-PACKAGES =+ "${PN}-src"
+#PACKAGES =+ "${PN}-src"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
