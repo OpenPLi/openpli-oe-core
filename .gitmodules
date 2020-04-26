@@ -24,16 +24,16 @@
 	url = https://github.com/XP-Master/meta-xp.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
-	url = https://github.com/XpeedDeveloperTeam/meta-xpeedc.git
+	url = https://github.com/OpenPLi/meta-xpeedc.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = https://github.com/zgemma-star/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = https://github.com/miraclebox-git/meta-miraclebox.git
+	url = https://github.com/OpenPLi/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
-	url = https://github.com/open-spycat/meta-spycat.git
+	url = https://github.com/OpenPLi/meta-spycat.git
 [submodule "meta-xtrend"]
 	path = meta-xtrend
 	url = https://github.com/nextv-xtrend/meta-xtrend.git
@@ -42,13 +42,13 @@
 	url = https://github.com/meta-qt5/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = https://github.com/GIDeveloperTeam/meta-gi.git
+	url = https://github.com/OpenPLi/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
 	url = https://github.com/HD-Digital/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
-	url = https://github.com/mariner2/meta-sab.git
+	url = https://github.com/OpenPLi/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
 	url = https://github.com/pli3/meta-xsarius.pli5.git
@@ -57,7 +57,7 @@
 	url = https://github.com/zhtq/meta-gigablue.git
 [submodule "meta-amiko"]
 	path = meta-amiko
-	url = https://github.com/open-amiko/meta-amiko.git
+	url = https://github.com/OpenPLi/meta-amiko.git
 [submodule "meta-edision"]
 	path = meta-edision
 	url = https://github.com/edision-open/meta-edision.git

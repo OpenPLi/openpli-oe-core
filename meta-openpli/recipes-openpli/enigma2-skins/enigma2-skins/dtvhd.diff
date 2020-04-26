@@ -21,7 +21,7 @@
  		</widget>
 @@ -233,7 +241,7 @@
  			<convert type="ServiceInfo">VideoHeight</convert>
- 		</widget>		
+ 		</widget>
  	</screen>
 -	<screen name="Volume" position="78,50" size="72,202" title="Volume" zPosition="1" backgroundColor="transparent2" flags="wfNoBorder">
 +	<screen name="Volume"   position="78,250"  size="72,202"   title="Volume"  zPosition="1" backgroundColor="transparent2" flags="wfNoBorder">

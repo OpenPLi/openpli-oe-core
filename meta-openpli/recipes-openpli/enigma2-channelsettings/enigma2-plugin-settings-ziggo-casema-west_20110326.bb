@@ -8,14 +8,14 @@ SRC_URI = "file://*"
 PACKAGES = "${PN}"
 PROVIDES="virtual/enigma2-settings"
 
-FILES_${PN} = "/etc/enigma2/*"
+FILES_${PN} = "${sysconfdir}/enigma2/*"
 S = "${WORKDIR}"
 
 do_install() {
-	install -d ${D}/etc/enigma2
+	install -d ${D}${sysconfdir}/enigma2
 	for f in services bouquets* userbouquet*
 	do
-		install -m 644 ${f} ${D}/etc/enigma2/${f}
+		install -m 644 ${f} ${D}${sysconfdir}/enigma2/${f}
 	done
 }
 

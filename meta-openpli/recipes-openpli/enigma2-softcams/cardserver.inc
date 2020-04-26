@@ -1,14 +1,14 @@
 LICENSE = "CLOSED"
 
-FILES_${PN} = "/usr/bin /etc"
+FILES_${PN} = "${bindir} ${sysconfdir}"
 
 # no docs, locales etc.
 PACKAGES = "${PN}"
 
 RDEPENDS_${PN} += "cardserver-support"
 
-CSLINK = "/etc/init.d/cardserver"
-CSPATH = "/etc/init.d/cardserver.${CSNAME}"
+CSLINK = "${sysconfdir}/init.d/cardserver"
+CSPATH = "${sysconfdir}/init.d/cardserver.${CSNAME}"
 
 CSSTART ?= "exec start-stop-daemon -S -x /usr/bin/${CSNAME}"
 CSSTOP  ?= "exec start-stop-daemon -K -R 2 -x /usr/bin/${CSNAME}"
@@ -53,8 +53,8 @@ EOF
 
 # Install routine, should be ok for most cams.
 do_install_append () {
-	install -d ${D}/etc/init.d
-	install -m 755 ${S}/init.${CSNAME} ${D}/etc/init.d/cardserver.${CSNAME}
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${S}/init.${CSNAME} ${D}${sysconfdir}/init.d/cardserver.${CSNAME}
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).

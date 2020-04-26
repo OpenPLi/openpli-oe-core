@@ -12,10 +12,10 @@ python do_remove_tarball() {
 addtask remove_tarball before do_fetch
 
 do_install() {
-	install -d ${D}/etc/enigma2
-	install -m 0644 ${S}/etc/enigma2/bouquets.* ${D}/etc/enigma2/
-	install -m 0644 ${S}/etc/enigma2/userbouquet.* ${D}/etc/enigma2/
-	install -m 0644 ${S}/etc/enigma2/lamedb ${D}/etc/enigma2/
+	install -d ${D}${sysconfdir}/enigma2
+	install -m 0644 ${S}${sysconfdir}/enigma2/bouquets.* ${D}${sysconfdir}/enigma2/
+	install -m 0644 ${S}${sysconfdir}/enigma2/userbouquet.* ${D}${sysconfdir}/enigma2/
+	install -m 0644 ${S}${sysconfdir}/enigma2/lamedb ${D}${sysconfdir}/enigma2/
 }
 
 FILES_${PN} = "/"

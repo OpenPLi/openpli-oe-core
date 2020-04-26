@@ -10,7 +10,7 @@ PKGV = "2.6.1+git${GITPKGV}"
 
 SRC_URI = "git://github.com/PD1LOI/Pd1loi-HD-night.git"
 
-FILES_${PN} = "/usr"
+FILES_${PN} = "${prefix}"
 
 S = "${WORKDIR}/git"
 
@@ -18,7 +18,7 @@ do_compile() {
 }
 
 do_install() {
-	install -d ${D}/usr
-	cp -r --preserve=mode,links ${S}/usr/* ${D}/usr/
-	chmod -R a+rX ${D}/usr
+	install -d ${D}${prefix}
+	cp -r --preserve=mode,links ${S}${prefix}/* ${D}${prefix}/
+	chmod -R a+rX ${D}${prefix}
 }

@@ -13,11 +13,11 @@ INITSCRIPT_NAME = "softcam"
 INITSCRIPT_PARAMS = "defaults 50"
 inherit update-rc.d
 
-FILES_${PN} = "/etc"
+FILES_${PN} = "${sysconfdir}"
 
 do_install() {
-	install -d ${D}/etc/init.d
-	install -m 755 ${S}/softcam.None ${D}/etc/init.d/softcam.None
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${S}/softcam.None ${D}${sysconfdir}/init.d/softcam.None
 }
 
 do_compile_append() {
@@ -25,8 +25,8 @@ do_compile_append() {
 }
 
 pkg_postinst_${PN} () {
-	if [ ! -e "$D/etc/init.d/softcam" ]
+	if [ ! -e "$D${sysconfdir}/init.d/softcam" ]
 	then
-		ln -s softcam.None $D/etc/init.d/softcam
+		ln -s softcam.None $D${sysconfdir}/init.d/softcam
 	fi
 }

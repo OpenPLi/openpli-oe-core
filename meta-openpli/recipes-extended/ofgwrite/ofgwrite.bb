@@ -10,14 +10,15 @@ inherit gitpkgv
 PV = "3.x+git${SRCPV}"
 PKGV = "3.x+git${GITPKGV}"
 
-SRC_URI = "git://github.com/oe-alliance/ofgwrite.git"
+SRC_URI = "git://github.com/oe-alliance/ofgwrite.git \
+	file://fix_glibc_major.patch"
 
 S = "${WORKDIR}/git"
 EXTRA_OEMAKE=""
 
 do_install() {
-    install -d ${D}/usr/bin
-    install -m 755 ${S}/ofgwrite ${D}/usr/bin
-    install -m 755 ${S}/ofgwrite_bin ${D}/usr/bin
-    install -m 755 ${S}/ofgwrite_test ${D}/usr/bin
+    install -d ${D}${bindir}
+    install -m 755 ${S}/ofgwrite ${D}${bindir}
+    install -m 755 ${S}/ofgwrite_bin ${D}${bindir}
+    install -m 755 ${S}/ofgwrite_test ${D}${bindir}
 }

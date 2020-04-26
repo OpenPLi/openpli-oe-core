@@ -100,7 +100,6 @@ OPTIONAL_PACKAGES += " \
 	p7zip \
 	parted \
 	procps \
-	pyload \
 	python-ipaddress \
 	python-ntplib \
 	python-pip \
@@ -118,7 +117,7 @@ OPTIONAL_PACKAGES += " \
 	python-iso639 \
 	picocom \
 	ppp \
-	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'rclone', d)} \
+	rclone \
 	rsync \
 	rtorrent \
 	sabnzbd \

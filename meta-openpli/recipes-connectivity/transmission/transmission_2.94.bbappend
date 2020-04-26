@@ -1,10 +1,8 @@
 SRC_URI += "\
 	file://configure-kill-intl-check.patch \
-	file://configure-allow-local-network.patch \
+	file://allow_the_rpc_server_to_listen_on_an_ipv6_address.patch \
 	file://configuration-default-download-dir.patch \
 	"
-
-DEPENDS = "gnutls openssl libtool intltool-native curl glib-2.0-native libevent"
 
 OE_EXTRACONF = "\
 	--disable-gtk --without-gtk \

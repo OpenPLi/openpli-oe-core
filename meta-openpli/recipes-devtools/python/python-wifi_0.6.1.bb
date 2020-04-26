@@ -32,3 +32,5 @@ do_install_append() {
 PACKAGES =+ "${PN}-examples"
 
 FILES_${PN}-examples = "${sbindir}"
+
+include python-package-split.inc

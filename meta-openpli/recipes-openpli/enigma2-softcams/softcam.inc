@@ -10,7 +10,7 @@
 
 LICENSE = "CLOSED"
 
-FILES_${PN} = "/usr/bin /etc"
+FILES_${PN} = "${bindir} ${sysconfdir}"
 
 RDEPENDS_${PN} += "softcam-support"
 INSANE_SKIP_${PN} += "already-stripped"
@@ -60,19 +60,19 @@ EOF
 
 # Install routine, should be ok for most cams.
 do_install_append () {
-	install -d ${D}/etc/init.d
-	install -m 755 ${S}/init.${CAMNAME} ${D}/etc/init.d/softcam.${CAMNAME}
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${S}/init.${CAMNAME} ${D}${sysconfdir}/init.d/softcam.${CAMNAME}
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
 pkg_postinst_${PN}_append () {
-	if [ ! -e "${CAMLINK}" ] || [ "/etc/init.d/softcam.None" = "`readlink -f ${CAMLINK}`" ]
+	if [ ! -e "$D${CAMLINK}" ] || [ "$D/etc/init.d/softcam.None" = "`readlink -f $D${CAMLINK}`" ]
 	then
-		rm -f "${CAMLINK}"
-		ln -s "softcam.${CAMNAME}" "${CAMLINK}"
+		rm -f "$D${CAMLINK}"
+		ln -s "softcam.${CAMNAME}" "$D${CAMLINK}"
 		echo "Switching default softcam to ${CAMNAME}"
 	fi
-	if [ "${CAMPATH}" = "`readlink -f ${CAMLINK}`" ]
+	if [ "${CAMPATH}" = "`readlink -f $D${CAMLINK}`" ]
 	then
 		echo "Softcam is selected as default, (re)starting ${CAMNAME}"
 		${CAMPATH} restart

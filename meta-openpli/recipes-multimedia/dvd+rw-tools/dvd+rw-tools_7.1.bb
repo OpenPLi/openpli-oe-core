@@ -13,6 +13,7 @@ SRC_URI = "http://fy.chalmers.se/~appro/linux/DVD+RW/tools/dvd+rw-tools-${PV}.ta
            file://08-cdrkit-code.dpatch;apply=yes \
            file://09-cdrkit-doc.dpatch;apply=yes \
            file://10-includes.dpatch;apply=yes \
+           file://fix-glibc2.28_major.patch \
           "
 
 do_configure() {
@@ -24,12 +25,12 @@ do_compile() {
 }
 
 do_install() {
-    install -d ${D}/usr/bin
-    install -m 755 ${S}/growisofs ${D}/usr/bin
-    install -m 755 ${S}/dvd+rw-booktype ${D}/usr/bin
-    install -m 755 ${S}/dvd+rw-format ${D}/usr/bin
-    install -m 755 ${S}/dvd+rw-mediainfo ${D}/usr/bin
-    install -m 755 ${S}/dvd-ram-control ${D}/usr/bin
+    install -d ${D}${bindir}
+    install -m 755 ${S}/growisofs ${D}${bindir}
+    install -m 755 ${S}/dvd+rw-booktype ${D}${bindir}
+    install -m 755 ${S}/dvd+rw-format ${D}${bindir}
+    install -m 755 ${S}/dvd+rw-mediainfo ${D}${bindir}
+    install -m 755 ${S}/dvd-ram-control ${D}${bindir}
 }
 
 
