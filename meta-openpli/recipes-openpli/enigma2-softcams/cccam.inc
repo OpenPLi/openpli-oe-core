@@ -14,6 +14,8 @@ S = "${WORKDIR}"
 
 require softcam.inc
 
+RDEPENDS_${PN} += "libxcrypt-compat"
+
 INHIBIT_PACKAGE_STRIP = "1"
 
 CONFFILES = "${sysconfdir}/CCcam.cfg"
