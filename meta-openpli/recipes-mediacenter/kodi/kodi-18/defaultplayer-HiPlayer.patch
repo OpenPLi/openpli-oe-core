@@ -1,0 +1,133 @@
+diff --git a/cmake/treedata/common/cores.txt b/cmake/treedata/common/cores.txt
+index d23939d314e..599b76ce4b2 100644
+--- a/cmake/treedata/common/cores.txt
++++ b/cmake/treedata/common/cores.txt
+@@ -6,3 +6,4 @@ xbmc/cores/DllLoader/exports/util      cores/dll-loader/exports/util
+ xbmc/cores/ExternalPlayer              cores/externalplayer
+ xbmc/cores/paplayer                    cores/paplayer
+ xbmc/cores/playercorefactory           cores/playercorefactory
++xbmc/cores/HiPlayer                    cores/hiplayer
+diff --git a/xbmc/guilib/GUIWindowManager.cpp b/xbmc/guilib/GUIWindowManager.cpp
+index 5ac45daad11..53bd0000a67 100644
+--- a/xbmc/guilib/GUIWindowManager.cpp
++++ b/xbmc/guilib/GUIWindowManager.cpp
+@@ -55,6 +55,7 @@
+ #include "pictures/GUIWindowSlideShow.h"
+ #include "windows/GUIWindowSplash.h"
+ #include "windows/GUIWindowStartup.h"
++#include "windows/GUIWindowSubtitles.h"
+ #include "video/windows/GUIWindowFullScreen.h"
+ #include "video/dialogs/GUIDialogVideoOSD.h"
+ 
+@@ -303,6 +304,7 @@ void CGUIWindowManager::CreateWindows()
+   Add(new GAME::CDialogGameAdvancedSettings);
+   Add(new GAME::CDialogGameVideoRotation);
+   Add(new RETRO::CGameWindowFullScreen);
++  Add(new CGUIWindowSubtitles); /* subtitle renderer */
+ }
+ 
+ bool CGUIWindowManager::DestroyWindows()
+@@ -433,6 +435,7 @@ bool CGUIWindowManager::DestroyWindows()
+ 
+     DestroyWindow(WINDOW_DIALOG_PERIPHERALS);
+     DestroyWindow(WINDOW_DIALOG_PERIPHERAL_SETTINGS);
++    DestroyWindow(12666); /* subtitle renderer */
+   }
+   catch (...)
+   {
+diff --git a/xbmc/windows/CMakeLists.txt b/xbmc/windows/CMakeLists.txt
+index 2fe465fcc2b..f44fd3f7516 100644
+--- a/xbmc/windows/CMakeLists.txt
++++ b/xbmc/windows/CMakeLists.txt
+@@ -8,7 +8,8 @@ set(SOURCES GUIMediaWindow.cpp
+             GUIWindowScreensaverDim.cpp
+             GUIWindowSplash.cpp
+             GUIWindowStartup.cpp
+-            GUIWindowSystemInfo.cpp)
++            GUIWindowSystemInfo.cpp
++            GUIWindowSubtitles.cpp)
+ 
+ set(HEADERS GUIMediaWindow.h
+             GUIWindowDebugInfo.h
+@@ -20,6 +21,7 @@ set(HEADERS GUIMediaWindow.h
+             GUIWindowScreensaverDim.h
+             GUIWindowSplash.h
+             GUIWindowStartup.h
+-            GUIWindowSystemInfo.h)
++            GUIWindowSystemInfo.h
++            GUIWindowSubtitles.h)
+ 
+ core_add_library(windows)
+diff --git a/xbmc/cores/playercorefactory/PlayerCoreConfig.h b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
+index 488947e90ad..37e94232767 100644
+--- a/xbmc/cores/playercorefactory/PlayerCoreConfig.h
++++ b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
+@@ -20,6 +20,8 @@
+ #include "system.h"
+ #include "utils/log.h"
+ 
++#include "cores/HiPlayer/HiPlayer.h"
++
+ class CPlayerCoreConfig
+ {
+ public:
+@@ -87,6 +89,10 @@ public:
+     {
+       pPlayer = new KODI::RETRO::CRetroPlayer(callback);
+     }
++    else if (m_type.compare("hiplayer") == 0)
++    {
++      pPlayer = new CHiPlayer(callback);
++    }
+     else if (m_type.compare("external") == 0)
+     {
+       pPlayer = new CExternalPlayer(callback);
+diff --git a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
+index 477824e6957..533ed8e02b9 100644
+--- a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
++++ b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
+@@ -25,6 +25,8 @@
+ #include "utils/XMLUtils.h"
+ #include <sstream>
+ 
++#include "cores/HiPlayer/HiPlayer.h"
++
+ #define PLAYERCOREFACTORY_XML "playercorefactory.xml"
+ 
+ CPlayerCoreFactory::CPlayerCoreFactory(const CProfileManager &profileManager) :
+@@ -316,6 +318,11 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
+     m_vecCoreSelectionRules.clear();
+ 
+     // Builtin players
++    CPlayerCoreConfig* HiPlayer = new CPlayerCoreConfig("HiPlayer", "hiplayer", nullptr);
++    HiPlayer->m_bPlaysAudio = true;
++    HiPlayer->m_bPlaysVideo = true;
++    m_vecPlayerConfigs.push_back(HiPlayer);
++
+     CPlayerCoreConfig* VideoPlayer = new CPlayerCoreConfig("VideoPlayer", "video", nullptr);
+     VideoPlayer->m_bPlaysAudio = true;
+     VideoPlayer->m_bPlaysVideo = true;
+@@ -351,6 +361,8 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
+         internaltype = "video";
+       else if (type == "paplayer")
+         internaltype = "music";
++      else if (type == "hiplayer")
++        internaltype = "hiplayer";
+       else if (type == "externalplayer")
+         internaltype = "external";
+ 
+diff --git a/system/playercorefactory.xml b/system/playercorefactory.xml
+index be6b721..c03699e 100644
+--- a/system/playercorefactory.xml
++++ b/system/playercorefactory.xml
+@@ -37,4 +37,8 @@
+     <!-- pvr radio channels should be played by VideoPlayer because they need buffering -->
+     <rule name="radio" filetypes="pvr" filename=".*/radio/.*" player="VideoPlayer" />
+   </rules>
++
++  <rules action="prepend">
++    <rule filetypes="dts|mp3|wav|wave|oga|ogg|flac|m4a|mp2|m2a|ac3|mka|aac|ape|alac|mpg|vob|m4v|mkv|avi|divx|dat|flv|mp4|mov|wmv|asf|3gp|3g2|mpeg|mpe|rm|rmvb|ogm|ogv|stream|amr|au|mid|wv|pva|wtv|ts|m2ts" player="HiPlayer" />
++  </rules>
+ </playercorefactory>
+-- 
+2.17.1
