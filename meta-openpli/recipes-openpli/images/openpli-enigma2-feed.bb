@@ -199,6 +199,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	${@bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
+	${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
 	libcrypto-compat \
 	dvb-usb-drivers-meta \
 	cdtextinfo \
