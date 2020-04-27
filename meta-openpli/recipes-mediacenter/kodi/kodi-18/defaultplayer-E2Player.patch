@@ -1,0 +1,96 @@
+diff -ruN a/cmake/treedata/common/cores.txt b/cmake/treedata/common/cores.txt
+--- a/cmake/treedata/common/cores.txt	2019-08-31 14:05:38.498693824 +0200
++++ b/cmake/treedata/common/cores.txt	2019-11-01 15:28:10.115620803 +0100
+@@ -4,3 +4,4 @@
+ xbmc/cores/ExternalPlayer              cores/externalplayer
+ xbmc/cores/paplayer                    cores/paplayer
+ xbmc/cores/playercorefactory           cores/playercorefactory
++xbmc/cores/Enigma2Player               cores/enigma2player
+diff --git a/system/playercorefactory.xml b/system/playercorefactory.xml
+index be6b7219ab4..406d20a6d9b 100644
+--- a/system/playercorefactory.xml
++++ b/system/playercorefactory.xml
+@@ -8,9 +8,17 @@
+     <player name="VideoPlayer" /> placeholder for MPlayer
+     <player name="PAPlayer" audio="true" />
+     -->
++    <player name="E2Player" type="Enigma2Player" audio="true" video="true">
++      <filename>kodiext</filename>
++      <args>-U "{1}" -S "{3}" -P "$PPID"</args>
++      <filenamemeta>/tmp/kodiextin.json</filenamemeta>
++      <hidexbmc>true</hidexbmc>
++      <hideconsole>true</hideconsole>
++      <warpcursor>none</warpcursor>
++    </player>
+   </players>
+
+-  <rules name="system rules">
++  <rules action="prepend" name="system rules">
+     <rule name="mms/udp" protocols="mms|mmsh|udp" player="VideoPlayer" />
+     <rule name="lastfm/shout" protocols="lastfm|shout" player="PAPlayer" />
+     <rule name="rtmp" protocols="rtmp" player="videodefaultplayer" />
+@@ -22,6 +30,8 @@
+     <rule name="streams" internetstream="true">
+       <rule name="aacp/sdp" mimetypes="audio/aacp|application/sdp" player="VideoPlayer" />
+       <rule name="mp2" mimetypes="application/octet-stream" filetypes="mp2" player="PAPlayer" />
++      <rule name="widevine1" filetypes="mpd" player="VideoPlayer" />
++      <rule name="netflix" filename="*manifest*"  player="VideoPlayer" />
+     </rule>
+
+     <!-- DVDs -->
+diff -ruN a/xbmc/cores/playercorefactory/PlayerCoreConfig.h b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
+--- a/xbmc/cores/playercorefactory/PlayerCoreConfig.h	2019-08-31 14:05:39.150698302 +0200
++++ b/xbmc/cores/playercorefactory/PlayerCoreConfig.h	2019-11-01 15:25:53.346886975 +0100
+@@ -14,6 +14,7 @@
+ #include "cores/paplayer/PAPlayer.h"
+ #include "cores/RetroPlayer/RetroPlayer.h"
+ #include "cores/ExternalPlayer/ExternalPlayer.h"
++#include "cores/Enigma2Player/Enigma2Player.h"
+ #ifdef HAS_UPNP
+ #include "network/upnp/UPnPPlayer.h"
+ #endif
+@@ -91,6 +92,10 @@
+     {
+       pPlayer = new CExternalPlayer(callback);
+     }
++    else if (m_type.compare("enigma2") == 0)
++    {
++      pPlayer = new CEnigma2Player(callback);
++    }
+ 
+ #if defined(HAS_UPNP)
+     else if (m_type.compare("remote") == 0)
+diff -ruN a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
+--- a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp	2019-11-01 16:22:48.741154778 +0100
++++ b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp	2019-11-01 16:24:58.029845348 +0100
+@@ -9,6 +9,7 @@
+ #include "PlayerCoreFactory.h"
+ #include "threads/SingleLock.h"
+ #include "cores/paplayer/PAPlayer.h"
++#include "cores/Enigma2Player/Enigma2Player.h"
+ #include "cores/IPlayerCallback.h"
+ #include "dialogs/GUIDialogContextMenu.h"
+ #include "URL.h"
+@@ -321,6 +322,11 @@
+     VideoPlayer->m_bPlaysVideo = true;
+     m_vecPlayerConfigs.push_back(VideoPlayer);
+ 
++    CPlayerCoreConfig* Enigma2Player = new CPlayerCoreConfig("Enigma2Player", "video", nullptr);
++    VideoPlayer->m_bPlaysAudio = true;
++    VideoPlayer->m_bPlaysVideo = true;
++    m_vecPlayerConfigs.push_back(Enigma2Player);
++
+     CPlayerCoreConfig* paplayer = new CPlayerCoreConfig("PAPlayer", "music", nullptr);
+     paplayer->m_bPlaysAudio = true;
+     m_vecPlayerConfigs.push_back(paplayer);
+@@ -353,6 +359,8 @@
+         internaltype = "music";
+       else if (type == "externalplayer")
+         internaltype = "external";
++      else if (type == "enigma2player")
++        internaltype = "enigma2";
+ 
+       int count = 0;
+       std::string playername = name;
+-- 
+2.17.1
