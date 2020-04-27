@@ -5,7 +5,7 @@ MAINTAINER = "wirbel <w_scan@gmx-topmail.de>"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=892f569a555ba9c07a568a7c0c4fa63a"
 
-SRC_URI = "http://wirbel.htpc-forum.de/w_scan/w_scan-${PV}.tar.bz2"
+SRC_URI = "http://deb.debian.org/debian/pool/main/w/w-scan/w-scan_${PV}.orig.tar.bz2"
 
 SRC_URI[md5sum] = "c7f9adf92d46b8da5391be80be6fbd72"
 SRC_URI[sha256sum] = "38e0f38a7bf06cff6d6ea01652ad4ee60da2cb0e937360468f936da785b46ffe"
