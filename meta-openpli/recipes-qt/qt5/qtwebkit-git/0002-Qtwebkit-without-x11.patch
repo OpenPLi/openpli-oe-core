@@ -1,88 +1,27 @@
-From 426da57b92b4a05d3f8edc21a3f3605ef634b13d Mon Sep 17 00:00:00 2001
-From: Stephan Reichholf <reichi@opendreambox.org>
-Date: Tue, 17 May 2016 13:53:39 +0200
-Subject: Enable NPAPI for Qt without X11
-
-Change-Id: Iad02f66e8698e0ee5db7b0e485f504c72fb3abd9
 ---
- Source/WebCore/plugins/PluginView.cpp      |   6 +
- Source/WebCore/plugins/PluginView.h        |   6 +-
- Source/WebCore/plugins/qt/PluginViewQt.cpp | 475 +++--------------------------
- Tools/qmake/mkspecs/features/features.pri  |   2 +-
- 4 files changed, 57 insertions(+), 432 deletions(-)
+ Source/WebCore/dom/Document.cpp           |   1 -
+ Source/WebKit/qt/Plugins/PluginViewQt.cpp | 472 ++--------------------
+ Source/WebKit/win/Plugins/PluginView.cpp  |   6 +
+ Source/WebKit/win/Plugins/PluginView.h    |   4 +
+ 4 files changed, 51 insertions(+), 432 deletions(-)
 
-diff --git a/Source/WebCore/plugins/PluginView.cpp b/Source/WebCore/plugins/PluginView.cpp
-index 237cda7..b5f470e 100644
---- a/Source/WebCore/plugins/PluginView.cpp
-+++ b/Source/WebCore/plugins/PluginView.cpp
-@@ -628,7 +628,11 @@ NPError PluginView::setValue(NPPVariable variable, void* value)
+diff --git a/Source/WebCore/dom/Document.cpp b/Source/WebCore/dom/Document.cpp
+index 19355f166..20fa2813d 100644
+--- a/Source/WebCore/dom/Document.cpp
++++ b/Source/WebCore/dom/Document.cpp
+@@ -1910,7 +1910,6 @@ void Document::recalcStyle(Style::Change change)
+ void Document::updateStyleIfNeeded()
+ {
+     ASSERT(isMainThread());
+-    ASSERT(!view() || !view()->isPainting());
  
-     switch (variable) {
-     case NPPVpluginWindowBool:
-+#if defined(MOZ_X11)
-         m_isWindowed = value;
-+#else
-+        m_isWindowed = true;
-+#endif
-         return NPERR_NO_ERROR;
-     case NPPVpluginTransparentBool:
-         m_isTransparent = value;
-@@ -847,11 +851,13 @@ PluginView::PluginView(Frame* parentFrame, const IntSize& size, PluginPackage* p
- #endif
- #if defined(XP_UNIX) && ENABLE(NETSCAPE_PLUGIN_API)
-     , m_hasPendingGeometryChange(true)
-+#if defined(MOZ_X11)
-     , m_drawable(0)
-     , m_visual(0)
-     , m_colormap(0)
-     , m_pluginDisplay(0)
- #endif
-+#endif
- #if PLATFORM(QT) && defined(MOZ_PLATFORM_MAEMO) && (MOZ_PLATFORM_MAEMO >= 5)
-     , m_renderToImage(false)
- #endif
-diff --git a/Source/WebCore/plugins/PluginView.h b/Source/WebCore/plugins/PluginView.h
-index 0fa2436..c05d0b3 100644
---- a/Source/WebCore/plugins/PluginView.h
-+++ b/Source/WebCore/plugins/PluginView.h
-@@ -259,7 +259,7 @@ namespace WebCore {
- #endif
- #endif
- 
--#if PLATFORM(QT) && ENABLE(NETSCAPE_PLUGIN_API) && defined(XP_UNIX)
-+#if PLATFORM(QT) && ENABLE(NETSCAPE_PLUGIN_API)
-         // PluginViewQt (X11) needs a few workarounds when running under DRT
-         static void setIsRunningUnderDRT(bool flag) { s_isRunningUnderDRT = flag; }
- #endif
-@@ -411,6 +411,7 @@ private:
- 
- #if defined(XP_UNIX) && ENABLE(NETSCAPE_PLUGIN_API)
-         bool m_hasPendingGeometryChange;
-+#if defined(MOZ_X11)
-         Pixmap m_drawable;
-         Visual* m_visual;
-         Colormap m_colormap;
-@@ -418,12 +419,15 @@ private:
- 
-         void initXEvent(XEvent* event);
- #endif
-+#endif
- 
- #if PLATFORM(QT)
- #if defined(XP_UNIX) && ENABLE(NETSCAPE_PLUGIN_API)
-         static bool s_isRunningUnderDRT;
-+#if defined(MOZ_X11)
-         static void setXKeyEventSpecificFields(XEvent*, KeyboardEvent*);
-         void paintUsingXPixmap(QPainter* painter, const QRect &exposedRect);
-+#endif
-         QWebPageClient* platformPageClient() const;
- #endif
- #if USE(ACCELERATED_COMPOSITING_PLUGIN_LAYER)
-diff --git a/Source/WebCore/plugins/qt/PluginViewQt.cpp b/Source/WebCore/plugins/qt/PluginViewQt.cpp
-index de06a2f..4b54e30 100644
---- a/Source/WebCore/plugins/qt/PluginViewQt.cpp
-+++ b/Source/WebCore/plugins/qt/PluginViewQt.cpp
-@@ -60,21 +60,13 @@
+     if (!view() || view()->isInRenderTreeLayout())
+         return;
+diff --git a/Source/WebKit/qt/Plugins/PluginViewQt.cpp b/Source/WebKit/qt/Plugins/PluginViewQt.cpp
+index b483d659f..2c715df74 100644
+--- a/Source/WebKit/qt/Plugins/PluginViewQt.cpp
++++ b/Source/WebKit/qt/Plugins/PluginViewQt.cpp
+@@ -59,21 +59,13 @@
  #include "PluginPackage.h"
  #include "QWebPageClient.h"
  #include "RenderObject.h"
@@ -105,7 +44,7 @@ index de06a2f..4b54e30 100644
  #include <QGuiApplication>
  #include <QWindow>
  #include <qpa/qplatformnativeinterface.h>
-@@ -94,34 +86,9 @@ bool PluginView::s_isRunningUnderDRT = false;
+@@ -93,36 +85,6 @@ bool PluginView::s_isRunningUnderDRT = false;
  
  using namespace HTMLNames;
  
@@ -124,8 +63,7 @@ index de06a2f..4b54e30 100644
 -static inline int displayDepth() { return x11Environment.displayDepth; }
 -
 -static inline void syncX()
-+bool PluginView::shouldUseAcceleratedCompositing() const
- {
+-{
 -    XSync(x11Display(), false);
 -}
 -
@@ -138,11 +76,12 @@ index de06a2f..4b54e30 100644
 -    if (!hostWindow)
 -        return 0;
 -    return hostWindow->platformPageClient();
-+    return false;
- }
- 
+-}
+-
  void PluginView::updatePluginWidget()
-@@ -145,24 +112,6 @@ void PluginView::updatePluginWidget()
+ {
+     if (!parent())
+@@ -144,24 +106,6 @@ void PluginView::updatePluginWidget()
      // The plugin had a zero width or height before but was resized, we need to show it again.
      if (oldWindowRect.isEmpty())
          show();
@@ -167,28 +106,19 @@ index de06a2f..4b54e30 100644
  
      // (i) in order to move/resize the plugin window at the same time as the
      // rest of frame during e.g. scrolling, we set the window geometry
-@@ -171,18 +120,8 @@ void PluginView::updatePluginWidget()
+@@ -170,10 +114,8 @@ void PluginView::updatePluginWidget()
      // scroll, we need to move/resize immediately.
      // (ii) if we are running layout tests from DRT, paint() won't ever get called
      // so we need to call setNPWindowIfNeeded() if window geometry has changed
 -    if (!m_windowRect.intersects(frameView->frameRect())
 -        || (s_isRunningUnderDRT && platformPluginWidget() && (m_windowRect != oldWindowRect || m_clipRect != oldClipRect)))
 -        setNPWindowIfNeeded();
--
--    if (!m_platformLayer) {
--        // Make sure we get repainted afterwards. This is necessary for downward
--        // scrolling to move the plugin widget properly.
--        // Note that we don't invalidate the frameRect() here. This is because QWebFrame::renderRelativeCoords()
--        // imitates ScrollView and adds the scroll offset back on to the rect we damage here (making the co-ordinates absolute
--        // to the frame again) before passing it to FrameView.
--        invalidate();
--    }
+ 
 +    setNPWindowIfNeeded();
-+    invalidate();
+     invalidate();
  }
  
- void PluginView::setFocus(bool focused)
-@@ -202,36 +141,6 @@ void PluginView::hide()
+@@ -194,36 +136,6 @@ void PluginView::hide()
      Widget::hide();
  }
  
@@ -222,28 +152,26 @@ index de06a2f..4b54e30 100644
 -    XDestroyImage(xImage);
 -}
 -
- void PluginView::paint(GraphicsContext* context, const IntRect& rect)
+ void PluginView::paint(GraphicsContext& context, const IntRect& rect)
  {
      if (!m_isStarted) {
-@@ -242,27 +151,18 @@ void PluginView::paint(GraphicsContext* context, const IntRect& rect)
-     if (context->paintingDisabled())
+@@ -231,25 +143,21 @@ void PluginView::paint(GraphicsContext& context, const IntRect& rect)
          return;
+     }
  
 +    updatePluginWidget();
+     if (context.paintingDisabled())
+         return;
+ 
      setNPWindowIfNeeded();
  
 -    if (m_isWindowed)
 -        return;
 -
--#if USE(ACCELERATED_COMPOSITING)
--    if (m_platformLayer)
--        return;
--#endif
--
 -    if (!m_drawable)
 -        return;
 -
-     QPainter* painter = context->platformContext();
+     QPainter* painter = context.platformContext();
      IntRect exposedRect(rect);
      exposedRect.intersect(frameRect());
      exposedRect.move(-frameRect().x(), -frameRect().y());
@@ -258,7 +186,7 @@ index de06a2f..4b54e30 100644
  }
  
  // TODO: Unify across ports.
-@@ -271,14 +171,6 @@ bool PluginView::dispatchNPEvent(NPEvent& event)
+@@ -258,14 +166,6 @@ bool PluginView::dispatchNPEvent(NPEvent& event)
      if (!m_plugin->pluginFuncs()->event)
          return false;
  
@@ -273,7 +201,7 @@ index de06a2f..4b54e30 100644
      PluginView::setCurrentPluginView(this);
      JSC::JSLock::DropAllLocks dropAllLocks(JSDOMWindowBase::commonVM());
      setCallingPlugin(true);
-@@ -286,66 +178,9 @@ bool PluginView::dispatchNPEvent(NPEvent& event)
+@@ -273,66 +173,9 @@ bool PluginView::dispatchNPEvent(NPEvent& event)
      setCallingPlugin(false);
      PluginView::setCurrentPluginView(0);
  
@@ -340,7 +268,7 @@ index de06a2f..4b54e30 100644
  void PluginView::handleKeyboardEvent(KeyboardEvent* event)
  {
      if (m_isWindowed)
-@@ -354,87 +189,9 @@ void PluginView::handleKeyboardEvent(KeyboardEvent* event)
+@@ -341,89 +184,12 @@ void PluginView::handleKeyboardEvent(KeyboardEvent* event)
      if (event->type() != eventNames().keydownEvent && event->type() != eventNames().keyupEvent)
          return;
  
@@ -365,7 +293,7 @@ index de06a2f..4b54e30 100644
 -        state |= Mod4Mask;
 -    return state;
 -}
--
+ 
 -static void setXButtonEventSpecificFields(XEvent* xEvent, MouseEvent* event, const IntPoint& postZoomPos)
 -{
 -    XButtonEvent& xbutton = xEvent->xbutton;
@@ -429,9 +357,12 @@ index de06a2f..4b54e30 100644
 +    event->setDefaultHandled();
 +#endif
  }
- 
+-
++    
  void PluginView::handleMouseEvent(MouseEvent* event)
-@@ -453,49 +210,14 @@ void PluginView::handleMouseEvent(MouseEvent* event)
+ {
+     if (m_isWindowed)
+@@ -440,49 +206,14 @@ void PluginView::handleMouseEvent(MouseEvent* event)
          focusPluginElement();
      }
  
@@ -486,7 +417,7 @@ index de06a2f..4b54e30 100644
  
  void PluginView::setParent(ScrollView* parent)
  {
-@@ -507,8 +229,7 @@ void PluginView::setParent(ScrollView* parent)
+@@ -494,8 +225,7 @@ void PluginView::setParent(ScrollView* parent)
  
  void PluginView::setNPWindowRect(const IntRect&)
  {
@@ -496,7 +427,7 @@ index de06a2f..4b54e30 100644
  }
  
  void PluginView::setNPWindowIfNeeded()
-@@ -516,24 +237,8 @@ void PluginView::setNPWindowIfNeeded()
+@@ -503,24 +233,8 @@ void PluginView::setNPWindowIfNeeded()
      if (!m_isStarted || !parent() || !m_plugin->pluginFuncs()->setwindow)
          return;
  
@@ -523,19 +454,9 @@ index de06a2f..4b54e30 100644
  
      // If the width or height are null, set the clipRect to null, indicating that
      // the plugin is not visible/scrolled out.
-@@ -543,31 +248,21 @@ void PluginView::setNPWindowIfNeeded()
-         m_npWindow.clipRect.top = 0;
-         m_npWindow.clipRect.bottom = 0;
-     } else {
--        // Clipping rectangle of the plug-in; the origin is the top left corner of the drawable or window. 
-+        // Clipping rectangle of the plug-in; the origin is the top left corner of the drawable or window.
-         m_npWindow.clipRect.left = m_npWindow.x + m_clipRect.x();
-         m_npWindow.clipRect.top = m_npWindow.y + m_clipRect.y();
-         m_npWindow.clipRect.right = m_npWindow.x + m_clipRect.x() + m_clipRect.width();
+@@ -537,24 +251,14 @@ void PluginView::setNPWindowIfNeeded()
          m_npWindow.clipRect.bottom = m_npWindow.y + m_clipRect.y() + m_clipRect.height();
      }
-+    m_npWindow.width = m_windowRect.width();
-+    m_npWindow.height = m_windowRect.height();
  
 -    if (m_plugin->quirks().contains(PluginQuirkDontCallSetWindowMoreThanOnce)) {
 -        // FLASH WORKAROUND: Only set initially. Multiple calls to
@@ -548,6 +469,8 @@ index de06a2f..4b54e30 100644
 -        m_npWindow.width = m_windowRect.width();
 -        m_npWindow.height = m_windowRect.height();
 -    }
++    m_npWindow.width = m_windowRect.width();
++    m_npWindow.height = m_windowRect.height();
  
      PluginView::setCurrentPluginView(this);
      JSC::JSLock::DropAllLocks dropAllLocks(JSDOMWindowBase::commonVM());
@@ -558,7 +481,7 @@ index de06a2f..4b54e30 100644
  }
  
  void PluginView::setParentVisible(bool visible)
-@@ -636,7 +331,10 @@ bool PluginView::platformGetValue(NPNVariable variable, void* value, NPError* re
+@@ -623,7 +327,9 @@ bool PluginView::platformGetValue(NPNVariable variable, void* value, NPError* re
  {
      switch (variable) {
      case NPNVxDisplay:
@@ -566,11 +489,10 @@ index de06a2f..4b54e30 100644
 +#if defined(Q_WS_QWS)
 +        *reinterpret_cast<void**>(value) = 0;
 +#endif
-+
          *result = NPERR_NO_ERROR;
          return true;
  
-@@ -645,9 +343,9 @@ bool PluginView::platformGetValue(NPNVariable variable, void* value, NPError* re
+@@ -632,9 +338,9 @@ bool PluginView::platformGetValue(NPNVariable variable, void* value, NPError* re
          return true;
  
      case NPNVnetscapeWindow: {
@@ -583,11 +505,11 @@ index de06a2f..4b54e30 100644
          *result = NPERR_NO_ERROR;
          return true;
      }
-@@ -691,109 +389,32 @@ void PluginView::forceRedraw()
+@@ -678,109 +384,31 @@ void PluginView::forceRedraw()
      invalidate();
  }
  
--static Display *getPluginDisplay()
+-static Display* getPluginDisplayQt()
 -{
 -    // The plugin toolkit might run using a different X connection. At the moment, we only
 -    // support gdk based plugins (like flash) that use a different X connection.
@@ -664,20 +586,20 @@ index de06a2f..4b54e30 100644
 +        m_plugin->pluginFuncs()->getvalue(m_instance, NPPVpluginNeedsXEmbed, &m_needsXEmbed);
 +        setCallingPlugin(false);
 +        PluginView::setCurrentPluginView(0);
-     }
- 
--    // Windowed mode is not supported with Qt5 yet.
--    if (m_isWindowed)
--        return false;
--    setPlatformWidget(0);
--    m_pluginDisplay = getPluginDisplay();
++    }
 +    if (m_isWindowed) {
 +            notImplemented();
 +            m_status = PluginStatusCanNotLoadPlugin;
 +            return false;
 +    } else {
 +        setPlatformWidget(0);
-+    }
+     }
+-
+-    // Windowed mode is not supported with Qt5 yet.
+-    if (m_isWindowed)
+-        return false;
+-    setPlatformWidget(0);
+-    m_pluginDisplay = getPluginDisplayQt();
  
      // If the width and the height are not zero we show the PluginView.
      if (!frameRect().isEmpty())
@@ -707,11 +629,10 @@ index de06a2f..4b54e30 100644
      if (!(m_plugin->quirks().contains(PluginQuirkDeferFirstSetWindowCall))) {
          updatePluginWidget();
          setNPWindowIfNeeded();
-@@ -806,12 +427,6 @@ void PluginView::platformDestroy()
- {
+@@ -794,30 +422,12 @@ void PluginView::platformDestroy()
      if (platformPluginWidget())
          delete platformPluginWidget();
--
+ 
 -    if (m_drawable)
 -        XFreePixmap(x11Display(), m_drawable);
 -
@@ -719,20 +640,84 @@ index de06a2f..4b54e30 100644
 -        XFreeColormap(x11Display(), m_colormap);
  }
  
- #if USE(ACCELERATED_COMPOSITING)
-diff --git a/Tools/qmake/mkspecs/features/features.pri b/Tools/qmake/mkspecs/features/features.pri
-index 1978aa0..9bb659c 100644
---- a/Tools/qmake/mkspecs/features/features.pri
-+++ b/Tools/qmake/mkspecs/features/features.pri
-@@ -86,7 +86,7 @@ FEATURE_DEFAULTS = \
-     ENABLE_MICRODATA=0 \
-     ENABLE_MOUSE_CURSOR_SCALE=0 \
-     ENABLE_NAVIGATOR_CONTENT_UTILS=0 \
--    ENABLE_NETSCAPE_PLUGIN_API=0 \
-+    ENABLE_NETSCAPE_PLUGIN_API=1 \
-     ENABLE_NETWORK_INFO=0 \
-     ENABLE_NOSNIFF=0 \
-     ENABLE_NOTIFICATIONS=1 \
+ // Copied from PluginViewWin.cpp
+ float PluginView::deviceScaleFactor() const
+ {
+     float scaleFactor = 1.0f;
+-
+-    if (!parent() || !parent()->isFrameView())
+-        return scaleFactor;
+-
+-    // For windowless plugins, the device scale factor will be applied as for other page elements.
+-    if (!m_isWindowed)
+-        return scaleFactor;
+-
+-    FrameView& frameView = downcast<FrameView>(*parent());
+-
+-    if (frameView.frame().document())
+-        scaleFactor = frameView.frame().document()->deviceScaleFactor();
+-
+     return scaleFactor;
+ }
+ 
+diff --git a/Source/WebKit/win/Plugins/PluginView.cpp b/Source/WebKit/win/Plugins/PluginView.cpp
+index 6939439ba..0199d25ba 100644
+--- a/Source/WebKit/win/Plugins/PluginView.cpp
++++ b/Source/WebKit/win/Plugins/PluginView.cpp
+@@ -622,7 +622,11 @@ NPError PluginView::setValue(NPPVariable variable, void* value)
+ 
+     switch (variable) {
+     case NPPVpluginWindowBool:
++#if defined(MOZ_X11)
+         m_isWindowed = value;
++#else
++        m_isWindowed = true;
++#endif
+         return NPERR_NO_ERROR;
+     case NPPVpluginTransparentBool:
+         m_isTransparent = value;
+@@ -839,11 +843,13 @@ PluginView::PluginView(Frame* parentFrame, const IntSize& size, PluginPackage* p
+ #endif
+ #if defined(XP_UNIX) && ENABLE(NETSCAPE_PLUGIN_API)
+     , m_hasPendingGeometryChange(true)
++#if defined(MOZ_X11)
+     , m_drawable(0)
+     , m_visual(0)
+     , m_colormap(0)
+     , m_pluginDisplay(0)
+ #endif
++#endif
+ #if PLATFORM(QT) && defined(MOZ_PLATFORM_MAEMO) && (MOZ_PLATFORM_MAEMO >= 5)
+     , m_renderToImage(false)
+ #endif
+diff --git a/Source/WebKit/win/Plugins/PluginView.h b/Source/WebKit/win/Plugins/PluginView.h
+index c7c800d50..067e2cfdd 100644
+--- a/Source/WebKit/win/Plugins/PluginView.h
++++ b/Source/WebKit/win/Plugins/PluginView.h
+@@ -409,6 +409,7 @@ private:
+ 
+ #if defined(XP_UNIX) && ENABLE(NETSCAPE_PLUGIN_API)
+         bool m_hasPendingGeometryChange;
++#if defined(MOZ_X11)
+         Pixmap m_drawable;
+         Visual* m_visual;
+         Colormap m_colormap;
+@@ -416,12 +417,15 @@ private:
+ 
+         void initXEvent(XEvent* event);
+ #endif
++#endif
+ 
+ #if PLATFORM(QT)
+ #if defined(XP_UNIX) && ENABLE(NETSCAPE_PLUGIN_API)
+         static bool s_isRunningUnderDRT;
++#if defined(MOZ_X11)
+         static void setXKeyEventSpecificFields(XEvent*, KeyboardEvent*);
+         void paintUsingXPixmap(QPainter* painter, const QRect &exposedRect);
++#endif
+         QWebPageClient* platformPageClient() const;
+ #endif
+ #endif // PLATFORM(QT)
 -- 
-2.7.4
+2.17.1
 
