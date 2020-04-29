@@ -1,0 +1,173 @@
+---
+ mkspecs/common/mac.conf           |   1 -
+ mkspecs/features/qmake_use.prf    |   1 +
+ mkspecs/features/qt_configure.prf | 106 +++++-------------------------
+ 3 files changed, 17 insertions(+), 91 deletions(-)
+
+diff --git a/mkspecs/common/mac.conf b/mkspecs/common/mac.conf
+index b77494ec9b..61bea952b2 100644
+--- a/mkspecs/common/mac.conf
++++ b/mkspecs/common/mac.conf
+@@ -14,7 +14,6 @@ include(unix.conf)
+ 
+ QMAKE_RESOURCE          = /Developer/Tools/Rez
+ QMAKE_EXTENSION_SHLIB   = dylib
+-QMAKE_EXTENSIONS_AUX_SHLIB = tbd
+ QMAKE_LIBDIR            =
+ 
+ # sdk.prf will prefix the proper SDK sysroot
+diff --git a/mkspecs/features/qmake_use.prf b/mkspecs/features/qmake_use.prf
+index 64faa4f215..e9a9f38a2c 100644
+--- a/mkspecs/features/qmake_use.prf
++++ b/mkspecs/features/qmake_use.prf
+@@ -21,6 +21,7 @@ for(ever) {
+     for (nu, LD_USES) {
+         !defined(QMAKE_LIBS_$$nu, var): \
+             error("Library '$$lower($$replace(nu, _, -))' is not defined.")
++        QMAKE_LIBDIR += $$eval(QMAKE_LIBDIR_$$nu)
+ 
+         debug: \
+             LIBS$${suffix} += $$eval(QMAKE_LIBS_$${nu}_DEBUG) $$eval(QMAKE_LIBS_$$nu)
+diff --git a/mkspecs/features/qt_configure.prf b/mkspecs/features/qt_configure.prf
+index 81110e9f6d..ba70b876aa 100644
+--- a/mkspecs/features/qt_configure.prf
++++ b/mkspecs/features/qt_configure.prf
+@@ -530,98 +530,23 @@ defineReplace(qtGccSysrootifiedPaths) {
+     return($$sysrootified)
+ }
+ 
+-# libs-var, libs, in-paths, out-paths-var
++# libs-var, libs, in-paths
+ defineTest(qtConfResolveLibs) {
+-    ret = true
+-    paths = $$3
+-    out =
+-    copy = false
+-    for (l, 2) {
+-        $$copy {
+-            copy = false
+-            out += $$l
+-        } else: equals(l, "-s") {
+-            # em++ flag to link libraries from emscripten-ports; passed on literally.
+-            copy = true
+-            out += $$l
+-        } else: contains(l, "^-L.*") {
+-            lp = $$replace(l, "^-L", )
+-            gcc: lp = $$qtGccSysrootifiedPath($$lp)
+-            !exists($$lp/.) {
+-                qtLog("Library path $$val_escape(lp) is invalid.")
+-                ret = false
+-            } else {
+-                paths += $$lp
+-            }
+-        } else: contains(l, "^-l.*") {
+-            lib = $$replace(l, "^-l", )
+-            lcan =
+-            integrity:contains(lib, "^.*\\.a") {
+-                # INTEGRITY compiler searches for exact filename
+-                # if -l argument has .a suffix
+-                lcan += $${lib}
+-            } else: contains(lib, "^:.*") {
+-                # Use exact filename when -l:filename syntax is used.
+-                lib ~= s/^://
+-                lcan += $${lib}
+-            } else: unix {
+-                # Under UNIX, we look for actual shared libraries, in addition
+-                # to static ones.
+-                shexts = $$QMAKE_EXTENSION_SHLIB $$QMAKE_EXTENSIONS_AUX_SHLIB
+-                for (ext, shexts) {
+-                    lcan += $${QMAKE_PREFIX_SHLIB}$${lib}.$${ext}
+-                }
+-                lcan += \
+-                    $${QMAKE_PREFIX_STATICLIB}$${lib}.$${QMAKE_EXTENSION_STATICLIB}
+-            } else {
+-                # Under Windows, we look only for static libraries, as even for DLLs
+-                # one actually links against a static import library.
+-                mingw {
+-                    lcan += \
+-                        # MinGW supports UNIX-style library naming in addition to
+-                        # the MSVC style.
+-                        lib$${lib}.dll.a lib$${lib}.a \
+-                        # Fun fact: prefix-less libraries are also supported.
+-                        $${lib}.dll.a $${lib}.a
+-                }
+-                lcan += $${lib}.lib
+-            }
+-            l = $$qtConfFindInPathList($$lcan, $$paths $$EXTRA_LIBDIR $$QMAKE_DEFAULT_LIBDIRS)
+-            isEmpty(l) {
+-                qtLog("None of [$$val_escape(lcan)] found in [$$val_escape(paths)] and global paths.")
+-                ret = false
+-            } else {
+-                out += $$l
+-            }
+-        } else {
+-            out += $$l
+-        }
+-    }
+-    $$1 = $$out
++    for (path, 3): \
++        pre_lflags += -L$$path
++    $$1 = $$pre_lflags $$2
+     export($$1)
+-    !isEmpty(4) {
+-        $$4 = $$paths
+-        export($$4)
+-    }
+-    return($$ret)
+-}
+-
+-# source-var
+-defineTest(qtConfResolveAllLibs) {
+-    ret = true
+-    !qtConfResolveLibs($${1}.libs, $$eval($${1}.libs), , $${1}.libdirs): \
+-        ret = false
+-    for (b, $${1}.builds._KEYS_): \
+-        !qtConfResolveLibs($${1}.builds.$${b}, $$eval($${1}.builds.$${b}), $$eval($${1}.libdirs), ): \
+-            ret = false
+-    return($$ret)
++    return(true)
+ }
+ 
+ # libs-var, in-paths, libs
+ defineTest(qtConfResolvePathLibs) {
+     ret = true
+-    gcc: 2 = $$qtGccSysrootifiedPaths($$2)
+-    for (libdir, 2) {
++    gcc: \
++        local_paths = $$qtGccSysrootifiedPaths($$2)
++    else: \
++        local_paths = $$2
++    for (libdir, local_paths) {
+         !exists($$libdir/.) {
+             qtLog("Library path $$val_escape(libdir) is invalid.")
+             ret = false
+@@ -671,8 +596,11 @@ defineReplace(qtConfGetTestIncludes) {
+ # includes-var, in-paths, test-object-var
+ defineTest(qtConfResolvePathIncs) {
+     ret = true
+-    gcc: 2 = $$qtGccSysrootifiedPaths($$2)
+-    for (incdir, 2) {
++    gcc: \
++        local_paths = $$qtGccSysrootifiedPaths($$2)
++    else: \
++        local_paths = $$2
++    for (incdir, local_paths) {
+         !exists($$incdir/.) {
+             qtLog("Include path $$val_escape(incdir) is invalid.")
+             ret = false
+@@ -766,11 +694,9 @@ defineTest(qtConfLibrary_inline) {
+         for (ld, libdir): \
+             libs += -L$$ld
+         $${1}.libs = $$libs $$eval($${1}.libs)
++        export($${1}.libs)
+     }
+ 
+-    !qtConfResolveAllLibs($$1): \
+-        return(false)
+-
+     !qtConfResolvePathIncs($${1}.includedir, $$includes, $$2): \
+         return(false)
+ 
+-- 
+2.17.1
+
