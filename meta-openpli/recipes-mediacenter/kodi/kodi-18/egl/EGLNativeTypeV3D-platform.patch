@@ -54,11 +54,11 @@ index 0000000..80e4678
 +
 +bool CEGLNativeTypeSTB::CreateNativeWindow()
 +{
-+  STB_RegisterDisplayPlatform(&m_platformHandle, m_nativeDisplay);
++  V3D_RegisterDisplayPlatform(&m_platformHandle, m_nativeDisplay);
 +  if (!m_platformHandle)
 +    return false;
 +
-+  STB_NativeWindowInfo info;
++  V3D_NativeWindowInfo info;
 +
 +  info.x = 0;
 +  info.y = 0;
@@ -68,7 +68,7 @@ index 0000000..80e4678
 +  info.clientID = 0;
 +  info.zOrder = 0;
 +
-+  m_nativeWindow = STB_CreateNativeWindow(&info);
++  m_nativeWindow = V3D_CreateNativeWindow(&info);
 +  if (!m_nativeWindow)
 +    return false;
 +
@@ -95,10 +95,10 @@ index 0000000..80e4678
 +
 +bool CEGLNativeTypeSTB::DestroyNativeWindow()
 +{
-+  STB_DestroyNativeWindow(m_nativeWindow);
++  V3D_DestroyNativeWindow(m_nativeWindow);
 +  m_nativeWindow = 0;
 +
-+  STB_UnregisterDisplayPlatform(m_platformHandle);
++  V3D_UnregisterDisplayPlatform(m_platformHandle);
 +  return true;
 +}
 +
@@ -176,7 +176,7 @@ index 0000000..80e4678
 +
 +bool CEGLNativeTypeSTB::ShowWindow(bool show)
 +{
-+  return STB_SetVisible(m_platformHandle, show);
++  return V3D_SetVisible(m_platformHandle, show);
 +}
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.h b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 new file mode 100644
@@ -208,7 +208,7 @@ index 0000000..c3b7624
 +
 +#include <vector>
 +#include <string>
-+#include <STBplatform.h>
++#include <v3dplatform.h>
 +
 +#include "EGLNativeType.h"
 +
@@ -243,7 +243,7 @@ index 0000000..c3b7624
 +private:
 +  RESOLUTION_INFO m_desktopRes;
 +  RESOLUTION_INFO m_desktopResAll[3];
-+  STB_PlatformHandle m_platformHandle;
++  V3D_PlatformHandle m_platformHandle;
 +};
 -- 
 2.7.4
