@@ -15,7 +15,7 @@ PV = "0.8.6+gitr${SRCPV}"
 PKGV = "0.8.6+gitr${GITPKGV}"
 PR = "r0"
 
-inherit python-dir
+inherit python-dir pythonnative
 
 ALLOW_EMPTY_${PN} = "1"
 
@@ -32,6 +32,7 @@ do_compile() {
 }
 
 do_install() {
+	find . -name __pycache__ -exec rm -rf '{}' ';'
     oe_runmake 'D=${D}' install
 }
 
