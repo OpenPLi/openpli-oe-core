@@ -5,8 +5,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=fc178bcd425090939a8b634d1d6a9594"
 
 inherit gitpkgv pythonnative
 
-PV = "1.0.0+gitr${SRCPV}"
-PKGV = "1.0.0+gitr${GITPKGV}"
+PV = "2+${SRCPV}"
+PKGV = "2+${GITPKGV}"
 PR = "r0"
 
 ALLOW_EMPTY_${PN} = "1"
