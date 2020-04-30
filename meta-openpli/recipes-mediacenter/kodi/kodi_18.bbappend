@@ -28,9 +28,11 @@ PACKAGECONFIG[stb] = "-DCORE_PLATFORM_NAME=stb -DENABLE_GLES=ON,,"
 SRC_URI_append_osmini4k    += "file://egl/EGLNativeTypeV3D-platform-arm.patch"
 SRC_URI_append_osmio4k     += "file://egl/EGLNativeTypeV3D-platform-arm.patch"
 SRC_URI_append_osmio4kplus += "file://egl/EGLNativeTypeV3D-platform-arm.patch"
+SRC_URI_append_osmega      += "file://egl/EGLNativeTypeV3D-platform.patch"
 EXTRA_OECMAKE_append_osmini4k    += " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmio4k     += " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmio4kplus += " -DWITH_V3D=v3dplatform"
+EXTRA_OECMAKE_append_osmega      += " -DWITH_V3D=v3dplatform"
 
 #Gigablue
 SRC_URI_append_gbquad4k     += " file://egl/EGLNativeTypeV3D-gb4k.patch"
