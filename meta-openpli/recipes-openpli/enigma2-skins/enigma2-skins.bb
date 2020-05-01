@@ -6,7 +6,7 @@ PACKAGES_DYNAMIC = "enigma2-plugin-skins-*"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://README;startline=1;endline=6;md5=d41d8cd98f00b204e9800998ecf8427e"
 
-inherit gitpkgv
+inherit gitpkgv pythonnative
 
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"

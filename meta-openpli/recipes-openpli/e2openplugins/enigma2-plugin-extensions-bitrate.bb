@@ -8,7 +8,7 @@ PR="r1"
 
 require openplugins.inc
 
-inherit autotools gettext
+inherit autotools gettext pythonnative
 
 DEPENDS += "python"
 
