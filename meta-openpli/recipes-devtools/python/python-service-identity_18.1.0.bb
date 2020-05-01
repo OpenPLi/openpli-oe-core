@@ -7,8 +7,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=8a0f079f4e6a215d6bd6f9d97cab4d5f"
 PYPI_PACKAGE = "service_identity"
 inherit pypi setuptools
 
-SRC_URI[md5sum] = "f509cb41ca2f8420bd8496291136d6cc"
-SRC_URI[sha256sum] = "4001fbb3da19e0df22c47a06d29681a398473af4aa9d745eca525b3b2c2302ab"
+SRC_URI[md5sum] = "c6b8bac93e7d899a1da313a19cc6570a"
+SRC_URI[sha256sum] = "0858a54aabc5b459d1aafa8a518ed2081a285087f349fe3e55197989232e2e2d"
 
 RDEPENDS_${PN} = "python-attrs python-idna python-pyasn1 python-pyasn1-modules python-pyopenssl"
 

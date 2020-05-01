@@ -15,9 +15,10 @@ RDEPENDS_${PN} = "\
   python-xml \
 "
 
-SRC_URI = "https://pypi.python.org/packages/source/f/flickrapi/flickrapi-${PV}.zip"
-SRC_URI[md5sum] = "90dca08a45968b18da0894887f3e59b3"
-SRC_URI[sha256sum] = "ac9304f571175b8af4fc2ee17d3e110847b526640665ca53d97bbf9df98329bc"
+SRC_URI = "https://pypi.python.org/packages/source/f/flickrapi/flickrapi-${PV}.tar.gz"
+
+SRC_URI[md5sum] = "94e9b9ac81b1dae1b226e22ac6a4375b"
+SRC_URI[sha256sum] = "ffb27b0e4f6d3ae8fc7d20e4696d2de2f95093ecf665a93d7f1d5a3383f8e20d"
 
 S = "${WORKDIR}/flickrapi-${PV}"
 
