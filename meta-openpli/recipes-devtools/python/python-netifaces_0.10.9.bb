@@ -1,11 +1,11 @@
 SUMMARY  = "Portable network interface information."
 DESCRIPTION = "An easy way to get the address(es) of the machine’s network interfaces from Python"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://PKG-INFO;md5=bc7d03606b982d3cd368dd1bf614c5ae"
+LIC_FILES_CHKSUM = "file://PKG-INFO;md5=d68ff546b11a03cda3aec0229188b6a2"
 
 inherit pypi setuptools
 
-SRC_URI[md5sum] = "5b4d1f1310ed279e6df27ef3a9b71519"
-SRC_URI[sha256sum] = "59d8ad52dd3116fcb6635e175751b250dc783fb011adba539558bd764e5d628b"
+SRC_URI[md5sum] = "de92cc322b4f56047c073f802ad77860"
+SRC_URI[sha256sum] = "2dee9ffdd16292878336a58d04a20f0ffe95555465fee7c9bd23b3490ef2abf3"
 
 include python-package-split.inc

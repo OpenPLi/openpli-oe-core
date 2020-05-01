@@ -7,13 +7,15 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=70f9df77ea55ba7d1f19e18f62cf5bb6"
 
 PR = "r0"
 
-SRC_URI = "https://pypi.python.org/packages/b6/56/affb227598d7e42b28e7be24fe9240a84f3aa0cfd65a2abdbfdfd3d2f7c6/PyExecJS-${PV}.zip"
+
+
+SRC_URI = "https://files.pythonhosted.org/packages/ba/8e/aedef81641c8dca6fd0fb7294de5bed9c45f3397d67fddf755c1042c2642/PyExecJS-${PV}.tar.gz"
 
 S = "${WORKDIR}/PyExecJS-${PV}"
 
 inherit setuptools
 
-SRC_URI[md5sum] = "714edb64c8914e94eb45541e123c420b"
-SRC_URI[sha256sum] = "31346cdf19d1e64840f0104f8be1c1231cb9ce3de9919828419814567cc2e691"
+SRC_URI[md5sum] = "f530b8e14373714448a94f458d24d1d6"
+SRC_URI[sha256sum] = "34cc1d070976918183ff7bdc0ad71f8157a891c92708c00c5fbbff7a769f505c"
 
 include python-package-split.inc
