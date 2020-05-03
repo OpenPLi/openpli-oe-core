@@ -66,3 +66,7 @@ DEPENDS_append_vuuno4k     += " kodiegl"
 DEPENDS_append_vuuno4kse   += " kodiegl"
 DEPENDS_append_vuzero4k    += " kodiegl"
 DEPENDS_append_vuduo4k     += " kodiegl"
+
+# Qviart
+SRC_URI_append_lunix4k    += "file://egl/EGLNativeTypeV3D-lunix4k.patch"
+EXTRA_OECMAKE_append_lunix4k    += " -DWITH_V3D=nxcl"
