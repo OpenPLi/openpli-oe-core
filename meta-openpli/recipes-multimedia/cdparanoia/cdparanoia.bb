@@ -5,18 +5,20 @@ LICENSE = "GPLv2 & LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING-GPL;md5=1ed9d357695b2e3ef099df37fed63d96 \
                     file://COPYING-LGPL;md5=d370feaa1c9edcdbd29ca27ea3d2304d"
 SECTION = "multimedia"
-SRCREV = "17289"
-PV = "10.2+svnr${SRCPV}"
+# SRCREV = "17289"
+PV = "10.2+svnr17289"
 PR = "r1"
 
-SRC_URI = "svn://svn.xiph.org/trunk;module=cdparanoia;protocol=http \
-	 file://fixes10.patch \
-	 file://Makefile.in.patch \
-	 file://interface_Makefile.in.patch \
-	 file://paranoia_Makefile.in.patch \
-	 file://configure.in.patch"
+SRC_URI = " \
+	file://${BPN}-${PV}.tar.gz \
+	file://fixes10.patch \
+	file://Makefile.in.patch \
+	file://interface_Makefile.in.patch \
+	file://paranoia_Makefile.in.patch \
+	file://configure.in.patch \
+	"
 
-S = "${WORKDIR}/cdparanoia"
+S = "${WORKDIR}/cdparanoia-III-10.2"
 
 PARALLEL_MAKE = ""
 
