@@ -19,9 +19,6 @@
 [submodule "meta-vuplus"]
 	path = meta-vuplus
 	url = https://github.com/vu-plus/meta-vuplus.git
-[submodule "meta-xp"]
-	path = meta-xp
-	url = https://github.com/XP-Master/meta-xp.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = https://github.com/XpeedDeveloperTeam/meta-xpeedc.git
