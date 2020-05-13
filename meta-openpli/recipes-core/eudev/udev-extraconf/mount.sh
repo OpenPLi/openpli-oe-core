@@ -19,8 +19,35 @@ done
 
 automount() {
 	name="`basename "$DEVNAME"`"
+	bus="`basename "$ID_BUS"`"
 
-	! test -d "/run/media/$name" && mkdir -p "/run/media/$name"
+	# Figure out a mount point to use
+	LABEL=${ID_FS_LABEL}
+
+	if [[ -z "${LABEL}" ]]; then
+		udevadm info /dev/$name | grep -q 'mmc'
+		mmc=$?
+		if [ "${mmc}" -eq "0" ]; then
+			if [ ! -d "/run/media/mmc" ]; then
+				LABEL="mmc"
+			else
+				LABEL="$name"
+			fi
+		elif [ "${bus}" == "ata" ]; then
+			udevadm info /dev/$name | grep -q 'ahci\|pci\|sata'
+			internal=$?
+			if [ "${internal}" -eq "0" ]; then
+				LABEL="hdd"
+			elif [ ! -d "/run/media/usbhdd" ]; then
+				LABEL="usbhdd"
+			else
+				LABEL="$name"
+			fi
+		else
+			LABEL="$name"
+		fi
+	fi
+	! test -d "/run/media/$LABEL" && mkdir -p "/run/media/$LABEL"
 	# Silent util-linux's version of mounting auto
 	if [ "x`readlink $MOUNT`" = "x/bin/mount.util-linux" ] ;
 	then
@@ -38,13 +65,13 @@ automount() {
 		;;
 	esac
 
-	if ! $MOUNT -t auto $DEVNAME "/run/media/$name"
+	if ! $MOUNT -t auto $DEVNAME "/run/media/$LABEL"
 	then
-		#logger "mount.sh/automount" "$MOUNT -t auto $DEVNAME \"/run/media/$name\" failed!"
-		rm_dir "/run/media/$name"
+		#logger "mount.sh/automount" "$MOUNT -t auto $DEVNAME \"/run/media/$LABEL\" failed!"
+		rm_dir "/run/media/$LABEL"
 	else
-		logger "mount.sh/automount" "Auto-mount of [/run/media/$name] successful"
-		touch "/tmp/.automount-$name"
+		logger "mount.sh/automount" "Auto-mount of [/run/media/$LABEL] successful"
+		touch "/tmp/.automount-$LABEL"
 	fi
 }
 
@@ -87,4 +114,8 @@ if [ "$ACTION" = "remove" ] || [ "$ACTION" = "change" ] && [ -x "$UMOUNT" ] && [
 	# Remove empty directories from auto-mounter
 	name="`basename "$DEVNAME"`"
 	test -e "/tmp/.automount-$name" && rm_dir "/run/media/$name"
+	test -e "/tmp/.automount-$LABEL" && rm_dir "/run/media/$LABEL"
+	test -e "/tmp/.automount-mmc" && rm_dir "/run/media/mmc"
+	test -e "/tmp/.automount-hdd" && rm_dir "/run/media/hdd"
+	test -e "/tmp/.automount-usbhdd" && rm_dir "/run/media/usbhdd"
 fi
