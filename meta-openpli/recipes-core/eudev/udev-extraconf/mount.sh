@@ -28,7 +28,7 @@ automount() {
 		udevadm info /dev/$name | grep -q 'mmc'
 		mmc=$?
 		if [ "${mmc}" -eq "0" ]; then
-			if [ ! -d "/run/media/mmc" ]; then
+			if [ ! -d "/media/mmc" ]; then
 				LABEL="mmc"
 			else
 				LABEL="$name"
@@ -38,7 +38,7 @@ automount() {
 			internal=$?
 			if [ "${internal}" -eq "0" ]; then
 				LABEL="hdd"
-			elif [ ! -d "/run/media/usbhdd" ]; then
+			elif [ ! -d "/media/usbhdd" ]; then
 				LABEL="usbhdd"
 			else
 				LABEL="$name"
@@ -47,7 +47,7 @@ automount() {
 			LABEL="$name"
 		fi
 	fi
-	! test -d "/run/media/$LABEL" && mkdir -p "/run/media/$LABEL"
+	! test -d "/media/$LABEL" && mkdir -p "/media/$LABEL"
 	# Silent util-linux's version of mounting auto
 	if [ "x`readlink $MOUNT`" = "x/bin/mount.util-linux" ] ;
 	then
@@ -65,12 +65,12 @@ automount() {
 		;;
 	esac
 
-	if ! $MOUNT -t auto $DEVNAME "/run/media/$LABEL"
+	if ! $MOUNT -t auto $DEVNAME "/media/$LABEL"
 	then
-		#logger "mount.sh/automount" "$MOUNT -t auto $DEVNAME \"/run/media/$LABEL\" failed!"
-		rm_dir "/run/media/$LABEL"
+		#logger "mount.sh/automount" "$MOUNT -t auto $DEVNAME \"/media/$LABEL\" failed!"
+		rm_dir "/media/$LABEL"
 	else
-		logger "mount.sh/automount" "Auto-mount of [/run/media/$LABEL] successful"
+		logger "mount.sh/automount" "Auto-mount of [/media/$LABEL] successful"
 		touch "/tmp/.automount-$LABEL"
 	fi
 }
@@ -113,9 +113,9 @@ if [ "$ACTION" = "remove" ] || [ "$ACTION" = "change" ] && [ -x "$UMOUNT" ] && [
 
 	# Remove empty directories from auto-mounter
 	name="`basename "$DEVNAME"`"
-	test -e "/tmp/.automount-$name" && rm_dir "/run/media/$name"
-	test -e "/tmp/.automount-$LABEL" && rm_dir "/run/media/$LABEL"
-	test -e "/tmp/.automount-mmc" && rm_dir "/run/media/mmc"
-	test -e "/tmp/.automount-hdd" && rm_dir "/run/media/hdd"
-	test -e "/tmp/.automount-usbhdd" && rm_dir "/run/media/usbhdd"
+	test -e "/tmp/.automount-$name" && rm_dir "/media/$name"
+	test -e "/tmp/.automount-$LABEL" && rm_dir "/media/$LABEL"
+	test -e "/tmp/.automount-mmc" && rm_dir "/media/mmc"
+	test -e "/tmp/.automount-hdd" && rm_dir "/media/hdd"
+	test -e "/tmp/.automount-usbhdd" && rm_dir "/media/usbhdd"
 fi
