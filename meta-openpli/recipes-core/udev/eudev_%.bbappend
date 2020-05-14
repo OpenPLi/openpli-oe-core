@@ -1,5 +1,8 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
+DEPENDS += " udev-extraconf"
+RDEPENDS_${PN} += " udev-extraconf"
+
 SRC_URI += " file://98-dbox-devices.rules"
 
 do_install_append() {
