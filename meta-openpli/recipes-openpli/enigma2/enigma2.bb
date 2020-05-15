@@ -46,6 +46,7 @@ PYTHON_RDEPS = " \
 	python-lang \
 	python-mmap \
 	python-netclient \
+	python-netifaces \
 	python-netserver \
 	python-numbers \
 	python-pickle \
