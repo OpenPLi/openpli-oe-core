@@ -7,7 +7,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
 # make the origin overridable from OE config, for local mirroring
 SRC_ORIGIN ?= "git://git.opendreambox.org/git/obi/libdvbsi++.git"
 SRC_URI := "${SRC_ORIGIN} \
-	file://fix_section_len_check.patch \
 	file://0001-ac3_descriptor-check-if-header-is-larger-than-descri.patch \
 "
 
