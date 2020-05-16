@@ -40,12 +40,6 @@ INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron"
 FILES_${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
 RDEPENDS_${PN}-cron += "${PN}"
 
-# Some packages recommend udev-hwdb to be installed. To prevent them actually
-# installing, just claim we already provide it and conflict with its default
-# provider.
-RPROVIDES_${PN}-mdev += "udev udev-hwdb"
-RCONFLICTS_${PN}-mdev += "eudev eudev-hwdb"
-
 pkg_postinst_${PN}_append () {
 	update-alternatives --install /bin/sh sh /bin/busybox.nosuid 50
 }
