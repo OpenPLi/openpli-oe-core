@@ -54,7 +54,7 @@
 	url = https://github.com/zhtq/meta-gigablue.git
 [submodule "meta-amiko"]
 	path = meta-amiko
-	url = https://github.com/open-amiko/meta-amiko.git
+	url = https://github.com/neo-pli-bsps/meta-amiko.git
 [submodule "meta-edision"]
 	path = meta-edision
 	url = https://github.com/edision-open/meta-edision.git
