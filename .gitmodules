@@ -12,7 +12,7 @@
 	ignore = dirty
 [submodule "meta-formuler"]
 	path = meta-formuler
-	url = https://github.com/formuler/meta-formuler.git
+	url = https://github.com/neo-pli-bsps/meta-formuler.git
 [submodule "meta-hd"]
 	path = meta-hd
 	url = https://github.com/HD-Digital/meta-hd.git
