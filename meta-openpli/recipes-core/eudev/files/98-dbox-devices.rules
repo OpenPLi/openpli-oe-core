@@ -1,2 +1,0 @@
-KERNEL=="oled0", SYMLINK+="dbox/oled0"
-KERNEL=="fp0", SYMLINK+="dbox/fp0"
