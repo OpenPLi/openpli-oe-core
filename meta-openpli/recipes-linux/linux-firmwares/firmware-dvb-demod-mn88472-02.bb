@@ -1,4 +1,4 @@
-require linux-firmware-local.inc
+require linux-firmware.inc
 
 DESCRIPTION = "Firmware for demod mn88472"
 
