@@ -9,6 +9,7 @@ DEPENDS = "\
 	enigma2-plugin-drivers-ct2-dvb-usb-pctv292e \
 	enigma2-plugin-drivers-ct2-usb-dvbsky-t330 \
 	enigma2-plugin-drivers-ct2-usb-geniatech-t230 \
+	enigma2-plugin-drivers-ct2-usb-xbox-one-vtuner \
 	enigma2-plugin-drivers-s2-usb-dvbsky-s960 \
 	enigma2-plugin-drivers-dvb-usb-af9015 \
 	enigma2-plugin-drivers-dvb-usb-af9035 \
