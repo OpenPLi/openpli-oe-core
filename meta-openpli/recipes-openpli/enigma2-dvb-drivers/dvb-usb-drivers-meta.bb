@@ -20,6 +20,10 @@ OPTIONAL_DVBUSB_PACKAGES = "\
 	enigma2-plugin-drivers-dvb-usb-tbs \
 	"
 
+# optional for the bsp layer when an usb dvb devices is backport
+
+OPTIONAL_EXTRA_DVBUSB_PACKAGES ?= " "
+
 DEPENDS = "\
 	enigma2-plugin-drivers-atsc-usb-hauppauge-950q \
 	enigma2-plugin-drivers-dvb-usb-af9015 \
@@ -29,6 +33,7 @@ DEPENDS = "\
 	enigma2-plugin-drivers-dvb-usb-siano \
 	enigma2-plugin-drivers-dvb-usb-technisat-skystar \
 	${OPTIONAL_DVBUSB_PACKAGES} \
+	${OPTIONAL_EXTRA_DVBUSB_PACKAGES} \
 	"
 
 PV = "1.1"
