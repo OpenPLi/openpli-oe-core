@@ -1,6 +1,6 @@
 require conf/license/openpli-gplv2.inc
 
-inherit allarch
+PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 PACKAGES = "${PN}"
 ALLOW_EMPTY_${PN} = "1"
