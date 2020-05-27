@@ -23,6 +23,8 @@ WIFI_DRIVERS = " \
 	kernel-module-zd1211rw \
 	"
 
+WIFI_BSP_DRIVERS ?= " "
+
 ENIGMA2_PLUGINS = " \
 	enigma2-plugin-extensions-audiosync \
 	enigma2-plugin-extensions-autobackup \
@@ -72,6 +74,7 @@ IMAGE_INSTALL += " \
 	${ENIGMA2_PLUGINS} \
 	\
 	${WIFI_DRIVERS} \
+	${WIFI_BSP_DRIVERS} \
 	\
 	${@bb.utils.contains_any('MACHINE', 'vuuno vuduo vuultimo vusolo vusolo2 vuduo2 vusolose vuzero vuuno4k vuuno4kse vuzero4k vuultimo4k vusolo4k vuduo4k', 'vuplus-tuner-turbo', '', d)} \
 	${@bb.utils.contains_any('MACHINE', 'vuuno4kse vuultimo4k vuduo4k', 'vuplus-hdmi-in-helper', '', d)} \
