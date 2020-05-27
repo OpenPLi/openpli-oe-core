@@ -1,0 +1,127 @@
+From d70610502ba74c0345919a06dd6227f32f24527c Mon Sep 17 00:00:00 2001
+From: Rene Ploetz <RenePloetz@gmx.de>
+Date: Sun, 3 Jul 2016 13:20:27 +0200
+Subject: [PATCH] fix compile against kernel 4.6
+
+Signed-off-by: Rene Ploetz <RenePloetz@gmx.de>
+---
+ chips/mt76x0.c      | 2 +-
+ chips/rtmp_chip.c   | 2 +-
+ common/rtusb_io.c   | 2 +-
+ common/txpower.c    | 4 ++--
+ mcu/mcu.c           | 4 ++--
+ mcu/mcu_and.c       | 4 ++--
+ os/linux/rt_linux.c | 2 +-
+ 7 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/chips/mt76x0.c b/chips/mt76x0.c
+index c3e265a..8fb6658 100644
+--- a/chips/mt76x0.c
++++ b/chips/mt76x0.c
+@@ -2771,7 +2771,7 @@ VOID MT76x0_Init(RTMP_ADAPTER *pAd)
+ #endif /* CONFIG_STA_SUPPORT */
+ 
+ 	/* Channel */
+-	pChipOps->ChipSwitchChannel = MT76x0_ChipSwitchChannel;
++	pChipOps->ChipSwitchChannel = (VOID*) MT76x0_ChipSwitchChannel;
+ 	pChipOps->ChipAGCInit = NULL;
+ 
+ 	pChipOps->AsicMacInit = NICInitMT76x0MacRegisters;
+diff --git a/chips/rtmp_chip.c b/chips/rtmp_chip.c
+index 342e3b9..b9320ae 100644
+--- a/chips/rtmp_chip.c
++++ b/chips/rtmp_chip.c
+@@ -907,7 +907,7 @@ int RtmpChipOpsHook(VOID *pCB)
+ 	pChipOps->ChipAGCAdjust = ChipAGCAdjust;
+ #endif /* CONFIG_STA_SUPPORT */
+ 	pChipOps->ChipBBPAdjust = ChipBBPAdjust;
+-	pChipOps->ChipSwitchChannel = Default_ChipSwitchChannel;
++	pChipOps->ChipSwitchChannel = (VOID*) Default_ChipSwitchChannel;
+ 
+ 	/* TX ALC */
+ 	pChipCap->bTempCompTxALC = FALSE;
+diff --git a/common/rtusb_io.c b/common/rtusb_io.c
+index 71ccb85..31da6a5 100644
+--- a/common/rtusb_io.c
++++ b/common/rtusb_io.c
+@@ -481,7 +481,7 @@ NTSTATUS RTUSBWriteMACRegister(
+ 		Status = RTUSBMultiWrite_nBytes(
+ 		pAd,
+ 		Offset,
+-		&Value,
++		(PUCHAR) &Value,
+ 		4,
+ 		4);
+ 	} else {
+diff --git a/common/txpower.c b/common/txpower.c
+index 8e741ac..4edd72f 100644
+--- a/common/txpower.c
++++ b/common/txpower.c
+@@ -161,8 +161,8 @@ VOID AsicGetAutoAgcOffsetForExternalTxAlc(
+ 			/* a channel */
+ 			bAutoTxAgc = pAd->bAutoTxAgcA;
+ 			TssiRef = pAd->TssiRefA;
+-			pTssiMinusBoundary = &pAd->TssiMinusBoundaryA[0];
+-			pTssiPlusBoundary = &pAd->TssiPlusBoundaryA[0];
++			pTssiMinusBoundary = (UCHAR*) &pAd->TssiMinusBoundaryA[0];
++			pTssiPlusBoundary = (UCHAR*) &pAd->TssiPlusBoundaryA[0];
+ 			TxAgcStep = pAd->TxAgcStepA;
+ 			pTxAgcCompensate = &pAd->TxAgcCompensateA;
+ 		}
+diff --git a/mcu/mcu.c b/mcu/mcu.c
+index 3289c20..f0c46fc 100644
+--- a/mcu/mcu.c
++++ b/mcu/mcu.c
+@@ -30,7 +30,7 @@
+ INT MCUBurstWrite(PRTMP_ADAPTER pAd, UINT32 Offset, UINT32 *Data, UINT32 Cnt)
+ {
+ #ifdef RTMP_USB_SUPPORT
+-	RTUSBMultiWrite_nBytes(pAd, Offset, Data, Cnt * 4, 64); 
++	RTUSBMultiWrite_nBytes(pAd, Offset, (PUCHAR) Data, Cnt * 4, 64); 
+ #endif /* RTMP_USB_SUPPORT */
+ }
+ 
+@@ -59,7 +59,7 @@ VOID ChipOpsMCUHook(PRTMP_ADAPTER pAd, enum MCU_TYPE MCUType)
+ 		//pChipOps->sendCommandToMcu = andes_send_cmd_msg;
+ 		pChipOps->MCUCtrlInit = andes_ctrl_init;
+ 		pChipOps->MCUCtrlExit = andes_ctrl_exit;
+-		pChipOps->Calibration = andes_calibration;
++		pChipOps->Calibration = (VOID*) andes_calibration;
+ 		pChipOps->BurstWrite =  andes_burst_write;
+ 		pChipOps->BurstRead = andes_burst_read;
+ 		pChipOps->RandomRead = andes_random_read;
+diff --git a/mcu/mcu_and.c b/mcu/mcu_and.c
+index fa4286a..17333b1 100644
+--- a/mcu/mcu_and.c
++++ b/mcu/mcu_and.c
+@@ -322,7 +322,7 @@ NDIS_STATUS andes_usb_loadfw(RTMP_ADAPTER *ad)
+ 									 cap->CommandBulkOutAddr,
+ 									 fw_data,
+ 									 sent_len + sizeof(*tx_info) + USB_END_PADDING,
+-									 usb_uploadfw_complete,
++									 (usb_complete_t) usb_uploadfw_complete,
+ 									 &load_fw_done,
+ 									 fw_dma);
+ 
+@@ -471,7 +471,7 @@ NDIS_STATUS andes_usb_loadfw(RTMP_ADAPTER *ad)
+ 									 cap->CommandBulkOutAddr,
+ 									 fw_data,
+ 									 sent_len + sizeof(*tx_info) + USB_END_PADDING,
+-									 usb_uploadfw_complete,
++									 (usb_complete_t) usb_uploadfw_complete,
+ 									 &load_fw_done,
+ 									 fw_dma);
+ 
+diff --git a/os/linux/rt_linux.c b/os/linux/rt_linux.c
+index 1308d07..667ebda 100644
+--- a/os/linux/rt_linux.c
++++ b/os/linux/rt_linux.c
+@@ -2032,7 +2032,7 @@ VOID RtmpDrvAllRFPrint(
+ 		if (file_w->f_op && file_w->f_op->write) {
+ 			file_w->f_pos = 0;
+ 			/* write data to file */
+-			file_w->f_op->write(file_w, pBuf, BufLen, &file_w->f_pos);
++			file_w->f_op->write(file_w, (const char *) pBuf, BufLen, &file_w->f_pos);
+ 		}
+ 		filp_close(file_w, NULL);
+ 	}
