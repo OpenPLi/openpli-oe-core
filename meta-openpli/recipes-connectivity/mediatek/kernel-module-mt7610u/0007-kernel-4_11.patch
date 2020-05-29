@@ -1,0 +1,494 @@
+From 60f669360e2f75b4bcb236761250d48e17cb868e Thu 29 May 18:38:34 2020
+From: Erik Slagter <erik@openpli.org>
+Date: Thu, 29 May 2020 18:38:34 +0200
+Subject: [PATCH] Kernel patches for 4.11+
+
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/ba_action.c mt7610u_wifi_sta_v3002_dpo_20130916/common/ba_action.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/ba_action.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/common/ba_action.c	2020-05-29 18:23:48.180200048 +0200
+@@ -1897,7 +1897,7 @@
+ 	/* V. Receive seq surpasses Win(lastseq + nMSDU). So refresh all reorder buffer*/
+ 	else
+ 	{
+-		LONG WinStartSeq, TmpSeq;
++		__LONG__ WinStartSeq, TmpSeq;
+ 
+ 
+ 		TmpSeq = Sequence - (pBAEntry->BAWinSize) -1;
+@@ -2043,7 +2043,7 @@
+ 	/* V. Receive seq surpasses Win(lastseq + nMSDU). So refresh all reorder buffer*/
+ 	else
+ 	{
+-		LONG WinStartSeq, TmpSeq;
++		__LONG__ WinStartSeq, TmpSeq;
+ 
+ 
+ 		TmpSeq = Sequence - (pBAEntry->BAWinSize) -1;
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/cmm_cfg.c mt7610u_wifi_sta_v3002_dpo_20130916/common/cmm_cfg.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/cmm_cfg.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/common/cmm_cfg.c	2020-05-29 18:18:15.672031276 +0200
+@@ -138,7 +138,7 @@
+ 	IN PSTRING			arg,
+ 	IN INT				band)
+ {
+-	LONG region;
++	__LONG__ region;
+ 	UCHAR *pCountryRegion;
+ 	
+ 	region = simple_strtol(arg, 0, 10);
+@@ -295,7 +295,7 @@
+ */
+ INT RT_CfgSetWirelessMode(RTMP_ADAPTER *pAd, PSTRING arg)
+ {
+-	LONG cfg_mode;
++	__LONG__ cfg_mode;
+ 	UCHAR wmode, *mode_str;
+ 
+ 
+@@ -361,7 +361,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG ShortSlot;
++	__LONG__ ShortSlot;
+ 
+ 	ShortSlot = simple_strtol(arg, 0, 10);
+ 
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/cmm_info.c mt7610u_wifi_sta_v3002_dpo_20130916/common/cmm_info.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/cmm_info.c	2020-05-29 03:01:33.753614123 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/common/cmm_info.c	2020-05-29 18:25:42.422884748 +0200
+@@ -273,7 +273,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG TxPower;
++	__LONG__ TxPower;
+ 	INT   success = FALSE;
+ 
+ 	TxPower = simple_strtol(arg, 0, 10);
+@@ -471,7 +471,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG TxBurst;
++	__LONG__ TxBurst;
+ 
+ 	TxBurst = simple_strtol(arg, 0, 10);
+ 	if (TxBurst == 1)
+@@ -502,7 +502,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG aggre;
++	__LONG__ aggre;
+ 
+ 	aggre = simple_strtol(arg, 0, 10);
+ 
+@@ -637,7 +637,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-    LONG ieee80211h;
++    __LONG__ ieee80211h;
+ 
+ 	ieee80211h = simple_strtol(arg, 0, 10);
+ 
+@@ -1177,7 +1177,7 @@
+ #ifdef CONFIG_STA_SUPPORT
+ VOID    RTMPSetDesiredRates(
+     IN  PRTMP_ADAPTER   pAdapter,
+-    IN  LONG            Rates)
++    IN  __LONG__            Rates)
+ {
+     NDIS_802_11_RATES aryRates;
+ 
+@@ -2433,13 +2433,13 @@
+ 				(HtMcs <= 3) && 
+ 				(pAd->StaCfg.DesiredTransmitSetting.field.FixedTxMode == FIXED_TXMODE_CCK))
+ 			{
+-				RTMPSetDesiredRates(pAd, (LONG) (RateIdToMbps[HtMcs] * 1000000));
++				RTMPSetDesiredRates(pAd, (__LONG__) (RateIdToMbps[HtMcs] * 1000000));
+ 			}
+ 			else if ((pAd->StaCfg.DesiredTransmitSetting.field.MCS != MCS_AUTO) && 
+ 					(HtMcs <= 7) &&
+ 	            			(pAd->StaCfg.DesiredTransmitSetting.field.FixedTxMode == FIXED_TXMODE_OFDM))
+ 			{
+-				RTMPSetDesiredRates(pAd, (LONG) (RateIdToMbps[HtMcs+4] * 1000000));
++				RTMPSetDesiredRates(pAd, (__LONG__) (RateIdToMbps[HtMcs+4] * 1000000));
+ 			}
+ 			else
+ 				bAutoRate = TRUE;
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/mlme.c mt7610u_wifi_sta_v3002_dpo_20130916/common/mlme.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/mlme.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/common/mlme.c	2020-05-29 18:23:36.504334499 +0200
+@@ -1139,7 +1139,7 @@
+ 			(RTMP_TIME_AFTER(pAd->Mlme.Now32, pAd->StaCfg.LastBeaconRxTime + (1*OS_HZ))))
+ 		{
+ 			ULONG BPtoJiffies;
+-			LONG timeDiff;
++			__LONG__ timeDiff;
+ 
+ 			BPtoJiffies = (((pAd->CommonCfg.BeaconPeriod * 1024 / 1000) * OS_HZ) / 1000);
+ 			timeDiff = (pAd->Mlme.Now32 - pAd->StaCfg.LastBeaconRxTime) / BPtoJiffies;
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/rtmp_init_inf.c mt7610u_wifi_sta_v3002_dpo_20130916/common/rtmp_init_inf.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/common/rtmp_init_inf.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/common/rtmp_init_inf.c	2020-05-29 18:23:27.676436112 +0200
+@@ -983,7 +983,7 @@
+ 	PSTRING			fileName = NULL;
+ 	RTMP_OS_FD		file_r, file_w;
+ 	RTMP_OS_FS_INFO		osFSInfo;
+-	LONG			rv, fileLen = 0;
++	__LONG__		rv, fileLen = 0;
+ 	char			*offset = 0;
+ 	PSTRING			pTempStr = 0;
+ //	INT				tempStrLen = 0;
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/oid.h mt7610u_wifi_sta_v3002_dpo_20130916/include/oid.h
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/oid.h	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/include/oid.h	2020-05-29 18:28:06.953220666 +0200
+@@ -426,7 +426,7 @@
+ /* */
+ /* Received Signal Strength Indication */
+ /* */
+-typedef LONG NDIS_802_11_RSSI;	/* in dBm */
++typedef __LONG__ NDIS_802_11_RSSI;	/* in dBm */
+ 
+ typedef struct _NDIS_802_11_CONFIGURATION_FH {
+ 	ULONG Length;		/* Length of structure */
+@@ -471,7 +471,7 @@
+ } NDIS_802_11_STATISTICS, *PNDIS_802_11_STATISTICS;
+ 
+ typedef struct _MBSS_STATISTICS {
+-	LONG TxCount;
++	__LONG__ TxCount;
+ 	ULONG RxCount;
+ 	ULONG ReceivedByteCount;
+ 	ULONG TransmittedByteCount;
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/rtmp.h mt7610u_wifi_sta_v3002_dpo_20130916/include/rtmp.h
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/rtmp.h	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/include/rtmp.h	2020-05-29 18:29:36.864185435 +0200
+@@ -7120,7 +7120,7 @@
+ 
+ VOID    RTMPSetDesiredRates(
+     IN  PRTMP_ADAPTER   pAdapter,
+-    IN  LONG            Rates);
++    IN  __LONG__            Rates);
+ 
+ #ifdef XLINK_SUPPORT
+ INT Set_XlinkMode_Proc(
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/rtmp_type.h mt7610u_wifi_sta_v3002_dpo_20130916/include/rtmp_type.h
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/rtmp_type.h	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/include/rtmp_type.h	2020-05-29 18:28:54.540672727 +0200
+@@ -66,7 +66,7 @@
+ 
+ typedef signed short SHORT;
+ typedef signed int INT;
+-typedef signed long LONG;
++typedef signed long __LONG__;
+ typedef signed long long LONGLONG;
+ 
+ typedef unsigned long long ULONGLONG;
+@@ -81,7 +81,7 @@
+ typedef CHAR *PCHAR;
+ typedef UCHAR *PUCHAR;
+ typedef USHORT *PUSHORT;
+-typedef LONG *PLONG;
++typedef __LONG__ *PLONG;
+ typedef ULONG *PULONG;
+ typedef UINT *PUINT;
+ 
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/rt_os_util.h mt7610u_wifi_sta_v3002_dpo_20130916/include/rt_os_util.h
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/include/rt_os_util.h	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/include/rt_os_util.h	2020-05-29 18:29:02.088585826 +0200
+@@ -254,7 +254,7 @@
+ 
+ VOID RtmpOsPktLenAssign(
+ 	IN	PNDIS_PACKET			pNetPkt,
+-	IN	LONG					Len);
++	IN	__LONG__					Len);
+ 
+ VOID RtmpOsPktTailAdjust(
+ 	IN	PNDIS_PACKET			pNetPkt,
+@@ -606,9 +606,9 @@
+ /* OS Atomic */
+ BOOLEAN RtmpOsAtomicInit(RTMP_OS_ATOMIC *pAtomic, LIST_HEADER *pAtomicList);
+ VOID RtmpOsAtomicDestroy(RTMP_OS_ATOMIC *pAtomic);
+-LONG RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomic);
++__LONG__ RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomic);
+ VOID RtmpOsAtomicDec(RTMP_OS_ATOMIC *pAtomic);
+-VOID RtmpOsAtomicInterlockedExchange(RTMP_OS_ATOMIC *pAtomicSrc, LONG Value);
++VOID RtmpOsAtomicInterlockedExchange(RTMP_OS_ATOMIC *pAtomicSrc, __LONG__ Value);
+ 
+ /* OS Utility */
+ void hex_dump(char *str, unsigned char *pSrcBufVA, unsigned int SrcBufLen);
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/os/linux/rt_linux.c mt7610u_wifi_sta_v3002_dpo_20130916/os/linux/rt_linux.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/os/linux/rt_linux.c	2020-05-29 03:01:33.793613678 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/os/linux/rt_linux.c	2020-05-29 18:27:09.005887843 +0200
+@@ -5158,7 +5158,7 @@
+ Note:
+ ========================================================================
+ */
+-VOID RtmpOsPktLenAssign(PNDIS_PACKET pNetPkt, LONG Len)
++VOID RtmpOsPktLenAssign(PNDIS_PACKET pNetPkt, __LONG__ Len)
+ {
+ 	SET_OS_PKT_LEN(pNetPkt, Len);
+ }
+@@ -5381,7 +5381,7 @@
+ Note:
+ ========================================================================
+ */
+-LONG RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomicSrc)
++__LONG__ RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomicSrc)
+ {
+ 	if (pAtomicSrc->pContent)
+ 		return atomic_read((atomic_t *) (pAtomicSrc->pContent));
+@@ -5428,7 +5428,7 @@
+ */
+ VOID RtmpOsAtomicInterlockedExchange(
+ 	RTMP_OS_ATOMIC *pAtomicSrc,
+-	LONG Value)
++	__LONG__ Value)
+ {
+ 	if (pAtomicSrc->pContent)
+ 		InterlockedExchange((atomic_t *) (pAtomicSrc->pContent), Value);
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/os/linux/sta_ioctl.c mt7610u_wifi_sta_v3002_dpo_20130916/os/linux/sta_ioctl.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/os/linux/sta_ioctl.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/os/linux/sta_ioctl.c	2020-05-29 18:27:26.249689315 +0200
+@@ -214,7 +214,7 @@
+ 		   __u32 *mode, char *extra)
+ {
+ 	VOID *pAd = NULL;
+-	LONG Mode;
++	__LONG__ Mode;
+ 
+ 	GET_PAD_FROM_NET_DEV(pAd, dev);
+ 
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0005-buildfix.patch/common/cmm_info.c mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0005-buildfix.patch/common/cmm_info.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0005-buildfix.patch/common/cmm_info.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0005-buildfix.patch/common/cmm_info.c	2020-05-29 18:26:57.646018650 +0200
+@@ -273,7 +273,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG TxPower;
++	__LONG__ TxPower;
+ 	INT   success = FALSE;
+ 
+ 	TxPower = simple_strtol(arg, 0, 10);
+@@ -471,7 +471,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG TxBurst;
++	__LONG__ TxBurst;
+ 
+ 	TxBurst = simple_strtol(arg, 0, 10);
+ 	if (TxBurst == 1)
+@@ -502,7 +502,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-	LONG aggre;
++	__LONG__ aggre;
+ 
+ 	aggre = simple_strtol(arg, 0, 10);
+ 
+@@ -637,7 +637,7 @@
+ 	IN	PRTMP_ADAPTER	pAd, 
+ 	IN	PSTRING			arg)
+ {
+-    LONG ieee80211h;
++    __LONG__ ieee80211h;
+ 
+ 	ieee80211h = simple_strtol(arg, 0, 10);
+ 
+@@ -1177,7 +1177,7 @@
+ #ifdef CONFIG_STA_SUPPORT
+ VOID    RTMPSetDesiredRates(
+     IN  PRTMP_ADAPTER   pAdapter,
+-    IN  LONG            Rates)
++    IN  __LONG__            Rates)
+ {
+     NDIS_802_11_RATES aryRates;
+ 
+@@ -2433,13 +2433,13 @@
+ 				(HtMcs <= 3) && 
+ 				(pAd->StaCfg.DesiredTransmitSetting.field.FixedTxMode == FIXED_TXMODE_CCK))
+ 			{
+-				RTMPSetDesiredRates(pAd, (LONG) (RateIdToMbps[HtMcs] * 1000000));
++				RTMPSetDesiredRates(pAd, (__LONG__) (RateIdToMbps[HtMcs] * 1000000));
+ 			}
+ 			else if ((pAd->StaCfg.DesiredTransmitSetting.field.MCS != MCS_AUTO) && 
+ 					(HtMcs <= 7) &&
+ 	            			(pAd->StaCfg.DesiredTransmitSetting.field.FixedTxMode == FIXED_TXMODE_OFDM))
+ 			{
+-				RTMPSetDesiredRates(pAd, (LONG) (RateIdToMbps[HtMcs+4] * 1000000));
++				RTMPSetDesiredRates(pAd, (__LONG__) (RateIdToMbps[HtMcs+4] * 1000000));
+ 			}
+ 			else
+ 				bAutoRate = TRUE;
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0005-buildfix.patch/os/linux/rt_linux.c mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0005-buildfix.patch/os/linux/rt_linux.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0005-buildfix.patch/os/linux/rt_linux.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0005-buildfix.patch/os/linux/rt_linux.c	2020-05-29 18:27:03.113955689 +0200
+@@ -5155,7 +5155,7 @@
+ Note:
+ ========================================================================
+ */
+-VOID RtmpOsPktLenAssign(PNDIS_PACKET pNetPkt, LONG Len)
++VOID RtmpOsPktLenAssign(PNDIS_PACKET pNetPkt, __LONG__ Len)
+ {
+ 	SET_OS_PKT_LEN(pNetPkt, Len);
+ }
+@@ -5378,7 +5378,7 @@
+ Note:
+ ========================================================================
+ */
+-LONG RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomicSrc)
++__LONG__ RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomicSrc)
+ {
+ 	if (pAtomicSrc->pContent)
+ 		return atomic_read((atomic_t *) (pAtomicSrc->pContent));
+@@ -5425,7 +5425,7 @@
+ */
+ VOID RtmpOsAtomicInterlockedExchange(
+ 	RTMP_OS_ATOMIC *pAtomicSrc,
+-	LONG Value)
++	__LONG__ Value)
+ {
+ 	if (pAtomicSrc->pContent)
+ 		InterlockedExchange((atomic_t *) (pAtomicSrc->pContent), Value);
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0005-buildfix.patch/sta/sta_cfg.c mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0005-buildfix.patch/sta/sta_cfg.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0005-buildfix.patch/sta/sta_cfg.c	2013-09-16 16:03:08.000000000 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0005-buildfix.patch/sta/sta_cfg.c	2020-05-29 18:26:43.514181362 +0200
+@@ -7743,13 +7743,13 @@
+ 	{
+ 		if (pAd->ate.RxAntennaSel == 0)
+ 		{
+-    		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (LONG)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
+-			sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (LONG)(pAd->ate.LastRssi1 - pAd->BbpRssiToDbmDelta));
+-			sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (LONG)(pAd->ate.LastRssi2 - pAd->BbpRssiToDbmDelta));
++    		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (__LONG__)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
++			sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (__LONG__)(pAd->ate.LastRssi1 - pAd->BbpRssiToDbmDelta));
++			sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (__LONG__)(pAd->ate.LastRssi2 - pAd->BbpRssiToDbmDelta));
+ 		}
+ 		else
+ 		{
+-    		sprintf(extra+strlen(extra), "RSSI                            = %ld\n", (LONG)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
++    		sprintf(extra+strlen(extra), "RSSI                            = %ld\n", (__LONG__)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
+ 		}
+ 	}
+ 	else
+@@ -7757,9 +7757,9 @@
+ 	{
+ #ifdef ENHANCED_STAT_DISPLAY
+ 		sprintf(extra+strlen(extra), "RSSI                            = %ld %ld %ld\n",
+-				(LONG)(pAd->StaCfg.RssiSample.LastRssi0 - pAd->BbpRssiToDbmDelta),
+-				(LONG)(pAd->StaCfg.RssiSample.LastRssi1 - pAd->BbpRssiToDbmDelta),
+-				(LONG)(pAd->StaCfg.RssiSample.LastRssi2 - pAd->BbpRssiToDbmDelta));
++				(__LONG__)(pAd->StaCfg.RssiSample.LastRssi0 - pAd->BbpRssiToDbmDelta),
++				(__LONG__)(pAd->StaCfg.RssiSample.LastRssi1 - pAd->BbpRssiToDbmDelta),
++				(__LONG__)(pAd->StaCfg.RssiSample.LastRssi2 - pAd->BbpRssiToDbmDelta));
+ 
+ 		// Display Last Rx Rate and BF SNR of first Associated entry in MAC table
+ 		if (pAd->MacTab.Size > 0)
+@@ -7798,13 +7798,13 @@
+ 			}
+ 		}
+ #else    		    	
+-		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (LONG)(pAd->StaCfg.RssiSample.AvgRssi0 - pAd->BbpRssiToDbmDelta));
+-		sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (LONG)(pAd->StaCfg.RssiSample.AvgRssi1 - pAd->BbpRssiToDbmDelta));
+-        	sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (LONG)(pAd->StaCfg.RssiSample.AvgRssi2 - pAd->BbpRssiToDbmDelta));
++		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgRssi0 - pAd->BbpRssiToDbmDelta));
++		sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgRssi1 - pAd->BbpRssiToDbmDelta));
++        	sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgRssi2 - pAd->BbpRssiToDbmDelta));
+ #endif /* ENHANCED_STAT_DISPLAY */
+ 
+-		sprintf(extra+strlen(extra), "SNR-A                          = %ld\n", (LONG)(pAd->StaCfg.RssiSample.AvgSnr0));
+-        	sprintf(extra+strlen(extra), "SNR-B (if available)           = %ld\n\n", (LONG)(pAd->StaCfg.RssiSample.AvgSnr1));
++		sprintf(extra+strlen(extra), "SNR-A                          = %ld\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgSnr0));
++        	sprintf(extra+strlen(extra), "SNR-B (if available)           = %ld\n\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgSnr1));
+ 	}
+ 
+ #ifdef WPA_SUPPLICANT_SUPPORT
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0006-kernel-4_6.patch/os/linux/rt_linux.c mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0006-kernel-4_6.patch/os/linux/rt_linux.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/.pc/0006-kernel-4_6.patch/os/linux/rt_linux.c	2020-05-29 03:01:33.749614168 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/.pc/0006-kernel-4_6.patch/os/linux/rt_linux.c	2020-05-29 18:26:19.910453112 +0200
+@@ -5158,7 +5158,7 @@
+ Note:
+ ========================================================================
+ */
+-VOID RtmpOsPktLenAssign(PNDIS_PACKET pNetPkt, LONG Len)
++VOID RtmpOsPktLenAssign(PNDIS_PACKET pNetPkt, __LONG__ Len)
+ {
+ 	SET_OS_PKT_LEN(pNetPkt, Len);
+ }
+@@ -5381,7 +5381,7 @@
+ Note:
+ ========================================================================
+ */
+-LONG RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomicSrc)
++__LONG__ RtmpOsAtomicRead(RTMP_OS_ATOMIC *pAtomicSrc)
+ {
+ 	if (pAtomicSrc->pContent)
+ 		return atomic_read((atomic_t *) (pAtomicSrc->pContent));
+@@ -5428,7 +5428,7 @@
+ */
+ VOID RtmpOsAtomicInterlockedExchange(
+ 	RTMP_OS_ATOMIC *pAtomicSrc,
+-	LONG Value)
++	__LONG__ Value)
+ {
+ 	if (pAtomicSrc->pContent)
+ 		InterlockedExchange((atomic_t *) (pAtomicSrc->pContent), Value);
+diff -ur mt7610u_wifi_sta_v3002_dpo_20130916-orig/sta/sta_cfg.c mt7610u_wifi_sta_v3002_dpo_20130916/sta/sta_cfg.c
+--- mt7610u_wifi_sta_v3002_dpo_20130916-orig/sta/sta_cfg.c	2020-05-29 03:01:33.753614123 +0200
++++ mt7610u_wifi_sta_v3002_dpo_20130916/sta/sta_cfg.c	2020-05-29 18:16:52.232993767 +0200
+@@ -7743,13 +7743,13 @@
+ 	{
+ 		if (pAd->ate.RxAntennaSel == 0)
+ 		{
+-    		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (LONG)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
+-			sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (LONG)(pAd->ate.LastRssi1 - pAd->BbpRssiToDbmDelta));
+-			sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (LONG)(pAd->ate.LastRssi2 - pAd->BbpRssiToDbmDelta));
++    		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (__LONG__)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
++			sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (__LONG__)(pAd->ate.LastRssi1 - pAd->BbpRssiToDbmDelta));
++			sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (__LONG__)(pAd->ate.LastRssi2 - pAd->BbpRssiToDbmDelta));
+ 		}
+ 		else
+ 		{
+-    		sprintf(extra+strlen(extra), "RSSI                            = %ld\n", (LONG)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
++    		sprintf(extra+strlen(extra), "RSSI                            = %ld\n", (__LONG__)(pAd->ate.LastRssi0 - pAd->BbpRssiToDbmDelta));
+ 		}
+ 	}
+ 	else
+@@ -7757,9 +7757,9 @@
+ 	{
+ #ifdef ENHANCED_STAT_DISPLAY
+ 		sprintf(extra+strlen(extra), "RSSI                            = %ld %ld %ld\n",
+-				(LONG)(pAd->StaCfg.RssiSample.LastRssi0 - pAd->BbpRssiToDbmDelta),
+-				(LONG)(pAd->StaCfg.RssiSample.LastRssi1 - pAd->BbpRssiToDbmDelta),
+-				(LONG)(pAd->StaCfg.RssiSample.LastRssi2 - pAd->BbpRssiToDbmDelta));
++				(__LONG__)(pAd->StaCfg.RssiSample.LastRssi0 - pAd->BbpRssiToDbmDelta),
++				(__LONG__)(pAd->StaCfg.RssiSample.LastRssi1 - pAd->BbpRssiToDbmDelta),
++				(__LONG__)(pAd->StaCfg.RssiSample.LastRssi2 - pAd->BbpRssiToDbmDelta));
+ 
+ 		// Display Last Rx Rate and BF SNR of first Associated entry in MAC table
+ 		if (pAd->MacTab.Size > 0)
+@@ -7798,13 +7798,13 @@
+ 			}
+ 		}
+ #else    		    	
+-		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (LONG)(pAd->StaCfg.RssiSample.AvgRssi0 - pAd->BbpRssiToDbmDelta));
+-		sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (LONG)(pAd->StaCfg.RssiSample.AvgRssi1 - pAd->BbpRssiToDbmDelta));
+-        	sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (LONG)(pAd->StaCfg.RssiSample.AvgRssi2 - pAd->BbpRssiToDbmDelta));
++		sprintf(extra+strlen(extra), "RSSI-A                          = %ld\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgRssi0 - pAd->BbpRssiToDbmDelta));
++		sprintf(extra+strlen(extra), "RSSI-B (if available)           = %ld\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgRssi1 - pAd->BbpRssiToDbmDelta));
++        	sprintf(extra+strlen(extra), "RSSI-C (if available)           = %ld\n\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgRssi2 - pAd->BbpRssiToDbmDelta));
+ #endif /* ENHANCED_STAT_DISPLAY */
+ 
+-		sprintf(extra+strlen(extra), "SNR-A                          = %ld\n", (LONG)(pAd->StaCfg.RssiSample.AvgSnr0));
+-        	sprintf(extra+strlen(extra), "SNR-B (if available)           = %ld\n\n", (LONG)(pAd->StaCfg.RssiSample.AvgSnr1));
++		sprintf(extra+strlen(extra), "SNR-A                          = %ld\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgSnr0));
++        	sprintf(extra+strlen(extra), "SNR-B (if available)           = %ld\n\n", (__LONG__)(pAd->StaCfg.RssiSample.AvgSnr1));
+ 	}
+ 
+ #ifdef WPA_SUPPLICANT_SUPPORT
