@@ -42,7 +42,6 @@ PYTHON_RDEPS = " \
 	python-core \
 	python-crypt \
 	python-fcntl \
-	python-importlib \
 	python-lang \
 	python-logging \
 	python-mmap \
