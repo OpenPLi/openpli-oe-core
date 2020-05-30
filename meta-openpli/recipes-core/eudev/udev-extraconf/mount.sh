@@ -111,11 +111,8 @@ if [ "$ACTION" = "remove" ] || [ "$ACTION" = "change" ] && [ -x "$UMOUNT" ] && [
 		$UMOUNT $mnt
 	done
 
+	LABEL=`echo $mnt | cut -c 8-`
+	# logger "remove device $LABEL"
 	# Remove empty directories from auto-mounter
-	name="`basename "$DEVNAME"`"
-	test -e "/tmp/.automount-$name" && rm_dir "/media/$name"
 	test -e "/tmp/.automount-$LABEL" && rm_dir "/media/$LABEL"
-	test -e "/tmp/.automount-mmc" && rm_dir "/media/mmc"
-	test -e "/tmp/.automount-hdd" && rm_dir "/media/hdd"
-	test -e "/tmp/.automount-usbhdd" && rm_dir "/media/usbhdd"
 fi
