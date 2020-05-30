@@ -15,6 +15,12 @@ SRC_URI_append += "\
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://kodiplayers/HiPlayer.patch file://kodiplayers/HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch file://kodi-input-devices-keyfixes.patch', 'file://defaultplayer-E2Player.patch file://kodiplayers/E2Player.patch', d)} \
 "
 
+RRECOMMENDS_${PN}_append += "\
+	python-pycryptodomex \
+	python-mechanize \
+	python-profile \
+"
+
 WINDOWSYSTEM = "stb"
 
 PACKAGECONFIG = "${ACCEL} ${WINDOWSYSTEM} lcms"
