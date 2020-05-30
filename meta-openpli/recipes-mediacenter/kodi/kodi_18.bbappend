@@ -12,7 +12,7 @@ SRC_URI_append += "\
             file://egl/kodi-EGL.patch \
             \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://kodiplayers/HiPlayer.patch file://kodiplayers/HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://kodiplayers/E2Player.patch', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://kodiplayers/HiPlayer.patch file://kodiplayers/HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch file://kodi-input-devices-keyfixes.patch', 'file://defaultplayer-E2Player.patch file://kodiplayers/E2Player.patch', d)} \
 "
 
 WINDOWSYSTEM = "stb"
@@ -34,8 +34,8 @@ EXTRA_OECMAKE_append_osmega      += " -DWITH_V3D=v3dplatform"
 SRC_URI_append_gbquad4k     += " file://egl/EGLNativeTypeV3D-gb4k.patch"
 SRC_URI_append_gbue4k       += " file://egl/EGLNativeTypeV3D-gb4k.patch"
 SRC_URI_append_gbtrio4k     += " file://egl/EGLNativeTypeMali.patch"
-EXTRA_OECMAKE_append_gbquad4k     += " -DWITH_V3D=nxinit"
-EXTRA_OECMAKE_append_gbue4k       += " -DWITH_V3D=nxinit"
+EXTRA_OECMAKE_append_gbquad4k += " -DWITH_V3D=nxinit"
+EXTRA_OECMAKE_append_gbue4k   += " -DWITH_V3D=nxinit"
 
 #Vuplus
 SRC_URI_append_vusolo2     += " file://egl/EGLNativeTypeV3D-vuplus.patch"
@@ -57,15 +57,15 @@ EXTRA_OECMAKE_append_vuuno4kse   += " -DWITH_V3D=vuarm"
 EXTRA_OECMAKE_append_vuzero4k    += " -DWITH_V3D=vuarm"
 EXTRA_OECMAKE_append_vuduo4k     += " -DWITH_V3D=vuarm"
 
-DEPENDS_append_vusolo2     += " kodi-vuplus"
-DEPENDS_append_vuduo2      += " kodi-vuplus"
-DEPENDS_append_vusolose    += " kodi-vuplus"
-DEPENDS_append_vusolo4k    += " kodiegl"
-DEPENDS_append_vuultimo4k  += " kodiegl"
-DEPENDS_append_vuuno4k     += " kodiegl"
-DEPENDS_append_vuuno4kse   += " kodiegl"
-DEPENDS_append_vuzero4k    += " kodiegl"
-DEPENDS_append_vuduo4k     += " kodiegl"
+DEPENDS_append_vusolo2    += " kodi-vuplus"
+DEPENDS_append_vuduo2     += " kodi-vuplus"
+DEPENDS_append_vusolose   += " kodi-vuplus"
+DEPENDS_append_vusolo4k   += " kodiegl"
+DEPENDS_append_vuultimo4k += " kodiegl"
+DEPENDS_append_vuuno4k    += " kodiegl"
+DEPENDS_append_vuuno4kse  += " kodiegl"
+DEPENDS_append_vuzero4k   += " kodiegl"
+DEPENDS_append_vuduo4k    += " kodiegl"
 
 EXTRA_KODI          = "empty"
 EXTRA_KODI_vusolo2  = "vuglesheader"

@@ -1,0 +1,28 @@
+---
+ xbmc/input/XBMC_keysym.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/xbmc/input/XBMC_keysym.h b/xbmc/input/XBMC_keysym.h
+index af48a15262..aade79b49f 100644
+--- a/xbmc/input/XBMC_keysym.h
++++ b/xbmc/input/XBMC_keysym.h
+@@ -116,7 +116,7 @@ typedef enum {
+   XBMCK_BROWSER_FAVORITES    = 0xAB,
+   XBMCK_BROWSER_HOME         = 0xAC,
+   XBMCK_VOLUME_MUTE          = 0xAD,
+-  XBMCK_VOLUME_DOWN          = 0xAE,
++  XBMCK_F14                  = 0xAE,
+   XBMCK_VOLUME_UP            = 0xAF,
+   XBMCK_MEDIA_NEXT_TRACK     = 0xB0,
+   XBMCK_MEDIA_PREV_TRACK     = 0xB1,
+@@ -175,7 +175,7 @@ typedef enum {
+   XBMCK_F11         = 0x124,
+   XBMCK_F12         = 0x125,
+   XBMCK_F13         = 0x126,
+-  XBMCK_F14         = 0x127,
++  XBMCK_VOLUME_DOWN = 0x127,
+   XBMCK_F15         = 0x128,
+ 
+   // Key state modifier keys
+-- 
+2.17.1
