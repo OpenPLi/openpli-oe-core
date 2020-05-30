@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..dd62eff
 --- /dev/null
 +++ b/cmake/platform/linux/stb.cmake
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,33 @@
 +set(PLATFORM_REQUIRED_DEPS EGL)
 +set(PLATFORM_OPTIONAL_DEPS VAAPI)
 +
@@ -1067,12 +1067,19 @@ index 0000000..f8efc14
 +  CEGLContextUtils m_pGLContext;
 +
 +};
+---
+ xbmc/windowing/egl/WinSystemstb.cpp | 525 ++++++++++++++++++++++++++++
+ xbmc/windowing/egl/WinSystemstb.h   |  70 ++++
+ 2 files changed, 595 insertions(+)
+ create mode 100644 xbmc/windowing/egl/WinSystemstb.cpp
+ create mode 100644 xbmc/windowing/egl/WinSystemstb.h
+
 diff --git a/xbmc/windowing/egl/WinSystemstb.cpp b/xbmc/windowing/egl/WinSystemstb.cpp
 new file mode 100644
-index 0000000..b462b54
+index 0000000000..decda832e2
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
-@@ -0,0 +1,536 @@
+@@ -0,0 +1,525 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1086,15 +1093,21 @@ index 0000000..b462b54
 +#include "WinSystemstb.h"
 +
 +#include "filesystem/SpecialProtocol.h"
++#include "settings/AdvancedSettings.h"
++#include "settings/Settings.h"
++#include "settings/SettingsComponent.h"
 +#include "ServiceBroker.h"
 +#include "cores/AudioEngine/AESinkFactory.h"
 +//#include "cores/AudioEngine/Sinks/AESinkPi.h"
-+#include "guilib/DispResource.h"
++
 +#include "settings/DisplaySettings.h"
-+#include "settings/Settings.h"
-+#include "settings/AdvancedSettings.h"
-+#include "settings/SettingsComponent.h"
++#include "guilib/DispResource.h"
++
 +#include "utils/log.h"
++#include "EGLWrapper.h"
++#include "EGLQuirks.h"
++#include <EGL/egl.h>
++#include <EGL/eglplatform.h>
 +#include "windowing/GraphicContext.h"
 +#include "windowing/Resolution.h"
 +
@@ -1108,28 +1121,20 @@ index 0000000..b462b54
 +#include <float.h>
 +#include <string.h>
 +
-+#include "EGLWrapper.h"
-+#include "EGLQuirks.h"
-+
-+#include <EGL/egl.h>
-+#include <EGL/eglplatform.h>
-+
 +using namespace KODI;
 +
 +CWinSystemstb::CWinSystemstb():
 +CWinSystemBase()
 +{
-+  m_display = EGL_NO_DISPLAY;
-+  m_surface = EGL_NO_SURFACE;
-+  m_context = EGL_NO_CONTEXT;
++  m_displayWidth      = 0;
++  m_displayHeight     = 0;
 +
-+  m_displayWidth = 0;
-+  m_displayHeight = 0;
-+
-+  m_stereo_mode = RENDER_STEREO_MODE_OFF;
-+  m_delayDispReset = false;
-+
-+  m_egl = new CEGLWrapper;
++  m_display           = EGL_NO_DISPLAY;
++  m_surface           = EGL_NO_SURFACE;
++  m_context           = EGL_NO_CONTEXT;
++  m_stereo_mode       = RENDER_STEREO_MODE_OFF;
++  m_delayDispReset    = false;
++  m_egl               = new CEGLWrapper;
 +
 +//  AE::CAESinkFactory::ClearSinks();
 +
@@ -1155,10 +1160,6 @@ index 0000000..b462b54
 +{
 +  delete m_egl;
 +  m_egl = nullptr;
-+ //if(m_nativeWindow)
-+  //{
-+  //  m_nativeWindow = nullptr;
-+  //}
 +}
 +
 +bool CWinSystemstb::InitWindowSystem()
@@ -1226,7 +1227,6 @@ index 0000000..b462b54
 +    return false;
 +  }
 +
-+
 +  // Some platforms require a surface before we can probe the resolution.
 +  // Create the window here, then the creation in CreateNewWindow() will be skipped.
 +  int quirks;
@@ -1239,98 +1239,6 @@ index 0000000..b462b54
 +
 +  m_extensions = m_egl->GetExtensions(m_display);
 +  return CWinSystemBase::InitWindowSystem();
-+}
-+
-+bool CWinSystemstb::DestroyWindowSystem()
-+{
-+  if (!m_egl)
-+    return true;
-+
-+  DestroyWindow();
-+
-+  if (m_context != EGL_NO_CONTEXT)
-+  {
-+    m_egl->DestroyContext(m_display, m_context);
-+  }
-+  m_context = EGL_NO_CONTEXT;
-+
-+  if (m_display != EGL_NO_DISPLAY)
-+    m_egl->DestroyDisplay(m_display);
-+  m_display = EGL_NO_DISPLAY;
-+
-+  m_egl->DestroyNativeWindow();
-+
-+  m_egl->DestroyNativeDisplay();
-+
-+  m_egl->Destroy();
-+  delete m_egl;
-+  m_egl = NULL;
-+
-+  CWinSystemBase::DestroyWindowSystem();
-+  //return true;
-+}
-+bool CWinSystemstb::CreateNewWindow(const std::string& name,
-+                                    bool fullScreen,
-+                                    RESOLUTION_INFO& res)
-+{
-+  RESOLUTION_INFO current_resolution;
-+  current_resolution.iWidth = current_resolution.iHeight = 0;
-+  RENDER_STEREO_MODE stereo_mode = CServiceBroker::GetWinSystem()->GetGfxContext().GetStereoMode();
-+
-+  m_nWidth        = res.iWidth;
-+  m_nHeight       = res.iHeight;
-+  m_displayWidth  = res.iScreenWidth;
-+  m_displayHeight = res.iScreenHeight;
-+  m_fRefreshRate  = res.fRefreshRate;
-+
-+  if ((m_bWindowCreated && m_egl && m_egl->GetNativeResolution(&current_resolution)) &&
-+    current_resolution.iWidth == res.iWidth && current_resolution.iHeight == res.iHeight &&
-+    current_resolution.iScreenWidth == res.iScreenWidth && current_resolution.iScreenHeight == res.iScreenHeight &&
-+    m_bFullScreen == fullScreen && current_resolution.fRefreshRate == res.fRefreshRate &&
-+    (current_resolution.dwFlags & D3DPRESENTFLAG_MODEMASK) == (res.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
-+    m_stereo_mode == stereo_mode)
-+  {
-+    CLog::Log(LOGDEBUG, "CWinSystemEGL::CreateNewWindow: No need to create a new window");
-+    return true;
-+  }
-+
-+  int delay = CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt("videoscreen.delayrefreshchange");
-+  if (delay > 0)
-+  {
-+    m_delayDispReset = true;
-+    m_dispResetTimer.Set(delay * 100);
-+  }
-+
-+  {
-+    CSingleLock lock(m_resourceSection);
-+    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
-+      (*i)->OnLostDisplay();
-+  }
-+
-+  m_stereo_mode = stereo_mode;
-+  m_bFullScreen   = fullScreen;
-+  // Destroy any existing window
-+  if (m_surface != EGL_NO_SURFACE)
-+    DestroyWindow();
-+
-+  // If we previously destroyed an existing window we need to create a new one
-+  // (otherwise this is taken care of by InitWindowSystem())
-+  if (!CreateWindow(res))
-+  {
-+    CLog::Log(LOGERROR, "%s: Could not create new window",__FUNCTION__);
-+    return false;
-+  }
-+
-+  if (!m_delayDispReset)
-+  {
-+    CSingleLock lock(m_resourceSection);
-+    // tell any shared resources
-+    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
-+      (*i)->OnResetDisplay();
-+  }
-+
-+  Show();
-+  return true;
 +}
 +
 +bool CWinSystemstb::CreateWindow(RESOLUTION_INFO &res)
@@ -1423,6 +1331,95 @@ index 0000000..b462b54
 +  return true;
 +}
 +
++bool CWinSystemstb::DestroyWindowSystem()
++{
++  if (!m_egl)
++    return true;
++
++  DestroyWindow();
++
++  if (m_context != EGL_NO_CONTEXT)
++  {
++    m_egl->DestroyContext(m_display, m_context);
++  }
++  m_context = EGL_NO_CONTEXT;
++
++  if (m_display != EGL_NO_DISPLAY)
++    m_egl->DestroyDisplay(m_display);
++  m_display = EGL_NO_DISPLAY;
++
++  m_egl->DestroyNativeWindow();
++
++  m_egl->DestroyNativeDisplay();
++
++  m_egl->Destroy();
++  delete m_egl;
++  m_egl = NULL;
++
++  CWinSystemBase::DestroyWindowSystem();
++  //return true;
++}
++bool CWinSystemstb::CreateNewWindow(const std::string& name, bool fullScreen, RESOLUTION_INFO& res)
++{
++  RESOLUTION_INFO current_resolution;
++  current_resolution.iWidth = current_resolution.iHeight = 0;
++  RENDER_STEREO_MODE stereo_mode = CServiceBroker::GetWinSystem()->GetGfxContext().GetStereoMode();
++
++  m_nWidth        = res.iWidth;
++  m_nHeight       = res.iHeight;
++  m_displayWidth  = res.iScreenWidth;
++  m_displayHeight = res.iScreenHeight;
++  m_fRefreshRate  = res.fRefreshRate;
++
++  if ((m_bWindowCreated && m_egl && m_egl->GetNativeResolution(&current_resolution)) &&
++    current_resolution.iWidth == res.iWidth && current_resolution.iHeight == res.iHeight &&
++    current_resolution.iScreenWidth == res.iScreenWidth && current_resolution.iScreenHeight == res.iScreenHeight &&
++    m_bFullScreen == fullScreen && current_resolution.fRefreshRate == res.fRefreshRate &&
++    (current_resolution.dwFlags & D3DPRESENTFLAG_MODEMASK) == (res.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
++    m_stereo_mode == stereo_mode)
++  {
++    CLog::Log(LOGDEBUG, "CWinSystemEGL::CreateNewWindow: No need to create a new window");
++    return true;
++  }
++
++  int delay = CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt("videoscreen.delayrefreshchange");
++  if (delay > 0)
++  {
++    m_delayDispReset = true;
++    m_dispResetTimer.Set(delay * 100);
++  }
++
++  {
++    CSingleLock lock(m_resourceSection);
++    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
++      (*i)->OnLostDisplay();
++  }
++
++  m_stereo_mode = stereo_mode;
++  m_bFullScreen   = fullScreen;
++  // Destroy any existing window
++  if (m_surface != EGL_NO_SURFACE)
++    DestroyWindow();
++
++  // If we previously destroyed an existing window we need to create a new one
++  // (otherwise this is taken care of by InitWindowSystem())
++  if (!CreateWindow(res))
++  {
++    CLog::Log(LOGERROR, "%s: Could not create new window",__FUNCTION__);
++    return false;
++  }
++
++  if (!m_delayDispReset)
++  {
++    CSingleLock lock(m_resourceSection);
++    // tell any shared resources
++    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
++      (*i)->OnResetDisplay();
++  }
++
++  Show();
++  return true;
++}
 +
 +bool CWinSystemstb::DestroyWindow()
 +{
@@ -1494,7 +1491,8 @@ index 0000000..b462b54
 +      resolutions[i].iScreenWidth,
 +      resolutions[i].iScreenHeight,
 +      resolutions[i].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "",
-+      resolutions[i].fRefreshRate);*/
++      resolutions[i].fRefreshRate);
++ */
 +
 +    if(resDesktop.iWidth == resolutions[i].iWidth &&
 +       resDesktop.iHeight == resolutions[i].iHeight &&
@@ -1529,31 +1527,19 @@ index 0000000..b462b54
 +  return m_egl->ShowWindow(false);
 +}
 +
-+bool CWinSystemstb::Show(bool raise)
++void CWinSystemstb::PresentRenderImpl(bool rendered)
 +{
-+  return m_egl->ShowWindow(true);
-+}
-+
-+void CWinSystemstb::SetVisible(bool visible)
-+{
-+  if (visible)
-+	Show();
-+  else
-+	Hide();
-+}
-+
-+void CWinSystemstb::Register(IDispResource *resource)
-+{
-+  CSingleLock lock(m_resourceSection);
-+  m_resources.push_back(resource);
-+}
-+
-+void CWinSystemstb::Unregister(IDispResource *resource)
-+{
-+  CSingleLock lock(m_resourceSection);
-+  std::vector<IDispResource*>::iterator i = find(m_resources.begin(), m_resources.end(), resource);
-+  if (i != m_resources.end())
-+    m_resources.erase(i);
++  if (m_delayDispReset && m_dispResetTimer.IsTimePast())
++  {
++    m_delayDispReset = false;
++    CSingleLock lock(m_resourceSection);
++    // tell any shared resources
++    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
++      (*i)->OnResetDisplay();
++  }
++  if (!rendered)
++    return;
++  m_egl->SwapBuffers(m_display, m_surface);
 +}
 +
 +bool CWinSystemstb::SetVSyncImpl(bool enable)
@@ -1572,19 +1558,31 @@ index 0000000..b462b54
 +  return resp;
 +}
 +
-+void CWinSystemstb::PresentRenderImpl(bool rendered)
++void CWinSystemstb::SetVisible(bool visible)
 +{
-+  if (m_delayDispReset && m_dispResetTimer.IsTimePast())
-+  {
-+    m_delayDispReset = false;
-+    CSingleLock lock(m_resourceSection);
-+    // tell any shared resources
-+    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
-+      (*i)->OnResetDisplay();
-+  }
-+  if (!rendered)
-+    return;
-+  m_egl->SwapBuffers(m_display, m_surface);
++  if (visible)
++	Show();
++  else
++	Hide();
++}
++
++bool CWinSystemstb::Show(bool raise)
++{
++  return m_egl->ShowWindow(true);
++}
++
++void CWinSystemstb::Register(IDispResource *resource)
++{
++  CSingleLock lock(m_resourceSection);
++  m_resources.push_back(resource);
++}
++
++void CWinSystemstb::Unregister(IDispResource *resource)
++{
++  CSingleLock lock(m_resourceSection);
++  std::vector<IDispResource*>::iterator i = find(m_resources.begin(), m_resources.end(), resource);
++  if (i != m_resources.end())
++    m_resources.erase(i);
 +}
 +
 +EGLDisplay CWinSystemstb::GetEGLDisplay()
@@ -1609,10 +1607,10 @@ index 0000000..b462b54
 +
 diff --git a/xbmc/windowing/egl/WinSystemstb.h b/xbmc/windowing/egl/WinSystemstb.h
 new file mode 100644
-index 0000000..2ed66ba
+index 0000000000..d5c4459464
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.h
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,71 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1629,6 +1627,7 @@ index 0000000..2ed66ba
 +#include "windowing/WinSystem.h"
 +
 +#include "platform/linux/OptionalsReg.h"
++
 +
 +#include "cores/AudioEngine/Engines/ActiveAE/ActiveAE.h"
 +
@@ -1647,11 +1646,8 @@ index 0000000..2ed66ba
 +  bool InitWindowSystem() override;
 +  bool DestroyWindowSystem() override;
 +
-+  bool CreateNewWindow(const std::string& name,
-+                       bool fullScreen,
-+                       RESOLUTION_INFO& res) override;
++  bool CreateNewWindow(const std::string& name, bool fullScreen, RESOLUTION_INFO& res) override;
 +
-+  bool CreateWindow(RESOLUTION_INFO &res);
 +  bool DestroyWindow() override;
 +  void UpdateResolutions() override;
 +
@@ -1660,34 +1656,31 @@ index 0000000..2ed66ba
 +  void SetVisible(bool visible);
 +  virtual void Register(IDispResource *resource);
 +  virtual void Unregister(IDispResource *resource);
-+  EGLDisplay GetEGLDisplay();
-+  EGLSurface GetEGLSurface();
-+  EGLContext GetEGLContext();
-+  EGLConfig  GetEGLConfig();
-+
 +  // winevents override
 +  bool MessagePump() override;
-+
++  EGLSurface    GetEGLSurface();
++  EGLDisplay    GetEGLDisplay();
++  EGLContext    GetEGLContext();
++  EGLConfig     GetEGLConfig();
 +protected:
-+  bool SetVSyncImpl(bool enable);
 +  void PresentRenderImpl(bool rendered);
-+  CEGLWrapper           *m_egl;
++  bool SetVSyncImpl(bool enable);
++  bool          CreateWindow(RESOLUTION_INFO &res);
++  int                   m_displayWidth;
++  int                   m_displayHeight;
++
 +  EGLDisplay            m_display;
 +  EGLSurface            m_surface;
 +  EGLContext            m_context;
 +  EGLConfig             m_config;
 +  RENDER_STEREO_MODE    m_stereo_mode;
 +
++  CEGLWrapper           *m_egl;
 +  std::string           m_extensions;
-+
-+  int m_displayWidth;
-+  int m_displayHeight;
-+
++  CCriticalSection             m_resourceSection;
++  std::vector<IDispResource*>  m_resources;
 +  bool m_delayDispReset;
 +  XbmcThreads::EndTime m_dispResetTimer;
-+
-+  CCriticalSection m_resourceSection;
-+  std::vector<IDispResource*> m_resources;
 +};
 diff --git a/cmake/treedata/common/stb.txt b/cmake/treedata/common/stb.txt
 new file mode 100644
