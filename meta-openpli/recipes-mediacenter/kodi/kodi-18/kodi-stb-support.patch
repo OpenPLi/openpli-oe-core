@@ -2,15 +2,6 @@ diff --git a/xbmc/platform/linux/input/CMakeLists.txt b/xbmc/platform/linux/inpu
 index b5a45d0..51f5347 100644
 --- a/xbmc/platform/linux/input/CMakeLists.txt
 +++ b/xbmc/platform/linux/input/CMakeLists.txt
-@@ -6,7 +6,7 @@ if(LIRCCLIENT_FOUND)
-   list(APPEND HEADERS LIRC.h)
- endif()
- 
--if(CORE_PLATFORM_NAME_LC STREQUAL rbpi OR CORE_PLATFORM_NAME_LC STREQUAL gbm OR CORE_PLATFORM_NAME_LC STREQUAL aml)
-+if(CORE_PLATFORM_NAME_LC STREQUAL rbpi OR CORE_PLATFORM_NAME_LC STREQUAL gbm OR CORE_PLATFORM_NAME_LC STREQUAL aml OR CORE_PLATFORM_NAME_LC STREQUAL stb)
-   if(LIBINPUT_FOUND)
-     list(APPEND SOURCES LibInputHandler.cpp
-                         LibInputKeyboard.cpp
 @@ -22,6 +22,12 @@ if(CORE_PLATFORM_NAME_LC STREQUAL rbpi OR CORE_PLATFORM_NAME_LC STREQUAL gbm OR
    endif()
  endif()

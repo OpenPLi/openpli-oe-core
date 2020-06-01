@@ -4,7 +4,7 @@ index 0000000..dd62eff
 --- /dev/null
 +++ b/cmake/platform/linux/stb.cmake
 @@ -0,0 +1,33 @@
-+set(PLATFORM_REQUIRED_DEPS EGL LibInput Xkbcommon)
++set(PLATFORM_REQUIRED_DEPS EGL)
 +set(PLATFORM_OPTIONAL_DEPS VAAPI)
 +
 +set(STB_RENDER_SYSTEM "" CACHE STRING "Render system to use with STB: \"gl\" or \"gles\"")
@@ -1072,7 +1072,7 @@ new file mode 100644
 index 0000000..b462b54
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
-@@ -0,0 +1,536 @@
+@@ -0,0 +1,534 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1117,7 +1117,7 @@ index 0000000..b462b54
 +using namespace KODI;
 +
 +CWinSystemstb::CWinSystemstb():
-+  m_libinput(new CLibInputHandler)
++CWinSystemBase()
 +{
 +  m_display = EGL_NO_DISPLAY;
 +  m_surface = EGL_NO_SURFACE;
@@ -1149,8 +1149,6 @@ index 0000000..b462b54
 +
 +  CLinuxPowerSyscall::Register();
 +  m_winEvents.reset(new CWinEventsSTB());
-+  m_lirc.reset(OPTIONALS::LircRegister());
-+  m_libinput->Start();
 +}
 +
 +CWinSystemstb::~CWinSystemstb()
@@ -1614,7 +1612,7 @@ new file mode 100644
 index 0000000..2ed66ba
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.h
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,76 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1631,7 +1629,6 @@ index 0000000..2ed66ba
 +#include "windowing/WinSystem.h"
 +
 +#include "platform/linux/OptionalsReg.h"
-+#include "platform/linux/input/LibInputHandler.h"
 +
 +#include "cores/AudioEngine/Engines/ActiveAE/ActiveAE.h"
 +
@@ -1691,8 +1688,6 @@ index 0000000..2ed66ba
 +
 +  CCriticalSection m_resourceSection;
 +  std::vector<IDispResource*> m_resources;
-+  std::unique_ptr<OPTIONALS::CLircContainer, OPTIONALS::delete_CLircContainer> m_lirc;
-+  std::unique_ptr<CLibInputHandler> m_libinput;
 +};
 diff --git a/cmake/treedata/common/stb.txt b/cmake/treedata/common/stb.txt
 new file mode 100644
