@@ -36,15 +36,6 @@ automount() {
 	readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
 	EXTERNAL=$?
 
-	# Bus the device is connected to
-	BUS="`basename "$ID_BUS"`"
-	if [ -z "$BUS" ]; then
-		# if not specified, make one up
-		if [ "$REMOVABLE" -eq "1" ]; then
-			BUS=usb
-		fi
-	fi
-
 	# Figure out a mount point to use
 	LABEL=${ID_FS_LABEL}
 
