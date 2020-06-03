@@ -18,39 +18,87 @@ do
 done
 
 automount() {
-	name="`basename "$DEVNAME"`"
-	bus="`basename "$ID_BUS"`"
+	# Device name and base device
+	NAME="`basename "$DEVNAME"`"
+	DEVBASE=${NAME:0:7}
+	if [ ! -d /sys/block/${DEVBASE} ]; then
+		DEVBASE=${NAME:0:3}
+	fi
+
+	# Get the device model
+	if [ -f /sys/block/$DEVBASE/device/model ]; then
+		MODEL=`cat /sys/block/$DEVBASE/device/model`
+	else
+		MODEL="unknown device"
+	fi
+
+	# external?
+	readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
+	EXTERNAL=$?
+
+	# Bus the device is connected to
+	BUS="`basename "$ID_BUS"`"
+	if [ -z "$BUS" ]; then
+		# if not specified, make one up
+		if [ "$REMOVABLE" -eq "1" ]; then
+			BUS=usb
+		fi
+	fi
 
 	# Figure out a mount point to use
 	LABEL=${ID_FS_LABEL}
 
+	# If no label, try to come up with one
 	if [[ -z "${LABEL}" ]]; then
-		udevadm info /dev/$name | grep -q 'mmc'
-		mmc=$?
-		if [ "${mmc}" -eq "0" ]; then
-			if [ ! -d "/media/mmc" ]; then
+
+		if [ "${EXTERNAL}" -eq "0" ]; then
+			# we assume it's the internal harddisk
+			LABEL="hdd"
+		else
+			# mount mmc block devices on /media/mcc
+			if [ ${DEVBASE:0:6} = "mmcblk" ]; then
 				LABEL="mmc"
 			else
-				LABEL="$name"
+				if [ "$MODEL" == "USB CF Reader   " ]; then
+					LABEL="cf"
+				elif [ "$MODEL" == "Compact Flash   " ]; then
+					LABEL="cf"
+				elif [ "$MODEL" == "USB SD Reader   " ]; then
+					LABEL="mmc"
+				elif [ "$MODEL" == "USB SD  Reader  " ]; then
+					LABEL="mmc"
+				elif [ "$MODEL" == "SD/MMC          " ]; then
+					LABEL="mmc"
+				elif [ "$MODEL" == "USB MS Reader   " ]; then
+					LABEL="mmc"
+				elif [ "$MODEL" == "SM/xD-Picture   " ]; then
+					LABEL="mmc"
+				elif [ "$MODEL" == "USB SM Reader   " ]; then
+					LABEL="mmc"
+				elif [ "$MODEL" == "MS/MS-Pro       " ]; then
+					LABEL="mmc"
+				else
+					LABEL="usb"
+				fi
 			fi
-		elif [ "${bus}" == "ata" ]; then
-			udevadm info /dev/$name | grep -q 'ahci\|pci\|sata'
-			internal=$?
-			if [ "${internal}" -eq "0" ]; then
-				LABEL="hdd"
-			elif [ ! -d "/media/usbhdd" ]; then
-				LABEL="usbhdd"
-			else
-				LABEL="$name"
-			fi
-		else
-			LABEL="$name"
 		fi
 	fi
+
+	# Check if we already have this mount point
+	if [ ! -z "${LABEL}" ] && [ -d /media/$LABEL ]; then
+		LABEL=
+	fi
+
+	# If no label, use the device name
+	if [[ -z "${LABEL}" ]]; then
+		LABEL="$NAME"
+	fi
+
+	# Create the mountpoint for the device	
 	! test -d "/media/$LABEL" && mkdir -p "/media/$LABEL"
+
 	# Silent util-linux's version of mounting auto
-	if [ "x`readlink $MOUNT`" = "x/bin/mount.util-linux" ] ;
-	then
+	if [ "x`readlink $MOUNT`" = "x/bin/mount.util-linux" ]; then
 		MOUNT="$MOUNT -o silent"
 	fi
 
@@ -67,7 +115,7 @@ automount() {
 
 	if ! $MOUNT -t auto $DEVNAME "/media/$LABEL"
 	then
-		#logger "mount.sh/automount" "$MOUNT -t auto $DEVNAME \"/media/$LABEL\" failed!"
+		logger "mount.sh/automount" "$MOUNT -t auto $DEVNAME \"/media/$LABEL\" failed!"
 		rm_dir "/media/$LABEL"
 	else
 		logger "mount.sh/automount" "Auto-mount of [/media/$LABEL] successful"
@@ -104,18 +152,14 @@ if [ "$ACTION" = "add" ] && [ -n "$DEVNAME" ] && [ -n "$ID_FS_TYPE" -o "$media_t
 	fi
 fi
 
-
 if [ "$ACTION" = "remove" ] || [ "$ACTION" = "change" ] && [ -x "$UMOUNT" ] && [ -n "$DEVNAME" ]; then
 	for mnt in `cat /proc/mounts | grep "$DEVNAME" | cut -f 2 -d " " `
 	do
 		$UMOUNT $mnt
 	done
 
+	LABEL=`echo $mnt | cut -c 8-`
+	# logger "remove device $LABEL"
 	# Remove empty directories from auto-mounter
-	name="`basename "$DEVNAME"`"
-	test -e "/tmp/.automount-$name" && rm_dir "/media/$name"
 	test -e "/tmp/.automount-$LABEL" && rm_dir "/media/$LABEL"
-	test -e "/tmp/.automount-mmc" && rm_dir "/media/mmc"
-	test -e "/tmp/.automount-hdd" && rm_dir "/media/hdd"
-	test -e "/tmp/.automount-usbhdd" && rm_dir "/media/usbhdd"
 fi
