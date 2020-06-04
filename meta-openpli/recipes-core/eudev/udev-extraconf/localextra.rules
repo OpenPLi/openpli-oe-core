@@ -19,6 +19,7 @@ KERNEL=="rtc0", SYMLINK+="rtc"
 # Legacy paths for dbox devices
 KERNEL=="oled0", SYMLINK+="dbox/oled0"
 KERNEL=="fp0", SYMLINK+="dbox/fp0"
+KERNEL=="lcd0", SYMLINK+="dbox/lcd0"
 
 # The first framebuffer is symlinked to /dev/fb
 KERNEL=="fb0", SYMLINK+="fb/0"
