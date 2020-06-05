@@ -4,10 +4,10 @@
 #
 # Attempt to mount any added block devices and umount any removed devices
 
-
 MOUNT="/bin/mount"
 PMOUNT="/usr/bin/pmount"
 UMOUNT="/bin/umount"
+
 for line in `grep -h -v ^# /etc/udev/mount.blacklist /etc/udev/mount.blacklist.d/*`
 do
 	if [ ` expr match "$DEVNAME" "$line" ` -gt 0 ];
@@ -17,12 +17,45 @@ do
 	fi
 done
 
+log() {
+	# comment to enable logging
+	return
+
+	if [ $# -eq 1 ]; then
+		echo "$1" >> /home/root/udev.log
+	else
+		echo "$DEVNAME: $1 $2" >> /home/root/udev.log
+	fi
+}
+
 automount() {
+	# blacklist boot device
+	BOOTDEV=$(cat /proc/cmdline | sed -e 's/^.*root=\/dev\///' -e 's/ .*$//')
+	log ">" "BOOTDEV = $BOOTDEV"
+	if [ "$DEVNAME" == "$BOOTDEV" ]; then
+		log "!" "exit, boot device is blacklisted"
+		exit 0
+	fi
+
 	# Device name and base device
 	NAME="`basename "$DEVNAME"`"
 	DEVBASE=${NAME:0:7}
 	if [ ! -d /sys/block/${DEVBASE} ]; then
 		DEVBASE=${NAME:0:3}
+	fi
+	log ">" "DEVBASE = $DEVBASE"
+
+	# blacklist partitions on the same device as the boot device
+	if [[ $BOOTDEV == $DEVBASE* ]]; then
+		log "!" "exit, boot device partition blacklisted"
+		exit 0
+	fi
+
+	# check for "please don't mount it" file
+	if [ -f "/dev/nomount.${DEVBASE}" ]; then
+		# blocked
+		log "!" "exit, due to a no-mount flag for $DEVBASE"
+		exit 0
 	fi
 
 	# Get the device model
@@ -31,6 +64,7 @@ automount() {
 	else
 		MODEL="unknown device"
 	fi
+	log ">" "MODEL = $MODEL"
 
 	# external?
 	readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
