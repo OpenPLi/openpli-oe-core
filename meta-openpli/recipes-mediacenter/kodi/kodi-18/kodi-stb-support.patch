@@ -11,19 +11,6 @@ index b5a45d0..51f5347 100644
    if(LIBINPUT_FOUND)
      list(APPEND SOURCES LibInputHandler.cpp
                          LibInputKeyboard.cpp
-@@ -22,6 +22,12 @@ if(CORE_PLATFORM_NAME_LC STREQUAL rbpi OR CORE_PLATFORM_NAME_LC STREQUAL gbm OR
-   endif()
- endif()
- 
-+if(CORE_PLATFORM_NAME_LC STREQUAL stb)
-+    list(APPEND SOURCES LinuxInputDevices.cpp)
-+    list(APPEND HEADERS LinuxInputDevices.h
-+                        Keymap.h)
-+endif()
-+
- if(SOURCES)
-   core_add_library(input_linux)
- endif()
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
 index 2b9e17b..c853c02 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt

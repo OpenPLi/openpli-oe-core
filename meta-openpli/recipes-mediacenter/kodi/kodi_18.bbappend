@@ -8,7 +8,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-18:"
 
 SRC_URI_append += "\
             file://kodi-stb-support.patch \
-            file://kodi-input-devices.patch \
             file://egl/kodi-EGL.patch \
             \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \

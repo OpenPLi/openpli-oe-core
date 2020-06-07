@@ -3,9 +3,8 @@ new file mode 100644
 index 0000000..dd62eff
 --- /dev/null
 +++ b/cmake/platform/linux/stb.cmake
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,32 @@
 +set(PLATFORM_REQUIRED_DEPS EGL LibInput Xkbcommon)
-+set(PLATFORM_OPTIONAL_DEPS VAAPI)
 +
 +set(STB_RENDER_SYSTEM "" CACHE STRING "Render system to use with STB: \"gl\" or \"gles\"")
 +
@@ -42,11 +41,10 @@ new file mode 100644
 index 0000000..1ffa32a
 --- /dev/null
 +++ b/xbmc/windowing/egl/CMakeLists.txt
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,13 @@
 +set(SOURCES WinSystemSTBContext.cpp
 +            WinSystemstb.cpp
 +            EGLWrapper.cpp
-+            WinEventsSTB.cpp
 +            EGLNativeTypeSTB.cpp)
 +
 +set(HEADERS EGLNativeType.h
@@ -54,7 +52,6 @@ index 0000000..1ffa32a
 +            EGLWrapper.h
 +            WinSystemstb.h
 +            WinSystemSTBContext.h
-+            WinEventsSTB.h
 +            EGLNativeTypeSTB.h)
 +
 +core_add_library(windowing_egl)
@@ -749,163 +746,12 @@ index 0000000..3a73b3e
 +  CEGLNativeType *m_nativeTypes;
 +  EGLint         m_result;
 +};
-diff --git a/xbmc/windowing/egl/WinEventsSTB.cpp b/xbmc/windowing/egl/WinEventsSTB.cpp
-new file mode 100644
-index 0000000..24a9a75
---- /dev/null
-+++ b/xbmc/windowing/egl/WinEventsSTB.cpp
-@@ -0,0 +1,92 @@
-+/*
-+ *      Copyright (C) 2005-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "system.h"
-+
-+#include "AppInboundProtocol.h"
-+#include "WinEventsSTB.h"
-+#include "windowing/WinEvents.h"
-+#include "windowing/XBMC_events.h"
-+#include "input/XBMC_keysym.h"
-+#include "Application.h"
-+#include "input/mouse/MouseStat.h"
-+#include "utils/log.h"
-+#include "powermanagement/PowerManager.h"
-+#include "ServiceBroker.h"
-+#include "platform/linux/input/LinuxInputDevices.h"
-+
-+
-+bool CWinEventsSTB::m_initialized = false;
-+CLinuxInputDevices CWinEventsSTB::m_devices;
-+
-+
-+void CWinEventsSTB::RefreshDevices()
-+{
-+  m_devices.InitAvailable();
-+}
-+
-+bool CWinEventsSTB::IsRemoteLowBattery()
-+{
-+  return m_devices.IsRemoteLowBattery();
-+  return false;
-+}
-+
-+bool CWinEventsSTB::MessagePump()
-+{
-+  std::shared_ptr<CAppInboundProtocol> appPort = CServiceBroker::GetAppPort();
-+
-+  if (!m_initialized)
-+  {
-+    m_devices.InitAvailable();
-+    m_checkHotplug = std::unique_ptr<CLinuxInputDevicesCheckHotplugged>(new CLinuxInputDevicesCheckHotplugged(m_devices));
-+    m_initialized = true;
-+  }
-+
-+  bool ret = false;
-+  XBMC_Event event = {0};
-+  while (1)
-+  {
-+    event = m_devices.ReadEvent();
-+    if (event.type != XBMC_NOEVENT)
-+    {
-+      if (appPort)
-+         ret |= appPort->OnEvent(event);
-+    }
-+    else
-+    {
-+      break;
-+    }
-+  }
-+
-+  return ret;
-+}
-+
-+size_t CWinEventsSTB::GetQueueSize()
-+{
-+  return m_devices.Size();
-+}
-+
-+void CWinEventsSTB::MessagePush(XBMC_Event *ev)
-+{
-+  std::shared_ptr<CAppInboundProtocol> appPort = CServiceBroker::GetAppPort();
-+  if (appPort)
-+    appPort->OnEvent(*ev);
-+}
-+
-+//#endif
-diff --git a/xbmc/windowing/egl/WinEventsSTB.h b/xbmc/windowing/egl/WinEventsSTB.h
-new file mode 100644
-index 0000000..d154068
---- /dev/null
-+++ b/xbmc/windowing/egl/WinEventsSTB.h
-@@ -0,0 +1,47 @@
-+/*
-+ *      Copyright (C) 2005-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#pragma once
-+#include <memory>
-+#include "windowing/WinEvents.h"
-+#include "platform/linux/input/LinuxInputDevices.h"
-+#include "utils/Observer.h"
-+
-+class CWinEventsSTB : public IWinEvents
-+{
-+public:
-+  bool MessagePump() override;
-+  size_t GetQueueSize();
-+  void MessagePush(XBMC_Event *ev);
-+  void RefreshDevices();
-+  void Notify(const Observable &obs, const ObservableMessage msg)
-+  {
-+    if (msg == ObservableMessagePeripheralsChanged)
-+      RefreshDevices();
-+  }
-+  static bool IsRemoteLowBattery();
-+
-+private:
-+  friend class CWinEventsSTB;
-+  static bool m_initialized;
-+  static CLinuxInputDevices m_devices;
-+  std::unique_ptr<CLinuxInputDevicesCheckHotplugged> m_checkHotplug;
-+};
-+
 diff --git a/xbmc/windowing/egl/WinSystemSTBContext.cpp b/xbmc/windowing/egl/WinSystemSTBContext.cpp
 new file mode 100644
 index 0000000..623de92
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemSTBContext.cpp
-@@ -0,0 +1,112 @@
+@@ -0,0 +1,110 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -934,7 +780,6 @@ index 0000000..623de92
 +#include "guilib/GUIWindowManager.h"
 +#include "utils/log.h"
 +
-+
 +using namespace KODI;
 +
 +std::unique_ptr<CWinSystemBase> CWinSystemBase::CreateWinSystem()
@@ -949,7 +794,6 @@ index 0000000..623de92
 +  {
 +    return false;
 +  }
-+
 +
 +  VIDEOPLAYER::CRendererFactory::ClearRenderer();
 +#ifdef HAS_GLES
@@ -1072,7 +916,7 @@ new file mode 100644
 index 0000000..b462b54
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
-@@ -0,0 +1,536 @@
+@@ -0,0 +1,523 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1102,7 +946,6 @@ index 0000000..b462b54
 +//#include "platform/linux/RBP.h"
 +#include "platform/linux/powermanagement/LinuxPowerSyscall.h"
 +#include "guilib/IDirtyRegionSolver.h"
-+#include "WinEventsSTB.h"
 +
 +#include <vector>
 +#include <float.h>
@@ -1148,8 +991,6 @@ index 0000000..b462b54
 +  }
 +
 +  CLinuxPowerSyscall::Register();
-+  m_winEvents.reset(new CWinEventsSTB());
-+  m_lirc.reset(OPTIONALS::LircRegister());
 +  m_libinput->Start();
 +}
 +
@@ -1157,10 +998,6 @@ index 0000000..b462b54
 +{
 +  delete m_egl;
 +  m_egl = nullptr;
-+ //if(m_nativeWindow)
-+  //{
-+  //  m_nativeWindow = nullptr;
-+  //}
 +}
 +
 +bool CWinSystemstb::InitWindowSystem()
@@ -1227,7 +1064,6 @@ index 0000000..b462b54
 +    CLog::Log(LOGERROR, "%s: Could not find a compatible configuration",__FUNCTION__);
 +    return false;
 +  }
-+
 +
 +  // Some platforms require a surface before we can probe the resolution.
 +  // Create the window here, then the creation in CreateNewWindow() will be skipped.
@@ -1604,17 +1440,12 @@ index 0000000..b462b54
 +  return m_config;
 +}
 +
-+bool CWinSystemstb::MessagePump()
-+{
-+  return m_winEvents->MessagePump();
-+}
-+
 diff --git a/xbmc/windowing/egl/WinSystemstb.h b/xbmc/windowing/egl/WinSystemstb.h
 new file mode 100644
 index 0000000..2ed66ba
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.h
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,76 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1668,9 +1499,6 @@ index 0000000..2ed66ba
 +  EGLContext GetEGLContext();
 +  EGLConfig  GetEGLConfig();
 +
-+  // winevents override
-+  bool MessagePump() override;
-+
 +protected:
 +  bool SetVSyncImpl(bool enable);
 +  void PresentRenderImpl(bool rendered);
@@ -1691,7 +1519,7 @@ index 0000000..2ed66ba
 +
 +  CCriticalSection m_resourceSection;
 +  std::vector<IDispResource*> m_resources;
-+  std::unique_ptr<OPTIONALS::CLircContainer, OPTIONALS::delete_CLircContainer> m_lirc;
++
 +  std::unique_ptr<CLibInputHandler> m_libinput;
 +};
 diff --git a/cmake/treedata/common/stb.txt b/cmake/treedata/common/stb.txt
