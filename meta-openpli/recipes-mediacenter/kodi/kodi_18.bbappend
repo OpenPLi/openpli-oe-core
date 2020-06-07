@@ -9,6 +9,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-18:"
 SRC_URI_append += "\
             file://kodi-stb-support.patch \
             file://egl/kodi-EGL.patch \
+            file://kodi18-add-libinput-rckey-events.patch \
             \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://kodiplayers/HiPlayer.patch file://kodiplayers/HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://kodiplayers/E2Player.patch', d)} \
