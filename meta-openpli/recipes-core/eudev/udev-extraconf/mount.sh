@@ -28,6 +28,13 @@ log() {
 	fi
 }
 
+notify() {
+	# we don't really depend on the hotplug_e2_helper, but when it exists, call it
+	if [ -x /usr/bin/hotplug_e2_helper ]; then
+		/usr/bin/hotplug_e2_helper $ACTION $DEVPATH
+	fi
+}
+
 automount() {
 	# blacklist boot device
 	BOOTDEV=$(cat /proc/cmdline | sed -e 's/^.*root=\/dev\///' -e 's/ .*$//')
@@ -188,3 +195,6 @@ if [ "$ACTION" = "remove" ] || [ "$ACTION" = "change" ] && [ -x "$UMOUNT" ] && [
 	# Remove empty directories from auto-mounter
 	test -e "/tmp/.automount-$LABEL" && rm_dir "/media/$LABEL"
 fi
+
+# inform E2 of the hotplug action
+notify
