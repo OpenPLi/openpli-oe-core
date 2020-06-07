@@ -35,6 +35,66 @@ notify() {
 	fi
 }
 
+samba_share() {
+	# bail out if samba is not installed
+	if [ ! -f /etc/init.d/samba.sh ]; then
+		log "!" "samba is not installed, no share created"
+		return
+	fi
+
+	# process the parameters
+	local path=$1
+	local mountpoint=`basename $1`
+	local model=$2
+	local share
+
+	# some mountpoint name exceptions
+	if [ "$mountpoint" == "hdd" ]; then
+		mountpoint="Harddisk"
+	fi
+
+	log ">" "$ACTION SAMBA share for $mountpoint"
+
+	# process the add/remove request
+	if [ "$ACTION" == "add" ]; then
+		# check if we already have a share for this path
+		share=`find /etc/samba -name "*.conf" -exec grep "path\s*=\s*${path}" {} \;`
+		if [ -z "$share" ]; then
+			# do have a share template?
+			if [ -f /etc/samba/shares/share.template ]; then
+				# generate a share config for this mountpoint
+				echo "[$mountpoint]" > /etc/samba/shares/${mountpoint}.conf
+				echo "  comment = $model" >> /etc/samba/shares/${mountpoint}.conf
+				echo "  path = $path" >> /etc/samba/shares/${mountpoint}.conf
+				cat /etc/samba/shares/share.template >> /etc/samba/shares/${mountpoint}.conf
+				log ">" "share for $path created"
+			else
+				log "!" "share creation failed, share template missing!"
+				return
+			fi
+		else
+			log "!" "share for $path already exists"
+			return
+		fi
+
+	elif [ "$ACTION" == "remove" ]; then
+		if [ -f /etc/samba/shares/${mountpoint}.conf ]; then
+			rm /etc/samba/shares/${mountpoint}.conf
+		fi
+	else
+		# unknown command, bail out
+		return
+	fi
+
+	# do we have samba running?
+	pidof -s smbd
+	if [ $? -eq 0 ]; then
+		# restart samba in the background
+		log ">" "background restart of samba"
+		/etc/init.d/samba.sh restart &
+	fi
+}
+
 automount() {
 	# blacklist boot device
 	BOOTDEV=$(cat /proc/cmdline | sed -e 's/^.*root=\/dev\///' -e 's/ .*$//')
@@ -152,6 +212,7 @@ automount() {
 	else
 		logger "mount.sh/automount" "Auto-mount of [/media/$LABEL] successful"
 		touch "/tmp/.automount-$LABEL"
+		samba_share "/media/$LABEL" "$MODEL"
 	fi
 }
 
@@ -192,6 +253,7 @@ if [ "$ACTION" = "remove" ] || [ "$ACTION" = "change" ] && [ -x "$UMOUNT" ] && [
 
 	LABEL=`echo $mnt | cut -c 8-`
 	# logger "remove device $LABEL"
+	samba_share "/media/$LABEL" ""
 	# Remove empty directories from auto-mounter
 	test -e "/tmp/.automount-$LABEL" && rm_dir "/media/$LABEL"
 fi
