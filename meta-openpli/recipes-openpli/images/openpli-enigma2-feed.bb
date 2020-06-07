@@ -118,6 +118,7 @@ OPTIONAL_PACKAGES += " \
 	python-isodate \
 	python-iso3166 \
 	python-iso639 \
+	python-youtube-dl \
 	picocom \
 	ppp \
 	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'rclone', d)} \
