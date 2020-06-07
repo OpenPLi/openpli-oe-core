@@ -113,6 +113,7 @@ OPTIONAL_PACKAGES += " \
 	python-pyexecjs \
 	python-beautifulsoup4 \
 	python-futures \
+	python-pycrypto \
 	python-singledispatch \
 	python-websocket \
 	python-isodate \
