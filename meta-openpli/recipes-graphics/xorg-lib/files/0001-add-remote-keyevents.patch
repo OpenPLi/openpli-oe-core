@@ -1,0 +1,79 @@
+---
+ keycodes/evdev | 23 ++++++++++++++++++++++-
+ symbols/inet   | 24 ++++++++++++++++++++++--
+ 2 files changed, 44 insertions(+), 3 deletions(-)
+
+diff --git a/keycodes/evdev b/keycodes/evdev
+index 5dcc9f6..9aedaa9 100644
+--- a/keycodes/evdev
++++ b/keycodes/evdev
+@@ -284,9 +284,29 @@ default xkb_keycodes "evdev" {
+ 	<I254> = 254;	// #define KEY_WWAN                246
+ 	<I255> = 255;	// #define KEY_RFKILL              247
+ 
+-	<I372> = 372;   // #define KEY_FAVORITES           364
++	<I360> = 360;	// #define KEY_OK                  352
++	<I366> = 366;	// #define KEY_INFO                358
++	<I367> = 367;	// #define KEY_TIME                359
++	<I370> = 370;	// #define KEY_PROGRAM             362
++	<I372> = 372;	// #define KEY_FAVORITES           364
++	<I373> = 373;	// #define KEY_EPG                 365
++	<I374> = 374;	// #define KEY_PVR                 366
++	<I378> = 378;	// #define KEY_SUBTITLE            370
+ 	<I382> = 382;   // #define KEY_KEYBOARD            374
++	<I383> = 383;	// #define KEY_ASPECT_RATIO        375
++	<I396> = 396;	// #define KEY_TEXT                388
++	<I400> = 400;	// #define KEY_AUDIO               392
++	<I401> = 401;	// #define KEY_VIDEO               393
++	<I403> = 403;	// #define KEY_LIST                395
++	<I406> = 406;	// #define KEY_RED                 398
++	<I407> = 407;	// #define KEY_GREEN               399
++	<I408> = 408;	// #define KEY_YELLOW              400
++	<I409> = 409;	// #define KEY_BLUE                401
++	<I410> = 410;	// #define KEY_CHANNELUP           402
++	<I411> = 411;	// #define KEY_CHANNELDOWN         403
++	<I446> = 446;	// #define KEY_CONTEXT_MENU        438
+ 	<I569> = 569;   // #define KEY_ROTATE_LOCK_TOGGLE  561
++	<I635> = 635;	// #define KEY_VOD                 627
+ 
+ 	// Fake keycodes for virtual keys
+ 	<LVL3> =   92;
+diff --git a/symbols/inet b/symbols/inet
+index 6c9dd87..7e5df0e 100644
+--- a/symbols/inet
++++ b/symbols/inet
+@@ -218,9 +218,29 @@ xkb_symbols "evdev" {
+     key <I254>   {      [ XF86WWAN              ]       }; // KEY_WWAN
+     key <I255>   {      [ XF86RFKill            ]       }; // KEY_RFKILL
+ 
+-    key <I372>  {       [ XF86Favorites          ]       };
+-    key <I382>  {       [ XF86Keyboard           ]       };
++    key <I360>   {      [ Return                ]       }; // KEY_OK
++//  key <I366>   {      [ ]       }; // KEY_INFO
++//  key <I367>   {      [ ]       }; // KEY_TIME
++//  key <I370>   {      [ ]       }; // KEY_PROGRAM
++    key <I372>  {       [ XF86Favorites         ]       }; // KEY_FAVORITES
++//  key <I373>   {      [ ]       }; // KEY_EPG
++//  key <I374>   {      [ ]       }; // KEY_PVR
++    key <I378>   {      [ XF86Subtitle          ]       }; // KEY_SUBTITLE
++    key <I382>  {       [ XF86Keyboard          ]       };
++//  key <I383>   {      [ ]       }; // KEY_ASPECT_RATIO
++//  key <I396>   {      [ ]       }; // KEY_TEXT
++//  key <I400>   {      [ ]       }; // KEY_AUDIO
++//  key <I401>   {      [ ]       }; // KEY_VIDEO
++//  key <I403>   {      [ ]       }; // KEY_LIST
++    key <I406>   {      [ XF86Red               ]       }; // KEY_RED
++    key <I407>   {      [ XF86Green             ]       }; // KEY_GREEN
++    key <I408>   {      [ XF86Yellow            ]       }; // KEY_YELLOW
++    key <I409>   {      [ XF86Blue              ]       }; // KEY_BLUE
++    key <I410>   {      [ Page_Up               ]       }; // KEY_CHANNELUP
++    key <I411>   {      [ Page_Down             ]       }; // KEY_CHANNELDOWN
++//  key <I446>   {      [ ]       }; // KEY_CONTEXT_MENU
+     key <I569>  {       [ XF86RotationLockToggle ]       };
++//  key <I635>   {      [ ]       }; // KEY_VOD
+ 
+     key <FK13>   {      [ XF86Tools         ]       };
+     key <FK14>   {      [ XF86Launch5       ]       };
+-- 
+2.17.1
+
