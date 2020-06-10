@@ -24,13 +24,11 @@ RDEPENDS_${PN} = " \
 	python-twisted-web \
 	"
 
-SRC_URI += "file://YouTube.key"
-
 CONFFILES = "/etc/enigma2/YouTube.key"
 
 do_install_append() {
 	install -d ${D}/etc/enigma2
-	install -m 0644 ${WORKDIR}/YouTube.key ${D}/etc/enigma2/YouTube.key
+	install -m 0644 ${S}/YouTube.key ${D}/etc/enigma2/YouTube.key
 }
 
 PACKAGES =+ " ${PN}-src"
