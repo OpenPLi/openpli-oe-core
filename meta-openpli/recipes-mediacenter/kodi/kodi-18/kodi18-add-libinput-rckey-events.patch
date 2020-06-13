@@ -1,0 +1,32 @@
+Date: Fri, 5 Jun 2020 16:21:24 +0200
+Subject: [PATCH] kodi18: add remote key events
+
+---
+ xbmc/platform/linux/input/LibInputKeyboard.cpp | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/platform/linux/input/LibInputKeyboard.cpp b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+index 9bbc9de434..21bd557e03 100644
+--- a/xbmc/platform/linux/input/LibInputKeyboard.cpp
++++ b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+@@ -142,8 +142,17 @@ static const std::map<xkb_keysym_t, XBMCKey> xkbMap =
+   // XBMCK_REWIND clashes with XBMCK_MEDIA_REWIND
+   { XKB_KEY_XF86Phone, XBMCK_PHONE },
+   { XKB_KEY_XF86AudioPlay, XBMCK_PLAY },
+-  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE }
++  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE },
+   // XBMCK_FASTFORWARD clashes with XBMCK_MEDIA_FASTFORWARD
++  //Remotebuttons
++  { XKB_KEY_XF86AudioNext , XBMCK_MEDIA_NEXT_TRACK },
++  { XKB_KEY_XF86AudioPrev , XBMCK_MEDIA_PREV_TRACK },
++  { XKB_KEY_XF86Close, XBMCK_ESCAPE },
++  { XKB_KEY_XF86Display , XBMCK_z },
++  { XKB_KEY_XF86MenuKB, XBMCK_MENU },
++  { XKB_KEY_XF86Subtitle , XBMCK_l },
++  { XKB_KEY_XF86Sleep , XBMCK_SLEEP },
++  { XKB_KEY_XF86WWW , XBMCK_TAB }
+ };
+ 
+ CLibInputKeyboard::CLibInputKeyboard()
+-- 
+2.17.1

@@ -11,6 +11,6 @@ do_install_append() {
 PROVIDES_remove = "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libgbm"
 
 REQUIRED_DISTRO_FEATURES = ""
-ANY_OF_DISTRO_FEATURES = ""
+ANY_OF_DISTRO_FEATURES_class-target = ""
 
-PACKAGECONFIG = "opengl egl gles gbm dri"
+PACKAGECONFIG_class-target = "opengl egl gles gbm dri"

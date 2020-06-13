@@ -1,0 +1,120 @@
+diff --git a/xbmc/platform/linux/input/CMakeLists.txt b/xbmc/platform/linux/input/CMakeLists.txt
+index b5a45d0..51f5347 100644
+--- a/xbmc/platform/linux/input/CMakeLists.txt
++++ b/xbmc/platform/linux/input/CMakeLists.txt
+@@ -6,7 +6,7 @@ if(LIRCCLIENT_FOUND)
+   list(APPEND HEADERS LIRC.h)
+ endif()
+ 
+-if(CORE_PLATFORM_NAME_LC STREQUAL rbpi OR CORE_PLATFORM_NAME_LC STREQUAL gbm OR CORE_PLATFORM_NAME_LC STREQUAL aml)
++if(CORE_PLATFORM_NAME_LC STREQUAL rbpi OR CORE_PLATFORM_NAME_LC STREQUAL gbm OR CORE_PLATFORM_NAME_LC STREQUAL aml OR CORE_PLATFORM_NAME_LC STREQUAL stb)
+   if(LIBINPUT_FOUND)
+     list(APPEND SOURCES LibInputHandler.cpp
+                         LibInputKeyboard.cpp
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
+index 2b9e17b..c853c02 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
+@@ -46,6 +46,7 @@ if(OPENGLES_FOUND AND (CORE_PLATFORM_NAME_LC STREQUAL android OR
+                        CORE_PLATFORM_NAME_LC STREQUAL ios OR
+                        CORE_PLATFORM_NAME_LC STREQUAL aml OR
+                        CORE_PLATFORM_NAME_LC STREQUAL gbm OR
++                       CORE_PLATFORM_NAME_LC STREQUAL stb OR
+                        CORE_PLATFORM_NAME_LC STREQUAL wayland))
+   list(APPEND SOURCES LinuxRendererGLES.cpp
+                       FrameBufferObject.cpp)
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
+index 4987883..b21352e 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
+@@ -26,6 +26,7 @@ if(OPENGLES_FOUND AND (CORE_PLATFORM_NAME_LC STREQUAL android OR
+                        CORE_PLATFORM_NAME_LC STREQUAL ios OR
+                        CORE_PLATFORM_NAME_LC STREQUAL aml OR
+                        CORE_PLATFORM_NAME_LC STREQUAL gbm OR
++                       CORE_PLATFORM_NAME_LC STREQUAL stb OR
+                        CORE_PLATFORM_NAME_LC STREQUAL wayland))
+   list(APPEND SOURCES ConversionMatrix.cpp
+                       VideoFilterShaderGLES.cpp
+diff -ruN a/system/settings/settings.xml b/system/settings/settings.xml
+--- a/system/settings/settings.xml	2019-08-31 14:05:38.902696000 +0200
++++ b/system/settings/settings.xml	2019-10-23 18:49:42.064354000 +0200
+@@ -493,7 +493,7 @@
+           <control type="spinner" format="integer" delayed="true"/>
+         </setting>
+         <setting id="subtitles.font" type="string" label="14089" help="36185">
+-          <level>1</level>
++          <level>3</level>
+           <default>arial.ttf</default>
+           <constraints>
+             <options>fonts</options>
+@@ -501,7 +501,7 @@
+           <control type="list" format="string" />
+         </setting>
+         <setting id="subtitles.charset" type="string" parent="subtitles.font" label="735" help="36189">
+-          <level>1</level>
++          <level>3</level>
+           <default>DEFAULT</default>
+           <constraints>
+             <options>charsets</options>
+@@ -2444,7 +2444,7 @@
+         <setting id="audiooutput.processquality" type="integer" label="13505" help="36169">
+           <requirement>HAS_AE_QUALITY_LEVELS</requirement>
+           <level>2</level>
+-          <default>30</default> <!-- AE_QUALITY_MID -->
++          <default>20</default> <!-- AE_QUALITY_MID -->
+           <constraints>
+             <options>aequalitylevels</options>
+           </constraints>
+@@ -2462,7 +2462,7 @@
+         </setting>
+         <setting id="audiooutput.samplerate" type="integer" label="458" help="36523">
+           <level>2</level>
+-          <default>48000</default>
++          <default>44100</default>
+           <dependencies>
+             <dependency type="visible">
+               <and>
+@@ -2474,10 +2474,6 @@
+           <constraints>
+             <options>
+               <option label="34124">44100</option>
+-              <option label="34125">48000</option>
+-              <option label="34126">88200</option>
+-              <option label="34127">96000</option>
+-              <option label="34128">192000</option>
+               <option label="34129">352800</option>
+               <option label="34130">384000</option>
+             </options>
+@@ -3247,7 +3243,7 @@
+       <group id="2" label="14270">
+         <setting id="locale.country" type="string" label="14271" help="36115">
+           <level>0</level>
+-          <default>USA (12h)</default>
++          <default>Central Europe</default>
+           <constraints>
+             <options>regions</options>
+           </constraints>
+diff -Nur a/addons/skin.estouchy/xml/Home.xml b/addons/skin.estouchy/xml/Home.xml
+--- a/addons/skin.estouchy/xml/Home.xml	2017-02-01 19:47:32.000000000 +0100
++++ b/addons/skin.estouchy/xml/Home.xml	2017-01-27 16:00:05.000000000 +0100
+@@ -183,7 +183,7 @@
+ 				<content>
+ 					<item>
+ 						<label>13012</label>
+-						<onclick>Shutdown</onclick>
++						<onclick>XBMC.Quit()</onclick>
+ 						<icon>icon_button_shutdown.png</icon>
+ 					</item>
+ 					<item>
+diff -Nur a/addons/skin.estuary/xml/Home.xml b/addons/skin.estuary/xml/Home.xml
+--- a/addons/skin.estuary/xml/Home.xml	2017-02-01 19:47:32.000000000 +0100
++++ b/addons/skin.estuary/xml/Home.xml	2017-01-27 16:01:17.000000000 +0100
+@@ -1005,7 +1005,7 @@
+ 					<align>justify</align>
+ 					<include content="IconButton">
+ 						<param name="control_id" value="804" />
+-						<param name="onclick" value="ActivateWindow(shutdownmenu)" />
++						<param name="onclick" value="XBMC.Quit()" />
+ 						<param name="icon" value="icons/power.png" />
+ 						<param name="label" value="$LOCALIZE[33060]" />
+ 					</include>
