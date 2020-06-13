@@ -47,6 +47,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 
 #	** TODO **
 #	rtl8723bt
+#	rtl8723au
 
 OPTIONAL_PACKAGES += " \
 	${@ 'wireguard-tools' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.14') >= 0) else '' } \
