@@ -46,7 +46,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	"
 
 #	** TODO **
-#	rtl8723bt
+#	rtl8723au_bt
 #	rtl8723au
 
 OPTIONAL_PACKAGES += " \
