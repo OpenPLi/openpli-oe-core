@@ -120,6 +120,8 @@ OPTIONAL_PACKAGES += " \
 	python-iso3166 \
 	python-iso639 \
 	python-youtube-dl \
+	python-pycryptodomex \
+	python-evdev \
 	picocom \
 	ppp \
 	rclone \
