@@ -1,0 +1,90 @@
+diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
+index 25d9398..d3ef850 100644
+--- a/xbmc/utils/EGLUtils.cpp
++++ b/xbmc/utils/EGLUtils.cpp
+@@ -98,7 +98,7 @@ std::map<EGLenum, const char*> eglErrors =
+ std::map<EGLint, const char*> eglErrorType =
+ {
+ //! @todo remove when Raspberry Pi updates their EGL headers
+-#if !defined(TARGET_RASPBERRY_PI)
++#if !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+   X(EGL_DEBUG_MSG_CRITICAL_KHR),
+   X(EGL_DEBUG_MSG_ERROR_KHR),
+   X(EGL_DEBUG_MSG_WARN_KHR),
+@@ -110,7 +110,7 @@ std::map<EGLint, const char*> eglErrorType =
+ } // namespace
+ 
+ //! @todo remove when Raspberry Pi updates their EGL headers
+-#if !defined(TARGET_RASPBERRY_PI)
++#if !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+ void EglErrorCallback(EGLenum error, const char *command, EGLint messageType, EGLLabelKHR threadLabel, EGLLabelKHR objectLabel, const char* message)
+ {
+   std::string errorStr;
+@@ -190,7 +190,7 @@ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platform
+ : m_platform{platform}
+ {
+ //! @todo remove when Raspberry Pi updates their EGL headers
+-#if !defined(TARGET_RASPBERRY_PI)
++#if !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+   if (CEGLUtils::HasClientExtension("EGL_KHR_debug"))
+   {
+     auto eglDebugMessageControl = CEGLUtils::GetRequiredProcAddress<PFNEGLDEBUGMESSAGECONTROLKHRPROC>("eglDebugMessageControlKHR");
+@@ -405,7 +405,7 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
+     contextAttribs.Add({{EGL_CONTEXT_PRIORITY_LEVEL_IMG, EGL_CONTEXT_PRIORITY_HIGH_IMG}});
+ 
+ //! @todo remove when Raspberry Pi updates their EGL headers
+-#if !defined(TARGET_RASPBERRY_PI)
++#if !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+   if (CEGLUtils::HasExtension(m_eglDisplay, "EGL_KHR_create_context") &&
+       CServiceBroker::GetSettingsComponent()->GetAdvancedSettings()->m_openGlDebugging)
+   {
+diff --git a/xbmc/utils/GLUtils.cpp b/xbmc/utils/GLUtils.cpp
+index e381fd6..bb03993 100644
+--- a/xbmc/utils/GLUtils.cpp
++++ b/xbmc/utils/GLUtils.cpp
+@@ -42,7 +42,7 @@ std::map<GLenum, const char*> glErrors =
+ std::map<GLenum, const char*> glErrorSource =
+ {
+ //! @todo remove TARGET_RASPBERRY_PI when Raspberry Pi updates their GL headers
+-#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI)
++#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+   X(GL_DEBUG_SOURCE_API_KHR),
+   X(GL_DEBUG_SOURCE_WINDOW_SYSTEM_KHR),
+   X(GL_DEBUG_SOURCE_SHADER_COMPILER_KHR),
+@@ -55,7 +55,7 @@ std::map<GLenum, const char*> glErrorSource =
+ std::map<GLenum, const char*> glErrorType =
+ {
+ //! @todo remove TARGET_RASPBERRY_PI when Raspberry Pi updates their GL headers
+-#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI)
++#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+   X(GL_DEBUG_TYPE_ERROR_KHR),
+   X(GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_KHR),
+   X(GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR_KHR),
+@@ -69,7 +69,7 @@ std::map<GLenum, const char*> glErrorType =
+ std::map<GLenum, const char*> glErrorSeverity =
+ {
+ //! @todo remove TARGET_RASPBERRY_PI when Raspberry Pi updates their GL headers
+-#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI)
++#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI) && !defined(TARGET_STB)
+   X(GL_DEBUG_SEVERITY_HIGH_KHR),
+   X(GL_DEBUG_SEVERITY_MEDIUM_KHR),
+   X(GL_DEBUG_SEVERITY_LOW_KHR),
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
+index a9aa0d6f8e..835140b5bf 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
+@@ -98,8 +98,12 @@ ConvolutionFilterShader::ConvolutionFilterShader(ESCALINGMETHOD method)
+ 
+   if (m_floattex)
+   {
++#if defined (TARGET_STB)
++    m_internalformat = GL_RGBA;
++#else
+     m_internalformat = GL_RGBA16F_EXT;
+     defines = "#define HAS_FLOAT_TEXTURE\n";
++#endif
+   }
+   else
+   {
+--
+2.17.1

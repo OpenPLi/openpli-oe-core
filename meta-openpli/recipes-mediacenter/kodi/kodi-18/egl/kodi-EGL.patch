@@ -35,7 +35,7 @@ index 0000000..dd62eff
 +endif()
 +
 +list(APPEND DEPLIBS EGL GLESv2)
-+list(APPEND PLATFORM_DEFINES -DEGL_NO_X11)
++list(APPEND PLATFORM_DEFINES -DEGL_NO_X11 -DTARGET_STB)
 diff --git a/xbmc/windowing/egl/CMakeLists.txt b/xbmc/windowing/egl/CMakeLists.txt
 new file mode 100644
 index 0000000..1ffa32a
