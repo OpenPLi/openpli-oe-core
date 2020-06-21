@@ -3,7 +3,6 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI_append_dm8000 = " file://get-rid-of-orgdream-check.patch"
-SRC_URI_append = " file://0001-revert-workaround-for-non-pli-streamproxy.patch"
 
 python do_cleanup () {
     # contains: MACHINE, box image, remote image, remote map
@@ -117,6 +116,7 @@ python do_cleanup () {
     target_remote = 'ow_remote.png'
     target_keymap = ''
     exception = ''
+    rename = ''
 
     for x in boxtypes:
         if x[0] == d.getVar('MACHINE', True):
@@ -129,12 +129,17 @@ python do_cleanup () {
                 exception = 'et7500.png'
             elif x[0] == 'xpeedc':
                 exception = 'xpeedlx.png'
+            elif x[0].startswith('vu'):
+                rename = 'vu' + x[1]
             break
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
         for name in files:
             if target_box != name and name != 'unknown.png' and exception != name:
-                os.remove(os.path.join(root, name))
+                if rename:
+                    os.rename(os.path.join(root, name), os.path.join(root, rename))
+                else:
+                    os.remove(os.path.join(root, name))
 
     for root, dirs, files in os.walk(images + 'remotes', topdown=False):
         for name in files:
