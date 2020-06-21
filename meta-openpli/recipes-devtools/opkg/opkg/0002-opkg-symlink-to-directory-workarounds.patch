@@ -2,7 +2,7 @@ diff --git a/libopkg/opkg_install.c b/libopkg/opkg_install.c
 index b8ee4b3..31f2c6b 100644
 --- a/libopkg/opkg_install.c
 +++ b/libopkg/opkg_install.c
-@@ -431,6 +431,7 @@ static int check_data_file_clashes(pkg_t * pkg, pkg_t * old_pkg)
+@@ -429,6 +429,7 @@ static int check_data_file_clashes(pkg_t * pkg, pkg_t * old_pkg)
      file_info_t *file_info;
      char *filename;
      int clashes = 0;
@@ -10,7 +10,7 @@ index b8ee4b3..31f2c6b 100644
  
      files_list = pkg_get_installed_files(pkg);
      if (files_list == NULL)
-@@ -443,10 +444,20 @@ static int check_data_file_clashes(pkg_t * pkg, pkg_t * old_pkg)
+@@ -442,10 +443,20 @@ static int check_data_file_clashes(pkg_t * pkg, pkg_t * old_pkg)
          if (file_exists(filename)) {
              pkg_t *owner;
              pkg_t *obs;
@@ -32,8 +32,8 @@ index b8ee4b3..31f2c6b 100644
 +            else if (existing_is_dir && S_ISDIR(file_info->mode)) {
                  continue;
              } else if (existing_is_dir || S_ISDIR(file_info->mode)) {
-                 /* OK if existing file is a symlink to a directory and the new
-@@ -491,7 +502,6 @@ static int check_data_file_clashes(pkg_t * pkg, pkg_t * old_pkg)
+                 /* Can't mix directory and non-directory.  For normal files,
+@@ -476,7 +487,6 @@ static int check_data_file_clashes(pkg_t * pkg, pkg_t * old_pkg)
              if (S_ISLNK(file_info->mode) && file_is_symlink(filename)) {
                  char *link_target;
                  int r, target_is_same_directory = 0;
