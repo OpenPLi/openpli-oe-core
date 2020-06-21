@@ -130,16 +130,16 @@ python do_cleanup () {
             elif x[0] == 'xpeedc':
                 exception = 'xpeedlx.png'
             elif x[0].startswith('vu'):
-                rename = 'vu' + x[1]
+                rename = 'vu' + target_box
             break
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
         for name in files:
-            if target_box != name and name != 'unknown.png' and exception != name:
-                if rename:
-                    os.rename(os.path.join(root, name), os.path.join(root, rename))
-                else:
+            if target_box != name:
+                if name != 'unknown.png' and exception != name:
                     os.remove(os.path.join(root, name))
+            elif rename:
+                os.rename(os.path.join(root, name), os.path.join(root, rename))
 
     for root, dirs, files in os.walk(images + 'remotes', topdown=False):
         for name in files:
