@@ -14,7 +14,7 @@ diff --git a/daemon/daemon.c b/daemon/daemon.c
 index 96a56cd..649a20a 100644
 --- a/daemon/daemon.c
 +++ b/daemon/daemon.c
-@@ -130,7 +130,7 @@ static const struct tr_option options[] =
+@@ -131,7 +131,7 @@ static const struct tr_option options[] =
      { 912, "encryption-tolerated", "Prefer unencrypted peer connections", "et", 0, NULL },
      { 'i', "bind-address-ipv4", "Where to listen for peer connections", "i", 1, "<ipv4 addr>" },
      { 'I', "bind-address-ipv6", "Where to listen for peer connections", "I", 1, "<ipv6 addr>" },
@@ -50,7 +50,7 @@ index e86a4a3..d0c21d7 100644
 --- a/libtransmission/rpc-server.c
 +++ b/libtransmission/rpc-server.c
 @@ -54,7 +54,7 @@ struct tr_rpc_server
-     bool               isWhitelistEnabled;
+     bool               isHostWhitelistEnabled;
      tr_port            port;
      char             * url;
 -    struct in_addr     bindAddress;
@@ -58,7 +58,7 @@ index e86a4a3..d0c21d7 100644
      struct evhttp    * httpd;
      struct event     * start_retry_timer;
      int                start_retry_counter;
-@@ -959,10 +959,7 @@ tr_rpcIsPasswordEnabled (const tr_rpc_server * server)
+@@ -1074,10 +1074,7 @@ tr_rpcIsPasswordEnabled (const tr_rpc_server * server)
  const char *
  tr_rpcGetBindAddress (const tr_rpc_server * server)
  {
@@ -70,7 +70,7 @@ index e86a4a3..d0c21d7 100644
  }
  
  /****
-@@ -1073,16 +1070,16 @@ tr_rpcInit (tr_session  * session, tr_variant * settings)
+@@ -1198,16 +1195,16 @@ tr_rpcInit (tr_session  * session, tr_variant * settings)
        tr_logAddNamedError (MY_NAME, _("%s is not a valid address"), str);
        address = tr_inaddr_any;
      }
@@ -95,7 +95,7 @@ diff --git a/libtransmission/transmission.h b/libtransmission/transmission.h
 index dd8add8..6683873 100644
 --- a/libtransmission/transmission.h
 +++ b/libtransmission/transmission.h
-@@ -128,7 +128,7 @@ const char* tr_getDefaultDownloadDir (void);
+@@ -122,7 +122,7 @@ const char* tr_getDefaultDownloadDir (void);
  
  #define TR_DEFAULT_BIND_ADDRESS_IPV4        "0.0.0.0"
  #define TR_DEFAULT_BIND_ADDRESS_IPV6             "::"

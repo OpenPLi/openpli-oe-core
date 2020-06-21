@@ -19,9 +19,9 @@ index cf7beb7dc46..47b13432c70 100644
      opt.SAMBA3_ADD_OPTION('pam')
 +    opt.SAMBA3_ADD_OPTION('pam_smbpass')
      opt.SAMBA3_ADD_OPTION('quotas')
-     opt.SAMBA3_ADD_OPTION('sendfile-support')
+     opt.SAMBA3_ADD_OPTION('sendfile-support', default=None)
      opt.SAMBA3_ADD_OPTION('utmp')
-@@ -918,6 +919,9 @@ int i; i = PAM_RADIO_TYPE;
+@@ -919,6 +920,9 @@ int i; i = PAM_RADIO_TYPE;
                         "or headers not found. Use --without-pam to disable "
                         "PAM support.");
  
