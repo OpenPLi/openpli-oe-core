@@ -17,6 +17,7 @@ SRC_URI = " \
     git://github.com/cilynx/rtl88x2bu.git;branch=${BRANCH} \
     file://0001-gcc49.patch \
     file://0002-adjust-policy-kernelversion.patch \
+    file://0003-fix-multiple-definitions.patch \
     "
 
 S = "${WORKDIR}/git"
