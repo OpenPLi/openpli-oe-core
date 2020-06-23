@@ -106,7 +106,7 @@ python do_cleanup () {
         ('sf8008', 'sf8008.png', 'octagon.png', 'octagon.html'),
     ]
 
-    import os
+    import os,shutil
 
     pluginpath = "%s%s" % (d.getVar('D', True), d.getVar('PLUGINPATH', True))
     images = "%s/public/images/" % pluginpath
@@ -116,7 +116,7 @@ python do_cleanup () {
     target_remote = 'ow_remote.png'
     target_keymap = ''
     exception = ''
-    rename = ''
+    tocopy = []
 
     for x in boxtypes:
         if x[0] == d.getVar('MACHINE', True):
@@ -129,17 +129,19 @@ python do_cleanup () {
                 exception = 'et7500.png'
             elif x[0] == 'xpeedc':
                 exception = 'xpeedlx.png'
+            elif x[0] == 'sf8008':
+                tocopy = ['sf8008c.png', 'sf8008s.png']
             elif x[0].startswith('vu'):
-                rename = 'vu' + target_box
+                tocopy = ['vu' + target_box]
             break
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
         for name in files:
+            for dest in tocopy:
+                shutil.copy(os.path.join(root, name), os.path.join(root, dest))
             if target_box != name:
                 if name != 'unknown.png' and exception != name:
                     os.remove(os.path.join(root, name))
-            elif rename:
-                os.rename(os.path.join(root, name), os.path.join(root, rename))
 
     for root, dirs, files in os.walk(images + 'remotes', topdown=False):
         for name in files:
