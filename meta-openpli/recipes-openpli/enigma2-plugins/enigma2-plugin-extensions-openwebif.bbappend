@@ -137,8 +137,9 @@ python do_cleanup () {
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
         for name in files:
-            for dest in tocopy:
-                shutil.copy(os.path.join(root, name), os.path.join(root, dest))
+            if target_box == name:
+                for dest in tocopy:
+                    shutil.copy(os.path.join(root, name), os.path.join(root, dest))
             if target_box != name:
                 if name != 'unknown.png' and exception != name:
                     os.remove(os.path.join(root, name))
