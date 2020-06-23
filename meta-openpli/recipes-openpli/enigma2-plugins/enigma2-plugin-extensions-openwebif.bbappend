@@ -140,7 +140,7 @@ python do_cleanup () {
 
     for root, dirs, files in os.walk(images + 'remotes', topdown=False):
         for name in files:
-            if target_remote != name and name != 'ow_remote.png' and name not inexception:
+            if target_remote != name and name != 'ow_remote.png' and name not in exception:
                 os.remove(os.path.join(root, name))
 
     for root, dirs, files in os.walk(keymaps + 'remotes', topdown=False):
