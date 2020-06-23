@@ -130,7 +130,7 @@ python do_cleanup () {
             elif x[0] == 'xpeedc':
                 exception = 'xpeedlx.png'
             elif x[0] == 'sf8008':
-                tocopy = ['sf8008c.png', 'sf8008s.png']
+                tocopy = ['sf8008c.png', 'sf8008s.png', 'sf8008t.png']
             elif x[0].startswith('vu'):
                 tocopy = ['vu' + target_box]
             break
