@@ -1,4 +1,4 @@
-KERNEL=="mtd*", SUBSYSTEM=="mtd", SYMLINK+="block/by-name/$sysfs{name}"
+KERNEL=="mtd*", ENV{DEVTYPE}=="mtd", SYMLINK+="block/by-name/$sysfs{name}"
 
 KERNEL=="mmcblk0p*", SUBSYSTEM=="block", RUN+="/etc/udev/scripts/mmc-dev-mapping.sh"
 
