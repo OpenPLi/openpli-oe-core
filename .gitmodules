@@ -73,3 +73,6 @@
 [submodule "meta-xp"]
 	path = meta-xp
 	url = https://github.com/hd-digital/meta-xp
+[submodule "meta-uclan"]
+	path = meta-uclan
+	url = https://github.com/zhtq/meta-uclan
