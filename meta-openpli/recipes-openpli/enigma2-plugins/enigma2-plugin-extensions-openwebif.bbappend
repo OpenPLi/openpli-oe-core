@@ -104,6 +104,7 @@ python do_cleanup () {
         ('lunix4k', 'lunix4k.png', 'lunix4k.png', 'lunix4k.html'),
         ('e4hd', 'e4hd.png', 'e4hd.png', 'e4hd.html'),
         ('sf8008', 'sf8008.png', 'octagon.png', 'octagon.html'),
+        ('sf8008m', 'sf8008m.png', 'octagon.png', 'octagon.html'),
     ]
 
     import os,shutil
