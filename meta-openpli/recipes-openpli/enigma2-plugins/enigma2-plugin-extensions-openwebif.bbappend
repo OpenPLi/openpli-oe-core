@@ -106,6 +106,7 @@ python do_cleanup () {
         ('e4hd', 'e4hd.png', 'e4hd.png', 'e4hd.html'),
         ('sf8008', 'sf8008.png', 'octagon.png', 'octagon.html'),
         ('sf8008m', 'sf8008m.png', 'octagon.png', 'octagon.html'),
+        ('ustym4kpro', 'ustym4kpro.png', 'uclan.png', 'uclan.html'),
     ]
 
     import os
