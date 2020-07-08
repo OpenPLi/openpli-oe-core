@@ -1,3 +1,5 @@
+LIC_FILES_CHKSUM = "file://LICENSE;md5=c679c9d6b02bc2757b3eaf8f53c43fba"
+
 PV = "2020a"
 
 DEFAULT_TIMEZONE = "Europe/Asterdam"
