@@ -53,6 +53,11 @@ do_install () {
         chown -R root:root ${D}
 }
 
+# fix issues with the non-standard timezone setup in 7.2
+pkg_preinst_${PN} () {
+	rm -rf $D${datadir}/zoneinfo/*
+}
+
 pkg_postinst_${PN} () {
 	etc_lt="$D${sysconfdir}/localtime"
 	src="$D${sysconfdir}/timezone"
