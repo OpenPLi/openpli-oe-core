@@ -1,0 +1,26 @@
+diff -ur a/src/rpc_com.h b/src/rpc_com.h
+--- a/src/rpc_com.h	2018-08-27 16:06:49.000000000 +0200
++++ b/src/rpc_com.h	2020-07-18 10:17:29.390812897 +0200
+@@ -61,8 +61,8 @@
+ void __xprt_set_raddr(SVCXPRT *, const struct sockaddr_storage *);
+ 
+ 
+-SVCXPRT **__svc_xports;
+-int __svc_maxrec;
++extern SVCXPRT **__svc_xports;
++extern int __svc_maxrec;
+ 
+ #ifdef __cplusplus
+ }
+diff -ur a/src/svc_vc.c b/src/svc_vc.c
+--- a/src/svc_vc.c	2018-08-27 16:06:49.000000000 +0200
++++ b/src/svc_vc.c	2020-07-18 10:21:50.074832510 +0200
+@@ -62,6 +62,8 @@
+ 
+ #include <getpeereid.h>
+ 
++SVCXPRT **__svc_xports;
++int __svc_maxrec;
+ 
+ extern rwlock_t svc_fd_lock;
+ 
