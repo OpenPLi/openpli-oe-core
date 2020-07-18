@@ -1,0 +1,12 @@
+diff -ur a/pseudo_ipc.h b/pseudo_ipc.h
+--- a/pseudo_ipc.h	2020-07-18 11:00:11.255315080 +0200
++++ b/pseudo_ipc.h	2020-07-18 11:08:29.681000414 +0200
+@@ -29,7 +29,7 @@
+ 	char path[];
+ } pseudo_msg_t;
+ 
+-enum {
++typedef enum {
+ 	PSA_EXEC = 1,
+ 	PSA_WRITE = (PSA_EXEC << 1),
+ 	PSA_READ = (PSA_WRITE << 1),
