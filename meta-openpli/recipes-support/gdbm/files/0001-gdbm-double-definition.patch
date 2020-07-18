@@ -1,9 +1,7 @@
 diff -ur a/src/parseopt.c b/src/parseopt.c
 --- a/src/parseopt.c	2018-05-30 11:39:15.000000000 +0200
 +++ b/src/parseopt.c	2020-07-18 09:39:03.639259823 +0200
-@@ -255,8 +255,8 @@
- }
-
+@@ -257,4 +257,4 @@
  char *parseopt_program_name;
 -char *parseopt_program_doc;
 -char *parseopt_program_args;
@@ -11,4 +9,3 @@ diff -ur a/src/parseopt.c b/src/parseopt.c
 +extern char *parseopt_program_args;
  const char *program_bug_address = "<" PACKAGE_BUGREPORT ">";
  void (*parseopt_help_hook) (FILE *stream);
-
