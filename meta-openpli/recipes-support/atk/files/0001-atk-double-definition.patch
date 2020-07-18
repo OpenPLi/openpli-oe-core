@@ -1,0 +1,24 @@
+diff -ur a/tests/atk_suite.c b/tests/atk_suite.c
+--- a/tests/atk_suite.c	2019-03-12 04:01:12.000000000 +0100
++++ b/tests/atk_suite.c	2020-07-18 20:30:37.402057524 +0200
+@@ -29,6 +29,8 @@
+ #include "atk_suite.h"
+ #include "atk_test_util.h"
+ 
++pid_t child_pid;
++
+ static gchar *tdata_list = NULL;
+ static gchar *one_test = NULL;
+ 
+diff -ur a/tests/atk_test_util.h b/tests/atk_test_util.h
+--- a/tests/atk_test_util.h	2019-03-12 04:01:12.000000000 +0100
++++ b/tests/atk_test_util.h	2020-07-18 20:29:17.366823436 +0200
+@@ -36,7 +36,7 @@
+ #include <locale.h>
+ #include "atk_suite.h"
+ 
+-pid_t child_pid;
++extern pid_t child_pid;
+ 
+ void run_app (const char *file_name);
+ AtspiAccessible *get_root_obj (const char *file_name);
