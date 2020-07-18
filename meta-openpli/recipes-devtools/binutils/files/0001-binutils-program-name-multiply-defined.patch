@@ -1,0 +1,36 @@
+diff -ur a/binutils/coffdump.c b/binutils/coffdump.c
+--- a/binutils/coffdump.c	2020-07-18 13:13:12.243376649 +0200
++++ b/binutils/coffdump.c	2020-07-18 16:25:32.150313514 +0200
+@@ -456,7 +456,7 @@
+     dump_coff_section (ptr->sections + i);
+ }
+ 
+-char * program_name;
++extern char * program_name;
+ 
+ static void
+ show_usage (FILE *file, int status)
+diff -ur a/binutils/srconv.c b/binutils/srconv.c
+--- a/binutils/srconv.c	2020-07-18 13:13:12.318377805 +0200
++++ b/binutils/srconv.c	2020-07-18 16:26:34.857280409 +0200
+@@ -1687,7 +1687,7 @@
+     }
+ }
+ 
+-char *program_name;
++extern char *program_name;
+ 
+ ATTRIBUTE_NORETURN static void
+ show_usage (FILE *ffile, int status)
+diff -ur a/binutils/sysdump.c b/binutils/sysdump.c
+--- a/binutils/sysdump.c	2020-07-18 13:13:12.319377820 +0200
++++ b/binutils/sysdump.c	2020-07-18 16:27:15.699910180 +0200
+@@ -633,7 +633,7 @@
+     }
+ }
+ 
+-char *program_name;
++extern char *program_name;
+ 
+ ATTRIBUTE_NORETURN static void
+ show_usage (FILE *ffile, int status)
