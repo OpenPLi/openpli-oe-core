@@ -20,3 +20,4 @@ FILES_SOLIBSDEV = ""
 FILES_${PN} = " ${bindir}/xbmc.helper ${libdir}/libxbmc_base.so"
 
 INSANE_SKIP_${PN}_append += "already-stripped dev-so"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
