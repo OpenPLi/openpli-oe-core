@@ -2,9 +2,12 @@
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-SRC_URI_append_dm8000 = " /
-	file://get-rid-of-orgdream-check.patch /
-	file://fix-h9-detection.patch /
+SRC_URI_append_dm8000 = " \
+	file://get-rid-of-orgdream-check.patch \
+	"
+
+SRC_URI_append = " \
+	file://0002-fix-h9-detection.patch \
 	"
 
 python do_cleanup () {
