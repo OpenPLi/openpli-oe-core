@@ -1,8 +1,8 @@
 diff --git a/plugin/controllers/models/owibranding.py b/plugin/controllers/models/owibranding.py
-index ba48b28f..3702fad2 100644
+index ba48b28f..bed917ea 100644
 --- a/plugin/controllers/models/owibranding.py
 +++ b/plugin/controllers/models/owibranding.py
-@@ -416,7 +416,10 @@ def getAllInfo():
+@@ -416,7 +416,11 @@ def getAllInfo():
  			brand = "Zgemma"
  			model = "H7 series"
  			grabpip = 1
@@ -11,10 +11,11 @@ index ba48b28f..3702fad2 100644
 +			brand = "Zgemma"
 +			model = "H9Combo"
 +		elif procmodel.startswith("h9"):
++			procmodel = "h9"
  			brand = "Zgemma"
  			model = "H9 series"
  			grabpip = 1
-@@ -432,9 +435,6 @@ def getAllInfo():
+@@ -432,9 +436,6 @@ def getAllInfo():
  		elif procmodel == "i55plus":
  			brand = "Zgemma"
  			model = "i55Plus"
@@ -24,4 +25,3 @@ index ba48b28f..3702fad2 100644
  		elif procmodel == "vs1500":
  			brand = "Vimastec"
  			model = "vs1500"
-
