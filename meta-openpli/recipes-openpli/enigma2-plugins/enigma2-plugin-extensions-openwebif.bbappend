@@ -7,7 +7,7 @@ SRC_URI_append_dm8000 = " \
 	"
 
 SRC_URI_append = " \
-	file://0002-fix-h9-detection.patch \
+	file://0002-fix-box-detection.patch \
 	"
 
 python do_cleanup () {
