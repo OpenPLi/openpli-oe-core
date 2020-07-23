@@ -2,12 +2,12 @@
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-SRC_URI_append_dm8000 = " \
-	file://get-rid-of-orgdream-check.patch \
+SRC_URI_append = " \
+	file://0001-fix-box-detection.patch \
 	"
 
-SRC_URI_append = " \
-	file://0002-fix-box-detection.patch \
+SRC_URI_append_dm8000 = " \
+	file://0002-get-rid-of-orgdream-check.patch \
 	"
 
 python do_cleanup () {

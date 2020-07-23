@@ -1,0 +1,67 @@
+diff --git a/plugin/controllers/models/owibranding.py b/plugin/controllers/models/owibranding.py
+index 089a77f9..85160da0 100644
+--- a/plugin/controllers/models/owibranding.py
++++ b/plugin/controllers/models/owibranding.py
+@@ -415,7 +416,16 @@ def getAllInfo():
+ 			brand = "Zgemma"
+ 			model = "H7 series"
+ 			grabpip = 1
+-		elif procmodel == "h9":
++		elif procmodel == "h9 combo":
++			procmodel = "h9combo"
++			brand = "Zgemma"
++			model = "H9 Combo"
++		elif procmodel == "h9 twin":
++			procmodel = "h9twin"
++			brand = "Zgemma"
++			model = "H9 Twin"
++		elif procmodel.startswith("h9"):
++			procmodel = "h9"
+ 			brand = "Zgemma"
+ 			model = "H9 series"
+ 			grabpip = 1
+@@ -431,13 +441,13 @@ def getAllInfo():
+ 		elif procmodel == "i55plus":
+ 			brand = "Zgemma"
+ 			model = "i55Plus"
+-		elif procmodel == "h9combo":
+-			brand = "Zgemma"
+-			model = "H9Combo"
+ 		elif procmodel == "vs1500":
+ 			brand = "Vimastec"
+ 			model = "vs1500"
+ 			grabpip = 1
++		elif procmodel == "sf8008m":
++			brand = "Octagon"
++			model = "SF8008 4K Mini"
+ 		elif procmodel.startswith("sf"):
+ 			brand = "Octagon"
+ 			if procmodel.startswith("sf8008"):
+@@ -458,6 +468,9 @@ def getAllInfo():
+ 			model = "E4HD"
+ 			lcd = 1
+ 			grabpip = 1
++		elif procmodel == "ustym4kpro":
++			brand = "uClan"
++			model = "Ustym 4K Pro"
+ 	elif fileExists("/proc/stb/info/model"):
+ 		f = open("/proc/stb/info/model", 'r')
+ 		procmodel = f.readline().strip().lower()
+@@ -656,7 +669,7 @@ def getAllInfo():
+ 		remote = "lunix4k"
+ 	elif procmodel in ("sh1", "lc"):
+ 		remote = "sh1"
+-	elif procmodel in ("h3", "h4", "h5", "h6", "h7", "h9", "i55plus", "h9combo"):
++	elif procmodel in ("h3", "h4", "h5", "h6", "h7", "h9", "i55plus", "h9combo", "h9twin"):
+ 		remote = "h3"
+ 	elif procmodel == "i55":
+ 		remote = "i55"
+@@ -672,6 +685,8 @@ def getAllInfo():
+ 		remote = "vs1x00"
+ 	elif procmodel in ("e4hd"):
+ 		remote = "e4hd"
++	elif procmodel in ("ustym4kpro"):
++		remote = "uclan"
+ 
+ 	info['remote'] = remote
+ 
