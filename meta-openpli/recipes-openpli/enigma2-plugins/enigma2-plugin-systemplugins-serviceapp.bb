@@ -9,9 +9,7 @@ DEPENDS = "enigma2 uchardet openssl"
 RDEPENDS_${PN} = "enigma2 uchardet openssl python-json"
 RRECOMMENDS_${PN} = "exteplayer3 gstplayer"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-
-SRC_URI = "git://github.com/mx3L/serviceapp.git;branch=develop file://0001-workaround-missing-servicetap.patch"
+SRC_URI = "git://github.com/mx3L/serviceapp.git;branch=develop"
 
 S = "${WORKDIR}/git"
 
