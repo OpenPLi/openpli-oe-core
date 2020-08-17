@@ -15,6 +15,7 @@ SRC_URI = " \
           file://rtl8192eu-makefile.patch \
           file://rtl8192eu-gcc5.patch \
           file://CHECKSM_IPV6_H.patch \
+          file://rtl8192eu-sha256-state.patch \
           "
 
 S = "${WORKDIR}/git"
