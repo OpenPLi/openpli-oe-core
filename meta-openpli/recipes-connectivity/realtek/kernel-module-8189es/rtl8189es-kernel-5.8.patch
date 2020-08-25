@@ -1,12 +1,13 @@
-From b9fcd586a4963be63267cd46ceed00aba2e53b7e Mon Sep 17 00:00:00 2001
-From: WanWizard <wanwizard@openpli.org>
+From dece5c506b0db2a6c78ea29ecb41feb69f64210e Mon Sep 17 00:00:00 2001
+From: WanWizard <wanwizard@wanwizard.eu>
 Date: Tue, 25 Aug 2020 11:57:11 +0100
-Subject: patch for kernel 5.8
+Subject: kernel 5.8 patches for rtl8189es
 
 ---
- core/rtw_security.c    | 326 ++++++++++++++++++++---------------------
- include/rtw_security.h |  46 +++---
- 2 files changed, 186 insertions(+), 186 deletions(-)
+ core/rtw_security.c           | 326 +++++++++++++++++-----------------
+ include/rtw_security.h        |  46 ++---
+ os_dep/linux/ioctl_cfg80211.c |   3 +
+ 3 files changed, 189 insertions(+), 186 deletions(-)
 
 diff --git a/core/rtw_security.c b/core/rtw_security.c
 index b4a24fc..f46c13e 100644
@@ -1348,6 +1349,20 @@ index 3babf5c..c93fb44 100644
  						u8 *lnkid, u8 *rsnie, u8 *timeoutie, u8 *ftie);
  #endif //CONFIG_TDLS
  
+diff --git a/os_dep/linux/ioctl_cfg80211.c b/os_dep/linux/ioctl_cfg80211.c
+index 0fe8e3d..df7b04a 100644
+--- a/os_dep/linux/ioctl_cfg80211.c
++++ b/os_dep/linux/ioctl_cfg80211.c
+@@ -6517,6 +6517,9 @@ static struct cfg80211_ops rtw_cfg80211_ops = {
+ 	.sched_scan_start = cfg80211_rtw_sched_scan_start,
+ 	.sched_scan_stop = cfg80211_rtw_sched_scan_stop,
+ #endif /* CONFIG_PNO_SUPPORT */
++
++	.mgmt_tx = cfg80211_rtw_mgmt_tx,
++	.mgmt_frame_register = cfg80211_rtw_mgmt_frame_register,
+ };
+ 
+ struct wiphy *rtw_wiphy_alloc(_adapter *padapter, struct device *dev)
 -- 
 2.26.2
 
