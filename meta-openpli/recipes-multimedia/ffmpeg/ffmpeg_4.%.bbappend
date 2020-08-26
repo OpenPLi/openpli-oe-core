@@ -1,10 +1,27 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 DEPENDS += "libxml2"
 
-PACKAGECONFIG_append += "mp3lame libvorbis vpx"
+PACKAGECONFIG_append = " libass libbluray libfreetype librtmp libvorbis \
+                        mp3lame openjpeg openssl vpx wavpack"
+
+PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
+PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
+PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
+PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,librtmp rtmpdump"
+PACKAGECONFIG[openjpeg] = "--enable-libopenjpeg,--disable-libopenjpeg,openjpeg"
+PACKAGECONFIG[wavpack] = "--enable-libwavpack,--disable-libwavpack,wavpack"
 
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
+SRC_URI_append += " \
+	file://4_02_fix_mpegts.patch \
+	file://4_10_rtsp_patch \
+	file://4_11_dxva2_patch \
+	"
+
 EXTRA_FFCONF = " \
+    --prefix=${prefix} \
     --disable-static \
     --disable-runtime-cpudetect \
     --enable-ffprobe \
@@ -39,17 +56,17 @@ EXTRA_FFCONF = " \
     --enable-outdevs \
     --enable-filters \
     --disable-doc \
+    --enable-libfdk-aac \
+    --enable-encoder=libfdk_aac \
     --disable-htmlpages \
     --disable-manpages \
     --disable-podpages \
     --disable-txtpages \
+    --disable-debug \
+    --enable-zlib \
     ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "--enable-armv6 --enable-armv6t2 --enable-vfp --enable-neon", "", d)} \
     ${@bb.utils.contains("TUNE_FEATURES", "aarch64", "--enable-armv8 --enable-vfp --enable-neon", "", d)} \
-    --disable-debug \
-    --pkg-config="pkg-config" \
-    --enable-zlib \
     --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS} -ffunction-sections -fdata-sections -fno-aggressive-loop-optimizations" \
     --extra-ldflags="${TARGET_LDFLAGS},--gc-sections -Wl,--print-gc-sections,-lrt" \
-    --prefix=${prefix} \
 "
