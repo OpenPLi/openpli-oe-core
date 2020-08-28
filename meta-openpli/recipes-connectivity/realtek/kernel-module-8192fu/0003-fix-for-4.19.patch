@@ -1,0 +1,20 @@
+---
+ os_dep/linux/os_intfs.c | 2 +-
+ 1 file changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/os_dep/linux/os_intfs.c b/os_dep/linux/os_intfs.c
+index b528ccf..c74a578 100644
+--- a/os_dep/linux/os_intfs.c
++++ b/os_dep/linux/os_intfs.c
+@@ -1704,7 +1704,7 @@ static const struct net_device_ops rtw_netdev_ops = {
+ 	.ndo_open = netdev_open,
+ 	.ndo_stop = netdev_close,
+ 	.ndo_start_xmit = rtw_xmit_entry,
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35))
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 19, 0)
+ 	.ndo_select_queue	= rtw_select_queue,
+ #endif
+ 	.ndo_set_mac_address = rtw_net_set_mac_address,
+-- 
+2.17.1
+
