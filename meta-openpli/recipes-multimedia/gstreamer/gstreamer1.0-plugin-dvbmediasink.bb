@@ -48,7 +48,7 @@ FILES_${PN}-dev += "${libdir}/gstreamer-${GSTVERSION}/*.la"
 FILES_${PN}-staticdev += "${libdir}/gstreamer-${GSTVERSION}/*.a"
 FILES_${PN}-dbg += "${libdir}/gstreamer-${GSTVERSION}/.debug"
 
-EXTRA_OECONF = "${DVBMEDIASINK_CONFIG} --with-gstversion=${GSTVERSION} --with-machine=${MACHINE}"
+EXTRA_OECONF = "${DVBMEDIASINK_CONFIG} --with-gstversion=${GSTVERSION}"
 
 pkg_preinst_${PN}_prepend () {
 	if [ -d "/.cache/gstreamer-1.0" ]
