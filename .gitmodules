@@ -76,3 +76,6 @@
 [submodule "meta-uclan"]
 	path = meta-uclan
 	url = https://github.com/zhtq/meta-uclan
+[submodule "meta-dream"]
+	path = meta-dream
+	url = https://github.com/neo-pli-bsps/meta-dream.git
