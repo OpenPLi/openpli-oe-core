@@ -132,6 +132,10 @@ python do_cleanup () {
                 exception = ['et7500.png']
             elif x[0] == 'xpeedc':
                 exception = ['xpeedlx.png']
+            elif x[0] == 'h8':
+                exception = ['h8.png', 'h8.2s.png']
+            elif x[0] == 'h9':
+                exception = ['h9.png', 'h9.2s.png', 'h9.2h.png', 'h9.s.png', 'h9.t.png']
             elif x[0] == 'sf8008':
                 exception = ['sf8008s.png', 'sf8008t.png', 'sf8008c.png']
             break
