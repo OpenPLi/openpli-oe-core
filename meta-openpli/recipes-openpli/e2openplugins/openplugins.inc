@@ -2,8 +2,6 @@ SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-${MODULE}.git;protocol=gi
 
 S="${WORKDIR}/git"
 
-#PACKAGES =+ "${PN}-src"
-
 inherit pkgconfig
 
 FILES_${PN}-dbg += "\

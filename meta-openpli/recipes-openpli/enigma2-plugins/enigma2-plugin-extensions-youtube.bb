@@ -31,6 +31,6 @@ do_install_append() {
 	install -m 0644 ${S}/YouTube.key ${D}/etc/enigma2/YouTube.key
 }
 
-#PACKAGES =+ " ${PN}-src"
 RDEPENDS_{PN}-src += "${PN}"
+
 FILES_${PN}-src = "${libdir}/enigma2/python/Plugins/Extensions/YouTube/*.py"
