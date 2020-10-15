@@ -9,6 +9,8 @@ inherit autotools-brokensep gitpkgv pythonnative gettext
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
+DEPENDS = "python"
+
 SRC_URI = "git://github.com/oe-alliance/MisPlsLcnScan.git;protocol=git"
 
 EXTRA_OECONF = " \
