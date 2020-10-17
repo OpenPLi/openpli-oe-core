@@ -8,6 +8,7 @@ SRC_URI += " \
             file://no-ldconfig.patch \
             file://setuptweaks-2.patch \
             file://pgettext.patch \
+            file://0001-mips-fix-MIPS-softfloat-build-issue.patch \
 "
 
 EXTRA_OECONF += " \
