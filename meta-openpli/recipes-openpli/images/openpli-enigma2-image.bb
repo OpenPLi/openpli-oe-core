@@ -88,4 +88,10 @@ IMAGE_INSTALL += " \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'dvd', 'cdtextinfo', '', d)} \
 	"
 
+purge_tmp_dir() {
+	rm ${IMAGE_ROOTFS}/tmp/*
+}
+
+ROOTFS_POSTPROCESS_COMMAND += "purge_tmp_dir; "
+
 export IMAGE_BASENAME = "openpli-enigma2"
