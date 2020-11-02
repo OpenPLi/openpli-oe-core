@@ -7,7 +7,7 @@ require gstreamer1.0-plugins-common.inc
 
 DEPENDS += "gstreamer1.0-plugins-base libcap zlib"
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-good.git;protocol=https;branch=master;name=gst_plugins_good \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-good.git;protocol=https;branch=1.18;name=gst_plugins_good \
            file://0001-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch \
 "
 

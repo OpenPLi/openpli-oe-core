@@ -15,7 +15,7 @@ DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2 libcap"
 
 inherit pkgconfig gobject-introspection
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=master;name=gst \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=1.18;name=gst \
            file://0001-gst-gstpluginloader.c-when-env-var-is-set-do-not-fal.patch \
            file://0003-meson-Add-valgrind-feature.patch \
            file://0004-meson-Add-option-for-installed-tests.patch \
