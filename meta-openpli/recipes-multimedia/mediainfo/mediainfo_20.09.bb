@@ -10,8 +10,8 @@ DEPENDS = "zlib"
 
 SRC_URI="http://mediaarea.net/download/binary/mediainfo/${PV}/MediaInfo_CLI_${PV}_GNU_FromSource.tar.bz2"
 
-SRC_URI[md5sum] = "6b699ee634d77f40cbc905c667be9d7b"
-SRC_URI[sha256sum] = "aaa70120ce7100f37c41c545d1a26d946e614dc858e6bd5ea91fa2e10b00f696"
+SRC_URI[md5sum] = "42cfef16aa9f3164858e85c494d99c41"
+SRC_URI[sha256sum] = "a252aa61dc1f4caeb9dc76d82292cadc993fb112a402dffd9e442e7fdf76e88e"
 
 S = "${WORKDIR}/MediaInfo_CLI_GNU_FromSource/MediaInfo/Project/GNU/CLI/"
 
