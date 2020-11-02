@@ -1,6 +1,5 @@
 LICENSE = "GPLv2+ & LGPLv2+ & LGPLv2.1+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=73a5855a8119deb017f5f13cf327095d \
-                    file://COPYING.LIB;md5=21682e4e8fea52413fd26c60acb907e5 \
+LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c \
 "
 
 require gstreamer1.0-plugins-common.inc
@@ -9,7 +8,7 @@ DEPENDS += "gstreamer1.0-plugins-base"
 
 inherit gettext gobject-introspection
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=master;name=gst_plugins_bad \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=1.18;name=gst_plugins_bad \
         file://0001-fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch \
         file://0002-avoid-including-sys-poll.h-directly.patch \
         file://0003-ensure-valid-sentinels-for-gst_structure_get-etc.patch \

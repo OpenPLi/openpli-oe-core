@@ -7,7 +7,7 @@ DEPENDS += "iso-codes util-linux zlib"
 
 inherit gobject-introspection
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-base.git;protocol=https;branch=master;name=gst_plugins_base \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-base.git;protocol=https;branch=1.18;name=gst_plugins_base \
            file://0001-get-caps-from-src-pad-when-query-caps.patch \
            file://0003-ssaparse-enhance-SSA-text-lines-parsing.patch \
            file://0005-viv-fb-Make-sure-config.h-is-included.patch \
