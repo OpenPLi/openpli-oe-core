@@ -34,12 +34,10 @@ do_install_append() {
 }
 
 RDEPENDS_${PN} = " \
-    ca-certificates \
     python-email \
     python-subprocess \
     python-unixadmin \
     python-ctypes \
-    python-codecs \
     python-argparse \
     python-html \
     "
