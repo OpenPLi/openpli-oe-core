@@ -5,7 +5,7 @@ from YouTube.com and a few more sites. It requires the Python interpreter \
 HOMEPAGE = "http://rg3.github.io/youtube-dl/"
 SECTION = "devel/python"
 LICENSE = "LGPLv2.1"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=7246f848faa4e9c9fc0ea91122d6e680"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=9936da26f04f6454c738c5f4fda24799"
 
 DEPENDS = "libxml2 bash-completion"
 
@@ -15,7 +15,7 @@ SRCREV = "${AUTOREV}"
 PE = "1"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
-SRC_URI = "git://source.netsyms.com/Mirrors/youtube-dl.git;protocol=https;branch=master"
+SRC_URI = "git://source.netsyms.com/Mirrors/l1ving_youtube-dl.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
