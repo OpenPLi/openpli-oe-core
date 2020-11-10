@@ -1,0 +1,21 @@
+--- a/djmount/upnp_util.h
++++ b/djmount/upnp_util.h
+@@ -28,6 +28,7 @@
+ 
+ 
+ #include <upnp.h>
++#include <upnpconfig.h>
+ #include <upnptools.h>
+ 
+ 
+--- a/djmount/xml_util.h
++++ b/djmount/xml_util.h_neu
+@@ -25,6 +25,7 @@
+ #define XML_UTIL_H_INCLUDED
+ 
+ #include <config.h>
++#include <upnpconfig.h>
+ 
+ #include <stdbool.h>
+ #include <inttypes.h>
+
