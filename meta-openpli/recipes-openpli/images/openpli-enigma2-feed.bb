@@ -176,7 +176,10 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-managerautofs \
 	enigma2-plugin-extensions-hdmitest \
 	enigma2-plugin-extensions-moviemanager \
+	enigma2-plugin-extensions-sundtekcontrolcenter \
+	enigma2-plugin-extensions-ts-sateditor \
 	enigma2-plugin-systemplugins-crossepg \
+	enigma2-plugin-systemplugins-devicemanager \
 	enigma2-plugin-systemplugins-joynescan \
 	enigma2-plugin-systemplugins-misplslcnscan \
 	enigma2-plugin-systemplugins-mountmanager \
