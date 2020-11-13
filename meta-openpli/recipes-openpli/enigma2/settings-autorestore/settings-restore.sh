@@ -137,8 +137,33 @@ if [ -n ${HAS_SAMBA} ]; then
 		# process the smb configuration from the backup
 		python /bin/convert-smbconf.py ${SAMBACONF}.old
 
-		# and restart samba
-		/etc/init.d/samba.sh restart
+		# check if samba is running
+		SAMBA_ON=$(pidof -s smbd)
+
+		# stop samba
+		if [ -n ${SAMBA_ON} ]; then
+			/etc/init.d/samba.sh stop
+		fi
+
+		# use udev mount to remove and recreate the share
+		DEVNAME=dummy ACTION=dummy source /etc/udev/scripts/mount.sh > /dev/null
+
+		# regenerate the shares
+		ACTION=add
+		for FILE in /etc/samba/shares/*.conf; do
+			# fetch the mount path from the share definition
+			path=`grep "path\s*=\s*" $FILE | tr -d "\040\011\012\015" | cut -d'=' -f 2`
+			comment=`grep "comment\s*=\s*" $FILE | tr -d "\040\011\012\015" | cut -d'=' -f 2`
+			# remove the old config
+			rm $FILE
+			# and recreate it
+			samba_share $path $comment
+        done
+
+		# start samba again
+		if [ -n ${SAMBA_ON} ]; then
+			/etc/init.d/samba.sh start
+		fi
 	fi
 fi
 
@@ -146,7 +171,7 @@ fi
 if [ ${HAS_NFS} ]; then
 	if [ -f /etc/exports -a -s /etc/exports ]; then
 		/etc/init.d/nfsserver restart
-	fi 
+	fi
 fi
 
 # if we have dropbear installed, check for  an outdated hostkey
