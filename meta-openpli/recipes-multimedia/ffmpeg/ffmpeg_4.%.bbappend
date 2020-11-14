@@ -50,6 +50,8 @@ EXTRA_FFCONF = " \
     --enable-muxers \
     --enable-encoders \
     --enable-decoders \
+    --disable-decoder=truehd \
+    --disable-decoder=mlp \
     --enable-demuxers \
     --enable-parsers \
     --enable-bsfs \
