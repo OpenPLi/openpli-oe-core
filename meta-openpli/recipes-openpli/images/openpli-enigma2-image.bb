@@ -66,9 +66,10 @@ IMAGE_INSTALL += " \
 	aio-grab \
 	enigma2 \
 	libavahi-client \
+	ntpdate \
+	ofgwrite \
 	settings-autorestore \
 	tuxbox-common \
-	ofgwrite \
 	${ENIGMA2_PLUGINS} \
 	\
 	${WIFI_DRIVERS} \
