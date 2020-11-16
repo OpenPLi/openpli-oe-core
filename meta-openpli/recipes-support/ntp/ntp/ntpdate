@@ -4,7 +4,11 @@ PATH=/sbin:/bin:/usr/bin:/usr/sbin
 
 test -x /usr/sbin/ntpdate || exit 0
 
-if test -f /etc/default/ntpdate ; then
+# try to get the NTP server from Enigma config
+NTPSERVERS=`grep "config.ntp.server" /etc/enigma2/settings | cut -d"=" -f 2`
+
+# if no NTP server defined, check the defaults
+if  test -f /etc/default/ntpdate ; then
 . /etc/default/ntpdate
 fi
 

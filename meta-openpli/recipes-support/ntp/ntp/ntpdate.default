@@ -1,10 +1,7 @@
 # Configuration script used by ntpdate-sync script
 
-if [ -f /etc/ntp.conf ]; then
-	NTPSERVERS=`grep -E "^\s*server\s*[^\s]*$" /etc/ntp.conf | head -n 1 | awk '{print $2}`
-else
-	NTPSERVERS="pool.ntp.org"
-fi
+NTPSERVERS="pool.ntp.org"
 
 # Set to "yes" to write time to hardware clock on success
 UPDATE_HWCLOCK="no"
+
