@@ -168,18 +168,18 @@ if [ -n ${HAS_SAMBA} ]; then
 fi
 
 # if we have NFS, check for exports and restart it
-if [ ${HAS_NFS} ]; then
+if [ -n ${HAS_NFS} ]; then
 	if [ -f /etc/exports -a -s /etc/exports ]; then
 		/etc/init.d/nfsserver restart
 	fi
 fi
 
 # if we have dropbear installed, check for  an outdated hostkey
-if [ ${HAS_DROPBEAR} ]; then
+if [ -n ${HAS_DROPBEAR} ]; then
 	# get the encoding type of the current key
-	$TYPE=$(strings $HOSTKEY | head -n 1)
+	TYPE=$(strings $HOSTKEY | head -n 1)
 	# if an old one was restored
-	if [ ${TYPE} == "sha-rsa" ]; then
+	if [ "${TYPE}" == "sha-rsa" ]; then
 		# restore the original
 		mv ${HOSTKEY} ${HOSTKEY}.old
 		mv ${HOSTKEY}.tmp ${HOSTKEY}
