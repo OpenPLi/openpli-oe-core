@@ -13,9 +13,6 @@ CFLAGS_append+= "-std=gnu89"
 
 SRC_URI = "git://github.com/mbarbon/djmount.git;protocol=http;branch=fixes"
 
-SRCREV = "02d7d47c4f04054a8a1c174b75839ee38682af86"
-PR="2"
-
 SRC_URI_append +=" \
 	file://init \
 	file://04-support-fstab-mounting.patch \
