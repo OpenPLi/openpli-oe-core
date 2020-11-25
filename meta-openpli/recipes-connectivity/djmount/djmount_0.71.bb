@@ -9,6 +9,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=eb723b61539feef013de476e68b5c50a"
 INITSCRIPT_NAME = "djmount"
 INITSCRIPT_PARAMS = "defaults"
 
+# libupnp make doesn't support it
+PARALLEL_MALE = ""
+
 CFLAGS_append+= "-std=gnu89"
 
 SRC_URI = "git://github.com/mbarbon/djmount.git;protocol=http;branch=fixes"
