@@ -179,7 +179,7 @@ if [ -n ${HAS_DROPBEAR} ]; then
 	# get the encoding type of the current key
 	TYPE=$(strings $HOSTKEY | head -n 1)
 	# if an old one was restored
-	if [ "${TYPE}" == "sha-rsa" ]; then
+	if [ "${TYPE}" == "ssh-rsa" ]; then
 		# restore the original
 		mv ${HOSTKEY} ${HOSTKEY}.old
 		mv ${HOSTKEY}.tmp ${HOSTKEY}
