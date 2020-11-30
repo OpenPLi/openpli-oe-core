@@ -210,6 +210,7 @@ RRECOMMENDS_${PN}_append = " libcec \
                              python-html \
                              python-difflib \
                              python-pycrypto \
+                             python-pycryptodomex \
                              python-json \
                              python-zlib \
                              python-shell \
