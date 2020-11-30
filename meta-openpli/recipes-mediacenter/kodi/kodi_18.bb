@@ -199,6 +199,8 @@ FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi
 RRECOMMENDS_${PN}_append = " libcec \
                              libcurl \
                              libnfs \
+                             nspr \
+                             nss \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
                              python \
                              python-ctypes \
