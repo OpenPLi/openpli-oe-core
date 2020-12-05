@@ -1,0 +1,21 @@
+diff -Naur gst-libav/meson.build gst-libav-PersianPrince/meson.build
+--- gst-libav/meson.build	2020-01-11 12:43:18.061232737 +0330
++++ gst-libav-PersianPrince/meson.build	2020-01-11 13:02:27.509818528 +0330
+@@ -16,13 +16,13 @@
+ endif
+ 
+ api_version = '1.0'
+-libavfilter_dep = dependency('libavfilter', version: '>= 7.16.100',
++libavfilter_dep = dependency('libavfilter', version: '>= 0.0.0',
+   fallback: ['FFmpeg', 'libavfilter_dep'])
+-libavformat_dep = dependency('libavformat', version: '>= 58.12.100',
++libavformat_dep = dependency('libavformat', version: '>= 0.0.0',
+   fallback: ['FFmpeg', 'libavformat_dep'])
+-libavcodec_dep = dependency('libavcodec', version: '>= 58.18.100',
++libavcodec_dep = dependency('libavcodec', version: '>= 0.0.0',
+   fallback: ['FFmpeg', 'libavcodec_dep'])
+-libavutil_dep = dependency('libavutil', version: '>= 56.14.100',
++libavutil_dep = dependency('libavutil', version: '>= 0.0.0',
+   fallback: ['FFmpeg', 'libavutil_dep'])
+ 
+ libav_deps = [libavfilter_dep, libavformat_dep, libavcodec_dep, libavutil_dep]
