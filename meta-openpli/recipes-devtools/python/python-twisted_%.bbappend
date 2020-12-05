@@ -1,5 +1,9 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/python-twisted:"
 
+SRC_URI += " \
+    file://0001-Revert-Prevent-CRLF-injections-described-in-CVE-2019.patch \
+    "
+
 FILES_${PN}-src += " \
     ${libdir}/${PYTHON_DIR}/site-packages/twisted/*.py \
     ${libdir}/${PYTHON_DIR}/site-packages/twisted/*/*.py \
