@@ -167,6 +167,13 @@ if [ -n ${HAS_SAMBA} ]; then
 	fi
 fi
 
+# fix possible resolv.conf symlink recursion
+find -L /etc/resolv.conf
+if [ $? -eq 1 ]; then
+	rm -f /etc/resolv.conf
+	touch /etc/resolv.conf
+fi
+
 # if we have NFS, check for exports and restart it
 if [ -n ${HAS_NFS} ]; then
 	if [ -f /etc/exports -a -s /etc/exports ]; then
