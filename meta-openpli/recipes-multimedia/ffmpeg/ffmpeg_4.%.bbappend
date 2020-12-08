@@ -22,7 +22,7 @@ SRC_URI_append += " \
 	file://4_11_dxva2_patch \
 	"
 
-EXTRA_FFCONF = " \
+EXTRA_FFCONF_arm = " \
     --prefix=${prefix} \
     --disable-static \
     --disable-runtime-cpudetect \
@@ -71,6 +71,58 @@ EXTRA_FFCONF = " \
     ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "--enable-armv6 --enable-armv6t2 --enable-vfp --enable-neon", "", d)} \
     ${@bb.utils.contains("TUNE_FEATURES", "aarch64", "--enable-armv8 --enable-vfp --enable-neon", "", d)} \
+    --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS} -ffunction-sections -fdata-sections -fno-aggressive-loop-optimizations" \
+    --extra-ldflags="${TARGET_LDFLAGS},--gc-sections -Wl,--print-gc-sections,-lrt" \
+"
+
+EXTRA_FFCONF_mipsel = " \
+    --prefix=${prefix} \
+    --disable-static \
+    --disable-runtime-cpudetect \
+    --disable-programs \
+    --disable-altivec \
+    --disable-amd3dnow \
+    --disable-amd3dnowext \
+    --disable-mmx \
+    --disable-mmxext \
+    --disable-sse \
+    --disable-sse2 \
+    --disable-sse3 \
+    --disable-ssse3 \
+    --disable-sse4 \
+    --disable-sse42 \
+    --disable-avx \
+    --disable-xop \
+    --disable-fma3 \
+    --disable-fma4 \
+    --disable-avx2 \
+    --enable-inline-asm \
+    --enable-asm \
+    --disable-x86asm \
+    --disable-fast-unaligned \
+    --disable-muxers \
+    --disable-encoders \
+    --disable-decoders \
+    --enable-decoder=wmalossless \
+    --enable-decoder=wmapro \
+    --enable-decoder=wmav1 \
+    --enable-decoder=wmav2 \
+    --enable-decoder=wmavoice \
+    --enable-decoder=dca \
+    --disable-demuxers \
+    --disable-parsers \
+    --disable-bsfs \
+    --disable-protocols \
+    --disable-devices \
+    --disable-filters \
+    --disable-doc \
+    --disable-htmlpages \
+    --disable-manpages \
+    --disable-podpages \
+    --disable-txtpages \
+    --disable-debug \
+    --disable-zlib \
+    ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
     --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS} -ffunction-sections -fdata-sections -fno-aggressive-loop-optimizations" \
     --extra-ldflags="${TARGET_LDFLAGS},--gc-sections -Wl,--print-gc-sections,-lrt" \
 "
