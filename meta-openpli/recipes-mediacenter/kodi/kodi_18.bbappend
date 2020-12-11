@@ -78,16 +78,27 @@ do_configure_prepend_vusolose() {
     cp -av ${WORKDIR}/xbmc-support/gles_init.* ${S}/xbmc/windowing/egl/
 }
 
-RDEPENDS_${pn}_append_vusolo2     += " kodi-vuplus-support"
-RDEPENDS_${pn}_append_vuduo2      += " kodi-vuplus-support"
-RDEPENDS_${pn}_append_vusolose    += " kodi-vuplus-support"
-RDEPENDS_${pn}_append_vusolo4k    += " kodiegl-vusolo4k"
-RDEPENDS_${pn}_append_vuultimo4k  += " kodiegl-vuultimo4k"
-RDEPENDS_${pn}_append_vuuno4k     += " kodiegl-vuuno4k"
-RDEPENDS_${pn}_append_vuuno4kse   += " kodiegl-vuuno4kse"
-RDEPENDS_${pn}_append_vuzero4k    += " kodiegl-vuzero4k"
-RDEPENDS_${pn}_append_vuduo4k     += " kodiegl-vuduo4k"
-RDEPENDS_${pn}_append_vuduo4kse   += " kodiegl-vuduo4kse"
+DEPENDS_append_vusolo2     += " kodi-vuplus-support"
+DEPENDS_append_vuduo2      += " kodi-vuplus-support"
+DEPENDS_append_vusolose    += " kodi-vuplus-support"
+DEPENDS_append_vusolo4k    += " kodiegl-vusolo4k"
+DEPENDS_append_vuultimo4k  += " kodiegl-vuultimo4k"
+DEPENDS_append_vuuno4k     += " kodiegl-vuuno4k"
+DEPENDS_append_vuuno4kse   += " kodiegl-vuuno4kse"
+DEPENDS_append_vuzero4k    += " kodiegl-vuzero4k"
+DEPENDS_append_vuduo4k     += " kodiegl-vuduo4k"
+DEPENDS_append_vuduo4kse   += " kodiegl-vuduo4kse"
+
+RDEPENDS_${PN}_append_vusolo2     += " kodi-vuplus-support"
+RDEPENDS_${PN}_append_vuduo2      += " kodi-vuplus-support"
+RDEPENDS_${PN}_append_vusolose    += " kodi-vuplus-support"
+RDEPENDS_${PN}_append_vusolo4k    += " kodiegl-vusolo4k"
+RDEPENDS_${PN}_append_vuultimo4k  += " kodiegl-vuultimo4k"
+RDEPENDS_${PN}_append_vuuno4k     += " kodiegl-vuuno4k"
+RDEPENDS_${PN}_append_vuuno4kse   += " kodiegl-vuuno4kse"
+RDEPENDS_${PN}_append_vuzero4k    += " kodiegl-vuzero4k"
+RDEPENDS_${PN}_append_vuduo4k     += " kodiegl-vuduo4k"
+RDEPENDS_${PN}_append_vuduo4kse   += " kodiegl-vuduo4kse"
 
 # Qviart
 SRC_URI_append_lunix4k    += "file://egl/EGLNativeTypeV3D-lunix4k.patch"
