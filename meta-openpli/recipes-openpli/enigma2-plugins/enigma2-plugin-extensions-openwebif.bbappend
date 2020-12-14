@@ -4,6 +4,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI_append = " \
 	file://0001-fix-box-detection.patch \
+	file://0001-revert-workaround-for-non-pli-streamproxy.patch \
 	"
 
 SRC_URI_append_dm8000 = " \
