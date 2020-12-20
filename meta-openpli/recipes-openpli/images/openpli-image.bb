@@ -23,6 +23,7 @@ IMAGE_INSTALL = "\
 	kernel-params \
 	modutils-loadscript \
 	nfs-utils-client \
+	openhal-module \
 	openpli-bootlogo \
 	openssh-sftp-server \
 	opkg \
