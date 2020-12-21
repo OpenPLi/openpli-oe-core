@@ -125,10 +125,10 @@ PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,puls
 PACKAGECONFIG[lcms] = ",,lcms"
 
 LDFLAGS += "${TOOLCHAIN_OPTIONS}"
-LDFLAGS_append_mips = " -latomic"
-LDFLAGS_append_mipsel = " -latomic"
-LDFLAGS_append_mips64 = " -latomic"
-LDFLAGS_append_mips64el = " -latomic"
+LDFLAGS_append_mips = " -latomic -lpthread"
+LDFLAGS_append_mipsel = " -latomic -lpthread"
+LDFLAGS_append_mips64 = " -latomic -lpthread"
+LDFLAGS_append_mips64el = " -latomic -lpthread"
 
 KODI_ARCH = ""
 KODI_ARCH_mips = "-DWITH_ARCH=${TARGET_ARCH}"
