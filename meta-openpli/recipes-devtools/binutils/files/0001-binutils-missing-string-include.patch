@@ -1,0 +1,11 @@
+diff -ur a/gold/debug.h b/gold/debug.h
+--- a/gold/debug.h	2020-07-17 20:56:54.213143987 +0200
++++ b/gold/debug.h	2020-07-18 12:48:13.035259962 +0200
+@@ -24,6 +24,7 @@
+ #define GOLD_DEBUG_H
+ 
+ #include <cstring>
++#include <string>
+ 
+ #include "parameters.h"
+ #include "errors.h"
