@@ -9,6 +9,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport virtual/kodi"
 
+RDEPENDS_${PN} = "python-pycrypto python-pycryptodomex kodi-addon-inputstream-adaptive nspr nss"
+
 SRC_URI = "git://github.com/mx3L/kodiext;protocol=git;branch=master \
 	file://0001-make-transparant.patch \
 	file://advancedsettings.xml \
