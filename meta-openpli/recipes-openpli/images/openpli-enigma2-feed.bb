@@ -78,6 +78,7 @@ OPTIONAL_PACKAGES += " \
 	gstplayer \
 	hddtemp \
 	hdparm \
+	htop \
 	inadyn-mt \
 	inetutils \
 	iperf3 \
