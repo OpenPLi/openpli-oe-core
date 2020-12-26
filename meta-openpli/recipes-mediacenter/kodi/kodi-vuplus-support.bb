@@ -17,7 +17,9 @@ do_install(){
 }
 
 FILES_SOLIBSDEV = ""
-FILES_${PN} = " ${bindir}/xbmc.helper ${libdir}/libxbmc_base.so"
+FILES_${PN} = "${bindir}/xbmc.helper ${libdir}/libxbmc_base.so"
 
-INSANE_SKIP_${PN}_append += "already-stripped dev-so"
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
