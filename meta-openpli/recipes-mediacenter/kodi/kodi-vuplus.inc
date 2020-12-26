@@ -11,3 +11,10 @@ SRC_URI[xbmc-vusolo2.md5sum] = "e29a91b185133ec60a59e94a8229d2b4"
 SRC_URI[xbmc-vusolo2.sha256sum] = "3c56b7ee890b3e21f378acd79db3752d721de0880b6d763bbd37fa942c2ae2b5"
 SRC_URI[xbmc-vusolose.md5sum] = "831014212eed47e36ec084f2e803e2d8"
 SRC_URI[xbmc-vusolose.sha256sum] = "97bfc26a316bcba4b897f81f31179e8861cc123a0b4d8589a2290f3cd7268c1d"
+
+# workaround for vuxxo2 unversioned shared libs
+ASSUME_SHLIBS += "libEGL.so:libgles-${MACHINE} libGLESv2.so:libgles-${MACHINE}"
+ASSUME_SHLIBS += "libdvb_base.so:libgles-${MACHINE} libdvb_client.so:libgles-${MACHINE}"
+ASSUME_SHLIBS += "libnxpl.so:libgles-${MACHINE} libv3ddriver.so:libgles-${MACHINE}"
+
+ASSUME_SHLIBS += "libxbmc_base.so:kodi-vuplus-support"
