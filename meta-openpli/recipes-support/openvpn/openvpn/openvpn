@@ -25,6 +25,7 @@ start_vpn () {
     fi
     start-stop-daemon --start --quiet --pidfile /var/run/openvpn.$NAME.pid \
             --exec $DAEMON -- \
+            --data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC:BF-CBC \
             --daemon --writepid /var/run/openvpn.$NAME.pid \
             --config $CONFIG_DIR/$NAME.conf --cd $CONFIG_DIR || rc="$?"
     case $rc in
