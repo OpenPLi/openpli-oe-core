@@ -10,7 +10,7 @@ INITSCRIPT_NAME = "djmount"
 INITSCRIPT_PARAMS = "defaults"
 
 # libupnp make doesn't support it
-PARALLEL_MALE = ""
+PARALLEL_MAKE = ""
 
 CFLAGS_append+= "-std=gnu89"
 
