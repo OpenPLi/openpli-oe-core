@@ -1,3 +1,3 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-SRC_URI += "file://0001-binutils-missing-string-include.patch"
+SRC_URI += " file://0001-binutils-missing-string-include.patch "
