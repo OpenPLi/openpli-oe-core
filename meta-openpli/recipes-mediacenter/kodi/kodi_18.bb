@@ -3,11 +3,14 @@ SUMMARY = "Kodi Media Center"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
 
-FILESPATH =. "${FILE_DIRNAME}/kodi-18:"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+PROVIDES = "virtual/kodi"
+RPROVIDES_${PN} = "virtual/kodi"
 
 inherit cmake gettext python-dir pythonnative systemd
 
-DEPENDS += " \
+DEPENDS = " \
             libfmt \
             flatbuffers flatbuffers-native \
             fstrcmp \
@@ -95,6 +98,15 @@ SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia \
            file://15941.patch \
           "
 
+SRC_URI_append = " \
+            file://kodi-stb-support.patch \
+            file://egl/kodi-EGL.patch \
+            file://kodi18-add-libinput-rckey-events.patch \
+            \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://kodiplayers/HiPlayer.patch file://kodiplayers/HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://kodiplayers/E2Player.patch', d)} \
+            "
+
 S = "${WORKDIR}/git"
 
 # breaks compilation
@@ -105,18 +117,26 @@ ACCEL ?= ""
 ACCEL_x86 = "vaapi vdpau"
 ACCEL_x86-64 = "vaapi vdpau"
 
-# Default to GBM everywhere, sucks to be nvidia
-WINDOWSYSTEM ?= "gbm"
+WINDOWSYSTEM ?= "stb"
 
-PACKAGECONFIG ??= "${ACCEL} ${WINDOWSYSTEM} pulseaudio lcms"
+PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} lcms \
+                   ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
+                   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', 'openglesv2', d)} \
+                  "
 
 # Core windowing system choices
 
 PACKAGECONFIG[x11] = "-DCORE_PLATFORM_NAME=x11,,libxinerama libxmu libxrandr libxtst glew"
 PACKAGECONFIG[gbm] = "-DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles,,"
+PACKAGECONFIG[stb] = "-DCORE_PLATFORM_NAME=stb,,"
 PACKAGECONFIG[raspberrypi] = "-DCORE_PLATFORM_NAME=rbpi,,userland"
 PACKAGECONFIG[amlogic] = "-DCORE_PLATFORM_NAME=aml,,"
 PACKAGECONFIG[wayland] = "-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles,,wayland waylandpp"
+
+# Features
+
+PACKAGECONFIG[opengl] = "-DENABLE_OPENGL=ON,,"
+PACKAGECONFIG[openglesv2] = "-DENABLE_GLES=ON,,virtual/egl"
 
 PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
@@ -124,35 +144,27 @@ PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
 PACKAGECONFIG[lcms] = ",,lcms"
 
-LDFLAGS += "${TOOLCHAIN_OPTIONS}"
-LDFLAGS_append_mips = " -latomic -lpthread"
-LDFLAGS_append_mipsel = " -latomic -lpthread"
-LDFLAGS_append_mips64 = " -latomic -lpthread"
-LDFLAGS_append_mips64el = " -latomic -lpthread"
+# Compilation tunes
 
-KODI_ARCH = ""
-KODI_ARCH_mips = "-DWITH_ARCH=${TARGET_ARCH}"
-KODI_ARCH_mipsel = "-DWITH_ARCH=${TARGET_ARCH}"
-KODI_ARCH_mips64 = "-DWITH_ARCH=${TARGET_ARCH}"
-KODI_ARCH_mips64el = "-DWITH_ARCH=${TARGET_ARCH}"
+PACKAGECONFIG[gold] = "-DENABLE_LDGOLD=ON,-DENABLE_LDGOLD=OFF"
+PACKAGECONFIG[lto] = "-DUSE_LTO=${@oe.utils.cpu_count()},-DUSE_LTO=OFF"
 
 EXTRA_OECMAKE = " \
-    ${KODI_ARCH} \
+    -DENABLE_INTERNAL_CROSSGUID=OFF \
+    -DENABLE_INTERNAL_FLATBUFFERS=OFF \
+    -DENABLE_INTERNAL_FMT=OFF \
+    -DENABLE_INTERNAL_FSTRCMP=0 \
+    -DENABLE_INTERNAL_RapidJSON=OFF \
+    -DENABLE_INTERNAL_FFMPEG=OFF \
     \
     -DNATIVEPREFIX=${STAGING_DIR_NATIVE}${prefix} \
     -DJava_JAVA_EXECUTABLE=/usr/bin/java \
     -DWITH_TEXTUREPACKER=${STAGING_BINDIR_NATIVE}/TexturePacker \
     -DWITH_JSONSCHEMABUILDER=${STAGING_BINDIR_NATIVE}/JsonSchemaBuilder \
-    -DENABLE_INTERNAL_FSTRCMP=0 \
     \
-    -DENABLE_LDGOLD=ON \
-    -DENABLE_STATIC_LIBS=FALSE \
     -DCMAKE_NM='${NM}' \
-    -DUSE_LTO=${@oe.utils.cpu_count()} \
     \
     -DFFMPEG_PATH=${STAGING_DIR_TARGET} \
-    -DENABLE_INTERNAL_FFMPEG=OFF \
-    -DENABLE_INTERNAL_CROSSGUID=OFF \
     -DLIBDVD_INCLUDE_DIRS=${STAGING_INCDIR} \
     -DNFS_INCLUDE_DIR=${STAGING_INCDIR} \
     -DSHAIRPLAY_INCLUDE_DIR=${STAGING_INCDIR} \
@@ -163,6 +175,13 @@ EXTRA_OECMAKE = " \
     -DENABLE_DEBUGFISSION=OFF \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 "
+
+LDFLAGS += "${TOOLCHAIN_OPTIONS}"
+LDFLAGS_append_mipsarch = " -latomic -lpthread"
+
+KODI_ARCH = ""
+KODI_ARCH_mipsarch = "-DWITH_ARCH=${TARGET_ARCH}"
+EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 
 # OECMAKE_GENERATOR="Unix Makefiles"
 #PARALLEL_MAKE = " "
@@ -188,7 +207,8 @@ do_configure_prepend() {
 	sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
-INSANE_SKIP_${PN} = "rpaths"
+# as of 18.9 do_package_qa is clean
+#INSANE_SKIP_${PN} = "rpaths"
 
 FILES_${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
 FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
@@ -201,6 +221,7 @@ RRECOMMENDS_${PN}_append = " libcec \
                              nspr \
                              nss \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
+                             os-release \
                              python \
                              python-ctypes \
                              python-lang \
@@ -236,3 +257,5 @@ RRECOMMENDS_${PN}_append_libc-glibc = " glibc-charmap-ibm850 \
 					glibc-charmap-utf-8 \
 					glibc-localedata-en-us \
                                       "
+# customizations should be in the BSP layers
+require kodi_18.inc
