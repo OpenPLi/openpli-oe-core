@@ -11,7 +11,7 @@ CSLINK = "${sysconfdir}/init.d/cardserver"
 CSPATH = "${sysconfdir}/init.d/cardserver.${CSNAME}"
 
 CSSTART ?= "exec start-stop-daemon -S -x /usr/bin/${CSNAME}"
-CSSTOP  ?= "exec start-stop-daemon -K -R 2 -x /usr/bin/${CSNAME}"
+CSSTOP  ?= "exec start-stop-daemon -K -o -R 2 -x /usr/bin/${CSNAME}"
 
 # Generate a simplistic standard init script
 # (sorry for the sleep 1, but start-stop-daemon -R does not work as advertised)
