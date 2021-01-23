@@ -1,10 +1,11 @@
-PV = "2020111701"
-SRC_URI = "file://*"
 DESCRIPTION = "Autorecover settings and install packages at first boot from /media/*/backup"
 PACKAGES = "${PN}"
 MAINTAINER = "OpenPLi team"
 
 require conf/license/openpli-gplv2.inc
+
+PV = "2020120601"
+SRC_URI = "file://*"
 
 # Need to tell bitbake that we have extra files installed
 FILES_${PN} = " \
