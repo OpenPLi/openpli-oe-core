@@ -17,7 +17,7 @@ RRECOMMENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
 S = "${WORKDIR}/git"
 B = "${S}"
 CAMNAME = "oscam"
-CAMSTART = "/usr/bin/oscam --wait 0 --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
+CAMSTART = "/usr/bin/oscam --wait 60 --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
 CAMSTOP = "kill \`cat /tmp/oscam.pid\` 2> /dev/null"
 
 SRC_URI += " \
@@ -39,7 +39,7 @@ EXTRA_OECMAKE += "\
 	-DSTATIC_LIBUSB=0 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
-	-DCLOCKFIX=0 \
+	-DCLOCKFIX=1 \
 	-DHAVE_PCSC=1 \
 	-DCARDREADER_SMARGO=1 \
 	-DCARDREADER_PCSC=1 \
