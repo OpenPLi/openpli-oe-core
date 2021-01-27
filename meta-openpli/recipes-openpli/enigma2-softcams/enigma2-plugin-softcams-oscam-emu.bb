@@ -48,6 +48,7 @@ EXTRA_OECMAKE += "\
 	-DCW_CYCLE_CHECK=1 \
 	-DCS_CACHEEX=1 \
 	-DMODULE_CONSTCW=1 \	
+	-DLCDSUPPORT=1 \
 	"
 
 do_install() {
