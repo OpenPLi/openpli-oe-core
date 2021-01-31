@@ -1,4 +1,4 @@
-MGCAMVER = ""
+MGCAMVER = "145c"
 
 PV = "1.45c"
 

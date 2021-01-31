@@ -19,10 +19,9 @@ CAMLINK = "/etc/init.d/softcam"
 CAMPATH = "/etc/init.d/softcam.${CAMNAME}"
 
 CAMSTART ?= "exec start-stop-daemon -S -x /usr/bin/${CAMNAME}"
-CAMSTOP  ?= "exec start-stop-daemon -K -o -R 2 -x /usr/bin/${CAMNAME}"
+CAMSTOP  ?= "exec start-stop-daemon -K -o -R TERM/5/KILL/2 -x /usr/bin/${CAMNAME}"
 
 # Generate a simplistic standard init script
-# (sorry for the sleep 1, but start-stop-daemon -R does not work as advertised)
 do_compile_append () {
 	if [ ! -f init.${CAMNAME} ]
 	then
@@ -35,10 +34,11 @@ start)
 	;;
 stop)
 	${CAMSTOP}
+	# in case a normal stop failed
+	killall /usr/bin/${CAMNAME}
 	;;
 restart|reload)
 	\$0 stop
-	sleep 1
 	\$0 start
 	;;
 version)
