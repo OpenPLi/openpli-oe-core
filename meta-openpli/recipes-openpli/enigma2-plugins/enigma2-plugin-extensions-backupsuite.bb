@@ -1,10 +1,9 @@
 DESCRIPTION = "Backup Suite"
 LICENSE = "GPLv3"
-MAINTAINER = "Open Vision Developers"
 AUTHOR = "Pedro Newbie <pedro.newbie@gmail.com>"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
-SRC_URI = "git://github.com/OpenVisionE2/BackupSuite.git;branch=master;protocol=git"
+SRC_URI = "git://github.com/persianpros/BackupSuite-PLi.git;protocol=git"
 
 # don't inherit allarch, it can't work with arch-dependent RDEPENDS
 inherit gitpkgv distutils-openplugins gettext
