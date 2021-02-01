@@ -7,8 +7,8 @@ DEPENDS = "freetype libdvdread fribidi libpng libxml2 zlib fontconfig virtual/ge
 SRC_URI = "git://github.com/ldo/dvdauthor file://fix-build.patch"
 
 inherit gitpkgv autotools gettext pkgconfig
-PV = "0.7.1+git${SRCPV}"
-PKGV = "0.7.1+git${GITPKGV}"
+PV = "0.7.2+git${SRCPV}"
+PKGV = "0.7.2+git${GITPKGV}"
 
 S = "${WORKDIR}/git"
 
