@@ -218,6 +218,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "chromiumos", "enigma2-plugin-extensions-chromium", "", d)} \
 	libcrypto-compat \
+	libxcrypt-compat \
 	dvb-usb-drivers-meta \
 	cdtextinfo \
 	meta-enigma2-dvdburn \

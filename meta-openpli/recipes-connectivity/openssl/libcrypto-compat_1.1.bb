@@ -2,7 +2,7 @@ SUMMARY = "Compatibility for packages that link to older libcrypto or libssl"
 
 require conf/license/license-gplv2.inc
 
-RDEPENDS_${PN} = "libcrypto libssl"
+RDEPENDS_${PN} = "libcrypto libssl libxcrypt-compat"
 
 RREPLACES_${PN} = "libcrypto1.0.0 libssl1.0.0 libcrypto0.9.8 libssl0.9.8 libcrypto0.9.7 libssl0.9.7"
 RCONFLICTS_${PN} = "libcrypto1.0.0 libssl1.0.0 libcrypto0.9.8 libssl0.9.8 libcrypto0.9.7 libssl0.9.7"
