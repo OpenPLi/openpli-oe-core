@@ -11,9 +11,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6762ed442b3822387a51c92d928ead0d \
 
 require gstreamer1.0-common.inc
 
-DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2 libcap"
+DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2"
 
-inherit pkgconfig gobject-introspection
+inherit meson pkgconfig gobject-introspection gettext
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=1.18;name=gst \
            file://0001-gst-gstpluginloader.c-when-env-var-is-set-do-not-fal.patch \
@@ -36,6 +36,7 @@ PACKAGECONFIG[unwind] = "-Dlibunwind=enabled,-Dlibunwind=disabled,libunwind"
 PACKAGECONFIG[dw] = "-Dlibdw=enabled,-Dlibdw=disabled,elfutils"
 PACKAGECONFIG[bash-completion] = "-Dbash-completion=enabled,-Dbash-completion=disabled,bash-completion"
 PACKAGECONFIG[tools] = "-Dtools=enabled,-Dtools=disabled"
+PACKAGECONFIG[setcap] = ",,libcap libcap-native"
 
 # TODO: put this in a gettext.bbclass patch
 def gettext_oemeson(d):
@@ -47,14 +48,11 @@ def gettext_oemeson(d):
     return '-Dnls=enabled'
 
 EXTRA_OEMESON += " \
+    -Ddoc=disabled \
     -Dexamples=disabled \
     -Ddbghelp=disabled \
     ${@gettext_oemeson(d)} \
 "
-
-GTKDOC_MESON_OPTION = "gtk_doc"
-GTKDOC_MESON_ENABLE_FLAG = "enabled"
-GTKDOC_MESON_DISABLE_FLAG = "disabled"
 
 GIR_MESON_ENABLE_FLAG = "enabled"
 GIR_MESON_DISABLE_FLAG = "disabled"
@@ -66,5 +64,7 @@ FILES_${PN} += "${libdir}/gstreamer-1.0/*.so"
 FILES_${PN}-dev += "${libdir}/gstreamer-1.0/*.a ${libdir}/gstreamer-1.0/include"
 FILES_${PN}-bash-completion += "${datadir}/bash-completion/completions/ ${datadir}/bash-completion/helpers/gst*"
 FILES_${PN}-dbg += "${datadir}/gdb ${datadir}/gstreamer-1.0/gdb"
+
+CVE_PRODUCT = "gstreamer"
 
 require gstreamer1.0-ptest.inc

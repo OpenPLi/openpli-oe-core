@@ -16,10 +16,10 @@ Signed-off-by: Alexander Kanavin <alex.kanavin@gmail.com>
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/gst/gstpluginloader.c b/gst/gstpluginloader.c
-index 430829d..3a75731 100644
+index d1e404d..2e00c3c 100644
 --- a/gst/gstpluginloader.c
 +++ b/gst/gstpluginloader.c
-@@ -471,9 +471,7 @@ gst_plugin_loader_spawn (GstPluginLoader * loader)
+@@ -475,9 +475,7 @@ gst_plugin_loader_spawn (GstPluginLoader * loader)
      helper_bin = g_strdup (env);
      res = gst_plugin_loader_try_helper (loader, helper_bin);
      g_free (helper_bin);
