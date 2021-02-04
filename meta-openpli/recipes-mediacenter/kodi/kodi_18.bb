@@ -250,6 +250,7 @@ RRECOMMENDS_${PN}_append = " libcec \
                              tzdata-europe \
                              tzdata-pacific \
                              xkeyboard-config \
+                             alsa-plugins \
                            "
 RRECOMMENDS_${PN}_append_libc-glibc = " glibc-charmap-ibm850 \
                                         glibc-gconv-ibm850 \
