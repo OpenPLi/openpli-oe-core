@@ -35,7 +35,6 @@ IMAGE_INSTALL = "\
 	python-ipaddress  \
 	python-netifaces \
 	python-pysmb \
-	nfs-utils \
 	samba-base \
 	sdparm \
 	tuxbox-common \
