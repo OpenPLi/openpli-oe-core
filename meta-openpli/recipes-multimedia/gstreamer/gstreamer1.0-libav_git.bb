@@ -23,5 +23,4 @@ CFLAGS_remove_sh4 = "-Wno-stringop-overflow"
 CFLAGS_append_sh4 = " -std=gnu99"
 
 FILES_${PN} += "${libdir}/gstreamer-1.0/*.so"
-FILES_${PN}-dev += "${libdir}/gstreamer-1.0/*.la"
 FILES_${PN}-staticdev += "${libdir}/gstreamer-1.0/*.a"

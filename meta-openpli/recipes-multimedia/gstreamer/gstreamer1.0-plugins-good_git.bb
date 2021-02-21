@@ -8,8 +8,8 @@ require gstreamer1.0-plugins-common.inc
 DEPENDS += "gstreamer1.0-plugins-base libcap zlib"
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-good.git;protocol=https;branch=1.18;name=gst_plugins_good \
+           file://0001-qt-include-ext-qt-gstqtgl.h-instead-of-gst-gl-gstglf.patch \
            file://0001-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch \
-	   file://0001-qt-include-ext-qt-gstqtgl.h-instead-of-gst-gl-gstglf.patch \
 "
 
 RPROVIDES_${PN}-pulseaudio += "${PN}-pulse"
@@ -62,10 +62,12 @@ PACKAGECONFIG[x11]        = "${X11ENABLEOPTS},${X11DISABLEOPTS},${X11DEPENDS}"
 EXTRA_OEMESON_remove += " --disable-qt"
 
 EXTRA_OEMESON += " \
-    -Doss=enabled \
+    -Ddoc=disabled \
     -Daalib=disabled \
     -Ddirectsound=disabled \
+    -Ddv=disabled \
     -Dlibcaca=disabled \
+    -Doss=enabled \
     -Doss4=disabled \
     -Dosxaudio=disabled \
     -Dosxvideo=disabled \
