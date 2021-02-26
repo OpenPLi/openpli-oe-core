@@ -9,11 +9,13 @@ DEPENDS += "gstreamer1.0-plugins-base"
 inherit gettext gobject-introspection
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=1.18;name=gst_plugins_bad \
-        file://0001-fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch \
+        file://0001-fix-maybe-uninitialized-warnings-when-compiling-with.patch \
         file://0002-avoid-including-sys-poll.h-directly.patch \
-        file://0003-ensure-valid-sentinels-for-gst_structure_get-etc.patch \
+        file://0003-ensure-valid-sentinals-for-gst_structure_get-etc.patch \
         file://0004-rtmp-hls-tsdemux-fix.patch \
         file://0005-rtmp-fix-seeking-and-potential-segfault.patch \
+        file://0004-opencv-resolve-missing-opencv-data-dir-in-yocto-buil.patch \
+        file://0005-msdk-fix-includedir-path.patch \
         file://0006-dvbapi5-fix-old-kernel.patch \
         file://0007-hls-main-thread-block.patch \
         file://0001-Revert-tsdemux-Limit-the-maximum-PES-payload-size.patch \
@@ -34,6 +36,7 @@ PACKAGECONFIG ??= " \
 # so disable it until fixed, or remove later
 # ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)} 
 
+PACKAGECONFIG[aom]             = "-Daom=enabled,-Daom=disabled,aom"
 PACKAGECONFIG[assrender]       = "-Dassrender=enabled,-Dassrender=disabled,libass"
 PACKAGECONFIG[bluez]           = "-Dbluez=enabled,-Dbluez=disabled,bluez5"
 PACKAGECONFIG[bz2]             = "-Dbz2=enabled,-Dbz2=disabled,bzip2"
@@ -82,6 +85,7 @@ PACKAGECONFIG[srtp]            = "-Dsrtp=enabled,-Dsrtp=disabled,libsrtp"
 PACKAGECONFIG[tinyalsa]        = "-Dtinyalsa=enabled,-Dtinyalsa=disabled,tinyalsa"
 PACKAGECONFIG[ttml]            = "-Dttml=enabled,-Dttml=disabled,libxml2 pango cairo"
 PACKAGECONFIG[uvch264]         = "-Duvch264=enabled,-Duvch264=disabled,libusb1 libgudev"
+PACKAGECONFIG[v4l2codecs]      = "-Dv4l2codecs=enabled,-Dv4l2codecs=disabled,libgudev"
 PACKAGECONFIG[va]              = "-Dva=enabled,-Dva=disabled,libva"
 PACKAGECONFIG[voaacenc]        = "-Dvoaacenc=enabled,-Dvoaacenc=disabled,vo-aacenc"
 PACKAGECONFIG[voamrwbenc]      = "-Dvoamrwbenc=enabled,-Dvoamrwbenc=disabled,vo-amrwbenc"
@@ -90,9 +94,8 @@ PACKAGECONFIG[wayland]         = "-Dwayland=enabled,-Dwayland=disabled,wayland-n
 PACKAGECONFIG[webp]            = "-Dwebp=enabled,-Dwebp=disabled,libwebp"
 PACKAGECONFIG[webrtc]          = "-Dwebrtc=enabled,-Dwebrtc=disabled,libnice"
 PACKAGECONFIG[webrtcdsp]       = "-Dwebrtcdsp=enabled,-Dwebrtcdsp=disabled,webrtc-audio-processing"
-PACKAGECONFIG[x265]            = "-Dx265=enabled,-Dx265=disabled,x265"
 PACKAGECONFIG[zbar]            = "-Dzbar=enabled,-Dzbar=disabled,zbar"
-PACKAGECONFIG[v4l2codecs]      = "-D-Dv4l2codecs=enabled,-Dv4l2codecs=disabled,libgudev"
+PACKAGECONFIG[x265]            = "-Dx265=enabled,-Dx265=disabled,x265"
 
 # these plugins currently have no corresponding library in OE-core or meta-openembedded:
 #   aom androidmedia applemedia bs2b chromaprint d3dvideosink
@@ -108,18 +111,27 @@ EXTRA_OEMESON += " \
     -Dipcpipeline=enabled \
     -Dnetsim=enabled \
     -Dshm=enabled \
+    -Dtranscode=enabled \
     -Dmpegdemux=enabled \
     -Dandroidmedia=disabled \
     -Dapplemedia=disabled \
+    -Davtp=disabled \
     -Dbs2b=disabled \
     -Dchromaprint=disabled \
+    -Dd3dvideosink=disabled \
+    -Dd3d11=disabled \
     -Ddirectsound=disabled \
     -Dfdkaac=disabled \
+    -Dflite=disabled \
     -Dgme=disabled \
     -Dgsm=disabled \
     -Diqa=disabled \
+    -Dkate=disabled \
     -Dladspa=disabled \
     -Dlv2=disabled \
+    -Dmagicleap=disabled \
+    -Dmediafoundation=disabled \
+    -Dmicrodns=disabled \
     -Dmpeg2enc=disabled \
     -Dmplex=disabled \
     -Dmsdk=disabled \
@@ -131,9 +143,11 @@ EXTRA_OEMESON += " \
     -Dopensles=disabled \
     -Dsoundtouch=disabled \
     -Dspandsp=disabled \
+    -Dsvthevcenc=disabled \
     -Dteletext=disabled \
     -Dtinyalsa=disabled \
     -Dwasapi=disabled \
+    -Dwasapi2=disabled \
     -Dwebrtcdsp=disabled \
     -Dwildmidi=disabled \
     -Dwinks=disabled \
@@ -150,5 +164,6 @@ ARM_INSTRUCTION_SET_armv5 = "arm"
 FILES_${PN}-dev += "${libdir}/gstreamer-1.0/include/gst/gl/gstglconfig.h"
 FILES_${PN}-freeverb += "${datadir}/gstreamer-1.0/presets/GstFreeverb.prs"
 FILES_${PN}-opencv += "${datadir}/gst-plugins-bad/1.0/opencv*"
+FILES_${PN}-transcode += "${datadir}/gstreamer-1.0/encoding-profiles"
 FILES_${PN}-voamrwbenc += "${datadir}/gstreamer-1.0/presets/GstVoAmrwbEnc.prs"
-FILES_${PN}-transcode += "${datadir}/gstreamer-1.0/encoding-profiles*"
+
