@@ -43,8 +43,8 @@ EXTRA_FFCONF = " \
     --disable-fma3 \
     --disable-fma4 \
     --disable-avx2 \
-    --enable-inline-asm \
-    --enable-asm \
+    --disable-inline-asm \
+    --disable-yasm \
     --disable-x86asm \
     --disable-fast-unaligned \
     --enable-muxers \
@@ -60,15 +60,12 @@ EXTRA_FFCONF = " \
     --enable-outdevs \
     --enable-filters \
     --disable-doc \
-    --enable-libfdk-aac \
-    --enable-encoder=libfdk_aac \
     --disable-htmlpages \
     --disable-manpages \
     --disable-podpages \
     --disable-txtpages \
     --disable-debug \
-    --enable-zlib \
-    ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
+    ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-vfp --disable-neon --enable-small --disable-mipsdsp --disable-mipsdspr2", "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "--enable-armv6 --enable-armv6t2 --enable-vfp --enable-neon", "", d)} \
     ${@bb.utils.contains("TUNE_FEATURES", "aarch64", "--enable-armv8 --enable-vfp --enable-neon", "", d)} \
     --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS} -ffunction-sections -fdata-sections -fno-aggressive-loop-optimizations" \
