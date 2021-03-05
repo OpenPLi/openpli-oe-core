@@ -26,6 +26,7 @@ LIC_FILES_CHKSUM = "file://COPYING.GPLv2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
 SRCREV = "1936413edaf6bb9596cb534d47c2b8d48135d132"
 SRC_URI = "git://github.com/FFmpeg/FFmpeg.git;branch=release/4.3 \
            file://4_mips64_cpu_detection.patch \
+           file://0001-libavutil-include-assembly-with-full-path-from-sourc.patch \
            "
 
 # Build fails when thumb is enabled: https://bugzilla.yoctoproject.org/show_bug.cgi?id=7717
@@ -44,7 +45,8 @@ S = "${WORKDIR}/git"
 inherit autotools pkgconfig
 
 PACKAGECONFIG ??= "avdevice avfilter avcodec avformat swresample swscale postproc avresample \
-                   alsa bzlib gpl lzma theora x264 zlib \
+                   alsa bzlib gpl lzma pic pthreads shared theora x264 zlib \
+                   ${@bb.utils.contains('AVAILTUNES', 'mips32r2', 'mips32r2', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xv xcb', '', d)}"
 
 # libraries to build in addition to avutil
@@ -59,6 +61,7 @@ PACKAGECONFIG[avresample] = "--enable-avresample,--disable-avresample"
 
 # features to support
 PACKAGECONFIG[alsa] = "--enable-alsa,--disable-alsa,alsa-lib"
+PACKAGECONFIG[altivec] = "--enable-altivec,--disable-altivec,"
 PACKAGECONFIG[bzlib] = "--enable-bzlib,--disable-bzlib,bzip2"
 PACKAGECONFIG[fdk-aac] = "--enable-libfdk-aac --enable-nonfree,--disable-libfdk-aac,fdk-aac"
 PACKAGECONFIG[gpl] = "--enable-gpl,--disable-gpl"
@@ -71,6 +74,7 @@ PACKAGECONFIG[mp3lame] = "--enable-libmp3lame,--disable-libmp3lame,lame"
 PACKAGECONFIG[openssl] = "--enable-openssl,--disable-openssl,openssl"
 PACKAGECONFIG[sdl2] = "--enable-sdl2,--disable-sdl2,virtual/libsdl2"
 PACKAGECONFIG[speex] = "--enable-libspeex,--disable-libspeex,speex"
+PACKAGECONFIG[srt] = "--enable-libsrt,--disable-libsrt,srt"
 PACKAGECONFIG[theora] = "--enable-libtheora,--disable-libtheora,libtheora libogg"
 PACKAGECONFIG[vaapi] = "--enable-vaapi,--disable-vaapi,libva"
 PACKAGECONFIG[vdpau] = "--enable-vdpau,--disable-vdpau,libvdpau"
@@ -80,6 +84,13 @@ PACKAGECONFIG[x265] = "--enable-libx265,--disable-libx265,x265"
 PACKAGECONFIG[xcb] = "--enable-libxcb,--disable-libxcb,libxcb"
 PACKAGECONFIG[xv] = "--enable-outdev=xv,--disable-outdev=xv,libxv"
 PACKAGECONFIG[zlib] = "--enable-zlib,--disable-zlib,zlib"
+
+# other configuration options
+PACKAGECONFIG[mips32r2] = ",--disable-mipsdsp --disable-mipsdspr2"
+PACKAGECONFIG[pic] = "--enable-pic"
+PACKAGECONFIG[pthreads] = "--enable-pthreads,--disable-pthreads"
+PACKAGECONFIG[shared] = "--enable-shared"
+PACKAGECONFIG[strip] = ",--disable-stripping"
 
 # Check codecs that require --enable-nonfree
 USE_NONFREE = "${@bb.utils.contains_any('PACKAGECONFIG', [ 'openssl' ], 'yes', '', d)}"
@@ -91,10 +102,6 @@ def cpu(d):
     return 'generic'
 
 EXTRA_OECONF = " \
-    --disable-stripping \
-    --enable-pic \
-    --enable-shared \
-    --enable-pthreads \
     ${@bb.utils.contains('USE_NONFREE', 'yes', '--enable-nonfree', '', d)} \
     \
     --cross-prefix=${TARGET_PREFIX} \
@@ -112,7 +119,6 @@ EXTRA_OECONF = " \
     --libdir=${libdir} \
     --shlibdir=${libdir} \
     --datadir=${datadir}/ffmpeg \
-    ${@bb.utils.contains('AVAILTUNES', 'mips32r2', '', '--disable-mipsdsp --disable-mipsdspr2', d)} \
     --cpu=${@cpu(d)} \
     --pkg-config=pkg-config \
 "
