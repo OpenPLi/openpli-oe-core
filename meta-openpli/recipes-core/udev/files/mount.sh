@@ -118,6 +118,14 @@ automount() {
 		exit 0
 	fi
 
+	# Activate swap space
+	if [ "$ID_FS_TYPE" == "swap" ] ; then
+		if ! grep -q "^/dev/${NAME} " /proc/swaps ; then
+			swapon /dev/${NAME}
+		fi
+		exit 0
+	fi
+
 	# check for "please don't mount it" file
 	if [ -f "/dev/nomount.${DEVBASE}" ]; then
 		# blocked
