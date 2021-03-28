@@ -4,9 +4,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c \
 
 require gstreamer1.0-plugins-common.inc
 
-DEPENDS += "gstreamer1.0-plugins-base"
+DEPENDS += "gstreamer1.0-plugins-base json-glib"
 
-inherit gettext gobject-introspection
+inherit gobject-introspection
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=1.18;name=gst_plugins_bad \
         file://0001-fix-maybe-uninitialized-warnings-when-compiling-with.patch \
@@ -51,7 +51,7 @@ PACKAGECONFIG[faac]            = "-Dfaac=enabled,-Dfaac=disabled,faac"
 PACKAGECONFIG[faad]            = "-Dfaad=enabled,-Dfaad=disabled,faad2"
 PACKAGECONFIG[flite]           = "-Dflite=enabled,-Dflite=disabled,flite-alsa"
 PACKAGECONFIG[fluidsynth]      = "-Dfluidsynth=enabled,-Dfluidsynth=disabled,fluidsynth"
-PACKAGECONFIG[hls]             = "-Dhls=enabled -Dhls-crypto=nettle,-Dhls=disabled,nettle"
+PACKAGECONFIG[hls]             = "-Dhls=enabled -Dhls-crypto=openssl,-Dhls=disabled,openssl"
 # the gl packageconfig enables OpenGL elements that haven't been ported
 # to -base yet. They depend on the gstgl library in -base, so we do
 # not add GL dependencies here, since these are taken care of in -base.
@@ -105,6 +105,7 @@ PACKAGECONFIG[x265]            = "-Dx265=enabled,-Dx265=disabled,x265"
 #   winscreencap wpe
 
 EXTRA_OEMESON += " \
+    -Ddoc=disabled \
     -Ddecklink=enabled \
     -Ddvb=enabled \
     -Dfbdev=enabled \

@@ -11,13 +11,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6762ed442b3822387a51c92d928ead0d \
 
 require gstreamer1.0-common.inc
 
-DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2"
+DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2 libcap"
 
-inherit meson pkgconfig gobject-introspection gettext
+inherit meson pkgconfig gobject-introspection
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=1.18;name=gst \
            file://0001-gst-gstpluginloader.c-when-env-var-is-set-do-not-fal.patch \
-           file://0002-Remove-unused-valgrind-detection.patch \
            file://0003-meson-Add-option-for-installed-tests.patch \
            file://0001-tests-seek-Don-t-use-too-strict-timeout-for-validati.patch \
            file://0005-revert-use-new-gst-adapter-get-buffer.patch \
@@ -36,7 +35,6 @@ PACKAGECONFIG[unwind] = "-Dlibunwind=enabled,-Dlibunwind=disabled,libunwind"
 PACKAGECONFIG[dw] = "-Dlibdw=enabled,-Dlibdw=disabled,elfutils"
 PACKAGECONFIG[bash-completion] = "-Dbash-completion=enabled,-Dbash-completion=disabled,bash-completion"
 PACKAGECONFIG[tools] = "-Dtools=enabled,-Dtools=disabled"
-PACKAGECONFIG[setcap] = "-Dptp-helper-permissions=capabilities,,libcap libcap-native"
 
 # TODO: put this in a gettext.bbclass patch
 def gettext_oemeson(d):
