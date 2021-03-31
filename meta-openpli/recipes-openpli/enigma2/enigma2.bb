@@ -161,7 +161,7 @@ FILES_${PN}-dbg += "\
 	"
 
 # Swig generated 200k enigma.py file has no purpose for end users
-# Save some space by not installing sources (Bootstrap.py must remain)
+# Save some space by not installing sources (Startup.py must remain)
 FILES_${PN}-src += "\
 	${libdir}/enigma2/python/e2reactor.py \
 	${libdir}/enigma2/python/enigma.py \
@@ -173,7 +173,6 @@ FILES_${PN}-src += "\
 	${libdir}/enigma2/python/RecordTimer.py \
 	${libdir}/enigma2/python/ServiceReference.py \
 	${libdir}/enigma2/python/SleepTimer.py \
-	${libdir}/enigma2/python/Startup.py \
 	${libdir}/enigma2/python/skin.py \
 	${libdir}/enigma2/python/timer.py \
 	${libdir}/enigma2/python/*/*.py \
