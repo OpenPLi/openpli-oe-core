@@ -81,6 +81,7 @@ OPTIONAL_PACKAGES += " \
 	htop \
 	inadyn-mt \
 	inetutils \
+	inotify-tools \
 	iperf3 \
 	iproute2 \
 	iputils \
