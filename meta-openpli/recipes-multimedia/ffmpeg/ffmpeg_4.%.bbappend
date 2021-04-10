@@ -3,14 +3,13 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 DEPENDS += "libxml2"
 
 PACKAGECONFIG_append = " libass libbluray libfreetype librtmp libvorbis \
-                        mp3lame openjpeg openssl vpx wavpack x265 libv4l2"
+                        mp3lame openjpeg openssl vpx x265 libv4l2"
 
 PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
 PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,librtmp rtmpdump"
 PACKAGECONFIG[openjpeg] = "--enable-libopenjpeg,--disable-libopenjpeg,openjpeg"
-PACKAGECONFIG[wavpack] = "--enable-libwavpack,--disable-libwavpack,wavpack"
 PACKAGECONFIG[libv4l2] = "--enable-libv4l2,--disable-libv4l2,v4l-utils"
 PACKAGECONFIG[gnutls] = "--enable-gnutls,--disable-gnutls"
 
@@ -26,7 +25,7 @@ EXTRA_FFCONF = " \
 	--prefix=${prefix} \
 	--disable-runtime-cpudetect \
 	--disable-ffplay \
-	--disable-ffprobe \
+	--enable-ffprobe \
 	\
 	--disable-doc \
 	--disable-htmlpages \
@@ -66,6 +65,7 @@ EXTRA_FFCONF = " \
 	--enable-muxer=h261 \
 	--enable-muxer=h263 \
 	--enable-muxer=h264 \
+	--enable-muxer=h265 \
 	--enable-muxer=hevc \
 	--enable-muxer=image2 \
 	--enable-muxer=image2pipe \
@@ -88,6 +88,7 @@ EXTRA_FFCONF = " \
 	--enable-parser=dvdsub \
 	--enable-parser=flac \
 	--enable-parser=h264 \
+	--enable-parser=h265 \
 	--enable-parser=hevc \
 	--enable-parser=mjpeg \
 	--enable-parser=mpeg4video \
@@ -155,6 +156,7 @@ EXTRA_FFCONF = " \
 	--enable-decoder=h263 \
 	--enable-decoder=h263i \
 	--enable-decoder=h264 \
+	--enable-decoder=h265 \
 	--enable-decoder=hevc \
 	--enable-decoder=iac \
 	--enable-decoder=imc \
@@ -248,6 +250,7 @@ EXTRA_FFCONF = " \
 	--enable-demuxer=flac \
 	--enable-demuxer=flv \
 	--enable-demuxer=h264 \
+	--enable-demuxer=h265 \
 	--enable-demuxer=hls \
 	--enable-demuxer=image2 \
 	--enable-demuxer=image2pipe \
@@ -294,8 +297,6 @@ EXTRA_FFCONF = " \
 	--disable-libxcb-xfixes \
 	--disable-libxcb-shape \
 	\
-	$(FFMPEG_CONF_OPTS) \
-	\
 	--enable-shared \
 	--enable-network \
 	--enable-nonfree \
@@ -308,7 +309,7 @@ EXTRA_FFCONF = " \
 	--enable-pthreads \
 	--enable-hardcoded-tables \
 	\
-    ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
+    ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-mmi --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "--enable-armv6 --enable-armv6t2 --enable-vfp --enable-neon", "", d)} \
     ${@bb.utils.contains("TUNE_FEATURES", "aarch64", "--enable-armv8 --enable-vfp --enable-neon", "", d)} \
     --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS} -ffunction-sections -fdata-sections -fno-aggressive-loop-optimizations" \
