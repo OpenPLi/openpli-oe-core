@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 DEPENDS = "python python-setuptools-scm-native"
 RDEPENDS_${PN} = "python-shell"
 
-SRC_URI = "https://files.pythonhosted.org/packages/aa/fd/ed738775442e3614849fefdf41417d7bff3ccb010d49c8f729432cc3c1e5/mutagen-${PV}.tar.gz"
-SRC_URI[md5sum] = "3154511015860685b3882c068258ae65"
-SRC_URI[sha256sum] = "3a982d39f1b800520a32afdebe3543f972e83a6ddd0c0198739a161ee705b588"
+SRC_URI = "https://files.pythonhosted.org/packages/f4/a2/af03414b37e2e3c1fcdfadfbc692652198767c5d822ad3a3b3a949bac86d/mutagen-${PV}.tar.gz"
+SRC_URI[md5sum] = "90e55bbd35517c2c93859f2d922969bd"
+SRC_URI[sha256sum] = "d873baeb7815311d3420aab0a1d83f050f628228cbc2d6045a14a16460411bc9"
 
 S = "${WORKDIR}/mutagen-${PV}"
 
