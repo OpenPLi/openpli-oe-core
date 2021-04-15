@@ -370,13 +370,15 @@ class DLNAServer(ConfigListScreen, Screen):
 						if v != None and v != "" and v[-1] != '/':
 							v = v + "/"
 					self.oldConfig[k] = v
-				except : pass
+				except :
+					pass
 		def setDefault(key, default):	# If value not in config file, create it and set a default value
 			try:
 				value = self.oldConfig.get(key)
 				if value == None or value.strip() == "":
 					self.oldConfig[key] = default
-			except: self.oldConfig[key] = default
+			except:
+				self.oldConfig[key] = default
 
 		setDefault("friendly_name", "%s" % (socket.gethostname()))
 		setDefault("VAPmediadirExists", "False")		# Flag for this plugin code, this is not a configuration value in the config file.
