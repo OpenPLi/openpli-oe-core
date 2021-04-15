@@ -121,7 +121,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 										# ';' is a comment delimiter only if it follows
 										# a spacing character
 										pos = optval.find(';')
-										if pos != -1 and optval[pos-1].isspace():
+										if pos != -1 and optval[pos - 1].isspace():
 											optval = optval[:pos]
 									optval = optval.strip()
 									# allow empty values
