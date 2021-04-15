@@ -50,7 +50,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 		"""Add a comment line"""
 		self.set(section, '# %s' % (comment,), None)
 
-	def add_section(self, section, items = None):
+	def add_section(self, section, items=None):
 		"""Create a new section in the configuration.
 		Raise DuplicateSectionError if a section by the specified name
 		already exists. Raise ValueError if name is DEFAULT or any of it's
@@ -177,7 +177,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 					self._write_item(fp, key, value, 2)
 				fp.write("\n")
 
-	def _write_item(self, fp, key, value, indent = 0):
+	def _write_item(self, fp, key, value, indent=0):
 		"""Write a single option or comment line"""
 		if key != "__name__":
 			if key.startswith('_comment_') and value is not None:

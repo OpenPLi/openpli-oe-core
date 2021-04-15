@@ -22,7 +22,7 @@ from Components.config import config, ConfigSelection, getConfigListEntry, Confi
 from Components.FileList import FileList
 
 config.plugins.dlnaserver = ConfigSubsection()
-config.plugins.dlnaserver.autostart = ConfigYesNo(default = False)
+config.plugins.dlnaserver.autostart = ConfigYesNo(default=False)
 
 def isRunning():
 	ps_str = os.popen("ps | grep minidlnad | grep -v grep").read()
@@ -46,7 +46,7 @@ class SelectDirectoryWindow(Screen):
 	def __init__(self, session, currentDir):
 		Screen.__init__(self, session)
 		inhibitDirs = ["/bin", "/boot", "/dev", "/etc", "/lib", "/proc", "/sbin", "/sys", "/usr"]
-		self["filelist"] = FileList(currentDir, showDirectories = True, showFiles = False, inhibitMounts=[], inhibitDirs=inhibitDirs)
+		self["filelist"] = FileList(currentDir, showDirectories=True, showFiles=False, inhibitMounts=[], inhibitDirs=inhibitDirs)
 		self["actions"]  = ActionMap(["WizardActions", "DirectionActions", "ColorActions", "EPGSelectActions"], {
 			"back"  : self.cancel,
 			"left"  : self.left,
@@ -262,12 +262,12 @@ class DLNAServer(ConfigListScreen, Screen):
 	def makeMenuEntry(self):	# Make all menu entry, including invisible
 		self.readConfigFile()
 		self.menuItemServerName    = ConfigText(default=self.oldConfig.get("friendly_name"))
-		self.menuItemOneMediaDir   = ConfigYesNo(default = True if self.oldConfig.get("VAPmediadirExists") != "True" else False)
-		self.menuItemMediaDir      = ConfigDirectory(default = self.oldConfig.get("media_dir"))
-		self.menuItemVideoDir      = ConfigDirectory(default = self.oldConfig.get("media_dirV"))
-		self.menuItemAudioDir      = ConfigDirectory(default = self.oldConfig.get("media_dirA"))
-		self.menuItemPictureDir    = ConfigDirectory(default = self.oldConfig.get("media_dirP"))
-		self.menuItemRootContainer = ConfigYesNo(default = True if self.oldConfig.get("root_container") == "B" else False)
+		self.menuItemOneMediaDir   = ConfigYesNo(default=True if self.oldConfig.get("VAPmediadirExists") != "True" else False)
+		self.menuItemMediaDir      = ConfigDirectory(default=self.oldConfig.get("media_dir"))
+		self.menuItemVideoDir      = ConfigDirectory(default=self.oldConfig.get("media_dirV"))
+		self.menuItemAudioDir      = ConfigDirectory(default=self.oldConfig.get("media_dirA"))
+		self.menuItemPictureDir    = ConfigDirectory(default=self.oldConfig.get("media_dirP"))
+		self.menuItemRootContainer = ConfigYesNo(default=True if self.oldConfig.get("root_container") == "B" else False)
 
 		log_level_list = self.oldConfig.get("log_level").split("=")
 		enable_log = False
@@ -276,9 +276,9 @@ class DLNAServer(ConfigListScreen, Screen):
 			log_level = "off"
 		if log_level != "off":
 			enable_log = True
-		self.menuItemEnableLog = ConfigYesNo(default = enable_log)
-		self.menuItemLogLevel  = ConfigSelection(default = log_level if enable_log else "warn", choices = [("fatal", _("fatal")), ("error", _("error")), ("warn", _("warn")), ("info", _("info")), ("debug", _("debug"))])
-		self.menuItemLogDir    = ConfigDirectory(default = self.oldConfig.get("log_dir"))
+		self.menuItemEnableLog = ConfigYesNo(default=enable_log)
+		self.menuItemLogLevel  = ConfigSelection(default=log_level if enable_log else "warn", choices=[("fatal", _("fatal")), ("error", _("error")), ("warn", _("warn")), ("info", _("info")), ("debug", _("debug"))])
+		self.menuItemLogDir    = ConfigDirectory(default=self.oldConfig.get("log_dir"))
 
 		self.menuEntryServerName    = getConfigListEntry(_("Server Name"), self.menuItemServerName)
 		self.menuEntryOneMediaDir   = getConfigListEntry(_("Only one media directory"), self.menuItemOneMediaDir)
@@ -424,5 +424,5 @@ def autostart(reason, **kwargs):
 				os.system(cmd)
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(name="DLNA Server", description="DLNA server using MiniDLNA", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main),
-		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc = autostart)]
+	return [PluginDescriptor(name="DLNA Server", description="DLNA server using MiniDLNA", where=PluginDescriptor.WHERE_PLUGINMENU, needsRestart=False, fnc=main),
+		PluginDescriptor(where=[PluginDescriptor.WHERE_AUTOSTART], fnc=autostart)]
