@@ -156,7 +156,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 	def write(self, filename):
 		"""Write an .ini-format representation of the configuration state."""
 
-		fp = open(filename,'w')
+		fp = open(filename, 'w')
 		self.writefp(fp)
 		fp.close()
 

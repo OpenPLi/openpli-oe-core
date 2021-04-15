@@ -317,7 +317,7 @@ class DLNAServer(ConfigListScreen, Screen):
 		configString = ""
 		def configDataAppend(origin, key, value):
 			if key.strip() != "" and value.strip() != "":
-				origin += "%s=%s\n" % (key,value)
+				origin += "%s=%s\n" % (key, value)
 			return origin
 		configString = configDataAppend(configString, "friendly_name", serverName)
 		if mediaDir is not None and mediaDir.strip() != "":
@@ -358,8 +358,8 @@ class DLNAServer(ConfigListScreen, Screen):
 					continue
 				try:
 					i = line.find('=')
-					k,v = line[:i],line[i + 1:]
-					k,v = k.strip(),v.strip()
+					k, v = line[:i], line[i + 1:]
+					k, v = k.strip(), v.strip()
 					# Special handling if 3 media directories
 					if k == "media_dir" and v[1] == ',' and (v[0] in "VAP"):
 						k += v[0]
