@@ -18,6 +18,8 @@ SHAREPATH = '/etc/samba/shares'
 # Our "Better" ConfigParser, which supports comments and a
 # toplevel section that doesn't require an INI header
 #
+
+
 class BetterConfigParser(ConfigParser.ConfigParser):
 
 	# class globals
@@ -152,7 +154,6 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 				if isinstance(val, list):
 					options[name] = '\n'.join(val)
 
-
 	def write(self, filename):
 		"""Write an .ini-format representation of the configuration state."""
 
@@ -186,6 +187,8 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 				fp.write("%s%s = %s\n" % (" " * indent, key, str(value).replace('\n', '\n\t')))
 
 # cli help information
+
+
 def syntax():
 	"""
 	Show syntax and usage information
@@ -207,6 +210,8 @@ Syntax:
 #
 # main function
 #
+
+
 def main():
 	"""
 	CLI programme to convert smb.conf files into OpenPLi format
@@ -273,6 +278,7 @@ def main():
 				share = BetterConfigParser()
 				share.add_section(section, inputfile.items(section))
 				share.write('%s/%s.conf' % (SHAREPATH, section.lower()))
+
 
 # run me
 if __name__ == '__main__':
