@@ -18,6 +18,7 @@ SRC_URI += " \
 			file://mount_single_uuid.patch \
 			file://inetd \
 			file://inetd.conf \
+			file://busybox-cron \
 			"
 
 # we do not really depend on mtd-utils, but as mtd-utils replaces 
