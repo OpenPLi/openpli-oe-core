@@ -4,7 +4,7 @@ MAINTAINER = "OpenPLi team"
 
 require conf/license/openpli-gplv2.inc
 
-PV = "2020120601"
+PV = "2021042101"
 SRC_URI = "file://*"
 
 # Need to tell bitbake that we have extra files installed
