@@ -123,7 +123,7 @@ OPTIONAL_PACKAGES += " \
 	python-futures \
 	python-pycrypto \
 	python-singledispatch \
-	python-websocket \
+	python-websocket-client \
 	python-isodate \
 	python-iso3166 \
 	python-iso639 \
