@@ -93,13 +93,5 @@ RDEPENDS_${PN}_append_vuzero4k    = " kodiegl-vuzero4k"
 RDEPENDS_${PN}_append_vuduo4k     = " kodiegl-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " kodiegl-vuduo4kse"
 
-#Zgemma
-RDEPENDS_${PN}_append_h7 = " zgemma-v3ddriver-h7"
-RDEPENDS_${PN}_append_h9 = " zgemma-mali-3798mv200"
-RDEPENDS_${PN}_append_h9se = " zgemma-mali-3798mv200"
-RDEPENDS_${PN}_append_h9combo = " zgemma-mali-3798mv200"
-RDEPENDS_${PN}_append_h9combose = " zgemma-mali-3798mv200"
-RDEPENDS_${PN}_append_h10 = " zgemma-mali-3798mv200"
-RDEPENDS_${PN}_append_h11 = " zgemma-mali-3798mv310"
-RDEPENDS_${PN}_append_i55se = " zgemma-mali-3798mv200"
-RDEPENDS_${PN}_append_i55seplus = " zgemma-mali-3798mv200"
+# Vu+ specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
+INSANE_SKIP_${PN} += "file-rdeps"
