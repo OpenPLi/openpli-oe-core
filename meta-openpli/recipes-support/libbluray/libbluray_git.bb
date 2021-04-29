@@ -8,10 +8,10 @@ DEPENDS = "libxml2"
 
 SRC_URI = "gitsm://code.videolan.org/videolan/libbluray.git;protocol=http"
 
-inherit gitpkgv autotools-brokensep pkgconfig
+inherit gitpkgv setuptools autotools-brokensep pkgconfig
 
-PV = "v1.1.0+git${SRCPV}"
-PKGV = "v1.1.0+git${GITPKGV}"
+PV = "v1.3.0+git${SRCPV}"
+PKGV = "v1.3.0+git${GITPKGV}"
 
 S="${WORKDIR}/git"
 
