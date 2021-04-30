@@ -15,12 +15,15 @@ inherit cmake gettext python-dir pythonnative systemd
 
 DEPENDS = " \
             libfmt \
-            flatbuffers flatbuffers-native \
+            flatbuffers \
+            flatbuffers-native \
             fstrcmp \
             rapidjson \
             crossguid \
             texturepacker-native \
-            libdvdnav libdvdcss libdvdread \
+            libdvdnav \
+            libdvdcss \
+            libdvdread \
             git-native \
             curl-native \
             gperf-native \
@@ -28,7 +31,6 @@ DEPENDS = " \
             nasm-native \
             swig-native \
             unzip-native \
-            yasm-native \
             zip-native \
             \
             avahi \
@@ -42,13 +44,13 @@ DEPENDS = " \
             ffmpeg \
             fontconfig \
             fribidi \
+            glib-2.0 \ 
             giflib \
             libass \
             libcdio \
             libcec \
-            libdvdcss \
-            libdvdread \
             libinput \
+            libbluray \
             libmad \
             libmicrohttpd \
             libmms \
@@ -73,6 +75,9 @@ DEPENDS = " \
             wavpack \
             yajl \
             zlib \
+            \
+            gstreamer1.0 \
+            gstreamer1.0-plugins-base \
           "
 
 SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
@@ -122,7 +127,7 @@ ACCEL_x86-64 = "vaapi vdpau"
 
 WINDOWSYSTEM ?= "stb"
 
-PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} lcms \
+PACKAGECONFIG ??= "${ACCEL} ${WINDOWSYSTEM} lcms lto \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', 'openglesv2', d)} \
                   "
@@ -152,20 +157,40 @@ PACKAGECONFIG[lcms] = ",,lcms"
 PACKAGECONFIG[gold] = "-DENABLE_LDGOLD=ON,-DENABLE_LDGOLD=OFF"
 PACKAGECONFIG[lto] = "-DUSE_LTO=${@oe.utils.cpu_count()},-DUSE_LTO=OFF"
 
+LDFLAGS += "${TOOLCHAIN_OPTIONS}"
+LDFLAGS_append_mips = " -latomic -lpthread"
+LDFLAGS_append_mipsel = " -latomic -lpthread"
+LDFLAGS_append_mips64 = " -latomic -lpthread"
+LDFLAGS_append_mips64el = " -latomic -lpthread"
+
+KODI_ARCH = ""
+KODI_ARCH_mips = "-DWITH_ARCH=${TARGET_ARCH}"
+KODI_ARCH_mipsel = "-DWITH_ARCH=${TARGET_ARCH}"
+KODI_ARCH_mips64 = "-DWITH_ARCH=${TARGET_ARCH}"
+KODI_ARCH_mips64el = "-DWITH_ARCH=${TARGET_ARCH}"
+
+KODI_DISABLE_INTERNAL_LIBRARIES = " \
+  -DENABLE_INTERNAL_CROSSGUID=OFF \
+  -DENABLE_INTERNAL_FLATBUFFERS=OFF \
+  -DENABLE_INTERNAL_FMT=OFF \
+  -DENABLE_INTERNAL_FSTRCMP=0 \
+  -DENABLE_INTERNAL_RapidJSON=OFF \
+  -DENABLE_INTERNAL_FFMPEG=OFF \
+"
+
 EXTRA_OECMAKE = " \
-    -DENABLE_INTERNAL_CROSSGUID=OFF \
-    -DENABLE_INTERNAL_FLATBUFFERS=OFF \
-    -DENABLE_INTERNAL_FMT=OFF \
-    -DENABLE_INTERNAL_FSTRCMP=0 \
-    -DENABLE_INTERNAL_RapidJSON=OFF \
-    -DENABLE_INTERNAL_FFMPEG=OFF \
+    ${KODI_ARCH} \
+    ${KODI_DISABLE_INTERNAL_LIBRARIES} \
     \
     -DNATIVEPREFIX=${STAGING_DIR_NATIVE}${prefix} \
     -DJava_JAVA_EXECUTABLE=/usr/bin/java \
     -DWITH_TEXTUREPACKER=${STAGING_BINDIR_NATIVE}/TexturePacker \
     -DWITH_JSONSCHEMABUILDER=${STAGING_BINDIR_NATIVE}/JsonSchemaBuilder \
     \
+    -DENABLE_LDGOLD=ON \
+    -DENABLE_STATIC_LIBS=FALSE \
     -DCMAKE_NM='${NM}' \
+    -DUSE_LTO=${@oe.utils.cpu_count()} \
     \
     -DFFMPEG_PATH=${STAGING_DIR_TARGET} \
     -DLIBDVD_INCLUDE_DIRS=${STAGING_INCDIR} \
@@ -178,11 +203,6 @@ EXTRA_OECMAKE = " \
     -DENABLE_DEBUGFISSION=OFF \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 "
-
-EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
-
-LDFLAGS += "${TOOLCHAIN_OPTIONS}"
-LDFLAGS_append_mipsarch = " -latomic -lpthread"
 
 # OECMAKE_GENERATOR="Unix Makefiles"
 #PARALLEL_MAKE = " "
@@ -230,7 +250,6 @@ RRECOMMENDS_${PN}_append = " libcec \
                              python-netclient \
                              python-html \
                              python-difflib \
-                             python-pycrypto \
                              python-pycryptodomex \
                              python-json \
                              python-zlib \
@@ -248,6 +267,8 @@ RRECOMMENDS_${PN}_append = " libcec \
                              tzdata-europe \
                              tzdata-pacific \
                              xkeyboard-config \
+                             kodi-addon-inputstream-adaptive \
+                             kodi-addon-inputstream-rtmp \
                              alsa-plugins \
                            "
 RRECOMMENDS_${PN}_append_libc-glibc = " glibc-charmap-ibm850 \
