@@ -6,9 +6,8 @@ SECTION = "net"
 LICENSE = "GPLv3+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=11bbae9cacaf61dd7fc10035f6f5c68e"
 
-SRC_URI = "git://github.com/zerotier/ZeroTierOne.git;protocol=http;tag=1.4.6 \
+SRC_URI = "git://github.com/zerotier/ZeroTierOne.git;protocol=http;tag=1.6.5 \
 	file://zerotier \
-	file://armv7ve.patch \
 	"
 SRCREV = "${PV}"
 
@@ -24,6 +23,8 @@ TARGET_CFLAGS += "-fpic"
 RDEPENDS_${PN} = "kernel-module-tun"
 
 do_install_append() {
-	install -d ${D}/etc/init.d
-	install -m 0755 ${WORKDIR}/zerotier ${D}/etc/init.d/zerotier
+    install -d ${D}${sysconfdir}/init.d
+    install -m 0755 ${WORKDIR}/zerotier ${D}${sysconfdir}/init.d/zerotier
 }
+
+INSANE_SKIP_${PN} = "already-stripped"
