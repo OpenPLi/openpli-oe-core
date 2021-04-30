@@ -142,6 +142,8 @@ OPTIONAL_PACKAGES += " \
 	sshpass \
 	smartmontools \
 	strace \
+	streamlink-27 \
+	streamlinksrv \	
 	tcpdump \
 	tmux \
 	transmission \
