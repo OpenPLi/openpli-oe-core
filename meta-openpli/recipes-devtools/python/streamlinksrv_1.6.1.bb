@@ -13,7 +13,7 @@ inherit gitpkgv
 
 SRCREV = "${AUTOREV}"
 
-SRC_URI = "git://github.com/kueken/livestreamersrv;protocol=https;branch=master"
+SRC_URI = "git://github.com/athoik/livestreamersrv;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
