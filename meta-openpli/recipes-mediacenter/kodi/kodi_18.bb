@@ -121,7 +121,7 @@ ACCEL_x86-64 = "vaapi vdpau"
 
 WINDOWSYSTEM ?= "stb"
 
-PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} lcms \
+PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} lcms lto \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', 'openglesv2', d)} \
                   "
