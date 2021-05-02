@@ -34,6 +34,11 @@ PKGV = "3.0+git${GITPKGV}"
 
 SRC_URI = "git://github.com/Billy2011/streamlink-27;protocol=https"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/streamlink-27:"
+
+SRC_URI += " \
+    file://0001-added-files.patch \
+    "
 S = "${WORKDIR}/git"
 
 do_install_append() {
