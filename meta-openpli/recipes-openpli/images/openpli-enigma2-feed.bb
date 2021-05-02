@@ -140,6 +140,7 @@ OPTIONAL_PACKAGES += " \
 	screen \
 	sed \
 	sshpass \
+	sshfs-fuse \
 	smartmontools \
 	strace \
 	streamlink-27 \
