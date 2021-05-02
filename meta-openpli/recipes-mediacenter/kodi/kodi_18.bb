@@ -14,7 +14,7 @@ RPROVIDES_${PN} += "virtual/kodi"
 inherit cmake gettext python-dir pythonnative systemd
 
 DEPENDS = " \
-            libfmt \
+            fmt \
             flatbuffers flatbuffers-native \
             fstrcmp \
             rapidjson \
