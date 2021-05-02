@@ -22,9 +22,9 @@ SRC_URI_append_lunix4k    = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k    = " -DWITH_V3D=nxcl"
 
 #Vuplus
-SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_vusolose    = " file://egl/EGLNativeTypeV3D-vuplus.patch file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch"
+SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch"
+SRC_URI_append_vusolose    = " file://egl/EGLNativeTypeV3D-vuplus.patch"
 SRC_URI_append_vusolo4k    = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
 SRC_URI_append_vuultimo4k  = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
 SRC_URI_append_vuuno4k     = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
@@ -93,5 +93,5 @@ RDEPENDS_${PN}_append_vuzero4k    = " kodiegl-vuzero4k"
 RDEPENDS_${PN}_append_vuduo4k     = " kodiegl-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " kodiegl-vuduo4kse"
 
-# Vu+ specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
+# Zgemma specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
 INSANE_SKIP_${PN} += "file-rdeps"
