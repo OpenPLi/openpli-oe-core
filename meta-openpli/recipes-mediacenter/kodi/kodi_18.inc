@@ -93,5 +93,5 @@ RDEPENDS_${PN}_append_vuzero4k    = " kodiegl-vuzero4k"
 RDEPENDS_${PN}_append_vuduo4k     = " kodiegl-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " kodiegl-vuduo4kse"
 
-# Vu+ specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
+# Zgemma specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
 INSANE_SKIP_${PN} += "file-rdeps"
