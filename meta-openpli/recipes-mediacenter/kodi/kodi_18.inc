@@ -22,9 +22,9 @@ SRC_URI_append_lunix4k    = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k    = " -DWITH_V3D=nxcl"
 
 #Vuplus
-SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_vusolose    = " file://egl/EGLNativeTypeV3D-vuplus.patch file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch"
+SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch"
+SRC_URI_append_vusolose    = " file://egl/EGLNativeTypeV3D-vuplus.patch"
 SRC_URI_append_vusolo4k    = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
 SRC_URI_append_vuultimo4k  = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
 SRC_URI_append_vuuno4k     = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
