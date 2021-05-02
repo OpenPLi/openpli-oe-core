@@ -9,13 +9,15 @@ inherit allarch
 
 RDEPENDS_${PN} = "python-core streamlink-27"
 
+SRC_URI = "git://github.com/athoik/livestreamersrv.git"
+S = "${WORKDIR}/git/"
+
 inherit gitpkgv
-
 SRCREV = "${AUTOREV}"
+PV = "1.7.0+git${SRCPV}"
+PKGV = "1.7.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/athoik/livestreamersrv;protocol=https;branch=master"
-
-S = "${WORKDIR}/git"
+PACKAGES = "${PN}"
 
 do_install_append() {
     install -d ${D}${sbindir}
@@ -31,5 +33,3 @@ do_install_append() {
 }
 
 FILES_${PN} = "/"
-
-do_package_qa[noexec] = "1"
