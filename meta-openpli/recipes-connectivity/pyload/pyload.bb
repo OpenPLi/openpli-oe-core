@@ -10,7 +10,7 @@ RDEPENDS_${PN} = "\
 	python-imaging \
 	python-numbers \
 	python-pprint \
-	python-pycrypto \
+	python-pycryptodome \
 	python-pycurl \
 	python-sqlite3 \
 	python-subprocess \

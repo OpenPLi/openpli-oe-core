@@ -17,7 +17,7 @@ RDEPENDS_${PN} = "python-core \
     python-iso639 \
     python-misc \
     python-pkgutil \
-    python-pycryptodomex \
+    python-pycryptodome \
     python-pysocks \
     python-requests \
     python-shell \
@@ -26,7 +26,7 @@ RDEPENDS_${PN} = "python-core \
     python-websocket-client \
     "
 
-inherit gitpkgv setuptools
+inherit gitpkgv setuptools python-dir
 
 SRCREV = "${AUTOREV}"
 PV = "3.0+git${SRCPV}"
@@ -34,6 +34,11 @@ PKGV = "3.0+git${GITPKGV}"
 
 SRC_URI = "git://github.com/Billy2011/streamlink-27;protocol=https"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/streamlink-27:"
+
+SRC_URI += " \
+    file://0001-added-files.patch \
+    "
 S = "${WORKDIR}/git"
 
 do_install_append() {
@@ -49,7 +54,7 @@ FILES_${PN} = " \
     ${libdir}/${PYTHON_DIR}/site-packages/streamlink/*/*/*.pyo \
     "
 
-FILES_${PN}-src = " \
+FILES_${PN}-src += " \
     ${libdir}/${PYTHON_DIR}/site-packages/streamlink-*.egg-info/* \
     ${libdir}/${PYTHON_DIR}/site-packages/streamlink/plugins/.removed \
     ${libdir}/${PYTHON_DIR}/site-packages/streamlink/*.py \
