@@ -1,10 +1,12 @@
 SUMMARY = "Driver for Realtek USB wireless device 8192eu"
 HOMEPAGE = "http://www.realtek.com/"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://README.md;md5=be8c96073836ae962143b35bebc83551"
+LIC_FILES_CHKSUM = "file://README.md;md5=d5ac1d5985371169258c94be26cff762"
 
 # backward compatibility
 RPROVIDES_${PN} = "rtl8192eu"
+
+DEPENDS ="bc-native"
 
 inherit module siteinfo
 
@@ -12,10 +14,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
           git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
-          file://rtl8192eu-makefile.patch \
-          file://rtl8192eu-gcc5.patch \
-          file://CHECKSM_IPV6_H.patch \
-          file://rtl8192eu-sha256-state.patch \
+          file://build.patch \
+          file://0001-add-CHECKSM_IPV6_H-patch.patch \
           "
 
 S = "${WORKDIR}/git"

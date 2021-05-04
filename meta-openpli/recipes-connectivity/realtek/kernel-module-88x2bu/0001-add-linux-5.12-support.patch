@@ -1,0 +1,26 @@
+From 3bb6258333be834e178c839a7622048bafb6611e Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Tue, 27 Apr 2021 21:15:54 +0200
+Subject: [PATCH] add linux 5.12 support
+
+---
+ os_dep/linux/recv_linux.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/os_dep/linux/recv_linux.c b/os_dep/linux/recv_linux.c
+index da9a84b..e210f30 100644
+--- a/os_dep/linux/recv_linux.c
++++ b/os_dep/linux/recv_linux.c
+@@ -355,7 +355,9 @@ static int napi_recv(_adapter *padapter, int budget)
+ 
+ #ifdef CONFIG_RTW_GRO
+ 		if (pregistrypriv->en_gro) {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 12, 0)
+ 			if (rtw_napi_gro_receive(&padapter->napi, pskb) != GRO_DROP)
++#endif
+ 				rx_ok = _TRUE;
+ 			goto next;
+ 		}
+-- 
+2.25.1
+

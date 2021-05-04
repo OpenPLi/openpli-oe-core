@@ -1,0 +1,53 @@
+From cfd5291e88ce237a966672258e4d9146656ab8f3 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Tue, 4 May 2021 18:57:48 +0200
+Subject: [PATCH] add CHECKSM_IPV6_H patch add gcc5 patch
+
+---
+ core/rtw_br_ext.c   | 3 +++
+ include/ieee80211.h | 6 +++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/core/rtw_br_ext.c b/core/rtw_br_ext.c
+index 9a0effd..43ffc31 100644
+--- a/core/rtw_br_ext.c
++++ b/core/rtw_br_ext.c
+@@ -18,6 +18,9 @@
+ 	#include <linux/if_arp.h>
+ 	#include <net/ip.h>
+ 	#include <net/ipx.h>
++	#ifndef _CHECKSM_IPV6_H
++	#include <net/ip6_checksum.h>
++	#endif
+ 	#include <linux/atalk.h>
+ 	#include <linux/udp.h>
+ 	#include <linux/if_pppox.h>
+diff --git a/include/ieee80211.h b/include/ieee80211.h
+index 6fac3d2..1cc1ac8 100644
+--- a/include/ieee80211.h
++++ b/include/ieee80211.h
+@@ -1613,18 +1613,18 @@ enum ieee80211_state {
+ 	(((Addr[2]) & 0xff) == 0xff) && (((Addr[3]) & 0xff) == 0xff) && (((Addr[4]) & 0xff) == 0xff) && \
+ 				     (((Addr[5]) & 0xff) == 0xff))
+ #else
+-extern __inline int is_multicast_mac_addr(const u8 *addr)
++static inline int is_multicast_mac_addr(const u8 *addr)
+ {
+ 	return (addr[0] != 0xff) && (0x01 & addr[0]);
+ }
+ 
+-extern __inline int is_broadcast_mac_addr(const u8 *addr)
++static inline int is_broadcast_mac_addr(const u8 *addr)
+ {
+ 	return ((addr[0] == 0xff) && (addr[1] == 0xff) && (addr[2] == 0xff) &&   \
+ 		(addr[3] == 0xff) && (addr[4] == 0xff) && (addr[5] == 0xff));
+ }
+ 
+-extern __inline int is_zero_mac_addr(const u8 *addr)
++static inline int is_zero_mac_addr(const u8 *addr)
+ {
+ 	return ((addr[0] == 0x00) && (addr[1] == 0x00) && (addr[2] == 0x00) &&   \
+ 		(addr[3] == 0x00) && (addr[4] == 0x00) && (addr[5] == 0x00));
+-- 
+2.25.1
+
