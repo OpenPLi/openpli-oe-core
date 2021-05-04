@@ -11,7 +11,7 @@ DEPENDS ="bc-native"
 inherit module siteinfo
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-PR = "2"
+
 SRC_URI = " \
           git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
           file://build.patch \
