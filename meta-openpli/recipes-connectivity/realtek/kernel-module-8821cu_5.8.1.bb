@@ -13,6 +13,7 @@ SRC_URI = " \
     file://0001-disable-mp-hw-tx-mode-for-vht.patch \
     file://0002-adjust-policy-kernelversion.patch \
     file://rtl8821cu-kernel-5.8.patch \
+    file://0001-add-linux-5.12-support.patch \
 "
 
 S = "${WORKDIR}/git"

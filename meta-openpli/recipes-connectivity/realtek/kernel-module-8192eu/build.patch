@@ -1,0 +1,17 @@
+--- a/core/rtw_ap.c
++++ b/core/rtw_ap.c
+@@ -3873,13 +3873,6 @@
+ 	_enter_critical_bh(&psta->lock, &irqL);
+ 	psta->state &= ~(_FW_LINKED | WIFI_UNDER_KEY_HANDSHAKE);
+ 
+-	if ((psta->auth_len != 0) && (psta->pauth_frame != NULL)) {
+-		rtw_mfree(psta->pauth_frame, psta->auth_len);
+-		psta->pauth_frame = NULL;
+-		psta->auth_len = 0;
+-	}
+-	_exit_critical_bh(&psta->lock, &irqL);
+-
+ 	if (!MLME_IS_MESH(padapter)) {
+ #ifdef CONFIG_IOCTL_CFG80211
+ 		#ifdef COMPAT_KERNEL_RELEASE
+
