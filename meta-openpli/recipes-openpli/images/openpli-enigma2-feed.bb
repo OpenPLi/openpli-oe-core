@@ -36,7 +36,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	${@ 'kernel-module-mt7610u' if ("${KERNEL_VERSION}" and "${MACHINE}" != "dm8000" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.19') < 0) else '' } \
 	\
 	${@ 'kernel-module-8192fu' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.8') >= 0) else '' } \
-	${@ 'kernel-module-8821cu' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.0') >= 0) else '' } \
+	${@ 'kernel-module-8821cu' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.8') >= 0) else '' } \
 	${@ 'kernel-module-88xxau' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.0') >= 0) else '' } \
 	\
 	${@bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RDEPENDS', 'rtl8723bs', '', bb.utils.contains('MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS', 'spycat-rtl8723bs', '', 'kernel-module-r8723bs' if ("${KERNEL_VERSION}" and "${MACHINE}" != "dm8000" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.12') < 0) else '', d), d)} \
