@@ -14,9 +14,14 @@ SRCREV = "${AUTOREV}"
 KODIADDONBRANCH = "Leia"
 
 PV = "2.4.7+gitr${SRCPV}"
-SRC_URI = "git://github.com/peak3d/inputstream.adaptive.git;protocol=https;branch=${KODIADDONBRANCH} \
+SRC_URI = "git://github.com/xbmc/inputstream.adaptive.git;protocol=https;branch=${KODIADDONBRANCH} \
           "
 
 S = "${WORKDIR}/git"
 
 KODIADDONNAME = "inputstream.adaptive"
+
+# Fix QA: found library in wrong location:
+# /usr/share/kodi/addons/inputstream.adaptive/libssd_wv.so [libdir]
+INSANE_SKIP_${PN} = "libdir"
+
