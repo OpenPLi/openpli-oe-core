@@ -21,7 +21,5 @@ S = "${WORKDIR}/git"
 
 KODIADDONNAME = "inputstream.adaptive"
 
-# Fix QA: found library in wrong location:
-# /usr/share/kodi/addons/inputstream.adaptive/libssd_wv.so [libdir]
-INSANE_SKIP_${PN} = "libdir"
-
+# purposedly packaged this way
+INSANE_SKIP_${PN} = "libdir dev-so"
