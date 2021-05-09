@@ -28,7 +28,6 @@ RDEPENDS_${PN} = "python-core \
 
 inherit gitpkgv setuptools python-dir
 
-SRCREV = "${AUTOREV}"
 PV = "3.0+git${SRCPV}"
 PKGV = "3.0+git${GITPKGV}"
 
