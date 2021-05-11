@@ -72,7 +72,7 @@ DEPENDS = " \
             wavpack \
             yajl \
             zlib \
-          "
+           "
 
 SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
 
@@ -83,31 +83,38 @@ PATCHTOOL = "git"
 PE = "1"
 
 PV = "18.9+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia \
-           \
-           file://0001-Add-support-for-musl-triplets.patch \
-           file://0002-Fix-file_Emu-on-musl.patch \
-           file://0003-Remove-FILEWRAP.patch \
-           file://0004-Replace-u_int64_t-with-uint64_t-from-stdint.h.patch \
-           \
-           file://0005-estuary-move-recently-added-entries-to-the-top-in-ho.patch \
-           file://0006-kodi.sh-set-mesa-debug.patch \
-           file://0007-peripheral-settings-export-CEC-device_name-in-GUI.patch \
-           file://0010-flatbuffers.patch \
-           file://0011-WIP-windowing-gbm-add-option-to-limit-gui-size.patch \
-           \
-           file://PR15286-shader-nopow.patch \
-           file://15941.patch \
-          "
+SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
 
+# patches for 18.x upstreamed in 19.x
 SRC_URI_append = " \
-            file://kodi-stb-support.patch \
-            file://egl/kodi-EGL.patch \
-            file://kodi18-add-libinput-rckey-events.patch \
+            file://0001-Add-support-for-musl-triplets.patch \
+            file://0002-Fix-file_Emu-on-musl.patch \
+            file://0003-Remove-FILEWRAP.patch \
+            file://0004-Replace-u_int64_t-with-uint64_t-from-stdint.h.patch \
+            \
+            file://0005-estuary-move-recently-added-entries-to-the-top-in-ho.patch \
+            file://0006-kodi.sh-set-mesa-debug.patch \
+            file://0007-peripheral-settings-export-CEC-device_name-in-GUI.patch \
+            file://0010-flatbuffers.patch \
+            file://0011-WIP-windowing-gbm-add-option-to-limit-gui-size.patch \
+            \
+            file://PR15286-shader-nopow.patch \
+            file://15941.patch \
+           "
+
+# stb, egl, players
+SRC_URI_append = " \
+            file://stb-1-platform.patch \
+            file://stb-2-ext-install.patch \
+            file://stb-3-rckey-events.patch \
+            file://stb-4-crosstools.patch \
+            \
+            file://egl-1-v3d-mali.patch \
+            file://egl-2-windowing.patch \
             \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://kodiplayers/HiPlayer.patch file://kodiplayers/HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://kodiplayers/E2Player.patch', d)} \
-            "
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
+           "
 
 S = "${WORKDIR}/git"
 
