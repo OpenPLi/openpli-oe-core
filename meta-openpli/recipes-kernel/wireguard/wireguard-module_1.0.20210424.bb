@@ -1,8 +1,8 @@
 require wireguard.inc
 
 SRC_URI = "https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-${PV}.tar.xz"
-SRC_URI[md5sum] = "1762b1948e1783266225cf0849f4d611"
-SRC_URI[sha256sum] = "cf166348fbb67419528e73049ce001d29131aea367fa6aef9d3e223f7251e116"
+SRC_URI[md5sum] = "a0b43709f873374591671a35ad76b183"
+SRC_URI[sha256sum] = "8839139a53733bd20602e39cfc679a8176747dae8fe9f9c7fce28f8fba71abde"
 
 S = "${WORKDIR}/wireguard-linux-compat-${PV}/src/"
 
