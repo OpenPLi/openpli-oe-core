@@ -121,7 +121,7 @@ OPTIONAL_PACKAGES += " \
 	python-pyexecjs \
 	python-beautifulsoup4 \
 	python-futures \
-	python-pycrypto \
+	python-pycryptodome \
 	python-singledispatch \
 	python-websocket-client \
 	python-isodate \
@@ -144,7 +144,7 @@ OPTIONAL_PACKAGES += " \
 	smartmontools \
 	strace \
 	streamlink-27 \
-	streamlinksrv \	
+	streamlinksrv \
 	tcpdump \
 	tmux \
 	transmission \
