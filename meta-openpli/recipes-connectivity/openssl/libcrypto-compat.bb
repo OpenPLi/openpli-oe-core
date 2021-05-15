@@ -229,13 +229,6 @@ do_install () {
 	ln -sf libssl.so.1.0.2 ${D}${libdir}/libssl.so.1.0.0
 }
 
-# Add the openssl.cnf file to the openssl-conf package. Make the libcrypto
-# package RRECOMMENDS on this package. This will enable the configuration
-# file to be installed for both the base openssl package and the libcrypto
-# package since the base openssl package depends on the libcrypto package.
-
-FILES_libcrypto10 = "${libdir}/libcrypto${SOLIBS}"
-FILES_libssl10 = "${libdir}/libssl${SOLIBS}"
 FILES_${PN} =+ "${libdir}/ssl/*"
 
 BBCLASSEXTEND = "native nativesdk"
