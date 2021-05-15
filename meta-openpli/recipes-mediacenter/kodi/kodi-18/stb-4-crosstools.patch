@@ -1,0 +1,77 @@
+From a301ad6dbb93dd996b4ee6ca39bbbc2071080c99 Mon Sep 17 00:00:00 2001
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Sat, 8 May 2021 16:01:55 +0200
+Subject: [PATCH 2/2] tools: fix cross-compilation of target tools
+
+taken from OE-A repository
+NOTE: we use external tools built separately als DEPENDS
+
+Signed-off-by: Andrea Adami <andrea.adami@gmail.com>
+---
+ tools/depends/target/libdvdcss/Makefile  | 4 ++--
+ tools/depends/target/libdvdnav/Makefile  | 4 ++--
+ tools/depends/target/libdvdread/Makefile | 5 +++--
+ 3 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/tools/depends/target/libdvdcss/Makefile b/tools/depends/target/libdvdcss/Makefile
+index a5026227c20..c7b103117af 100644
+--- a/tools/depends/target/libdvdcss/Makefile
++++ b/tools/depends/target/libdvdcss/Makefile
+@@ -3,7 +3,7 @@ include DVDCSS-VERSION
+ DEPS= DVDCSS-VERSION Makefile
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdcss-install
+@@ -19,7 +19,7 @@ RETRIEVE_TOOL := curl -Ls --create-dirs --retry 10 --retry-delay 3
+ ARCHIVE_TOOL := tar --strip-components=1 -xf
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ 
+ GITREV=$(shell git ls-remote $(BASE_URL) $(VERSION) | awk '{print $$1}')
+ ifeq ($(GITREV),)
+diff --git a/tools/depends/target/libdvdnav/Makefile b/tools/depends/target/libdvdnav/Makefile
+index fab216472c3..64b74e1fb94 100644
+--- a/tools/depends/target/libdvdnav/Makefile
++++ b/tools/depends/target/libdvdnav/Makefile
+@@ -3,11 +3,11 @@ include DVDNAV-VERSION
+ DEPS = DVDNAV-VERSION Makefile
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ EXTRA_CFLAGS = -D_XBMC -DHAVE_DVDCSS_DVDCSS_H
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdnav-install
+diff --git a/tools/depends/target/libdvdread/Makefile b/tools/depends/target/libdvdread/Makefile
+index e9fd9b10a48..9d1b909322f 100644
+--- a/tools/depends/target/libdvdread/Makefile
++++ b/tools/depends/target/libdvdread/Makefile
+@@ -3,11 +3,12 @@ include DVDREAD-VERSION
+ DEPS = DVDREAD-VERSION Makefile
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
++#config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ EXTRA_CFLAGS = -D_XBMC -DHAVE_DVDCSS_DVDCSS_H
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdread-install
+-- 
+2.17.1
+
