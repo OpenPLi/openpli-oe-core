@@ -1,5 +1,8 @@
-SUMMARY  = "Portable network interface information."
-DESCRIPTION = "An easy way to get the address(es) of the machine’s network interfaces from Python"
+SUMMARY = "Portable network interface information for Python"
+DESCRIPTION = "Portable network interface information for Python"
+HOMEPAGE = "https://github.com/al45tair/netifaces"
+SECTION = "devel/python"
+
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://PKG-INFO;md5=d68ff546b11a03cda3aec0229188b6a2"
 

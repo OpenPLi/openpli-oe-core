@@ -9,8 +9,6 @@ inherit autotools-brokensep gitpkgv pythonnative gettext
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-DEPENDS = "python"
-
 SRC_URI = "git://github.com/oe-alliance/MisPlsLcnScan.git;protocol=git"
 
 EXTRA_OECONF = " \
@@ -21,6 +19,9 @@ EXTRA_OECONF = " \
     "
 
 S = "${WORKDIR}/git"
+
+DEPENDS = "enigma2"
+RDEPENDS_${PN} = "enigma2"
 
 INSANE_SKIP_${PN} += "already-stripped ldflags"
 

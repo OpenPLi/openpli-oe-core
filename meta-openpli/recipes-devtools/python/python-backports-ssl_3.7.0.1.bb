@@ -14,11 +14,7 @@ SRC_URI[sha256sum] = "bb82e60f9fbf4c080eabd957c39f0641f0fc247d9a16e31e26d594d8f4
 
 PYPI_PACKAGE = "backports.ssl_match_hostname"
 
-inherit pypi setuptools
+inherit pypi setuptools python-backports-init
 
 RDEPENDS_${PN} += "${PYTHON_PN}-pkgutil"
 
-do_install_append() {
-    # python-lzma already provides __init__.py(o) files
-    rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/backports/__init__.py*
-}

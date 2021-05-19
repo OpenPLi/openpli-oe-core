@@ -8,6 +8,9 @@ PR = "r2"
 inherit distutils
 
 SRC_URI = "http://jerakeen.org/files/PythonDaap-${PV}.tar.gz"
+SRC_URI += " \
+	file://python-daap.patch \
+"
 S = "${WORKDIR}/PythonDaap-${PV}"
 
 RDEPENDS_${PN} = "python-compression"
