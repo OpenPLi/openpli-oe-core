@@ -10,7 +10,7 @@ inherit gitpkgv
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 do_install () {
 	install -d ${D}/${bindir}
