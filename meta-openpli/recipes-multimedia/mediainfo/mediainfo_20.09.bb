@@ -13,7 +13,7 @@ SRC_URI="http://mediaarea.net/download/binary/mediainfo/${PV}/MediaInfo_CLI_${PV
 SRC_URI[md5sum] = "42cfef16aa9f3164858e85c494d99c41"
 SRC_URI[sha256sum] = "a252aa61dc1f4caeb9dc76d82292cadc993fb112a402dffd9e442e7fdf76e88e"
 
-S = "${WORKDIR}/MediaInfo_CLI_GNU_FromSource/MediaInfo/Project/GNU/CLI/"
+S = "${WORKDIR}/MediaInfo_CLI_GNU_FromSource/MediaInfo/Project/GNU/CLI"
 
 do_configure () {
     #build zenlib
@@ -34,6 +34,10 @@ do_configure () {
 do_compile_prepend () {
     #compile media info
     cd ${S}
+}
+
+do_install_append () {
+	chrpath -d ${D}${libdir}/libmediainfo.so.0.0.0
 }
 
 do_install_prepend () {
