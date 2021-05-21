@@ -9,3 +9,6 @@ SRC_URI[softcam.sha256sum] = "1aebc407b4c7c96554d4ded83a6dc83b90b7db9fe1975f063e
 
 DEPENDS += "zlib"
 RDEPENDS_${PN} += "libcrypto-compat libxcrypt-compat"
+
+RCONFLICTS_${PN} = "enigma2-plugins-softcams-mgcamd enigma2-plugins-softcams-mgcamd135a enigma2-plugins-softcams-mgcamd146"
+RREPLACES_${PN} = "enigma2-plugins-softcams-mgcamd enigma2-plugins-softcams-mgcamd135a enigma2-plugins-softcams-mgcamd146"

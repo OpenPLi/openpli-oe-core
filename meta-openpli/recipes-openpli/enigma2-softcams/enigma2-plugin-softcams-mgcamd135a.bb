@@ -11,5 +11,5 @@ DEPENDS += "zlib"
 RDEPENDS_${PN} += "libcrypto-compat libxcrypt-compat"
 INSANE_SKIP_${PN} += "file-rdeps ldflags"
 
-RCONFLICTS_${PN} = "enigma2-plugins-softcams-mgcamd"
-RREPLACES_${PN} = "enigma2-plugins-softcams-mgcamd"
+RCONFLICTS_${PN} = "enigma2-plugins-softcams-mgcamd enigma2-plugins-softcams-mgcamd145c enigma2-plugins-softcams-mgcamd146"
+RREPLACES_${PN} = "enigma2-plugins-softcams-mgcamd enigma2-plugins-softcams-mgcamd145c enigma2-plugins-softcams-mgcamd146"
