@@ -97,6 +97,7 @@ python do_cleanup () {
         ('i55plus', 'i55plus.png', 'h3.png', 'h3.html'),
         ('h9combo', 'h9combo.png', 'h3.png', 'h3.html'),
         ('h9se', 'h9se.s.png', 'h3.png', 'h3.html'),
+        ('h9combose', 'h9combose.png', 'h3.png', 'h3.html'),
         ('lc', 'lc.png', 'sh1.png', 'sh1.html'),
         ('sh1', 'sh1.png', 'sh1.png', 'sh1.html'),
         ('vipercombo', 'vipercombo.png', 'amiko.png', 'amiko.html'),
@@ -138,6 +139,12 @@ python do_cleanup () {
                 exception = ['h8.png', 'h8.2s.png']
             elif x[0] == 'h9':
                 exception = ['h9.png', 'h9.2s.png', 'h9.2h.png', 'h9.s.png', 'h9.t.png']
+            elif x[0] == 'h9combo':
+                exception = ['h9combo.png', 'h9twin.png']
+            elif x[0] == 'h9se':
+                exception = ['h9se.png', 'h9se.s.png', 'h9se.22.png', 'h9se.2h.png']
+            elif x[0] == 'h9combose':
+                exception = ['h9combose.png', 'h9twinse.png']
             elif x[0] == 'sf8008':
                 exception = ['sf8008s.png', 'sf8008t.png', 'sf8008c.png']
             break
