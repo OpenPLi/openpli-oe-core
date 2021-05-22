@@ -7,10 +7,6 @@ FILESPATH =. "${FILE_DIRNAME}/kodi-18:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-PROVIDES += "virtual/kodi"
-# FIX-ME: virtual/ never makes sense in runtime variables
-RPROVIDES_${PN} += "virtual/kodi"
-
 inherit cmake gettext python-dir pythonnative systemd
 
 DEPENDS = " \

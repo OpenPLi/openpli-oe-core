@@ -9,7 +9,7 @@ DEPENDS += " \
             libtinyxml2 \
             jsoncpp \
             jsonrpc \
-            virtual/kodi \
+            kodi \
           "
 
 PACKAGE_ARCH = "${MACHINE}"
