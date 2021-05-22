@@ -183,6 +183,7 @@ EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 
 LDFLAGS += "${TOOLCHAIN_OPTIONS}"
 LDFLAGS_append_mipsarch = " -latomic -lpthread"
+LDFLAGS_append_arm = " -lpthread"
 
 # OECMAKE_GENERATOR="Unix Makefiles"
 #PARALLEL_MAKE = " "
