@@ -3,13 +3,9 @@ SUMMARY = "Kodi Media Center"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
 
-FILESPATH =. "${FILE_DIRNAME}/kodi-18:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-
-PROVIDES += "virtual/kodi"
-# FIX-ME: virtual/ never makes sense in runtime variables
-RPROVIDES_${PN} += "virtual/kodi"
 
 inherit cmake gettext python-dir pythonnative systemd
 
@@ -183,9 +179,7 @@ EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 
 LDFLAGS += "${TOOLCHAIN_OPTIONS}"
 LDFLAGS_append_mipsarch = " -latomic -lpthread"
-
-# OECMAKE_GENERATOR="Unix Makefiles"
-#PARALLEL_MAKE = " "
+LDFLAGS_append_arm = " -lpthread"
 
 FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
 BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
@@ -200,16 +194,13 @@ export PYTHON_DIR
 export TARGET_PREFIX
 
 do_configure_prepend() {
-	# Ensure 'nm' can find the lto plugins 
-	liblto=$(find ${STAGING_DIR_NATIVE} -name "liblto_plugin.so.0.0.0")
-	mkdir -p ${STAGING_LIBDIR_NATIVE}/bfd-plugins
-	ln -sf $liblto ${STAGING_LIBDIR_NATIVE}/bfd-plugins/liblto_plugin.so
+        # Ensure 'nm' can find the lto plugins 
+        liblto=$(find ${STAGING_DIR_NATIVE} -name "liblto_plugin.so.0.0.0")
+        mkdir -p ${STAGING_LIBDIR_NATIVE}/bfd-plugins
+        ln -sf $liblto ${STAGING_LIBDIR_NATIVE}/bfd-plugins/liblto_plugin.so
 
-	sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
+        sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
-
-# as of 18.9 do_package_qa is clean
-#INSANE_SKIP_${PN} = "rpaths"
 
 FILES_${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
 FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
@@ -256,10 +247,10 @@ RRECOMMENDS_${PN}_append_libc-glibc = " glibc-charmap-ibm850 \
                                         glibc-gconv-ibm850 \
                                         glibc-charmap-ibm437 \
                                         glibc-gconv-ibm437 \
-					glibc-gconv-unicode \
+                                        glibc-gconv-unicode \
                                         glibc-gconv-utf-32 \
-					glibc-charmap-utf-8 \
-					glibc-localedata-en-us \
+                                        glibc-charmap-utf-8 \
+                                        glibc-localedata-en-us \
                                       "
 # customizations should be in the BSP layers
 require kodi_18.inc

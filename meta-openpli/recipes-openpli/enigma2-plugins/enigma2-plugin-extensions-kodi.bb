@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport virtual/kodi"
+RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport kodi"
 
 RDEPENDS_${PN} = "python-pycryptodome python-pycryptodomex kodi-addon-inputstream-adaptive nspr nss"
 
