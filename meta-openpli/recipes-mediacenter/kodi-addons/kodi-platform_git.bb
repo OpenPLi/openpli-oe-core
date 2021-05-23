@@ -1,44 +1,47 @@
-SUMMARY = "Platform support library used by libCEC and binary add-ons for Kodi"
-HOMEPAGE = "http://libcec.pulse-eight.com/"
+SUMMARY = "Kodi platform support library"
+DESCRIPTION = "Platform support library used by libCEC and binary add-ons for Kodi"
+HOMEPAGE = "https://github.com/xbmc/kodi-platform"
 
-PACKAGE_ARCH = "${MACHINE}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://src/util/XMLUtils.cpp;beginline=2;endline=18;md5=dae8e846500e70dd8ecee55f3f018c30"
 
 DEPENDS = "libtinyxml kodi"
 
-PV = "18.0.0"
+SRCREV = "809c5e9d711e378561440a896fcb7dbcd009eb3d"
 
-SRCREV = "e8574b883ffa2131f2eeb96ff3724d60b21130f7"
 SRC_URI = "git://github.com/xbmc/kodi-platform.git;protocol=https \
            file://kodi-platform-01_crosscompile-badness.patch \
            file://kodi-platform-02_no-multi-lib.patch \
           "
+
+PV = "18.9+gitr${SRCPV}"
 
 S = "${WORKDIR}/git"
 
 inherit cmake pkgconfig
 
 OECMAKE_GENERATOR="Unix Makefiles"
-EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=${STAGING_DIR_HOST}${prefix} \
+EXTRA_OECMAKE = " \
                   -DCMAKE_INSTALL_LIBDIR=${libdir} \
                   -DCMAKE_INSTALL_LIBDIR_NOARCH=${libdir} \
-                  -DKODI_INCLUDE_DIR=${STAGING_INCDIR}/kodi \
+                  -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=${STAGING_DIR_HOST}${prefix} \
                   -DCMAKE_MODULE_PATH='${STAGING_DIR_HOST}${libdir}/kodi;${STAGING_DIR_HOST}${datadir}/kodi/cmake' \
                   -DCMAKE_PREFIX_PATH=${STAGING_DIR_HOST}${prefix} \
+                  -DKODI_INCLUDE_DIR=${STAGING_INCDIR}/kodi \
                 "
 
 do_compile_prepend() {
-	sed -i -e 's:I/usr/include:I${STAGING_INCDIR}:g' \
-	       -e 's:-pipe:${HOST_CC_ARCH} ${TOOLCHAIN_OPTIONS} -pipe:g' \
-	          ${B}/CMakeFiles/kodiplatform.dir/flags.make
-	sed -i -e 's:-pipe:${HOST_CC_ARCH} ${TOOLCHAIN_OPTIONS} -pipe:g'\
-	          ${B}/CMakeFiles/kodiplatform.dir/link.txt
+        sed -i -e 's:I/usr/include:I${STAGING_INCDIR}:g' \
+               -e 's:-pipe:${HOST_CC_ARCH} ${TOOLCHAIN_OPTIONS} -pipe:g' \
+                  ${B}/CMakeFiles/kodiplatform.dir/flags.make
+        sed -i -e 's:-pipe:${HOST_CC_ARCH} ${TOOLCHAIN_OPTIONS} -pipe:g'\
+                  ${B}/CMakeFiles/kodiplatform.dir/link.txt
 }
 
 do_install_append() {
-	sed -i -e '/CXX/d' \
+        sed -i -e '/CXX/d' \
                -e '/CC/d' \
                -e 's:${STAGING_LIBDIR}:${libdir}:g' \
                -e 's:${STAGING_DIR_HOST}:/:g' \
@@ -54,9 +57,3 @@ PACKAGES =+ "libkodiplatform"
 FILES_libkodiplatform = "${libdir}/lib*.so.*"
 
 FILES_${PN}-dev += "${libdir}/*platform"
-
-do_qa_staging() {
-}
-
-do_rm_work() {
-}
