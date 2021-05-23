@@ -1,6 +1,6 @@
 SUMMARY = "Kodi texture packer"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM ?= "file://${WORKDIR}/git/LICENSE.GPL;md5=930e2a5f63425d8dd72dbd7391c43c46"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE.GPL;md5=930e2a5f63425d8dd72dbd7391c43c46"
 
 DEPENDS = "\
             giflib \
