@@ -1,26 +1,18 @@
-SUMMARY = "Kodi Media Center"
-
+SUMMARY = "Kodi texture packer"
 LICENSE = "GPLv2"
-#LIC_FILES_CHKSUM = "file://LICENSE.GPL;md5=930e2a5f63425d8dd72dbd7391c43c46"
-LIC_FILES_CHKSUM = "file://../../../../LICENSE.GPL;md5=930e2a5f63425d8dd72dbd7391c43c46"
+LIC_FILES_CHKSUM ?= "file://${WORKDIR}/git/LICENSE.GPL;md5=930e2a5f63425d8dd72dbd7391c43c46"
 
-FILESPATH =. "${FILE_DIRNAME}/kodi-18:"
-
-DEPENDS = " \
-            lzo \
+DEPENDS = "\
+            giflib \
             jpeg \
             libpng \
-            giflib \
+            lzo \
           "
 
 SRCREV = "cd02e6c4fe0f6486b967049d697ce086b1afcc56"
 
-# 'patch' doesn't support binary diffs
-PATCHTOOL = "git"
-
 PV = "18.0+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;branch=master \
-          "
+SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Leia"
 
 inherit cmake gettext python-dir pythonnative
 
@@ -31,8 +23,6 @@ OECMAKE_CXX_FLAGS_append = " -DTARGET_POSIX -std=gnu++11 -I${WORKDIR}/git/xbmc/l
 do_configure_prepend() {
     ln -sf ${WORKDIR}/git/xbmc ${WORKDIR}/git/tools/depends/native/TexturePacker/
 }
-
-#OECMAKE_SOURCEPATH = "${S}"
 
 EXTRA_OECMAKE = "-DCMAKE_MODULE_PATH=${WORKDIR}/git/cmake/modules"
 
