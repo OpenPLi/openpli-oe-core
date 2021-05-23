@@ -25,3 +25,9 @@ INITSCRIPT_NAME = "update_systemconfig.sh"
 INITSCRIPT_PARAMS = "start 90 3 ."
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+# nothing to strip for debug here,
+# update_systemconfig_arm is stripped
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_SYSROOT_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
