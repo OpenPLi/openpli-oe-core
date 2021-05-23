@@ -9,9 +9,9 @@ DEPENDS = "\
             lzo \
           "
 
-SRCREV = "cd02e6c4fe0f6486b967049d697ce086b1afcc56"
+SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
 
-PV = "18.0+gitr${SRCPV}"
+PV = "18.9+gitr${SRCPV}"
 SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Leia"
 
 inherit cmake gettext python-dir pythonnative
