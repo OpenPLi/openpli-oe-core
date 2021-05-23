@@ -194,12 +194,12 @@ export PYTHON_DIR
 export TARGET_PREFIX
 
 do_configure_prepend() {
-	# Ensure 'nm' can find the lto plugins 
-	liblto=$(find ${STAGING_DIR_NATIVE} -name "liblto_plugin.so.0.0.0")
-	mkdir -p ${STAGING_LIBDIR_NATIVE}/bfd-plugins
-	ln -sf $liblto ${STAGING_LIBDIR_NATIVE}/bfd-plugins/liblto_plugin.so
+        # Ensure 'nm' can find the lto plugins 
+        liblto=$(find ${STAGING_DIR_NATIVE} -name "liblto_plugin.so.0.0.0")
+        mkdir -p ${STAGING_LIBDIR_NATIVE}/bfd-plugins
+        ln -sf $liblto ${STAGING_LIBDIR_NATIVE}/bfd-plugins/liblto_plugin.so
 
-	sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
+        sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
 FILES_${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
@@ -247,10 +247,10 @@ RRECOMMENDS_${PN}_append_libc-glibc = " glibc-charmap-ibm850 \
                                         glibc-gconv-ibm850 \
                                         glibc-charmap-ibm437 \
                                         glibc-gconv-ibm437 \
-					glibc-gconv-unicode \
+                                        glibc-gconv-unicode \
                                         glibc-gconv-utf-32 \
-					glibc-charmap-utf-8 \
-					glibc-localedata-en-us \
+                                        glibc-charmap-utf-8 \
+                                        glibc-localedata-en-us \
                                       "
 # customizations should be in the BSP layers
 require kodi_18.inc
