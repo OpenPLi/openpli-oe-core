@@ -18,7 +18,7 @@ CONFFILES = "${prefix}/keys/mg_cfg ${prefix}/keys/ignore.list ${prefix}/keys/new
 
 do_install() {
 	install -d ${D}${bindir}
-	install -m 0755 ${S}/mgcamd.${TARGET_ARCH} ${D}${bindir}/mgcamd
+	install -m 0755 ${S}/mgcamd.${TARGET_ARCH} ${D}${bindir}/${CAMNAME}
 	install -d ${D}${prefix}/keys
 	install -m 0644 ${S}/mg_cfg ${D}${prefix}/keys/mg_cfg
 	install -m 0644 ${S}/ignore.list.example ${D}${prefix}/keys/ignore.list.example

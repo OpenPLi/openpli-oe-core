@@ -11,6 +11,7 @@ DEPENDS_append_mipsel = "\
 	enigma2-plugin-softcams-cccam221 \
 	enigma2-plugin-softcams-cccam230 \
 	enigma2-plugin-softcams-rqcamd \
+	enigma2-plugin-softcams-mgcamd135a \
 	enigma2-plugin-softcams-mgcamd145c \
 	enigma2-plugin-softcams-mgcamd146 \
 	"
