@@ -28,8 +28,8 @@ RDEPENDS_${PN} = "python-core \
 
 inherit gitpkgv setuptools python-dir
 
-PV = "3.0+git${SRCPV}"
-PKGV = "3.0+git${GITPKGV}"
+PV = "4.0+git${SRCPV}"
+PKGV = "4.0+git${GITPKGV}"
 
 SRC_URI = "git://github.com/Billy2011/streamlink-27;protocol=https"
 
