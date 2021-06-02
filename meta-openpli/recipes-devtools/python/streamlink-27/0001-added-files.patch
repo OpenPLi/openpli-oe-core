@@ -1,14 +1,14 @@
-From 25c60f2865773dad8ea01cb418a13a0a8a39856d Mon Sep 17 00:00:00 2001
-From: NickerSK <nickersk@gmail.com>
-Date: Mon, 5 Apr 2021 11:59:18 +0200
-Subject: [PATCH] added files
+From fa17836cac5debc2b77fbe9a602a5b58057eb8f2 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Wed, 2 Jun 2021 23:19:29 +0200
+Subject: [PATCH] added-files
 
 ---
- src/streamlink/opts_parser.py         | 659 ++++++++++++++++++++++++++
+ src/streamlink/opts_parser.py         | 671 ++++++++++++++++++++++++++
  src/streamlink/plugins/muxedstream.py |  41 ++
  src/streamlink/plugins/radio2see.py   |  35 ++
- src/streamlink/plugins/youtubedl.py   | 394 +++++++++++++++
- 4 files changed, 1129 insertions(+)
+ src/streamlink/plugins/youtubedl.py   | 423 ++++++++++++++++
+ 4 files changed, 1170 insertions(+)
  create mode 100644 src/streamlink/opts_parser.py
  create mode 100644 src/streamlink/plugins/muxedstream.py
  create mode 100644 src/streamlink/plugins/radio2see.py
@@ -16,10 +16,10 @@ Subject: [PATCH] added files
 
 diff --git a/src/streamlink/opts_parser.py b/src/streamlink/opts_parser.py
 new file mode 100644
-index 00000000..d60df904
+index 00000000..a8858f03
 --- /dev/null
 +++ b/src/streamlink/opts_parser.py
-@@ -0,0 +1,659 @@
+@@ -0,0 +1,671 @@
 +﻿"""
 +  Options Parser for Streamlinksrv by Billy2011.
 +  Options must be appended to the URL.
@@ -41,7 +41,7 @@ index 00000000..d60df904
 +from streamlink.utils.args import comma_list, comma_list_filter, filesize, keyvalue, num
 +from streamlink.utils.times import hours_minutes_seconds
 +
-+__version__ = "0.2.6"
++__version__ = "0.2.8"
 +
 +STREAM_PASSTHROUGH = ["hls", "http"]
 +XDG_CONFIG_HOME = "/home/root/.config"
@@ -319,6 +319,10 @@ index 00000000..d60df904
 +        metavar="TIMEOUT",
 +    )
 +    transport.add_argument(
++        "--http-add-audio",
++        metavar="URL",
++    )
++    transport.add_argument(
 +        "--ringbuffer-size",
 +        metavar="SIZE",
 +        type=filesize,
@@ -407,6 +411,11 @@ index 00000000..d60df904
 +
 +    stream = PARSER.add_argument_group("Stream options")
 +    stream.add_argument(
++        "--default-stream",
++        type=comma_list,
++        metavar="STREAM",
++    )
++    stream.add_argument(
 +        "--stream-types", "--stream-priority",
 +        metavar="TYPES",
 +        type=comma_list,
@@ -493,6 +502,9 @@ index 00000000..d60df904
 +
 +    if args.hds_timeout:
 +        streamlink.set_option("hds-timeout", args.hds_timeout)
++
++    if args.http_add_audio:
++        streamlink.set_option("http-add-audio", args.http_add_audio)
 +
 +    if args.http_stream_timeout:
 +        streamlink.set_option("http-stream-timeout", args.http_stream_timeout)
@@ -769,15 +781,15 @@ index 00000000..0f9389ba
 +__plugin__ = Radio2See
 diff --git a/src/streamlink/plugins/youtubedl.py b/src/streamlink/plugins/youtubedl.py
 new file mode 100644
-index 00000000..9d516b00
+index 00000000..174c305a
 --- /dev/null
 +++ b/src/streamlink/plugins/youtubedl.py
-@@ -0,0 +1,394 @@
+@@ -0,0 +1,423 @@
 +"""
 +  YoutubeDL Plugin for Streamlink by Billy2011.
 +  This plugin is only for youtube streams.
 +  The URL's must have a "youtubedl://" prefix
-+  Version 0.12 / 2020-08-13
++  Version 0.13 / 2021-05-09
 +"""
 +
 +from __future__ import unicode_literals
@@ -787,6 +799,7 @@ index 00000000..9d516b00
 +import re
 +from platform import node as hostname
 +
++from streamlink.compat import urlparse
 +from streamlink.plugin import Plugin, PluginArgument, PluginArguments, PluginError
 +from streamlink.plugin.api import validate
 +from streamlink.plugin.api.utils import itertags
@@ -935,6 +948,9 @@ index 00000000..9d516b00
 +        self.author = None
 +        self.title = None
 +        self.video_id = None
++        consent = self.cache.get("consent_ck")
++        if consent is not None:
++            self.set_consent_ck(consent)
 +
 +    def get_author(self):
 +        if self.author is None:
@@ -1042,6 +1058,12 @@ index 00000000..9d516b00
 +
 +        return streams
 +
++    def set_consent_ck(self, consent):
++        self.session.http.cookies.set(
++            'CONSENT',
++            consent,
++            domain='.youtube.com', path="/")
++
 +    def _find_video_id(self, url):
 +        m = _url_re.match(url)
 +        if m and m.group("video_id"):
@@ -1049,31 +1071,50 @@ index 00000000..9d516b00
 +            return m.group("video_id"), m.group("pl_id")
 +
 +        res = self.session.http.get(update_scheme("https://", url.replace("youtubedl://", "")))
++        if urlparse(res.url).netloc == "consent.youtube.com":
++            c_data = {}
++            for _i in itertags(res.text, "input"):
++                if _i.attributes.get("type") == "hidden":
++                    c_data[_i.attributes.get("name")] = _i.attributes.get("value")
++            log.debug("c_data_keys: {}".format(', '.join(c_data.keys())))
++            res = self.session.http.post("https://consent.youtube.com/s", data=c_data)
++            consent = self.session.http.cookies.get('CONSENT', domain='.youtube.com')
++            if 'YES' in consent:
++                self.cache.set("consent_ck", consent)
++
 +        datam = _ytdata_re.search(res.text)
 +        if datam:
 +            data = parse_json(datam.group(1))
-+            # find the videoRenderer object, where there is a LIVE NOW badge
-+            for vid_ep in search_dict(data, "currentVideoEndpoint"):
++            # find the videoRenderer object, where there is a LVE NOW badge
++            for vid_ep in search_dict(data, 'currentVideoEndpoint'):
 +                video_id = vid_ep.get("watchEndpoint", {}).get("videoId")
 +                if video_id:
 +                    log.debug("Video ID from currentVideoEndpoint")
-+                    return video_id, None
-+            for x in search_dict(data, "videoRenderer"):
++                    return video_id
++            for x in search_dict(data, 'videoRenderer'):
++                if x.get("viewCountText", {}).get("runs"):
++                    if x.get("videoId"):
++                        log.debug("Video ID from videoRenderer (live)")
++                        return x["videoId"]
 +                for bstyle in search_dict(x.get("badges", {}), "style"):
 +                    if bstyle == "BADGE_STYLE_TYPE_LIVE_NOW":
 +                        if x.get("videoId"):
 +                            log.debug("Video ID from videoRenderer (live)")
-+                            return x["videoId"], None
++                            return x["videoId"]
 +
-+        if "/embed/live_stream" in url:
++        if urlparse(url).path.endswith(("/embed/live_stream", "/live")):
 +            for link in itertags(res.text, "link"):
 +                if link.attributes.get("rel") == "canonical":
 +                    canon_link = link.attributes.get("href")
 +                    if canon_link != url:
-+                        log.debug("Re-directing to canonical URL: {0}".format(canon_link))
-+                        return self._find_video_id(canon_link), None
++                        if canon_link.endswith("v=live_stream"):
++                            log.debug("The video is not available")
++                            break
++                        else:
++                            log.debug("Re-directing to canonical URL: {0}".format(canon_link))
++                            return self._find_video_id("youtubedl://{0}".format(canon_link))
 +
-+        raise PluginError("Could not find a Video ID in URL")
++        raise PluginError("Could not find a video on this page")
 +
 +    def _save2M3U(self, pl_path, info, ua):
 +        m3u = "#EXTM3U,$MODE=IPTV\n"
