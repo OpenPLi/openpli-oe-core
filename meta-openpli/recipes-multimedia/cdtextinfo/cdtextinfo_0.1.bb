@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 DEPENDS = "libcddb libcdio"
 PR = "r1"
 
-SRC_URI = "http://dreamboxupdate.com/download/sources/${P}.tar.bz2 \
+SRC_URI = "file://${P}.tar.bz2 \
 	file://fix-for-libcdio_0_93.patch \
 	"
 
