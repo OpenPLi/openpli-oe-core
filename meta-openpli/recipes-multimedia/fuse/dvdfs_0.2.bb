@@ -8,7 +8,7 @@ PR = "r1"
 
 inherit pkgconfig
 
-SRC_URI = "http://www.jspenguin.org/software/${PN}/${PN}-${PV}.tar.gz \
+SRC_URI = "file://${PN}-${PV}.tar.gz \
 	file://crosscompile.patch \
 	file://defaultdevicesr0.patch \
 	"
