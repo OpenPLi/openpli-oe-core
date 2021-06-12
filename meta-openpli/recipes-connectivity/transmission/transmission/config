@@ -1,8 +1,0 @@
-# Default values for transmission daemon
-# please fill in and enable service.
-# Set DAEMON_USER to run under different credentials
-DAEMON_USER=""
-DAEMON_GROUP=""
-CONFIG_DIR="/var/lib/transmission-daemon"
-# options to pass to startup command
-TRANSOPTIONS="-g ${CONFIG_DIR}"
