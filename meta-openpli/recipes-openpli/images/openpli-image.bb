@@ -19,7 +19,6 @@ IMAGE_INSTALL = "\
 	e2fsprogs-tune2fs \
 	fakelocale \
 	fuse-exfat \
-	glibc-binary-localedata-en-gb \
 	kernel-params \
 	modutils-loadscript \
 	cifs-utils \
@@ -42,6 +41,8 @@ IMAGE_INSTALL = "\
 	volatile-media \
 	vsftpd \
 "
+
+IMAGE_INSTALL_append_libc-glibc = " glibc-binary-localedata-en-gb"
 
 export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""
