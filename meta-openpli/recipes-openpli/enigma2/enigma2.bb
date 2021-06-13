@@ -24,18 +24,20 @@ RDEPENDS_${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
 	ethtool \
-	glibc-gconv-iso8859-15 \
 	${PYTHON_RDEPS} \
 	"
+
+RDEPENDS_${PN}_append_libc-glibc = " glibc-gconv-iso8859-15"
 
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
 	hotplug-e2-helper \
-	glibc-gconv-utf-16 \
 	python-sendfile \
 	ofgwrite \
 	virtual/enigma2-mediaservice \
 	"
+
+RRECOMMENDS_${PN}_append_libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
 	python-codecs \
