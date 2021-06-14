@@ -7,6 +7,7 @@ inherit gitpkgv
 
 GITHUB_URI ?= "git://github.com"
 SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt.git"
+SRC_URI_append_libc-musl = " file://0001-libtuxtxt-fix-build-with-musl.patch"
 
 S = "${WORKDIR}/git/libtuxtxt"
 
