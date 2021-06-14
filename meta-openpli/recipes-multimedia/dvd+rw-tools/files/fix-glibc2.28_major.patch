@@ -4,9 +4,9 @@
  #include <string.h>
  #include <fcntl.h>
  #include <sys/types.h>
-+#ifdef __GLIBC__
++//#ifdef __GLIBC__
 +#include <sys/sysmacros.h>
-+#endif
++//#endif
  #include <sys/stat.h>
  #include <assert.h>
  #include "mp.h"
