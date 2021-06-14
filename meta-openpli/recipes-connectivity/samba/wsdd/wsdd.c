@@ -49,7 +49,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
+
+#ifdef __GLIBC__
 #include <sys/poll.h>
+#else
+#include <poll.h>
+#endif
 
 #include <time.h>
 #include <pthread.h>
