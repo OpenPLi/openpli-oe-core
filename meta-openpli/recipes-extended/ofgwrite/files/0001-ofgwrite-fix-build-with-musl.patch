@@ -1,0 +1,96 @@
+From 99a8478d4b660c0d61f1a9af36481e7c1891a649 Mon Sep 17 00:00:00 2001
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Tue, 15 Jun 2021 02:05:39 +0200
+Subject: [PATCH 1/1] ofgwrite: fix build with musl
+
+-fix: u_long and u_short
+
+ lib/libfec.c:628:5: error: unknown type name 'u_long'
+  628 |     u_long magic ;
+
+- fix missing rpmatch(line)
+
+- define WTMP_FILE
+
+Signed-off-by: Andrea Adami <andrea.adami@gmail.com>
+---
+ busybox/libbb/messages.c | 4 ++++
+ include/common.h         | 9 +++++++++
+ lib/common.h             | 9 +++++++++
+ lib/libfec.c             | 5 +++++
+ 4 files changed, 27 insertions(+)
+
+diff --git a/busybox/libbb/messages.c b/busybox/libbb/messages.c
+index c1b7ba2..5875a29 100644
+--- a/busybox/libbb/messages.c
++++ b/busybox/libbb/messages.c
+@@ -19,6 +19,10 @@
+ 
+ #define BANNER "BusyBox v" BB_VER " (" BB_EXTRA_VERSION ")"
+ 
++#ifndef __GLIBC__
++#define WTMP_FILE "/var/log/wtmp"
++#endif
++
+ const char bb_banner[] ALIGN1 = BANNER;
+ 
+ 
+diff --git a/include/common.h b/include/common.h
+index 0e9f8cf..29b9585 100644
+--- a/include/common.h
++++ b/include/common.h
+@@ -102,6 +102,15 @@ extern "C" {
+ 	my_fprintf(stderr, "%s: warning!: " fmt "\n", PROGRAM_NAME, ##__VA_ARGS__); \
+ } while(0)
+ 
++/* musl libc compat */
++#ifndef HAVE_RPMATCH
++#define rpmatch(line) \
++	( (line == NULL)? -1 : \
++	  (*line == 'y' || *line == 'Y')? 1 : \
++	  (*line == 'n' || *line == 'N')? 0 : \
++	  -1 )
++#endif
++
+ /**
+  * prompt the user for confirmation
+  */
+diff --git a/lib/common.h b/lib/common.h
+index 0e9f8cf..29b9585 100644
+--- a/lib/common.h
++++ b/lib/common.h
+@@ -102,6 +102,15 @@ extern "C" {
+ 	my_fprintf(stderr, "%s: warning!: " fmt "\n", PROGRAM_NAME, ##__VA_ARGS__); \
+ } while(0)
+ 
++/* musl libc compat */
++#ifndef HAVE_RPMATCH
++#define rpmatch(line) \
++	( (line == NULL)? -1 : \
++	  (*line == 'y' || *line == 'Y')? 1 : \
++	  (*line == 'n' || *line == 'N')? 0 : \
++	  -1 )
++#endif
++
+ /**
+  * prompt the user for confirmation
+  */
+diff --git a/lib/libfec.c b/lib/libfec.c
+index 060eb32..efb368e 100644
+--- a/lib/libfec.c
++++ b/lib/libfec.c
+@@ -46,6 +46,11 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++/* for musl u_long and u_short */
++#ifndef __GLIBC__
++#include <sys/types.h>
++#endif
++
+ /*
+  * stuff used for testing purposes only
+  */
+-- 
+2.17.1
+
