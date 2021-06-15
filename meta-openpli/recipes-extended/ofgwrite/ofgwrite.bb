@@ -10,8 +10,9 @@ inherit gitpkgv
 PV = "4.x+git${SRCPV}"
 PKGV = "4.x+git${GITPKGV}"
 
-SRC_URI = "git://github.com/oe-alliance/ofgwrite.git \
-	file://fix_glibc_major.patch"
+SRC_URI = "git://github.com/oe-alliance/ofgwrite.git"
+SRC_URI_append = " file://fix_glibc_major.patch"
+SRC_URI_append_libc-musl = " file://0001-ofgwrite-fix-build-with-musl.patch"
 
 S = "${WORKDIR}/git"
 EXTRA_OEMAKE=""
