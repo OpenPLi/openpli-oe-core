@@ -1,0 +1,32 @@
+From f3a16f097d5483734b562c0f997bfd616cb69f5e Mon Sep 17 00:00:00 2001
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Tue, 15 Jun 2021 00:17:39 +0200
+Subject: [PATCH 1/1] tuxtxt-enigma2: fix build with musl
+
+fix
+ | ../git/tuxtxt/tuxtxt.c:215:15: error: storage size of 's' isn't known
+ |   215 |   struct stat s;
+ |       |               ^
+
+Signed-off-by: Andrea Adami <andrea.adami@gmail.com>
+---
+ tuxtxt.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tuxtxt.h b/tuxtxt.h
+index 7f40b09..500f0fa 100644
+--- a/tuxtxt.h
++++ b/tuxtxt.h
+@@ -40,6 +40,9 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <sys/types.h>
++#ifndef __GLIBC__
++#include <sys/stat.h>
++#endif
+ #include <sys/time.h>
+ #include <ctype.h>
+ 
+-- 
+2.17.1
+
