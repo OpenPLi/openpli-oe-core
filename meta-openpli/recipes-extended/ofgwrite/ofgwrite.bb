@@ -11,7 +11,10 @@ PV = "4.x+git${SRCPV}"
 PKGV = "4.x+git${GITPKGV}"
 
 SRC_URI = "git://github.com/oe-alliance/ofgwrite.git \
-	file://fix_glibc_major.patch"
+	file://0001-ofgwrite-no-guards-around-sys-sysmacros.h.patch \
+	file://0002-ofgwrite-fix-build-with-musl-libc.patch \
+	file://0003-ofgwrite-define-default-WTMP_FILE-for-musl-libc.patch \
+	"
 
 S = "${WORKDIR}/git"
 EXTRA_OEMAKE=""
