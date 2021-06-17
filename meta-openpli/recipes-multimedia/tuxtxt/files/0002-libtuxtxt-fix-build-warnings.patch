@@ -1,0 +1,41 @@
+From 1f31172bd370875da49a6538911e2259e29154b5 Mon Sep 17 00:00:00 2001
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Thu, 17 Jun 2021 11:24:55 +0200
+Subject: [PATCH 2/4] libtuxtxt: fix build warnings
+
+In file included from ../git/libtuxtxt/libtuxtxt.c:40:
+../git/libtuxtxt/tuxtxt_common.h: In function 'tuxtxt_RenderCharIntern':
+../git/libtuxtxt/tuxtxt_common.h:4372:14:
+ warning: comparison of distinct pointer types lacks a cast
+ 4372 |       if ((p > pstart) && (memcmp(p-4,bgra[bgcolor],4)==0))
+      |              ^
+../git/libtuxtxt/tuxtxt_common.h:4387:14:
+ warning: comparison of distinct pointer types lacks a cast
+ 4387 |       if ((p > pstart) && (memcmp(p-4,bgra[fgcolor],4)==0))
+      |              ^
+../git/libtuxtxt/tuxtxt_common.h:4415:13:
+ warning: comparison of distinct pointer types lacks a cast
+ 4415 |      if ((p > pstart) && (memcmp(p-4,bgra[fgcolor],4)==0))
+      |             ^
+
+Signed-off-by: Andrea Adami <andrea.adami@gmail.com>
+---
+ tuxtxt_common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tuxtxt_common.h b/tuxtxt_common.h
+index 1e72b5f..5e994d7 100644
+--- a/tuxtxt_common.h
++++ b/tuxtxt_common.h
+@@ -4346,7 +4346,7 @@ void tuxtxt_RenderCharIntern(tstRenderInfo* renderinfo,int Char, tstPageAttr *At
+ 		for (Row = he; Row; Row--) /* row counts up, but down may be a little faster :) */
+ 		{
+ 			int pixtodo = (renderinfo->usettf ? renderinfo->sbit->width : curfontwidth);
+-			char *pstart = p;
++			unsigned char *pstart = p;
+ 
+ 			for (Bit = xfactor * (renderinfo->sbit->left + renderinfo->TTFShiftX); Bit > 0; Bit--) /* fill left margin */
+ 			{
+-- 
+2.17.1
+
