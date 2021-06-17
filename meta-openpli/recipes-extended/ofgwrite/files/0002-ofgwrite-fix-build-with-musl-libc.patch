@@ -1,0 +1,78 @@
+From f6556ac9d534c528f442aa692fd3fafc3d5a80e8 Mon Sep 17 00:00:00 2001
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Thu, 17 Jun 2021 16:06:31 +0200
+Subject: [PATCH 2/3] ofgwrite: fix build with musl libc
+
+fix u_long and u_short
+
+lib/libfec.c:628:5: error: unknown type name 'u_long'
+628 |     u_long magic ;
+
+fix missing rpmatch(line)
+
+Signed-off-by: Andrea Adami <andrea.adami@gmail.com>
+---
+ include/common.h | 9 +++++++++
+ lib/common.h     | 9 +++++++++
+ lib/libfec.c     | 5 +++++
+ 3 files changed, 23 insertions(+)
+
+diff --git a/include/common.h b/include/common.h
+index 0e9f8cf..236d715 100644
+--- a/include/common.h
++++ b/include/common.h
+@@ -102,6 +102,15 @@ extern "C" {
+ 	my_fprintf(stderr, "%s: warning!: " fmt "\n", PROGRAM_NAME, ##__VA_ARGS__); \
+ } while(0)
+ 
++/* musl libc compat */
++#ifndef HAVE_RPMATCH
++#define rpmatch(line) \
++	( (line == NULL)? -1 : \
++	(*line == 'y' || *line == 'Y')? 1 : \
++	(*line == 'n' || *line == 'N')? 0 : \
++	-1 )
++#endif
++
+ /**
+  * prompt the user for confirmation
+  */
+diff --git a/lib/common.h b/lib/common.h
+index 0e9f8cf..236d715 100644
+--- a/lib/common.h
++++ b/lib/common.h
+@@ -102,6 +102,15 @@ extern "C" {
+ 	my_fprintf(stderr, "%s: warning!: " fmt "\n", PROGRAM_NAME, ##__VA_ARGS__); \
+ } while(0)
+ 
++/* musl libc compat */
++#ifndef HAVE_RPMATCH
++#define rpmatch(line) \
++	( (line == NULL)? -1 : \
++	(*line == 'y' || *line == 'Y')? 1 : \
++	(*line == 'n' || *line == 'N')? 0 : \
++	-1 )
++#endif
++
+ /**
+  * prompt the user for confirmation
+  */
+diff --git a/lib/libfec.c b/lib/libfec.c
+index 060eb32..efb368e 100644
+--- a/lib/libfec.c
++++ b/lib/libfec.c
+@@ -46,6 +46,11 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++/* for musl u_long and u_short */
++#ifndef __GLIBC__
++#include <sys/types.h>
++#endif
++
+ /*
+  * stuff used for testing purposes only
+  */
+-- 
+2.17.1
+

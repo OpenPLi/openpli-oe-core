@@ -1,0 +1,53 @@
+From 7e3d1858d17bc1c263f0be95f155b4a3671f4a35 Mon Sep 17 00:00:00 2001
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Thu, 17 Jun 2021 15:59:04 +0200
+Subject: [PATCH 1/3] ofgwrite: no guards around <sys/sysmacros.h>
+
+add 'minor' and 'major' for both glibc and musl
+
+Signed-off-by: Andrea Adami <andrea.adami@gmail.com>
+---
+ lib/libmtd.c        | 1 +
+ lib/libmtd_legacy.c | 1 +
+ libubi.c            | 1 +
+ 3 files changed, 3 insertions(+)
+
+diff --git a/lib/libmtd.c b/lib/libmtd.c
+index 7622532..2eeb540 100644
+--- a/lib/libmtd.c
++++ b/lib/libmtd.c
+@@ -29,6 +29,7 @@
+ #include <fcntl.h>
+ #include <dirent.h>
+ #include <sys/types.h>
++#include <sys/sysmacros.h>
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <inttypes.h>
+diff --git a/lib/libmtd_legacy.c b/lib/libmtd_legacy.c
+index 3121da9..535b20a 100644
+--- a/lib/libmtd_legacy.c
++++ b/lib/libmtd_legacy.c
+@@ -29,6 +29,7 @@
+ #include <stdlib.h>
+ #include <errno.h>
+ #include <sys/types.h>
++#include <sys/sysmacros.h>
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <mtd/mtd-user.h>
+diff --git a/libubi.c b/libubi.c
+index 1e08b7d..a479aae 100644
+--- a/libubi.c
++++ b/libubi.c
+@@ -32,6 +32,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
++#include <sys/sysmacros.h>
+ #include <libubi.h>
+ #include "libubi_int.h"
+ #include "common.h"
+-- 
+2.17.1
+
