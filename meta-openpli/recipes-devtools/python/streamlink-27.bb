@@ -26,10 +26,10 @@ RDEPENDS_${PN} = "python-core \
     python-websocket-client \
     "
 
-inherit gitpkgv setuptools python-dir
+inherit gittag setuptools python-dir
 
-PV = "4.0+git${SRCPV}"
-PKGV = "4.0+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 SRC_URI = "git://github.com/Billy2011/streamlink-27;protocol=https"
 
