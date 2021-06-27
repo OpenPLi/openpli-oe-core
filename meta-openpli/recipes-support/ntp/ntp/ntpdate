@@ -4,12 +4,15 @@ PATH=/sbin:/bin:/usr/bin:/usr/sbin
 
 test -x /usr/sbin/ntpdate || exit 0
 
-# try to get the NTP server from Enigma config
-NTPSERVERS=`grep "config.ntp.server" /etc/enigma2/settings | cut -d"=" -f 2`
-
-# if no NTP server defined, check the defaults
-if  test -f /etc/default/ntpdate ; then
+# load the defaults
+if test -f /etc/default/ntpdate ; then
 . /etc/default/ntpdate
+fi
+
+# try to get the NTP server from Enigma config
+OVERRIDE=`grep "config.ntp.server" /etc/enigma2/settings | cut -d"=" -f 2`
+if [ ! -z $OVERRIDE ]; then
+	NTPSERVERS=$OVERRIDE
 fi
 
 # This is a heuristic:  The idea is that if a static interface is brought
