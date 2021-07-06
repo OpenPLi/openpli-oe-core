@@ -92,7 +92,6 @@ SRC_URI_append = " \
             file://0006-kodi.sh-set-mesa-debug.patch \
             file://0007-peripheral-settings-export-CEC-device_name-in-GUI.patch \
             file://0010-flatbuffers.patch \
-            file://0011-WIP-windowing-gbm-add-option-to-limit-gui-size.patch \
             \
             file://PR15286-shader-nopow.patch \
             file://15941.patch \
