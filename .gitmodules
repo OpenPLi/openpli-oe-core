@@ -79,3 +79,6 @@
 [submodule "meta-dream"]
 	path = meta-dream
 	url = https://github.com/neo-pli-bsps/meta-dream.git
+[submodule "meta-abcom"]
+	path = meta-abcom
+	url = https://github.com/Ceryon-bsp/meta-pulse4k
