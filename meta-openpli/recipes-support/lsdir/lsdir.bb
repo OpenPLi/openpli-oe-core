@@ -8,7 +8,7 @@ SRC_URI = "file://lsdir.tar.gz"
 # same version as the last git commit before the repo disappeared
 PV = "1.0+git4+4be3f6b"
 
-S = "${WORKDIR}/lsdir/"
+S = "${WORKDIR}/lsdir"
 
 SOURCE_FILES = "src/lsdir.c"
 

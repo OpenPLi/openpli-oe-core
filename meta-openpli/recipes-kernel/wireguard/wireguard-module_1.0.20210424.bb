@@ -4,7 +4,7 @@ SRC_URI = "https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux
 SRC_URI[md5sum] = "a0b43709f873374591671a35ad76b183"
 SRC_URI[sha256sum] = "8839139a53733bd20602e39cfc679a8176747dae8fe9f9c7fce28f8fba71abde"
 
-S = "${WORKDIR}/wireguard-linux-compat-${PV}/src/"
+S = "${WORKDIR}/wireguard-linux-compat-${PV}/src"
 
 inherit module kernel-module-split
 
