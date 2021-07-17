@@ -19,7 +19,7 @@ SRC_URI[sha256sum] = "43b3814b318d8baeab5138bbdb586461f94a52151135f55185a4b3b4c0
 
 FILES_${PN}_append = "${sysconfdir}/Wireless"
 
-S = "${WORKDIR}/MT7601U/"
+S = "${WORKDIR}/MT7601U"
 
 EXTRA_OEMAKE = 'LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR} CFLAGS="${CFLAGS} -Wno-error=incompatible-pointer-types"'
 

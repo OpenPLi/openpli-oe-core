@@ -14,7 +14,7 @@ PR = "r0"
 SRC_URI = "git://github.com/selsta/hlsdl.git;protocol=git"
 SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 SOURCE_FILES = "src/main.c"
 SOURCE_FILES =+ "src/aes_openssl.c"

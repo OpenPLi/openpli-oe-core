@@ -3,7 +3,7 @@ DESCRIPTION = "${CAMNAME} ${PV} softcam"
 
 SRC_URI = "http://downloads.openpli.org/softcams/${CAMNAME}-${PV}-binaries.tar.gz"
 
-S = "${WORKDIR}/"
+S = "${WORKDIR}"
 
 INHIBIT_PACKAGE_STRIP = "1"
 

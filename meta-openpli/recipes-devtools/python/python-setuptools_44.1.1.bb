@@ -33,7 +33,7 @@ RDEPENDS_${PN} = "\
   ${PYTHON_PN}-xml \
 "
 RDEPENDS_${PN}_append = " ${PYTHON_PN}-pkg-resources"
-RPROVIDES_append_class-native = " ${PYTHON_PN}-pkg-resources-native"
+RPROVIDES_${PN}_append_class-native = " ${PYTHON_PN}-pkg-resources-native"
 PROVIDES = "python-distribute"
 
 do_install_prepend() {

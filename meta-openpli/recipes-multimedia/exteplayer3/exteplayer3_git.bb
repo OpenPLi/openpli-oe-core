@@ -14,7 +14,7 @@ PKGV = "68+gitr${GITPKGV}"
 
 SRC_URI = "git://github.com/technic/exteplayer3.git;branch=master"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 
 SOURCE_FILES = "main/exteplayer.c"
