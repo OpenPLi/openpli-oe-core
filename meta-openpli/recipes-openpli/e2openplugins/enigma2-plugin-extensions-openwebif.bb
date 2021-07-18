@@ -1,7 +1,7 @@
 MODULE = "OpenWebif"
 DESCRIPTION = "Control your receiver with a browser"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://README;firstline=10;lastline=12;md5=9c14f792d0aeb54e15490a28c89087f7"
+LIC_FILES_CHKSUM = "file://README;md5=26abba37d1c2fcbf96a087ceb8e1db86"
 
 DEPENDS = "python-cheetah-native"
 RDEPENDS_${PN} = "\
@@ -12,8 +12,11 @@ RDEPENDS_${PN} = "\
 	python-json \
 	python-misc \
 	python-numbers \
+	python-pprint \
 	python-pyopenssl \
 	python-shell \
+	python-six \
+	python-twisted-web \
 	python-unixadmin \
 	"
 
