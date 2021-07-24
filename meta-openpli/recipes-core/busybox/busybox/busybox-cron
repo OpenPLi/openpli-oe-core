@@ -2,7 +2,7 @@
 DAEMON=/usr/sbin/crond
 NAME=crond
 DESC="Busybox Periodic Command Scheduler"
-ARGS="-c /var/spool/cron"
+ARGS="-c /var/spool/cron/crontabs"
 
 test -f $DAEMON || exit 0
 

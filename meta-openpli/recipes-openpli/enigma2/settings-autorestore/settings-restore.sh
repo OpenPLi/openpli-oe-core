@@ -203,7 +203,7 @@ if [[ -d /etc/cron/crontabs && ! -L /etc/cron ]]; then
 	# move them to /var/spool/cron
 	cd /etc/cron/crontabs
 	for file in *; do
-		cat $file >> /var/spool/cron/$file
+		mv $file /var/spool/cron/crobtabs/$file
 	done
 	cd /
 	rm -rf /etc/cron
