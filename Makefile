@@ -43,6 +43,7 @@ TMPDIR = $(TOPDIR)/tmp
 DEPDIR = $(TOPDIR)/.deps
 
 BBLAYERS ?= \
+	$(CURDIR)/meta-local \
 	$(CURDIR)/meta-openembedded/meta-oe \
 	$(CURDIR)/meta-openembedded/meta-filesystems \
 	$(CURDIR)/meta-openembedded/meta-multimedia \
@@ -65,7 +66,6 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-spycat \
 	$(CURDIR)/meta-gi \
 	$(CURDIR)/meta-sab \
-	$(CURDIR)/meta-local \
 	$(CURDIR)/meta-qt5
 
 CONFFILES = \
