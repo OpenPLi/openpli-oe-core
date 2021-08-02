@@ -82,3 +82,6 @@
 [submodule "meta-abcom"]
 	path = meta-abcom
 	url = https://github.com/Ceryon-bsp/meta-pulse4k
+[submodule "meta-python2"]
+	path = meta-python2
+	url = https://git.openembedded.org/meta-python2
