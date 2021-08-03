@@ -13,9 +13,9 @@ require gstreamer1.0-common.inc
 
 DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base ffmpeg"
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-libav.git;protocol=https;branch=1.18;name=gst_libav"
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-libav.git;protocol=https;branch=master;name=gst_libav"
 
-inherit meson pkgconfig
+inherit pkgconfig
 
 CFLAGS += "-Wno-implicit-function-declaration -Wno-stringop-overflow"
 
@@ -23,5 +23,6 @@ CFLAGS_remove_sh4 = "-Wno-stringop-overflow"
 CFLAGS_append_sh4 = " -std=gnu99"
 
 FILES_${PN} += "${libdir}/gstreamer-1.0/*.so"
+FILES_${PN}-dbg += "${libdir}/gstreamer-1.0/.debug"
 FILES_${PN}-dev += "${libdir}/gstreamer-1.0/*.la"
 FILES_${PN}-staticdev += "${libdir}/gstreamer-1.0/*.a"
