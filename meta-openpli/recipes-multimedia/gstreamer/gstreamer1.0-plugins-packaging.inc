@@ -6,13 +6,16 @@
 # This is mainly used by the gstreamer1.0-plugins-* plugin set recipes,
 # but can be used in any recipe that produces GStreamer plugins.
 
+# Dynamically generate packages for all enabled plugins
+PACKAGES_DYNAMIC = "^${PN}-.* ^libgst.*"
+
 PACKAGESPLITFUNCS_prepend = " split_gstreamer10_packages "
-PACKAGESPLITFUNCS_append = " set_gstreamer10_metapkg_rdepends "
+PACKAGESPLITFUNCS_append = " set_metapkg_rdepends "
 
 python split_gstreamer10_packages () {
     gst_libdir = d.expand('${libdir}/gstreamer-1.0')
-    postinst = d.getVar('plugin_postinst')
-    glibdir = d.getVar('libdir')
+    postinst = d.getVar('plugin_postinst', True)
+    glibdir = d.getVar('libdir', True)
 
     # GStreamer libraries
     do_split_packages(d, glibdir, r'^lib(.*)\.so\.*', 'lib%s', 'GStreamer 1.0 %s library', extra_depends='', allow_links=True)
@@ -22,25 +25,23 @@ python split_gstreamer10_packages () {
     do_split_packages(d, glibdir+'/girepository-1.0', r'Gst(.*)-1.0\.typelib$', d.expand('${PN}-%s-typelib'), 'GStreamer 1.0 typelib file for %s', postinst=postinst, extra_depends='')
     # Static GStreamer libraries for development
     do_split_packages(d, gst_libdir, r'libgst(.*)\.a$', d.expand('${PN}-%s-staticdev'), 'GStreamer 1.0 plugin for %s (static development files)', extra_depends='${PN}-staticdev')
+    do_split_packages(d, gst_libdir, 'libgst(.*)\.la$', d.expand('${PN}-%s-dev'), 'GStreamer plugin for %s (development files)', extra_depends='${PN}-dev')
 }
 
 python set_gstreamer10_metapkg_rdepends () {
     import os
-    import oe.utils
 
-    # Go through all generated packages (excluding the main package and
-    # the -meta package itself) and add them to the -meta package as RDEPENDS.
-
-    pn = d.getVar('PN')
+    pn = d.getVar('PN', True)
     metapkg =  pn + '-meta'
     d.setVar('ALLOW_EMPTY_' + metapkg, "1")
     d.setVar('FILES_' + metapkg, "")
-    blacklist = [ pn, pn + '-meta' ]
+    blacklist = [ pn, pn + '-locale', pn + '-dev', pn + '-dbg', pn + '-doc', pn + '-meta' ]
     metapkg_rdepends = []
-    pkgdest = d.getVar('PKGDEST')
-    for pkg in oe.utils.packages_filter_out_system(d):
-        if pkg not in blacklist and pkg not in metapkg_rdepends:
-            # See if the package is empty by looking at the contents of its PKGDEST subdirectory.
+    packages = d.getVar('PACKAGES', True).split()
+    pkgdest = d.getVar('PKGDEST', True)
+    for pkg in packages[1:]:
+        if not pkg in blacklist and not pkg in metapkg_rdepends and not pkg.endswith('-dev') and not pkg.endswith('-dbg') and not pkg.count('locale') and not pkg.count('-staticdev'):
+            # See if the package is empty by looking at the contents of its PKGDEST subdirectory. 
             # If this subdirectory is empty, then the package is.
             # Empty packages do not get added to the meta package's RDEPENDS
             pkgdir = os.path.join(pkgdest, pkg)

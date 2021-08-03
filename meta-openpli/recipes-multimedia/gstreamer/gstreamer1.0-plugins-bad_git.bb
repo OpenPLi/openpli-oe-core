@@ -1,6 +1,5 @@
 LICENSE = "GPLv2+ & LGPLv2+ & LGPLv2.1+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c \
-"
+LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
 require gstreamer1.0-plugins-common.inc
 
@@ -8,19 +7,13 @@ DEPENDS += "gstreamer1.0-plugins-base json-glib"
 
 inherit gobject-introspection
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=1.18;name=gst_plugins_bad \
-        file://0001-fix-maybe-uninitialized-warnings-when-compiling-with.patch \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=master;name=gst_plugins_bad \
+        file://0001-fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch \
         file://0002-avoid-including-sys-poll.h-directly.patch \
-        file://0003-ensure-valid-sentinals-for-gst_structure_get-etc.patch \
+        file://0003-ensure-valid-sentinels-for-gst_structure_get-etc.patch \
         file://0004-rtmp-hls-tsdemux-fix.patch \
         file://0005-rtmp-fix-seeking-and-potential-segfault.patch \
-        file://0004-opencv-resolve-missing-opencv-data-dir-in-yocto-buil.patch \
-        file://0005-msdk-fix-includedir-path.patch \
         file://0006-dvbapi5-fix-old-kernel.patch \
-        file://0007-hls-main-thread-block.patch \
-        file://0001-Revert-tsdemux-Limit-the-maximum-PES-payload-size.patch \
-        file://0002-Revert-tsdemux-always-take-the-seek-segment-stop-int.patch \
-        file://0003-Revert-tsdemux-Use-gst_segment_do_seek.patch \
 "
 
 PACKAGECONFIG ??= " \
@@ -77,7 +70,7 @@ PACKAGECONFIG[resindvd]        = "-Dresindvd=enabled,-Dresindvd=disabled,libdvdr
 PACKAGECONFIG[rsvg]            = "-Drsvg=enabled,-Drsvg=disabled,librsvg"
 PACKAGECONFIG[rtmp]            = "-Drtmp=enabled,-Drtmp=disabled,rtmpdump librtmp"
 PACKAGECONFIG[sbc]             = "-Dsbc=enabled,-Dsbc=disabled,sbc"
-PACKAGECONFIG[sctp]            = "-Dsctp=enabled,-Dsctp=disabled,usrsctp"
+PACKAGECONFIG[sctp]            = "-Dsctp=enabled,-Dsctp=disabled"
 PACKAGECONFIG[smoothstreaming] = "-Dsmoothstreaming=enabled,-Dsmoothstreaming=disabled,libxml2"
 PACKAGECONFIG[sndfile]         = "-Dsndfile=enabled,-Dsndfile=disabled,libsndfile1"
 PACKAGECONFIG[srt]             = "-Dsrt=enabled,-Dsrt=disabled,srt"
@@ -89,50 +82,28 @@ PACKAGECONFIG[v4l2codecs]      = "-Dv4l2codecs=enabled,-Dv4l2codecs=disabled,lib
 PACKAGECONFIG[va]              = "-Dva=enabled,-Dva=disabled,libva"
 PACKAGECONFIG[voaacenc]        = "-Dvoaacenc=enabled,-Dvoaacenc=disabled,vo-aacenc"
 PACKAGECONFIG[voamrwbenc]      = "-Dvoamrwbenc=enabled,-Dvoamrwbenc=disabled,vo-amrwbenc"
-PACKAGECONFIG[vulkan]          = "-Dvulkan=enabled,-Dvulkan=disabled,vulkan-loader shaderc-native"
+PACKAGECONFIG[vulkan]          = "-Dvulkan=enabled,-Dvulkan=disabled,vulkan-loader"
 PACKAGECONFIG[wayland]         = "-Dwayland=enabled,-Dwayland=disabled,wayland-native wayland wayland-protocols libdrm"
 PACKAGECONFIG[webp]            = "-Dwebp=enabled,-Dwebp=disabled,libwebp"
 PACKAGECONFIG[webrtc]          = "-Dwebrtc=enabled,-Dwebrtc=disabled,libnice"
 PACKAGECONFIG[webrtcdsp]       = "-Dwebrtcdsp=enabled,-Dwebrtcdsp=disabled,webrtc-audio-processing"
-PACKAGECONFIG[zbar]            = "-Dzbar=enabled,-Dzbar=disabled,zbar"
 PACKAGECONFIG[x265]            = "-Dx265=enabled,-Dx265=disabled,x265"
-
-# these plugins currently have no corresponding library in OE-core or meta-openembedded:
-#   aom androidmedia applemedia bs2b chromaprint d3dvideosink
-#   directsound dts fdkaac gme gsm iq kate ladspa lv2 mpeg2enc
-#   mplex musepack nvdec nvenc ofa openexr openni2 opensles
-#   soundtouch spandsp srt teletext vdpau wasapi wildmidi winks
-#   winscreencap wpe
+PACKAGECONFIG[zbar]            = "-Dzbar=enabled,-Dzbar=disabled,zbar"
 
 EXTRA_OEMESON += " \
     -Ddoc=disabled \
-    -Ddecklink=enabled \
-    -Ddvb=enabled \
-    -Dfbdev=enabled \
-    -Dipcpipeline=enabled \
-    -Dnetsim=enabled \
-    -Dshm=enabled \
-    -Dtranscode=enabled \
     -Dmpegdemux=enabled \
     -Dandroidmedia=disabled \
     -Dapplemedia=disabled \
-    -Davtp=disabled \
     -Dbs2b=disabled \
     -Dchromaprint=disabled \
-    -Dd3dvideosink=disabled \
-    -Dd3d11=disabled \
     -Ddirectsound=disabled \
     -Dfdkaac=disabled \
-    -Dflite=disabled \
     -Dgme=disabled \
     -Dgsm=disabled \
     -Diqa=disabled \
-    -Dkate=disabled \
     -Dladspa=disabled \
     -Dlv2=disabled \
-    -Dmagicleap=disabled \
-    -Dmediafoundation=disabled \
-    -Dmicrodns=disabled \
     -Dmpeg2enc=disabled \
     -Dmplex=disabled \
     -Dmsdk=disabled \
@@ -144,18 +115,14 @@ EXTRA_OEMESON += " \
     -Dopensles=disabled \
     -Dsoundtouch=disabled \
     -Dspandsp=disabled \
-    -Dsvthevcenc=disabled \
     -Dteletext=disabled \
     -Dtinyalsa=disabled \
     -Dwasapi=disabled \
-    -Dwasapi2=disabled \
     -Dwebrtcdsp=disabled \
     -Dwildmidi=disabled \
     -Dwinks=disabled \
     -Dwinscreencap=disabled \
-    ${@bb.utils.contains("TUNE_FEATURES", "mx32", "-Dyadif=disabled", "", d)} \
 "
-EXTRA_OEMESON_remove += " --disable-qt"
 
 export OPENCV_PREFIX = "${STAGING_DIR_TARGET}${prefix}"
 

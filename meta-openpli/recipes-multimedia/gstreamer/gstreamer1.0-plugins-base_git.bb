@@ -1,5 +1,5 @@
 LICENSE = "GPLv2+ & LGPLv2+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=6762ed442b3822387a51c92d928ead0d"
+LIC_FILES_CHKSUM = "file://COPYING;md5=69333daa044cb77e486cc36129f7a770"
 
 require gstreamer1.0-plugins-common.inc
 
@@ -7,13 +7,12 @@ DEPENDS += "iso-codes util-linux zlib"
 
 inherit gobject-introspection
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-base.git;protocol=https;branch=1.18;name=gst_plugins_base \
-           file://0001-ENGR00312515-get-caps-from-src-pad-when-query-caps.patch \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-base.git;protocol=https;branch=master;name=gst_plugins_base \
+           file://0001-get-caps-from-src-pad-when-query-caps.patch \
+           file://0003-ssaparse-enhance-SSA-text-lines-parsing.patch \
+           file://0005-viv-fb-Make-sure-config.h-is-included.patch \
            file://0002-subparse-set-need_segment-after-sink-pad-received-GS.patch \
            file://0003-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-caps.patch \
-           file://0003-viv-fb-Make-sure-config.h-is-included.patch \
-           file://0002-ssaparse-enhance-SSA-text-lines-parsing.patch \
-           file://0004-glimagesink-Downrank-to-marginal.patch \
 "
 
 PACKAGES_DYNAMIC =+ "^libgst.*"
@@ -97,5 +96,3 @@ def get_opengl_cmdline_list(switch_name, options, d):
         return '-D' + switch_name + '=' + ','.join(selected_options)
     else:
         return ''
-
-CVE_PRODUCT += "gst-plugins-base"
