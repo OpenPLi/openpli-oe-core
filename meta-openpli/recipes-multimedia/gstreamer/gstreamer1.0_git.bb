@@ -4,22 +4,19 @@ It supports a wide range of formats including mp3, ogg, avi, mpeg and quicktime.
 HOMEPAGE = "http://gstreamer.freedesktop.org/"
 BUGTRACKER = "https://bugzilla.gnome.org/enter_bug.cgi?product=Gstreamer"
 SECTION = "multimedia"
-LICENSE = "LGPLv2+"
-
-LIC_FILES_CHKSUM = "file://COPYING;md5=6762ed442b3822387a51c92d928ead0d \
-                    file://gst/gst.h;beginline=1;endline=21;md5=e059138481205ee2c6fc1c079c016d0d"
+LICENSE = "LGPLv2.1+"
+LIC_FILES_CHKSUM = "file://COPYING;md5=69333daa044cb77e486cc36129f7a770 \
+                    file://gst/gst.h;beginline=1;endline=21;md5=e059138481205ee2c6fc1c079c016d0d \
+                    "
 
 require gstreamer1.0-common.inc
 
 DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2 libcap"
 
-inherit meson pkgconfig gobject-introspection
+inherit pkgconfig upstream-version-is-even
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=1.18;name=gst \
-           file://0001-gst-gstpluginloader.c-when-env-var-is-set-do-not-fal.patch \
-           file://0003-meson-Add-option-for-installed-tests.patch \
-           file://0001-tests-seek-Don-t-use-too-strict-timeout-for-validati.patch \
-           file://0005-revert-use-new-gst-adapter-get-buffer.patch \
+SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=master;name=gst \
+           file://0002-revert-use-new-gst-adapter-get-buffer.patch \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.contains('PTEST_ENABLED', '1', 'tests', '', d)} \
@@ -57,12 +54,9 @@ GIR_MESON_DISABLE_FLAG = "disabled"
 
 PACKAGES += "${PN}-bash-completion"
 
-# Add the core element plugins to the main package
-FILES_${PN} += "${libdir}/gstreamer-1.0/*.so"
-FILES_${PN}-dev += "${libdir}/gstreamer-1.0/*.a ${libdir}/gstreamer-1.0/include"
+FILES_${PN} += "${libdir}/gstreamer-1.0/*.so /usr/share/"
+FILES_${PN}-dev += "${libdir}/gstreamer-1.0/*.la ${libdir}/gstreamer-1.0/*.a ${libdir}/gstreamer-1.0/include"
 FILES_${PN}-bash-completion += "${datadir}/bash-completion/completions/ ${datadir}/bash-completion/helpers/gst*"
 FILES_${PN}-dbg += "${datadir}/gdb ${datadir}/gstreamer-1.0/gdb"
-
-CVE_PRODUCT = "gstreamer"
 
 require gstreamer1.0-ptest.inc

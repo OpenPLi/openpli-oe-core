@@ -8,7 +8,7 @@ require gstreamer1.0-plugins-packaging.inc
 
 DEPENDS = "gstreamer1.0 glib-2.0-native"
 
-inherit meson pkgconfig
+inherit pkgconfig
 
 # Orc enables runtime JIT compilation of data processing routines from Orc
 # bytecode to SIMD instructions for various architectures (currently SSE, MMX,
@@ -16,10 +16,7 @@ inherit meson pkgconfig
 # This value is used in the PACKAGECONFIG values for each plugin set recipe.
 # By modifying it, Orc can be enabled/disabled in all of these recipes at once.
 GSTREAMER_ORC ?= "orc"
-# workaround to disable orc on mips to fix the build failure
-# {standard input}: Assembler messages:
-# {standard input}:46587: Error: branch out of range
-GSTREAMER_ORC_mips = ""
+
 PACKAGECONFIG[orc] = "-Dorc=enabled,-Dorc=disabled,orc orc-native"
 
 # TODO: put this in a gettext.bbclass patch (with variables to allow for
