@@ -1,4 +1,3 @@
-
 SUMMARY = "A Python Interface To The cURL library"
 DESCRIPTION = "\
 PycURL is a Python interface to libcurl, the multiprotocol file \
