@@ -3,14 +3,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
 require gstreamer1.0-plugins-common.inc
 
-DEPENDS += "gstreamer1.0-plugins-base json-glib"
+DEPENDS += "gstreamer1.0-plugins-base"
 
 inherit gobject-introspection
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git;protocol=https;branch=master;name=gst_plugins_bad \
         file://0001-fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch \
-        file://0002-avoid-including-sys-poll.h-directly.patch \
-        file://0003-ensure-valid-sentinels-for-gst_structure_get-etc.patch \
         file://0004-rtmp-hls-tsdemux-fix.patch \
         file://0005-rtmp-fix-seeking-and-potential-segfault.patch \
         file://0006-dvbapi5-fix-old-kernel.patch \
