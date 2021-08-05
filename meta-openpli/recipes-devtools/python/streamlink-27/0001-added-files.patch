@@ -1,19 +1,34 @@
-From 18e84d35743d0d8a5106628b23fe5e754558e14e Mon Sep 17 00:00:00 2001
+From 67eb31f20ec1bca80e7fa718d0fef6ae63901395 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Sun, 20 Jun 2021 14:29:36 +0200
-Subject: [PATCH] added_files
+Date: Tue, 3 Aug 2021 20:13:11 +0200
+Subject: [PATCH] add-files
 
 ---
+ src/streamlink/cache.py               |   2 +-
  src/streamlink/opts_parser.py         | 677 ++++++++++++++++++++++++++
- src/streamlink/plugins/muxedstream.py |  41 ++
  src/streamlink/plugins/radio2see.py   |  35 ++
- src/streamlink/plugins/youtubedl.py   | 419 ++++++++++++++++
- 4 files changed, 1172 insertions(+)
+ src/streamlink/plugins/youtubedl.py   | 420 ++++++++++++++++
+ src/streamlink/stream/ffmpegmux.py    |   6 +-
+ src/streamlink/stream/hls.py          |  16 +-
+ src/streamlink/stream/hls_playlist.py |   8 +-
+ 7 files changed, 1158 insertions(+), 6 deletions(-)
  create mode 100644 src/streamlink/opts_parser.py
- create mode 100644 src/streamlink/plugins/muxedstream.py
  create mode 100644 src/streamlink/plugins/radio2see.py
  create mode 100644 src/streamlink/plugins/youtubedl.py
 
+diff --git a/src/streamlink/cache.py b/src/streamlink/cache.py
+index 5a09f9db..cb2f3353 100644
+--- a/src/streamlink/cache.py
++++ b/src/streamlink/cache.py
+@@ -9,7 +9,7 @@ from streamlink.compat import is_win32
+ if is_win32:
+     xdg_cache = os.environ.get("APPDATA", os.path.expanduser("~"))
+ else:
+-    xdg_cache = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
++    xdg_cache = "/home/root/.cache"
+ 
+ cache_dir = os.path.join(xdg_cache, "streamlink")
+ 
 diff --git a/src/streamlink/opts_parser.py b/src/streamlink/opts_parser.py
 new file mode 100644
 index 00000000..7a39ae3e
@@ -697,53 +712,6 @@ index 00000000..7a39ae3e
 +
 +__all__ = ["build_parser", "setup_args", "setupHttpSession", "setupTransportOpts", "conv_argitems_to_arglist",
 +           "setup_plugin_args", "setup_plugin_options", "setup_config_files", "argsplit", "PLUGINS_DIR", "LOG_DIR"]
-diff --git a/src/streamlink/plugins/muxedstream.py b/src/streamlink/plugins/muxedstream.py
-new file mode 100644
-index 00000000..d6c1092f
---- /dev/null
-+++ b/src/streamlink/plugins/muxedstream.py
-@@ -0,0 +1,41 @@
-+from __future__ import unicode_literals
-+
-+import re
-+
-+from streamlink.plugin import Plugin
-+from streamlink.plugin.plugin import parse_url_params
-+from streamlink.stream import HTTPStream
-+from streamlink.stream.ffmpegmux import MuxedStream
-+from streamlink.utils import update_scheme
-+
-+
-+class MuxedStreamPlugin(Plugin):
-+    _url_re = re.compile(r"muxedstream://(.+)")
-+
-+    @classmethod
-+    def can_handle_url(cls, url):
-+        return cls._url_re.match(url) is not None
-+
-+    def _get_streams(self):
-+        url, params = parse_url_params(self.url)
-+        urlnoproto = self._url_re.match(url).group(1)
-+        urlnoproto = update_scheme("http://", urlnoproto)
-+
-+        self.logger.debug("Video URL: {}", urlnoproto)
-+
-+        aurlnoproto = params.get("audio")
-+        aurlnoproto = update_scheme("http://", aurlnoproto)
-+        quality = params.get("quality", "unknown")
-+
-+        self.logger.debug("Video Quality: {}", quality)
-+        self.logger.debug("Audio URL: {}", aurlnoproto)
-+
-+        streams = {}
-+        streams[quality] = MuxedStream(
-+            self.session, HTTPStream(self.session, urlnoproto), HTTPStream(self.session, aurlnoproto)
-+        )
-+
-+        return streams
-+
-+
-+__plugin__ = MuxedStreamPlugin
 diff --git a/src/streamlink/plugins/radio2see.py b/src/streamlink/plugins/radio2see.py
 new file mode 100644
 index 00000000..0f9389ba
@@ -787,10 +755,10 @@ index 00000000..0f9389ba
 +__plugin__ = Radio2See
 diff --git a/src/streamlink/plugins/youtubedl.py b/src/streamlink/plugins/youtubedl.py
 new file mode 100644
-index 00000000..5419498f
+index 00000000..510c306d
 --- /dev/null
 +++ b/src/streamlink/plugins/youtubedl.py
-@@ -0,0 +1,419 @@
+@@ -0,0 +1,420 @@
 +"""
 +  YoutubeDL Plugin for Streamlink by Billy2011.
 +  This plugin is only for youtube streams.
@@ -949,6 +917,7 @@ index 00000000..5419498f
 +        consent = self.cache.get("consent_ck")
 +        if consent is not None:
 +            self.set_consent_ck(consent)
++        self._find_canonical_url = None
 +
 +    @classmethod
 +    def can_handle_url(cls, url):
@@ -1210,6 +1179,98 @@ index 00000000..5419498f
 +
 +
 +__plugin__ = YouTubeDL
+diff --git a/src/streamlink/stream/ffmpegmux.py b/src/streamlink/stream/ffmpegmux.py
+index 7f3c802c..0eef3a8c 100644
+--- a/src/streamlink/stream/ffmpegmux.py
++++ b/src/streamlink/stream/ffmpegmux.py
+@@ -105,8 +105,12 @@ class FFMPEGMuxer(StreamIO):
+         self._cmd.extend(['-c:v', videocodec])
+         self._cmd.extend(['-c:a', audiocodec])
+ 
++        add_audio = options.pop("add_audio", False)
+         for m in maps:
+-            self._cmd.extend(["-map", str(m)])
++            if not m and add_audio:
++                self._cmd.extend(["-map", "0:v:0"])
++            else:
++                self._cmd.extend(["-map", str(m)])
+ 
+         if copyts:
+             self._cmd.extend(["-copyts"])
+diff --git a/src/streamlink/stream/hls.py b/src/streamlink/stream/hls.py
+index 73478f72..59ce9edb 100644
+--- a/src/streamlink/stream/hls.py
++++ b/src/streamlink/stream/hls.py
+@@ -117,7 +117,7 @@ class HLSStreamWriter(SegmentedStreamWriter):
+                                          retries=self.retries,
+                                          **request_params)
+         except StreamError as err:
+-            log.error("Failed to open segment {0}: {1}", sequence.num, err)
++            log.error("Failed to open segment {0}: {1}".format(sequence.num, err))
+             return
+ 
+     def write(self, sequence, res, chunk_size=8192):
+@@ -158,6 +158,7 @@ class HLSStreamWorker(SegmentedStreamWorker):
+         SegmentedStreamWorker.__init__(self, *args, **kwargs)
+         self.stream = self.reader.stream
+ 
++        self.init_map = None
+         self.playlist_changed = False
+         self.playlist_end = None
+         self.playlist_sequence = -1
+@@ -288,6 +289,17 @@ class HLSStreamWorker(SegmentedStreamWorker):
+         total_duration = 0
+         while not self.closed:
+             for sequence in filter(self.valid_sequence, self.playlist_sequences):
++                if self.init_map != sequence.segment.map:
++                    if sequence.segment.map is not None:
++                        self.init_map = sequence.segment.map
++                        _segment = hls_playlist.Segment(
++                            self.init_map.uri, 0, None, None, False, self.init_map.byterange, None, None)
++                        _sequence = Sequence(sequence.num, _segment)
++                        log.debug("Adding map segment {0} to queue", sequence.num)
++                        yield _sequence
++                    else:
++                        log.warning("Missing segment init map, maybe korrupted playlist, sequence num: {0}".format(
++                            sequence.num))
+                 log.debug("Adding segment {0} to queue".format(sequence.num))
+                 yield sequence
+                 total_duration += sequence.segment.duration
+@@ -306,7 +318,7 @@ class HLSStreamWorker(SegmentedStreamWorker):
+                 try:
+                     self.reload_playlist()
+                 except StreamError as err:
+-                    log.warning("Failed to reload playlist: {0}", err)
++                    log.warning("Failed to reload playlist: {0}".format(err))
+ 
+ 
+ class HLSStreamReader(SegmentedStreamReader):
+diff --git a/src/streamlink/stream/hls_playlist.py b/src/streamlink/stream/hls_playlist.py
+index 0b4284f2..ea8e6c2c 100644
+--- a/src/streamlink/stream/hls_playlist.py
++++ b/src/streamlink/stream/hls_playlist.py
+@@ -8,7 +8,11 @@ from itertools import starmap
+ 
+ from isodate import ISO8601Error, parse_datetime
+ 
+-from streamlink.compat import urljoin, urlparse
++from streamlink.compat import is_py2, urljoin, urlparse
++if is_py2:
++    from cStringIO import StringIO
++else:
++    from io import StringIO
+ 
+ log = logging.getLogger(__name__)
+ 
+@@ -298,7 +302,7 @@ class M3U8Parser(object):
+             self.m3u8.playlists.append(playlist)
+ 
+     def parse(self, data):
+-        lines = iter(filter(bool, data.splitlines()))
++        lines = (_l.rstrip() for _l in StringIO(data))
+         try:
+             line = next(lines)
+         except StopIteration:
 -- 
 2.25.1
 
