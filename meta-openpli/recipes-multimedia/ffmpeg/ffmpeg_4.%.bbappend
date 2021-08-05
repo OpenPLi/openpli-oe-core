@@ -2,11 +2,12 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 DEPENDS += "libxml2"
 
-PACKAGECONFIG_append = " libass libbluray libfreetype librtmp libvorbis \
+PACKAGECONFIG_append = " libass libbluray libdav1d libfreetype librtmp libvorbis \
                         mp3lame openjpeg openssl vpx x265 libv4l2"
 
 PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
+PACKAGECONFIG[libdav1d] = "--enable-libdav1d,--disable-libdav1d,libdav1d"
 PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,librtmp rtmpdump"
 PACKAGECONFIG[openjpeg] = "--enable-libopenjpeg,--disable-libopenjpeg,openjpeg"
@@ -59,7 +60,9 @@ EXTRA_FFCONF = " \
 	--disable-vdpau \
 	\
 	--disable-muxers \
+	--enable-muxer=adts \
 	--enable-muxer=apng \
+	--enable-muxer=asf \
 	--enable-muxer=flac \
 	--enable-muxer=mp3 \
 	--enable-muxer=h261 \
@@ -77,6 +80,7 @@ EXTRA_FFCONF = " \
 	--enable-muxer=mpeg2video \
 	--enable-muxer=mpegts \
 	--enable-muxer=ogg \
+	--enable-muxer=rawvideo \
 	\
 	--disable-parsers \
 	--enable-parser=aac \
@@ -102,11 +106,13 @@ EXTRA_FFCONF = " \
 	\
 	--disable-encoders \
 	--enable-encoder=aac \
+	--enable-encoder=ac3 \
 	--enable-encoder=h261 \
 	--enable-encoder=h263 \
 	--enable-encoder=h263p \
 	--enable-encoder=jpeg2000 \
 	--enable-encoder=jpegls \
+	--enable-encoder=libx264 \
 	--enable-encoder=ljpeg \
 	--enable-encoder=mjpeg \
 	--enable-encoder=mpeg1video \
@@ -114,6 +120,7 @@ EXTRA_FFCONF = " \
 	--enable-encoder=mpeg4 \
 	--enable-encoder=png \
 	--enable-encoder=rawvideo \
+	--enable-encoder=wmav2 \
 	\
 	--disable-decoders \
 	--enable-decoder=aac \
