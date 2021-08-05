@@ -44,7 +44,7 @@ S = "${WORKDIR}/git"
 inherit autotools pkgconfig
 
 PACKAGECONFIG ??= "avdevice avfilter avcodec avformat swresample swscale postproc avresample \
-                   alsa bzlib gpl lzma pic pthreads shared theora x264 zlib \
+                   alsa bzlib gpl lzma pic pthreads shared theora zlib \
                    ${@bb.utils.contains('AVAILTUNES', 'mips32r2', 'mips32r2', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xv xcb', '', d)}"
 
@@ -66,6 +66,7 @@ PACKAGECONFIG[fdk-aac] = "--enable-libfdk-aac --enable-nonfree,--disable-libfdk-
 PACKAGECONFIG[gpl] = "--enable-gpl,--disable-gpl"
 PACKAGECONFIG[gsm] = "--enable-libgsm,--disable-libgsm,libgsm"
 PACKAGECONFIG[jack] = "--enable-indev=jack,--disable-indev=jack,jack"
+PACKAGECONFIG[libopus] = "--enable-libopus,--disable-libopus,libopus"
 PACKAGECONFIG[libvorbis] = "--enable-libvorbis,--disable-libvorbis,libvorbis"
 PACKAGECONFIG[lzma] = "--enable-lzma,--disable-lzma,xz"
 PACKAGECONFIG[mfx] = "--enable-libmfx,--disable-libmfx,intel-mediasdk"
@@ -105,15 +106,15 @@ EXTRA_OECONF = " \
     \
     --cross-prefix=${TARGET_PREFIX} \
     \
-    --ld="${CCLD}" \
-    --cc="${CC}" \
-    --cxx="${CXX}" \
+    --ld='${CCLD}' \
+    --cc='${CC}' \
+    --cxx='${CXX}' \
     --arch=${TARGET_ARCH} \
-    --target-os="linux" \
+    --target-os='linux' \
     --enable-cross-compile \
-    --extra-cflags="${CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS}" \
-    --extra-ldflags="${LDFLAGS}" \
-    --sysroot="${STAGING_DIR_TARGET}" \
+    --extra-cflags='${CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS}' \
+    --extra-ldflags='${LDFLAGS}' \
+    --sysroot='${STAGING_DIR_TARGET}' \
     ${EXTRA_FFCONF} \
     --libdir=${libdir} \
     --shlibdir=${libdir} \
@@ -123,6 +124,16 @@ EXTRA_OECONF = " \
 "
 
 EXTRA_OECONF_append_linux-gnux32 = " --disable-asm"
+
+EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mipsisa64r6', '--disable-mips64r2 --disable-mips32r2', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mipsisa64r2', '--disable-mips64r6 --disable-mips32r6', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mips32r2', '--disable-mips64r6 --disable-mips32r6', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mips32r6', '--disable-mips64r2 --disable-mips32r2', '', d)}"
+EXTRA_OECONF_append_mips = " --extra-libs=-latomic --disable-mips32r5 --disable-mipsdsp --disable-mipsdspr2 \
+                             --disable-loongson2 --disable-loongson3 --disable-mmi --disable-msa --disable-msa2"
+EXTRA_OECONF_append_riscv32 = " --extra-libs=-latomic"
+EXTRA_OECONF_append_armv5 = " --extra-libs=-latomic"
+
 # gold crashes on x86, another solution is to --disable-asm but thats more hacky
 # ld.gold: internal error in relocate_section, at ../../gold/i386.cc:3684
 
@@ -130,6 +141,11 @@ LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -f
 
 do_configure() {
     ${S}/configure ${EXTRA_OECONF}
+}
+
+# patch out build host paths for reproducibility
+do_compile_prepend_class-target() {
+        sed -i -e "s,${WORKDIR},,g" ${B}/config.h
 }
 
 PACKAGES =+ "libavcodec \
