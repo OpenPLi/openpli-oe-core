@@ -7,8 +7,8 @@ SRC_URI = " \
 	file://iptvplayer.patch \
 	"
 
-SRC_URI[md5sum] = "e55fe3830f0d469dc67205b380515af0"
-SRC_URI[sha256sum] = "83d411560a1cd36ea132bd81d8d9885efe9285c6bc6685c4b71e69a0c4329616"
+SRC_URI[md5sum] = "01ee8ecf3dd5c6504543c8679661bb20"
+SRC_URI[sha256sum] = "96f4a05a6c84590e53b18c59bb776aaba80a205afbbd92b82be609ba7fe75fa7"
 
 do_compile() {
 	oe_runmake -f Makefile.cmdline
