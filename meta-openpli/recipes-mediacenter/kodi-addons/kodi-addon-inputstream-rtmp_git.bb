@@ -9,6 +9,8 @@ DEPENDS += "librtmp \
             expat \
             "
 
+PACKAGE_ARCH = "${MACHINE}"
+
 SRCREV = "${AUTOREV}"
 
 PV = "2.0.9+gitr${SRCPV}"
