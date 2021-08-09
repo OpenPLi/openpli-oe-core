@@ -14,3 +14,7 @@ REQUIRED_DISTRO_FEATURES = ""
 ANY_OF_DISTRO_FEATURES_class-target = ""
 
 PACKAGECONFIG_class-target = "opengl egl gles gbm dri"
+
+# make sure EGL drivers are build per machine to avoid conflicts
+# with hardware / SoC dependent OpenGL drivers
+PACKAGE_ARCH = "${MACHINE_ARCH}"

@@ -9,7 +9,7 @@ DEPENDS += "librtmp \
             expat \
             "
 
-PACKAGE_ARCH = "${MACHINE}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "${AUTOREV}"
 
