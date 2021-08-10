@@ -17,6 +17,34 @@ EXTRA_OECMAKE_append_osmega      = " -DWITH_V3D=v3dplatform"
 #EXTRA_OECMAKE_append_gbquad4k     = " -DWITH_V3D=nxinit"
 #EXTRA_OECMAKE_append_gbue4k       = " -DWITH_V3D=nxinit"
 
+#Maxytech
+SRC_URI_remove_aapend_multiboxse = " file://defaultplayer-Es2Player.patch \
+           file://E2Player.patch \
+"
+RPROVIDES_${PN}_append_multiboxse += "kodi"
+RDEPENDS_${PN}_append_multiboxse += "maxytec-mali-${MACHINE}"
+EXTRA_OECMAKE_append_multiboxse += " \
+    -DWITH_PLATFORM=mali-cortexa15 \
+    -DWITH_FFMPEG=stb \
+"
+SRC_URI_remove_multibox = " file://defaultplayer-E2Player.patch \
+           file://E2Player.patch \
+"
+RPROVIDES_${PN}_append_multibox += "kodi"
+RDEPENDS_${PN}_append_multibox += "maxytec-mali-${MACHINE}"
+EXTRA_OECMAKE_append_multibox += " \
+    -DWITH_PLATFORM=mali-cortexa15 \
+    -DWITH_FFMPEG=stb \
+"
+#Mutant
+PROVIDES_append_hd2400 += "kodi"
+RPROVIDES_${PN}_append_hd2400 += "kodi"
+RDEPENDS_${PN}_append_hd2400 += "hd-v3ddriver-${MACHINE}"
+
+EXTRA_OECMAKE_append_hd2400 += " \
+    -DWITH_PLATFORM=v3d-mipsel \
+    -DWITH_FFMPEG=stb \
+"
 # Qviart
 SRC_URI_append_lunix4k    = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k    = " -DWITH_V3D=nxcl"
