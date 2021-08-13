@@ -7,7 +7,9 @@ DEPENDS = "libgcrypt"
 PV = "0.11.0+git${SRCPV}"
 PKGV = "0.11.0+git${GITPKGV}"
 
-SRC_URI = "git://code.videolan.org/videolan/${BPN}.git;protocol=https"
+# make the origin overridable from OE config, for local mirroring
+SRC_ORIGIN ?= "git://code.videolan.org/videolan/${BPN}.git;protocol=https"
+SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
 

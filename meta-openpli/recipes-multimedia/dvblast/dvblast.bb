@@ -12,7 +12,9 @@ PKGV = "1.0+git${GITPKGV}"
 
 DEPENDS = "bitstream libev"
 
-SRC_URI = "git://code.videolan.org/videolan/dvblast.git;protocol=http"
+# make the origin overridable from OE config, for local mirroring
+SRC_ORIGIN ?= "git://code.videolan.org/videolan/dvblast.git;protocol=https"
+SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
 

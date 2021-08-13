@@ -6,7 +6,9 @@ LIC_FILES_CHKSUM="file://COPYING;md5=435ed639f84d4585d93824e7da3d85da"
 
 DEPENDS = "libxml2"
 
-SRC_URI = "gitsm://code.videolan.org/videolan/libbluray.git;protocol=http"
+# make the origin overridable from OE config, for local mirroring
+SRC_ORIGIN ?= "gitsm://code.videolan.org/videolan/libbluray.git;protocol=https"
+SRC_URI := "${SRC_ORIGIN} "
 
 inherit gitpkgv setuptools autotools-brokensep pkgconfig
 
