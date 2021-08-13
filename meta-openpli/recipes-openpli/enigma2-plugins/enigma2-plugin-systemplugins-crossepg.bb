@@ -8,8 +8,10 @@ RDEPENDS_${PN} += "libcurl python-compression python-lzma xz python-core"
 
 inherit gitpkgv
 
-SRC_URI = "git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=git"
-SRC_URI_append = " file://add-dummy-boxbranding.patch"
+SRC_URI = " git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=git \
+			file://add-dummy-boxbranding.patch \
+			file://make-huffman-root-structure-variable-extern.patch \
+			"
 
 PV = "0.8.6+gitr${SRCPV}"
 PKGV = "0.8.6+gitr${GITPKGV}"
@@ -42,7 +44,7 @@ rm -fr ${libdir}/enigma2/python/Plugins/SystemPlugins/CrossEPG > /dev/null 2>&1
 
 # Just a quick hack to "compile" the python parts.
 do_compile_append() {
-    python -O -m compileall ${S}
+    python2 -O -m compileall ${S}
 }
 
 python populate_packages_prepend() {
