@@ -88,4 +88,3 @@ FILES_${PN}-dbg_append_class-target += "\
 "
 
 BBCLASSEXTEND = "native"
-PACKAGE_ARCH := "${MACHINE_ARCH}"

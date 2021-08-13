@@ -9,9 +9,6 @@ require recipes-core/meta/package-index.bb
 # We have a GPLv2 license for this recipe...
 require conf/license/openpli-gplv2.inc
 
-# Depend on the image, so that it gets build
-DEPENDS = "openpli-enigma2-image"
-
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS ?= ""
 
 OPTIONAL_PACKAGES ?= ""

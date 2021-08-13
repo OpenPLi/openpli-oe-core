@@ -9,6 +9,8 @@ DEPENDS += "expat"
 RDEPENDS_${PN} += "ldd"
 RRECOMMENDS_${PN} = "kernel-module-ext2"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 SRCREV = "${AUTOREV}"
 
 KODIADDONBRANCH = "Leia"
