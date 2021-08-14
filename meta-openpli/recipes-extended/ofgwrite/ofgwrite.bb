@@ -10,7 +10,9 @@ inherit gitpkgv
 PV = "4.x+git${SRCPV}"
 PKGV = "4.x+git${GITPKGV}"
 
-SRC_URI = "git://github.com/oe-alliance/ofgwrite.git"
+SRC_URI = "git://github.com/oe-alliance/ofgwrite.git \
+    file://fix-build-with-fno-common.patch \
+"
 
 S = "${WORKDIR}/git"
 EXTRA_OEMAKE=""
