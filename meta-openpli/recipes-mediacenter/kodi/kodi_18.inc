@@ -1,6 +1,19 @@
 # NOTE: this should be put in kodi_18.bbappend in the respective BSP layers
 
-#Edision
+# meta-abcom
+# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
+#SRC_URI_append_pulse4k           = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_pulse4kmini       = " file://egl/EGLNativeTypeMali.patch"
+EXTRA_OECMAKE_append_pulse4k     = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_pulse4kmini = " -DWITH_V3D=mali-cortexa15"
+
+# meta-axasuhd
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_e4hd       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi += " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_e4hd = " -DWITH_V3D=nxpl"
+
+# meta-edision
 SRC_URI_append_osmini4k    = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
 SRC_URI_append_osmio4k     = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
 SRC_URI_append_osmio4kplus = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
@@ -10,18 +23,20 @@ EXTRA_OECMAKE_append_osmio4k     = " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmega      = " -DWITH_V3D=v3dplatform"
 
-#Gigablue
-#SRC_URI_append_gbquad4k     = " file://egl/EGLNativeTypeV3D-gb4k.patch"
-#SRC_URI_append_gbue4k       = " file://egl/EGLNativeTypeV3D-gb4k.patch"
-#SRC_URI_append_gbtrio4k     = " file://egl/EGLNativeTypeMali.patch"
-#EXTRA_OECMAKE_append_gbquad4k     = " -DWITH_V3D=nxinit"
-#EXTRA_OECMAKE_append_gbue4k       = " -DWITH_V3D=nxinit"
+# meta-gigablue
+SRC_URI_append_gbquad4k     = " file://egl/EGLNativeTypeV3D-gb4k.patch"
+SRC_URI_append_gbue4k       = " file://egl/EGLNativeTypeV3D-gb4k.patch"
+EXTRA_OECMAKE_append_gbquad4k     = " -DWITH_V3D=nxinit"
+EXTRA_OECMAKE_append_gbue4k       = " -DWITH_V3D=nxinit"
+# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
+#SRC_URI_append_gbtrio4k       = " file://egl/EGLNativeTypeMali.patch"
+EXTRA_OECMAKE_append_gbtrio4k = " -DWITH_V3D=mali-cortexa15"
 
-# Qviart
-SRC_URI_append_lunix4k    = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
-EXTRA_OECMAKE_append_lunix4k    = " -DWITH_V3D=nxcl"
+# meta-qviart
+SRC_URI_append_lunix4k        = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
+EXTRA_OECMAKE_append_lunix4k  = " -DWITH_V3D=nxcl"
 
-#Vuplus
+# meta-vuplus
 SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch"
 SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch"
 SRC_URI_append_vusolose    = " file://egl/EGLNativeTypeV3D-vuplus.patch"
