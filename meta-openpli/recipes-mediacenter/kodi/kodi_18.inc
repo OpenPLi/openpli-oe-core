@@ -48,6 +48,13 @@ EXTRA_OECMAKE_append_osmega      = " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_hd60   = " -DWITH_V3D=mali-cortexa15"
 EXTRA_OECMAKE_append_hd61   = " -DWITH_V3D=mali-cortexa15"
 
+# meta-gi
+# MACHINE_FEATURES contains "v3d-nxclient" so try the nxpl version
+SRC_URI_append_et1x000     = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxclient"
+# translated into nxcl
+EXTRA_OECMAKE_append_et1x000 = " -DWITH_V3D=nxcl"
+
 # meta-gigablue
 SRC_URI_append_gbquad4k     = " file://egl/EGLNativeTypeV3D-gb4k.patch"
 SRC_URI_append_gbue4k       = " file://egl/EGLNativeTypeV3D-gb4k.patch"
