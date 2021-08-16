@@ -141,5 +141,35 @@ RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 # already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
 #EXTRA_OECMAKE_append_et10000 = " -DWITH_V3D=nxpl"
 
+# meta-zgemma
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_h7       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_h7 = " -DWITH_V3D=nxpl"
+#
+# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
+#SRC_URI_append_hzero      = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h9         = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h9combo    = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h9combose  = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h9se       = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h10        = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h10se      = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_h11        = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_i55        = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_i55plus    = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_i55se      = " file://egl/EGLNativeTypeMali.patch"
+EXTRA_OECMAKE_append_hzero     = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h9        = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h9combo   = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h9combose = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h9se      = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h10       = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h10se     = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_h11       = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_i55       = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_i55plus   = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_i55se     = " -DWITH_V3D=mali-cortexa15"
+
 # Zgemma specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
 INSANE_SKIP_${PN} += "file-rdeps"
