@@ -135,5 +135,11 @@ RDEPENDS_${PN}_append_vuzero4k    = " vuplus-kodi-vuzero4k"
 RDEPENDS_${PN}_append_vuduo4k     = " vuplus-kodi-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 
+# meta-xtrend
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_et10000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_et10000 = " -DWITH_V3D=nxpl"
+
 # Zgemma specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
 INSANE_SKIP_${PN} += "file-rdeps"
