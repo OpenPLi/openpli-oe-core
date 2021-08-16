@@ -19,9 +19,14 @@ SRC_URI = "git://github.com/mbarbon/djmount.git;protocol=http;branch=fixes"
 SRC_URI_append +=" \
 	file://init \
 	file://04-support-fstab-mounting.patch \
+	file://06-fix-build-with-gettext-0.20.x.patch \
 	file://missing_header.patch \
 	"
-EXTRA_OECONF = "--with-external-libupnp-prefix='${STAGING_LIBDIR}' --with-fuse-prefix='${STAGING_LIBDIR}'"
+EXTRA_OECONF = "--with-external-libupnp-prefix='${STAGING_LIBDIR}' \
+				--with-fuse-prefix='${STAGING_LIBDIR}' \
+				CFLAGS="$(CFLAGS)" \
+				LDFLAGS="$(LDFLAGS) -Wl,-V" \
+				"
 
 do_configure_prepend() {
 	mkdir ${S}/libupnp/config.aux/
