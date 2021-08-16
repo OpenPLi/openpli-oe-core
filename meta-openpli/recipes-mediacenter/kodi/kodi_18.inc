@@ -64,6 +64,13 @@ EXTRA_OECMAKE_append_gbue4k       = " -DWITH_V3D=nxinit"
 #SRC_URI_append_gbtrio4k       = " file://egl/EGLNativeTypeMali.patch"
 EXTRA_OECMAKE_append_gbtrio4k = " -DWITH_V3D=mali-cortexa15"
 
+# meta-maxytec
+# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
+#SRC_URI_append_multibox       = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_multiboxse       = " file://egl/EGLNativeTypeMali.patch"
+EXTRA_OECMAKE_append_multibox = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_multiboxse = " -DWITH_V3D=mali-cortexa15"
+
 # meta-qviart
 SRC_URI_append_lunix4k        = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k  = " -DWITH_V3D=nxcl"
