@@ -82,6 +82,15 @@ EXTRA_OECMAKE_append_sf8008m  = " -DWITH_V3D=mali-cortexa15"
 SRC_URI_append_lunix4k        = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k  = " -DWITH_V3D=nxcl"
 
+# meta-uclan
+#
+# in OE-A seems needing a support package as it was for Vu+:
+# hiadp.a and hiplayer.a are installed by hand
+#
+# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
+#SRC_URI_append_ustym4kpro        = " file://egl/EGLNativeTypeMali.patch"
+EXTRA_OECMAKE_append_ustym4kpro   = " -DWITH_V3D=mali-cortexa15"
+
 # meta-vuplus
 SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch"
 SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch"
