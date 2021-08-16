@@ -10,7 +10,7 @@ EXTRA_OECMAKE_append_pulse4kmini = " -DWITH_V3D=mali-cortexa15"
 # meta-axasuhd
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_e4hd       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi += " -DWITH_V3D=nxpl"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
 #EXTRA_OECMAKE_append_e4hd = " -DWITH_V3D=nxpl"
 
 # meta-edision
@@ -22,6 +22,31 @@ EXTRA_OECMAKE_append_osmini4k    = " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmio4k     = " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_V3D=v3dplatform"
 EXTRA_OECMAKE_append_osmega      = " -DWITH_V3D=v3dplatform"
+
+# meta-gfutures
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_bre2ze4k     = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_V3D=nxpl"
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_hd2400     = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_hd2400 = " -DWITH_V3D=nxpl"
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_hd51     = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_hd51 = " -DWITH_V3D=nxpl"
+#
+# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
+#SRC_URI_append_vs1500     = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
+#EXTRA_OECMAKE_append_vs1500 = " -DWITH_V3D=nxpl"
+#
+# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
+#SRC_URI_append_hd60         = " file://egl/EGLNativeTypeMali.patch"
+#SRC_URI_append_hd61         = " file://egl/EGLNativeTypeMali.patch"
+EXTRA_OECMAKE_append_hd60   = " -DWITH_V3D=mali-cortexa15"
+EXTRA_OECMAKE_append_hd61   = " -DWITH_V3D=mali-cortexa15"
 
 # meta-gigablue
 SRC_URI_append_gbquad4k     = " file://egl/EGLNativeTypeV3D-gb4k.patch"
