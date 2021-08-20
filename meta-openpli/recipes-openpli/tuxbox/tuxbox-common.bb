@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/OpenPLi/tuxbox-xml.git;protocol=git"
 S = "${WORKDIR}/git/xml"
 FILES_${PN} = "${sysconfdir}/tuxbox/* ${prefix}/* ${localstatedir}/*"
 
-RDEPENDS = "xz"
+RDEPENDS_${PN} = "xz"
 
 do_compile[noexec] = "1"
 
