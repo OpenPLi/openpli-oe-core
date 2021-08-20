@@ -6,6 +6,8 @@ PKGV = "1.0+git${GITPKGV}"
 SRC_URI = "git://github.com/technl/Hanssettings.git"
 S = "${WORKDIR}/git"
 
+DEPENDS = "xz"
+
 inherit gitpkgv allarch
 
 FILES_${PN} = "${sysconfdir}/enigma2/"
