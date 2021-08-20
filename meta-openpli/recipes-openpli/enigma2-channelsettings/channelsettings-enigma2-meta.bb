@@ -2,6 +2,8 @@ require conf/license/openpli-gplv2.inc
 
 DESCRIPTION = "meta file for settings"
 
+inherit allarch
+
 DEPENDS = "\
 	enigma2-plugin-settings-hans-19e-23e \
 	enigma2-plugin-settings-hans-19e-23e-basis \
