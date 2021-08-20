@@ -6,7 +6,7 @@ PKGV = "1.0+git${GITPKGV}"
 SRC_URI = "git://github.com/technl/Hanssettings.git"
 S = "${WORKDIR}/git"
 
-RDEPENDS = "xz"
+RDEPENDS_${PN} = "xz"
 
 inherit gitpkgv allarch
 
