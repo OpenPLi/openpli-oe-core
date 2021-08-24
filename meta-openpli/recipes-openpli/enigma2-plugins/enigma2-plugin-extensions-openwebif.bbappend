@@ -114,6 +114,7 @@ python do_cleanup () {
         ('sf8008m', 'sf8008m.png', 'octagon.png', 'octagon.html'),
         ('ustym4kpro', 'ustym4kpro.png', 'uclan.png', 'uclan.html'),
         ('pulse4k', 'pulse4k.png', 'pulse4k.png', 'pulse4k.html'),
+        ('pulse4kmini', 'pulse4kmini.png', 'pulse4k.png', 'pulse4k.html'),
     ]
 
     import os
