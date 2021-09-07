@@ -1,0 +1,53 @@
+From 6b1bb6e3c0050e8175a072df46aed76ae1308e39 Mon Sep 17 00:00:00 2001
+From: Brett Neumeier <brett@neumeier.us>
+Date: Fri, 18 Jan 2019 14:00:40 -0600
+Subject: [PATCH] fix build with modern toolchain
+
+When built with the latest stable GCC, glibc, and binutils, the
+generated math.h produces conflicting declaration errors related to
+"signbit":
+
+In file included from ./lib/math.h:27,
+                 from ./src/include/driver.h:27,
+                 from src/devices/grodvi/dvi.cpp:20:
+/usr/include/c++/8.2.1/math.h:68:12: error: 'constexpr bool std::signbit(float)' conflicts with a previous declaration
+ using std::signbit;
+            ^~~~~~~
+In file included from /usr/include/c++/8.2.1/cmath:45,
+                 from /usr/include/c++/8.2.1/math.h:36,
+                 from ./lib/math.h:27,
+                 from ./src/include/driver.h:27,
+                 from src/devices/grodvi/dvi.cpp:20:
+./lib/math.h:2877:1: note: previous declaration 'int signbit(float)'
+ _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit)
+
+Probably the right thing to do is tweak the circumstances under which
+the preprocessor takes action, but my goal is just to get the build to
+succeed. The easiest thing to do is simply get rid of the entire
+conditional block.
+
+---
+ lib/math.in.h | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/lib/math.in.h b/lib/math.in.h
+index c30fc20..09e4099 100644
+--- a/lib/math.in.h
++++ b/lib/math.in.h
+@@ -2396,13 +2396,6 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
+     sizeof (x) == sizeof (double) ? gl_signbitd (x) : \
+     gl_signbitf (x))
+ # endif
+-# ifdef __cplusplus
+-#  if defined signbit || defined GNULIB_NAMESPACE
+-_GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
+-#   undef signbit
+-_GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit)
+-#  endif
+-# endif
+ #elif defined GNULIB_POSIXCHECK
+ # if defined signbit
+ _GL_WARN_REAL_FLOATING_DECL (signbit);
+-- 
+2.19.2
+
