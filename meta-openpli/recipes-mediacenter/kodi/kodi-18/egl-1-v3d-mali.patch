@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..dd62eff
 --- /dev/null
 +++ b/cmake/platform/linux/stb.cmake
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,41 @@
 +set(PLATFORM_REQUIRED_DEPS EGL LibInput Xkbcommon)
 +
 +set(STB_RENDER_SYSTEM "" CACHE STRING "Render system to use with STB: \"gl\" or \"gles\"")
@@ -38,6 +38,9 @@ index 0000000..dd62eff
 +elseif(WITH_V3D STREQUAL "vumips")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS dvb_base nxpl xbmc_base dvb_client gles_init)
++elseif(WITH_V3D STREQUAL "mali-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_MALI")
++  list(APPEND DEPLIBS mali)
 +endif()
 +
 +list(APPEND DEPLIBS EGL GLESv2)
