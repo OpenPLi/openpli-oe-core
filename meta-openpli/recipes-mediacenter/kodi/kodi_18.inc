@@ -89,6 +89,7 @@ EXTRA_OECMAKE_append_lunix4k  = " -DWITH_V3D=nxcl"
 #
 # MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
 #SRC_URI_append_ustym4kpro        = " file://egl/EGLNativeTypeMali.patch"
+SRC_URI_append_ustym4kpro        = " file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_ustym4kpro   = " -DWITH_V3D=mali-cortexa15"
 
 # meta-vuplus
