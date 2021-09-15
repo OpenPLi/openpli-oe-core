@@ -1,4 +1,4 @@
-GST_VERSION_FULL = "1.18.4"
+GST_VERSION_FULL = "1.18.5"
 
 inherit gitpkgv meson gettext
 
