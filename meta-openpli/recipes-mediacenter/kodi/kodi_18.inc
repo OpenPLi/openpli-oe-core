@@ -76,6 +76,8 @@ EXTRA_OECMAKE_append_multiboxse = " -DWITH_V3D=mali-cortexa15"
 # MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
 #SRC_URI_append_sf8008        = " file://egl/EGLNativeTypeMali.patch"
 #SRC_URI_append_sf8008m       = " file://egl/EGLNativeTypeMali.patch"
+SRC_URI_append_sf8008         = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_sf8008m        = " file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_sf8008   = " -DWITH_V3D=mali-cortexa15"
 EXTRA_OECMAKE_append_sf8008m  = " -DWITH_V3D=mali-cortexa15"
 
