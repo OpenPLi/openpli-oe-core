@@ -171,5 +171,15 @@ EXTRA_OECMAKE_append_i55       = " -DWITH_V3D=mali-cortexa15"
 EXTRA_OECMAKE_append_i55plus   = " -DWITH_V3D=mali-cortexa15"
 EXTRA_OECMAKE_append_i55se     = " -DWITH_V3D=mali-cortexa15"
 
-# Zgemma specific: for libEGL.so and libGLESv2.so no providers found in RDEPENDS_kodi? [file-rdeps]
-INSANE_SKIP_${PN} += "file-rdeps"
+# Zgemma specific: for libmali.so libEGL.so and libGLESv2.so no providers found
+  in RDEPENDS_kodi? [file-rdeps]
+INSANE_SKIP_${PN}_h7 += "file-rdeps"
+INSANE_SKIP_${PN}_h9 += "file-rdeps"
+INSANE_SKIP_${PN}_h9combo += "file-rdeps"
+INSANE_SKIP_${PN}_h9combose += "file-rdeps"
+INSANE_SKIP_${PN}_h9se += "file-rdeps"
+INSANE_SKIP_${PN}_h10 += "file-rdeps"
+INSANE_SKIP_${PN}_h11 += "file-rdeps"
+INSANE_SKIP_${PN}_i55 += "file-rdeps"
+INSANE_SKIP_${PN}_i55plus += "file-rdeps"
+INSANE_SKIP_${PN}_i55se += "file-rdeps"
