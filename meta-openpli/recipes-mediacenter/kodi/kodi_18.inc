@@ -172,6 +172,8 @@ EXTRA_OECMAKE_append_i55se     = " -DWITH_V3D=mali-cortexa15"
 # for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
 # in RDEPENDS_kodi? [file-rdeps]
 #
+INSANE_SKIP_${PN}_gbtrio4k += "file-rdeps"
+#
 INSANE_SKIP_${PN}_sf8008 += "file-rdeps"
 INSANE_SKIP_${PN}_sf8008m += "file-rdeps"
 #
