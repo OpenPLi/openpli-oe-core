@@ -6,36 +6,33 @@ DEPENDS = "ffmpeg flac libav jpeg sqlite3 libexif libogg libid3tag libvorbis"
 # because it depends on libav which has commercial flag
 LICENSE_FLAGS = "commercial"
 
-inherit gettext autotools-brokensep update-rc.d systemd
+inherit gitpkgv
+
+PV = "1.3.0+git${SRCPV}"
+PKGV = "1.3.0+git${GITPKGV}"
+DEPENDS = "libexif libav libjpeg-turbo libvorbis flac libid3tag sqlite3"
 
 SRC_URI = "git://git.code.sf.net/p/minidlna/git;branch=master;module=git \
-           file://minidlna-daemon.init.d \
-           file://minidlna.service \
-           file://0001-Update-Gettext-version.patch \
+           file://0001-fix-configure-add-skript.patch \
            "
-
 S = "${WORKDIR}/git"
 
-# This remove "--exclude=autopoint" option from autoreconf argument to avoid
-# configure.ac:30: error: required file './ABOUT-NLS' not found
-EXTRA_AUTORECONF = ""
-
-do_install_append(){
-    install -d ${D}${sysconfdir}
-    install -m 0755 minidlna.conf ${D}${sysconfdir}
-
-# Systemd script
-    install -d ${D}${nonarch_base_libdir}/systemd/system
-    install -m 0755 ${WORKDIR}/minidlna.service ${D}${nonarch_base_libdir}/systemd/system
-
-# Sysvinit script
-    install -d ${D}${sysconfdir}/init.d
-    install -m 0755 ${WORKDIR}/minidlna-daemon.init.d ${D}${sysconfdir}/init.d/minidlna
-
+do_configure_prepend() {
+		sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
 }
 
-SYSTEMD_SERVICE_${PN} = "minidlna.service"
+CONFFILES_${PN} = "${sysconfdir}/minidlna.conf"
 
-INITSCRIPT_NAME = "minidlna"
-INITSCRIPT_PARAMS = "defaults 90"
+inherit autotools-brokensep pkgconfig gettext update-rc.d
 
+# DLNAServer plugin will start the service. Only stop by rc.d below.
+INITSCRIPT_NAME = "minidlna.sh"
+INITSCRIPT_PARAMS = "stop 21 0 1 6 ."
+
+do_install_append() {
+	install -m 755 -d ${D}${sysconfdir}/
+	install -m 644 ${S}/minidlna.conf ${D}${sysconfdir}/
+	install -m 755 -d ${D}${sysconfdir}/init.d/
+	install -m 755 ${S}/minidlna.sh ${D}${sysconfdir}/init.d/
+	install -m 755 -d ${D}${localstatedir}/lib/minidlna/
+}

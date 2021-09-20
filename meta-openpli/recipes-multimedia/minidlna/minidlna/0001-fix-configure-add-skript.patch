@@ -1,0 +1,376 @@
+From 638195fb07a525009c9f4f8fc08e7abea59fed28 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Mon, 20 Sep 2021 22:35:11 +0200
+Subject: [PATCH] fix configure add skript
+
+---
+ Makefile.am   |   5 +-
+ configure.ac  |  41 ++++++-----------
+ minidlna.conf |  10 ++--
+ minidlna.sh   |  58 ++++++++++++++++++++++++
+ po/LINGUAS    |   2 +-
+ po/hu.po      | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 206 insertions(+), 33 deletions(-)
+ create mode 100755 minidlna.sh
+ create mode 100644 po/hu.po
+
+diff --git a/Makefile.am b/Makefile.am
+index 74859c1..1d7d73f 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -15,7 +15,7 @@
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ # USA.
+ 
+-AM_CFLAGS = -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
++AM_CFLAGS = -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 @STATIC_CFLAGS@
+ 
+ SUBDIRS=po
+ 
+@@ -55,11 +55,14 @@ minidlnad_LDADD = \
+ 	@LIBID3TAG_LIBS@ \
+ 	@LIBSQLITE3_LIBS@ \
+ 	@LIBAVFORMAT_LIBS@ \
++	@LIBAVUTIL_LIBS@ \
+ 	@LIBEXIF_LIBS@ \
+ 	@LIBINTL@ \
+ 	@LIBICONV@ \
+ 	-lFLAC $(flacogglibs) $(vorbislibs) $(avahilibs)
+ 
++minidlnad_LDFLAGS = @STATIC_LDFLAGS@
++
+ testupnpdescgen_SOURCES = testupnpdescgen.c upnpdescgen.c
+ testupnpdescgen_LDADD = \
+ 	@LIBJPEG_LIBS@ \
+diff --git a/configure.ac b/configure.ac
+index cb596b9..e13a531 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -14,7 +14,7 @@
+ # License along with MiniDLNA; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ # USA.
+-AC_INIT(MiniDLNA,1.1.3,,minidlna)
++AC_INIT(MiniDLNA,1.3.0,,minidlna)
+ #LT_INIT
+ 
+ AC_CANONICAL_TARGET
+@@ -411,10 +411,10 @@ for dir in "" /usr/local $SEARCH_DIR; do
+     if test -n "$dir"; then
+         LDFLAGS="$LDFLAGS -L$dir/lib"
+     fi
+-    AC_CHECK_LIB([id3tag -lz], [id3_file_open], [LIBID3TAG_LIBS="-lid3tag -lz"], [unset ac_cv_lib_id3tag_id3_file_open; LDFLAGS="$LDFLAGS_SAVE"; continue])
++    AC_CHECK_LIB([id3tag], [id3_file_open], [LIBID3TAG_LIBS="-lid3tag"], [unset ac_cv_lib_id3tag_id3_file_open; LDFLAGS="$LDFLAGS_SAVE"; continue])
+     break
+ done
+-test x"$ac_cv_lib_id3tag__lz___id3_file_open" = x"yes" || AC_MSG_ERROR([Could not find libid3tag])
++test x"$ac_cv_lib_id3tag_id3_file_open" = x"yes" || AC_MSG_ERROR([Could not find libid3tag])
+ AC_SUBST(LIBID3TAG_LIBS)
+ 
+ LDFLAGS_SAVE="$LDFLAGS"
+@@ -435,17 +435,20 @@ for dir in "" /usr/local $SEARCH_DIR; do
+     if test -n "$dir"; then
+         LDFLAGS="$LDFLAGS -L$dir/lib"
+     fi
+-    AC_CHECK_LIB([avformat -lavcodec -lavutil -lz], [avformat_open_input], [LIBAVFORMAT_LIBS="-lavformat -lavcodec -lavutil -lz"],
+-		 [AC_CHECK_LIB([avformat -lavcodec -lavutil -lz], [av_open_input_file], [LIBAVFORMAT_LIBS="-lavformat -lavcodec -lavutil -lz"],
++    AC_CHECK_LIB([avformat], [av_open_input_file], [LIBAVFORMAT_LIBS="-lavformat"],
++		 [AC_CHECK_LIB([avformat], [avformat_open_input], [LIBAVFORMAT_LIBS="-lavformat"],
+ 		  [unset ac_cv_lib_avformat_av_open_input_file; unset ac_cv_lib_avformat_avformat_open_input; LDFLAGS="$LDFLAGS_SAVE"; continue])])
+     break
+ done
+-if test x"$ac_cv_lib_avformat__lavcodec__lavutil__lz___av_open_input_file" != x"yes" &&
+-   test x"$ac_cv_lib_avformat__lavcodec__lavutil__lz___avformat_open_input" != x"yes"; then
++if test x"$ac_cv_lib_avformat_av_open_input_file" != x"yes" &&
++   test x"$ac_cv_lib_avformat_avformat_open_input" != x"yes"; then
+    AC_MSG_ERROR([Could not find libavformat - part of ffmpeg])
+ fi
+ AC_SUBST(LIBAVFORMAT_LIBS)
+ 
++AC_CHECK_LIB(avutil ,[av_rescale_q], [LIBAVUTIL_LIBS="-lavutil"], [AC_MSG_ERROR([Could not find libavutil - part of ffmpeg])])
++AC_SUBST(LIBAVUTIL_LIBS)
++
+ AC_CHECK_LIB(pthread, pthread_create)
+ 
+ # test if we have vorbisfile
+@@ -486,9 +489,7 @@ AC_CHECK_LIB(avahi-client, avahi_threaded_poll_new,
+ ################################################################################################################
+ ### Header checks
+ 
+-AC_CHECK_HEADERS([arpa/inet.h asm/unistd.h endian.h machine/endian.h fcntl.h libintl.h locale.h netdb.h netinet/in.h poll.h stddef.h stdlib.h string.h sys/file.h sys/inotify.h sys/ioctl.h sys/param.h sys/queue.h sys/socket.h sys/time.h unistd.h])
+-test x"$ac_cv_header_poll_h" != x"yes" && AC_MSG_ERROR([poll.h not found or not usable])
+-test x"$ac_cv_header_sys_queue_h" != x"yes" && AC_MSG_ERROR([sys/queue.h not found or not usable])
++AC_CHECK_HEADERS([arpa/inet.h asm/unistd.h endian.h machine/endian.h fcntl.h libintl.h locale.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/file.h sys/inotify.h sys/ioctl.h sys/param.h sys/socket.h sys/time.h unistd.h])
+ 
+ AC_CHECK_FUNCS(inotify_init, AC_DEFINE(HAVE_INOTIFY,1,[Whether kernel has inotify support]), [
+     AC_MSG_CHECKING([for __NR_inotify_init syscall])
+@@ -606,22 +607,10 @@ AC_MSG_CHECKING([whether to build a static binary executable])
+ AC_ARG_ENABLE(static,
+ 	[  --enable-static         build a static binary executable],[
+ 	if test "$enableval" = "yes"; then
+-		CFLAGS="$CFLAGS -DSTATIC"
+-		LDFLAGS="$LDFLAGS -static"
+-                AC_MSG_RESULT([yes])
+-        else
+-                AC_MSG_RESULT([no])
+-        fi
+-        ],[
+-                AC_MSG_RESULT([no])
+-        ]
+-)
+-
+-AC_MSG_CHECKING([whether to enable LTO])
+-AC_ARG_ENABLE(lto,
+-	[  --enable-lto            enable link-time optimization],[
+-	if test "$enableval" = "yes"; then
+-		CFLAGS="$CFLAGS -flto"
++		STATIC_CFLAGS="-DSTATIC"
++		AC_SUBST(STATIC_CFLAGS)
++		STATIC_LDFLAGS="-Wl,-Bstatic"
++		AC_SUBST(STATIC_LDFLAGS)
+                 AC_MSG_RESULT([yes])
+         else
+                 AC_MSG_RESULT([no])
+diff --git a/minidlna.conf b/minidlna.conf
+index 82db5f1..c8dc33b 100644
+--- a/minidlna.conf
++++ b/minidlna.conf
+@@ -15,7 +15,7 @@ port=8200
+ #   + "V" for video  (eg. media_dir=V,/home/jmaggard/Videos)
+ #   + "P" for images (eg. media_dir=P,/home/jmaggard/Pictures)
+ #   + "PV" for pictures and video (eg. media_dir=PV,/home/jmaggard/digital_camera)
+-media_dir=/opt
++media_dir=/media
+ 
+ # set this to merge all media_dir base contents into the root container
+ # note: the default is no
+@@ -25,14 +25,14 @@ media_dir=/opt
+ #friendly_name=My DLNA Server
+ 
+ # set this if you would like to specify the directory where you want MiniDLNA to store its database and album art cache
+-#db_dir=/var/cache/minidlna
++db_dir=/var/lib/minidlna
+ 
+ # set this if you would like to specify the directory where you want MiniDLNA to store its log file
+-#log_dir=/var/log
++log_dir=/tmp
+ 
+ # set this to change the verbosity of the information that is logged
+ # each section can use a different level: off, fatal, error, warn, info, or debug
+-#log_level=general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=warn
++log_level=general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=off
+ 
+ # this should be a list of file names to check for when searching for album art
+ # note: names should be delimited with a forward slash ("/")
+@@ -77,7 +77,7 @@ model_number=1
+ #   + "P" - "Pictures"
+ #   + Or, you can specify the ObjectID of your desired root container (eg. 1$F for Music/Playlists)
+ # if you specify "B" and client device is audio-only then "Music/Folders" will be used as root
+-#root_container=.
++root_container=B
+ 
+ # always force SortCriteria to this value, regardless of the SortCriteria passed by the client
+ # note: you can prepend the sort criteria with "!" to alter the titles of the objects so that they
+diff --git a/minidlna.sh b/minidlna.sh
+new file mode 100755
+index 0000000..6e365dc
+--- /dev/null
++++ b/minidlna.sh
+@@ -0,0 +1,58 @@
++#!/bin/sh
++### BEGIN INIT INFO
++# Provides:				minidlna
++# Required-Start:		$networking
++# Required-Stop:
++# Default-Start:        2 3 4 5
++# Default-Stop:			0 1 6
++# Short-Description:	DLNA/UPnP-AV media server
++### END INIT INFO
++
++# This service script is used in Enigma2 based set-top boxes (STB).
++# Note that the default Start/Stop runlevels above isn't always used.
++# This script is for example executed from the OpenPLi DLNAServer plugin.
++
++PATH=/sbin:/bin:/usr/sbin:/usr/bin
++DAEMON=/usr/sbin/minidlnad
++NAME=MiniDLNA
++DESC=DLNA-Server
++
++test -x "$DAEMON" || exit 0
++
++case "$1" in
++
++	start)
++		echo -n "Starting ${DESC}: "
++		start-stop-daemon -S -x "$DAEMON"
++		echo "${NAME}."
++		;;
++
++	stop)
++		echo -n "Stopping ${DESC}: "
++		start-stop-daemon -K -x "$DAEMON"
++		echo "${NAME}."
++		;;
++
++	restart)
++		echo -n "Restarting ${DESC}: "
++		start-stop-daemon -K -x "$DAEMON"
++		sleep 1
++		start-stop-daemon -S -x "$DAEMON"
++		echo "${NAME}."
++		;;
++
++	reload)
++		echo -n "Reloading ${DESC}: "
++		start-stop-daemon -K -x "$DAEMON"
++		sleep 1
++		start-stop-daemon -S -x "$DAEMON" -- -R
++		echo "${NAME}."
++		;;
++
++	*)
++		echo "usage: /etc/init.d/${NAME} {start|stop|restart|reload}" >&2
++		exit 1
++		;;
++esac
++
++exit 0
+diff --git a/po/LINGUAS b/po/LINGUAS
+index 98c79da..6465840 100644
+--- a/po/LINGUAS
++++ b/po/LINGUAS
+@@ -1 +1 @@
+-da de es fr it ja ko nb nl pl ru sl sv
++da de es fr hu it ja ko nb nl pl ru sl sv
+diff --git a/po/hu.po b/po/hu.po
+new file mode 100644
+index 0000000..d0aadd5
+--- /dev/null
++++ b/po/hu.po
+@@ -0,0 +1,123 @@
++# MiniDLNA translation template file
++# Justin Maggard <jmaggard@users.sourceforge.net>, 2010.
++#
++# MiniDLNA media server
++# Copyright (C) 2010  NETGEAR
++#
++# This file is part of MiniDLNA.
++#
++# MiniDLNA is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License version 2 as
++# published by the Free Software Foundation.
++#
++# MiniDLNA is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with MiniDLNA. If not, see <http://www.gnu.org/licenses/>.
++#
++msgid ""
++msgstr ""
++"Project-Id-Version: minidlna 1.1.0\n"
++"Report-Msgid-Bugs-To: jmaggard@users.sourceforge.net\n"
++"POT-Creation-Date: 2013-06-12 16:46+0200\n"
++"PO-Revision-Date: 2014-12-27 18:45+0100\n"
++"Last-Translator: Báthory Péter <bathory@index.hu>\n"
++"Language-Team: \n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"X-Generator: Poedit 1.5.4\n"
++"Language: magyar\n"
++
++#: scanner.c:165
++msgid "Unknown Date"
++msgstr "Ismeretlen dátum"
++
++#: scanner.c:167
++msgid "Unknown Camera"
++msgstr "Ismeretlen kamera"
++
++#: scanner.c:277
++msgid "- All Albums -"
++msgstr "- Összes album -"
++
++#: scanner.c:285 scanner.c:292 scanner.c:296
++msgid "Unknown Album"
++msgstr "Ismeretlen album"
++
++#: scanner.c:318
++msgid "- All Artists -"
++msgstr "- Összes előadó -"
++
++#: scanner.c:326 scanner.c:332 scanner.c:336
++msgid "Unknown Artist"
++msgstr "Ismeretlen előadó"
++
++#: scanner.c:528
++msgid "Music"
++msgstr "Zene"
++
++#: scanner.c:529
++msgid "All Music"
++msgstr "Összes zene"
++
++#: scanner.c:530
++msgid "Genre"
++msgstr "Műfaj"
++
++#: scanner.c:531
++msgid "Artist"
++msgstr "Előadó"
++
++#: scanner.c:532
++msgid "Album"
++msgstr "Album"
++
++#: scanner.c:533 scanner.c:538 scanner.c:544
++msgid "Folders"
++msgstr "Könyvtárak"
++
++#: scanner.c:534
++msgid "Playlists"
++msgstr "Lejátszólisták"
++
++#: scanner.c:536
++msgid "Video"
++msgstr "Videó"
++
++#: scanner.c:537
++msgid "All Video"
++msgstr "Összes videó"
++
++#: scanner.c:540
++msgid "Pictures"
++msgstr "Képek"
++
++#: scanner.c:541
++msgid "All Pictures"
++msgstr "Összes kép"
++
++#: scanner.c:542
++msgid "Date Taken"
++msgstr "Készítés dátuma"
++
++#: scanner.c:543
++msgid "Camera"
++msgstr "Kamera"
++
++#: scanner.c:546
++msgid "Browse Folders"
++msgstr "Könyvtárak tallózása"
++
++#: scanner.c:690
++#, c-format
++msgid "Scanning %s\n"
++msgstr "%s  beolvasása\n"
++
++#: scanner.c:766
++#, c-format
++msgid "Scanning %s finished (%llu files)!\n"
++msgstr "%s beolvasása elkészült (%llu fájl)!\n"
+-- 
+2.25.1
+
