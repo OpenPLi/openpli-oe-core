@@ -62,6 +62,7 @@ PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 
 CFLAGS += "-I${STAGING_INCDIR}/tirpc"
 LDFLAGS += "-ltirpc"
+CXXFLAGS = " -std=c++11"
 
 inherit autotools-brokensep
 
@@ -71,6 +72,7 @@ DEPENDS = " \
 	python-pyopenssl \
 	streamripper \
 	python-mutagen \
+	python-six-native \
 	python-twisted \
 	python-daap \
 	libcddb \
