@@ -5,10 +5,10 @@ MAINTAINER = "wirbel <w_scan@gmx-topmail.de>"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=892f569a555ba9c07a568a7c0c4fa63a"
 
-SRC_URI = "http://deb.debian.org/debian/pool/main/w/w-scan/w-scan_${PV}.orig.tar.bz2"
+SRC_URI = "https://www.gen2vdr.de/wirbel/w_scan_cpp/w_scan-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "c7f9adf92d46b8da5391be80be6fbd72"
-SRC_URI[sha256sum] = "38e0f38a7bf06cff6d6ea01652ad4ee60da2cb0e937360468f936da785b46ffe"
+SRC_URI[md5sum] = "e80cb986c1830e0ed9b8fe8f6c89809d"
+SRC_URI[sha256sum] = "75d7447ebeddfb9ce251f32a93f23190ed46dca44f5b701f2af11e1787b9eb08"
 
 S = "${WORKDIR}/w_scan-${PV}"
 
