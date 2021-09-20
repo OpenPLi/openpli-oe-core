@@ -97,7 +97,7 @@ OPTIONAL_PACKAGES += " \
 	ndisc6 \
 	net-snmp \
 	net-tools \
-	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
+	perl \
 	ntfs-3g \
 	ntp \
 	ofgwrite \

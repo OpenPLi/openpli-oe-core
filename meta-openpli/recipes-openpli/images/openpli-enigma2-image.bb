@@ -68,6 +68,7 @@ IMAGE_INSTALL += " \
 	libavahi-client \
 	ntpdate \
 	ofgwrite \
+	perl \
 	settings-autorestore \
 	tuxbox-common \
 	${ENIGMA2_PLUGINS} \
