@@ -58,9 +58,6 @@
 [submodule "meta-edision"]
 	path = meta-edision
 	url = https://github.com/edision-open/meta-edision.git
-[submodule "meta-qviart"]
-	path = meta-qviart
-	url = https://github.com/pli3/meta-qviart-5.git
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
 	url = https://github.com/Axas-UHD/meta-axasuhd.git
@@ -85,3 +82,6 @@
 [submodule "meta-python2"]
 	path = meta-python2
 	url = https://git.openembedded.org/meta-python2
+[submodule "meta-qviart"]
+	path = meta-qviart
+	url = https://github.com/pli3/meta-qviart.git

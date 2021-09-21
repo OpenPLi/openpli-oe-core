@@ -6,6 +6,8 @@ PKGV = "1.0+git${GITPKGV}"
 SRC_URI = "git://github.com/morpheus883/Enigma2-Settings.git"
 S = "${WORKDIR}/git"
 
+RDEPENDS_${PN} = "xz"
+
 inherit gitpkgv allarch
 
 FILES_${PN} = "/etc/enigma2/"

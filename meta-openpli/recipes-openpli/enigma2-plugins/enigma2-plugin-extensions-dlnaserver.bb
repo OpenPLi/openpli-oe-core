@@ -19,5 +19,5 @@ PACKAGES = "${PN}"
 do_install() {
 	install -d ${D}${libdir}/enigma2/python/Plugins/Extensions/DLNAServer
 	install -m 0644 ${S}/*.py ${D}${libdir}/enigma2/python/Plugins/Extensions/DLNAServer/
-	python -O -m compileall ${D}${libdir}/enigma2/python/Plugins/
+	python2 -O -m compileall ${D}${libdir}/enigma2/python/Plugins/
 }

@@ -3,8 +3,10 @@ LICENSE = "CLOSED"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/haroo/HansSettings.git"
+SRC_URI = "git://github.com/technl/Hanssettings.git"
 S = "${WORKDIR}/git"
+
+RDEPENDS_${PN} = "xz"
 
 inherit gitpkgv allarch
 

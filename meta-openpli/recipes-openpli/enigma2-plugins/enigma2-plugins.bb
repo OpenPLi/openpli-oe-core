@@ -14,7 +14,6 @@ PACKAGES += "\
 	enigma2-plugin-extensions-fancontrol2 \
 	enigma2-plugin-extensions-bonjour \
 	enigma2-plugin-extensions-transmission \
-	enigma2-plugin-systemplugins-systemtime \
 	"
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
@@ -22,7 +21,6 @@ RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
 RDEPENDS_enigma2-plugin-systemplugins-satipclient = "satipclient"
 
 RRECOMMENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
-RRECOMMENDS_enigma2-plugin-systemplugins-systemtime = "ntpdate"
 RRECOMMENDS_enigma2-plugin-extensions-transmission = "transmission transmission-client"
 
 PROVIDES += "\
@@ -64,6 +62,7 @@ PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 
 CFLAGS += "-I${STAGING_INCDIR}/tirpc"
 LDFLAGS += "-ltirpc"
+CXXFLAGS = " -std=c++11"
 
 inherit autotools-brokensep
 
@@ -73,6 +72,7 @@ DEPENDS = " \
 	python-pyopenssl \
 	streamripper \
 	python-mutagen \
+	python-six-native \
 	python-twisted \
 	python-daap \
 	libcddb \

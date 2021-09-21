@@ -1,17 +1,17 @@
-From 67eb31f20ec1bca80e7fa718d0fef6ae63901395 Mon Sep 17 00:00:00 2001
+From 3fb23436046d2f49f7d9378982f597cf0c36f031 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Tue, 3 Aug 2021 20:13:11 +0200
-Subject: [PATCH] add-files
+Date: Tue, 7 Sep 2021 21:58:48 +0200
+Subject: [PATCH] added files
 
 ---
  src/streamlink/cache.py               |   2 +-
- src/streamlink/opts_parser.py         | 677 ++++++++++++++++++++++++++
+ src/streamlink/opts_parser.py         | 625 ++++++++++++++++++++++++++
  src/streamlink/plugins/radio2see.py   |  35 ++
- src/streamlink/plugins/youtubedl.py   | 420 ++++++++++++++++
+ src/streamlink/plugins/youtubedl.py   | 420 +++++++++++++++++
  src/streamlink/stream/ffmpegmux.py    |   6 +-
  src/streamlink/stream/hls.py          |  16 +-
  src/streamlink/stream/hls_playlist.py |   8 +-
- 7 files changed, 1158 insertions(+), 6 deletions(-)
+ 7 files changed, 1106 insertions(+), 6 deletions(-)
  create mode 100644 src/streamlink/opts_parser.py
  create mode 100644 src/streamlink/plugins/radio2see.py
  create mode 100644 src/streamlink/plugins/youtubedl.py
@@ -31,10 +31,10 @@ index 5a09f9db..cb2f3353 100644
  
 diff --git a/src/streamlink/opts_parser.py b/src/streamlink/opts_parser.py
 new file mode 100644
-index 00000000..7a39ae3e
+index 00000000..4d13837d
 --- /dev/null
 +++ b/src/streamlink/opts_parser.py
-@@ -0,0 +1,677 @@
+@@ -0,0 +1,625 @@
 +﻿"""
 +  Options Parser for Streamlinksrv by Billy2011.
 +  Options must be appended to the URL.
@@ -56,7 +56,7 @@ index 00000000..7a39ae3e
 +from streamlink.utils.args import comma_list, comma_list_filter, filesize, keyvalue, num
 +from streamlink.utils.times import hours_minutes_seconds
 +
-+__version__ = "0.2.9"
++__version__ = "0.3.0"
 +
 +STREAM_PASSTHROUGH = ["hls", "http", "hls-multi", "dash"]
 +XDG_CONFIG_HOME = "/home/root/.config"
@@ -245,40 +245,16 @@ index 00000000..7a39ae3e
 +        type=num(float, min=0),
 +        metavar="SECONDS",
 +    )
-+    transport.add_argument(
-+        "--hds-segment-attempts",
-+        type=num(int, min=0),
-+        metavar="ATTEMPTS",
-+    )
-+    transport.add_argument(
-+        "--hds-segment-threads",
-+        type=num(int, max=10),
-+        metavar="THREADS",
-+    )
-+    transport.add_argument(
-+        "--hds-segment-timeout",
-+        type=num(float, min=0),
-+        metavar="TIMEOUT",
-+    )
-+    transport.add_argument(
-+        "--hds-timeout",
-+        type=num(float, min=0),
-+        metavar="TIMEOUT",
-+    )
++    transport.add_argument("--hds-segment-attempts", help=argparse.SUPPRESS)
++    transport.add_argument("--hds-segment-threads", help=argparse.SUPPRESS)
++    transport.add_argument("--hds-segment-timeout", help=argparse.SUPPRESS)
++    transport.add_argument("--hds-timeout", help=argparse.SUPPRESS)
 +    transport.add_argument(
 +        "--hls-live-edge",
 +        type=num(int, min=0),
 +        metavar="SEGMENTS",
 +    )
-+    transport.add_argument(
-+        "--hls-segment-stream-data",
-+        action="store_true",
-+    )
-+    transport.add_argument(
-+        "--hls-segment-attempts",
-+        type=num(int, min=0),
-+        metavar="ATTEMPTS",
-+    )
++    transport.add_argument("--hls-segment-stream-data", action="store_true", help=argparse.SUPPRESS)
 +    transport.add_argument(
 +        "--hls-playlist-reload-attempts",
 +        type=num(int, min=0),
@@ -288,16 +264,9 @@ index 00000000..7a39ae3e
 +        "--hls-playlist-reload-time",
 +        metavar="TIME",
 +    )
-+    transport.add_argument(
-+        "--hls-segment-threads",
-+        type=num(int, max=10),
-+        metavar="THREADS",
-+    )
-+    transport.add_argument(
-+        "--hls-segment-timeout",
-+        type=num(float, min=0),
-+        metavar="TIMEOUT",
-+    )
++    transport.add_argument("--hls-segment-attempts", help=argparse.SUPPRESS)
++    transport.add_argument("--hls-segment-threads", help=argparse.SUPPRESS)
++    transport.add_argument("--hls-segment-timeout", help=argparse.SUPPRESS)
 +    transport.add_argument(
 +        "--hls-segment-ignore-names",
 +        metavar="NAMES",
@@ -313,11 +282,7 @@ index 00000000..7a39ae3e
 +        type=comma_list,
 +        metavar="CODE",
 +    )
-+    transport.add_argument(
-+        "--hls-timeout",
-+        type=num(float, min=0),
-+        metavar="TIMEOUT",
-+    )
++    transport.add_argument("--hls-timeout", help=argparse.SUPPRESS)
 +    transport.add_argument(
 +        "--hls-start-offset",
 +        type=hours_minutes_seconds,
@@ -335,14 +300,10 @@ index 00000000..7a39ae3e
 +        action="store_true",
 +    )
 +    transport.add_argument(
-+        "--http-stream-timeout",
-+        type=num(float, min=0),
-+        metavar="TIMEOUT",
-+    )
-+    transport.add_argument(
 +        "--http-add-audio",
 +        metavar="URL",
 +    )
++    transport.add_argument("--http-stream-timeout", help=argparse.SUPPRESS)
 +    transport.add_argument(
 +        "--ringbuffer-size",
 +        metavar="SIZE",
@@ -357,11 +318,7 @@ index 00000000..7a39ae3e
 +        metavar="FILENAME",
 +    )
 +    transport.add_argument("--rtmpdump", help=argparse.SUPPRESS)
-+    transport.add_argument(
-+        "--rtmp-timeout",
-+        type=num(float, min=0),
-+        metavar="TIMEOUT",
-+    )
++    transport.add_argument("--rtmp-timeout", help=argparse.SUPPRESS)
 +    transport.add_argument(
 +        "--stream-segment-attempts",
 +        type=num(int, min=0),
@@ -470,32 +427,17 @@ index 00000000..7a39ae3e
 +    if args.hls_live_edge:
 +        streamlink.set_option("hls-live-edge", args.hls_live_edge)
 +
-+    if args.hls_segment_attempts:
-+        streamlink.set_option("hls-segment-attempts", args.hls_segment_attempts)
-+
-+    if args.hls_segment_stream_data:
-+        streamlink.set_option("hls-segment-stream-data", args.hls_segment_stream_data)
-+
 +    if args.hls_playlist_reload_attempts:
 +        streamlink.set_option("hls-playlist-reload-attempts", args.hls_playlist_reload_attempts)
 +
 +    if args.hls_playlist_reload_time:
 +        streamlink.set_option("hls-playlist-reload-time", args.hls_playlist_reload_time)
 +
-+    if args.hls_segment_threads:
-+        streamlink.set_option("hls-segment-threads", args.hls_segment_threads)
-+
-+    if args.hls_segment_timeout:
-+        streamlink.set_option("hls-segment-timeout", args.hls_segment_timeout)
-+
 +    if args.hls_segment_ignore_names:
 +        streamlink.set_option("hls-segment-ignore-names", args.hls_segment_ignore_names)
 +
 +    if args.hls_segment_key_uri:
 +        streamlink.set_option("hls-segment-key-uri", args.hls_segment_key_uri)
-+
-+    if args.hls_timeout:
-+        streamlink.set_option("hls-timeout", args.hls_timeout)
 +
 +    if args.hls_audio_select:
 +        streamlink.set_option("hls-audio-select", args.hls_audio_select)
@@ -512,23 +454,8 @@ index 00000000..7a39ae3e
 +    if args.hds_live_edge:
 +        streamlink.set_option("hds-live-edge", args.hds_live_edge)
 +
-+    if args.hds_segment_attempts:
-+        streamlink.set_option("hds-segment-attempts", args.hds_segment_attempts)
-+
-+    if args.hds_segment_threads:
-+        streamlink.set_option("hds-segment-threads", args.hds_segment_threads)
-+
-+    if args.hds_segment_timeout:
-+        streamlink.set_option("hds-segment-timeout", args.hds_segment_timeout)
-+
-+    if args.hds_timeout:
-+        streamlink.set_option("hds-timeout", args.hds_timeout)
-+
 +    if args.http_add_audio:
 +        streamlink.set_option("http-add-audio", args.http_add_audio)
-+
-+    if args.http_stream_timeout:
-+        streamlink.set_option("http-stream-timeout", args.http_stream_timeout)
 +
 +    if args.ringbuffer_size:
 +        streamlink.set_option("ringbuffer-size", args.ringbuffer_size)
@@ -541,9 +468,30 @@ index 00000000..7a39ae3e
 +    elif args.rtmpdump:
 +        streamlink.set_option("rtmp-rtmpdump", args.rtmpdump)
 +
++    # deprecated
++    if args.hds_segment_attempts:
++        streamlink.set_option("hds-segment-attempts", args.hds_segment_attempts)
++    if args.hds_segment_threads:
++        streamlink.set_option("hds-segment-threads", args.hds_segment_threads)
++    if args.hds_segment_timeout:
++        streamlink.set_option("hds-segment-timeout", args.hds_segment_timeout)
++    if args.hds_timeout:
++        streamlink.set_option("hds-timeout", args.hds_timeout)
++    if args.hls_segment_attempts:
++        streamlink.set_option("hls-segment-attempts", args.hls_segment_attempts)
++    if args.hls_segment_threads:
++        streamlink.set_option("hls-segment-threads", args.hls_segment_threads)
++    if args.hls_segment_timeout:
++        streamlink.set_option("hls-segment-timeout", args.hls_segment_timeout)
++    if args.hls_timeout:
++        streamlink.set_option("hls-timeout", args.hls_timeout)
++    if args.http_stream_timeout:
++        streamlink.set_option("http-stream-timeout", args.http_stream_timeout)
++
 +    if args.rtmp_timeout:
 +        streamlink.set_option("rtmp-timeout", args.rtmp_timeout)
 +
++    # generic stream- arguments take precedence over deprecated stream-type arguments
 +    if args.stream_segment_attempts:
 +        streamlink.set_option("stream-segment-attempts", args.stream_segment_attempts)
 +
@@ -1180,10 +1128,10 @@ index 00000000..510c306d
 +
 +__plugin__ = YouTubeDL
 diff --git a/src/streamlink/stream/ffmpegmux.py b/src/streamlink/stream/ffmpegmux.py
-index 7f3c802c..0eef3a8c 100644
+index dd679a1f..ec132401 100644
 --- a/src/streamlink/stream/ffmpegmux.py
 +++ b/src/streamlink/stream/ffmpegmux.py
-@@ -105,8 +105,12 @@ class FFMPEGMuxer(StreamIO):
+@@ -106,8 +106,12 @@ class FFMPEGMuxer(StreamIO):
          self._cmd.extend(['-c:v', videocodec])
          self._cmd.extend(['-c:a', audiocodec])
  
@@ -1198,10 +1146,10 @@ index 7f3c802c..0eef3a8c 100644
          if copyts:
              self._cmd.extend(["-copyts"])
 diff --git a/src/streamlink/stream/hls.py b/src/streamlink/stream/hls.py
-index 73478f72..59ce9edb 100644
+index 2ed2b110..f969531c 100644
 --- a/src/streamlink/stream/hls.py
 +++ b/src/streamlink/stream/hls.py
-@@ -117,7 +117,7 @@ class HLSStreamWriter(SegmentedStreamWriter):
+@@ -113,7 +113,7 @@ class HLSStreamWriter(SegmentedStreamWriter):
                                           retries=self.retries,
                                           **request_params)
          except StreamError as err:
@@ -1210,7 +1158,7 @@ index 73478f72..59ce9edb 100644
              return
  
      def write(self, sequence, res, chunk_size=8192):
-@@ -158,6 +158,7 @@ class HLSStreamWorker(SegmentedStreamWorker):
+@@ -154,6 +154,7 @@ class HLSStreamWorker(SegmentedStreamWorker):
          SegmentedStreamWorker.__init__(self, *args, **kwargs)
          self.stream = self.reader.stream
  
@@ -1218,7 +1166,7 @@ index 73478f72..59ce9edb 100644
          self.playlist_changed = False
          self.playlist_end = None
          self.playlist_sequence = -1
-@@ -288,6 +289,17 @@ class HLSStreamWorker(SegmentedStreamWorker):
+@@ -284,6 +285,17 @@ class HLSStreamWorker(SegmentedStreamWorker):
          total_duration = 0
          while not self.closed:
              for sequence in filter(self.valid_sequence, self.playlist_sequences):
@@ -1236,7 +1184,7 @@ index 73478f72..59ce9edb 100644
                  log.debug("Adding segment {0} to queue".format(sequence.num))
                  yield sequence
                  total_duration += sequence.segment.duration
-@@ -306,7 +318,7 @@ class HLSStreamWorker(SegmentedStreamWorker):
+@@ -302,7 +314,7 @@ class HLSStreamWorker(SegmentedStreamWorker):
                  try:
                      self.reload_playlist()
                  except StreamError as err:
