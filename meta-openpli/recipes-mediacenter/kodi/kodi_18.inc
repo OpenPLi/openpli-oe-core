@@ -56,10 +56,12 @@ SRC_URI_append_et1x000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_et1x000 = " -DWITH_V3D=nxcl"
 
 # meta-gigablue
-SRC_URI_append_gbquad4k        = " file://egl/EGLNativeTypeV3D-gb4k.patch"
-SRC_URI_append_gbue4k          = " file://egl/EGLNativeTypeV3D-gb4k.patch"
+SRC_URI_append_gbquad4k        = " file://egl/EGLNativeTypeV3D-gb4k.patch file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbue4k          = " file://egl/EGLNativeTypeV3D-gb4k.patch file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_gbquad4k  = " -DWITH_V3D=nxinit"
 EXTRA_OECMAKE_append_gbue4k    = " -DWITH_V3D=nxinit"
+DEPENDS_append_gbquad4k        = " gigablue-kodi-gbquad4k"
+DEPENDS_append_gbue4k          = " gigablue-kodi-gbue4k"
 # MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
 #SRC_URI_append_gbtrio4k       = " file://egl/EGLNativeTypeMali.patch"
 SRC_URI_append_gbtrio4k        = " file://egl/kodi-old-gl-headers.patch"
