@@ -1,0 +1,44 @@
+From 493a4577436da6bad7aa165a7993d26be733d739 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Wed, 22 Sep 2021 18:31:13 +0200
+Subject: [PATCH] Crossguide_update_handling
+
+---
+ cmake/modules/FindCrossGUID.cmake | 6 +++---
+ xbmc/utils/StringUtils.cpp        | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/cmake/modules/FindCrossGUID.cmake b/cmake/modules/FindCrossGUID.cmake
+index 7384747b20..fea63bd865 100644
+--- a/cmake/modules/FindCrossGUID.cmake
++++ b/cmake/modules/FindCrossGUID.cmake
+@@ -49,10 +49,10 @@ if(ENABLE_INTERNAL_CROSSGUID)
+   set(CROSSGUID_LIBRARIES ${CROSSGUID_LIBRARY})
+   set(CROSSGUID_INCLUDE_DIRS ${CROSSGUID_INCLUDE_DIR})
+ else()
+-  find_path(CROSSGUID_INCLUDE_DIR NAMES guid.h)
++  find_path(CROSSGUID_INCLUDE_DIR NAMES Guid.hpp)
+ 
+-  find_library(CROSSGUID_LIBRARY_RELEASE NAMES crossguid)
+-  find_library(CROSSGUID_LIBRARY_DEBUG NAMES crossguidd)
++  find_library(CROSSGUID_LIBRARY_RELEASE NAMES crossguid xg)
++  find_library(CROSSGUID_LIBRARY_DEBUG NAMES crossguidd xg)
+ 
+   include(SelectLibraryConfigurations)
+   select_library_configurations(CROSSGUID)
+diff --git a/xbmc/utils/StringUtils.cpp b/xbmc/utils/StringUtils.cpp
+index 79fc0a75c8..621caa9a1d 100644
+--- a/xbmc/utils/StringUtils.cpp
++++ b/xbmc/utils/StringUtils.cpp
+@@ -16,7 +16,7 @@
+ //
+ //------------------------------------------------------------------------
+ 
+-#include <guid.h>
++#include <Guid.hpp>
+ 
+ #if defined(TARGET_ANDROID)
+ #include <androidjni/JNIThreading.h>
+-- 
+2.25.1
+

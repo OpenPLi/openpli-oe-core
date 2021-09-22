@@ -9,7 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit cmake gettext python-dir pythonnative systemd
 
-DEPENDS = " \
+DEPENDS += " \
             fmt \
             flatbuffers flatbuffers-native \
             fstrcmp \
@@ -84,6 +84,7 @@ SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
 # patches for 18.x upstreamed in 19.x
 SRC_URI_append = " \
             file://0001-Add-support-for-musl-triplets.patch \
+            file://0001-Crossguid_update_handling.patch \
             file://0002-Fix-file_Emu-on-musl.patch \
             file://0003-Remove-FILEWRAP.patch \
             file://0004-Replace-u_int64_t-with-uint64_t-from-stdint.h.patch \
