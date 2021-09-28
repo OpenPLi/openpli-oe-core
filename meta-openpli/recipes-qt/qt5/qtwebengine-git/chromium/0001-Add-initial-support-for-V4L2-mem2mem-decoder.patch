@@ -1,0 +1,163 @@
+From 972e9bf0965d6c766c15b00d552b2cedd567d25c Mon Sep 17 00:00:00 2001
+From: Jaedon Shin <jaedon.shin@gmail.com>
+Date: Fri, 19 Jun 2020 14:37:50 +0900
+Subject: [PATCH] Add initial support for V4L2 mem2mem decoder
+
+---
+ .../media/filters/ffmpeg_video_decoder.cc     | 98 ++++++++++++++++++-
+ chromium/media/filters/ffmpeg_video_decoder.h |  2 +
+ 2 files changed, 97 insertions(+), 3 deletions(-)
+
+diff --git a/chromium/media/filters/ffmpeg_video_decoder.cc b/chromium/media/filters/ffmpeg_video_decoder.cc
+index 21ccdda5ed64..4a4fba3580c2 100644
+--- a/chromium/media/filters/ffmpeg_video_decoder.cc
++++ b/chromium/media/filters/ffmpeg_video_decoder.cc
+@@ -86,7 +86,7 @@ bool FFmpegVideoDecoder::IsCodecSupported(VideoCodec codec) {
+ }
+ 
+ FFmpegVideoDecoder::FFmpegVideoDecoder(MediaLog* media_log)
+-    : media_log_(media_log), state_(kUninitialized), decode_nalus_(false) {
++    : media_log_(media_log), state_(kUninitialized), decode_nalus_(false), decoder_v4l2m2m_(false) {
+   DVLOG(1) << __func__;
+   thread_checker_.DetachFromThread();
+ }
+@@ -319,7 +319,12 @@ bool FFmpegVideoDecoder::FFmpegDecode(const DecoderBuffer& buffer) {
+     DCHECK_GT(packet.size, 0);
+ 
+     // Let FFmpeg handle presentation timestamp reordering.
+-    codec_context_->reordered_opaque = buffer.timestamp().InMicroseconds();
++    if (decoder_v4l2m2m_) {
++      packet.pts =
++      packet.dts = buffer.timestamp().InMicroseconds();
++    } else {
++      codec_context_->reordered_opaque = buffer.timestamp().InMicroseconds();
++    }
+   }
+ 
+   switch (decoding_loop_->DecodePacket(
+@@ -356,6 +361,74 @@ bool FFmpegVideoDecoder::OnNewFrame(AVFrame* frame) {
+     return false;
+   }
+ 
++  if (decoder_v4l2m2m_) {
++    const VideoPixelFormat format =
++        AVPixelFormatToVideoPixelFormat(codec_context_->pix_fmt);
++
++    gfx::Size size(frame->width, frame->height);
++    const int ret = av_image_check_size(size.width(), size.height(), 0, NULL);
++    if (ret < 0)
++      return false;
++
++    gfx::Size natural_size;
++    if (codec_context_->sample_aspect_ratio.num > 0) {
++      natural_size = GetNaturalSize(size,
++                                    codec_context_->sample_aspect_ratio.num,
++                                    codec_context_->sample_aspect_ratio.den);
++    } else {
++      natural_size =
++          GetNaturalSize(gfx::Rect(size), config_.GetPixelAspectRatio());
++    }
++
++    scoped_refptr<VideoFrame> external_frame = VideoFrame::WrapExternalYuvData(
++        format, size, gfx::Rect(size), natural_size,
++        frame->linesize[VideoFrame::kYPlane],
++        frame->linesize[VideoFrame::kUPlane],
++        frame->linesize[VideoFrame::kVPlane],
++        frame->data[VideoFrame::kYPlane],
++        frame->data[VideoFrame::kUPlane],
++        frame->data[VideoFrame::kVPlane],
++        kNoTimestamp);
++
++    scoped_refptr<VideoFrame> video_frame = frame_pool_.CreateFrame(
++      format, size, gfx::Rect(size), natural_size, kNoTimestamp);
++
++    if (!video_frame)
++      return false;
++
++    if (!I420CopyWithPadding(*external_frame, video_frame.get()))
++      return false;
++
++    VideoColorSpace color_space = AVColorSpaceToColorSpace(
++        codec_context_->colorspace, codec_context_->color_range);
++    if (!color_space.IsSpecified())
++      color_space = config_.color_space_info();
++    video_frame->set_color_space(color_space.ToGfxColorSpace());
++
++    if (codec_context_->codec_id == AV_CODEC_ID_VP8 &&
++        codec_context_->color_primaries == AVCOL_PRI_UNSPECIFIED &&
++        codec_context_->color_trc == AVCOL_TRC_UNSPECIFIED &&
++        codec_context_->colorspace == AVCOL_SPC_BT470BG) {
++      if (codec_context_->color_range == AVCOL_RANGE_JPEG) {
++        video_frame->set_color_space(gfx::ColorSpace::CreateJpeg());
++      }
++    } else if (codec_context_->color_primaries != AVCOL_PRI_UNSPECIFIED ||
++              codec_context_->color_trc != AVCOL_TRC_UNSPECIFIED ||
++              codec_context_->colorspace != AVCOL_SPC_UNSPECIFIED) {
++      media::VideoColorSpace video_color_space = media::VideoColorSpace(
++          codec_context_->color_primaries, codec_context_->color_trc,
++          codec_context_->colorspace,
++          codec_context_->color_range != AVCOL_RANGE_MPEG
++              ? gfx::ColorSpace::RangeID::FULL
++              : gfx::ColorSpace::RangeID::LIMITED);
++      video_frame->set_color_space(video_color_space.ToGfxColorSpace());
++    }
++
++    video_frame->set_timestamp(base::TimeDelta::FromMicroseconds(frame->pts));
++    video_frame->metadata()->SetBoolean(VideoFrameMetadata::POWER_EFFICIENT,
++                                        false);
++    output_cb_.Run(video_frame);
++  } else {
+   scoped_refptr<VideoFrame> video_frame =
+       reinterpret_cast<VideoFrame*>(av_buffer_get_opaque(frame->buf[0]));
+   video_frame->set_timestamp(
+@@ -363,6 +436,7 @@ bool FFmpegVideoDecoder::OnNewFrame(AVFrame* frame) {
+   video_frame->metadata()->SetBoolean(VideoFrameMetadata::POWER_EFFICIENT,
+                                       false);
+   output_cb_.Run(video_frame);
++  }
+   return true;
+ }
+ 
+@@ -392,7 +466,25 @@ bool FFmpegVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config,
+   if (decode_nalus_)
+     codec_context_->flags2 |= AV_CODEC_FLAG2_CHUNKS;
+ 
+-  AVCodec* codec = avcodec_find_decoder(codec_context_->codec_id);
++  AVCodec* codec = NULL;
++  if (codec_context_->codec_id == AV_CODEC_ID_H264)
++    codec = avcodec_find_decoder_by_name("h264_v4l2m2m");
++  else if (codec_context_->codec_id == AV_CODEC_ID_VP9)
++    codec = avcodec_find_decoder_by_name("vp9_v4l2m2m");
++  else if (codec_context_->codec_id == AV_CODEC_ID_HEVC)
++    codec = avcodec_find_decoder_by_name("hevc_v4l2m2m");
++  if (codec) {
++    decoder_v4l2m2m_ = true;
++    codec_context_->thread_count = 1;
++    codec_context_->thread_type = FF_THREAD_SLICE | FF_THREAD_FRAME;
++    codec_context_->get_buffer2 = NULL;
++    codec_context_->time_base.num = 1;
++    codec_context_->time_base.den = base::Time::kMicrosecondsPerSecond;
++    codec_context_->pkt_timebase.num = 1;
++    codec_context_->pkt_timebase.den = base::Time::kMicrosecondsPerSecond;
++  }
++  if (!codec)
++    codec = avcodec_find_decoder(codec_context_->codec_id);
+   if (!codec || avcodec_open2(codec_context_.get(), codec, NULL) < 0) {
+     ReleaseFFmpegResources();
+     return false;
+diff --git a/chromium/media/filters/ffmpeg_video_decoder.h b/chromium/media/filters/ffmpeg_video_decoder.h
+index f13ce417f8bc..b69257fad864 100644
+--- a/chromium/media/filters/ffmpeg_video_decoder.h
++++ b/chromium/media/filters/ffmpeg_video_decoder.h
+@@ -91,6 +91,8 @@ class MEDIA_EXPORT FFmpegVideoDecoder : public VideoDecoder {
+ 
+   bool decode_nalus_;
+ 
++  bool decoder_v4l2m2m_;
++
+   std::unique_ptr<FFmpegDecodingLoop> decoding_loop_;
+ 
+   DISALLOW_COPY_AND_ASSIGN(FFmpegVideoDecoder);
+-- 
+2.30.1
+

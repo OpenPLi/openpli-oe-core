@@ -8,8 +8,8 @@ file://LICENSE.GPLv3;md5=a40e2bb02b1ac431f461afd03ff9d1d6 \
 file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-DEPENDS = " qtwebengine upower"
-RDEPENDS_${PN} = "qtquickcontrols qtquickcontrols2 qtgraphicaleffects qtvirtualkeyboard upower"
+DEPENDS = " qtwebengine upower qtwidevine qtflashplayer"
+RDEPENDS_${PN} = "qtquickcontrols qtquickcontrols2 qtgraphicaleffects qtvirtualkeyboard upower qtwidevine qtflashplayer"
 PACKAGES += "${PN}-examples"
 
 BRANCH = "dev"

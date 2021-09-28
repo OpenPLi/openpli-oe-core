@@ -1,0 +1,21 @@
+From 6d5e30a0ca5fc2346fc02295ae57706f36c85bd9 Mon Sep 17 00:00:00 2001
+From: captain <openatv@gmail.com>
+Date: Mon, 5 Dec 2016 11:52:55 +0100
+
+---
+ gst/mpegtsdemux/tsdemux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gst/mpegtsdemux/tsdemux.c b/gst/mpegtsdemux/tsdemux.c
+index c50f81179..fb0fe4c6f 100644
+--- a/gst/mpegtsdemux/tsdemux.c
++++ b/gst/mpegtsdemux/tsdemux.c
+@@ -1842,7 +1842,7 @@ gst_ts_demux_stream_added (MpegTSBase * base, MpegTSBaseStream * bstream,
+     stream->first_pts = GST_CLOCK_TIME_NONE;
+     stream->raw_pts = -1;
+     stream->raw_dts = -1;
+-    stream->pending_ts = TRUE;
++    stream->pending_ts = program->pcr_pid < 0x1fff;
+     stream->nb_out_buffers = 0;
+     stream->gap_ref_buffers = 0;
+     stream->gap_ref_pts = GST_CLOCK_TIME_NONE;

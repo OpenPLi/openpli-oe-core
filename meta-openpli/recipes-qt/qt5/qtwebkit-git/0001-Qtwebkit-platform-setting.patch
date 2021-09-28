@@ -1,13 +1,17 @@
+From b8430ee60d9edbda31891828499d572b3b9622a0 Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Thu, 10 Jun 2021 13:20:31 +0200
+Subject: [PATCH 1/2] Qtwebkit-platform-setting
+
 ---
- Source/cmake/OptionsQt.cmake | 54 ++++++++++++++++++------------------
- Tools/PlatformQt.cmake       |  2 --
- 2 files changed, 27 insertions(+), 29 deletions(-)
+ Source/cmake/OptionsQt.cmake | 52 ++++++++++++++++++------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/Source/cmake/OptionsQt.cmake b/Source/cmake/OptionsQt.cmake
-index ec6081de0..68f3b07d3 100644
+index bce9ea252..780359420 100644
 --- a/Source/cmake/OptionsQt.cmake
 +++ b/Source/cmake/OptionsQt.cmake
-@@ -222,7 +222,7 @@ if (WIN32 OR APPLE)
+@@ -224,7 +224,7 @@ if (WIN32 OR APPLE)
      set(USE_QT_MULTIMEDIA_DEFAULT ON)
  else ()
      set(USE_LIBHYPHEN_DEFAULT ON)
@@ -16,7 +20,7 @@ index ec6081de0..68f3b07d3 100644
      set(USE_QT_MULTIMEDIA_DEFAULT OFF)
  endif ()
  
-@@ -234,7 +234,7 @@ else ()
+@@ -236,7 +236,7 @@ else ()
  endif ()
  
  if (CMAKE_SYSTEM_NAME MATCHES "Linux")
@@ -25,7 +29,7 @@ index ec6081de0..68f3b07d3 100644
  else ()
      set(ENABLE_GAMEPAD_DEPRECATED_DEFAULT OFF)
  endif ()
-@@ -266,7 +266,7 @@ endif ()
+@@ -268,7 +268,7 @@ endif ()
  if (QT_STATIC_BUILD)
      set(ENABLE_WEBKIT2_DEFAULT OFF)
  else ()
@@ -34,12 +38,9 @@ index ec6081de0..68f3b07d3 100644
  endif ()
  
  if (UNIX AND TARGET Qt5::QXcbIntegrationPlugin AND NOT APPLE)
-@@ -289,16 +289,16 @@ WEBKIT_OPTION_DEFINE(USE_LIBHYPHEN "Use automatic hyphenation with LibHyphen" PU
- WEBKIT_OPTION_DEFINE(USE_MEDIA_FOUNDATION "Use MediaFoundation implementation of MediaPlayer" PUBLIC ${USE_MEDIA_FOUNDATION_DEFAULT})
- WEBKIT_OPTION_DEFINE(USE_QT_MULTIMEDIA "Use Qt Multimedia implementation of MediaPlayer" PUBLIC ${USE_QT_MULTIMEDIA_DEFAULT})
+@@ -293,14 +293,14 @@ WEBKIT_OPTION_DEFINE(USE_QT_MULTIMEDIA "Use Qt Multimedia implementation of Medi
  WEBKIT_OPTION_DEFINE(USE_WOFF2 "Include support of WOFF2 fonts format" PUBLIC ON)
--WEBKIT_OPTION_DEFINE(ENABLE_INSPECTOR_UI "Include Inspector UI into resources" PUBLIC ON)
-+WEBKIT_OPTION_DEFINE(ENABLE_INSPECTOR_UI "Include Inspector UI into resources" PUBLIC OFF)
+ WEBKIT_OPTION_DEFINE(ENABLE_INSPECTOR_UI "Include Inspector UI into resources" PUBLIC ON)
  WEBKIT_OPTION_DEFINE(ENABLE_OPENGL "Whether to use OpenGL." PUBLIC ON)
 -WEBKIT_OPTION_DEFINE(ENABLE_PRINT_SUPPORT "Enable support for printing web pages" PUBLIC ON)
 -WEBKIT_OPTION_DEFINE(ENABLE_QT_GESTURE_EVENTS "Enable support for gesture events (required for mouse in WK2)" PUBLIC ON)
@@ -56,8 +57,8 @@ index ec6081de0..68f3b07d3 100644
 +cmake_dependent_option(ENABLE_TEST_SUPPORT "Build tools for running layout tests and related library code" OFF
                                             "DEVELOPER_MODE" OFF)
  option(USE_STATIC_RUNTIME "Use static runtime (MSVC only)" OFF)
- 
-@@ -312,7 +312,7 @@ WEBKIT_OPTION_DEFINE(USE_LIBJPEG "Support JPEG format directly. If it is disable
+ option(ENABLE_PCH "Use pre-compiled headers (MSVC only)" ON)
+@@ -315,7 +315,7 @@ WEBKIT_OPTION_DEFINE(USE_LIBJPEG "Support JPEG format directly. If it is disable
  # to support changing the value of the option.
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_ACCELERATED_2D_CANVAS PUBLIC ON)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_ALLINONE_BUILD PUBLIC ON)
@@ -66,7 +67,7 @@ index ec6081de0..68f3b07d3 100644
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_CSS_GRID_LAYOUT PUBLIC ON)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_DATABASE_PROCESS PUBLIC ON)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_DATALIST_ELEMENT PUBLIC ON)
-@@ -323,17 +323,17 @@ WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_INDEXED_DATABASE PUBLIC ON)
+@@ -326,17 +326,17 @@ WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_INDEXED_DATABASE PUBLIC ON)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_LEGACY_WEB_AUDIO PUBLIC ${USE_GSTREAMER_DEFAULT})
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_LINK_PREFETCH PUBLIC ON)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_MEDIA_SOURCE PUBLIC ${USE_GSTREAMER_DEFAULT})
@@ -90,7 +91,7 @@ index ec6081de0..68f3b07d3 100644
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_WEB_AUDIO PUBLIC ${USE_GSTREAMER_DEFAULT})
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(USE_SYSTEM_MALLOC PUBLIC OFF)
  
-@@ -352,14 +352,14 @@ WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_FTL_JIT PRIVATE ${ENABLE_FTL_DEFAULT})
+@@ -355,14 +355,14 @@ WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_FTL_JIT PRIVATE ${ENABLE_FTL_DEFAULT})
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_FTPDIR PRIVATE OFF)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_INPUT_TYPE_COLOR PRIVATE ON)
  WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_INPUT_TYPE_COLOR_POPOVER PRIVATE ON)
@@ -108,7 +109,7 @@ index ec6081de0..68f3b07d3 100644
  
  if (MINGW AND CMAKE_SIZEOF_VOID_P EQUAL 8)
      WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_JIT PRIVATE OFF)
-@@ -382,14 +382,14 @@ WEBKIT_OPTION_DEPEND(ENABLE_WEB_AUDIO USE_GSTREAMER)
+@@ -385,14 +385,14 @@ WEBKIT_OPTION_DEPEND(ENABLE_WEB_AUDIO USE_GSTREAMER)
  WEBKIT_OPTION_DEPEND(ENABLE_LEGACY_WEB_AUDIO USE_GSTREAMER)
  WEBKIT_OPTION_DEPEND(ENABLE_MEDIA_SOURCE USE_GSTREAMER)
  
@@ -127,7 +128,7 @@ index ec6081de0..68f3b07d3 100644
  
  WEBKIT_OPTION_END()
  
-@@ -649,10 +649,10 @@ endif ()
+@@ -625,10 +625,10 @@ endif ()
  
  find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS ${QT_REQUIRED_COMPONENTS})
  
@@ -142,17 +143,6 @@ index ec6081de0..68f3b07d3 100644
  if (ENABLE_WEBKIT2)
      CHECK_QT5_PRIVATE_INCLUDE_DIRS(Quick private/qsgrendernode_p.h)
  endif ()
-diff --git a/Tools/PlatformQt.cmake b/Tools/PlatformQt.cmake
-index 41db83119..30aca1372 100644
---- a/Tools/PlatformQt.cmake
-+++ b/Tools/PlatformQt.cmake
-@@ -1,7 +1,5 @@
- remove_definitions(-DQT_ASCII_CAST_WARNINGS)
- 
--add_subdirectory(QtTestBrowser)
--
- if (ENABLE_TEST_SUPPORT)
-     add_subdirectory(DumpRenderTree)
-     add_subdirectory(ImageDiff)
 -- 
-2.17.1
+2.32.0.windows.1
+
