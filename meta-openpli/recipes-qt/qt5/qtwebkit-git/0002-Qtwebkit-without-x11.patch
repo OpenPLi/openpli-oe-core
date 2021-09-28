@@ -1,3 +1,8 @@
+From 55d301434403e1cd34f367d851574e3561f5a10f Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Thu, 10 Jun 2021 13:21:51 +0200
+Subject: [PATCH 2/2] Qtwebkit-without-x11
+
 ---
  Source/WebCore/dom/Document.cpp           |   1 -
  Source/WebKit/qt/Plugins/PluginViewQt.cpp | 472 ++--------------------
@@ -719,5 +724,5 @@ index c7c800d50..067e2cfdd 100644
  #endif
  #endif // PLATFORM(QT)
 -- 
-2.17.1
+2.32.0.windows.1
 
