@@ -8,14 +8,11 @@ EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_e4hd = " -DWITH_PLATFORM=nxpl"
 
 # meta-edision
-SRC_URI_append_osmini4k    = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
-SRC_URI_append_osmio4k     = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
-SRC_URI_append_osmio4kplus = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
-SRC_URI_append_osmega      = " file://egl/EGLNativeTypeV3D-platform.patch file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_osmini4k    = " -DWITH_PLATFORM=v3dplatform"
-EXTRA_OECMAKE_append_osmio4k     = " -DWITH_PLATFORM=v3dplatform"
-EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=v3dplatform"
-EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=v3dplatform"
+SRC_URI_append_osmega      = " file://egl/kodi-old-gl-headers.patch"
+EXTRA_OECMAKE_append_osmini4k    = " -DWITH_PLATFORM=v3dplatform-arm"
+EXTRA_OECMAKE_append_osmio4k     = " -DWITH_PLATFORM=v3dplatform-arm"
+EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=v3dplatform-arm"
+EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=v3dplatform-mipsel"
 
 # meta-gfutures
 EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=nxpl"
