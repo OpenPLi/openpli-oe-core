@@ -28,8 +28,8 @@ EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_et1x000 = " -DWITH_PLATFORM=nxcl"
 
 # meta-gigablue
-SRC_URI_append_gbquad4k        = " file://egl/EGLNativeTypeV3D-gb4k.patch file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_gbue4k          = " file://egl/EGLNativeTypeV3D-gb4k.patch file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbquad4k        = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbue4k          = " file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_gbquad4k  = " -DWITH_PLATFORM=nxinit"
 EXTRA_OECMAKE_append_gbue4k    = " -DWITH_PLATFORM=nxinit"
 DEPENDS_append_gbquad4k        = " gigablue-kodi-gbquad4k"
