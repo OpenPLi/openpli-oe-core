@@ -25,7 +25,6 @@ EXTRA_OECMAKE_append_hd60     = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-gi
-SRC_URI_append_et1x000       = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_et1x000 = " -DWITH_PLATFORM=nxcl"
 
 # meta-gigablue
@@ -49,7 +48,6 @@ EXTRA_OECMAKE_append_sf8008   = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_sf8008m  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-qviart
-SRC_URI_append_lunix4k        = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k  = " -DWITH_PLATFORM=nxcl"
 
 # meta-uclan
