@@ -10,8 +10,7 @@ EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_PLATFORM=mali-cortexa15"
 # meta-axasuhd
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_e4hd       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_e4hd = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_e4hd = " -DWITH_PLATFORM=nxpl"
 
 # meta-edision
 SRC_URI_append_osmini4k    = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
@@ -26,21 +25,17 @@ EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=v3dplatform"
 # meta-gfutures
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_bre2ze4k       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=nxpl"
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_hd2400         = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_hd2400   = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_hd2400   = " -DWITH_PLATFORM=nxpl"
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_hd51           = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=nxpl"
 #
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_vs1500       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_vs1500 = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_vs1500 = " -DWITH_PLATFORM=nxpl"
 #
 # MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
 #SRC_URI_append_hd60         = " file://egl/EGLNativeTypeMali.patch"
@@ -51,8 +46,6 @@ EXTRA_OECMAKE_append_hd61    = " -DWITH_PLATFORM=mali-cortexa15"
 # meta-gi
 # MACHINE_FEATURES contains "v3d-nxclient" so try the nxpl version
 SRC_URI_append_et1x000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxclient"
-# translated into nxcl
 EXTRA_OECMAKE_append_et1x000 = " -DWITH_PLATFORM=nxcl"
 
 # meta-gigablue
@@ -144,14 +137,12 @@ RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 # meta-xtrend
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_et10000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_et10000 = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_et10000 = " -DWITH_PLATFORM=nxpl"
 
 # meta-zgemma
 # MACHINE_FEATURES contains "v3d-nxpl" so this is already added
 #SRC_URI_append_h7       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_h7 = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_h7 = " -DWITH_PLATFORM=nxpl"
 #
 # MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
 #SRC_URI_append_h9         = " file://egl/EGLNativeTypeMali.patch"
