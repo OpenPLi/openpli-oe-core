@@ -1,9 +1,6 @@
 # NOTE: this should be in the conf files in the respective BSP layers
 
 # meta-abcom
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_pulse4k           = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_pulse4kmini       = " file://egl/EGLNativeTypeMali.patch"
 EXTRA_OECMAKE_append_pulse4k      = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_PLATFORM=mali-cortexa15"
 
@@ -37,9 +34,6 @@ EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=nxpl"
 #SRC_URI_append_vs1500       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_vs1500 = " -DWITH_PLATFORM=nxpl"
 #
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_hd60         = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_hd61         = " file://egl/EGLNativeTypeMali.patch"
 EXTRA_OECMAKE_append_hd60    = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_hd61    = " -DWITH_PLATFORM=mali-cortexa15"
 
@@ -55,22 +49,14 @@ EXTRA_OECMAKE_append_gbquad4k  = " -DWITH_PLATFORM=nxinit"
 EXTRA_OECMAKE_append_gbue4k    = " -DWITH_PLATFORM=nxinit"
 DEPENDS_append_gbquad4k        = " gigablue-kodi-gbquad4k"
 DEPENDS_append_gbue4k          = " gigablue-kodi-gbue4k"
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_gbtrio4k       = " file://egl/EGLNativeTypeMali.patch"
 SRC_URI_append_gbtrio4k        = " file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_gbtrio4k  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-maxytec
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_multibox        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_multiboxse      = " file://egl/EGLNativeTypeMali.patch"
 EXTRA_OECMAKE_append_multibox   = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_multiboxse = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-octagon
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_sf8008        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_sf8008m       = " file://egl/EGLNativeTypeMali.patch"
 SRC_URI_append_sf8008         = " file://egl/kodi-old-gl-headers.patch"
 SRC_URI_append_sf8008m        = " file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_sf8008   = " -DWITH_PLATFORM=mali-cortexa15"
@@ -81,12 +67,6 @@ SRC_URI_append_lunix4k        = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_lunix4k  = " -DWITH_PLATFORM=nxcl"
 
 # meta-uclan
-#
-# in OE-A seems needing a support package as it was for Vu+:
-# hiadp.a and hiplayer.a are installed by hand
-#
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_ustym4kpro        = " file://egl/EGLNativeTypeMali.patch"
 SRC_URI_append_ustym4kpro         = " file://egl/kodi-old-gl-headers.patch"
 EXTRA_OECMAKE_append_ustym4kpro   = " -DWITH_PLATFORM=mali-cortexa15"
 
@@ -144,15 +124,6 @@ EXTRA_OECMAKE_append_et10000 = " -DWITH_PLATFORM=nxpl"
 #SRC_URI_append_h7       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_h7 = " -DWITH_PLATFORM=nxpl"
 #
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_h9         = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h9combo    = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h9combose  = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h9se       = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h10        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h11        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_i55plus    = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_i55se      = " file://egl/EGLNativeTypeMali.patch"
 EXTRA_OECMAKE_append_h9        = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_h9combo   = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_h9combose = " -DWITH_PLATFORM=mali-cortexa15"
