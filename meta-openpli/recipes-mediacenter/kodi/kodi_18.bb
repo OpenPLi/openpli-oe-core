@@ -114,7 +114,10 @@ SRC_URI_append = " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'nxinit', 'file://egl/EGLNativeTypeV3D-gb4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vumips', 'file://egl/EGLNativeTypeV3D-vuplus.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuarm', 'file://egl/EGLNativeTypeV3D-vuplus4k.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch', '', d)} \
+            \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
+                                                              'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
            "
 
 S = "${WORKDIR}/git"
