@@ -110,6 +110,7 @@ SRC_URI_append = " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3dplatform-arm', 'file://egl/EGLNativeTypeV3D-platform-arm.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3dplatform-mipsel', 'file://egl/EGLNativeTypeV3D-platform.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'nxcl', 'file://egl/EGLNativeTypeV3D-lunix4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
            "
 
