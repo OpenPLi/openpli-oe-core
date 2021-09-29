@@ -5,8 +5,6 @@ EXTRA_OECMAKE_append_pulse4k      = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-axasuhd
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_e4hd       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_e4hd = " -DWITH_PLATFORM=nxpl"
 
 # meta-edision
@@ -20,22 +18,14 @@ EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=v3dplatform"
 EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=v3dplatform"
 
 # meta-gfutures
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_bre2ze4k       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=nxpl"
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_hd2400         = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_hd2400   = " -DWITH_PLATFORM=nxpl"
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_hd51           = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=nxpl"
 #
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_vs1500       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-EXTRA_OECMAKE_append_vs1500 = " -DWITH_PLATFORM=nxpl"
+EXTRA_OECMAKE_append_vs1500   = " -DWITH_PLATFORM=nxpl"
 #
-EXTRA_OECMAKE_append_hd60    = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_hd61    = " -DWITH_PLATFORM=mali-cortexa15"
+EXTRA_OECMAKE_append_hd60     = " -DWITH_PLATFORM=mali-cortexa15"
+EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-gi
 # MACHINE_FEATURES contains "v3d-nxclient" so try the nxpl version
@@ -115,13 +105,9 @@ RDEPENDS_${PN}_append_vuduo4k     = " vuplus-kodi-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 
 # meta-xtrend
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_et10000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_et10000 = " -DWITH_PLATFORM=nxpl"
 
 # meta-zgemma
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_h7       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
 EXTRA_OECMAKE_append_h7 = " -DWITH_PLATFORM=nxpl"
 #
 EXTRA_OECMAKE_append_h9        = " -DWITH_PLATFORM=mali-cortexa15"
