@@ -25,8 +25,7 @@ EXTRA_OECMAKE_append_hd60     = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-gi
-# MACHINE_FEATURES contains "v3d-nxclient" so try the nxpl version
-SRC_URI_append_et1x000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
+SRC_URI_append_et1x000       = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
 EXTRA_OECMAKE_append_et1x000 = " -DWITH_PLATFORM=nxcl"
 
 # meta-gigablue
