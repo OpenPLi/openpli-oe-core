@@ -20,10 +20,10 @@ index 0000000..dd62eff
 +  message(SEND_ERROR "You need to decide whether you want to use GL- or GLES-based rendering in combination with the STB windowing system. Please set STB_RENDER_SYSTEM to either \"gl\" or \"gles\". For normal desktop systems, you will usually want to use \"gl\".")
 +endif()
 +
-+if(WITH_PLATFORM STREQUAL "v3dplatform-arm")
++if(WITH_PLATFORM STREQUAL "edison-cortexa15")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS v3dplatform)
-+elseif(WITH_PLATFORM STREQUAL "v3dplatform-mipsel")
++elseif(WITH_PLATFORM STREQUAL "xcore-mipsel")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS v3dplatform)
 +elseif(WITH_PLATFORM STREQUAL "nxpl")
