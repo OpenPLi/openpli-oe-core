@@ -1,6 +1,6 @@
 # NOTE: this should be in the conf files in the respective BSP layers
 # 
-# EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=x"
+# EXTRA_OECMAKE_append_pn-kodi = " -DWITH_PLATFORM=x"
 
 # meta-abcom
 EXTRA_OECMAKE_append_pulse4k      = " -DWITH_PLATFORM=mali-cortexa15"
