@@ -107,7 +107,8 @@ SRC_URI_append = " \
             file://egl-1-v3d-mali.patch \
             file://egl-2-windowing.patch \
             \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'edison-cortexa15', 'file://egl/EGLNativeTypeV3D-platform-arm.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', 'file://egl/EGLNativeTypeV3D-platform.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'nxcl', 'file://egl/EGLNativeTypeV3D-lunix4k.patch', '', d)} \
