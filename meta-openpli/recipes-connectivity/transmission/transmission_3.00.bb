@@ -22,7 +22,7 @@ INITSCRIPT_PARAMS = "defaults 60 "
 
 S = "${WORKDIR}/git"
 
-inherit autotools-brokensep gettext update-rc.d systemd
+inherit autotools-brokensep gettext update-rc.d pkgconfig systemd
 
 PACKAGECONFIG = "${@bb.utils.contains('DISTRO_FEATURES','systemd','systemd','',d)}"
 
