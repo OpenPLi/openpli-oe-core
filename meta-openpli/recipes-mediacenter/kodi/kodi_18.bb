@@ -7,7 +7,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake gettext python-dir pythonnative systemd
+inherit cmake pkgconfig gettext python-dir pythonnative systemd
 
 DEPENDS = " \
             fmt \
