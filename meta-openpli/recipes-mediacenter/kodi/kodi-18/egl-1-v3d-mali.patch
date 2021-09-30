@@ -23,7 +23,7 @@ index 0000000..dd62eff
 +if(WITH_PLATFORM STREQUAL "v3dplatform-arm")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS v3dplatform)
-+if(WITH_PLATFORM STREQUAL "v3dplatform-mipsel")
++elseif(WITH_PLATFORM STREQUAL "v3dplatform-mipsel")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS v3dplatform)
 +elseif(WITH_PLATFORM STREQUAL "nxpl")
