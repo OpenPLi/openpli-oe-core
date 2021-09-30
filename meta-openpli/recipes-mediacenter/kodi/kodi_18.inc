@@ -34,8 +34,8 @@ EXTRA_OECMAKE_append_hd60     = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-gi
-MACHINE_FEATURES_append_et1x000 = " nxcl"
-EXTRA_OECMAKE_append_et1x000    = " -DWITH_PLATFORM=nxcl"
+MACHINE_FEATURES_append_et1x000 = " nextv-cortexa15"
+EXTRA_OECMAKE_append_et1x000    = " -DWITH_PLATFORM=nextv-cortexa15"
 
 # meta-gigablue
 MACHINE_FEATURES_append_gbquad4k = " GB-cortexa15"
@@ -60,8 +60,8 @@ EXTRA_OECMAKE_append_sf8008   = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_sf8008m  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-qviart
-MACHINE_FEATURES_append_lunix4k = " nxcl"
-EXTRA_OECMAKE_append_lunix4k    = " -DWITH_PLATFORM=nxcl"
+MACHINE_FEATURES_append_lunix4k = " nextv-cortexa15"
+EXTRA_OECMAKE_append_lunix4k    = " -DWITH_PLATFORM=nextv-cortexa15"
 
 # meta-uclan
 SRC_URI_append_ustym4kpro         = " file://egl/kodi-old-gl-headers.patch"

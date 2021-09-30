@@ -111,7 +111,7 @@ SRC_URI_append = " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'edison-cortexa15', 'file://egl/EGLNativeTypeV3D-platform-arm.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', 'file://egl/EGLNativeTypeV3D-platform.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'nxcl', 'file://egl/EGLNativeTypeV3D-lunix4k.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', 'file://egl/EGLNativeTypeV3D-lunix4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', 'file://egl/EGLNativeTypeV3D-gb4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', 'file://egl/EGLNativeTypeV3D-vuplus.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/EGLNativeTypeV3D-vuplus4k.patch', '', d)} \
