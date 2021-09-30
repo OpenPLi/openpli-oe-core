@@ -11,15 +11,15 @@ MACHINE_FEATURES_append_e4hd = " nxpl"
 EXTRA_OECMAKE_append_e4hd    = " -DWITH_PLATFORM=nxpl"
 
 # meta-edision
-MACHINE_FEATURES_append_osmini4k    = " v3dplatform-arm"
-MACHINE_FEATURES_append_osmio4k     = " v3dplatform-arm"
-MACHINE_FEATURES_append_osmio4kplus = " v3dplatform-arm"
-MACHINE_FEATURES_append_osmega      = " v3dplatform-mipsel"
+MACHINE_FEATURES_append_osmini4k    = " edison-cortexa15"
+MACHINE_FEATURES_append_osmio4k     = " edison-cortexa15"
+MACHINE_FEATURES_append_osmio4kplus = " edison-cortexa15"
+MACHINE_FEATURES_append_osmega      = " xcore-mipsel"
 SRC_URI_append_osmega            = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_osmini4k    = " -DWITH_PLATFORM=v3dplatform-arm"
-EXTRA_OECMAKE_append_osmio4k     = " -DWITH_PLATFORM=v3dplatform-arm"
-EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=v3dplatform-arm"
-EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=v3dplatform-mipsel"
+EXTRA_OECMAKE_append_osmini4k    = " -DWITH_PLATFORM=edison-cortexa15"
+EXTRA_OECMAKE_append_osmio4k     = " -DWITH_PLATFORM=edison-cortexa15"
+EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=edison-cortexa15"
+EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=xcore-mipsel"
 
 # meta-gfutures
 MACHINE_FEATURES_append_bre2ze4k = " nxpl"
