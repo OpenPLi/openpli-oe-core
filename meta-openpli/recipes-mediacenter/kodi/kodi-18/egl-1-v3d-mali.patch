@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..dd62eff
 --- /dev/null
 +++ b/cmake/platform/linux/stb.cmake
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,47 @@
 +set(PLATFORM_REQUIRED_DEPS EGL LibInput Xkbcommon)
 +
 +set(STB_RENDER_SYSTEM "" CACHE STRING "Render system to use with STB: \"gl\" or \"gles\"")
@@ -26,7 +26,10 @@ index 0000000..dd62eff
 +elseif(WITH_PLATFORM STREQUAL "xcore-mipsel")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS v3dplatform)
-+elseif(WITH_PLATFORM STREQUAL "nxpl")
++elseif(WITH_PLATFORM STREQUAL "v3d-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus)
++elseif(WITH_PLATFORM STREQUAL "v3d-mipsel")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS nxpl nexus)
 +elseif(WITH_PLATFORM STREQUAL "nxcl")

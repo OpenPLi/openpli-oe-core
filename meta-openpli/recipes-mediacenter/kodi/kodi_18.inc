@@ -7,8 +7,8 @@ EXTRA_OECMAKE_append_pulse4k      = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-axasuhd
-MACHINE_FEATURES_append_e4hd = " nxpl"
-EXTRA_OECMAKE_append_e4hd    = " -DWITH_PLATFORM=nxpl"
+MACHINE_FEATURES_append_e4hd = " v3d-cortexa15"
+EXTRA_OECMAKE_append_e4hd    = " -DWITH_PLATFORM=v3d-cortexa15"
 
 # meta-edision
 MACHINE_FEATURES_append_osmini4k    = " edison-cortexa15"
@@ -22,14 +22,14 @@ EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=edison-cortexa15"
 EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=xcore-mipsel"
 
 # meta-gfutures
-MACHINE_FEATURES_append_bre2ze4k = " nxpl"
-MACHINE_FEATURES_append_hd2400   = " nxpl"
-MACHINE_FEATURES_append_hd51     = " nxpl"
-MACHINE_FEATURES_append_vs1500   = " nxpl"
-EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=nxpl"
-EXTRA_OECMAKE_append_hd2400   = " -DWITH_PLATFORM=nxpl"
-EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=nxpl"
-EXTRA_OECMAKE_append_vs1500   = " -DWITH_PLATFORM=nxpl"
+MACHINE_FEATURES_append_bre2ze4k = " v3d-cortexa15"
+MACHINE_FEATURES_append_hd2400   = " v3d-mipsel"
+MACHINE_FEATURES_append_hd51     = " v3d-cortexa15"
+MACHINE_FEATURES_append_vs1500   = " v3d-cortexa15"
+EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=v3d-cortexa15"
+EXTRA_OECMAKE_append_hd2400   = " -DWITH_PLATFORM=v3d-mipsel"
+EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=v3d-cortexa15"
+EXTRA_OECMAKE_append_vs1500   = " -DWITH_PLATFORM=v3d-cortexa15"
 EXTRA_OECMAKE_append_hd60     = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 
@@ -115,12 +115,12 @@ RDEPENDS_${PN}_append_vuduo4k     = " vuplus-kodi-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 
 # meta-xtrend
-MACHINE_FEATURES_append_et10000   = " nxpl"
-EXTRA_OECMAKE_append_et10000      = " -DWITH_PLATFORM=nxpl"
+MACHINE_FEATURES_append_et10000   = " v3d-mipsel"
+EXTRA_OECMAKE_append_et10000      = " -DWITH_PLATFORM=v3d-mipsel"
 
 # meta-zgemma
-MACHINE_FEATURES_append_h7     = " nxpl"
-EXTRA_OECMAKE_append_h7        = " -DWITH_PLATFORM=nxpl"
+MACHINE_FEATURES_append_h7     = " v3d-cortexa15"
+EXTRA_OECMAKE_append_h7        = " -DWITH_PLATFORM=v3d-cortexa15"
 #
 EXTRA_OECMAKE_append_h9        = " -DWITH_PLATFORM=mali-cortexa15"
 EXTRA_OECMAKE_append_h9combo   = " -DWITH_PLATFORM=mali-cortexa15"
