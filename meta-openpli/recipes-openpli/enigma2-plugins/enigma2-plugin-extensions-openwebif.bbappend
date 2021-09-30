@@ -109,6 +109,7 @@ python do_cleanup () {
         ('lunix3-4k', 'lunix3-4k.png', 'qviart.png', 'qviart.html'),
         ('lunix', 'lunix.png', 'qviart.png', 'qviart.html'),
         ('lunix4k', 'lunix4k.png', 'lunix4k.png', 'lunix4k.html'),
+        ('dual', 'dual.png', 'dual.png', 'dual.html'),
         ('e4hd', 'e4hd.png', 'e4hd.png', 'e4hd.html'),
         ('sf8008', 'sf8008.png', 'octagon.png', 'octagon.html'),
         ('sf8008m', 'sf8008m.png', 'octagon.png', 'octagon.html'),
