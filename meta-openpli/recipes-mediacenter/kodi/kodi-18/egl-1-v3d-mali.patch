@@ -32,7 +32,7 @@ index 0000000..dd62eff
 +elseif(WITH_PLATFORM STREQUAL "v3d-mipsel")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS nxpl nexus)
-+elseif(WITH_PLATFORM STREQUAL "nxcl")
++elseif(WITH_PLATFORM STREQUAL "nextv-cortexa15")
 +  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
 +  list(APPEND DEPLIBS nxpl nexus nxclient)
 +elseif(WITH_PLATFORM STREQUAL "GB-cortexa15")
