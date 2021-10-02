@@ -1,14 +1,9 @@
 # NOTE: this should be in the conf files in the respective BSP layers
-# 
-# EXTRA_OECMAKE_append_pn-kodi = " -DWITH_PLATFORM=x"
 
 # meta-abcom
-EXTRA_OECMAKE_append_pulse4k      = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-axasuhd
 MACHINE_FEATURES_append_e4hd = " v3d-cortexa15"
-EXTRA_OECMAKE_append_e4hd    = " -DWITH_PLATFORM=v3d-cortexa15"
 
 # meta-edision
 MACHINE_FEATURES_append_osmini4k    = " edison-cortexa15"
@@ -16,56 +11,36 @@ MACHINE_FEATURES_append_osmio4k     = " edison-cortexa15"
 MACHINE_FEATURES_append_osmio4kplus = " edison-cortexa15"
 MACHINE_FEATURES_append_osmega      = " xcore-mipsel"
 SRC_URI_append_osmega            = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_osmini4k    = " -DWITH_PLATFORM=edison-cortexa15"
-EXTRA_OECMAKE_append_osmio4k     = " -DWITH_PLATFORM=edison-cortexa15"
-EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_PLATFORM=edison-cortexa15"
-EXTRA_OECMAKE_append_osmega      = " -DWITH_PLATFORM=xcore-mipsel"
 
 # meta-gfutures
 MACHINE_FEATURES_append_bre2ze4k = " v3d-cortexa15"
 MACHINE_FEATURES_append_hd2400   = " v3d-mipsel"
 MACHINE_FEATURES_append_hd51     = " v3d-cortexa15"
 MACHINE_FEATURES_append_vs1500   = " v3d-cortexa15"
-EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_PLATFORM=v3d-cortexa15"
-EXTRA_OECMAKE_append_hd2400   = " -DWITH_PLATFORM=v3d-mipsel"
-EXTRA_OECMAKE_append_hd51     = " -DWITH_PLATFORM=v3d-cortexa15"
-EXTRA_OECMAKE_append_vs1500   = " -DWITH_PLATFORM=v3d-cortexa15"
-EXTRA_OECMAKE_append_hd60     = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_hd61     = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-gi
 MACHINE_FEATURES_append_et1x000 = " nextv-cortexa15"
-EXTRA_OECMAKE_append_et1x000    = " -DWITH_PLATFORM=nextv-cortexa15"
 
 # meta-gigablue
 MACHINE_FEATURES_append_gbquad4k = " GB-cortexa15"
 MACHINE_FEATURES_append_gbue4k   = " GB-cortexa15"
 SRC_URI_append_gbquad4k          = " file://egl/kodi-old-gl-headers.patch"
 SRC_URI_append_gbue4k            = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_gbquad4k    = " -DWITH_PLATFORM=GB-cortexa15"
-EXTRA_OECMAKE_append_gbue4k      = " -DWITH_PLATFORM=GB-cortexa15"
 DEPENDS_append_gbquad4k          = " gigablue-kodi-gbquad4k"
 DEPENDS_append_gbue4k            = " gigablue-kodi-gbue4k"
 SRC_URI_append_gbtrio4k          = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_gbtrio4k    = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-maxytec
-EXTRA_OECMAKE_append_multibox   = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_multiboxse = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-octagon
 SRC_URI_append_sf8008         = " file://egl/kodi-old-gl-headers.patch"
 SRC_URI_append_sf8008m        = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_sf8008   = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_sf8008m  = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-qviart
 MACHINE_FEATURES_append_lunix4k = " nextv-cortexa15"
-EXTRA_OECMAKE_append_lunix4k    = " -DWITH_PLATFORM=nextv-cortexa15"
 
 # meta-uclan
 SRC_URI_append_ustym4kpro         = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_ustym4kpro   = " -DWITH_PLATFORM=mali-cortexa15"
 
 # meta-vuplus
 MACHINE_FEATURES_append_vusolo2    = " vuplus-mipsel"
@@ -81,16 +56,6 @@ MACHINE_FEATURES_append_vuduo4kse  = " vuplus-cortexa15"
 
 SRC_URI_append_vuduo4k     = " file://vuplus-fix-exception-duo4k.patch"
 SRC_URI_append_vuduo4kse   = " file://vuplus-fix-exception-duo4k.patch"
-EXTRA_OECMAKE_append_vusolo2     = " -DWITH_PLATFORM=vuplus-mipsel"
-EXTRA_OECMAKE_append_vuduo2      = " -DWITH_PLATFORM=vuplus-mipsel"
-EXTRA_OECMAKE_append_vusolose    = " -DWITH_PLATFORM=vuplus-mipsel"
-EXTRA_OECMAKE_append_vusolo4k    = " -DWITH_PLATFORM=vuplus-cortexa15"
-EXTRA_OECMAKE_append_vuultimo4k  = " -DWITH_PLATFORM=vuplus-cortexa15"
-EXTRA_OECMAKE_append_vuuno4k     = " -DWITH_PLATFORM=vuplus-cortexa15"
-EXTRA_OECMAKE_append_vuuno4kse   = " -DWITH_PLATFORM=vuplus-cortexa15"
-EXTRA_OECMAKE_append_vuzero4k    = " -DWITH_PLATFORM=vuplus-cortexa15"
-EXTRA_OECMAKE_append_vuduo4k     = " -DWITH_PLATFORM=vuplus-cortexa15"
-EXTRA_OECMAKE_append_vuduo4kse   = " -DWITH_PLATFORM=vuplus-cortexa15"
 
 DEPENDS_append_vusolo2     = " vuplus-kodi-vusolo2"
 DEPENDS_append_vuduo2      = " vuplus-kodi-vuduo2"
@@ -116,20 +81,10 @@ RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 
 # meta-xtrend
 MACHINE_FEATURES_append_et10000   = " v3d-mipsel"
-EXTRA_OECMAKE_append_et10000      = " -DWITH_PLATFORM=v3d-mipsel"
 
 # meta-zgemma
 MACHINE_FEATURES_append_h7     = " v3d-cortexa15"
-EXTRA_OECMAKE_append_h7        = " -DWITH_PLATFORM=v3d-cortexa15"
 #
-EXTRA_OECMAKE_append_h9        = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_h9combo   = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_h9combose = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_h9se      = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_h10       = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_h11       = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_i55plus   = " -DWITH_PLATFORM=mali-cortexa15"
-EXTRA_OECMAKE_append_i55se     = " -DWITH_PLATFORM=mali-cortexa15"
 
 # for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
 # in RDEPENDS_kodi? [file-rdeps]
