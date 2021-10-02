@@ -17,6 +17,7 @@ inherit pkgconfig gobject-introspection
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=master;name=gst \
            file://0001-meson-Add-option-for-installed-tests.patch \
+           file://0002-revert-use-new-gst-adapter-get-buffer.patch \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.contains('PTEST_ENABLED', '1', 'tests', '', d)} \
