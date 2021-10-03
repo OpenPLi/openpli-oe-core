@@ -115,7 +115,7 @@ SRC_URI_append = " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', 'file://egl/EGLNativeTypeV3D-gb4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', 'file://egl/EGLNativeTypeV3D-vuplus.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/EGLNativeTypeV3D-vuplus4k.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://egl/EGLNativeTypeMali.patch', '', d)} \
             \
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
                                                               'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
