@@ -1,123 +1,61 @@
-# NOTE: this should be put in kodi_18.bbappend in the respective BSP layers
+# NOTE: this should be in the conf files in the respective BSP layers
 
 # meta-abcom
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_pulse4k           = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_pulse4kmini       = " file://egl/EGLNativeTypeMali.patch"
-EXTRA_OECMAKE_append_pulse4k      = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_pulse4kmini  = " -DWITH_V3D=mali-cortexa15"
 
 # meta-axasuhd
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_e4hd       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_e4hd = " -DWITH_V3D=nxpl"
+MACHINE_FEATURES_append_e4hd = " v3d-cortexa15"
 
 # meta-edision
-SRC_URI_append_osmini4k    = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
-SRC_URI_append_osmio4k     = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
-SRC_URI_append_osmio4kplus = " file://egl/EGLNativeTypeV3D-platform-arm.patch"
-SRC_URI_append_osmega      = " file://egl/EGLNativeTypeV3D-platform.patch file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_osmini4k    = " -DWITH_V3D=v3dplatform"
-EXTRA_OECMAKE_append_osmio4k     = " -DWITH_V3D=v3dplatform"
-EXTRA_OECMAKE_append_osmio4kplus = " -DWITH_V3D=v3dplatform"
-EXTRA_OECMAKE_append_osmega      = " -DWITH_V3D=v3dplatform"
+MACHINE_FEATURES_append_osmini4k    = " edison-cortexa15"
+MACHINE_FEATURES_append_osmio4k     = " edison-cortexa15"
+MACHINE_FEATURES_append_osmio4kplus = " edison-cortexa15"
+MACHINE_FEATURES_append_osmega      = " xcore-mipsel"
+SRC_URI_append_osmega            = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-gfutures
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_bre2ze4k       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_bre2ze4k = " -DWITH_V3D=nxpl"
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_hd2400         = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_hd2400   = " -DWITH_V3D=nxpl"
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_hd51           = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_hd51     = " -DWITH_V3D=nxpl"
-#
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_vs1500       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_vs1500 = " -DWITH_V3D=nxpl"
-#
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_hd60         = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_hd61         = " file://egl/EGLNativeTypeMali.patch"
-EXTRA_OECMAKE_append_hd60    = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_hd61    = " -DWITH_V3D=mali-cortexa15"
+MACHINE_FEATURES_append_bre2ze4k = " v3d-cortexa15"
+MACHINE_FEATURES_append_hd2400   = " v3d-mipsel"
+MACHINE_FEATURES_append_hd51     = " v3d-cortexa15"
+MACHINE_FEATURES_append_vs1500   = " v3d-cortexa15"
 
 # meta-gi
-# MACHINE_FEATURES contains "v3d-nxclient" so try the nxpl version
-SRC_URI_append_et1x000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxclient"
-# translated into nxcl
-EXTRA_OECMAKE_append_et1x000 = " -DWITH_V3D=nxcl"
+MACHINE_FEATURES_append_et1x000 = " nextv-cortexa15"
 
 # meta-gigablue
-SRC_URI_append_gbquad4k        = " file://egl/EGLNativeTypeV3D-gb4k.patch file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_gbue4k          = " file://egl/EGLNativeTypeV3D-gb4k.patch file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_gbquad4k  = " -DWITH_V3D=nxinit"
-EXTRA_OECMAKE_append_gbue4k    = " -DWITH_V3D=nxinit"
-DEPENDS_append_gbquad4k        = " gigablue-kodi-gbquad4k"
-DEPENDS_append_gbue4k          = " gigablue-kodi-gbue4k"
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_gbtrio4k       = " file://egl/EGLNativeTypeMali.patch"
-SRC_URI_append_gbtrio4k        = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_gbtrio4k  = " -DWITH_V3D=mali-cortexa15"
+MACHINE_FEATURES_append_gbquad4k = " GB-cortexa15"
+MACHINE_FEATURES_append_gbue4k   = " GB-cortexa15"
+SRC_URI_append_gbquad4k          = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbue4k            = " file://egl/kodi-old-gl-headers.patch"
+DEPENDS_append_gbquad4k          = " gigablue-kodi-gbquad4k"
+DEPENDS_append_gbue4k            = " gigablue-kodi-gbue4k"
+SRC_URI_append_gbtrio4k          = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-maxytec
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_multibox        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_multiboxse      = " file://egl/EGLNativeTypeMali.patch"
-EXTRA_OECMAKE_append_multibox   = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_multiboxse = " -DWITH_V3D=mali-cortexa15"
 
 # meta-octagon
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_sf8008        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_sf8008m       = " file://egl/EGLNativeTypeMali.patch"
 SRC_URI_append_sf8008         = " file://egl/kodi-old-gl-headers.patch"
 SRC_URI_append_sf8008m        = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_sf8008   = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_sf8008m  = " -DWITH_V3D=mali-cortexa15"
 
 # meta-qviart
-SRC_URI_append_lunix4k        = " file://egl/EGLNativeTypeV3D-lunix4k.patch"
-EXTRA_OECMAKE_append_lunix4k  = " -DWITH_V3D=nxcl"
+MACHINE_FEATURES_append_lunix4k = " nextv-cortexa15"
 
 # meta-uclan
-#
-# in OE-A seems needing a support package as it was for Vu+:
-# hiadp.a and hiplayer.a are installed by hand
-#
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_ustym4kpro        = " file://egl/EGLNativeTypeMali.patch"
 SRC_URI_append_ustym4kpro         = " file://egl/kodi-old-gl-headers.patch"
-EXTRA_OECMAKE_append_ustym4kpro   = " -DWITH_V3D=mali-cortexa15"
 
 # meta-vuplus
-SRC_URI_append_vusolo2     = " file://egl/EGLNativeTypeV3D-vuplus.patch"
-SRC_URI_append_vuduo2      = " file://egl/EGLNativeTypeV3D-vuplus.patch"
-SRC_URI_append_vusolose    = " file://egl/EGLNativeTypeV3D-vuplus.patch"
-SRC_URI_append_vusolo4k    = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
-SRC_URI_append_vuultimo4k  = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
-SRC_URI_append_vuuno4k     = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
-SRC_URI_append_vuuno4kse   = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
-SRC_URI_append_vuzero4k    = " file://egl/EGLNativeTypeV3D-vuplus4k.patch"
-SRC_URI_append_vuduo4k     = " file://egl/EGLNativeTypeV3D-vuplus4k.patch file://vuplus-fix-exception-duo4k.patch"
-SRC_URI_append_vuduo4kse   = " file://egl/EGLNativeTypeV3D-vuplus4k.patch file://vuplus-fix-exception-duo4k.patch"
-EXTRA_OECMAKE_append_vusolo2     = " -DWITH_V3D=vumips"
-EXTRA_OECMAKE_append_vuduo2      = " -DWITH_V3D=vumips"
-EXTRA_OECMAKE_append_vusolose    = " -DWITH_V3D=vumips"
-EXTRA_OECMAKE_append_vusolo4k    = " -DWITH_V3D=vuarm"
-EXTRA_OECMAKE_append_vuultimo4k  = " -DWITH_V3D=vuarm"
-EXTRA_OECMAKE_append_vuuno4k     = " -DWITH_V3D=vuarm"
-EXTRA_OECMAKE_append_vuuno4kse   = " -DWITH_V3D=vuarm"
-EXTRA_OECMAKE_append_vuzero4k    = " -DWITH_V3D=vuarm"
-EXTRA_OECMAKE_append_vuduo4k     = " -DWITH_V3D=vuarm"
-EXTRA_OECMAKE_append_vuduo4kse   = " -DWITH_V3D=vuarm"
+MACHINE_FEATURES_append_vusolo2    = " vuplus-mipsel"
+MACHINE_FEATURES_append_vuduo2     = " vuplus-mipsel"
+MACHINE_FEATURES_append_vusolose   = " vuplus-mipsel"
+MACHINE_FEATURES_append_vusolo4k   = " vuplus-cortexa15"
+MACHINE_FEATURES_append_vuultimo4k = " vuplus-cortexa15"
+MACHINE_FEATURES_append_vuuno4k    = " vuplus-cortexa15"
+MACHINE_FEATURES_append_vuuno4kse  = " vuplus-cortexa15"
+MACHINE_FEATURES_append_vuzero4k   = " vuplus-cortexa15"
+MACHINE_FEATURES_append_vuduo4k    = " vuplus-cortexa15"
+MACHINE_FEATURES_append_vuduo4kse  = " vuplus-cortexa15"
+
+SRC_URI_append_vuduo4k     = " file://vuplus-fix-exception-duo4k.patch"
+SRC_URI_append_vuduo4kse   = " file://vuplus-fix-exception-duo4k.patch"
 
 DEPENDS_append_vusolo2     = " vuplus-kodi-vusolo2"
 DEPENDS_append_vuduo2      = " vuplus-kodi-vuduo2"
@@ -142,34 +80,11 @@ RDEPENDS_${PN}_append_vuduo4k     = " vuplus-kodi-vuduo4k"
 RDEPENDS_${PN}_append_vuduo4kse   = " vuplus-kodi-vuduo4kse"
 
 # meta-xtrend
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_et10000       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_et10000 = " -DWITH_V3D=nxpl"
+MACHINE_FEATURES_append_et10000   = " v3d-mipsel"
 
 # meta-zgemma
-# MACHINE_FEATURES contains "v3d-nxpl" so this is already added
-#SRC_URI_append_h7       = " file://egl/EGLNativeTypeV3D-nxpl.patch"
-# already in the BSP: EXTRA_OECMAKE_append_pn-kodi = " -DWITH_V3D=nxpl"
-#EXTRA_OECMAKE_append_h7 = " -DWITH_V3D=nxpl"
+MACHINE_FEATURES_append_h7     = " v3d-cortexa15"
 #
-# MACHINE_FEATURES contains "hisil" so this and HiPlayer are added
-#SRC_URI_append_h9         = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h9combo    = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h9combose  = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h9se       = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h10        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_h11        = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_i55plus    = " file://egl/EGLNativeTypeMali.patch"
-#SRC_URI_append_i55se      = " file://egl/EGLNativeTypeMali.patch"
-EXTRA_OECMAKE_append_h9        = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_h9combo   = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_h9combose = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_h9se      = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_h10       = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_h11       = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_i55plus   = " -DWITH_V3D=mali-cortexa15"
-EXTRA_OECMAKE_append_i55se     = " -DWITH_V3D=mali-cortexa15"
 
 # for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
 # in RDEPENDS_kodi? [file-rdeps]

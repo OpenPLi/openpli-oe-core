@@ -7,7 +7,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake gettext python-dir pythonnative systemd
+inherit cmake pkgconfig gettext python-dir pythonnative systemd
 
 DEPENDS = " \
             fmt \
@@ -107,8 +107,18 @@ SRC_URI_append = " \
             file://egl-1-v3d-mali.patch \
             file://egl-2-windowing.patch \
             \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nxpl', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://egl/EGLNativeTypeMali.patch file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', 'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'edison-cortexa15', 'file://egl/EGLNativeTypeV3D-platform-arm.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', 'file://egl/EGLNativeTypeV3D-platform.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', 'file://egl/EGLNativeTypeV3D-lunix4k.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', 'file://egl/EGLNativeTypeV3D-gb4k.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', 'file://egl/EGLNativeTypeV3D-vuplus.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/EGLNativeTypeV3D-vuplus4k.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://egl/EGLNativeTypeMali.patch', '', d)} \
+            \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
+                                                              'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
            "
 
 S = "${WORKDIR}/git"
@@ -172,6 +182,16 @@ EXTRA_OECMAKE = " \
     -DENABLE_DVDCSS=OFF \
     -DENABLE_DEBUGFISSION=OFF \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', '-DWITH_PLATFORM="v3d-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', '-DWITH_PLATFORM="v3d-mipsel"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'edison-cortexa15', '-DWITH_PLATFORM="edison-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', '-DWITH_PLATFORM="xcore-mipsel"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', '-DWITH_PLATFORM="nextv-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', '-DWITH_PLATFORM="GB-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', '-DWITH_PLATFORM="vuplus-mipsel"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', '-DWITH_PLATFORM="vuplus-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
 EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
