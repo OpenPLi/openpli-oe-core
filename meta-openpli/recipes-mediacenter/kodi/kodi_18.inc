@@ -94,6 +94,8 @@ INSANE_SKIP_${PN}_gbtrio4k += "file-rdeps"
 INSANE_SKIP_${PN}_sf8008 += "file-rdeps"
 INSANE_SKIP_${PN}_sf8008m += "file-rdeps"
 #
+INSANE_SKIP_${PN}_dual += "file-rdeps"
+#
 INSANE_SKIP_${PN}_h7 += "file-rdeps"
 INSANE_SKIP_${PN}_h9 += "file-rdeps"
 INSANE_SKIP_${PN}_h9combo += "file-rdeps"
