@@ -13,12 +13,8 @@ MACHINE_FEATURES_append_hd51     = " v3d-cortexa15"
 MACHINE_FEATURES_append_vs1500   = " v3d-cortexa15"
 
 # meta-gigablue
-MACHINE_FEATURES_append_gbquad4k = " GB-cortexa15"
-MACHINE_FEATURES_append_gbue4k   = " GB-cortexa15"
 SRC_URI_append_gbquad4k          = " file://egl/kodi-old-gl-headers.patch"
 SRC_URI_append_gbue4k            = " file://egl/kodi-old-gl-headers.patch"
-DEPENDS_append_gbquad4k          = " gigablue-kodi-gbquad4k"
-DEPENDS_append_gbue4k            = " gigablue-kodi-gbue4k"
 SRC_URI_append_gbtrio4k          = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-octagon
