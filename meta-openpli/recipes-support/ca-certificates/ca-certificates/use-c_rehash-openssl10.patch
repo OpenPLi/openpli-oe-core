@@ -1,8 +1,6 @@
-diff --git a/sbin/update-ca-certificates b/sbin/update-ca-certificates
-index bdf5b27..ac59ae9 100755
 --- a/sbin/update-ca-certificates
 +++ b/sbin/update-ca-certificates
-@@ -183,9 +218,9 @@ then
+@@ -218,9 +218,9 @@ then
    done
    if [ "$verbose" = 0 ]
    then
@@ -10,6 +8,7 @@ index bdf5b27..ac59ae9 100755
 +    c_rehash . > /dev/null
    else
 -    openssl rehash -v .
-+    c_rehash  .
++    c_rehash -v .
    fi
  fi
+ 

@@ -11,20 +11,20 @@ LIC_FILES_CHKSUM = "file://debian/copyright;md5=ae5b36b514e3f12ce1aa8e2ee67f3d7e
 DEPENDS = ""
 DEPENDS_class-native = "openssl-native"
 DEPENDS_class-nativesdk = "openssl-native"
+RDEPENDS_${PN} += "openssl"
+
 # Need rehash from openssl and run-parts from debianutils
 PACKAGE_WRITE_DEPS += "openssl-native debianutils-native"
 
-SRCREV = "b3a8980b781bc9a370e42714a605cd4191bb6c0b"
+SRCREV = "181be7ebd169b4a6fb5d90c3e6dc791e90534144"
 
 SRC_URI = "git://salsa.debian.org/debian/ca-certificates.git;protocol=https \
            file://0002-update-ca-certificates-use-SYSROOT.patch \
            file://0001-update-ca-certificates-don-t-use-Debianisms-in-run-p.patch \
-           file://update-ca-certificates-support-Toybox.patch \
            file://default-sysroot.patch \
            file://sbindir.patch \
            file://0003-update-ca-certificates-use-relative-symlinks-from-ET.patch \
-           file://0001-certdata2pem.py-use-python3.patch \
-           file://0004-revert-update-ca-certificates-to-using-c_rehash.patch \
+           file://use-c_rehash-openssl10.patch \
            "
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>\d+)"
 
@@ -49,6 +49,8 @@ do_install () {
 
     install -d ${D}${mandir}/man8
     install -m 0644 sbin/update-ca-certificates.8 ${D}${mandir}/man8/
+
+    rm ${D}${datadir}/ca-certificates/mozilla/DST_Root_CA_X3.crt
 
     install -d ${D}${sysconfdir}
     {
@@ -84,9 +86,5 @@ do_install_append_class-nativesdk () {
 do_install_append_class-native () {
     SYSROOT="${D}${base_prefix}" ${D}${sbindir}/update-ca-certificates
 }
-
-RDEPENDS_${PN}_class-target = "openssl-bin"
-RDEPENDS_${PN}_class-native = "openssl-native"
-RDEPENDS_${PN}_class-nativesdk = "nativesdk-openssl-bin"
 
 BBCLASSEXTEND = "native nativesdk"
