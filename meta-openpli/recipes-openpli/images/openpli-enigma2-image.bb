@@ -25,7 +25,7 @@ WIFI_DRIVERS = " \
 
 WIFI_BSP_DRIVERS ?= " "
 
-ENIGMA2_PLUGINS = " \
+ENIGMA2_PLUGINS += " \
 	enigma2-plugin-extensions-audiosync \
 	enigma2-plugin-extensions-autobackup \
 	enigma2-plugin-extensions-cutlisteditor \
