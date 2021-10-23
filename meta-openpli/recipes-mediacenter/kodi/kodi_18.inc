@@ -1,36 +1,23 @@
 # NOTE: this should be in the conf files in the respective BSP layers
 
-# meta-axasuhd
-MACHINE_FEATURES_append_e4hd = " v3d-cortexa15"
-
 # meta-edision
-SRC_URI_append_osmega            = " file://egl/kodi-old-gl-headers.patch"
-
-# meta-gfutures
-MACHINE_FEATURES_append_bre2ze4k = " v3d-cortexa15"
-MACHINE_FEATURES_append_hd2400   = " v3d-mipsel"
-MACHINE_FEATURES_append_hd51     = " v3d-cortexa15"
-MACHINE_FEATURES_append_vs1500   = " v3d-cortexa15"
+SRC_URI_append_osmega = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-gigablue
-SRC_URI_append_gbquad4k          = " file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_gbue4k            = " file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_gbtrio4k          = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbquad4k = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbue4k = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_gbtrio4k = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-octagon
-SRC_URI_append_sf8008         = " file://egl/kodi-old-gl-headers.patch"
-SRC_URI_append_sf8008m        = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_sf8008 = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_sf8008m = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-uclan
-SRC_URI_append_ustym4kpro         = " file://egl/kodi-old-gl-headers.patch"
+SRC_URI_append_ustym4kpro = " file://egl/kodi-old-gl-headers.patch"
 
 # meta-vuplus
-SRC_URI_append_vuduo4k     = " file://vuplus-fix-exception-duo4k.patch"
-SRC_URI_append_vuduo4kse   = " file://vuplus-fix-exception-duo4k.patch"
-
-# meta-zgemma
-MACHINE_FEATURES_append_h7     = " v3d-cortexa15"
-
+SRC_URI_append_vuduo4k = " file://vuplus-fix-exception-duo4k.patch"
+SRC_URI_append_vuduo4kse = " file://vuplus-fix-exception-duo4k.patch"
 
 # for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
 # in RDEPENDS_kodi? [file-rdeps]
