@@ -3,10 +3,10 @@ HOMEPAGE = "https://github.com/deactivated/python-iso3166"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=5e2f4edc7e7408a82e4a1d05f229b695"
 
-inherit setuptools gitpkgv
+SRC_URI[sha256sum] = "b1e58dbcf50fbb2c9c418ec7a6057f0cdb30b8f822ac852f72e71ba769dae8c5"
 
-PV = "1.0.1+git${SRCPV}"
-PKGV = "1.0.1+git${GITPKGV}"
+inherit pypi setuptools
 
-SRC_URI = "git://github.com/deactivated/python-iso3166.git"
-S = "${WORKDIR}/git"
+PACKAGES = "${PN}"
+
+BBCLASSEXTEND = "native nativesdk"
