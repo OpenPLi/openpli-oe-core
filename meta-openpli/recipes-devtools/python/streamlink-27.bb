@@ -24,7 +24,6 @@ RDEPENDS_${PN} = "python-core \
     python-shell \
     python-singledispatch \
     python-subprocess \
-    python-typing \
     python-websocket-client \
     python-youtube-dl \
     "
