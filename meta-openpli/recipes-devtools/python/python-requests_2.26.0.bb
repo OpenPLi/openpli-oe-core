@@ -32,3 +32,4 @@ CVE_PRODUCT = "requests"
 
 BBCLASSEXTEND = "native nativesdk"
 
+include python-package-split.inc
