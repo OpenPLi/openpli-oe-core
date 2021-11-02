@@ -14,7 +14,7 @@ PARALLEL_MAKE = ""
 
 CFLAGS_append+= "-std=gnu89"
 
-SRC_URI = "git://github.com/mbarbon/djmount.git;protocol=http;branch=fixes"
+SRC_URI = "git://github.com/mbarbon/djmount.git;protocol=https;branch=fixes"
 
 SRC_URI_append +=" \
 	file://init \

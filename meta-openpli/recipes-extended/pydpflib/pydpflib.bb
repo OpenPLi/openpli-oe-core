@@ -3,7 +3,7 @@ MAINTAINER = "https://sourceforge.net/projects/pydpf/"
 LICENSE = "LGPLv2"
 LIC_FILES_CHKSUM = "file://PKG-INFO;md5=6a256fd20875b5cf06888bbcbe1a21aa"
 
-SRC_URI = "git://github.com/athoik/pydpflib.git;protocol=http"
+SRC_URI = "git://github.com/athoik/pydpflib.git;protocol=https"
 
 DEPENDS = "libusb"
 

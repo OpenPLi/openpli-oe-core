@@ -8,7 +8,7 @@ inherit gitpkgv allarch
 PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 
-SRC_URI = "git://github.com/littlesat/PLi-HD-FullNight.git;protocol=http"
+SRC_URI = "git://github.com/littlesat/PLi-HD-FullNight.git;protocol=https"
 
 FILES_${PN} = "${datadir}/enigma2/"
 

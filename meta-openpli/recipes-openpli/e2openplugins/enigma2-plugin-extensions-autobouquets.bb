@@ -20,7 +20,7 @@ PR = "r0"
 
 INSANE_SKIP_${PN} += "already-stripped"
 
-SRC_URI="git://github.com/LraiZer/AutoBouquets.git;branch=${AUTOBOUQUETS_BRANCH};protocol=http"
+SRC_URI="git://github.com/LraiZer/AutoBouquets.git;branch=${AUTOBOUQUETS_BRANCH};protocol=https"
 
 S = "${WORKDIR}/git"
 

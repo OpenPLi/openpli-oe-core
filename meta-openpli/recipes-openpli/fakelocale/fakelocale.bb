@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 
 DEPENDS += "cross-localedef-native"
 
-SRC_URI = "git://github.com/OpenPLi/fakelocale-locales.git;protocol=http \
+SRC_URI = "git://github.com/OpenPLi/fakelocale-locales.git;protocol=https \
 	file://locale.alias \
 	file://SYS_LC_MESSAGES \
 "
