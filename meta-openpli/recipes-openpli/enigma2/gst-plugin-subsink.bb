@@ -11,7 +11,7 @@ PV = "0.10.0+git${SRCPV}"
 PKGV = "0.10.0+git${GITPKGV}"
 
 GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git;protocol=https"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git${@ ';protocol=https' if d.getVar('GITHUB_URI', '').startswith('git://github.com') else '' }"
 
 S = "${WORKDIR}/git"
 

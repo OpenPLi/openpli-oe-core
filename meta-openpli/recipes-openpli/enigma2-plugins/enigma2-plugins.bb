@@ -33,7 +33,7 @@ PV = "z-git${SRCPV}"
 PKGV = "z-git${GITPKGV}"
 
 GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git;protocol=https"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git${@ ';protocol=https' if d.getVar('GITHUB_URI', '').startswith('git://github.com') else '' }"
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \

@@ -6,7 +6,7 @@ DEPENDS = "libpng freetype zlib"
 inherit gitpkgv
 
 GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt.git"
+SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt.git${@ ';protocol=https' if d.getVar('GITHUB_URI', '').startswith('git://github.com') else '' }"
 
 S = "${WORKDIR}/git/libtuxtxt"
 
