@@ -4,7 +4,7 @@ MAINTAINER = "oe-alliance team"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
-inherit autotools-brokensep gettext gitpkgv ${PYTHON_PN}targetconfig ${PYTHON_PN}native
+inherit autotools-brokensep gitpkgv pythonnative gettext
 
 SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=https"
 SRC_URI_append = " file://add-dummy-boxbranding.patch"
@@ -22,7 +22,9 @@ EXTRA_OECONF = " \
 
 S = "${WORKDIR}/git"
 
-INSANE_SKIP_${PN} += "already-stripped build-deps ldflags"
+DEPENDS = "enigma2"
+
+INSANE_SKIP_${PN} += "already-stripped ldflags"
 
 python populate_packages_prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
