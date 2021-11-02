@@ -10,5 +10,5 @@ PR = "r0"
 require conf/license/license-gplv2.inc
 require openplugins-distutils.inc
 
-SRC_URI = "https://github.com/E2OpenPlugins/e2openplugin-SimpleUmount"
+SRC_URI = "https://github.com/E2OpenPlugins/e2openplugin-SimpleUmount;protocol=git"
 

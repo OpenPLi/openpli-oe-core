@@ -12,7 +12,7 @@ SRCREV="${AUTOREV}"
 PV = "6.12+git${SRCPV}"
 PKGV = "6.12+git${GITPKGV}"
 
-SRC_URI = "https://github.com/kiddac/Jedi_Maker_Xtream"
+SRC_URI = "https://github.com/kiddac/Jedi_Maker_Xtream;protocol=git"
 
 S = "${WORKDIR}/git"
 

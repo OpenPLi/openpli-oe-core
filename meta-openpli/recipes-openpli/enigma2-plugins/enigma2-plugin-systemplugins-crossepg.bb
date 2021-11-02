@@ -8,7 +8,7 @@ RDEPENDS_${PN} += "libcurl python-compression python-lzma xz python-core"
 
 inherit gitpkgv
 
-SRC_URI = "https://github.com/oe-alliance/e2openplugin-CrossEPG"
+SRC_URI = "https://github.com/oe-alliance/e2openplugin-CrossEPG;protocol=git"
 SRC_URI_append = " file://add-dummy-boxbranding.patch"
 
 PV = "0.8.6+gitr${SRCPV}"

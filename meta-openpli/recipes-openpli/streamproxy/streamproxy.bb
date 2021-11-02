@@ -10,7 +10,7 @@ PV = "2+git${SRCPV}"
 PKGV = "2+git${GITPKGV}"
 RDEPENDS_${PN} = "enigma2-plugin-systemplugins-transcodingsetup"
 
-SRC_URI = "https://github.com/eriksl/streamproxy"
+SRC_URI = "https://github.com/eriksl/streamproxy;protocol=git"
 SRC_URI_append_libc-musl = " file://0001-streamproxy-fix-build-with-musl.patch"
 
 FILES_${PN} = "${bindir}/streamproxy ${sysconfdir}/init.d/streamproxy.sh ${sysconfdir}/enigma2/streamproxy.conf"

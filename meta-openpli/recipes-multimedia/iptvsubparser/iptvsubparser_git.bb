@@ -10,7 +10,7 @@ PV = "1.1+git${SRCPV}"
 PKGV = "1.1+git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "https://github.com/e2iplayer/e2isubparser"
+SRC_URI = "https://github.com/e2iplayer/e2isubparser;protocol=git"
 
 S = "${WORKDIR}/git"
 
