@@ -11,7 +11,7 @@ RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport kodi"
 
 RDEPENDS_${PN} = "python-pycryptodome python-pycryptodomex kodi-addon-inputstream-adaptive nspr nss"
 
-SRC_URI = "https://github.com/mx3L/kodiext;protocol=git;branch=master \
+SRC_URI = "https://github.com/mx3L/kodiext;branch=master \
 	file://0001-make-transparant.patch \
 	file://advancedsettings.xml \
 	file://advancedsettings-empty.xml \

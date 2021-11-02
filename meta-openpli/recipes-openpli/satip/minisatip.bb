@@ -7,7 +7,7 @@ inherit gitpkgv
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 
-SRC_URI = "https://github.com/eriksl/minisatip;protocol=git"
+SRC_URI = "https://github.com/eriksl/minisatip"
 FILES_${PN} = "${sbindir}/minisatip"
 S = "${WORKDIR}/git"
 BUILD = "${WORKDIR}/build"

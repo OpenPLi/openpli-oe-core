@@ -13,7 +13,7 @@ ALLOW_EMPTY_${PN} = "1"
 
 INSANE_SKIP_${PN} += "already-stripped ldflags"
 
-SRC_URI = "https://github.com/LraiZer/RadiotimesXmltvEmulator;branch=gui-plugin;protocol=git"
+SRC_URI = "https://github.com/LraiZer/RadiotimesXmltvEmulator;branch=gui-plugin"
 
 S = "${WORKDIR}/git"
 

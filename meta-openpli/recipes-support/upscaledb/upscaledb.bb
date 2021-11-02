@@ -8,7 +8,7 @@ DEPENDS = "boost"
 RREPLACES_${PN} = "hamsterdb"
 CONFLICTS_${PN} = "hamsterdb"
 
-SRC_URI = "https://github.com/cruppstahl/upscaledb;protocol=git"
+SRC_URI = "https://github.com/cruppstahl/upscaledb"
 
 S = "${WORKDIR}/git"
 

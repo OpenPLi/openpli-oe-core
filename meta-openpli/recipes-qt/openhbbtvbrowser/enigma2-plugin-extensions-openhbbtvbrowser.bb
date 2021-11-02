@@ -13,7 +13,7 @@ PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "https://github.com/openhbbtvbrowser/enigma2-plugin-extensions-openhbbtvbrowser;protocol=git \
+SRC_URI = "https://github.com/openhbbtvbrowser/enigma2-plugin-extensions-openhbbtvbrowser \
 "
 
 S = "${WORKDIR}/git"
