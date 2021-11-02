@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE.md;md5=7b423f1c9388eae123332e3
 SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
 
 PV = "18.9+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;branch=Leia"
+SRC_URI = "https://github.com/xbmc/xbmc;branch=Leia"
 
 inherit autotools-brokensep gettext native
 

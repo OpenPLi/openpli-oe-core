@@ -38,7 +38,7 @@ PKGV = "1.x+git${GITPKGV}"
 
 S = "${WORKDIR}/git"
 
-SRC_URI = "git://${GO_IMPORT}.git;protocol=https;destsuffix=git/src/${GO_IMPORT} \
+SRC_URI = "https://${GO_IMPORT};protocol=https;destsuffix=git/src/${GO_IMPORT} \
     file://rclonefs"
 
 INSANE_SKIP_${PN} = "ldflags file-rdeps"

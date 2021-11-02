@@ -87,7 +87,7 @@ RRECOMMENDS_${PN} = "\
 	${GST_UGLY_RDEPS} \
 	"
 
-SRC_URI = "git://github.com/openpli/servicemp3.git;branch=master"
+SRC_URI = "https://github.com/openpli/servicemp3;branch=master"
 
 S = "${WORKDIR}/git"
 

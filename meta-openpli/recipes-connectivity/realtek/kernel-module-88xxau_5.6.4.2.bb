@@ -12,7 +12,7 @@ RREPLACES_${PN} = "kernel-module-8812au kernel-module-8814au"
 RCONFLICTS_${PN} = "kernel-module-8812au kernel-module-8814au"
 
 SRC_URI = " \
-          git://github.com/aircrack-ng/rtl8812au.git;branch=v5.6.4.2 \
+          https://github.com/aircrack-ng/rtl8812au;branch=v5.6.4.2 \
           "
 
 SRC_URI[md5sum] = "0f36c65f154971c3b305a1705f9e500f"

@@ -6,8 +6,8 @@ DESCRIPTION = "tuxbox tuxtxt for enigma2"
 
 inherit gitpkgv
 
-GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt.git"
+GITHUB_URI ?= "https://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/tuxtxt"
 
 S = "${WORKDIR}/git/tuxtxt"
 

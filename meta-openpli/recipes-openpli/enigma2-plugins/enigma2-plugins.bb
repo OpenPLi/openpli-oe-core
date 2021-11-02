@@ -32,8 +32,8 @@ inherit gitpkgv pythonnative pkgconfig gettext
 PV = "z-git${SRCPV}"
 PKGV = "z-git${GITPKGV}"
 
-GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}.git"
+GITHUB_URI ?= "https://github.com"
+SRC_URI = "${GITHUB_URI}/OpenPLi/${BPN}"
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \

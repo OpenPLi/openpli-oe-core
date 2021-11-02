@@ -79,7 +79,7 @@ PATCHTOOL = "git"
 PE = "1"
 
 PV = "18.9+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
+SRC_URI = "https://github.com/xbmc/xbmc;protocol=https;branch=Leia"
 
 # patches for 18.x upstreamed in 19.x
 SRC_URI_append = " \
