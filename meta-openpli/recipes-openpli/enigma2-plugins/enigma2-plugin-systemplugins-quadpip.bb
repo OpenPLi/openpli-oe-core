@@ -7,6 +7,6 @@ PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
 S = "${WORKDIR}/git"
-SRC_URI = "https://github.com/OpenPLi/enigma2-plugin-systemplugins-quadpip;protocol=http"
+SRC_URI = "git://github.com/OpenPLi/enigma2-plugin-systemplugins-quadpip.git;protocol=http"
 
 inherit distutils-openplugins

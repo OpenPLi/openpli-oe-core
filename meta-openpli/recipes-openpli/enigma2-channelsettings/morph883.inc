@@ -3,7 +3,7 @@ LICENSE = "CLOSED"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "https://github.com/morpheus883/Enigma2-Settings"
+SRC_URI = "git://github.com/morpheus883/Enigma2-Settings.git"
 S = "${WORKDIR}/git"
 
 RDEPENDS_${PN} = "xz"

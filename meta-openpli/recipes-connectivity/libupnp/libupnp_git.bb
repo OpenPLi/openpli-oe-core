@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=394a0f17b97f33426275571e15920434"
 
 PV = "1.14.0+git${SRCPV}"
 
-SRC_URI = "https://github.com/mrjimenez/pupnp;protocol=https"
+SRC_URI = "git://github.com/mrjimenez/pupnp.git;protocol=https"
 
 S="${WORKDIR}/git"
 

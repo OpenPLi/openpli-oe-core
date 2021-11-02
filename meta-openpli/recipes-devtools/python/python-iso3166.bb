@@ -8,5 +8,5 @@ inherit setuptools gitpkgv
 PV = "1.0.1+git${SRCPV}"
 PKGV = "1.0.1+git${GITPKGV}"
 
-SRC_URI = "https://github.com/deactivated/python-iso3166"
+SRC_URI = "git://github.com/deactivated/python-iso3166.git"
 S = "${WORKDIR}/git"

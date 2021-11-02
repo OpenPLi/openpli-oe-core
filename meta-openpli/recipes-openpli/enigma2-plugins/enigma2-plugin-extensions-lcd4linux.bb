@@ -9,7 +9,7 @@ PKGVERSION = "5.0-r4"
 PV = "${PKGVERSION}-${SRCPV}"
 PKGV = "${PKGVERSION}-${GITPKGV}"
 
-SRC_URI = "https://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy"
+SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-source-copy.git"
 
 RDEPENDS_${PN} += "\
 	png-util \

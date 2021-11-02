@@ -11,7 +11,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "https://github.com/jgaeddert/liquid-dsp;protocol=http"
+SRC_URI = "git://github.com/jgaeddert/liquid-dsp.git;protocol=http"
 SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"

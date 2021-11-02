@@ -8,5 +8,5 @@ inherit setuptools gitpkgv
 PV = "0.4.5+git${SRCPV}"
 PKGV = "0.4.5+git${GITPKGV}"
 
-SRC_URI = "https://github.com/noumar/iso639"
+SRC_URI = "git://github.com/noumar/iso639.git"
 S = "${WORKDIR}/git"

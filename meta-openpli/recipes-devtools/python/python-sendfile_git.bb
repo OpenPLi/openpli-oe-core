@@ -9,7 +9,7 @@ inherit setuptools gitpkgv
 PV = "2.0.1+git${SRCPV}"
 PKGV = "2.0.1+git${GITPKGV}"
 
-SRC_URI = "https://github.com/giampaolo/pysendfile"
+SRC_URI = "git://github.com/giampaolo/pysendfile.git"
 S = "${WORKDIR}/git"
 
 include python-package-split.inc
