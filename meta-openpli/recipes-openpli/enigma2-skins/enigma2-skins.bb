@@ -12,7 +12,7 @@ PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
 BRANCH = "3.2"
 
-SRC_URI = "git://github.com/opendreambox/enigma2-skins.git;protocol=git;branch=${BRANCH}"
+SRC_URI = "git://github.com/opendreambox/enigma2-skins.git;protocol=http;branch=${BRANCH}"
 
 #include examples of openpli widgets
 SRC_URI_append = " \

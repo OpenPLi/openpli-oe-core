@@ -1,6 +1,6 @@
 HOMEPAGE = "https://github.com/Dima73/${PLUGINNAME}"
 
-SRC_URI = "git://github.com/Dima73/${PLUGINNAME}.git"
+SRC_URI = "git://github.com/Dima73/${PLUGINNAME}.git;protocol=http"
 
 S = "${WORKDIR}/git"
 

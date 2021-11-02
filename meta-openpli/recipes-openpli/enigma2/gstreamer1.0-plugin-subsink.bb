@@ -6,7 +6,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
 GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/OpenPLi/gst-plugin-subsink.git"
+SRC_URI = "${GITHUB_URI}/OpenPLi/gst-plugin-subsink.git;protocol=http"
 
 S = "${WORKDIR}/git"
 

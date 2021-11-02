@@ -12,7 +12,7 @@ SRCREV = "${AUTOREV}"
 PV = "2.30+git${SRCPV}"
 PKGV = "2.30+git${GITPKGV}"
 
-SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=git"
+SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=http"
 
 S = "${WORKDIR}/git"
 

@@ -12,7 +12,7 @@ PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 BRANCH = "openpli"
 
-SRC_URI = "git://github.com/Taapat/enigma2-plugin-blurayplayer.git;branch=${BRANCH}"
+SRC_URI = "git://github.com/Taapat/enigma2-plugin-blurayplayer.git;branch=${BRANCH};protocol=http"
 
 S = "${WORKDIR}/git"
 
