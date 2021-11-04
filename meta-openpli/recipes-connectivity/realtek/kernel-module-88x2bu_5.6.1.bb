@@ -14,7 +14,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 BRANCH = "5.6.1_30362.20181109_COEX20180928-6a6a"
 
 SRC_URI = " \
-    git://github.com/cilynx/rtl88x2bu.git;branch=${BRANCH} \
+    git://github.com/cilynx/rtl88x2bu.git;protocol=https;branch=${BRANCH} \
     file://0001-gcc49.patch \
     file://0002-adjust-policy-kernelversion.patch \
     file://0003-fix-multiple-definitions.patch \

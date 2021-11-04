@@ -9,7 +9,7 @@ inherit module
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
-          git://github.com/lwfinger/rtl8188eu.git \
+          git://github.com/lwfinger/rtl8188eu.git;protocol=https \
           "
 
 EXTRA_OEMAKE = "KSRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"

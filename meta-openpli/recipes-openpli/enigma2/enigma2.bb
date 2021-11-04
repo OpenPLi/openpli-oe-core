@@ -113,7 +113,7 @@ PKGV = "2.7+git${GITPKGV}"
 ENIGMA2_BRANCH ?= "develop"
 GITHUB_URI ?= "git://github.com"
 
-SRC_URI = " ${GITHUB_URI}/OpenPLi/enigma2.git;branch=${ENIGMA2_BRANCH} \
+SRC_URI = " ${GITHUB_URI}/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
 			file://01-use-mallinfo2.patch \
 			"
 

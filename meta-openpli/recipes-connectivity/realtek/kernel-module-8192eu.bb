@@ -13,7 +13,7 @@ inherit module siteinfo
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
-          git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
+          git://github.com/Mange/rtl8192eu-linux-driver.git;protocol=https;branch=realtek-4.4.x \
           file://build.patch \
           file://0001-add-CHECKSM_IPV6_H-patch.patch \
           "

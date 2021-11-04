@@ -6,7 +6,7 @@ LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 DEPENDS = "openssl libdvbcsa libaio"
 
-SRC_URI = "git://github.com/OpenVisionE2/astra-sm.git;branch=staging;;protocol=http \
+SRC_URI = "git://github.com/OpenVisionE2/astra-sm.git;protocol=https;;branch=staging; \
            file://replace-sys-siglist.patch \
            "
 

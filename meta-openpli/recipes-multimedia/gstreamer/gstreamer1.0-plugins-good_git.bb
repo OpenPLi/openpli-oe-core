@@ -9,6 +9,7 @@ DEPENDS += "gstreamer1.0-plugins-base libcap zlib"
 
 SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-plugins-good.git;protocol=https;branch=master;name=gst_plugins_good \
            file://0001-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch \
+           file://0002-Revert-souphttpsrc-Always-use-the-conte2t-decoder-bu.patch \
 "
 
 RPROVIDES_${PN}-pulseaudio += "${PN}-pulse"
