@@ -3,16 +3,14 @@ LICENSE = "GPLv2"
 
 LIC_FILES_CHKSUM = "file://license.txt;md5=fc9c335ec05a5f36764ef9ce7a79daa1"
 
-HOMEPAGE = "http://www.rarlab.com"
+HOMEPAGE = "http://www.rarlab.com/"
 
-SRC_URI = "http://www.rarlab.com/rar/unrarsrc-${PV}.tar.gz \
+SRC_URI = "https://ftp.osuosl.org/pub/blfs/conglomeration/unrarsrc/unrarsrc-${PV}.tar.gz \
         file://makefile-nostrip.patch"
-
-SRC_URI[md5sum] = "0f5a438ebee5cf92184d0b039e6890af"
-SRC_URI[sha256sum] = "43e4d3ac762e2f58bfa9e37693efa342c1363eb1029fab409dfdf69171201450"
+SRC_URI[md5sum] = "de5017a63a610cb82dba7d33bd826fb6"
+SRC_URI[sha256sum] = "a7029942006cbcced3f3b7322ec197683f8e7be408972ca08099b196c038f518"
 
 S = "${WORKDIR}/unrar"
-TARGET_CC_ARCH += "${LDFLAGS}"
 
 BBCLASSEXTEND = "native"
 NATIVE_INSTALL_WORKS = "1"
@@ -26,7 +24,5 @@ do_compile() {
 do_install() {
     oe_runmake install
 }
-INSANE_SKIP_${PN} = "ldflags"
-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
-INHIBIT_PACKAGE_STRIP = "1"
 
+INSANE_SKIP_${PN} = "already-stripped ldflags"
