@@ -15,7 +15,7 @@ PACKAGES += "${PN}-examples"
 BRANCH = "dev"
 SRCREV = "93637d1b4f32a1f73613f70b29544f232059d600"
 
-SRC_URI = "git://code.qt.io/qt-apps/qtwebbrowser.git;protocol=git;branch=${BRANCH} \
+SRC_URI = "git://code.qt.io/qt-apps/qtwebbrowser.git;protocol=https;branch=${BRANCH} \
 "
 
 S = "${WORKDIR}/git"

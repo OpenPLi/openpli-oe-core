@@ -4,21 +4,21 @@ MAINTAINER = "http://osmocom.org/projects/sdr"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
-inherit gitpkgv
+inherit gitpkgv cmake
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "git://git.osmocom.org/rtl-sdr.git;protocol=git"
+SRC_URI[sha256sum] = "84db1d332e27f0c6c28e261f4993f4b7c2953761991c328fd0f195260d26c60e"
+
+SRC_URI = "git://git.osmocom.org/rtl-sdr;protocol=https"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "libusb1"
 
 EXTRA_OECMAKE += " -DLIB_INSTALL_DIR=${libdir}"
-
-inherit cmake
 
 EXTRA_OECONF = "--enable-driver-detach"
 

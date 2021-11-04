@@ -8,9 +8,8 @@ inherit gitpkgv
 
 PV = "1.1+git${SRCPV}"
 PKGV = "1.1+git${GITPKGV}"
-PR = "r0"
 
-SRC_URI = "git://github.com/e2iplayer/e2isubparser.git;protocol=git"
+SRC_URI = "git://github.com/OpenVisionE2/e2isubparser.git;protocol=https"
 
 S = "${WORKDIR}/git"
 

@@ -1,8 +1,6 @@
 DESCRIPTION = "Simple F4M/HDS (Adobe HTTP Dynamic Streaming) dumper. Intended to be used by IPTVPlayer plugin: https://gitorious.org/iptv-pl-dla-openpli, http://iptvplayer.vline.pl."
 MAINTAINER = "samsamsam"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/$PN}:"
-
 DEPENDS = "openssl zlib"
 RDEPENDS_${PN} += "wget"
 
