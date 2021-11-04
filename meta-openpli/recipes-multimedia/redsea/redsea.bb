@@ -4,13 +4,12 @@ MAINTAINER = "Oona Räisänen <windyoona@gmail.com>"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=884926124e31c67b8c1bdaa062802dec"
 
-inherit gitpkgv
+inherit gittag
 
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
-PR = "r0"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/windytan/redsea.git;protocol=http"
+SRC_URI = "git://github.com/windytan/redsea.git;protocol=https"
 
 S = "${WORKDIR}/git"
 
