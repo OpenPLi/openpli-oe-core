@@ -1,15 +1,27 @@
+From 32309afa0d9135ac152ca07fe233c5a6c827ff72 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Sun, 25 Jul 2021 01:30:27 +0200
+
+---
+ NEWS                   |   1 +
+ stdlib/tst-system.c    | 122 +++++++++++++++++++++++++++++++++++++++--
+ sysdeps/posix/system.c |  18 +++---
+ 3 files changed, 130 insertions(+), 11 deletions(-)
+
 diff --git a/NEWS b/NEWS
+index 2a57721d72..40656dc1ca 100644
 --- a/NEWS
 +++ b/NEWS
-@@ -46,6 +46,7 @@ The following bugs are resolved with this release:
+@@ -10,6 +10,7 @@ Version 2.30.1
  The following bugs are resolved with this release:
  
    [24867] malloc: Remove unwanted leading whitespace in malloc_info
 +  [25715] system() returns wrong errors when posix_spawn fails
  
- \f
+ 
  Version 2.30
 diff --git a/stdlib/tst-system.c b/stdlib/tst-system.c
+index 06afbf24c7..0830a157b4 100644
 --- a/stdlib/tst-system.c
 +++ b/stdlib/tst-system.c
 @@ -17,14 +17,128 @@
@@ -146,6 +158,7 @@ diff --git a/stdlib/tst-system.c b/stdlib/tst-system.c
 -#include "../test-skeleton.c"
 +#include <support/test-driver.c>
 diff --git a/sysdeps/posix/system.c b/sysdeps/posix/system.c
+index a08d328b23..922a023ab6 100644
 --- a/sysdeps/posix/system.c
 +++ b/sysdeps/posix/system.c
 @@ -97,7 +97,8 @@ cancel_handler (void *arg)
@@ -188,3 +201,4 @@ diff --git a/sysdeps/posix/system.c b/sysdeps/posix/system.c
 +
    return status;
  }
+ 
