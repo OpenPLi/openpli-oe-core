@@ -4,7 +4,7 @@ PRIORITY = "optional"
 LICENSE = "GPLv3+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS = "libdvdread virtual/gettext"
+DEPENDS = "libdvdread gettext-native"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${BPN}/${BP}.tar.xz"
 
