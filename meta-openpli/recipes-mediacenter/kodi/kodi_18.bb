@@ -200,9 +200,6 @@ LDFLAGS += "${TOOLCHAIN_OPTIONS}"
 LDFLAGS_append_mipsarch = " -latomic -lpthread"
 LDFLAGS_append_arm = " -lpthread"
 
-FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
-BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
-
 # for python modules
 export HOST_SYS
 export BUILD_SYS
