@@ -8,20 +8,22 @@ Subject: [PATCH] Add kernel 5.15(+) support
  1 file changed, 28 insertions(+)
 
 diff --git a/core/rtw_br_ext.c b/core/rtw_br_ext.c
-index 6509df3..e49575c 100644
+index 43ffc31..c6172a8 100644
 --- a/core/rtw_br_ext.c
 +++ b/core/rtw_br_ext.c
-@@ -17,7 +17,10 @@
+@@ -17,8 +17,11 @@
  #ifdef __KERNEL__
  	#include <linux/if_arp.h>
  	#include <net/ip.h>
 +	#include <linux/version.h>
-+#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 15, 0))
++	#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 15, 0))
  	#include <net/ipx.h>
-+#endif
+-	#ifndef _CHECKSM_IPV6_H
++	#endif
++	#ifndef _CHECKSM_IPV6_H
+ 	#include <net/ip6_checksum.h>
+ 	#endif
  	#include <linux/atalk.h>
- 	#include <linux/udp.h>
- 	#include <linux/if_pppox.h>
 @@ -68,6 +71,31 @@
  #define MAGIC_CODE_LEN	2
  #define WAIT_TIME_PPPOE	5	/* waiting time for pppoe server in sec */
