@@ -19,7 +19,7 @@ SRC_URI = " \
     file://0006-fix-for-5.15.patch \
     "
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}"
 
 EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR} KSRC=${STAGING_KERNEL_DIR}"
 
