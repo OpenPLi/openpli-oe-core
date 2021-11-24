@@ -1,0 +1,133 @@
+From ebd39cd9a383449bbad043aa0a687bc8f1f7735e Mon Sep 17 00:00:00 2001
+From: ims <ims21@users.sourceforge.net>
+Date: Wed, 24 Nov 2021 08:26:32 +0100
+Subject: [PATCH] rtl8192fu - complement to 5.15
+
+---
+ core/rtw_btcoex.c      |  4 ++++
+ core/rtw_wlan_util.c   |  4 ++++
+ os_dep/osdep_service.c | 33 ++++++++++++++++++++++++++++++---
+ 3 files changed, 38 insertions(+), 3 deletions(-)
+
+diff --git a/core/rtw_btcoex.c b/core/rtw_btcoex.c
+index 15df50e..8f68307 100644
+--- a/core/rtw_btcoex.c
++++ b/core/rtw_btcoex.c
+@@ -1498,15 +1498,19 @@ u8 rtw_btcoex_sendmsgbysocket(_adapter *padapter, u8 *msg, u8 msg_size, bool for
+ 	udpmsg.msg_control	= NULL;
+ 	udpmsg.msg_controllen = 0;
+ 	udpmsg.msg_flags	= MSG_DONTWAIT | MSG_NOSIGNAL;
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	oldfs = get_fs();
+ 	set_fs(KERNEL_DS);
++    #endif
+ 
+ #if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 1, 0))
+ 	error = sock_sendmsg(pcoex_info->udpsock, &udpmsg);
+ #else
+ 	error = sock_sendmsg(pcoex_info->udpsock, &udpmsg, msg_size);
+ #endif
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	set_fs(oldfs);
++    #endif
+ 	if (error < 0) {
+ 		RTW_INFO("Error when sendimg msg, error:%d\n", error);
+ 		return _FAIL;
+diff --git a/core/rtw_wlan_util.c b/core/rtw_wlan_util.c
+index fbe575e..258f41c 100644
+--- a/core/rtw_wlan_util.c
++++ b/core/rtw_wlan_util.c
+@@ -4789,8 +4789,10 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t *ssid,
+ 		return 0;
+ 	}
+ 
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	fs = get_fs();
+ 	set_fs(KERNEL_DS);
++    #endif
+ 
+ 	source = rtw_zmalloc(2048);
+ 
+@@ -4800,7 +4802,9 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t *ssid,
+ 		rtw_mfree(source, 2048);
+ 	}
+ 
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	set_fs(fs);
++    #endif
+ 	filp_close(fp, NULL);
+ 
+ 	RTW_INFO("-%s-\n", __func__);
+diff --git a/os_dep/osdep_service.c b/os_dep/osdep_service.c
+index 34b73b4..1fa3266 100644
+--- a/os_dep/osdep_service.c
++++ b/os_dep/osdep_service.c
+@@ -2220,7 +2220,14 @@ static int isFileReadable(const char *path, u32 *sz)
+ 	if (IS_ERR(fp))
+ 		ret = PTR_ERR(fp);
+ 	else {
+-		oldfs = get_fs();
++        #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
++            oldfs = get_fs();
++            #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++                set_fs(KERNEL_DS);
++            #else
++                set_fs(get_ds());
++            #endif
++        #endif
+ 
+ 		if (1 != readFile(fp, &buf, 1))
+ 			ret = PTR_ERR(fp);
+@@ -2233,7 +2240,9 @@ static int isFileReadable(const char *path, u32 *sz)
+ 			#endif
+ 		}
+ 
++        #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 		set_fs(oldfs);
++        #endif
+ 		filp_close(fp, NULL);
+ 	}
+ 	return ret;
+@@ -2257,9 +2266,18 @@ static int retriveFromFile(const char *path, u8 *buf, u32 sz)
+ 		if (0 == ret) {
+ 			RTW_INFO("%s openFile path:%s fp=%p\n", __FUNCTION__, path , fp);
+ 
+-			oldfs = get_fs();
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
++                oldfs = get_fs();
++                #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++                    set_fs(KERNEL_DS);
++                #else
++                    set_fs(get_ds());
++                #endif
++            #endif
+ 			ret = readFile(fp, buf, sz);
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 			set_fs(oldfs);
++            #endif
+ 			closeFile(fp);
+ 
+ 			RTW_INFO("%s readFile, ret:%d\n", __FUNCTION__, ret);
+@@ -2291,9 +2309,18 @@ static int storeToFile(const char *path, u8 *buf, u32 sz)
+ 		if (0 == ret) {
+ 			RTW_INFO("%s openFile path:%s fp=%p\n", __FUNCTION__, path , fp);
+ 
+-			oldfs = get_fs();
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
++                oldfs = get_fs();
++                #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++                    set_fs(KERNEL_DS);
++                #else
++                    set_fs(get_ds());
++                #endif
++            #endif
+ 			ret = writeFile(fp, buf, sz);
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 			set_fs(oldfs);
++            #endif
+ 			closeFile(fp);
+ 
+ 			RTW_INFO("%s writeFile, ret:%d\n", __FUNCTION__, ret);
+-- 
+2.17.1
+
