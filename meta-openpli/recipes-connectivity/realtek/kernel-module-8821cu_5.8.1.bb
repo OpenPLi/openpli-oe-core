@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://wlan0dhcp;md5=069fc07a0c587af26235837dc342eb25"
 
 inherit module
 
-BRANCH = "5.8.1"
+BRANCH = "master"
 
 SRC_URI = " \
     git://github.com/brektrou/rtl8821CU.git;branch=${BRANCH} \
