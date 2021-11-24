@@ -12,9 +12,6 @@ SRC_URI = " \
     git://github.com/brektrou/rtl8821CU.git;branch=${BRANCH} \
     file://0001-disable-mp-hw-tx-mode-for-vht.patch \
     file://0002-adjust-policy-kernelversion.patch \
-    file://rtl8821cu-kernel-5.8.patch \
-    file://0001-add-linux-5.12-support.patch \
-    file://rtl8821cu-kernel-5.15.patch \
 "
 
 S = "${WORKDIR}/git"
