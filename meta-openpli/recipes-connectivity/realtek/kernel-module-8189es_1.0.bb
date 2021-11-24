@@ -17,7 +17,6 @@ SRC_URI = " \
           file://rtl8189es-kernel-5.2.patch \
           file://rtl8189es-kernel-5.6.patch \
           file://rtl8189es-kernel-5.8.patch \
-          file://rtl8189es-kernel-5.10.patch \
           file://rtl8189es-kernel-5.15.patch \
           "
 
