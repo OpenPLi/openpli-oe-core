@@ -6,14 +6,14 @@ LIC_FILES_CHKSUM = "file://wlan0dhcp;md5=069fc07a0c587af26235837dc342eb25"
 
 inherit module
 
-BRANCH = "5.8.1"
+BRANCH = "master"
 
 SRC_URI = " \
-    git://github.com/brektrou/rtl8821CU.git;protocol=https;branch=${BRANCH} \
+    git://github.com/brektrou/rtl8821CU.git;branch=${BRANCH} \
     file://0001-disable-mp-hw-tx-mode-for-vht.patch \
     file://0002-adjust-policy-kernelversion.patch \
-    file://rtl8821cu-kernel-5.8.patch \
-    file://0001-add-linux-5.12-support.patch \
+    file://support-kernel-5.1-to-5.9.patch \
+    file://restore_support_for_kernels_older_than_420.patch \
 "
 
 S = "${WORKDIR}/git"
