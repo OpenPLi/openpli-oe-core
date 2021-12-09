@@ -23,12 +23,14 @@ PYPI_PACKAGE_EXT = "tar.bz2"
 
 inherit pypi python-dir setuptools
 
+include python-package-split.inc
+
 do_install_append() {
     # remove some useless files before packaging
     find ${D} \( -name "*.bat" -o -name "*.c" -o -name "*.h" \) -exec rm -f {} \;
 }
 
-PACKAGES += "\
+PACKAGES =+ "\
     ${PN}-zsh \
     ${PN}-test \
     ${PN}-protocols \
@@ -274,8 +276,6 @@ ${PYTHON_SITEPACKAGES_DIR}/twisted/pair \
 FILES_${PN}-dbg += " \
 ${PYTHON_SITEPACKAGES_DIR}/twisted/*/.debug \
 ${PYTHON_SITEPACKAGES_DIR}/twisted/*/*/.debug \
-${PYTHON_SITEPACKAGES_DIR}/twisted/*.egg-info \
-${PYTHON_SITEPACKAGES_DIR}/twisted/*/*/test \
 "
 
 FILES_${PN}-doc += " \
@@ -287,9 +287,6 @@ FILES_${PN}-src = " \
     ${PYTHON_SITEPACKAGES_DIR}/twisted/*.py \
     ${PYTHON_SITEPACKAGES_DIR}/twisted/*/*.py \
     ${PYTHON_SITEPACKAGES_DIR}/twisted/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/twisted/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/twisted/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/twisted/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/twisted/*/*/*/*.py \
 "
 
+PNBLACKLIST[python-twisted] ?= "${@bb.utils.contains('I_SWEAR_TO_MIGRATE_TO_PYTHON3', 'yes', '', 'python2 is out of support for long time, read https://www.python.org/doc/sunset-python-2/ https://python3statement.org/ and if you really have to temporarily use this, then set I_SWEAR_TO_MIGRATE_TO_PYTHON3 to "yes"', d)}"

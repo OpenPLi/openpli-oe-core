@@ -20,9 +20,10 @@ RDEPENDS_${PN} = "\
 "
 RRECOMMENDS_${PN} = "unrar"
 
-PV = "0.4.20"
+inherit gittag update-rc.d
 
-inherit update-rc.d
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 SRCREV = "1f29cd14d4c3d90d3249d20165a21c2b04ffed26"
 SRC_URI = "git://github.com/pyload/pyload.git;protocol=https;branch=stable \

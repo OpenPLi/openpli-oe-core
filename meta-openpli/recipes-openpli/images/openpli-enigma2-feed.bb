@@ -123,8 +123,7 @@ OPTIONAL_PACKAGES += " \
 	python-singledispatch \
 	python-websocket-client \
 	python-isodate \
-	python-iso3166 \
-	python-iso639 \
+	python-pycountry \
 	python-youtube-dl \
 	python-pycryptodomex \
 	python-evdev \
@@ -203,7 +202,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
-	enigma2-plugin-skins-simple-gray-hd \
+	enigma2-plugin-skins-simple-gray \
 	enigma2-plugin-skins-pd1loi-hd-night \
 	enigma2-plugin-skins-glamouraurafhd \
 	enigma2-plugins \

@@ -6,14 +6,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 RDEPENDS_${PN} = "python-requests python-xmlrpc python-compression python-codecs python-zlib python-difflib unrar"
 
-inherit autotools-brokensep gettext
+inherit autotools-brokensep gettext gittag
 
 SRC_URI = "git://github.com/mx3L/subssupport;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
-PV = "1.5.8"
-PKGV = "1.5.8"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/SubsSupport \
 ${localstatedir}/lib/subssupport"

@@ -17,6 +17,8 @@ SRC_URI = " \
           file://rtl8189es-kernel-5.2.patch \
           file://rtl8189es-kernel-5.6.patch \
           file://rtl8189es-kernel-5.8.patch \
+          file://rtl8189es-kernel-5.15.patch \
+          file://rtl8189es-complement-to-5.15.patch \
           "
 
 SRC_URI[md5sum] = "df5d47702271a7bc429f893d6f044221"

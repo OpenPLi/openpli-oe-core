@@ -1,0 +1,131 @@
+diff --git a/core/rtw_btcoex.c b/core/rtw_btcoex.c
+index ffdc308..e0598da 100644
+--- a/core/rtw_btcoex.c
++++ b/core/rtw_btcoex.c
+@@ -1422,10 +1422,14 @@ u8 rtw_btcoex_sendmsgbysocket(_adapter *padapter, u8 *msg, u8 msg_size, bool for
+ 	udpmsg.msg_control	= NULL; 
+ 	udpmsg.msg_controllen = 0; 
+ 	udpmsg.msg_flags	= MSG_DONTWAIT | MSG_NOSIGNAL; 
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	oldfs = get_fs(); 
+ 	set_fs(KERNEL_DS); 
++    #endif
+ 	error = sock_sendmsg(pcoex_info->udpsock, &udpmsg, msg_size); 
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	set_fs(oldfs); 
++    #endif
+ 	if (error < 0) {
+ 		DBG_871X("Error when sendimg msg, error:%d\n", error); 
+ 		return _FAIL;
+diff --git a/core/rtw_wlan_util.c b/core/rtw_wlan_util.c
+index 15a8203..61de19d 100644
+--- a/core/rtw_wlan_util.c
++++ b/core/rtw_wlan_util.c
+@@ -4469,8 +4469,10 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t* ssid,
+ 		return 0;
+ 	}
+ 
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	fs = get_fs();
+ 	set_fs(KERNEL_DS);
++    #endif
+ 
+ 	source = rtw_zmalloc(2048);
+ 
+@@ -4484,7 +4486,9 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t* ssid,
+ 		rtw_mfree(source, 2048);
+ 	}
+ 
++    #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 	set_fs(fs);
++    #endif
+ 	filp_close(fp, NULL);
+ 
+ 	DBG_871X("-%s-\n", __func__);
+diff --git a/os_dep/osdep_service.c b/os_dep/osdep_service.c
+index 40f1bd3..22c5e3d 100644
+--- a/os_dep/osdep_service.c
++++ b/os_dep/osdep_service.c
+@@ -1952,19 +1952,21 @@ static int isFileReadable(char *path)
+ 		ret = PTR_ERR(fp);
+ 	}
+ 	else {
+-		oldfs = get_fs(); set_fs(
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,1,0))
+-				KERNEL_DS
+-#else
+-				get_ds()
+-#endif
+-				);
+-
++        #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
++            oldfs = get_fs();
++            #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++                set_fs(KERNEL_DS);
++            #else
++                set_fs(get_ds());
++            #endif
++        #endif
+ 		
+ 		if(1!=readFile(fp, &buf, 1))
+ 			ret = PTR_ERR(fp);
+-		
++
++        #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 		set_fs(oldfs);
++        #endif
+ 		filp_close(fp,NULL);
+ 	}	
+ 	return ret;
+@@ -1987,15 +1989,18 @@ static int retriveFromFile(char *path, u8* buf, u32 sz)
+ 		if( 0 == (ret=openFile(&fp,path, O_RDONLY, 0)) ){
+ 			DBG_871X("%s openFile path:%s fp=%p\n",__FUNCTION__, path ,fp);
+ 
+-			oldfs = get_fs(); set_fs(
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,1,0))
+-				KERNEL_DS
+-#else
+-				get_ds()
+-#endif
+-			);
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
++                oldfs = get_fs();
++                #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++                    set_fs(KERNEL_DS);
++                #else
++                    set_fs(get_ds());
++                #endif
++            #endif
+ 			ret=readFile(fp, buf, sz);
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 			set_fs(oldfs);
++            #endif
+ 			closeFile(fp);
+ 			
+ 			DBG_871X("%s readFile, ret:%d\n",__FUNCTION__, ret);
+@@ -2027,15 +2032,18 @@ static int storeToFile(char *path, u8* buf, u32 sz)
+ 		if( 0 == (ret=openFile(&fp, path, O_CREAT|O_WRONLY, 0666)) ) {
+ 			DBG_871X("%s openFile path:%s fp=%p\n",__FUNCTION__, path ,fp);
+ 
+-			oldfs = get_fs(); set_fs(
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,1,0))
+-				KERNEL_DS
+-#else
+-				get_ds()
+-#endif
+-			);
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
++                oldfs = get_fs();
++                #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++                    set_fs(KERNEL_DS);
++                #else
++                    set_fs(get_ds());
++                #endif
++            #endif
+ 			ret=writeFile(fp, buf, sz);
++            #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
+ 			set_fs(oldfs);
++            #endif
+ 			closeFile(fp);
+ 
+ 			DBG_871X("%s writeFile, ret:%d\n",__FUNCTION__, ret);

@@ -20,9 +20,9 @@ RDEPENDS_${PN} = "\
 	python-unixadmin \
 	"
 
-inherit gitpkgv
-PV = "1+git${SRCPV}"
-PKGV = "1+git${GITPKGV}"
+inherit gittag
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 require openplugins-distutils.inc
 
