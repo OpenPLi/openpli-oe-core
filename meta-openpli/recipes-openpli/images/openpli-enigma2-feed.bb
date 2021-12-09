@@ -123,8 +123,7 @@ OPTIONAL_PACKAGES += " \
 	python-singledispatch \
 	python-websocket-client \
 	python-isodate \
-	python-iso3166 \
-	python-iso639 \
+	python-pycountry \
 	python-youtube-dl \
 	python-pycryptodomex \
 	python-evdev \
