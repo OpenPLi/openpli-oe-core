@@ -171,6 +171,7 @@ FILES_${PN}-dbg += "\
 # Swig generated 200k enigma.py file has no purpose for end users
 # Save some space by not installing sources (Startup.py must remain)
 FILES_${PN}-src += "\
+	${@bb.utils.contains("PYTHON_VER", "python", " \
 	${libdir}/enigma2/python/e2reactor.py \
 	${libdir}/enigma2/python/enigma.py \
 	${libdir}/enigma2/python/GlobalActions.py \
@@ -186,7 +187,7 @@ FILES_${PN}-src += "\
 	${libdir}/enigma2/python/*/*.py \
 	${libdir}/enigma2/python/*/*/*.py \
 	${libdir}/enigma2/python/*/*/*/*.py \
-	"
+	", "", d)}"
 
 do_install_append() {
 	install -d ${D}${datadir}/keymaps
