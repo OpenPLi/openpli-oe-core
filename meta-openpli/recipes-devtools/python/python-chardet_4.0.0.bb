@@ -23,4 +23,4 @@ RDEPENDS_${PN}_class-target += " \
     ${PYTHON_PN}-logging \
 "
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

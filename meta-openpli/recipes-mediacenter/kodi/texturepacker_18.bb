@@ -14,7 +14,7 @@ SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
 PV = "18.9+gitr${SRCPV}"
 SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
 
-inherit cmake gettext python-dir pythonnative
+inherit cmake gettext ${PYTHON_VER}-dir ${PYTHON_VER}native
 
 S = "${WORKDIR}/git/tools/depends/native/TexturePacker"
 

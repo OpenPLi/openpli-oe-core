@@ -16,7 +16,7 @@ PR = "r1"
 
 inherit distutils-openplugins
 
-RDEPENDS_${PN} = "python-core rtl-sdr redsea dab-cmdline-sdgradio dab-cmdline-sdgradio-pcm dab-cmdline-sdgradio-wav"
+RDEPENDS_${PN} = "${PYTHON_VER}-core rtl-sdr redsea dab-cmdline-sdgradio dab-cmdline-sdgradio-pcm dab-cmdline-sdgradio-wav"
 
 RDEPENDS_{PN}-src = "${PN}"
 

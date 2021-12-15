@@ -2,7 +2,7 @@ MODULE = "MeteoViewer"
 DESCRIPTION = "meteo pictures viewer"
 
 RDEPENDS_${PN} = "\
-	python-requests \
+	${PYTHON_VER}-requests \
 	"
 
 require conf/license/license-gplv2.inc

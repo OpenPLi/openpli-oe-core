@@ -3,7 +3,7 @@ MAINTAINER = "kiddac"
 require conf/license/license-gplv2.inc
 HOMEPAGE = "https://github.com/kiddac/Jedi_Maker_Xtream"
 
-DEPENDS += "python-lzma"
+DEPENDS += "${PYTHON_VER}-lzma"
 
 inherit gitpkgv allarch
 

@@ -11,7 +11,8 @@ DEPENDS = " \
 	jpeg \
 	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-2.0 giflib libxml2 \
 	openssl libudfread \
-	python-imaging python-twisted python-wifi \
+	${PYTHON_VER}-twisted python-wifi \
+	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	swig-native \
 	tuxtxt-enigma2 \
 	"
@@ -40,26 +41,26 @@ RRECOMMENDS_${PN} = " \
 RRECOMMENDS_${PN}_append_libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
-	python-codecs \
-	python-core \
-	python-crypt \
-	python-fcntl \
-	python-lang \
-	python-logging \
-	python-mmap \
-	python-netclient \
-	python-netifaces \
-	python-netserver \
-	python-numbers \
-	python-pickle \
-	python-re \
-	python-shell \
-	python-threading \
-	python-twisted-core \
-	python-twisted-web \
-	python-xml \
-	python-zlib \
-	python-zopeinterface \
+	${PYTHON_PN}-codecs \
+	${PYTHON_PN}-core \
+	${PYTHON_PN}-crypt \
+	${PYTHON_PN}-fcntl \
+	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-lang", "", d)} \
+	${PYTHON_PN}-logging \
+	${PYTHON_PN}-mmap \
+	${PYTHON_PN}-netclient \
+	${PYTHON_PN}-netifaces \
+	${PYTHON_PN}-netserver \
+	${PYTHON_PN}-numbers \
+	${PYTHON_PN}-pickle \
+	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-re", "", d)} \
+	${PYTHON_PN}-shell \
+	${PYTHON_PN}-threading \
+	${PYTHON_PN}-twisted-core \
+	${PYTHON_PN}-twisted-web \
+	${PYTHON_PN}-xml \
+	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-zlib", "", d)} \
+	${PYTHON_PN}-zopeinterface \
 	"
 
 # DVD and iso playback is integrated, we need the libraries
@@ -84,12 +85,13 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configu
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
-RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "python-twisted-web"
-RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "python-twisted-web"
+RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "${PYTHON_VER}-twisted-web"
+RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_VER}-twisted-web"
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python-wifi"
 
 # Note that these tools lack recipes
-RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL}"
+RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit ${PYTHON_VER}-imaging ${DEMUXTOOL} \
+                                              ${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)}"
 RDEPENDS_enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
 RRECOMMENDS_enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 
@@ -97,15 +99,16 @@ RRECOMMENDS_enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 # the RDEPENDS for the plugins above, preventing [build-deps] warnings.
 RDEPENDS_${PN}-build-dependencies = "\
 	aio-grab \
-	dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL} \
+	dvd+rw-tools dvdauthor mjpegtools cdrkit ${DEMUXTOOL} \
+	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	wpa-supplicant wireless-tools python-wifi \
-	python-twisted-web \
+	${PYTHON_VER}-twisted-web \
 	"
 RRECOMMENDS_${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
-inherit gitpkgv pythonnative
+inherit gitpkgv ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setuptools3", d)}
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"

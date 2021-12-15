@@ -4,7 +4,7 @@ AUTHOR = "Maroš Ondrášek <mx3ldev@gmail.com>"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-RDEPENDS_${PN} = "python-requests python-xmlrpc python-compression python-codecs python-zlib python-difflib unrar"
+RDEPENDS_${PN} = "${PYTHON_VER}-requests ${PYTHON_VER}-xmlrpc ${PYTHON_VER}-compression ${PYTHON_VER}-codecs ${PYTHON_VER}-zlib ${PYTHON_VER}-difflib unrar"
 
 inherit autotools-brokensep gettext gittag
 

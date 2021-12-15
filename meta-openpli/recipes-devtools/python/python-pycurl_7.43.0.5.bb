@@ -24,4 +24,4 @@ DEPENDS = "\
     curl \
     ${PYTHON_PN}\
 "
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

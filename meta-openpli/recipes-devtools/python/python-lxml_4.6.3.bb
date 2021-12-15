@@ -39,4 +39,4 @@ RDEPENDS_${PN} += "libxml2 libxslt ${PYTHON_PN}-compression"
 
 CLEANBROKEN = "1"
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

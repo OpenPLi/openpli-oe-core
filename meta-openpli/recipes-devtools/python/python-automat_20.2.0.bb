@@ -3,7 +3,7 @@ HOMEPAGE = "https://github.com/glyph/Automat"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4ad213bcca81688e94593e5f60c87477"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/python-automat:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PYTHON_VER}-automat:"
 
 SRC_URI[md5sum] = "d6cef9886b037b8857bfbc686f3ae30a"
 SRC_URI[sha256sum] = "7979803c74610e11ef0c0d68a2942b152df52da55336e0c9d58daf1831cbdf33"
@@ -22,4 +22,4 @@ RDEPENDS_${PN} += "\
    ${PYTHON_PN}-attrs \
    ${PYTHON_PN}-six \
 "
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

@@ -4,7 +4,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = "python"
-RDEPENDS_${PN} = "python-shell"
+RDEPENDS_${PN} = "${PYTHON_VER}-shell"
 
 SRC_URI = "https://files.pythonhosted.org/packages/f4/a2/af03414b37e2e3c1fcdfadfbc692652198767c5d822ad3a3b3a949bac86d/mutagen-${PV}.tar.gz"
 
@@ -15,4 +15,4 @@ S = "${WORKDIR}/mutagen-${PV}"
 
 inherit distutils setuptools
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

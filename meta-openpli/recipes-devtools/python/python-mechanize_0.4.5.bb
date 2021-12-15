@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=621053d4e9daec9454e15e60fe40214f"
 
 PR = "r2"
 
-RDEPENDS_${PN} = "python-core python-robotparser"
+RDEPENDS_${PN} = "${PYTHON_VER}-core ${PYTHON_VER}-robotparser"
 
 SRC_URI = "https://pypi.python.org/packages/source/m/mechanize/mechanize-${PV}.tar.gz"
 
@@ -17,4 +17,4 @@ S = "${WORKDIR}/mechanize-${PV}"
 
 inherit setuptools distutils
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

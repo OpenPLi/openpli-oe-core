@@ -11,5 +11,5 @@ inherit pypi setuptools
 BBCLASSEXTEND = "native nativesdk"
 
 RDEPENDS_${PN} += " \
-    python-datetime \
+    ${PYTHON_VER}-datetime \
 "

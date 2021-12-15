@@ -14,19 +14,19 @@ SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-sour
 RDEPENDS_${PN} += "\
 	png-util \
 	pydpflib \
-	python-codecs \
-	python-ctypes \
-	python-datetime \
-	python-email \
-	python-image \
-	python-imaging \
-	python-mutagen \
-	python-pyusb \
-	python-shell \
-	python-simplejson \
-	python-subprocess \
-	python-textutils \
-	python-zlib \
+	${PYTHON_VER}-codecs \
+	${PYTHON_VER}-ctypes \
+	${PYTHON_VER}-datetime \
+	${PYTHON_VER}-email \
+	${PYTHON_VER}-image \
+	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_VER}-imaging", "${PYTHON_VER}-pillow", d)} \
+	${PYTHON_VER}-mutagen \
+	${PYTHON_VER}-pyusb \
+	${PYTHON_VER}-shell \
+	${PYTHON_VER}-simplejson \
+	${PYTHON_VER}-subprocess \
+	${PYTHON_VER}-textutils \
+	${PYTHON_VER}-zlib \
 "
 
 S = "${WORKDIR}/git"

@@ -1,6 +1,6 @@
 SUMMARY = "Internationalised Domain Names in Applications"
 HOMEPAGE = "https://github.com/kjd/idna"
-LICENSE = "BSD-3-Clause & Python-2.0 & Unicode"
+LICENSE = "BSD-3-Clause & ${PYTHON_VER}-2.0 & Unicode"
 LIC_FILES_CHKSUM = "file://LICENSE.rst;md5=cf36c8682cc154d2d4aa57bd6246b9a1"
 
 SRC_URI[md5sum] = "7a910c706db30d758f377db2762c0f9a"
@@ -21,4 +21,4 @@ BBCLASSEXTEND = "native nativesdk"
 
 PYPI_PACKAGE = "idna"
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

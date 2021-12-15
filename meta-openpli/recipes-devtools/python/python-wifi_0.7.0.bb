@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://README;md5=54307cbab01c3aad9adf7605132bcf31 \
 					file://pythonwifi/iwlibs.py;md5=a648a9858e3e6973c53dc77944571649 \
 					"
 
-RDEPENDS_${PN} = "python-ctypes python-datetime"
+RDEPENDS_${PN} = "${PYTHON_VER}-ctypes ${PYTHON_VER}-datetime"
 PR = "r1"
 
 SRC_URI = "https://github.com/Opvolger/pythonwifi/releases/download/0.7.0/python-wifi-0.7.0.tar.bz2"
@@ -32,4 +32,4 @@ PACKAGES =+ "${PN}-examples"
 
 FILES_${PN}-examples = "${sbindir}"
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

@@ -16,4 +16,4 @@ inherit setuptools
 SRC_URI[md5sum] = "451a084bec40bd43d6932a6bb1af1757"
 SRC_URI[sha256sum] = "a41b1009dd1498ae7d436bfa5ac952a08ca92a4bb9e31dca6e8bb966b49f7fce"
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

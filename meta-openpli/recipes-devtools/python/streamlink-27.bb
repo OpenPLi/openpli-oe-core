@@ -6,28 +6,28 @@ SECTION = "devel/python"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7c0be52291b7252b878da806d185b1d1"
 
-RDEPENDS_${PN} = "python-core \
-    python-backports-functools-lru-cache \
-    python-backports-shutil-get-terminal-size \
-    python-backports-shutil-which \
-    python-ctypes \
-    python-futures \
-    python-isodate \
-    python-lxml \
-    python-misc \
-    python-pkgutil \
-    python-pycryptodome \
-    python-pycountry \
-    python-pysocks \
-    python-requests \
-    python-shell \
-    python-singledispatch \
-    python-subprocess \
-    python-websocket-client \
-    python-youtube-dl \
+RDEPENDS_${PN} = "${PYTHON_VER}-core \
+    ${PYTHON_VER}-backports-functools-lru-cache \
+    ${PYTHON_VER}-backports-shutil-get-terminal-size \
+    ${PYTHON_VER}-backports-shutil-which \
+    ${PYTHON_VER}-ctypes \
+    ${PYTHON_VER}-futures \
+    ${PYTHON_VER}-isodate \
+    ${PYTHON_VER}-lxml \
+    ${PYTHON_VER}-misc \
+    ${PYTHON_VER}-pkgutil \
+    ${PYTHON_VER}-pycryptodome \
+    ${PYTHON_VER}-pycountry \
+    ${PYTHON_VER}-pysocks \
+    ${PYTHON_VER}-requests \
+    ${PYTHON_VER}-shell \
+    ${PYTHON_VER}-singledispatch \
+    ${PYTHON_VER}-subprocess \
+    ${PYTHON_VER}-websocket-client \
+    ${PYTHON_VER}-youtube-dl \
     "
 
-inherit gittag setuptools python-dir
+inherit gittag setuptools ${PYTHON_VER}-dir
 
 # SRCREV = "${AUTOREV}"
 

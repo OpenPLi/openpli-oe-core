@@ -15,4 +15,4 @@ RDEPENDS_${PN} = "${PYTHON_PN}-pyasn1"
 
 BBCLASSEXTEND = "native nativesdk"
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc

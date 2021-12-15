@@ -109,24 +109,24 @@ OPTIONAL_PACKAGES += " \
 	parted \
 	procps \
 	pyload \
-	python-ipaddress \
-	python-ntplib \
-	python-pip \
-	python-requests \
-	python-mechanize \
-	python-lxml \
-	python-js2py \
-	python-pyexecjs \
-	python-beautifulsoup4 \
-	python-futures \
-	python-pycryptodome \
-	python-singledispatch \
-	python-websocket-client \
-	python-isodate \
-	python-pycountry \
-	python-youtube-dl \
-	python-pycryptodomex \
-	python-evdev \
+	${PYTHON_VER}-ipaddress \
+	${PYTHON_VER}-ntplib \
+	${PYTHON_VER}-pip \
+	${PYTHON_VER}-requests \
+	${PYTHON_VER}-mechanize \
+	${PYTHON_VER}-lxml \
+	${PYTHON_VER}-js2py \
+	${PYTHON_VER}-pyexecjs \
+	${PYTHON_VER}-beautifulsoup4 \
+	${PYTHON_VER}-futures \
+	${PYTHON_VER}-pycryptodome \
+	${PYTHON_VER}-singledispatch \
+	${PYTHON_VER}-websocket-client \
+	${PYTHON_VER}-isodate \
+	${PYTHON_VER}-pycountry \
+	${PYTHON_VER}-youtube-dl \
+	${PYTHON_VER}-pycryptodomex \
+	${PYTHON_VER}-evdev \
 	picocom \
 	ppp \
 	rclone \

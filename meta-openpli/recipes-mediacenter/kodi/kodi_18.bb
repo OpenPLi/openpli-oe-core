@@ -7,7 +7,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake pkgconfig gettext python-dir pythonnative systemd
+inherit cmake pkgconfig gettext ${PYTHON_VER}-dir ${PYTHON_VER}native systemd
 
 DEPENDS = " \
             fmt \
@@ -234,20 +234,20 @@ RRECOMMENDS_${PN}_append = " libcec \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
                              os-release \
                              python \
-                             python-ctypes \
-                             python-lang \
-                             python-re \
-                             python-netclient \
-                             python-html \
-                             python-difflib \
-                             python-pycryptodome \
-                             python-pycryptodomex \
-                             python-json \
-                             python-zlib \
-                             python-shell \
-                             python-sqlite3 \
-                             python-compression \
-                             python-xmlrpc \
+                             ${PYTHON_VER}-ctypes \
+                             ${PYTHON_VER}-lang \
+                             ${PYTHON_VER}-re \
+                             ${PYTHON_VER}-netclient \
+                             ${PYTHON_VER}-html \
+                             ${PYTHON_VER}-difflib \
+                             ${PYTHON_VER}-pycryptodome \
+                             ${PYTHON_VER}-pycryptodomex \
+                             ${PYTHON_VER}-json \
+                             ${PYTHON_VER}-zlib \
+                             ${PYTHON_VER}-shell \
+                             ${PYTHON_VER}-sqlite3 \
+                             ${PYTHON_VER}-compression \
+                             ${PYTHON_VER}-xmlrpc \
                              tzdata-africa \
                              tzdata-americas \
                              tzdata-antarctica \

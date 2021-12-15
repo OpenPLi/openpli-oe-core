@@ -10,8 +10,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=67da0714c3f9471067b729eca6c9fbe8"
 SRC_URI[md5sum] = "4b38238b7305fcb3ffbc4368be4e8845"
 SRC_URI[sha256sum] = "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
 
-inherit pypi setuptools
+inherit pypi ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setuptools3", d)}
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc
 
 BBCLASSEXTEND = "native nativesdk"

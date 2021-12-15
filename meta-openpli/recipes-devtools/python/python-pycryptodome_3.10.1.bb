@@ -27,9 +27,9 @@ FILES_${PN}-tests += " \
 "
 
 BBCLASSEXTEND = "native nativesdk"
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc
 
-PROVIDES += "python-pycrypto"
-RPROVIDES_${PN} += "python-pycrypto"
-RCONFLICTS_${PN} = "python-pycrypto"
-RREPLACES_${PN} = "python-pycrypto"
+PROVIDES += "${PYTHON_VER}-pycrypto"
+RPROVIDES_${PN} += "${PYTHON_VER}-pycrypto"
+RCONFLICTS_${PN} = "${PYTHON_VER}-pycrypto"
+RREPLACES_${PN} = "${PYTHON_VER}-pycrypto"

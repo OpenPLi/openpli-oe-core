@@ -26,6 +26,6 @@ FILES_${PN}-tests += " \
     ${PYTHON_SITEPACKAGES_DIR}/Crypto/SelfTest/__pycache__/ \
 "
 
-include python-package-split.inc
+include ${PYTHON_VER}-package-split.inc
 
 BBCLASSEXTEND = "native nativesdk"

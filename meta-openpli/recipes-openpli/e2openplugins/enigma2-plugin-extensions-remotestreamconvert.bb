@@ -1,7 +1,7 @@
 MODULE = "RemoteChannelStreamConverter"
 DESCRIPTION = "Fetch channels from remote bouquets and make them available locally"
 
-RDEPENDS_${PN} = "python-shell"
+RDEPENDS_${PN} = "${PYTHON_VER}-shell"
 
 PR="r0"
 

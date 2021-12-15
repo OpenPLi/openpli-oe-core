@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=7246f848faa4e9c9fc0ea91122d6e680"
 
 DEPENDS = "libxml2 bash-completion"
 
-inherit setuptools gittag
+inherit ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setuptools3", d)} gittag
 
 SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
@@ -33,12 +33,12 @@ do_install_append() {
 }
 
 RDEPENDS_${PN} = " \
-    python-email \
-    python-subprocess \
-    python-unixadmin \
-    python-ctypes \
-    python-argparse \
-    python-html \
+    ${PYTHON_PN}-email \
+    ${PYTHON_PN}-subprocess \
+    ${PYTHON_PN}-unixadmin \
+    ${PYTHON_PN}-ctypes \
+    ${PYTHON_PN}-argparse \
+    ${PYTHON_PN}-html \
     "
 
 RDEPENDS_{PN}-src = "${PN}"
