@@ -113,7 +113,7 @@ inherit gitpkgv ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setu
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
 
-ENIGMA2_BRANCH ?= "develop"
+ENIGMA2_BRANCH ?= "${@bb.utils.contains("PYTHON_VER", "python", "develop", "python3", d)}"
 GITHUB_URI ?= "git://github.com"
 
 SRC_URI = " ${GITHUB_URI}/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
