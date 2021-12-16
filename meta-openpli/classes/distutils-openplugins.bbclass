@@ -1,4 +1,4 @@
-inherit distutils gettext
+inherit ${@bb.utils.contains("PYTHON_VER", "python", "distutils", "distutils3", d)} gettext
 
 # Scripts want to install "/etc", so we need "--root" instead of setting install-data stuff
 # to remain compatible with previous versions.
