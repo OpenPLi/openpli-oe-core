@@ -10,7 +10,7 @@ require openplugins.inc
 
 inherit autotools gettext pythonnative
 
-DEPENDS += "python"
+DEPENDS += "${PYTHON_VER}"
 
 EXTRA_OECONF = " \
     STAGING_INCDIR=${STAGING_INCDIR} \
