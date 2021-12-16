@@ -3,7 +3,7 @@ inherit ${PYTHON_VER}-dir
 #PACKAGES =+ " ${PN}-src"
 RDEPENDS_{PN}-src = "${PN}"
 
-SSTATE_DUPWHITELIST += "${STAGING_LIBDIR}/python2.7/site-packages/tests/__init__.py ${STAGING_LIBDIR}/python2.7/site-packages/tests/__init__.pyo"
+SSTATE_DUPWHITELIST += "${STAGING_LIBDIR}/python3.9/site-packages/tests/__init__.py ${STAGING_LIBDIR}/python3.9/site-packages/tests/__init__.py"
 
 FILES_${PN}-src += " \
     ${PYTHON_SITEPACKAGES_DIR}/*.h \
