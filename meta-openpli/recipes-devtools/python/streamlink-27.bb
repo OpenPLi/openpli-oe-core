@@ -13,19 +13,18 @@ RDEPENDS_${PN} = "python-core \
     python-ctypes \
     python-futures \
     python-isodate \
-    python-iso3166 \
-    python-iso639 \
     python-lxml \
     python-misc \
     python-pkgutil \
     python-pycryptodome \
+    python-pycountry \
     python-pysocks \
     python-requests \
     python-shell \
     python-singledispatch \
     python-subprocess \
-    python-typing \
     python-websocket-client \
+    python-youtube-dl \
     "
 
 inherit gittag setuptools python-dir
@@ -33,7 +32,7 @@ inherit gittag setuptools python-dir
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/Billy2011/streamlink-27;protocol=https"
+SRC_URI = "git://github.com/Billy2011/streamlink-27;branch=release-2.27.0.0;protocol=https"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/streamlink-27:"
 
