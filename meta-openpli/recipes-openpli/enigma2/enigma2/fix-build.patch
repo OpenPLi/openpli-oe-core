@@ -1,0 +1,283 @@
+diff --git a/configure.ac b/configure.ac
+index 53f57a3a7..669a5d6ac 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -248,7 +248,7 @@ AX_CHECK_COMPILE_FLAG([-Wattribute-alias=1], [CXXFLAGS="$CXXFLAGS -Wattribute-al
+ 
+ CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
+ CFLAGS="$CFLAGS -Wall"
+-CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror \
++CXXFLAGS="$CXXFLAGS -Wall -Wextra \
+ 	-Wformat=2 -Wformat-overflow=2 -Wformat-nonliteral -Wformat-security \
+ 	-Wimplicit-fallthrough=5 -Wduplicated-branches -Wtrampolines \
+ 	-Wdangling-else -Wshift-overflow=2 -Wswitch \
+diff --git a/data/Makefile.am b/data/Makefile.am
+index fe3112f99..e40a7d911 100644
+--- a/data/Makefile.am
++++ b/data/Makefile.am
+@@ -22,4 +22,4 @@ dist_pkgdata_DATA = \
+ 	unicable.xml
+ 
+ iso-639-3.pck: $(srcdir)/iso-639-3.tab
+-	python $(srcdir)/convert-iso-639-3.py $< $@
++	python3 $(srcdir)/convert-iso-639-3.py $< $@
+diff --git a/data/convert-iso-639-3.py b/data/convert-iso-639-3.py
+index 0a3599b66..845445139 100644
+--- a/data/convert-iso-639-3.py
++++ b/data/convert-iso-639-3.py
+@@ -1,5 +1,5 @@
+ import sys
+-import cPickle
++import pickle
+ 
+ infilename = "iso-639-3.tab"
+ outfilename = "iso-639-3.pck"
+@@ -21,4 +21,4 @@ with open(infilename, 'r') as f:
+ 				l[item[i]] = name
+ 
+ with open(outfilename, 'wb') as f:
+-	cPickle.dump(l, f, cPickle.HIGHEST_PROTOCOL)
++	pickle.dump(l, f, pickle.HIGHEST_PROTOCOL)
+diff --git a/lib/dvb/epgcache.cpp b/lib/dvb/epgcache.cpp
+index 3398def2c..c8dc5e1e1 100644
+--- a/lib/dvb/epgcache.cpp
++++ b/lib/dvb/epgcache.cpp
+@@ -1624,7 +1624,7 @@ int handleEvent(eServiceEvent *ptr, ePyObject dest_list, const char* argstring,
+ PyObject *eEPGCache::lookupEvent(ePyObject list, ePyObject convertFunc)
+ {
+ 	ePyObject convertFuncArgs;
+-	int argcount=0;
++	ssize_t argcount=0;
+ 	const char *argstring=NULL;
+ 	if (!PyList_Check(list))
+ 	{
+@@ -2048,7 +2048,7 @@ unsigned int eEPGCache::getEpgSources()
+ 
+ static const char* getStringFromPython(ePyObject obj)
+ {
+-	char *result = 0;
++	const char *result = 0;
+ 	if (PyString_Check(obj))
+ 	{
+ 		result = PyString_AS_STRING(obj);
+@@ -2075,7 +2075,7 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
+ 
+ 	if (PyString_Check(serviceReferences))
+ 	{
+-		char *refstr;
++		const char *refstr;
+ 		refstr = PyString_AS_STRING(serviceReferences);
+ 	        if (!refstr)
+ 	        {
+@@ -2090,7 +2090,7 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
+ 		for (int i = 0; i < nRefs; ++i)
+ 		{
+ 			PyObject* item = PyList_GET_ITEM(serviceReferences, i);
+-			char *refstr;
++			const char *refstr;
+ 	                refstr = PyString_AS_STRING(item);
+ 	                if (!refstr)
+         	        {
+@@ -2189,7 +2189,7 @@ PyObject *eEPGCache::search(ePyObject arg)
+ 	std::deque<uint32_t> descr;
+ 	int eventid = -1;
+ 	const char *argstring=0;
+-	char *refstr=0;
++	const char *refstr=0;
+ 	int argcount=0;
+ 	int querytype=-1;
+ 	bool needServiceEvent=false;
+@@ -2205,12 +2205,7 @@ PyObject *eEPGCache::search(ePyObject arg)
+ 			ePyObject obj = PyTuple_GET_ITEM(arg,0);
+ 			if (PyString_Check(obj))
+ 			{
+-#if PY_VERSION_HEX < 0x02060000
+-				argcount = PyString_GET_SIZE(obj);
+-#else
+-				argcount = PyString_Size(obj);
+-#endif
+-				argstring = PyString_AS_STRING(obj);
++				argstring = PyUnicode_AsUTF8AndSize(obj, &argcount);
+ 				for (int i=0; i < argcount; ++i)
+ 					switch(argstring[i])
+ 					{
+@@ -2252,7 +2247,7 @@ PyObject *eEPGCache::search(ePyObject arg)
+ 				ePyObject obj = PyTuple_GET_ITEM(arg, 3);
+ 				if (PyString_Check(obj))
+ 				{
+-					refstr = PyString_AS_STRING(obj);
++					const char* refstr = PyString_AS_STRING(obj);
+ 					eServiceReferenceDVB ref(refstr);
+ 					if (ref.valid())
+ 					{
+@@ -2305,12 +2300,8 @@ PyObject *eEPGCache::search(ePyObject arg)
+ 				if (PyString_Check(obj))
+ 				{
+ 					int casetype = PyLong_AsLong(PyTuple_GET_ITEM(arg, 4));
+-					const char *str = PyString_AS_STRING(obj);
+-#if PY_VERSION_HEX < 0x02060000
+-					int strlen = PyString_GET_SIZE(obj);
+-#else
+-					int strlen = PyString_Size(obj);
+-#endif
++					ssize_t strlen;
++					const char *str = PyUnicode_AsUTF8AndSize(obj, &strlen);
+ 					switch (querytype)
+ 					{
+ 						case 1:
+diff --git a/lib/dvb_ci/dvbci.cpp b/lib/dvb_ci/dvbci.cpp
+index 821f10e49..63563c04b 100644
+--- a/lib/dvb_ci/dvbci.cpp
++++ b/lib/dvb_ci/dvbci.cpp
+@@ -933,7 +933,7 @@ RESULT eDVBCIInterfaces::setDescrambleRules(int slotid, SWIG_PYOBJECT(ePyObject)
+ 			PyErr_SetString(PyExc_StandardError, buf);
+ 			return -1;
+ 		}
+-		char *tmpstr = PyString_AS_STRING(refstr);
++		const char *tmpstr = PyString_AS_STRING(refstr);
+ 		eServiceReference ref(tmpstr);
+ 		if (ref.valid())
+ 			slot->possible_services.insert(ref);
+@@ -973,7 +973,7 @@ RESULT eDVBCIInterfaces::setDescrambleRules(int slotid, SWIG_PYOBJECT(ePyObject)
+ 			PyErr_SetString(PyExc_StandardError, buf);
+ 			return -1;
+ 		}
+-		char *tmpstr = PyString_AS_STRING(PyTuple_GET_ITEM(tuple, 0));
++		const char *tmpstr = PyString_AS_STRING(PyTuple_GET_ITEM(tuple, 0));
+ 		uint32_t orbpos = PyLong_AsUnsignedLong(PyTuple_GET_ITEM(tuple, 1));
+ 		if (strlen(tmpstr))
+ 			slot->possible_providers.insert(std::pair<std::string, uint32_t>(tmpstr, orbpos));
+diff --git a/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp b/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp
+index 496280b14..eb294962f 100644
+--- a/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp
++++ b/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp
+@@ -489,7 +489,7 @@ PyMODINIT_FUNC
+ initsocketmmi(void)
+ {
+ #if PY_MAJOR_VERSION >= 3
+-	PyModule_Create(&moduledef);
++	return PyModule_Create(&moduledef);
+ #else
+ 	Py_InitModule3("socketmmi", module_methods,
+ 		"Module that implements mmi via unix domain socket.");
+diff --git a/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py b/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py
+index 6608b3e0d..fff663d77 100644
+--- a/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py
+@@ -1,7 +1,7 @@
+ from __future__ import print_function
+ import os
+ import time
+-import cPickle
++import pickle
+ from Plugins.Plugin import PluginDescriptor
+ from Screens.Console import Console
+ from Screens.ChoiceBox import ChoiceBox
+@@ -57,7 +57,7 @@ def write_cache(cache_file, cache_data):
+ 		path = os.path.dirname(cache_file)
+ 		if not os.path.isdir(path):
+ 			os.mkdir(path)
+-		cPickle.dump(cache_data, open(cache_file, 'w'), -1)
++		pickle.dump(cache_data, open(cache_file, 'w'), -1)
+ 	except Exception as ex:
+ 		print("Failed to write cache data to %s:" % cache_file, ex)
+ 
+@@ -76,7 +76,7 @@ def valid_cache(cache_file, cache_ttl):
+ 
+ 
+ def load_cache(cache_file):
+-	return cPickle.load(open(cache_file))
++	return pickle.load(open(cache_file))
+ 
+ 
+ class UpdatePluginMenu(Screen):
+diff --git a/lib/python/Screens/InfoBarGenerics.py b/lib/python/Screens/InfoBarGenerics.py
+index 0c94c48ca..80713b026 100644
+--- a/lib/python/Screens/InfoBarGenerics.py
++++ b/lib/python/Screens/InfoBarGenerics.py
+@@ -111,19 +111,19 @@ def getResumePoint(session):
+ 
+ def saveResumePoints():
+ 	global resumePointCache, resumePointCacheLast
+-	import cPickle
++	import pickle
+ 	try:
+ 		f = open('/home/root/resumepoints.pkl', 'wb')
+-		cPickle.dump(resumePointCache, f, cPickle.HIGHEST_PROTOCOL)
++		pickle.dump(resumePointCache, f, pickle.HIGHEST_PROTOCOL)
+ 	except Exception as ex:
+ 		print("[InfoBar] Failed to write resumepoints:", ex)
+ 	resumePointCacheLast = int(time())
+ 
+ 
+ def loadResumePoints():
+-	import cPickle
++	import pickle
+ 	try:
+-		return cPickle.load(open('/home/root/resumepoints.pkl', 'rb'))
++		return pickle.load(open('/home/root/resumepoints.pkl', 'rb'))
+ 	except Exception as ex:
+ 		print("[InfoBar] Failed to load resumepoints:", ex)
+ 		return {}
+diff --git a/lib/python/Tools/ISO639.py b/lib/python/Tools/ISO639.py
+index 4c7213ea6..47ef8dc15 100644
+--- a/lib/python/Tools/ISO639.py
++++ b/lib/python/Tools/ISO639.py
+@@ -1,4 +1,4 @@
+-import cPickle
++import pickle
+ import enigma
+ with open(enigma.eEnv.resolve("${datadir}/enigma2/iso-639-3.pck"), 'rb') as f:
+-	LanguageCodes = cPickle.load(f)
++	LanguageCodes = pickle.load(f)
+diff --git a/lib/python/python.cpp b/lib/python/python.cpp
+index 558c4b7e7..6b45b7d6c 100644
+--- a/lib/python/python.cpp
++++ b/lib/python/python.cpp
+@@ -136,7 +136,6 @@ ePython::ePython()
+ #endif
+ 
+ 	Py_Initialize();
+-	PyEval_InitThreads();
+ 
+ #if PY_MAJOR_VERSION < 3
+ 	init_enigma();
+diff --git a/lib/python/python_base.i b/lib/python/python_base.i
+index a01f6a25c..e5e3b7863 100644
+--- a/lib/python/python_base.i
++++ b/lib/python/python_base.i
+@@ -352,7 +352,7 @@ static PyMethodDef base_module_methods[] = {
+ 	PyModuleDef_HEAD_INIT,
+ 	"eBaseImpl",																			/* m_name */
+ 	"Module that implements some enigma classes with working cyclic garbage collection.",	/* m_doc */
+-	-1,																						/* m_siz
++	-1,																						/* m_siz */
+ 	base_module_methods,																	/* m_methods */
+ 	NULL,																					/* m_reload */
+ 	NULL,																					/* m_traverse */
+diff --git a/lib/python/python_console.i b/lib/python/python_console.i
+index d6b5b9ecf..07f4645a7 100644
+--- a/lib/python/python_console.i
++++ b/lib/python/python_console.i
+@@ -358,7 +358,7 @@ static PyMethodDef console_module_methods[] = {
+ 	PyModuleDef_HEAD_INIT,
+ 	"eConsoleImpl",																			/* m_name */
+ 	"Module that implements eConsoleAppContainer with working cyclic garbage collection.",	/* m_doc */
+-	-1,																						/* m_siz
++	-1,																						/* m_siz */
+ 	console_module_methods,																	/* m_methods */
+ 	NULL,																					/* m_reload */
+ 	NULL,																					/* m_traverse */
+diff --git a/lib/service/servicedvd.cpp b/lib/service/servicedvd.cpp
+index 329c30311..ea2ba4974 100644
+--- a/lib/service/servicedvd.cpp
++++ b/lib/service/servicedvd.cpp
+@@ -1189,7 +1189,7 @@ PyMODINIT_FUNC
+ initservicedvd(void)
+ {
+ #if PY_MAJOR_VERSION >= 3
+-	PyModule_Create(&servicedvd_moduledef);
++	return PyModule_Create(&servicedvd_moduledef);
+ #else
+ 	Py_InitModule("servicedvd", NULL);
+ #endif

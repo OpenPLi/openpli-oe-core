@@ -118,6 +118,7 @@ GITHUB_URI ?= "git://github.com"
 
 SRC_URI = " ${GITHUB_URI}/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
 			file://01-use-mallinfo2.patch \
+			file://fix-build.patch \
 			"
 
 LDFLAGS_prepend = " -lxml2 "
