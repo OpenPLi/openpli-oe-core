@@ -12,3 +12,5 @@ require openplugins-distutils.inc
 
 FILES_${PN} += "${sysconfdir}/enigma2/Foreca"
 CONFFILES_${PN} = "${sysconfdir}/enigma2/Foreca/City.cfg ${sysconfdir}/enigma2/Foreca/Filter.cfg ${sysconfdir}/enigma2/Foreca/fav1.cfg ${sysconfdir}/enigma2/Foreca/fav2.cfg ${sysconfdir}/enigma2/Foreca/startservice.cfg"
+
+SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-Foreca.git;branch=python3;protocol=https"
