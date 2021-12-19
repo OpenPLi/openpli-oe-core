@@ -13,3 +13,7 @@ require openplugins-distutils.inc
 do_install_append() {
 	chmod a+x ${D}${libdir}/enigma2/python/Plugins/*/*/*.sh
 }
+
+DEPENDS = "python3-future-native"
+
+SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-AutoBackup.git;branch=python3;protocol=https"
