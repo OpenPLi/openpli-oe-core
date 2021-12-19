@@ -13,6 +13,8 @@ do_install() {
 }
 
 
+SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-HetWeer.git;branch=python3;protocol=https"
+
 pkg_postrm_${PN}() {
     rm -rf ${libdir}/enigma2/python/Plugins/Extensions/HetWeer
 }
