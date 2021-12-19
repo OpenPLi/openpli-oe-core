@@ -8,11 +8,11 @@ PR="r1"
 
 require openplugins.inc
 
-inherit autotools gettext pythonnative
+inherit autotools gettext ${PYTHON_VER}native
 
 DEPENDS += "${PYTHON_VER}"
 
-SRC_URI = " git://github.com/E2OpenPlugins/e2openplugin-Bitrate.git;branch=python3;protocol=https"
+SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-Bitrate.git;branch=python3;protocol=https"
 
 EXTRA_OECONF = " \
     STAGING_INCDIR=${STAGING_INCDIR} \
