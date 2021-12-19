@@ -74,6 +74,7 @@ DEPENDS = " \
 	${PYTHON_VER}-mutagen \
 	${PYTHON_VER}-six-native \
 	${PYTHON_VER}-twisted \
+	python-daap \
 	libcddb \
 	dvdbackup \
 	libtirpc \
