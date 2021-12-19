@@ -7,10 +7,11 @@ PR = "r2"
 
 inherit ${@bb.utils.contains("PYTHON_VER", "python", "distutils", "distutils3", d)}
 
-SRC_URI = "http://jerakeen.org/files/PythonDaap-${PV}.tar.gz"
-SRC_URI += " \
-	file://python-daap.patch \
+SRC_URI = "http://jerakeen.org/files/PythonDaap-${PV}.tar.gz \
+           file://python-daap.patch \
+           file://0001-The-member-ob_type-is-not-present-in-the-pcapobject-.patch \
 "
+
 S = "${WORKDIR}/PythonDaap-${PV}"
 
 RDEPENDS_${PN} = "${PYTHON_VER}-compression"
