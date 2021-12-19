@@ -16,3 +16,5 @@ RDEPENDS_${PN} = " \
 	${PYTHON_VER}-unixadmin \
 	${PYTHON_VER}-lxml \
 	"
+
+SRC_URI = "git://github.com/Hains/enigma2-plugin-extensions-tmbd.git;protocol=https;branch=master"
