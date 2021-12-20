@@ -1,16 +1,3 @@
-diff --git a/configure.ac b/configure.ac
-index 53f57a3a7..669a5d6ac 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -248,7 +248,7 @@ AX_CHECK_COMPILE_FLAG([-Wattribute-alias=1], [CXXFLAGS="$CXXFLAGS -Wattribute-al
- 
- CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
- CFLAGS="$CFLAGS -Wall"
--CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror \
-+CXXFLAGS="$CXXFLAGS -Wall -Wextra \
- 	-Wformat=2 -Wformat-overflow=2 -Wformat-nonliteral -Wformat-security \
- 	-Wimplicit-fallthrough=5 -Wduplicated-branches -Wtrampolines \
- 	-Wdangling-else -Wshift-overflow=2 -Wswitch \
 diff --git a/data/Makefile.am b/data/Makefile.am
 index fe3112f99..e40a7d911 100644
 --- a/data/Makefile.am
