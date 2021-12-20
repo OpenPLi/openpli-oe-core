@@ -106,10 +106,6 @@ EXTRA_OECONF = "\
 	STAGING_LIBDIR=${STAGING_LIBDIR} \
 	"
 
-do_install_append() {
-	rm ${D}${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/*.pyc
-}
-
 FILES_${PN} = "\
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/*.pyo \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/servicemp3.so"
