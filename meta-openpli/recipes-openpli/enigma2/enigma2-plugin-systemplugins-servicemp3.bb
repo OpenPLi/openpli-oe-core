@@ -107,7 +107,7 @@ EXTRA_OECONF = "\
 	"
 
 FILES_${PN} = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/*.pyo \
+	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/*.py \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/servicemp3.so"
 
 FILES_${PN}-dev = "\
