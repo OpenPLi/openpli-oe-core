@@ -82,6 +82,3 @@
 [submodule "meta-qviart"]
 	path = meta-qviart
 	url = https://github.com/pli3/meta-qviart.git
-[submodule "meta-python2"]
-	path = meta-python2
-	url = https://git.openembedded.org/meta-python2
