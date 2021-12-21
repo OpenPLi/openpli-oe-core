@@ -12,7 +12,6 @@ RDEPENDS_${PN} = " \
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-misc \
 	${PYTHON_PN}-html \
-	${PYTHON_PN}-subprocess \
 	${PYTHON_PN}-unixadmin \
 	${PYTHON_PN}-lxml \
 	"

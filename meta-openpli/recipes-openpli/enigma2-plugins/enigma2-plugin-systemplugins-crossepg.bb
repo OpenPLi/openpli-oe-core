@@ -3,8 +3,8 @@ HOMEPAGE = "https://github.com/oe-alliance/e2openplugin-CrossEPG"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=4fbd65380cdd255951079008b364516c"
 
-DEPENDS += "libxml2 zlib swig-native curl python"
-RDEPENDS_${PN} += "libcurl ${PYTHON_PN}-compression ${PYTHON_PN}-lzma xz ${PYTHON_PN}-core"
+DEPENDS += "libxml2 zlib swig-native curl ${PYTHON_PN}"
+RDEPENDS_${PN} += "libcurl ${PYTHON_PN}-compression ${PYTHON_PN}-backports-lzma xz ${PYTHON_PN}-core"
 
 inherit gitpkgv
 
@@ -44,7 +44,7 @@ rm -fr ${libdir}/enigma2/python/Plugins/SystemPlugins/CrossEPG > /dev/null 2>&1
 
 # Just a quick hack to "compile" the python parts.
 do_compile_append() {
-    python2 -O -m compileall ${S}
+    python3 -O -m compileall ${S}
 }
 
 python populate_packages_prepend() {

@@ -7,8 +7,8 @@ DEPENDS = "${PYTHON_PN}-cheetah-native"
 RDEPENDS_${PN} = "\
 	aio-grab \
 	${PYTHON_PN}-cheetah \
-	${PYTHON_PN}-compression\
-	${PYTHON_PN}-ipaddress\
+	${PYTHON_PN}-compression \
+	${PYTHON_PN}-ipaddress \
 	${PYTHON_PN}-json \
 	${PYTHON_PN}-misc \
 	${PYTHON_PN}-numbers \
@@ -29,7 +29,7 @@ require openplugins-distutils.inc
 # Just a quick hack to "compile" it
 do_compile() {
 	cheetah-compile -R --nobackup ${S}/plugin
-	python2 -O -m compileall -d ${PLUGINPATH} ${S}/plugin
+	python3 -O -m compileall -d ${PLUGINPATH} ${S}/plugin
 }
 
 PLUGINPATH = "${libdir}/enigma2/python/Plugins/Extensions/${MODULE}"

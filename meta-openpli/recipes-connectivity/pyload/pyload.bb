@@ -13,7 +13,6 @@ RDEPENDS_${PN} = "\
 	${PYTHON_PN}-pycryptodome \
 	${PYTHON_PN}-pycurl \
 	${PYTHON_PN}-sqlite3 \
-	${PYTHON_PN}-subprocess \
 	${PYTHON_PN}-terminal \
 	${PYTHON_PN}-unixadmin \
 	${PYTHON_PN}-xmlrpc \
@@ -38,7 +37,7 @@ INITSCRIPT_NAME = "${PN}"
 INITSCRIPT_PARAMS = "defaults 60 "
 
 do_compile() {
-	python2 -m compileall ${S}
+	python3 -m compileall ${S}
 }
 
 do_install() {

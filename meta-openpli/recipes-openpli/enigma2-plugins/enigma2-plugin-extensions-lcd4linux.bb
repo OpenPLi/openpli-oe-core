@@ -19,22 +19,21 @@ RDEPENDS_${PN} += "\
 	${PYTHON_PN}-datetime \
 	${PYTHON_PN}-email \
 	${PYTHON_PN}-image \
-	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	${PYTHON_PN}-mutagen \
 	${PYTHON_PN}-pyusb \
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-simplejson \
-	${PYTHON_PN}-subprocess \
 	${PYTHON_PN}-textutils \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	${PYTHON_PN}-zlib \
 "
 
 S = "${WORKDIR}/git"
 
-inherit gitpkgv pythonnative
+inherit gitpkgv python3native
 
 do_compile() {
-	python2 -m compileall ${S}${libdir}
+	python -m compileall ${S}${libdir}
 }
 
 do_install() {

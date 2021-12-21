@@ -17,7 +17,7 @@ RCONFLICTS_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 RREPLACES_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 
 RDEPENDS_${PN} = " \
-    ${PYTHON_PN}-argparse \
+    ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-argparse", "", d)} \
     "
 
 do_install_prepend() {
@@ -26,6 +26,5 @@ do_install_prepend() {
 
 python populate_packages_prepend() {
     e2_pdir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
-    do_split_packages(d, e2_pdir, '^(\w+/\w+)/.*\.py$', 'enigma2-plugin-%s-src', '%s (source files)', recursive=True, match_path=True, prepend=True)
     do_split_packages(d, e2_pdir, '^(\w+/\w+)/.*\/.*\.po$', 'enigma2-plugin-%s-po', '%s (translations)', recursive=True, match_path=True, prepend=True)
 }

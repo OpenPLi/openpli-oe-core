@@ -5,12 +5,14 @@ MAINTAINER = "team@sabnzbd.org"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYRIGHT.txt;md5=6c2cd2089133de5067e13a6d4f75afef"
 
-DEPENDS = "python"
+DEPENDS = "${PYTHON_PN}"
 RDEPENDS_${PN} = "\
     ${PYTHON_PN}-cheetah ${PYTHON_PN}-compression ${PYTHON_PN}-core ${PYTHON_PN}-crypt ${PYTHON_PN}-ctypes ${PYTHON_PN}-email ${PYTHON_PN}-html \
-    ${PYTHON_PN}-misc ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-sabyenc ${PYTHON_PN}-sqlite3 ${PYTHON_PN}-shell ${PYTHON_PN}-subprocess \
+    ${PYTHON_PN}-misc ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-sqlite3 ${PYTHON_PN}-shell ${PYTHON_PN}-sabyenc3 ${PYTHON_PN}-configobj \
+    ${PYTHON_PN}-cryptography ${PYTHON_PN}-feedparser ${PYTHON_PN}-cheroot ${PYTHON_PN}-cherrypy ${PYTHON_PN}-portend ${PYTHON_PN}-chardet \
+    ${PYTHON_PN}-notify2 ${PYTHON_PN}-puremagic ${PYTHON_PN}-guessit ${PYTHON_PN}-sgmllib3k ${PYTHON_PN}-more-itertools ${PYTHON_PN}-modules \
     "
-RDEPENDS_${PN}-src = "python"
+RDEPENDS_${PN}-src = "${PYTHON_PN}"
 
 RRECOMMENDS_${PN} = "par2cmdline unrar"
 
@@ -37,7 +39,7 @@ INITSCRIPT_NAME = "sabnzbd"
 INITSCRIPT_PARAMS = "defaults"
 
 do_compile() {
-    python2 -O -m compileall .
+    python3 -O -m compileall .
 }
 
 do_install() {

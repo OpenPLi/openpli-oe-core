@@ -12,7 +12,7 @@ PKGV = "1+git${GITPKGV}"
 
 inherit distutils-openplugins
 
-RRECOMMENDS_${PN} = "${PYTHON_PN}-subprocess mtd-utils mtd-utils-ubifs kernel-module-nandsim openmultiboot"
+RRECOMMENDS_${PN} = "mtd-utils mtd-utils-ubifs kernel-module-nandsim openmultiboot"
 
 pkg_preinst_${PN}() {
 #!/bin/sh
