@@ -7,11 +7,8 @@ LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7c0be52291b7252b878da806d185b1d1"
 
 RDEPENDS_${PN} = "${PYTHON_PN}-core \
-    ${PYTHON_PN}-backports-functools-lru-cache \
-    ${PYTHON_PN}-backports-shutil-get-terminal-size \
-    ${PYTHON_PN}-backports-shutil-which \
     ${PYTHON_PN}-ctypes \
-    ${PYTHON_PN}-futures \
+    ${PYTHON_PN}-futures3 \
     ${PYTHON_PN}-isodate \
     ${PYTHON_PN}-lxml \
     ${PYTHON_PN}-misc \
@@ -22,12 +19,11 @@ RDEPENDS_${PN} = "${PYTHON_PN}-core \
     ${PYTHON_PN}-requests \
     ${PYTHON_PN}-shell \
     ${PYTHON_PN}-singledispatch \
-    ${PYTHON_PN}-subprocess \
     ${PYTHON_PN}-websocket-client \
     ${PYTHON_PN}-youtube-dl \
     "
 
-inherit gittag setuptools ${PYTHON_PN}-dir
+inherit gittag setuptools3 ${PYTHON_PN}-dir
 
 # SRCREV = "${AUTOREV}"
 
