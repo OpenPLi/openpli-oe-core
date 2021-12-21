@@ -34,7 +34,7 @@ IMAGE_INSTALL = "\
 	${PYTHON_VER}-ipaddress  \
 	${PYTHON_VER}-netifaces \
 	${PYTHON_VER}-pysmb \
-	${@bb.utils.contains('PYTHON_VER', 'python', 'samba-base', '', d)} \
+	samba-base \
 	sdparm \
 	tuxbox-common \
 	tzdata \
