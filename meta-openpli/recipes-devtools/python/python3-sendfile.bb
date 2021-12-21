@@ -1,13 +1,12 @@
 SUMMARY  = "Interface to the sendfile syscall"
 HOMEPAGE = "https://github.com/giampaolo/pysendfile"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=b8eec2f0885ebe1362d0bdb1617f61b5"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=42fd5943ce8e80da4f2e57cb3a73489d"
 
-inherit setuptools3 gitpkgv
+inherit setuptools3 gittag
 
-# Version 2.0.1 is actually over three years old, we're using "master".
-PV = "2.0.1+git${SRCPV}"
-PKGV = "2.0.1+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 SRC_URI = "git://github.com/giampaolo/pysendfile.git;protocol=https"
 S = "${WORKDIR}/git"
