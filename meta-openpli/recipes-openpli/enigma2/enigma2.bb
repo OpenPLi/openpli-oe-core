@@ -11,7 +11,7 @@ DEPENDS = " \
 	jpeg \
 	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-2.0 giflib libxml2 \
 	openssl libudfread \
-	${PYTHON_PN}-twisted python-wifi \
+	${PYTHON_PN}-twisted ${PYTHON_PN}-wifi \
 	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	swig-native \
 	tuxtxt-enigma2 \
@@ -33,7 +33,7 @@ RDEPENDS_${PN}_append_libc-glibc = " glibc-gconv-iso8859-15"
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
 	hotplug-e2-helper \
-	python-sendfile \
+	${PYTHON_PN}-sendfile \
 	ofgwrite \
 	virtual/enigma2-mediaservice \
 	"
@@ -87,7 +87,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
 RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "${PYTHON_PN}-twisted-web"
 RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_PN}-twisted-web"
-RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python-wifi"
+RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools ${PYTHON_PN}-wifi"
 
 # Note that these tools lack recipes
 RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit ${PYTHON_PN}-imaging ${DEMUXTOOL} \
@@ -101,7 +101,7 @@ RDEPENDS_${PN}-build-dependencies = "\
 	aio-grab \
 	dvd+rw-tools dvdauthor mjpegtools cdrkit ${DEMUXTOOL} \
 	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
-	wpa-supplicant wireless-tools python-wifi \
+	wpa-supplicant wireless-tools ${PYTHON_PN}-wifi \
 	${PYTHON_PN}-twisted-web \
 	"
 RRECOMMENDS_${PN}-build-dependencies = "\
@@ -110,8 +110,8 @@ RRECOMMENDS_${PN}-build-dependencies = "\
 
 inherit gitpkgv ${@bb.utils.contains("PYTHON_PN", "python", "setuptools", "setuptools3", d)}
 
-PV = "2.7+git${SRCPV}"
-PKGV = "2.7+git${GITPKGV}"
+PV = "3.9+git${SRCPV}"
+PKGV = "3.9+git${GITPKGV}"
 
 ENIGMA2_BRANCH ?= "${@bb.utils.contains("PYTHON_PN", "python", "develop", "python3", d)}"
 GITHUB_URI ?= "git://github.com"
