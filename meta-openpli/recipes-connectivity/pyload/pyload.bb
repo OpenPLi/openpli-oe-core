@@ -3,20 +3,20 @@ LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE.MD;md5=d4333f07cbfa8fe036e90820f556b2ad"
 HOMEPAGE = "http://pyload.org/"
 RDEPENDS_${PN} = "\
-	${PYTHON_VER}-compression \
-	${PYTHON_VER}-db \
-	${PYTHON_VER}-email \
-	${PYTHON_VER}-html \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_VER}-pillow", d)} \
-	${PYTHON_VER}-numbers \
-	${PYTHON_VER}-pprint \
-	${PYTHON_VER}-pycryptodome \
-	${PYTHON_VER}-pycurl \
-	${PYTHON_VER}-sqlite3 \
-	${PYTHON_VER}-subprocess \
-	${PYTHON_VER}-terminal \
-	${PYTHON_VER}-unixadmin \
-	${PYTHON_VER}-xmlrpc \
+	${PYTHON_PN}-compression \
+	${PYTHON_PN}-db \
+	${PYTHON_PN}-email \
+	${PYTHON_PN}-html \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+	${PYTHON_PN}-numbers \
+	${PYTHON_PN}-pprint \
+	${PYTHON_PN}-pycryptodome \
+	${PYTHON_PN}-pycurl \
+	${PYTHON_PN}-sqlite3 \
+	${PYTHON_PN}-subprocess \
+	${PYTHON_PN}-terminal \
+	${PYTHON_PN}-unixadmin \
+	${PYTHON_PN}-xmlrpc \
 "
 RRECOMMENDS_${PN} = "unrar"
 

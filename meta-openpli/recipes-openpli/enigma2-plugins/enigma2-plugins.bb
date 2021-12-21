@@ -27,7 +27,7 @@ PROVIDES += "\
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
 "
 
-inherit gitpkgv ${PYTHON_VER}native pkgconfig gettext
+inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext
 
 PV = "z-git${SRCPV}"
 PKGV = "z-git${GITPKGV}"
@@ -69,11 +69,11 @@ inherit autotools-brokensep
 S = "${WORKDIR}/git"
 
 DEPENDS = " \
-	${PYTHON_VER}-pyopenssl \
+	${PYTHON_PN}-pyopenssl \
 	streamripper \
-	${PYTHON_VER}-mutagen \
-	${PYTHON_VER}-six-native \
-	${PYTHON_VER}-twisted \
+	${PYTHON_PN}-mutagen \
+	${PYTHON_PN}-six-native \
+	${PYTHON_PN}-twisted \
 	python-daap \
 	libcddb \
 	dvdbackup \
@@ -101,12 +101,12 @@ python populate_packages_prepend () {
             if line.startswith('Package: '):
                 full_package = line[9:]
             elif line.startswith('Depends: '):
-                # some plugins still reference twisted-* dependencies, these packages are now called ${PYTHON_VER}-twisted-*
+                # some plugins still reference twisted-* dependencies, these packages are now called ${PYTHON_PN}-twisted-*
                 rdepends = []
                 for depend in line[9:].split(','):
                     depend = depend.strip()
                     if depend.startswith('twisted-'):
-                        rdepends.append(depend.replace('twisted-', '${PYTHON_VER}-twisted-'))
+                        rdepends.append(depend.replace('twisted-', '${PYTHON_PN}-twisted-'))
                     elif depend.startswith('enigma2') and not depend.startswith('enigma2-'):
                         pass # Ignore silly depends on enigma2 with all kinds of misspellings
                     else:

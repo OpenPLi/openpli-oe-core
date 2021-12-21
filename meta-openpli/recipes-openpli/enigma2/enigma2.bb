@@ -11,8 +11,8 @@ DEPENDS = " \
 	jpeg \
 	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-2.0 giflib libxml2 \
 	openssl libudfread \
-	${PYTHON_VER}-twisted python-wifi \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+	${PYTHON_PN}-twisted python-wifi \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	swig-native \
 	tuxtxt-enigma2 \
 	"
@@ -45,7 +45,7 @@ PYTHON_RDEPS = " \
 	${PYTHON_PN}-core \
 	${PYTHON_PN}-crypt \
 	${PYTHON_PN}-fcntl \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-lang", "", d)} \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-lang", "", d)} \
 	${PYTHON_PN}-logging \
 	${PYTHON_PN}-mmap \
 	${PYTHON_PN}-netclient \
@@ -53,13 +53,13 @@ PYTHON_RDEPS = " \
 	${PYTHON_PN}-netserver \
 	${PYTHON_PN}-numbers \
 	${PYTHON_PN}-pickle \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-re", "", d)} \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-re", "", d)} \
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-threading \
 	${PYTHON_PN}-twisted-core \
 	${PYTHON_PN}-twisted-web \
 	${PYTHON_PN}-xml \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-zlib", "", d)} \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-zlib", "", d)} \
 	${PYTHON_PN}-zopeinterface \
 	"
 
@@ -85,13 +85,13 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configu
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
-RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "${PYTHON_VER}-twisted-web"
-RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_VER}-twisted-web"
+RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "${PYTHON_PN}-twisted-web"
+RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_PN}-twisted-web"
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python-wifi"
 
 # Note that these tools lack recipes
-RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit ${PYTHON_VER}-imaging ${DEMUXTOOL} \
-                                              ${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)}"
+RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools cdrkit ${PYTHON_PN}-imaging ${DEMUXTOOL} \
+                                              ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)}"
 RDEPENDS_enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
 RRECOMMENDS_enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 
@@ -100,20 +100,20 @@ RRECOMMENDS_enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 RDEPENDS_${PN}-build-dependencies = "\
 	aio-grab \
 	dvd+rw-tools dvdauthor mjpegtools cdrkit ${DEMUXTOOL} \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	wpa-supplicant wireless-tools python-wifi \
-	${PYTHON_VER}-twisted-web \
+	${PYTHON_PN}-twisted-web \
 	"
 RRECOMMENDS_${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
-inherit gitpkgv ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setuptools3", d)}
+inherit gitpkgv ${@bb.utils.contains("PYTHON_PN", "python", "setuptools", "setuptools3", d)}
 
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
 
-ENIGMA2_BRANCH ?= "${@bb.utils.contains("PYTHON_VER", "python", "develop", "python3", d)}"
+ENIGMA2_BRANCH ?= "${@bb.utils.contains("PYTHON_PN", "python", "develop", "python3", d)}"
 GITHUB_URI ?= "git://github.com"
 
 SRC_URI = " ${GITHUB_URI}/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
@@ -172,7 +172,7 @@ FILES_${PN}-dbg += "\
 # Swig generated 200k enigma.py file has no purpose for end users
 # Save some space by not installing sources (Startup.py must remain)
 FILES_${PN}-src += "\
-	${@bb.utils.contains("PYTHON_VER", "python", " \
+	${@bb.utils.contains("PYTHON_PN", "python", " \
 	${libdir}/enigma2/python/e2reactor.py \
 	${libdir}/enigma2/python/enigma.py \
 	${libdir}/enigma2/python/GlobalActions.py \

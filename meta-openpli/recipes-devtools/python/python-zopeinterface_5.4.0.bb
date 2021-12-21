@@ -15,7 +15,7 @@ PACKAGES =. "${PN}-test "
 RPROVIDES_${PN} += "zope-interfaces"
 
 RDEPENDS_${PN}_class-target += "${PYTHON_PN}-datetime"
-RDEPENDS_${PN}-test += "${PYTHON_VER}-unittest ${PYTHON_VER}-doctest"
+RDEPENDS_${PN}-test += "${PYTHON_PN}-unittest ${PYTHON_PN}-doctest"
 
 FILES_${PN}-dbg += "${PYTHON_SITEPACKAGES_DIR}/*.egg/*/*/.debug"
 FILES_${PN}-dev += "${PYTHON_SITEPACKAGES_DIR}/zope/interface/*.c"
@@ -25,4 +25,4 @@ FILES_${PN}-test += " \
         ${PYTHON_SITEPACKAGES_DIR}/zope/interface/common/tests \
 "
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

@@ -27,4 +27,4 @@ BBCLASSEXTEND = "native nativesdk"
 
 PYPI_PACKAGE = "click"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

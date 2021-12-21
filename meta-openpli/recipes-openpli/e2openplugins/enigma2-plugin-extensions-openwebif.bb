@@ -3,21 +3,21 @@ DESCRIPTION = "Control your receiver with a browser"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://README;md5=26abba37d1c2fcbf96a087ceb8e1db86"
 
-DEPENDS = "${PYTHON_VER}-cheetah-native"
+DEPENDS = "${PYTHON_PN}-cheetah-native"
 RDEPENDS_${PN} = "\
 	aio-grab \
-	${PYTHON_VER}-cheetah \
-	${PYTHON_VER}-compression\
-	${PYTHON_VER}-ipaddress\
-	${PYTHON_VER}-json \
-	${PYTHON_VER}-misc \
-	${PYTHON_VER}-numbers \
-	${PYTHON_VER}-pprint \
-	${PYTHON_VER}-pyopenssl \
-	${PYTHON_VER}-shell \
-	${PYTHON_VER}-six \
-	${PYTHON_VER}-twisted-web \
-	${PYTHON_VER}-unixadmin \
+	${PYTHON_PN}-cheetah \
+	${PYTHON_PN}-compression\
+	${PYTHON_PN}-ipaddress\
+	${PYTHON_PN}-json \
+	${PYTHON_PN}-misc \
+	${PYTHON_PN}-numbers \
+	${PYTHON_PN}-pprint \
+	${PYTHON_PN}-pyopenssl \
+	${PYTHON_PN}-shell \
+	${PYTHON_PN}-six \
+	${PYTHON_PN}-twisted-web \
+	${PYTHON_PN}-unixadmin \
 	"
 
 inherit gittag

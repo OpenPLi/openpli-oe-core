@@ -9,6 +9,6 @@ inherit pypi setuptools
 SRC_URI[md5sum] = "f65c673c45c5291bce8a0b8755986b9f"   
 SRC_URI[sha256sum] = "09aca1174ea9d8b402f2231aa2277726174c30482710fc887ebbda7eb820f614"
 
-RDEPENDS_${PN} = "${PYTHON_VER}-dbus ${PYTHON_VER}-tcpbridge ${PYTHON_VER}-pygobject"
+RDEPENDS_${PN} = "${PYTHON_PN}-dbus ${PYTHON_PN}-tcpbridge ${PYTHON_PN}-pygobject"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

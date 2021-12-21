@@ -5,11 +5,11 @@ LICENSE = "LGPLv2+ & GPLv2+"
 LICENSE_${PN}-examples = "GPLv2+"
 LIC_FILES_CHKSUM = "file://README;md5=54307cbab01c3aad9adf7605132bcf31"
 
-RDEPENDS_${PN} = "${PYTHON_VER}-ctypes ${PYTHON_VER}-datetime"
+RDEPENDS_${PN} = "${PYTHON_PN}-ctypes ${PYTHON_PN}-datetime"
 PR = "r1"
 
 SRC_URI = "https://github.com/Opvolger/pythonwifi/releases/download/0.7.0/python-wifi-0.7.0.tar.bz2 \
-           ${@bb.utils.contains("PYTHON_VER", "python", "", " \
+           ${@bb.utils.contains("PYTHON_PN", "python", "", " \
            file://rename-tostring-to-tobytes.patch \
            file://dont-encode-ifname-to-bytes.patch \
            file://use-bytes-to-split.patch", d)} \
@@ -34,4 +34,4 @@ PACKAGES =+ "${PN}-examples"
 
 FILES_${PN}-examples = "${sbindir}"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

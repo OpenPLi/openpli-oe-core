@@ -3,7 +3,7 @@ HOMEPAGE = "https://github.com/LraiZer/RadiotimesXmltvEmulator"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=fc178bcd425090939a8b634d1d6a9594"
 
-inherit gitpkgv ${PYTHON_VER}native
+inherit gitpkgv ${PYTHON_PN}native
 
 PV = "2+${SRCPV}"
 PKGV = "2+${GITPKGV}"

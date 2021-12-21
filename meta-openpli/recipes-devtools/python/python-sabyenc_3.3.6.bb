@@ -11,4 +11,4 @@ inherit pypi setuptools
 SRC_URI[md5sum] = "f13c533fbae139731f1abe9775e77038"
 SRC_URI[sha256sum] = "a4cacd0332577c52a4e416c18509ddf2bc9ea7f89637ac6d67b51a6142ac7ee1"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

@@ -10,6 +10,6 @@ inherit pypi setuptools
 SRC_URI[md5sum] = "c6b8bac93e7d899a1da313a19cc6570a"
 SRC_URI[sha256sum] = "0858a54aabc5b459d1aafa8a518ed2081a285087f349fe3e55197989232e2e2d"
 
-RDEPENDS_${PN} = "${PYTHON_VER}-attrs ${PYTHON_VER}-idna ${PYTHON_VER}-pyasn1 ${PYTHON_VER}-pyasn1-modules ${PYTHON_VER}-pyopenssl"
+RDEPENDS_${PN} = "${PYTHON_PN}-attrs ${PYTHON_PN}-idna ${PYTHON_PN}-pyasn1 ${PYTHON_PN}-pyasn1-modules ${PYTHON_PN}-pyopenssl"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

@@ -15,6 +15,6 @@ S = "${WORKDIR}/${SRCNAME}-${PV}"
 
 inherit distutils
 
-RDEPENDS_${PN} = "${PYTHON_VER}-core"
+RDEPENDS_${PN} = "${PYTHON_PN}-core"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

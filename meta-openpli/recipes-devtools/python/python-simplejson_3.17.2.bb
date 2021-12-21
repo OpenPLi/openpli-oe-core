@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=c6338d7abd321c0b50a2a547e441c52e"
 SRC_URI[md5sum] = "27fba3bc75a32318bd3b163b8a31aa7e"
 SRC_URI[sha256sum] = "75ecc79f26d99222a084fbdd1ce5aad3ac3a8bd535cd9059528452da38b68841"
 
-inherit pypi ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setuptools3", d)}
+inherit pypi ${@bb.utils.contains("PYTHON_PN", "python", "setuptools", "setuptools3", d)}
 
 RDEPENDS_${PN} += "\
     ${PYTHON_PN}-io \
@@ -28,4 +28,4 @@ DISTUTILS_INSTALL_ARGS = " \
     --install-lib=${PYTHON_SITEPACKAGES_DIR} \
 "
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

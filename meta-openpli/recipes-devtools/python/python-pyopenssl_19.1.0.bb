@@ -24,4 +24,4 @@ RDEPENDS_${PN}-tests = "${PN}"
 
 BBCLASSEXTEND = "native nativesdk"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

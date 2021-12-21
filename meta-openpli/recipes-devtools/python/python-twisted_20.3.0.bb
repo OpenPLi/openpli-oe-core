@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=27ac6d9597237e7e76282edd7a40cd68"
 SRC_URI[sha256sum] = "d72c55b5d56e176563b91d11952d13b01af8725c623e498db5507b6614fc1e10"
 SRC_URI[md5sum] = "fc16d575730db7d0cddd09fc35af3eea"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PYTHON_VER}-twisted:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PYTHON_PN}-twisted:"
 
 SRC_URI += " \
     file://0001-Revert-Prevent-CRLF-injections-described-in-CVE-2019.patch \
@@ -21,9 +21,9 @@ SRC_URI += " \
 PYPI_PACKAGE = "Twisted"
 PYPI_PACKAGE_EXT = "tar.bz2"
 
-inherit pypi ${PYTHON_VER}-dir setuptools
+inherit pypi ${PYTHON_PN}-dir setuptools
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc
 
 do_install_append() {
     # remove some useless files before packaging

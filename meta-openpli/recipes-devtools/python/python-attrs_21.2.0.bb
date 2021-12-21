@@ -18,4 +18,4 @@ RDEPENDS_${PN} += "\
 
 BBCLASSEXTEND = "native"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

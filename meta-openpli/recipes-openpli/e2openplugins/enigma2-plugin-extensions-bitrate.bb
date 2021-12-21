@@ -8,9 +8,9 @@ PR="r1"
 
 require openplugins.inc
 
-inherit autotools gettext ${PYTHON_VER}native
+inherit autotools gettext ${PYTHON_PN}native
 
-DEPENDS += "${PYTHON_VER}"
+DEPENDS += "${PYTHON_PN}"
 
 SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-Bitrate.git;branch=python3;protocol=https"
 

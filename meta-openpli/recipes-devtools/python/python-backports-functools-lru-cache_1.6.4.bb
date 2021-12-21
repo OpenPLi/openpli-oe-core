@@ -9,7 +9,7 @@ PYPI_PACKAGE = "backports.functools_lru_cache"
 SRC_URI[md5sum] = "8fed424f30bf9554235aa02997b7574c"
 SRC_URI[sha256sum] = "d5ed2169378b67d3c545e5600d363a923b09c456dab1593914935a68ad478271"
 
-DEPENDS += "${PYTHON_VER}-setuptools-scm-native"
+DEPENDS += "${PYTHON_PN}-setuptools-scm-native"
 
 inherit setuptools pypi python-backports-init
 

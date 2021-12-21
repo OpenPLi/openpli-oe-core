@@ -31,9 +31,9 @@ IMAGE_INSTALL = "\
 	packagegroup-base \
 	packagegroup-core-boot \
 	parted \
-	${PYTHON_VER}-ipaddress  \
-	${PYTHON_VER}-netifaces \
-	${PYTHON_VER}-pysmb \
+	${PYTHON_PN}-ipaddress  \
+	${PYTHON_PN}-netifaces \
+	${PYTHON_PN}-pysmb \
 	samba-base \
 	sdparm \
 	tuxbox-common \

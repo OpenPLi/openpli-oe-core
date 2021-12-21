@@ -7,7 +7,7 @@ require conf/license/license-gplv2.inc
 
 inherit allarch
 
-RDEPENDS_${PN} = "${PYTHON_VER}-core streamlink-27"
+RDEPENDS_${PN} = "${PYTHON_PN}-core streamlink-27"
 
 SRC_URI = "git://github.com/athoik/livestreamersrv.git;protocol=https"
 S = "${WORKDIR}/git"

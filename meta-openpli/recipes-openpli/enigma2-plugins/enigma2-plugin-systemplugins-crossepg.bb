@@ -4,7 +4,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=4fbd65380cdd255951079008b364516c"
 
 DEPENDS += "libxml2 zlib swig-native curl python"
-RDEPENDS_${PN} += "libcurl ${PYTHON_VER}-compression ${PYTHON_VER}-lzma xz ${PYTHON_VER}-core"
+RDEPENDS_${PN} += "libcurl ${PYTHON_PN}-compression ${PYTHON_PN}-lzma xz ${PYTHON_PN}-core"
 
 inherit gitpkgv
 
@@ -17,7 +17,7 @@ PV = "0.8.6+gitr${SRCPV}"
 PKGV = "0.8.6+gitr${GITPKGV}"
 PR = "r0"
 
-inherit ${PYTHON_VER}-dir ${PYTHON_VER}native
+inherit ${PYTHON_PN}-dir ${PYTHON_PN}native
 
 ALLOW_EMPTY_${PN} = "1"
 

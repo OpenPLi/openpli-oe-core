@@ -15,13 +15,13 @@ PKGV = "1+git${GITPKGV}"
 inherit distutils-openplugins
 
 RDEPENDS_${PN} = " \
-	${PYTHON_VER}-core \
-	${PYTHON_VER}-codecs \
-	${PYTHON_VER}-json \
-	${PYTHON_VER}-netclient \
-	${PYTHON_VER}-pyopenssl \
-	${PYTHON_VER}-zlib \
-	${PYTHON_VER}-twisted-web \
+	${PYTHON_PN}-core \
+	${PYTHON_PN}-codecs \
+	${PYTHON_PN}-json \
+	${PYTHON_PN}-netclient \
+	${PYTHON_PN}-pyopenssl \
+	${PYTHON_PN}-zlib \
+	${PYTHON_PN}-twisted-web \
 	"
 
 CONFFILES = "/etc/enigma2/YouTube.key"

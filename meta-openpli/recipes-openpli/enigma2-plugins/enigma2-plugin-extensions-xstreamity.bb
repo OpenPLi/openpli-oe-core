@@ -3,8 +3,8 @@ HOMEPAGE = "https://www.linuxsat-support.com"
 MAINTAINER = "kiddac"
 require conf/license/license-gplv2.inc
 
-RDEPENDS_${PN} = "${PYTHON_VER}-argparse ${PYTHON_VER}-image ${PYTHON_VER}-lzma ${PYTHON_VER}-multiprocessing ${PYTHON_VER}-requests \
-                  ${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+RDEPENDS_${PN} = "${PYTHON_PN}-argparse ${PYTHON_PN}-image ${PYTHON_PN}-lzma ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-requests \
+                  ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 "
 
 inherit gitpkgv allarch

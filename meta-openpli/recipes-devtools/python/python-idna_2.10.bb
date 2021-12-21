@@ -21,4 +21,4 @@ BBCLASSEXTEND = "native nativesdk"
 
 PYPI_PACKAGE = "idna"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

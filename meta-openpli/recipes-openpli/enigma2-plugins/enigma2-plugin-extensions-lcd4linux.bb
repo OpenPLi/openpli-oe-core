@@ -14,19 +14,19 @@ SRC_URI = "git://github.com/eriksl/enigma2-plugin-extensions-lcd4linux-ihad-sour
 RDEPENDS_${PN} += "\
 	png-util \
 	pydpflib \
-	${PYTHON_VER}-codecs \
-	${PYTHON_VER}-ctypes \
-	${PYTHON_VER}-datetime \
-	${PYTHON_VER}-email \
-	${PYTHON_VER}-image \
-	${@bb.utils.contains("PYTHON_VER", "python", "${PYTHON_VER}-imaging", "${PYTHON_VER}-pillow", d)} \
-	${PYTHON_VER}-mutagen \
-	${PYTHON_VER}-pyusb \
-	${PYTHON_VER}-shell \
-	${PYTHON_VER}-simplejson \
-	${PYTHON_VER}-subprocess \
-	${PYTHON_VER}-textutils \
-	${PYTHON_VER}-zlib \
+	${PYTHON_PN}-codecs \
+	${PYTHON_PN}-ctypes \
+	${PYTHON_PN}-datetime \
+	${PYTHON_PN}-email \
+	${PYTHON_PN}-image \
+	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+	${PYTHON_PN}-mutagen \
+	${PYTHON_PN}-pyusb \
+	${PYTHON_PN}-shell \
+	${PYTHON_PN}-simplejson \
+	${PYTHON_PN}-subprocess \
+	${PYTHON_PN}-textutils \
+	${PYTHON_PN}-zlib \
 "
 
 S = "${WORKDIR}/git"

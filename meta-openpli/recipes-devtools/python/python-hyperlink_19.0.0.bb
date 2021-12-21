@@ -1,6 +1,6 @@
 SUMMARY = "A featureful, correct URL for Python"
 DESCRIPTION = "A featureful, correct URL for Python"
-HOMEPAGE = "https://github.com/${PYTHON_VER}-hyper/hyperlink"
+HOMEPAGE = "https://github.com/${PYTHON_PN}-hyper/hyperlink"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3893d4ed05dcc823f8ed685a9ea19bcb"
 
@@ -21,4 +21,4 @@ FILES_${PN}-test += " \
         ${PYTHON_SITEPACKAGES_DIR}/hyperlinkt/test \
 "
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

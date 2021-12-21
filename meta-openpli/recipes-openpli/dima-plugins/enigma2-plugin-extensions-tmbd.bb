@@ -7,14 +7,14 @@ PLUGINNAME = "enigma2-plugin-extensions-tmbd"
 require dima-plugins.inc
 
 RDEPENDS_${PN} = " \
-	${PYTHON_VER}-twisted-web \
-	${PYTHON_VER}-xml \
-	${PYTHON_VER}-shell \
-	${PYTHON_VER}-misc \
-	${PYTHON_VER}-html \
-	${PYTHON_VER}-subprocess \
-	${PYTHON_VER}-unixadmin \
-	${PYTHON_VER}-lxml \
+	${PYTHON_PN}-twisted-web \
+	${PYTHON_PN}-xml \
+	${PYTHON_PN}-shell \
+	${PYTHON_PN}-misc \
+	${PYTHON_PN}-html \
+	${PYTHON_PN}-subprocess \
+	${PYTHON_PN}-unixadmin \
+	${PYTHON_PN}-lxml \
 	"
 
 SRC_URI = "git://github.com/Hains/enigma2-plugin-extensions-tmbd.git;protocol=https;branch=master"

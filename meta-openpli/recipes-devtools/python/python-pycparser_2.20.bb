@@ -16,4 +16,4 @@ RDEPENDS_${PN}_class-target += "\
     ${PYTHON_PN}-subprocess \
     "
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

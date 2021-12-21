@@ -9,7 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport kodi"
 
-RDEPENDS_${PN} = "${PYTHON_VER}-pycryptodome ${PYTHON_VER}-pycryptodomex kodi-addon-inputstream-adaptive nspr nss"
+RDEPENDS_${PN} = "${PYTHON_PN}-pycryptodome ${PYTHON_PN}-pycryptodomex kodi-addon-inputstream-adaptive nspr nss"
 
 SRC_URI = "git://github.com/mx3L/kodiext;protocol=https;branch=master \
 	file://0001-make-transparant.patch \

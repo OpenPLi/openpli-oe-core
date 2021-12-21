@@ -9,7 +9,7 @@ DEPENDS = "libusb"
 
 S = "${WORKDIR}/git"
 
-inherit gitpkgv ${@bb.utils.contains("PYTHON_VER", "python", "setuptools", "setuptools3", d)}
+inherit gitpkgv ${@bb.utils.contains("PYTHON_PN", "python", "setuptools", "setuptools3", d)}
 
 PV = "0.14+git${SRCPV}"
 PKGV = "0.14+git${GITPKGV}"

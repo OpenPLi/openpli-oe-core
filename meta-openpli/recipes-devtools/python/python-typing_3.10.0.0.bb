@@ -8,4 +8,4 @@ SRC_URI[sha256sum] = "13b4ad211f54ddbf93e5901a9967b1e07720c1d1b78d596ac6a439641a
 BBCLASSEXTEND = "native nativesdk"
 
 inherit pypi setuptools
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

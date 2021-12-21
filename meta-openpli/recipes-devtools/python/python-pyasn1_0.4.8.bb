@@ -17,4 +17,4 @@ RDEPENDS_${PN}_class-target += " \
 "
 
 BBCLASSEXTEND = "native nativesdk"
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

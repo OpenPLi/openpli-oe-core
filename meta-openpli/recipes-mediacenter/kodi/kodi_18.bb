@@ -7,7 +7,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake pkgconfig gettext ${PYTHON_VER}-dir ${PYTHON_VER}native systemd
+inherit cmake pkgconfig gettext ${PYTHON_PN}-dir ${PYTHON_PN}native systemd
 
 DEPENDS = " \
             fmt \
@@ -234,20 +234,20 @@ RRECOMMENDS_${PN}_append = " libcec \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
                              os-release \
                              python \
-                             ${PYTHON_VER}-ctypes \
-                             ${PYTHON_VER}-lang \
-                             ${PYTHON_VER}-re \
-                             ${PYTHON_VER}-netclient \
-                             ${PYTHON_VER}-html \
-                             ${PYTHON_VER}-difflib \
-                             ${PYTHON_VER}-pycryptodome \
-                             ${PYTHON_VER}-pycryptodomex \
-                             ${PYTHON_VER}-json \
-                             ${PYTHON_VER}-zlib \
-                             ${PYTHON_VER}-shell \
-                             ${PYTHON_VER}-sqlite3 \
-                             ${PYTHON_VER}-compression \
-                             ${PYTHON_VER}-xmlrpc \
+                             ${PYTHON_PN}-ctypes \
+                             ${PYTHON_PN}-lang \
+                             ${PYTHON_PN}-re \
+                             ${PYTHON_PN}-netclient \
+                             ${PYTHON_PN}-html \
+                             ${PYTHON_PN}-difflib \
+                             ${PYTHON_PN}-pycryptodome \
+                             ${PYTHON_PN}-pycryptodomex \
+                             ${PYTHON_PN}-json \
+                             ${PYTHON_PN}-zlib \
+                             ${PYTHON_PN}-shell \
+                             ${PYTHON_PN}-sqlite3 \
+                             ${PYTHON_PN}-compression \
+                             ${PYTHON_PN}-xmlrpc \
                              tzdata-africa \
                              tzdata-americas \
                              tzdata-antarctica \

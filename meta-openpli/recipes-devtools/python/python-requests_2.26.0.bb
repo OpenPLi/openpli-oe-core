@@ -15,21 +15,21 @@ SRC_URI[sha256sum] = "b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b0
 inherit pypi setuptools
 
 RDEPENDS_${PN} += " \
-    ${PYTHON_VER}-chardet \
-    ${PYTHON_VER}-email \
-    ${PYTHON_VER}-idna \
-    ${PYTHON_VER}-json \
-    ${PYTHON_VER}-ndg-httpsclient \
-    ${PYTHON_VER}-netserver \
-    ${PYTHON_VER}-pyasn1 \
-    ${PYTHON_VER}-pyopenssl \
-    ${PYTHON_VER}-pysocks \
-    ${PYTHON_VER}-urllib3 \
-    ${PYTHON_VER}-zlib \
+    ${PYTHON_PN}-chardet \
+    ${PYTHON_PN}-email \
+    ${PYTHON_PN}-idna \
+    ${PYTHON_PN}-json \
+    ${PYTHON_PN}-ndg-httpsclient \
+    ${PYTHON_PN}-netserver \
+    ${PYTHON_PN}-pyasn1 \
+    ${PYTHON_PN}-pyopenssl \
+    ${PYTHON_PN}-pysocks \
+    ${PYTHON_PN}-urllib3 \
+    ${PYTHON_PN}-zlib \
 "
 
 CVE_PRODUCT = "requests"
 
 BBCLASSEXTEND = "native nativesdk"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

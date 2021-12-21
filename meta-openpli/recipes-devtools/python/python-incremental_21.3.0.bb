@@ -9,8 +9,8 @@ SRC_URI[sha256sum] = "02f5de5aff48f6b9f665d99d48bfc7ec03b6e3943210de7cfc88856d75
 inherit pypi setuptools
 
 RDEPENDS_${PN} += " \
-    ${PYTHON_VER}-twisted \
-    ${PYTHON_VER}-click \
+    ${PYTHON_PN}-twisted \
+    ${PYTHON_PN}-click \
 "
 
 # -native is needed to build python[3]-twisted, however, we need to take steps to
@@ -20,4 +20,4 @@ RDEPENDS_${PYTHON_PN}-incremental-native_remove = "${PYTHON_PN}-twisted-native"
 
 BBCLASSEXTEND = "native"
 
-include ${PYTHON_VER}-package-split.inc
+include ${PYTHON_PN}-package-split.inc

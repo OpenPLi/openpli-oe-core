@@ -1,4 +1,4 @@
-inherit ${PYTHON_VER}-dir
+inherit ${PYTHON_PN}-dir
 
 #PACKAGES =+ " ${PN}-src"
 RDEPENDS_{PN}-src = "${PN}"

@@ -109,24 +109,24 @@ OPTIONAL_PACKAGES += " \
 	parted \
 	procps \
 	pyload \
-	${PYTHON_VER}-ipaddress \
-	${PYTHON_VER}-ntplib \
-	${PYTHON_VER}-pip \
-	${PYTHON_VER}-requests \
-	${PYTHON_VER}-mechanize \
-	${PYTHON_VER}-lxml \
-	${PYTHON_VER}-js2py \
-	${PYTHON_VER}-pyexecjs \
-	${PYTHON_VER}-beautifulsoup4 \
-	${PYTHON_VER}-futures \
-	${PYTHON_VER}-pycryptodome \
-	${PYTHON_VER}-singledispatch \
-	${PYTHON_VER}-websocket-client \
-	${PYTHON_VER}-isodate \
-	${PYTHON_VER}-pycountry \
-	${PYTHON_VER}-youtube-dl \
-	${PYTHON_VER}-pycryptodomex \
-	${PYTHON_VER}-evdev \
+	${PYTHON_PN}-ipaddress \
+	${PYTHON_PN}-ntplib \
+	${PYTHON_PN}-pip \
+	${PYTHON_PN}-requests \
+	${PYTHON_PN}-mechanize \
+	${PYTHON_PN}-lxml \
+	${PYTHON_PN}-js2py \
+	${PYTHON_PN}-pyexecjs \
+	${PYTHON_PN}-beautifulsoup4 \
+	${PYTHON_PN}-futures \
+	${PYTHON_PN}-pycryptodome \
+	${PYTHON_PN}-singledispatch \
+	${PYTHON_PN}-websocket-client \
+	${PYTHON_PN}-isodate \
+	${PYTHON_PN}-pycountry \
+	${PYTHON_PN}-youtube-dl \
+	${PYTHON_PN}-pycryptodomex \
+	${PYTHON_PN}-evdev \
 	picocom \
 	ppp \
 	rclone \
