@@ -60,6 +60,7 @@ ENIGMA2_PLUGINS += " \
 
 DEPENDS += " \
 	enigma2 \
+	package-index \
 	"
 
 IMAGE_INSTALL += " \
