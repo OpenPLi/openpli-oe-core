@@ -134,19 +134,6 @@ index 821f10e49..63563c04b 100644
  		uint32_t orbpos = PyLong_AsUnsignedLong(PyTuple_GET_ITEM(tuple, 1));
  		if (strlen(tmpstr))
  			slot->possible_providers.insert(std::pair<std::string, uint32_t>(tmpstr, orbpos));
-diff --git a/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp b/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp
-index 496280b14..eb294962f 100644
---- a/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp
-+++ b/lib/python/Plugins/Extensions/SocketMMI/src/socket_mmi.cpp
-@@ -489,7 +489,7 @@ PyMODINIT_FUNC
- initsocketmmi(void)
- {
- #if PY_MAJOR_VERSION >= 3
--	PyModule_Create(&moduledef);
-+	return PyModule_Create(&moduledef);
- #else
- 	Py_InitModule3("socketmmi", module_methods,
- 		"Module that implements mmi via unix domain socket.");
 diff --git a/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py b/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py
 index 6608b3e0d..fff663d77 100644
 --- a/lib/python/Plugins/SystemPlugins/SoftwareManager/plugin.py
@@ -229,42 +216,3 @@ index 558c4b7e7..6b45b7d6c 100644
  
  #if PY_MAJOR_VERSION < 3
  	init_enigma();
-diff --git a/lib/python/python_base.i b/lib/python/python_base.i
-index a01f6a25c..e5e3b7863 100644
---- a/lib/python/python_base.i
-+++ b/lib/python/python_base.i
-@@ -352,7 +352,7 @@ static PyMethodDef base_module_methods[] = {
- 	PyModuleDef_HEAD_INIT,
- 	"eBaseImpl",																			/* m_name */
- 	"Module that implements some enigma classes with working cyclic garbage collection.",	/* m_doc */
--	-1,																						/* m_siz
-+	-1,																						/* m_siz */
- 	base_module_methods,																	/* m_methods */
- 	NULL,																					/* m_reload */
- 	NULL,																					/* m_traverse */
-diff --git a/lib/python/python_console.i b/lib/python/python_console.i
-index d6b5b9ecf..07f4645a7 100644
---- a/lib/python/python_console.i
-+++ b/lib/python/python_console.i
-@@ -358,7 +358,7 @@ static PyMethodDef console_module_methods[] = {
- 	PyModuleDef_HEAD_INIT,
- 	"eConsoleImpl",																			/* m_name */
- 	"Module that implements eConsoleAppContainer with working cyclic garbage collection.",	/* m_doc */
--	-1,																						/* m_siz
-+	-1,																						/* m_siz */
- 	console_module_methods,																	/* m_methods */
- 	NULL,																					/* m_reload */
- 	NULL,																					/* m_traverse */
-diff --git a/lib/service/servicedvd.cpp b/lib/service/servicedvd.cpp
-index 329c30311..ea2ba4974 100644
---- a/lib/service/servicedvd.cpp
-+++ b/lib/service/servicedvd.cpp
-@@ -1189,7 +1189,7 @@ PyMODINIT_FUNC
- initservicedvd(void)
- {
- #if PY_MAJOR_VERSION >= 3
--	PyModule_Create(&servicedvd_moduledef);
-+	return PyModule_Create(&servicedvd_moduledef);
- #else
- 	Py_InitModule("servicedvd", NULL);
- #endif
