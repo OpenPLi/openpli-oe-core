@@ -1,0 +1,12 @@
+diff --git a/usr/share/enigma2/PLi-FullNightHD/skin.xml b/usr/share/enigma2/PLi-FullNightHD/skin.xml
+index 9a761b6..39e4b3f 100644
+--- a/usr/share/enigma2/PLi-FullNightHD/skin.xml
++++ b/usr/share/enigma2/PLi-FullNightHD/skin.xml
+@@ -95,7 +95,6 @@
+ 	</colors>
+ 
+ 	<parameters>
+-		<parameter name="ConfigListSlider" value="22,3"/>
+ 		<parameter name="ChoicelistName" value="68,3,1000,31"/>
+ 		<parameter name="ExpandableListIcon" value="0,0,55,38"/>
+ 		<parameter name="ExpandableListDescr" value="55,2,1000,45"/>

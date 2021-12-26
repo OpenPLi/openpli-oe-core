@@ -8,7 +8,9 @@ inherit gitpkgv allarch
 PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
 
-SRC_URI = "git://github.com/littlesat/skin-PLiHD.git;protocol=https"
+SRC_URI = "git://github.com/littlesat/skin-PLiHD.git;protocol=https \
+           file://fix-sliderconfig.patch \
+"
 
 FILES_${PN} = "${datadir}/enigma2/"
 
