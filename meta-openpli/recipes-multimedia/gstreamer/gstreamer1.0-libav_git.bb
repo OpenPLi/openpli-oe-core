@@ -13,7 +13,7 @@ require gstreamer1.0-common.inc
 
 DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base ffmpeg"
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gst-libav.git;protocol=https;branch=master;name=gst_libav"
+SRC_URI = "git://github.com/GStreamer/gst-libav.git;protocol=https;branch=master;name=gst_libav"
 
 inherit pkgconfig
 
