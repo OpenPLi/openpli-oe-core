@@ -13,6 +13,6 @@ S = "${WORKDIR}/git/libtuxtxt"
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
 
-EXTRA_OECONF = "--with-boxtype=generic DVB_API_VERSION=5"
+EXTRA_OECONF = "--with-boxtype=generic DVB_API_VERSION=5 --without-debug"
 
 inherit autotools pkgconfig
