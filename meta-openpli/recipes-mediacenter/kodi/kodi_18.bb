@@ -233,7 +233,7 @@ RRECOMMENDS_${PN}_append = " libcec \
                              nss \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
                              os-release \
-                             python \
+                             python3 \
                              ${PYTHON_PN}-ctypes \
                              ${PYTHON_PN}-lang \
                              ${PYTHON_PN}-netclient \
