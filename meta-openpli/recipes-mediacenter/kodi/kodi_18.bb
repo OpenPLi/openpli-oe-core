@@ -235,7 +235,6 @@ RRECOMMENDS_${PN}_append = " libcec \
                              os-release \
                              python3 \
                              ${PYTHON_PN}-ctypes \
-                             ${PYTHON_PN}-lang \
                              ${PYTHON_PN}-netclient \
                              ${PYTHON_PN}-html \
                              ${PYTHON_PN}-difflib \
