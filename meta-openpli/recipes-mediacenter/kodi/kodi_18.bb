@@ -60,7 +60,7 @@ DEPENDS = " \
             libxslt \
             lzo \
             mpeg2dec \
-            python \
+            python3 \
             samba \
             sqlite3 \
             taglib \
