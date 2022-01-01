@@ -13,6 +13,7 @@ SRC_URI = " https://github.com/Opvolger/pythonwifi/releases/download/0.7.0/pytho
 			file://rename-tostring-to-tobytes.patch \
 			file://dont-encode-ifname-to-bytes.patch \
 			file://use-bytes-to-split.patch \
+			file://rename-next-method.patch \
 "
 
 S = "${WORKDIR}/python-wifi-${PV}"
