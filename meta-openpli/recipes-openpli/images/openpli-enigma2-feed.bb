@@ -208,7 +208,6 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugins \
 	enigma2-skins \
 	softcams-enigma2-meta \
-	packagegroup-openplugins \
 	${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
 	enigma2-plugin-extensions-backupsuite \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
