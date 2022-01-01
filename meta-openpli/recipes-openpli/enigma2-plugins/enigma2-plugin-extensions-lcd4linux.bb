@@ -24,7 +24,6 @@ RDEPENDS_${PN} += "\
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-simplejson \
 	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
-	${PYTHON_PN}-zlib \
 "
 
 S = "${WORKDIR}/git"
