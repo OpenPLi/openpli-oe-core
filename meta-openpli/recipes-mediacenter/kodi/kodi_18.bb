@@ -236,14 +236,12 @@ RRECOMMENDS_${PN}_append = " libcec \
                              python \
                              ${PYTHON_PN}-ctypes \
                              ${PYTHON_PN}-lang \
-                             ${PYTHON_PN}-re \
                              ${PYTHON_PN}-netclient \
                              ${PYTHON_PN}-html \
                              ${PYTHON_PN}-difflib \
                              ${PYTHON_PN}-pycryptodome \
                              ${PYTHON_PN}-pycryptodomex \
                              ${PYTHON_PN}-json \
-                             ${PYTHON_PN}-zlib \
                              ${PYTHON_PN}-shell \
                              ${PYTHON_PN}-sqlite3 \
                              ${PYTHON_PN}-compression \
