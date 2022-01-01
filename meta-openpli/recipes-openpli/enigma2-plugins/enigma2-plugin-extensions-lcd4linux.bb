@@ -23,7 +23,6 @@ RDEPENDS_${PN} += "\
 	${PYTHON_PN}-pyusb \
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-simplejson \
-	${PYTHON_PN}-textutils \
 	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
 	${PYTHON_PN}-zlib \
 "
