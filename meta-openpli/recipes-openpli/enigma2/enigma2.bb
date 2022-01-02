@@ -114,9 +114,8 @@ PV = "3.9+git${SRCPV}"
 PKGV = "3.9+git${GITPKGV}"
 
 ENIGMA2_BRANCH ?= "${@bb.utils.contains("PYTHON_PN", "python", "develop", "python3", d)}"
-GITHUB_URI ?= "git://github.com"
 
-SRC_URI = " ${GITHUB_URI}/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
+SRC_URI = " git://github.com/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
 			file://01-use-mallinfo2.patch \
 			file://fix-build.patch \
 			"

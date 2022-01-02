@@ -32,8 +32,7 @@ inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext
 PV = "z-git${SRCPV}"
 PKGV = "z-git${GITPKGV}"
 
-GITHUB_URI ?= "git://github.com"
-SRC_URI = "${GITHUB_URI}/Hains/${BPN}.git;protocol=https;branch=openpli"
+SRC_URI = "git://github.com/Hains/${BPN}.git;protocol=https;branch=openpli"
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \
