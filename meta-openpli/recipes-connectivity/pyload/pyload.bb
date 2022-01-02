@@ -1,13 +1,14 @@
 SUMMARY = "pyLoad is a fast, lightweight and full featured download manager for many One-Click-Hoster"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://LICENSE.MD;md5=d4333f07cbfa8fe036e90820f556b2ad"
+LIC_FILES_CHKSUM = "file://LICENSE.md;md5=2d20d11c1dccf4454ce811d6bfb05a2b"
 HOMEPAGE = "http://pyload.org/"
+
 RDEPENDS_${PN} = "\
 	${PYTHON_PN}-compression \
 	${PYTHON_PN}-db \
 	${PYTHON_PN}-email \
 	${PYTHON_PN}-html \
-	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+	${PYTHON_PN}-pillow  \
 	${PYTHON_PN}-numbers \
 	${PYTHON_PN}-pprint \
 	${PYTHON_PN}-pycryptodome \
@@ -24,8 +25,7 @@ inherit gittag update-rc.d
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRCREV = "1f29cd14d4c3d90d3249d20165a21c2b04ffed26"
-SRC_URI = "git://github.com/pyload/pyload.git;protocol=https;branch=stable \
+SRC_URI = "git://github.com/pyload/pyload.git;protocol=https;branch=main \
 	file://pyload.init \
 	file://pyload.tar.gz.defaults"
 
@@ -44,13 +44,6 @@ do_install() {
 	install -d ${D}/etc/init.d
 	install -d ${D}/usr/pyload
 
-	cp -r ${S}/icons ${D}/usr/pyload
-	cp -r ${S}/locale ${D}/usr/pyload
-	cp -r ${S}/module ${D}/usr/pyload
-	cp -r ${S}/scripts ${D}/usr/pyload
-	install -m 755 ${S}/pyLoadCli.py ${D}/usr/pyload
-	install -m 755 ${S}/pyLoadCore.py ${D}/usr/pyload
-	install -m 755 ${S}/systemCheck.py ${D}/usr/pyload
 	cp ${WORKDIR}/pyload.tar.gz.defaults ${D}/usr/pyload/pyload-defaults.tar.gz
 
 	install -m 0755 ${WORKDIR}/pyload.init ${D}/etc/init.d/pyload
