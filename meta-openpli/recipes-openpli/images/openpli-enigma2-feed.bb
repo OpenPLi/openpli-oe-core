@@ -140,7 +140,7 @@ OPTIONAL_PACKAGES += " \
 	sshfs-fuse \
 	smartmontools \
 	strace \
-	streamlink-27 \
+	streamlink \
 	streamlinksrv \
 	tcpdump \
 	tmux \
