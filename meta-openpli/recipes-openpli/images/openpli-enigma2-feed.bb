@@ -141,7 +141,6 @@ OPTIONAL_PACKAGES += " \
 	smartmontools \
 	strace \
 	streamlink \
-	streamlinksrv \
 	tcpdump \
 	tmux \
 	transmission \
@@ -164,41 +163,14 @@ OPTIONAL_PACKAGES += " \
 
 OPTIONAL_ENIGMA2_PACKAGES = " \
 	channelsettings-enigma2-meta \
-	enigma2-plugin-extensions-automatic-fullbackup \
 	enigma2-plugin-drivers-usbserial \
-	enigma2-plugin-extensions-dlnabrowser \
-	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-blurayplayer \
-	enigma2-plugin-extensions-epgimport \
-	enigma2-plugin-extensions-fontinfo \
 	enigma2-plugin-extensions-e2iplayer-deps \
 	enigma2-plugin-extensions-youtube \
-	enigma2-plugin-extensions-openmultiboot \
-	enigma2-plugin-extensions-modifyplifullhd \
-	enigma2-plugin-extensions-refreshbouquet \
-	enigma2-plugin-extensions-sdgradio \
-	enigma2-plugin-extensions-managerautofs \
-	enigma2-plugin-extensions-hdmitest \
-	enigma2-plugin-extensions-moviemanager \
-	enigma2-plugin-extensions-sundtekcontrolcenter \
-	enigma2-plugin-extensions-ts-sateditor \
-	enigma2-plugin-systemplugins-crossepg \
-	enigma2-plugin-systemplugins-devicemanager \
 	enigma2-plugin-systemplugins-misplslcnscan \
 	enigma2-plugin-systemplugins-terrestrialscan \
-	enigma2-plugin-systemplugins-mountmanager \
-	enigma2-plugin-systemplugins-signalfinder \
-	enigma2-plugin-systemplugins-extnumberzap \
-	enigma2-plugin-systemplugins-serviceapp \
-	enigma2-plugin-systemplugins-hrtunerproxy \
-	enigma2-plugin-systemplugins-quadpip \
-	enigma2-plugin-systemplugins-extrafancontrol \
 	enigma2-plugin-systemplugins-radiotimesxmltvemulator \
-	enigma2-plugin-extensions-historyzapselector \
-	enigma2-plugin-extensions-lcd4linux \
 	enigma2-plugin-extensions-tmbd \
-	enigma2-plugin-extensions-xmodem \
-	enigma2-plugin-extensions-vcs \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
@@ -206,7 +178,6 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-skins-pd1loi-hd-night \
 	enigma2-plugin-skins-glamouraurafhd \
 	enigma2-plugins \
-	enigma2-skins \
 	softcams-enigma2-meta \
 	packagegroup-openplugins \
 	${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
