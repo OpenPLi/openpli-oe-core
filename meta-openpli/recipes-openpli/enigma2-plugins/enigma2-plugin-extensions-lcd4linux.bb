@@ -30,7 +30,7 @@ S = "${WORKDIR}/git"
 inherit gitpkgv python3native
 
 do_compile() {
-	python -m compileall ${S}${libdir}
+	python3 -m compileall ${S}${libdir}
 }
 
 do_install() {
