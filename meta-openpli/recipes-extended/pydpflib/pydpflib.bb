@@ -16,5 +16,5 @@ PKGV = "0.14+git${GITPKGV}"
 PR = "r0"
 
 do_compile_prepend() {
-    $MAKE -C ./dpf-ax/dpflib all
+    $MAKE -C ${S}/dpf-ax/dpflib all
 }
