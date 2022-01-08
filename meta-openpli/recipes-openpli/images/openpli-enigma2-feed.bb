@@ -168,6 +168,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-systemplugins-misplslcnscan \
 	enigma2-plugin-systemplugins-terrestrialscan \
+	enigma2-plugin-systemplugins-serviceapp \
 	enigma2-plugin-systemplugins-radiotimesxmltvemulator \
 	enigma2-plugin-extensions-lcd4linux \
 	enigma2-plugin-extensions-tmbd \

@@ -9,11 +9,13 @@ DEPENDS = "enigma2 uchardet openssl"
 RDEPENDS_${PN} = "enigma2 uchardet openssl ${PYTHON_PN}-json"
 RRECOMMENDS_${PN} = "exteplayer3 gstplayer"
 
-SRC_URI = "git://github.com/mx3L/serviceapp.git;protocol=https;branch=develop"
+SRC_URI = "git://github.com/mx3L/serviceapp.git;protocol=https;branch=develop \
+			file://0001-Support-python-3-thanks.patch \
+"
 
 S = "${WORKDIR}/git"
 
-inherit autotools gitpkgv ${PYTHON_PN}native pkgconfig gettext
+inherit autotools gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig
 
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
@@ -26,15 +28,14 @@ EXTRA_OECONF = "\
 	"
 
 do_install_append() {
-	rm ${D}${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.pyc
+	rm ${D}${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.py
 }
 
 FILES_${PN} = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.pyo \
+	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.py \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/locale/*/LC_MESSAGES/ServiceApp.mo \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/serviceapp.so"
 
 FILES_${PN}-dev = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.py \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/serviceapp.la"
 
