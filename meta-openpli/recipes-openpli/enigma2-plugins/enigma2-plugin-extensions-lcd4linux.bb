@@ -22,7 +22,7 @@ RDEPENDS_${PN} += "\
 	${PYTHON_PN}-pyusb \
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-simplejson \
-	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+	${PYTHON_PN}-pillow \
 "
 
 S = "${WORKDIR}/git"
@@ -39,8 +39,8 @@ do_install() {
 }
 
 FILES_${PN} = "\
-	${libdir}/python2.7 \
-	${libdir}/python2.7/site-packages \
+	${libdir}/python3.9 \
+	${libdir}/python3.9/site-packages \
 	${libdir}/enigma2/python/Components/Renderer/PixmapLcd4linux.py* \
 	${libdir}/enigma2/python/Plugins/Extensions/LCD4linux \
 	${sysconfdir}/enigma2/lcd4config*"
