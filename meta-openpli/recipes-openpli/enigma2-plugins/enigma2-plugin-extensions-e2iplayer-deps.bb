@@ -12,6 +12,7 @@ RRECOMMENDS_${PN} = " \
 	lsdir \
 	f4mdump \
 	gst-ifdsrc \
+	iptvsubparser \
 	rtmpdump \
 	duktape \
 	uchardet \
