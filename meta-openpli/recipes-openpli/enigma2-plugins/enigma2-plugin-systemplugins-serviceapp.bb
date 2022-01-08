@@ -10,7 +10,7 @@ RDEPENDS_${PN} = "enigma2 uchardet openssl ${PYTHON_PN}-json"
 RRECOMMENDS_${PN} = "exteplayer3 gstplayer"
 
 SRC_URI = "git://github.com/mx3L/serviceapp.git;protocol=https;branch=develop \
-			file://0001-Support-python-3-thanks.patch \
+			file://0001-Support-python-3.patch \
 "
 
 S = "${WORKDIR}/git"
