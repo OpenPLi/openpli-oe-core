@@ -20,7 +20,6 @@ RDEPENDS_${PN} = " \
 	${PYTHON_PN}-json \
 	${PYTHON_PN}-netclient \
 	${PYTHON_PN}-pyopenssl \
-	${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-zlib", "", d)} \
 	${PYTHON_PN}-twisted-web \
 	"
 

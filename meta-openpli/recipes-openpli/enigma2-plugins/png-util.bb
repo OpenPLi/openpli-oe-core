@@ -12,7 +12,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}/${P}"
 
-inherit ${@bb.utils.contains("PYTHON_PN", "python", "distutils-base", "distutils3-base", d)}
+inherit distutils3-base
 
 do_compile() {
 	swig -python -c++ ${WORKDIR}/png_util.i

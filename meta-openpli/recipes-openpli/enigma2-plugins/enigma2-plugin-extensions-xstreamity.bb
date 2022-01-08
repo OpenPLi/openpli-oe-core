@@ -4,7 +4,7 @@ MAINTAINER = "kiddac"
 require conf/license/license-gplv2.inc
 
 RDEPENDS_${PN} = "${PYTHON_PN}-argparse ${PYTHON_PN}-image ${PYTHON_PN}-backports-lzma ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-requests \
-                  ${@bb.utils.contains("PYTHON_PN", "python", "${PYTHON_PN}-imaging", "${PYTHON_PN}-pillow", d)} \
+                  ${PYTHON_PN}-pillow \
 "
 
 inherit gitpkgv allarch

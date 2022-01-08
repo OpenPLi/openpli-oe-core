@@ -10,7 +10,7 @@ DEPENDS = "libxml2"
 SRC_ORIGIN ?= "gitsm://code.videolan.org/videolan/libbluray.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} "
 
-inherit gittag ${@bb.utils.contains("PYTHON_PN", "python", "setuptools", "setuptools3", d)} autotools-brokensep pkgconfig
+inherit gittag setuptools3 autotools-brokensep pkgconfig
 
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
