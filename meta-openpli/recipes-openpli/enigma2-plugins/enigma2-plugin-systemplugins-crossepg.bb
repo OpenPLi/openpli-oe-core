@@ -38,7 +38,7 @@ do_install() {
     mv ${D}/usr/crossepg/libcrossepg.so ${D}${libdir}/
 }
 
-pkg_postrm:${PN}() {
+pkg_postrm_${PN}() {
     rm -fr ${libdir}/enigma2/python/Plugins/SystemPlugins/CrossEPG > /dev/null 2>&1
 }
 
