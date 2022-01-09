@@ -164,6 +164,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	channelsettings-enigma2-meta \
 	enigma2-plugin-drivers-usbserial \
 	enigma2-plugin-extensions-blurayplayer \
+	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-e2iplayer-deps \
 	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-systemplugins-misplslcnscan \
