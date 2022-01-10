@@ -17,8 +17,3 @@ PR = "r1"
 inherit distutils-openplugins
 
 RDEPENDS_${PN} = "${PYTHON_PN}-core rtl-sdr redsea dab-cmdline-sdgradio dab-cmdline-sdgradio-pcm dab-cmdline-sdgradio-wav"
-
-RDEPENDS_{PN}-src = "${PN}"
-
-FILES_${PN}-src = "${libdir}/enigma2/python/Plugins/Extensions/SDGRadio/*.py"
-

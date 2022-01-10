@@ -53,6 +53,5 @@ python populate_packages_prepend() {
 
 ALLOW_EMPTY_${PN} = "1"
 FILES_${PN}_append = " /usr/crossepg ${libdir}/libcrossepg.so ${libdir}/${PYTHON_DIR}"
-FILES_${PN}-src_append = " ${libdir}/${PYTHON_DIR}/crossepg.py"
 FILES_${PN}-dbg_append = " /usr/crossepg/scripts/mhw2epgdownloader/.debug /usr/crossepg/scripts/mhw2epgdownloader/.debug"
 FILES_SOLIBSDEV = ""
