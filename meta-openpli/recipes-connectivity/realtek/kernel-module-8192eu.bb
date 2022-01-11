@@ -13,7 +13,7 @@ inherit module siteinfo
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
-	git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x \
+	git://github.com/Mange/rtl8192eu-linux-driver.git;branch=realtek-4.4.x;protocol=https \
 	file://build.patch \
 	file://0001-add-CHECKSM_IPV6_H-patch.patch \
 	file://0002-kernel-515-removes-ipx.patch \
@@ -29,7 +29,7 @@ do_configure() {
 
 do_compile() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-        oe_runmake -C "${STAGING_KERNEL_DIR}" M="${S}" modules 
+        oe_runmake -C "${STAGING_KERNEL_DIR}" M="${S}" modules
 }
 
 do_install() {

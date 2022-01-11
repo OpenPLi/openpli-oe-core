@@ -21,7 +21,7 @@ PVRMYTV = "${@bb.utils.contains("KODIADDONPLUGIN", "mythtv", "janbar", "kodi-pvr
 
 PVRGIT = "${PVRMYTV}"
 
-SRC_URI = "git://github.com/${PVRGIT}/pvr.${KODIADDONPLUGIN}.git;destsuffix=pvr.${KODIADDONPLUGIN};name=pvr${KODIADDONPLUGIN};branch=${KODIADDONBRANCH}"
+SRC_URI = "git://github.com/${PVRGIT}/pvr.${KODIADDONPLUGIN}.git;destsuffix=pvr.${KODIADDONPLUGIN};name=pvr${KODIADDONPLUGIN};branch=${KODIADDONBRANCH};protocol=https"
 
 inherit cmake pkgconfig gettext gitpkgv
 

@@ -12,7 +12,7 @@ inherit module
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = " \
-          git://github.com/lwfinger/rtl8723bu.git;branch=master \
+          git://github.com/lwfinger/rtl8723bu.git;branch=master;protocol=https \
           file://rt8723bu-makefile.patch \
           file://rt8723bu-gcc5.patch \
           "

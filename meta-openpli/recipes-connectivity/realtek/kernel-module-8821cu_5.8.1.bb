@@ -9,7 +9,7 @@ inherit module
 BRANCH = "master"
 
 SRC_URI = " \
-    git://github.com/brektrou/rtl8821CU.git;branch=${BRANCH} \
+    git://github.com/brektrou/rtl8821CU.git;branch=${BRANCH};protocol=https \
     file://rtl8821cu-gcc5.patch \
     file://0001-disable-mp-hw-tx-mode-for-vht.patch \
     file://0002-adjust-policy-kernelversion.patch \
