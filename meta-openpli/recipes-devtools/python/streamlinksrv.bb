@@ -7,9 +7,9 @@ require conf/license/license-gplv2.inc
 
 inherit allarch
 
-RDEPENDS_${PN} = "${PYTHON_PN}-core streamlink-27"
+RDEPENDS_${PN} = "${PYTHON_PN}-core streamlink"
 
-SRC_URI = "git://github.com/athoik/livestreamersrv.git;protocol=https"
+SRC_URI = "git://github.com/oe-mirrors/livestreamersrv;protocol=https;branch=streamlinksrv"
 S = "${WORKDIR}/git"
 
 inherit gittag
@@ -17,7 +17,6 @@ SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-PACKAGES = "${PN}"
 
 do_install_append() {
     install -d ${D}${sbindir}
@@ -33,3 +32,5 @@ do_install_append() {
 }
 
 FILES_${PN} = "/"
+
+do_package_qa[noexec] = "1"
