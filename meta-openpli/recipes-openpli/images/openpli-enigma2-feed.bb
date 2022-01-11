@@ -140,6 +140,7 @@ OPTIONAL_PACKAGES += " \
 	smartmontools \
 	strace \
 	streamlink \
+	streamlinksrv \
 	tcpdump \
 	tmux \
 	transmission \
@@ -191,6 +192,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "chromiumos", "enigma2-plugin-extensions-chromium", "", d)} \
+	${@bb.utils.contains('OPENPLI_FEATURES', 'openhbbtvbrowser', 'enigma2-plugin-extensions-openhbbtvbrowser', '', d)} \
 	libcrypto-compat \
 	libxcrypt-compat \
 	dvb-usb-drivers-meta \
