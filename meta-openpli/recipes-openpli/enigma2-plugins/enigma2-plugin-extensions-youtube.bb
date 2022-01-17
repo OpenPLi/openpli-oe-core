@@ -8,9 +8,10 @@ LIC_FILES_CHKSUM = "file://COPYING.GPLv2;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 SRC_URI = "git://github.com/Taapat/enigma2-plugin-youtube.git;protocol=https"
 S = "${WORKDIR}/git"
 
-inherit gitpkgv
-PV = "1+git${SRCPV}"
-PKGV = "1+git${GITPKGV}"
+inherit gittag
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
+
 
 inherit distutils-openplugins
 
