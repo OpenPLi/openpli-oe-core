@@ -27,7 +27,7 @@
 	url = https://github.com/kueken/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = https://github.com/neo-pli-bsps/meta-miraclebox.git
+	url = https://github.com/kueken/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
 	url = https://github.com/neo-pli-bsps/meta-spycat.git
@@ -45,7 +45,7 @@
 	url = https://github.com/kueken/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
-	url = https://github.com/neo-pli-bsps/meta-sab.git
+	url = https://github.com/kueken/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
 	url = https://github.com/kueken/meta-xsarius.pli5.git
@@ -72,7 +72,7 @@
 	url = https://github.com/hd-digital/meta-xp
 [submodule "meta-uclan"]
 	path = meta-uclan
-	url = https://github.com/zhtq/meta-uclan
+	url = https://github.com/kueken/meta-uclan
 [submodule "meta-dream"]
 	path = meta-dream
 	url = https://github.com/neo-pli-bsps/meta-dream.git
