@@ -13,8 +13,8 @@ SRC_URI = " git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=git;
 			file://make-huffman-root-structure-variable-extern.patch \
 			"
 
-PV = "0.8.6+gitr${SRCPV}"
-PKGV = "0.8.6+gitr${GITPKGV}"
+PV = "0.8.7+gitr${SRCPV}"
+PKGV = "0.8.7+gitr${GITPKGV}"
 PR = "r0"
 
 inherit python-dir pythonnative
