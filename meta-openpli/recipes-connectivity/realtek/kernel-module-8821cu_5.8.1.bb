@@ -2,23 +2,32 @@ SUMMARY = "Drivers for Realtek 8821CU/8811CU"
 HOMEPAGE = "http://www.realtek.com.tw"
 SECTION = "kernel/modules"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://wlan0dhcp;md5=069fc07a0c587af26235837dc342eb25"
+LIC_FILES_CHKSUM = "file://ifcfg-wlan0;md5=a84acae65af4b2d44d5035aa9f63cd85"
 
 inherit module
 
-BRANCH = "master"
-
-SRC_URI = " \
-    git://github.com/brektrou/rtl8821CU.git;branch=${BRANCH} \
-    file://0001-disable-mp-hw-tx-mode-for-vht.patch \
-    file://0002-adjust-policy-kernelversion.patch \
-    file://support-kernel-5.1-to-5.9.patch \
-    file://restore_support_for_kernels_older_than_420.patch \
+SRC_URI = "git://github.com/atvcaptain/RTL8821CU_driver_v5.8.1.git;protocol=https \
+    file://add-5.15-support.patch \
 "
+
+EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"
 
 S = "${WORKDIR}/git"
 
-EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR} KSRC=${STAGING_KERNEL_DIR}"
+do_compile () {
+    unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS CC LD CPP
+    oe_runmake 'M={D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless' \
+        'KERNEL_SOURCE=${STAGING_KERNEL_DIR}' \
+        'LINUX_SRC=${STAGING_KERNEL_DIR}' \
+        'KDIR=${STAGING_KERNEL_DIR}' \
+        'KERNDIR=${STAGING_KERNEL_DIR}' \
+        'KSRC=${STAGING_KERNEL_DIR}' \
+        'KERNEL_VERSION=${KERNEL_VERSION}' \
+        'KVER=${KERNEL_VERSION}' \
+        'CC=${KERNEL_CC}' \
+        'AR=${KERNEL_AR}' \
+        'LD=${KERNEL_LD}'
+}
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
