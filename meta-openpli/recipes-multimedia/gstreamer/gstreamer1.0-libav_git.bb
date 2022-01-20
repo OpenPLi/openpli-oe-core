@@ -13,7 +13,9 @@ require gstreamer1.0-common.inc
 
 DEPENDS = "gstreamer1.0 gstreamer1.0-plugins-base ffmpeg"
 
-SRC_URI = "git://github.com/GStreamer/gst-libav.git;protocol=https;branch=master;name=gst_libav"
+SRC_URI = "git://github.com/GStreamer/gst-libav.git;protocol=https;branch=master;name=gst_libav \
+           file://0001-gst-libav-fix-build-with-ffmpeg-5.0.0.patch \
+"
 
 inherit pkgconfig
 
