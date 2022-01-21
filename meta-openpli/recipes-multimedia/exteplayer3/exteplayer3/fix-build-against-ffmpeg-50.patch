@@ -1,0 +1,34 @@
+diff --git a/container/container_ffmpeg.c b/container/container_ffmpeg.c
+index 219ba54..89cd10c 100755
+--- a/container/container_ffmpeg.c
++++ b/container/container_ffmpeg.c
+@@ -46,6 +46,7 @@
+ #include <libavutil/avutil.h>
+ #include <libavutil/time.h>
+ #include <libavformat/avformat.h>
++#include "libavcodec/avcodec.h"
+ #include <libswresample/swresample.h>
+ #include <libavutil/opt.h>
+ 
+@@ -1853,7 +1854,7 @@ int32_t container_ffmpeg_init_av_context(Context_t *context, char *filename, uin
+         }
+     }
+ 
+-    avContextTab[AVIdx]->iformat->flags |= AVFMT_SEEK_TO_PTS;
++    // avContextTab[AVIdx]->iformat->flags |= AVFMT_SEEK_TO_PTS;
+     avContextTab[AVIdx]->flags = AVFMT_FLAG_GENPTS;
+ 
+     if (context->playback->noprobe)
+diff --git a/container/mpeg4p2_ffmpeg.c b/container/mpeg4p2_ffmpeg.c
+index dce8899..52adab6 100755
+--- a/container/mpeg4p2_ffmpeg.c
++++ b/container/mpeg4p2_ffmpeg.c
+@@ -3,6 +3,8 @@
+ // http://forums.openpli.org/topic/39326-gstreamer10-and-mpeg4-part2/?hl=%2Bmpeg4+%2Bpart2
+ //
+ 
++#include <libavcodec/bsf.h>
++
+ // mpeg4_unpack_bframes
+ typedef struct
+ {
