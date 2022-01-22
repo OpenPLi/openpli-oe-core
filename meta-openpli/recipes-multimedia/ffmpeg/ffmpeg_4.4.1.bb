@@ -11,6 +11,7 @@ LICENSE_libavcodec = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LG
 LICENSE_libavdevice = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LGPLv2.1+', d)}"
 LICENSE_libavfilter = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LGPLv2.1+', d)}"
 LICENSE_libavformat = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LGPLv2.1+', d)}"
+LICENSE_libavresample = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LGPLv2.1+', d)}"
 LICENSE_libavutil = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LGPLv2.1+', d)}"
 LICENSE_libpostproc = "GPLv2+"
 LICENSE_libswresample = "${@bb.utils.contains('PACKAGECONFIG', 'gpl', 'GPLv2+', 'LGPLv2.1+', d)}"
@@ -22,7 +23,7 @@ LIC_FILES_CHKSUM = "file://COPYING.GPLv2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
                     file://COPYING.LGPLv2.1;md5=bd7a443320af8c812e4c18d1b79df004 \
                     file://COPYING.LGPLv3;md5=e6a600fd5e1d9cbde2d983680233ad02"
 
-SRC_URI = "git://github.com/FFmpeg/FFmpeg.git;protocol=https;branch=release/5.0 \
+SRC_URI = "git://github.com/FFmpeg/FFmpeg.git;protocol=https;branch=release/4.4 \
            file://4_mips64_cpu_detection.patch \
            file://0001-libavutil-include-assembly-with-full-path-from-sourc.patch \
            "
@@ -42,7 +43,7 @@ S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
 
-PACKAGECONFIG ??= "avdevice avfilter avcodec avformat swresample swscale postproc \
+PACKAGECONFIG ??= "avdevice avfilter avcodec avformat swresample swscale postproc avresample \
                    alsa bzlib gpl lzma pic pthreads shared theora x264 zlib \
                    ${@bb.utils.contains('AVAILTUNES', 'mips32r2', 'mips32r2', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xv xcb', '', d)}"
@@ -55,6 +56,7 @@ PACKAGECONFIG[avformat] = "--enable-avformat,--disable-avformat"
 PACKAGECONFIG[swresample] = "--enable-swresample,--disable-swresample"
 PACKAGECONFIG[swscale] = "--enable-swscale,--disable-swscale"
 PACKAGECONFIG[postproc] = "--enable-postproc,--disable-postproc"
+PACKAGECONFIG[avresample] = "--enable-avresample,--disable-avresample"
 
 # features to support
 PACKAGECONFIG[alsa] = "--enable-alsa,--disable-alsa,alsa-lib"
@@ -150,6 +152,7 @@ PACKAGES =+ "libavcodec \
              libavdevice \
              libavfilter \
              libavformat \
+             libavresample \
              libavutil \
              libpostproc \
              libswresample \
@@ -159,6 +162,7 @@ FILES_libavcodec = "${libdir}/libavcodec${SOLIBS}"
 FILES_libavdevice = "${libdir}/libavdevice${SOLIBS}"
 FILES_libavfilter = "${libdir}/libavfilter${SOLIBS}"
 FILES_libavformat = "${libdir}/libavformat${SOLIBS}"
+FILES_libavresample = "${libdir}/libavresample${SOLIBS}"
 FILES_libavutil = "${libdir}/libavutil${SOLIBS}"
 FILES_libpostproc = "${libdir}/libpostproc${SOLIBS}"
 FILES_libswresample = "${libdir}/libswresample${SOLIBS}"
@@ -170,6 +174,7 @@ INSANE_SKIP_${MLPREFIX}libavdevice = "textrel"
 INSANE_SKIP_${MLPREFIX}libavfilter = "textrel"
 INSANE_SKIP_${MLPREFIX}libavformat = "textrel"
 INSANE_SKIP_${MLPREFIX}libavutil = "textrel"
+INSANE_SKIP_${MLPREFIX}libavresample = "textrel"
 INSANE_SKIP_${MLPREFIX}libswscale = "textrel"
 INSANE_SKIP_${MLPREFIX}libswresample = "textrel"
 INSANE_SKIP_${MLPREFIX}libpostproc = "textrel"
