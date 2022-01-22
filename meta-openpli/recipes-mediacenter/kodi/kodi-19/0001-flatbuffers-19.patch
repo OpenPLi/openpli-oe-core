@@ -1,11 +1,7 @@
-From cd9a147e6ca70d5cf495ad5e7e39bfaacde51979 Mon Sep 17 00:00:00 2001
-From: Koen Kooi <koen.kooi@linaro.org>
-Date: Sat, 8 Sep 2018 09:14:10 +0200
-Subject: [PATCH 10/12] flatbuffers.patch
-
----
- xbmc/cores/RetroPlayer/messages/savestate.fbs | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+From f76576a6e64a5e0fa49424040dac2325951aff63 Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Wed, 15 Jul 2020 19:40:27 +0200
+Subject: [PATCH 01/10] flatbuffers-19
 
 diff --git a/xbmc/cores/RetroPlayer/messages/savestate.fbs b/xbmc/cores/RetroPlayer/messages/savestate.fbs
 index 1d708d61f98..33b07d8dcaf 100644
@@ -54,5 +50,5 @@ index 1d708d61f98..33b07d8dcaf 100644
  
  root_type Savestate;
 -- 
-2.17.1
+2.25.1
 

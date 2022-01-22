@@ -9,7 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit cmake pkgconfig gettext ${PYTHON_PN}-dir ${PYTHON_PN}native systemd
 
-DEPENDS = " \
+DEPENDS += " \
             fmt \
             flatbuffers flatbuffers-native \
             fstrcmp \
@@ -38,6 +38,7 @@ DEPENDS = " \
             ffmpeg \
             fontconfig \
             fribidi \
+            glib-2.0 \ 
             giflib \
             libass \
             libcdio \
@@ -54,6 +55,7 @@ DEPENDS = " \
             libsamplerate0 \
             libsquish \
             libssh \
+            spdlog \
             libtinyxml \
             libusb1 \
             libxkbcommon \
@@ -70,53 +72,26 @@ DEPENDS = " \
             zlib \
            "
 
-SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
-
 # 'patch' doesn't support binary diffs
 PATCHTOOL = "git"
 
-# Correct 18+git vs 18-git screwup
 PE = "1"
 
-PV = "18.9+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
-
-# patches for 18.x upstreamed in 19.x
-SRC_URI_append = " \
-            file://0001-Add-support-for-musl-triplets.patch \
-            file://0002-Fix-file_Emu-on-musl.patch \
-            file://0003-Remove-FILEWRAP.patch \
-            file://0004-Replace-u_int64_t-with-uint64_t-from-stdint.h.patch \
+PV = "19.3+gitr${SRCPV}"
+SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Matrix \
+           file://0001-flatbuffers-19.patch \
+           file://0002-readd-Touchscreen-settings.patch \
+           file://0003-crossguid-0.2.patch \
+           file://0004-shader-nopow-19.patch \
+           file://0006-stb-settings-19.patch \
+           file://0005-stb-support-19.patch \
+           file://0007-add-winsystemfactory-windowing-init.patch \
+           file://0008-adapt-window-system-registration.patch \
             \
-            file://0005-estuary-move-recently-added-entries-to-the-top-in-ho.patch \
-            file://0006-kodi.sh-set-mesa-debug.patch \
-            file://0007-peripheral-settings-export-CEC-device_name-in-GUI.patch \
-            file://0010-flatbuffers.patch \
-            \
-            file://PR15286-shader-nopow.patch \
-            file://15941.patch \
            "
 
 # stb, egl, players
-SRC_URI_append = " \
-            file://stb-1-platform.patch \
-            file://stb-2-ext-install.patch \
-            file://stb-3-rckey-events.patch \
-            file://stb-4-crosstools.patch \
-            \
-            file://egl-1-v3d-mali.patch \
-            file://egl-2-windowing.patch \
-            \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/EGLNativeTypeV3D-nxpl.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'edison-cortexa15', 'file://egl/EGLNativeTypeV3D-platform-arm.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', 'file://egl/EGLNativeTypeV3D-platform.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', 'file://egl/EGLNativeTypeV3D-lunix4k.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', 'file://egl/EGLNativeTypeV3D-gb4k.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', 'file://egl/EGLNativeTypeV3D-vuplus.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/EGLNativeTypeV3D-vuplus4k.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://egl/EGLNativeTypeMali.patch', '', d)} \
-            \
+SRC_URI_append += " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
                                                               'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
            "
@@ -124,7 +99,7 @@ SRC_URI_append = " \
 S = "${WORKDIR}/git"
 
 # breaks compilation
-CCACHE = ""
+CCACHE_DISABLE = "1"
 ASNEEDED = ""
 
 ACCEL ?= ""
@@ -132,6 +107,8 @@ ACCEL_x86 = "vaapi vdpau"
 ACCEL_x86-64 = "vaapi vdpau"
 
 WINDOWSYSTEM ?= "stb"
+
+APPRENDERSYSTEM ?= "gles"
 
 PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} lcms lto \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
@@ -163,8 +140,19 @@ PACKAGECONFIG[lcms] = ",,lcms"
 PACKAGECONFIG[gold] = "-DENABLE_LDGOLD=ON,-DENABLE_LDGOLD=OFF"
 PACKAGECONFIG[lto] = "-DUSE_LTO=${@oe.utils.cpu_count()},-DUSE_LTO=OFF"
 
+KODI_DISABLE_INTERNAL_LIBRARIES = " \
+  -DENABLE_INTERNAL_CROSSGUID=OFF \
+  -DENABLE_INTERNAL_FLATBUFFERS=OFF \
+  -DENABLE_INTERNAL_FMT=OFF \
+  -DENABLE_INTERNAL_FSTRCMP=0 \
+  -DENABLE_INTERNAL_RapidJSON=OFF \
+  -DENABLE_INTERNAL_FFMPEG=OFF \
+"
+
 EXTRA_OECMAKE = " \
+    ${KODI_ARCH} \
     ${KODI_DISABLE_INTERNAL_LIBRARIES} \
+    -DAPP_RENDER_SYSTEM=${APPRENDERSYSTEM} \
     \
     -DNATIVEPREFIX=${STAGING_DIR_NATIVE}${prefix} \
     -DJava_JAVA_EXECUTABLE=/usr/bin/java \
@@ -178,6 +166,7 @@ EXTRA_OECMAKE = " \
     -DNFS_INCLUDE_DIR=${STAGING_INCDIR} \
     -DSHAIRPLAY_INCLUDE_DIR=${STAGING_INCDIR} \
     \
+    -DENABLE_AIRTUNES=ON \
     -DENABLE_OPTICAL=OFF \
     -DENABLE_DVDCSS=OFF \
     -DENABLE_DEBUGFISSION=OFF \
@@ -185,7 +174,7 @@ EXTRA_OECMAKE = " \
     \
     ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', '-DWITH_PLATFORM="v3d-cortexa15"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', '-DWITH_PLATFORM="v3d-mipsel"', '', d)} \
-    ${@bb.utils.contains('MACHINE_FEATURES', 'edison-cortexa15', '-DWITH_PLATFORM="edison-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'edision-cortexa15', '-DWITH_PLATFORM="edision-cortexa15 -DWITH_FFMPEG=stb"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', '-DWITH_PLATFORM="xcore-mipsel"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', '-DWITH_PLATFORM="nextv-cortexa15"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', '-DWITH_PLATFORM="GB-cortexa15"', '', d)} \
@@ -200,7 +189,8 @@ LDFLAGS += "${TOOLCHAIN_OPTIONS}"
 LDFLAGS_append_mipsarch = " -latomic -lpthread"
 LDFLAGS_append_arm = " -lpthread"
 
-FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
+FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O3 -ffast-math"
+FULL_OPTIMIZATION_armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O3 -ffast-math"
 BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
@@ -208,7 +198,7 @@ export HOST_SYS
 export BUILD_SYS
 export STAGING_LIBDIR
 export STAGING_INCDIR
-export PYTHON_DIR
+export ${PYTHON_DIR}
 
 export TARGET_PREFIX
 
@@ -221,7 +211,14 @@ do_configure_prepend() {
         sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
-FILES_${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
+INSANE_SKIP_${PN} = "rpaths already-stripped"
+
+FILES_${PN} = "${libdir}/kodi ${libdir}/xbmc"
+FILES_${PN} += "${bindir}/kodi ${bindir}/xbmc"
+FILES_${PN} += "${datadir}/icons ${datadir}/kodi ${datadir}/xbmc"
+FILES_${PN} += "${bindir}/kodi-standalone ${bindir}/xbmc-standalone ${datadir}/xsessions"
+FILES_${PN} += "${libdir}/firewalld"
+FILES_${PN}-dev = "${includedir}"
 FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
@@ -229,7 +226,6 @@ FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi
 RRECOMMENDS_${PN}_append = " libcec \
                              libcurl \
                              libnfs \
-                             nspr \
                              nss \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
                              os-release \
@@ -245,6 +241,8 @@ RRECOMMENDS_${PN}_append = " libcec \
                              ${PYTHON_PN}-sqlite3 \
                              ${PYTHON_PN}-compression \
                              ${PYTHON_PN}-xmlrpc \
+                             ${PYTHON_PN}-mechanize \
+                             ${PYTHON_PN}-profile \
                              tzdata-africa \
                              tzdata-americas \
                              tzdata-antarctica \
@@ -269,4 +267,4 @@ RRECOMMENDS_${PN}_append_libc-glibc = " glibc-charmap-ibm850 \
                                         glibc-localedata-en-us \
                                       "
 # customizations should be in the BSP layers
-require kodi_18.inc
+require kodi_19.inc

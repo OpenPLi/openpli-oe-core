@@ -1,6 +1,56 @@
-diff -ruN a/xbmc/cores/Enigma2Player/CMakeLists.txt b/xbmc/cores/Enigma2Player/CMakeLists.txt
---- a/xbmc/cores/Enigma2Player/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
-+++ b/xbmc/cores/Enigma2Player/CMakeLists.txt	2019-11-01 15:43:52.540647760 +0100
+From 9198ecdf8c3f0b0adcd929a84d6d02fdbe30c29e Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Fri, 17 Jul 2020 21:00:25 +0200
+Subject: [PATCH 09/10] e2-player
+
+diff --git a/cmake/treedata/common/cores.txt b/cmake/treedata/common/cores.txt
+index d23939d314e..5e5c6cbf80c 100644
+--- a/cmake/treedata/common/cores.txt
++++ b/cmake/treedata/common/cores.txt
+@@ -4,5 +4,6 @@ xbmc/cores/DllLoader                   cores/dll-loader
+ xbmc/cores/DllLoader/exports           cores/dll-loader/exports
+ xbmc/cores/DllLoader/exports/util      cores/dll-loader/exports/util
+ xbmc/cores/ExternalPlayer              cores/externalplayer
++xbmc/cores/Enigma2Player               cores/enigma2player
+ xbmc/cores/paplayer                    cores/paplayer
+ xbmc/cores/playercorefactory           cores/playercorefactory
+diff --git a/system/playercorefactory.xml b/system/playercorefactory.xml
+index f928311cf0b..8e2502143eb 100644
+--- a/system/playercorefactory.xml
++++ b/system/playercorefactory.xml
+@@ -8,9 +8,17 @@
+     <player name="VideoPlayer" /> placeholder for MPlayer
+     <player name="PAPlayer" audio="true" />
+     -->
++    <player name="E2Player" type="Enigma2Player" audio="true" video="true">
++      <filename>kodiext</filename>
++      <args>-U "{1}" -S "{3}" -P "$PPID"</args>
++      <filenamemeta>/tmp/kodiextin.json</filenamemeta>
++      <hidexbmc>true</hidexbmc>
++      <hideconsole>true</hideconsole>
++      <warpcursor>none</warpcursor>
++    </player>
+   </players>
+ 
+-  <rules name="system rules">
++  <rules action="prepend" name="system rules">
+     <rule name="mms/udp" protocols="mms|mmsh|udp" player="VideoPlayer" />
+     <rule name="lastfm/shout" protocols="lastfm|shout" player="PAPlayer" />
+     <rule name="rtmp" protocols="rtmp" player="videodefaultplayer" />
+@@ -22,6 +30,8 @@
+     <rule name="streams" internetstream="true">
+       <rule name="aacp/sdp" mimetypes="audio/aacp|application/sdp" player="VideoPlayer" />
+       <rule name="mp2" mimetypes="application/octet-stream" filetypes="mp2" player="PAPlayer" />
++      <rule name="widevine1" filetypes="mpd" player="VideoPlayer" />
++      <rule name="netflix" filename="*manifest*"  player="VideoPlayer" />
+     </rule>
+ 
+     <!-- DVDs -->
+diff --git a/xbmc/cores/Enigma2Player/CMakeLists.txt b/xbmc/cores/Enigma2Player/CMakeLists.txt
+new file mode 100644
+index 00000000000..fc672758ff9
+--- /dev/null
++++ b/xbmc/cores/Enigma2Player/CMakeLists.txt
 @@ -0,0 +1,6 @@
 +set(SOURCES Enigma2Player.cpp)
 +
@@ -8,9 +58,11 @@ diff -ruN a/xbmc/cores/Enigma2Player/CMakeLists.txt b/xbmc/cores/Enigma2Player/C
 +
 +core_add_library(enigma2player)
 +
-diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Player/Enigma2Player.cpp
---- a/xbmc/cores/Enigma2Player/Enigma2Player.cpp	1970-01-01 01:00:00.000000000 +0100
-+++ b/xbmc/cores/Enigma2Player/Enigma2Player.cpp	2019-11-03 12:57:46.606767168 +0100
+diff --git a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Player/Enigma2Player.cpp
+new file mode 100644
+index 00000000000..70b0493bc64
+--- /dev/null
++++ b/xbmc/cores/Enigma2Player/Enigma2Player.cpp
 @@ -0,0 +1,793 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
@@ -111,7 +163,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +    double percent = 0;
 +    m_playbackStartTime = XbmcThreads::SystemClockMillis();
 +    m_launchFilename = file.GetDynPath();
-+    CLog::Log(LOGNOTICE, "%s: %s", __FUNCTION__, m_launchFilename.c_str());
++    CLog::Log(LOGINFO, "%s: %s", __FUNCTION__, m_launchFilename.c_str());
 +
 +    std::string thumb = CSpecialProtocol::TranslatePath(CTextureCache::GetCachedPath(CTextureCache::GetCacheFile(file.GetArt("thumb")) + ".jpg"));
 +
@@ -131,7 +183,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +
 +    std::string jsonStr;
 +    CJSONVariantWriter::Write(variant, jsonStr, false);
-+    CLog::Log(LOGNOTICE, "%s json: %s", __FUNCTION__, jsonStr.c_str());
++    CLog::Log(LOGINFO, "%s json: %s", __FUNCTION__, jsonStr.c_str());
 +
 +    CFile file;
 +    if (file.OpenForWrite(m_filenameMeta, true))
@@ -148,7 +200,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +        file.Close();
 +    }
 +
-+    CLog::Log(LOGNOTICE, "%s: %s", __FUNCTION__, m_launchFilename.c_str());
++    CLog::Log(LOGINFO, "%s: %s", __FUNCTION__, m_launchFilename.c_str());
 +
 +    Create();
 +
@@ -262,11 +314,11 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +    }
 +  }
 +
-+  CLog::Log(LOGNOTICE, "%s: Player : %s", __FUNCTION__, m_filename.c_str());
-+  CLog::Log(LOGNOTICE, "%s: File   : %s", __FUNCTION__, mainFile.c_str());
-+  CLog::Log(LOGNOTICE, "%s: Content: %s", __FUNCTION__, archiveContent.c_str());
-+  CLog::Log(LOGNOTICE, "%s: Args   : %s", __FUNCTION__, m_args.c_str());
-+  CLog::Log(LOGNOTICE, "%s: Start", __FUNCTION__);
++  CLog::Log(LOGINFO, "%s: Player : %s", __FUNCTION__, m_filename.c_str());
++  CLog::Log(LOGINFO, "%s: File   : %s", __FUNCTION__, mainFile.c_str());
++  CLog::Log(LOGINFO, "%s: Content: %s", __FUNCTION__, archiveContent.c_str());
++  CLog::Log(LOGINFO, "%s: Args   : %s", __FUNCTION__, m_args.c_str());
++  CLog::Log(LOGINFO, "%s: Start", __FUNCTION__);
 +
 +  // make sure we surround the arguments with quotes where necessary
 +  std::string strFName;
@@ -323,7 +375,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +        y = GetSystemMetrics(SM_CYSCREEN) / 2;
 +        break;
 +    }
-+    CLog::Log(LOGNOTICE, "%s: Warping cursor to (%d,%d)", __FUNCTION__, x, y);
++    CLog::Log(LOGINFO, "%s: Warping cursor to (%d,%d)", __FUNCTION__, x, y);
 +    SetCursorPos(x,y);
 +  }
 +
@@ -332,13 +384,13 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +
 +  if (m_hidexbmc && !m_islauncher)
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Hiding %s window", __FUNCTION__, CCompileInfo::GetAppName());
++    CLog::Log(LOGINFO, "%s: Hiding %s window", __FUNCTION__, CCompileInfo::GetAppName());
 +    CServiceBroker::GetWinSystem()->Hide();
 +  }
 +#if defined(TARGET_WINDOWS_DESKTOP)
 +  else if (currentStyle & WS_EX_TOPMOST)
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Lowering %s window", __FUNCTION__, CCompileInfo::GetAppName());
++    CLog::Log(LOGINFO, "%s: Lowering %s window", __FUNCTION__, CCompileInfo::GetAppName());
 +    SetWindowPos(g_hWnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOREDRAW | SWP_ASYNCWINDOWPOS);
 +  }
 +
@@ -380,7 +432,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +  {
 +    if (m_hidexbmc)
 +    {
-+      CLog::Log(LOGNOTICE, "%s: %s cannot stay hidden for a launcher process", __FUNCTION__, CCompileInfo::GetAppName());
++      CLog::Log(LOGINFO, "%s: %s cannot stay hidden for a launcher process", __FUNCTION__, CCompileInfo::GetAppName());
 +      CServiceBroker::GetWinSystem()->Show(false);
 +    }
 +
@@ -397,21 +449,21 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +  }
 +
 +  m_bIsPlaying = false;
-+  CLog::Log(LOGNOTICE, "%s: Stop", __FUNCTION__);
++  CLog::Log(LOGINFO, "%s: Stop", __FUNCTION__);
 +
 +#if defined(TARGET_WINDOWS_DESKTOP)
 +  CServiceBroker::GetWinSystem()->Restore();
 +
 +  if (currentStyle & WS_EX_TOPMOST)
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Showing %s window TOPMOST", __FUNCTION__, CCompileInfo::GetAppName());
++    CLog::Log(LOGINFO, "%s: Showing %s window TOPMOST", __FUNCTION__, CCompileInfo::GetAppName());
 +    SetWindowPos(g_hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW | SWP_ASYNCWINDOWPOS);
 +    SetForegroundWindow(g_hWnd);
 +  }
 +  else
 +#endif
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Showing %s window", __FUNCTION__, CCompileInfo::GetAppName());
++    CLog::Log(LOGINFO, "%s: Showing %s window", __FUNCTION__, CCompileInfo::GetAppName());
 +    CServiceBroker::GetWinSystem()->Show();
 +  }
 +
@@ -425,12 +477,12 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +      m_xPos = (m_ptCursorpos.x);
 +      m_yPos = (m_ptCursorpos.y);
 +    }
-+    CLog::Log(LOGNOTICE, "%s: Restoring cursor to (%d,%d)", __FUNCTION__, m_xPos, m_yPos);
++    CLog::Log(LOGINFO, "%s: Restoring cursor to (%d,%d)", __FUNCTION__, m_xPos, m_yPos);
 +    SetCursorPos(m_xPos,m_yPos);
 +  }
 +#endif
 +
-+  CLog::Log(LOGNOTICE, "Enigma2Player: terminado a %d segundos",m_time);
++  CLog::Log(LOGINFO, "Enigma2Player: terminado a %d segundos",m_time);
 +//  IPlayerCallback *cb = &m_callback;
 +  if (m_time >= m_playCountMinTime)
 +  {
@@ -442,7 +494,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +    cb->OnPlayerCloseFile(m_file, bookmark);
 +  }, CJob::PRIORITY_NORMAL);*/
 +    m_callback.OnPlayerCloseFile(m_file, bookmark);
-+    CLog::Log(LOGNOTICE, "Enigma2Player: bookmark a %d segundos",elapsedMillis / 1000);
++    CLog::Log(LOGINFO, "Enigma2Player: bookmark a %d segundos",elapsedMillis / 1000);
 +  }
 +
 +  /* Resume AE processing of XBMC native audio */
@@ -464,7 +516,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +#if defined(TARGET_WINDOWS_DESKTOP)
 +bool CEnigma2Player::ExecuteAppW32(const char* strPath, const char* strSwitches)
 +{
-+  CLog::Log(LOGNOTICE, "%s: %s %s", __FUNCTION__, strPath, strSwitches);
++  CLog::Log(LOGINFO, "%s: %s %s", __FUNCTION__, strPath, strSwitches);
 +
 +  STARTUPINFOW si;
 +  memset(&si, 0, sizeof(si));
@@ -485,7 +537,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +  if (ret == FALSE)
 +  {
 +    DWORD lastError = GetLastError();
-+    CLog::Log(LOGNOTICE, "%s - Failure: %d", __FUNCTION__, lastError);
++    CLog::Log(LOGINFO, "%s - Failure: %d", __FUNCTION__, lastError);
 +  }
 +  else
 +  {
@@ -494,16 +546,16 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +    switch (res)
 +    {
 +      case WAIT_OBJECT_0:
-+        CLog::Log(LOGNOTICE, "%s: WAIT_OBJECT_0", __FUNCTION__);
++        CLog::Log(LOGINFO, "%s: WAIT_OBJECT_0", __FUNCTION__);
 +        break;
 +      case WAIT_ABANDONED:
-+        CLog::Log(LOGNOTICE, "%s: WAIT_ABANDONED", __FUNCTION__);
++        CLog::Log(LOGINFO, "%s: WAIT_ABANDONED", __FUNCTION__);
 +        break;
 +      case WAIT_TIMEOUT:
-+        CLog::Log(LOGNOTICE, "%s: WAIT_TIMEOUT", __FUNCTION__);
++        CLog::Log(LOGINFO, "%s: WAIT_TIMEOUT", __FUNCTION__);
 +        break;
 +      case WAIT_FAILED:
-+        CLog::Log(LOGNOTICE, "%s: WAIT_FAILED (%d)", __FUNCTION__, GetLastError());
++        CLog::Log(LOGINFO, "%s: WAIT_FAILED (%d)", __FUNCTION__, GetLastError());
 +        ret = FALSE;
 +        break;
 +    }
@@ -520,12 +572,12 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +#if !defined(TARGET_ANDROID) && !defined(TARGET_DARWIN_EMBEDDED) && defined(TARGET_POSIX)
 +bool CEnigma2Player::ExecuteAppLinux(const char* strSwitches)
 +{
-+  CLog::Log(LOGNOTICE, "%s: %s", __FUNCTION__, strSwitches);
++  CLog::Log(LOGINFO, "%s: %s", __FUNCTION__, strSwitches);
 +
 +  FILE *f;
 +  if ((f = popen(strSwitches, "r")) == NULL)
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Failure popen: %s", __FUNCTION__, strerror(errno));
++    CLog::Log(LOGINFO, "%s: Failure popen: %s", __FUNCTION__, strerror(errno));
 +    return false;
 +  }
 +
@@ -538,7 +590,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +
 +  if (ret != 0)
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Failure: %d", __FUNCTION__, ret);
++    CLog::Log(LOGINFO, "%s: Failure: %d", __FUNCTION__, ret);
 +  }
 +
 +  return (ret == 0);
@@ -548,13 +600,13 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +#if defined(TARGET_ANDROID)
 +bool CEnigma2Player::ExecuteAppAndroid(const char* strSwitches,const char* strPath)
 +{
-+  CLog::Log(LOGNOTICE, "%s: %s", __FUNCTION__, strSwitches);
++  CLog::Log(LOGINFO, "%s: %s", __FUNCTION__, strSwitches);
 +
 +  bool ret = CXBMCApp::StartActivity(strSwitches, "android.intent.action.VIEW", "video/*", strPath);
 +
 +  if (!ret)
 +  {
-+    CLog::Log(LOGNOTICE, "%s: Failure", __FUNCTION__);
++    CLog::Log(LOGINFO, "%s: Failure", __FUNCTION__);
 +  }
 +
 +  return (ret == 0);
@@ -655,7 +707,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +  XMLUtils::GetString(pConfig, "filename", m_filename);
 +  if (m_filename.length() > 0)
 +  {
-+    CLog::Log(LOGNOTICE, "Enigma2Player Filename: %s", m_filename.c_str());
++    CLog::Log(LOGINFO, "Enigma2Player Filename: %s", m_filename.c_str());
 +  }
 +  else
 +  {
@@ -668,7 +720,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +  XMLUtils::GetString(pConfig, "filenamemeta", m_filenameMeta);
 +  if (m_filenameMeta.length() > 0)
 +  {
-+    CLog::Log(LOGNOTICE, "Enigma2Player FilenameMeta: %s", m_filenameMeta.c_str());
++    CLog::Log(LOGINFO, "Enigma2Player FilenameMeta: %s", m_filenameMeta.c_str());
 +  }
 +
 +  XMLUtils::GetString(pConfig, "args", m_args);
@@ -704,7 +756,7 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +
 +  XMLUtils::GetInt(pConfig, "playcountminimumtime", m_playCountMinTime, 1, INT_MAX);
 +
-+  CLog::Log(LOGNOTICE, "Enigma2Player Tweaks: hideconsole (%s), hidexbmc (%s), islauncher (%s), warpcursor (%s)",
++  CLog::Log(LOGINFO, "Enigma2Player Tweaks: hideconsole (%s), hidexbmc (%s), islauncher (%s), warpcursor (%s)",
 +          m_hideconsole ? "true" : "false",
 +          m_hidexbmc ? "true" : "false",
 +          m_islauncher ? "true" : "false",
@@ -731,16 +783,16 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +  int iAction = 0; // overwrite
 +  // for backward compatibility
 +  const char* szAppend = pRootElement->Attribute("append");
-+  if ((szAppend && stricmp(szAppend, "yes") == 0))
++  if ((szAppend && strcasecmp(szAppend, "yes") == 0))
 +    iAction = 1;
 +  // action takes precedence if both attributes exist
 +  const char* szAction = pRootElement->Attribute("action");
 +  if (szAction)
 +  {
 +    iAction = 0; // overwrite
-+    if (stricmp(szAction, "append") == 0)
++    if (strcasecmp(szAction, "append") == 0)
 +      iAction = 1; // append
-+    else if (stricmp(szAction, "prepend") == 0)
++    else if (strcasecmp(szAction, "prepend") == 0)
 +      iAction = 2; // prepend
 +  }
 +  if (iAction == 0)
@@ -754,8 +806,8 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +    {
 +      const char* szGlobal = pReplacer->Attribute("global");
 +      const char* szStop = pReplacer->Attribute("stop");
-+      bool bGlobal = szGlobal && stricmp(szGlobal, "true") == 0;
-+      bool bStop = szStop && stricmp(szStop, "true") == 0;
++      bool bGlobal = szGlobal && strcasecmp(szGlobal, "true") == 0;
++      bool bStop = szStop && strcasecmp(szStop, "true") == 0;
 +
 +      std::string strMatch;
 +      std::string strPat;
@@ -802,12 +854,14 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.cpp b/xbmc/cores/Enigma2Playe
 +    m_time = variantOutput["position"].asInteger(0);
 +  if (!variantOutput["duration"].isNull())
 +    m_totalTime = variantOutput["duration"].asInteger(0);
-+  CLog::Log(LOGNOTICE, "%s: position: %d, duration: %d", __FUNCTION__, m_time, m_totalTime);
++  CLog::Log(LOGINFO, "%s: position: %d, duration: %d", __FUNCTION__, m_time, m_totalTime);
 +}
 +
-diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.h b/xbmc/cores/Enigma2Player/Enigma2Player.h
---- a/xbmc/cores/Enigma2Player/Enigma2Player.h	1970-01-01 01:00:00.000000000 +0100
-+++ b/xbmc/cores/Enigma2Player/Enigma2Player.h	2019-11-01 17:42:12.829878484 +0100
+diff --git a/xbmc/cores/Enigma2Player/Enigma2Player.h b/xbmc/cores/Enigma2Player/Enigma2Player.h
+new file mode 100644
+index 00000000000..9d969049472
+--- /dev/null
++++ b/xbmc/cores/Enigma2Player/Enigma2Player.h
 @@ -0,0 +1,96 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
@@ -905,3 +959,62 @@ diff -ruN a/xbmc/cores/Enigma2Player/Enigma2Player.h b/xbmc/cores/Enigma2Player/
 +  std::vector<std::string> m_filenameReplacers;
 +  CFileItem m_file;
 +};
+diff --git a/xbmc/cores/playercorefactory/PlayerCoreConfig.h b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
+index 92742cdcd59..0a7980e6ccd 100644
+--- a/xbmc/cores/playercorefactory/PlayerCoreConfig.h
++++ b/xbmc/cores/playercorefactory/PlayerCoreConfig.h
+@@ -13,6 +13,7 @@
+ #include "cores/RetroPlayer/RetroPlayer.h"
+ #include "cores/VideoPlayer/VideoPlayer.h"
+ #include "cores/paplayer/PAPlayer.h"
++#include "cores/Enigma2Player/Enigma2Player.h"
+ #ifdef HAS_UPNP
+ #include "network/upnp/UPnPPlayer.h"
+ #endif
+@@ -94,6 +95,10 @@ public:
+     {
+       pPlayer = new CExternalPlayer(callback);
+     }
++    else if (m_type.compare("enigma2") == 0)
++    {
++      pPlayer = new CEnigma2Player(callback);
++    }
+ 
+ #if defined(HAS_UPNP)
+     else if (m_type.compare("remote") == 0)
+diff --git a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
+index 28ad4303a48..bbc5c090d26 100644
+--- a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
++++ b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
+@@ -14,6 +14,7 @@
+ #include "URL.h"
+ #include "cores/IPlayerCallback.h"
+ #include "cores/paplayer/PAPlayer.h"
++#include "cores/Enigma2Player/Enigma2Player.h"
+ #include "dialogs/GUIDialogContextMenu.h"
+ #include "guilib/LocalizeStrings.h"
+ #include "profiles/ProfileManager.h"
+@@ -323,6 +324,11 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
+     VideoPlayer->m_bPlaysVideo = true;
+     m_vecPlayerConfigs.push_back(VideoPlayer);
+ 
++    CPlayerCoreConfig* Enigma2Player = new CPlayerCoreConfig("Enigma2Player", "video", nullptr);
++    VideoPlayer->m_bPlaysAudio = true;
++    VideoPlayer->m_bPlaysVideo = true;
++    m_vecPlayerConfigs.push_back(Enigma2Player);
++
+     CPlayerCoreConfig* paplayer = new CPlayerCoreConfig("PAPlayer", "music", nullptr);
+     paplayer->m_bPlaysAudio = true;
+     m_vecPlayerConfigs.push_back(paplayer);
+@@ -355,6 +361,8 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
+         internaltype = "music";
+       else if (type == "externalplayer")
+         internaltype = "external";
++      else if (type == "enigma2player")
++        internaltype = "enigma2";
+ 
+       int count = 0;
+       std::string playername = name;
+-- 
+2.25.1
+

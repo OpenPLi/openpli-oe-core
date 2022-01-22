@@ -9,10 +9,10 @@ DEPENDS = "\
             lzo \
           "
 
-SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
+SRCREV = "${AUTOREV}"
 
-PV = "18.9+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
+PV = "19.3+gitr${SRCPV}"
+SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Matrix"
 
 inherit cmake gettext ${PYTHON_PN}-dir ${PYTHON_PN}native
 

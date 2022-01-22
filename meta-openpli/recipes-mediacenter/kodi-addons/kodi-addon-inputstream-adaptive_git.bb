@@ -13,11 +13,11 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "${AUTOREV}"
 
-KODIADDONBRANCH = "Leia"
+KODIADDONBRANCH = "Matrix"
 
 PV = "2.4.7+gitr${SRCPV}"
 SRC_URI = "git://github.com/xbmc/inputstream.adaptive.git;protocol=https;branch=${KODIADDONBRANCH} \
-          "
+        file://define-INPUTSTREAM_MAX_STREAM_COUNT-ifndef.patch"
 
 S = "${WORKDIR}/git"
 

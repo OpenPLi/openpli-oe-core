@@ -2,10 +2,10 @@ SUMMARY = "Kodi json schema builder"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
 
-SRCREV = "0655c2c71821567e4c21c1c5a508a39ab72f0ef1"
+SRCREV = "dc2adb742477bc95b0211be4ab4c2afdf3428b3c"
 
-PV = "18.9+gitr${SRCPV}"
-SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Leia"
+PV = "19.3+gitr${SRCPV}"
+SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Matrix"
 
 inherit autotools-brokensep gettext native
 

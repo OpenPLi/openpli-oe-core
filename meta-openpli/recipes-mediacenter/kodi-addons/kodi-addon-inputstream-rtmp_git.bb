@@ -15,7 +15,7 @@ SRCREV = "${AUTOREV}"
 
 PV = "2.0.9+gitr${SRCPV}"
 
-KODIADDONBRANCH = "Leia"
+KODIADDONBRANCH = "Matrix"
 
 SRC_URI = "git://github.com/xbmc/inputstream.rtmp.git;protocol=https;branch=${KODIADDONBRANCH} \
          "

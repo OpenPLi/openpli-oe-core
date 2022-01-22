@@ -1,6 +1,6 @@
 LICENSE = "GPLv2+"
 require conf/license/license-gplv2.inc
-require kodi-leia.inc
+require kodi-matrix.inc
 
 DEPENDS += " \
             zip-native \
