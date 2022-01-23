@@ -112,9 +112,7 @@ PKGV = "3.9+git${GITPKGV}"
 
 ENIGMA2_BRANCH ?= "python3"
 
-SRC_URI = " git://github.com/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH} \
-			file://fix-build.patch \
-			"
+SRC_URI = " git://github.com/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH}"
 
 LDFLAGS_prepend = " -lxml2 "
 
