@@ -164,7 +164,6 @@ FILES_${PN}-dbg += "\
 
 do_install_append() {
 	install -d ${D}${datadir}/keymaps
-	find ${D}${libdir}/enigma2/python/ -name '*.pyc' -exec rm {} \;
 }
 
 python populate_packages_prepend() {
