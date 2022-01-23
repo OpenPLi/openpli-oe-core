@@ -2,6 +2,15 @@ diff --git a/servicemp3/servicemp3.cpp b/servicemp3/servicemp3.cpp
 index cb94d1b..784aa9e 100644
 --- a/servicemp3/servicemp3.cpp
 +++ b/servicemp3/servicemp3.cpp
+@@ -2967,7 +2967,7 @@ PyObject *eServiceMP3::getCutList()
+ 	{
+ 		ePyObject tuple = PyTuple_New(2);
+ 		PyTuple_SET_ITEM(tuple, 0, PyLong_FromLongLong(i->where));
+-		PyTuple_SET_ITEM(tuple, 1, PyInt_FromLong(i->what));
++		PyTuple_SET_ITEM(tuple, 1, PyLong_FromLong(i->what));
+ 		PyList_Append(list, tuple);
+ 		Py_DECREF(tuple);
+ 	}
 @@ -3256,13 +3256,13 @@ void eServiceMP3::setCutList(ePyObject list)
  			continue;
  		}
