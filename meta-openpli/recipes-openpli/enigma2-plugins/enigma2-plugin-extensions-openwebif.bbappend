@@ -94,6 +94,7 @@ python do_cleanup () {
         ('h5', 'h5.png', 'h3.png', 'h3.html'),
         ('h6', 'h5.png', 'h3.png', 'h3.html'),
         ('h7', 'h7.png', 'h3.png', 'h3.html'),
+        ('h8', 'h8.png', 'h3.png', 'h3.html'),
         ('h9', 'h9.png', 'h3.png', 'h3.html'),
         ('h10', 'h10.png', 'h3.png', 'h3.html'),
         ('h11', 'h11.png', 'h3.png', 'h3.html'),
@@ -143,11 +144,13 @@ python do_cleanup () {
             elif x[0] == 'xpeedc':
                 exception = ['xpeedlx.png']
             elif x[0] == 'h8':
-                exception = ['h8.png', 'h8.2s.png']
+                exception = ['h8.png', 'h8.2s.png', h8.2h.png']
             elif x[0] == 'h9':
                 exception = ['h9.png', 'h9.2s.png', 'h9.2h.png', 'h9.s.png', 'h9.t.png']
             elif x[0] == 'h10':
                 exception = ['h10.t.png', 'h10.2s.png', 'h10.2h.png']
+            elif x[0] == 'h11':
+                exception = ['h11.png', 'h11.s.png']
             elif x[0] == 'h9combo':
                 exception = ['h9combo.png', 'h9twin.png']
             elif x[0] == 'h9se':
