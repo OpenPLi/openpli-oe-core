@@ -89,9 +89,7 @@ RRECOMMENDS_${PN} = "\
 	${GST_UGLY_RDEPS} \
 	"
 
-SRC_URI = "git://github.com/openpli/servicemp3.git;branch=master;protocol=https \
-           file://use-pylong-instead-of-pyint.patch \
-"
+SRC_URI = "git://github.com/openpli/servicemp3.git;branch=python3;protocol=https"
 
 S = "${WORKDIR}/git"
 
