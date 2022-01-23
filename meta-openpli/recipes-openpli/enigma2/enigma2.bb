@@ -162,6 +162,26 @@ FILES_${PN}-dbg += "\
 	${libdir}/enigma2/python/Plugins/*/*/.debug \
 	"
 
+# Swig generated 200k enigma.py file has no purpose for end users
+# Save some space by not installing sources (Startup.py must remain)
+FILES_${PN}-src += "\
+	${libdir}/enigma2/python/e2reactor.py \
+	${libdir}/enigma2/python/enigma.py \
+	${libdir}/enigma2/python/GlobalActions.py \
+	${libdir}/enigma2/python/keyids.py \
+	${libdir}/enigma2/python/keymapparser.py \
+	${libdir}/enigma2/python/Navigation.py \
+	${libdir}/enigma2/python/NavigationInstance.py \
+	${libdir}/enigma2/python/RecordTimer.py \
+	${libdir}/enigma2/python/ServiceReference.py \
+	${libdir}/enigma2/python/SleepTimer.py \
+	${libdir}/enigma2/python/skin.py \
+	${libdir}/enigma2/python/timer.py \
+	${libdir}/enigma2/python/*/*.py \
+	${libdir}/enigma2/python/*/*/*.py \
+	${libdir}/enigma2/python/*/*/*/*.py \
+	"
+
 do_install_append() {
 	install -d ${D}${datadir}/keymaps
 }
@@ -169,6 +189,7 @@ do_install_append() {
 python populate_packages_prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.*$', 'enigma2-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends='')
+    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.py$', 'enigma2-plugin-%s-src', '%s (sources)', recursive=True, match_path=True, prepend=True, extra_depends='')
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True, extra_depends='')
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.a$', 'enigma2-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True, extra_depends='')
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/(.*/)?\.debug/.*$', 'enigma2-plugin-%s-dbg', '%s (debug)', recursive=True, match_path=True, prepend=True, extra_depends='')
