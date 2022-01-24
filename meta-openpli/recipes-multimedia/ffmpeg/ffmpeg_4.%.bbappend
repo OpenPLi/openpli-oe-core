@@ -108,6 +108,7 @@ EXTRA_FFCONF = " \
 	--enable-encoder=jpeg2000 \
 	--enable-encoder=jpegls \
 	--enable-encoder=ljpeg \
+	--enable-encoder=libx264 \
 	--enable-encoder=mjpeg \
 	--enable-encoder=mpeg1video \
 	--enable-encoder=mpeg2video \
