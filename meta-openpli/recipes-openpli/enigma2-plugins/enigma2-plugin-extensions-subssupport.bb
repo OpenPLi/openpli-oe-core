@@ -8,7 +8,7 @@ RDEPENDS_${PN} = "${PYTHON_PN}-requests ${PYTHON_PN}-xmlrpc ${PYTHON_PN}-compres
 
 inherit autotools-brokensep gettext gittag
 
-SRC_URI = "git://github.com/mx3L/subssupport;protocol=https;branch=master"
+SRC_URI = "git://github.com/oe-mirrors/subssupport;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
