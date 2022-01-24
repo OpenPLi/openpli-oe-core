@@ -169,6 +169,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-e2iplayer-deps \
 	enigma2-plugin-extensions-youtube \
+	enigma2-plugin-extensions-sdgradio \
 	enigma2-plugin-systemplugins-crossepg \
 	enigma2-plugin-systemplugins-misplslcnscan \
 	enigma2-plugin-systemplugins-terrestrialscan \
