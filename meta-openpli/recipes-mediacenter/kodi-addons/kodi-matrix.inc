@@ -6,6 +6,7 @@ SRCREV_pvrdvblink_pn-kodi-addon-pvr-dvblink = "3c5e09aa046bcd340af2a65ae5bf72585
 SRCREV_pvrdvbviewer_pn-kodi-addon-pvr-dvbviewer = "71ca0d16ecccbb657e03ec9fdc30e6afef20d8e7"
 SRCREV_pvrfilmon_pn-kodi-addon-pvr-filmon = "1e041402936b082f6f4ee7264f2b74aba8b80e82"
 SRCREV_pvrhdhomerun_pn-kodi-addon-pvr-hdhomerun = "7a5355fc2a0f2fe5e0e91f982ca8bd72cd64fca5"
+PV_pvrhdhomerun_pn-kodi-addon-pvr-hdhomerun = "19.0.0+git${SRCPV}"
 SRCREV_pvrhts_pn-kodi-addon-pvr-hts = "7349e3c6af147d3b827fa9d9b7b5b82fb500564e"
 SRCREV_pvriptvsimple_pn-kodi-addon-pvr-iptvsimple = "85aa63c2ef0d64b80426a40834048d0592d537ef"
 SRCREV_pvrmediaportal.tvserver_pn-kodi-addon-pvr-mediaportal.tvserver = "4de2d4ab205ba14033a6ab3fed3d6a393b9d14df"

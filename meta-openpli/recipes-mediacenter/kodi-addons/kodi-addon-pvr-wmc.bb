@@ -6,4 +6,3 @@ PKGV = "2.4.5+git${GITPKGV}"
 KODIADDONPLUGIN = "wmc"
 
 require kodi-addon-pvr.inc
-
