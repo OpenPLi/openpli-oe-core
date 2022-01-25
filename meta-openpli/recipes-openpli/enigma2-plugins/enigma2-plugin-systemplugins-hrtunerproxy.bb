@@ -16,9 +16,9 @@ S = "${WORKDIR}/git"
 RCONFLICTS_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 RREPLACES_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 
-do_install_prepend() {
-    echo ${GITPKGVTAG} | awk -F"-" '{print $1}'> ${S}/build/lib/SystemPlugins/HRTunerProxy/PLUGIN_VERSION
-}
+#do_install_prepend() {
+#    echo ${GITPKGVTAG} | awk -F"-" '{print $1}'> ${S}/build/lib/SystemPlugins/HRTunerProxy/PLUGIN_VERSION
+#}
 
 python populate_packages_prepend() {
     e2_pdir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
