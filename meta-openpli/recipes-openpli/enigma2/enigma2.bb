@@ -107,8 +107,8 @@ RRECOMMENDS_${PN}-build-dependencies = "\
 
 inherit gitpkgv setuptools3
 
-PV = "3.9+git${SRCPV}"
-PKGV = "3.9+git${GITPKGV}"
+PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
+PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
 
 ENIGMA2_BRANCH ?= "python3"
 
