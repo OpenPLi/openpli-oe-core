@@ -37,4 +37,4 @@ PACKAGES =+ "${PN}-examples"
 
 FILES:${PN}-examples = "${sbindir}"
 
-include python-package-split.inc
+include python3-package-split.inc

@@ -15,4 +15,4 @@ S = "${WORKDIR}/mutagen-${PV}"
 
 inherit distutils3 setuptools3
 
-include python-package-split.inc
+include python3-package-split.inc
