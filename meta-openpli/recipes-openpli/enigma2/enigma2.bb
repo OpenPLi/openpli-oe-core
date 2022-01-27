@@ -9,7 +9,7 @@ DEPENDS = " \
 	freetype \
 	gettext-native \
 	jpeg \
-	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-2.0 giflib libxml2 \
+	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-3 giflib libxml2 \
 	openssl libudfread \
 	${PYTHON_PN}-twisted ${PYTHON_PN}-wifi \
 	${PYTHON_PN}-pillow \
