@@ -6,6 +6,7 @@ BRANCH = "vuplus_experimental"
 S = "${WORKDIR}/git"
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
 	file://enigma2-plugin-systemplugins-dlnabrowser_20130723.patch;striplevel=1;apply=yes \
+	file://port-to-python3.patch \
 "
 
 inherit gitpkgv ${PYTHON_PN}native
