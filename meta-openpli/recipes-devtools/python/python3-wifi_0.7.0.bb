@@ -2,12 +2,12 @@ SUMMARY = "Provides access to Linux Wireless Extensions"
 HOMEPAGE = "http://pythonwifi.wikispot.org/"
 SECTION = "devel/python"
 LICENSE = "LGPLv2+ & GPLv2+"
-LICENSE:${PN}-examples = "GPLv2+"
+LICENSE_${PN}-examples = "GPLv2+"
 LIC_FILES_CHKSUM = "file://README;md5=54307cbab01c3aad9adf7605132bcf31"
 
 PR = "r1"
 
-RDEPENDS:${PN} = "python3-ctypes python3-datetime"
+RDEPENDS_${PN} = "python3-ctypes python3-datetime"
 
 SRC_URI = " https://github.com/Opvolger/pythonwifi/releases/download/0.7.0/python-wifi-0.7.0.tar.bz2 \
 			file://rename-tostring-to-tobytes.patch \
@@ -23,18 +23,18 @@ SRC_URI[sha256sum] = "a18699739f07444b1781d4731286ac85c8c35f98ca1166cde2d9f91366
 
 inherit setuptools3
 
-do_install:append() {
-		install -d ${D}${docdir}/${PN}
-		mv ${D}${datadir}/README ${D}${docdir}/${PN}
-		mv ${D}${datadir}/docs/* ${D}${docdir}/${PN}
-		rmdir ${D}${datadir}/docs
-		install -d ${D}${sbindir}
-		mv ${D}${datadir}/examples/* ${D}${sbindir}
-		rmdir ${D}${datadir}/examples
+do_install_append() {
+    install -d ${D}${docdir}/${PN}
+    mv ${D}${datadir}/README ${D}${docdir}/${PN}
+    mv ${D}${datadir}/docs/* ${D}${docdir}/${PN}
+    rmdir ${D}${datadir}/docs
+    install -d ${D}${sbindir}
+    mv ${D}${datadir}/examples/* ${D}${sbindir}
+    rmdir ${D}${datadir}/examples
 }
 
 PACKAGES =+ "${PN}-examples"
 
-FILES:${PN}-examples = "${sbindir}"
+FILES_${PN}-examples = "${sbindir}"
 
 include python3-package-split.inc
