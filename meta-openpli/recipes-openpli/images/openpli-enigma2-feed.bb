@@ -181,6 +181,8 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-sdgradio \
 	enigma2-plugin-extensions-subssupport \
 	enigma2-plugin-extensions-tmbd \
+	enigma2-plugin-extensions-vcs \
+	enigma2-plugin-extensions-xmodem \
 	enigma2-plugin-extensions-youtube \
 	enigma2-plugin-systemplugins-crossepg \
 	enigma2-plugin-systemplugins-hrtunerproxy \
