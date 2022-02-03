@@ -1,10 +1,465 @@
-From b1efbae659b227bf3d6aed6446005d3c7f8ea885 Mon Sep 17 00:00:00 2001
-From: Captain <captain.onboard@web.de>
-Date: Wed, 15 Jul 2020 18:02:31 +0200
-Subject: [PATCH 05/10] stb-support-19
+From 112252b6afd4f57be2d5e67a715f4d8ea1fe5e25 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Thu, 3 Feb 2022 15:12:41 +0100
+Subject: [PATCH] 0005-stb-support-19
 
+---
+ addons/skin.estuary/xml/Home.xml              |    2 +-
+ cmake/modules/FindFFMPEG.cmake                |   43 +-
+ cmake/platform/linux/stb.cmake                |   47 +
+ cmake/scripts/linux/ArchSetup.cmake           |    4 +
+ cmake/treedata/common/stb.txt                 |    1 +
+ system/settings/settings.xml                  |   14 +-
+ tools/Linux/kodi.sh.in                        |   46 +-
+ tools/depends/target/ffmpeg/CMakeLists.txt    |   30 +
+ tools/depends/target/libdvdcss/Makefile       |    4 +-
+ tools/depends/target/libdvdnav/Makefile       |    4 +-
+ tools/depends/target/libdvdread/Makefile      |    5 +-
+ xbmc/addons/addoninfo/AddonInfoBuilder.cpp    |   12 +
+ .../VideoPlayer/VideoRenderers/CMakeLists.txt |    1 +
+ .../VideoShaders/CMakeLists.txt               |    1 +
+ .../VideoShaders/VideoFilterShaderGLES.cpp    |    5 +
+ xbmc/guilib/guiinfo/SystemGUIInfo.cpp         |    5 +
+ xbmc/input/InputManager.cpp                   |   12 +
+ xbmc/platform/linux/input/CMakeLists.txt      |    8 +-
+ xbmc/platform/linux/input/Keymap.h            |   36 +
+ .../linux/input/LinuxInputDevices.cpp         | 1582 +++++++++++++++++
+ xbmc/platform/linux/input/LinuxInputDevices.h |  125 ++
+ xbmc/system_gl.h                              |    3 +
+ xbmc/utils/CMakeLists.txt                     |    5 +
+ xbmc/utils/DreamboxUtils.cpp                  |  103 ++
+ xbmc/utils/DreamboxUtils.h                    |   25 +
+ xbmc/utils/EGLUtils.cpp                       |   21 +
+ xbmc/utils/GLUtils.cpp                        |    6 +-
+ xbmc/view/ViewStateSettings.cpp               |    2 +-
+ xbmc/windowing/egl/CMakeLists.txt             |   62 +
+ xbmc/windowing/egl/EGLNativeType.h            |  152 ++
+ xbmc/windowing/egl/EGLQuirks.h                |   42 +
+ xbmc/windowing/egl/EGLWrapper.cpp             |  397 +++++
+ xbmc/windowing/egl/EGLWrapper.h               |   76 +
+ xbmc/windowing/egl/WinEventsSTB.cpp           |   92 +
+ xbmc/windowing/egl/WinEventsSTB.h             |   47 +
+ xbmc/windowing/egl/WinSystemSTBContext.cpp    |  112 ++
+ xbmc/windowing/egl/WinSystemSTBContext.h      |   43 +
+ xbmc/windowing/egl/WinSystemstb.cpp           |  541 ++++++
+ xbmc/windowing/egl/WinSystemstb.h             |   79 +
+ 39 files changed, 3750 insertions(+), 45 deletions(-)
+ create mode 100644 cmake/platform/linux/stb.cmake
+ create mode 100644 cmake/treedata/common/stb.txt
+ create mode 100644 xbmc/platform/linux/input/Keymap.h
+ create mode 100644 xbmc/platform/linux/input/LinuxInputDevices.cpp
+ create mode 100644 xbmc/platform/linux/input/LinuxInputDevices.h
+ create mode 100644 xbmc/utils/DreamboxUtils.cpp
+ create mode 100644 xbmc/utils/DreamboxUtils.h
+ create mode 100644 xbmc/windowing/egl/CMakeLists.txt
+ create mode 100644 xbmc/windowing/egl/EGLNativeType.h
+ create mode 100644 xbmc/windowing/egl/EGLQuirks.h
+ create mode 100644 xbmc/windowing/egl/EGLWrapper.cpp
+ create mode 100644 xbmc/windowing/egl/EGLWrapper.h
+ create mode 100644 xbmc/windowing/egl/WinEventsSTB.cpp
+ create mode 100644 xbmc/windowing/egl/WinEventsSTB.h
+ create mode 100644 xbmc/windowing/egl/WinSystemSTBContext.cpp
+ create mode 100644 xbmc/windowing/egl/WinSystemSTBContext.h
+ create mode 100644 xbmc/windowing/egl/WinSystemstb.cpp
+ create mode 100644 xbmc/windowing/egl/WinSystemstb.h
+
+diff --git a/addons/skin.estuary/xml/Home.xml b/addons/skin.estuary/xml/Home.xml
+index f90d63470b..82671efbf9 100644
+--- a/addons/skin.estuary/xml/Home.xml
++++ b/addons/skin.estuary/xml/Home.xml
+@@ -1046,7 +1046,7 @@
+ 					<align>justify</align>
+ 					<include content="IconButton">
+ 						<param name="control_id" value="804" />
+-						<param name="onclick" value="ActivateWindow(shutdownmenu)" />
++						<param name="onclick" value="Shutdown" />
+ 						<param name="icon" value="icons/power.png" />
+ 						<param name="label" value="$LOCALIZE[33060]" />
+ 					</include>
+diff --git a/cmake/modules/FindFFMPEG.cmake b/cmake/modules/FindFFMPEG.cmake
+index 81d26979e3..356a009b23 100644
+--- a/cmake/modules/FindFFMPEG.cmake
++++ b/cmake/modules/FindFFMPEG.cmake
+@@ -46,16 +46,22 @@ set(_postproc_ver ">=55.7.100")
+ # Allows building with external ffmpeg not found in system paths,
+ # without library version checks
+ if(WITH_FFMPEG)
+-  set(FFMPEG_PATH ${WITH_FFMPEG})
+-  message(STATUS "Warning: FFmpeg version checking disabled")
+-  set(REQUIRED_FFMPEG_VERSION undef)
+-  unset(_avcodec_ver)
+-  unset(_avfilter_ver)
+-  unset(_avformat_ver)
+-  unset(_avutil_ver)
+-  unset(_swscale_ver)
+-  unset(_swresample_ver)
+-  unset(_postproc_ver)
++  if(WITH_FFMPEG STREQUAL stb)
++    set(FFMPEG_TARGET ${WITH_FFMPEG})
++    set(ENABLE_INTERNAL_FFMPEG ON)
++  else()
++    set(FFMPEG_TARGET "")
++    set(FFMPEG_PATH ${WITH_FFMPEG})
++    message(STATUS "Warning: FFmpeg version checking disabled")
++    set(REQUIRED_FFMPEG_VERSION undef)
++    unset(_avcodec_ver)
++    unset(_avfilter_ver)
++    unset(_avformat_ver)
++    unset(_avutil_ver)
++    unset(_swscale_ver)
++    unset(_swresample_ver)
++    unset(_postproc_ver)
++  endif()
+ endif()
+ 
+ # Allows building with external ffmpeg not found in system paths,
+@@ -240,6 +246,12 @@ if(NOT FFMPEG_FOUND)
+                      -DENABLE_DAV1D=${DAV1D_FOUND}
+                      -DEXTRA_FLAGS=${FFMPEG_EXTRA_FLAGS})
+ 
++  if(WITH_FFMPEG STREQUAL stb)
++    list(APPEND FFMPEG_OPTIONS -DFFMPEG_TARGET=${FFMPEG_TARGET})
++  endif()
++
++
++
+   if(KODI_DEPENDSBUILD)
+     set(CROSS_ARGS -DDEPENDS_PATH=${DEPENDS_PATH}
+                    -DPKG_CONFIG_EXECUTABLE=${PKG_CONFIG_EXECUTABLE}
+@@ -283,12 +295,12 @@ if(NOT FFMPEG_FOUND)
+     add_dependencies(ffmpeg dav1d)
+   endif()
+ 
+-  find_program(BASH_COMMAND bash)
+-  if(NOT BASH_COMMAND)
+-    message(FATAL_ERROR "Internal FFmpeg requires bash.")
+-  endif()
++#  find_program(BASH_COMMAND bash)
++#  if(NOT BASH_COMMAND)
++#    message(FATAL_ERROR "Internal FFmpeg requires bash.")
++#  endif()
+   file(WRITE ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/ffmpeg/ffmpeg-link-wrapper
+-"#!${BASH_COMMAND}
++"#!/bin/bash
+ if [[ $@ == *${APP_NAME_LC}.bin* || $@ == *${APP_NAME_LC}${APP_BINARY_SUFFIX}* || $@ == *${APP_NAME_LC}.so* || $@ == *${APP_NAME_LC}-test* ]]
+ then
+   avformat=`PKG_CONFIG_PATH=${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/lib/pkgconfig ${PKG_CONFIG_EXECUTABLE} --libs --static libavcodec`
+@@ -302,6 +314,7 @@ then
+ else
+   $@
+ fi")
++
+   file(COPY ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/ffmpeg/ffmpeg-link-wrapper
+        DESTINATION ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE)
+diff --git a/cmake/platform/linux/stb.cmake b/cmake/platform/linux/stb.cmake
+new file mode 100644
+index 0000000000..094d44343a
+--- /dev/null
++++ b/cmake/platform/linux/stb.cmake
+@@ -0,0 +1,47 @@
++set(PLATFORM_REQUIRED_DEPS EGL LibInput Xkbcommon)
++
++set(STB_RENDER_SYSTEM "" CACHE STRING "Render system to use with STB: \"gl\" or \"gles\"")
++
++if(ENABLE_OPENGL STREQUAL "ON")
++  list(APPEND PLATFORM_REQUIRED_DEPS OpenGl)
++  set(APP_RENDER_SYSTEM gl)
++  message(STATUS "STB_RENDER_SYSTEM=GL")
++elseif(ENABLE_GLES STREQUAL "ON")
++  list(APPEND PLATFORM_REQUIRED_DEPS OpenGLES)
++  set(APP_RENDER_SYSTEM gles)
++  message(STATUS "STB_RENDER_SYSTEM=GLES")
++else()
++  message(SEND_ERROR "You need to decide whether you want to use GL- or GLES-based rendering in combination with the STB windowing system. Please set STB_RENDER_SYSTEM to either \"gl\" or \"gles\". For normal desktop systems, you will usually want to use \"gl\".")
++endif()
++
++if(WITH_PLATFORM STREQUAL "edision-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS v3dplatform)
++elseif(WITH_PLATFORM STREQUAL "xcore-mipsel")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS v3dplatform)
++elseif(WITH_PLATFORM STREQUAL "v3d-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus)
++elseif(WITH_PLATFORM STREQUAL "v3d-mipsel")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus)
++elseif(WITH_PLATFORM STREQUAL "nextv-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus nxclient)
++elseif(WITH_PLATFORM STREQUAL "GB-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus nxclient gles_init)
++elseif(WITH_PLATFORM STREQUAL "vuplus-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS KodiGLESPL dvb_base nxpl dvb_client)
++elseif(WITH_PLATFORM STREQUAL "vuplus-mipsel")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS dvb_base nxpl xbmc_base dvb_client gles_init)
++elseif(WITH_PLATFORM STREQUAL "mali-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_MALI")
++  list(APPEND DEPLIBS mali)
++endif()
++
++list(APPEND DEPLIBS EGL GLESv2)
++list(APPEND PLATFORM_DEFINES -DEGL_NO_X11 -DTARGET_STB)
+diff --git a/cmake/scripts/linux/ArchSetup.cmake b/cmake/scripts/linux/ArchSetup.cmake
+index 1bfc32ccad..4f5ff57a21 100644
+--- a/cmake/scripts/linux/ArchSetup.cmake
++++ b/cmake/scripts/linux/ArchSetup.cmake
+@@ -35,6 +35,10 @@ else()
+   elseif(CPU MATCHES riscv64)
+     set(ARCH riscv64)
+     set(NEON False)
++  elseif(CPU MATCHES "cortexa15")
++    set(ARCH arm)
++    set(NEON True)
++    set(NEON_FLAGS "-Wno-psabi -Wa,-march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mvectorize-with-neon-quad -fPIC -mcpu=cortex-a15 -mfloat-abi=hard")
+   else()
+     message(SEND_ERROR "Unknown CPU: ${CPU}")
+   endif()
+diff --git a/cmake/treedata/common/stb.txt b/cmake/treedata/common/stb.txt
+new file mode 100644
+index 0000000000..2606a0f999
+--- /dev/null
++++ b/cmake/treedata/common/stb.txt
+@@ -0,0 +1 @@
++xbmc/windowing/egl   windowing/egl    # STB
+diff --git a/system/settings/settings.xml b/system/settings/settings.xml
+index b8ab2a5ee3..3d069cf775 100755
+--- a/system/settings/settings.xml
++++ b/system/settings/settings.xml
+@@ -503,7 +503,7 @@
+           <control type="spinner" format="integer" delayed="true"/>
+         </setting>
+         <setting id="subtitles.font" type="string" label="14089" help="36185">
+-          <level>1</level>
++          <level>3</level>
+           <default>arial.ttf</default>
+           <constraints>
+             <options>fonts</options>
+@@ -511,7 +511,7 @@
+           <control type="list" format="string" />
+         </setting>
+         <setting id="subtitles.charset" type="string" parent="subtitles.font" label="735" help="36189">
+-          <level>1</level>
++          <level>3</level>
+           <default>DEFAULT</default>
+           <constraints>
+             <options>charsets</options>
+@@ -2759,7 +2759,7 @@
+         <setting id="audiooutput.processquality" type="integer" label="13505" help="36169">
+           <requirement>HAS_AE_QUALITY_LEVELS</requirement>
+           <level>2</level>
+-          <default>30</default> <!-- AE_QUALITY_MID -->
++          <default>20</default> <!-- AE_QUALITY_MID -->
+           <constraints>
+             <options>aequalitylevels</options>
+           </constraints>
+@@ -2777,7 +2777,7 @@
+         </setting>
+         <setting id="audiooutput.samplerate" type="integer" label="458" help="36523">
+           <level>2</level>
+-          <default>48000</default>
++          <default>44100</default>
+           <dependencies>
+             <dependency type="visible">
+               <and>
+@@ -2789,10 +2789,6 @@
+           <constraints>
+             <options>
+               <option label="34124">44100</option>
+-              <option label="34125">48000</option>
+-              <option label="34126">88200</option>
+-              <option label="34127">96000</option>
+-              <option label="34128">192000</option>
+               <option label="34129">352800</option>
+               <option label="34130">384000</option>
+             </options>
+@@ -3581,7 +3577,7 @@
+       <group id="2" label="14270">
+         <setting id="locale.country" type="string" label="14271" help="36115">
+           <level>0</level>
+-          <default>USA (12h)</default>
++          <default>Central Europe</default>
+           <constraints>
+             <options>regions</options>
+           </constraints>
+diff --git a/tools/Linux/kodi.sh.in b/tools/Linux/kodi.sh.in
+index 3806ebc3c4..67780f37cd 100644
+--- a/tools/Linux/kodi.sh.in
++++ b/tools/Linux/kodi.sh.in
+@@ -26,8 +26,11 @@ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+ LIBDIR="@libdir@"
+ APP_BINARY=$LIBDIR/${bin_name}/@APP_BINARY@
+-CRASHLOG_DIR=${CRASHLOG_DIR:-$HOME}
+-KODI_DATA=${KODI_DATA:-"${HOME}/.${bin_name}"} # mapped to special://home/
++#CRASHLOG_DIR=${CRASHLOG_DIR:-$HOME}
++#KODI_DATA=${KODI_DATA:-"${HOME}/.${bin_name}"} # mapped to special://home/
++
++export KODI_TEMP="/tmp/kodi"
++CRASHLOG_DIR=${CRASHLOG_DIR:-$KODI_TEMP}
+ 
+ # Workaround for high CPU load with nvidia GFX
+ export __GL_YIELD=USLEEP
+@@ -35,6 +38,31 @@ export __GL_YIELD=USLEEP
+ # Fix wasting RAM due to fragmentation
+ export MALLOC_MMAP_THRESHOLD_=131072
+ 
++check_media_hdd() {
++    [ -e /proc/mounts ] || return 0
++
++    exec 9<&0 < /proc/mounts
++    while read DEV MTPT REST; do
++        case $DEV in
++            /dev/sd[a-z][0-9])
++            if [ "$MTPT" == "/media/hdd" ]; then
++                export HOME="$MTPT"
++                break
++            fi
++            ;;
++	    /dev/mmcblk[0-9]p[0-9])
++            if [ "$MTPT" == "/media/mmc" ]; then
++            	export HOME="$MTPT"
++            fi
++	    ;;
++        esac
++    done
++    exec 0<&9 9<&-
++}
++
++check_media_hdd
++KODI_DATA="${HOME}/.${bin_name}"
++
+ # Check for some options used by this script
+ while [ "$#" -gt "0" ]
+ do
+@@ -185,13 +213,13 @@ do
+   CHILD=$!
+   wait "${CHILD}"
+   RET=$?
+-  if [ $(( $RET == 65 )) = "1" ]
+-  then # User requested to restart app
+-    LOOP=1
+-  elif [ $(( ($RET >= 131 && $RET <= 136) || $RET == 139 )) = "1" ]
+-  then # Crashed with core dump
+-    print_crash_report
+-  fi
++#  if [ $(( $RET == 65 )) = "1" ]
++#  then # User requested to restart app
++#    LOOP=1
++#  elif [ $(( ($RET >= 131 && $RET <= 136) || $RET == 139 )) = "1" ]
++#  then # Crashed with core dump
++#    print_crash_report
++#  fi
+ done
+ 
+ exit $RET
+diff --git a/tools/depends/target/ffmpeg/CMakeLists.txt b/tools/depends/target/ffmpeg/CMakeLists.txt
+index e358775911..2b73a8751a 100644
+--- a/tools/depends/target/ffmpeg/CMakeLists.txt
++++ b/tools/depends/target/ffmpeg/CMakeLists.txt
+@@ -10,6 +10,36 @@ else()
+   set(ffmpeg_conf --cc=${CMAKE_C_COMPILER} --cxx=${CMAKE_CXX_COMPILER})
+ endif()
+ 
++if(FFMPEG_TARGET STREQUAL "stb")
++  set(pkgconf "PKG_CONFIG_LIBDIR=${CMAKE_BINARY_DIR}/lib/pkgconfig")
++  list(APPEND ffmpeg_conf --pkg-config=${CMAKE_BINARY_DIR}/lib/pkgconfig --pkg-config-flags=--static)
++  list(APPEND ffmpeg_conf --enable-cross-compile --arch=generic --target-os=linux)
++  list(APPEND ffmpeg_conf --pkgconfigdir=${CMAKE_BINARY_DIR}/lib/pkgconfig) 
++  list(APPEND ffmpeg_conf --bindir=${CMAKE_INSTALL_PREFIX}/ffmpeg/bin --libdir=${CMAKE_INSTALL_PREFIX}/ffmpeg/lib --incdir=${CMAKE_INSTALL_PREFIX}/ffmpeg/include --datadir=${CMAKE_INSTALL_PREFIX}/ffmpeg/share/)
++  if(WITH_PLATFORM STREQUAL "GB-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  elseif(WITH_PLATFORM STREQUAL "dags-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  elseif(WITH_PLATFORM STREQUAL "dreambox-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  elseif(WITH_PLATFORM STREQUAL "vuplus-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  elseif(WITH_PLATFORM STREQUAL "v3d-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  elseif(WITH_PLATFORM STREQUAL "nextv-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  elseif(WITH_PLATFORM STREQUAL "mali-cortexa15")
++    set(CPU cortex-a15)
++    list(APPEND ffmpeg_conf --cpu=${CPU})
++  endif()
++endif()
++
+ if(CROSSCOMPILING)
+   set(pkgconf "PKG_CONFIG_LIBDIR=${DEPENDS_PATH}/lib/pkgconfig")
+   list(APPEND ffmpeg_conf --pkg-config=${PKG_CONFIG_EXECUTABLE} --pkg-config-flags=--static)
+diff --git a/tools/depends/target/libdvdcss/Makefile b/tools/depends/target/libdvdcss/Makefile
+index a5026227c2..c7b103117a 100644
+--- a/tools/depends/target/libdvdcss/Makefile
++++ b/tools/depends/target/libdvdcss/Makefile
+@@ -3,7 +3,7 @@ include DVDCSS-VERSION
+ DEPS= DVDCSS-VERSION Makefile
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdcss-install
+@@ -19,7 +19,7 @@ RETRIEVE_TOOL := curl -Ls --create-dirs --retry 10 --retry-delay 3
+ ARCHIVE_TOOL := tar --strip-components=1 -xf
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ 
+ GITREV=$(shell git ls-remote $(BASE_URL) $(VERSION) | awk '{print $$1}')
+ ifeq ($(GITREV),)
+diff --git a/tools/depends/target/libdvdnav/Makefile b/tools/depends/target/libdvdnav/Makefile
+index eada58a160..38f9be520d 100644
+--- a/tools/depends/target/libdvdnav/Makefile
++++ b/tools/depends/target/libdvdnav/Makefile
+@@ -3,11 +3,11 @@ include DVDNAV-VERSION
+ DEPS = DVDNAV-VERSION Makefile
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ EXTRA_CFLAGS = -D_XBMC -DHAVE_DVDCSS_DVDCSS_H
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdnav-install
+diff --git a/tools/depends/target/libdvdread/Makefile b/tools/depends/target/libdvdread/Makefile
+index d240953fe4..2c9100f84e 100644
+--- a/tools/depends/target/libdvdread/Makefile
++++ b/tools/depends/target/libdvdread/Makefile
+@@ -3,11 +3,12 @@ include DVDREAD-VERSION
+ DEPS = DVDREAD-VERSION Makefile
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
++#config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ EXTRA_CFLAGS = -D_XBMC -DHAVE_DVDCSS_DVDCSS_H
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdread-install
 diff --git a/xbmc/addons/addoninfo/AddonInfoBuilder.cpp b/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
-index 1b6a9b5533b..eba4772b22a 100644
+index 1b6a9b5533..eba4772b22 100644
 --- a/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
 +++ b/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
 @@ -582,6 +582,12 @@ const char* CAddonInfoBuilder::GetPlatformLibraryName(const TiXmlElement* elemen
@@ -34,10 +489,10 @@ index 1b6a9b5533b..eba4772b22a 100644
      "freebsd",
  #elif defined(TARGET_LINUX)
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
-index 3bc0cc7f656..1960ffd6213 100644
+index 40aa37a9f6..e48e5b1c91 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
-@@ -44,6 +44,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
+@@ -45,6 +45,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "ios" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "tvos" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "gbm" IN_LIST CORE_PLATFORM_NAME_LC OR
@@ -46,7 +501,7 @@ index 3bc0cc7f656..1960ffd6213 100644
                         "wayland" IN_LIST CORE_PLATFORM_NAME_LC))
    list(APPEND SOURCES LinuxRendererGLES.cpp
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
-index adc3d144a22..bff66319556 100644
+index adc3d144a2..bff6631955 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
 @@ -26,6 +26,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
@@ -58,7 +513,7 @@ index adc3d144a22..bff66319556 100644
                         "wayland" IN_LIST CORE_PLATFORM_NAME_LC))
    list(APPEND SOURCES ConversionMatrix.cpp
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
-index b2cb942f510..756d0ad09df 100644
+index b2cb942f51..756d0ad09d 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
 @@ -97,6 +97,10 @@ ConvolutionFilterShader::ConvolutionFilterShader(ESCALINGMETHOD method)
@@ -80,8 +535,47 @@ index b2cb942f510..756d0ad09df 100644
  
    CLog::Log(LOGDEBUG, "GL: ConvolutionFilterShader: using %s defines:\n%s", shadername.c_str(), defines.c_str());
    PixelShader()->LoadSource(shadername, defines);
+diff --git a/xbmc/guilib/guiinfo/SystemGUIInfo.cpp b/xbmc/guilib/guiinfo/SystemGUIInfo.cpp
+index a310281956..addcc26542 100644
+--- a/xbmc/guilib/guiinfo/SystemGUIInfo.cpp
++++ b/xbmc/guilib/guiinfo/SystemGUIInfo.cpp
+@@ -57,6 +57,11 @@ std::string CSystemGUIInfo::GetSystemHeatInfo(int info) const
+ #if defined(TARGET_POSIX)
+     CServiceBroker::GetCPUInfo()->GetTemperature(m_cpuTemp);
+     m_gpuTemp = GetGPUTemperature();
++#if defined(TARGET_STB_EXTEND)
++    m_gpuTemp = m_cpuTemp;
++#else
++    m_gpuTemp = GetGPUTemperature();
++#endif
+ #endif
+   }
+ 
+diff --git a/xbmc/input/InputManager.cpp b/xbmc/input/InputManager.cpp
+index 097245822e..14d49726b3 100644
+--- a/xbmc/input/InputManager.cpp
++++ b/xbmc/input/InputManager.cpp
+@@ -579,6 +579,18 @@ bool CInputManager::HandleKey(const CKey& key)
+           useKeyboard = true;
+       }
+     }
++#if defined(TARGET_STB)
++    switch(key.GetVKey()) {
++      case 0x0d:
++      case 0x80:
++      case 0x81:
++      case 0x82:
++      case 0x83:
++        if (iWin == WINDOW_DIALOG_KEYBOARD)
++          useKeyboard = false;
++        break;
++    }
++#endif
+     if (useKeyboard)
+     {
+       // use the virtualkeyboard section of the keymap, and send keyboard-specific or navigation
 diff --git a/xbmc/platform/linux/input/CMakeLists.txt b/xbmc/platform/linux/input/CMakeLists.txt
-index ebb2ccd5852..3def6644afc 100644
+index ebb2ccd585..3def6644af 100644
 --- a/xbmc/platform/linux/input/CMakeLists.txt
 +++ b/xbmc/platform/linux/input/CMakeLists.txt
 @@ -6,7 +6,7 @@ if(LIRCCLIENT_FOUND)
@@ -108,7 +602,7 @@ index ebb2ccd5852..3def6644afc 100644
  endif()
 diff --git a/xbmc/platform/linux/input/Keymap.h b/xbmc/platform/linux/input/Keymap.h
 new file mode 100644
-index 00000000000..dda17585581
+index 0000000000..dda1758558
 --- /dev/null
 +++ b/xbmc/platform/linux/input/Keymap.h
 @@ -0,0 +1,36 @@
@@ -150,7 +644,7 @@ index 00000000000..dda17585581
 +};
 diff --git a/xbmc/platform/linux/input/LinuxInputDevices.cpp b/xbmc/platform/linux/input/LinuxInputDevices.cpp
 new file mode 100644
-index 00000000000..75da398e678
+index 0000000000..75da398e67
 --- /dev/null
 +++ b/xbmc/platform/linux/input/LinuxInputDevices.cpp
 @@ -0,0 +1,1582 @@
@@ -1738,7 +2232,7 @@ index 00000000000..75da398e678
 +//#endif
 diff --git a/xbmc/platform/linux/input/LinuxInputDevices.h b/xbmc/platform/linux/input/LinuxInputDevices.h
 new file mode 100644
-index 00000000000..23794ab9259
+index 0000000000..23794ab925
 --- /dev/null
 +++ b/xbmc/platform/linux/input/LinuxInputDevices.h
 @@ -0,0 +1,125 @@
@@ -1868,7 +2362,7 @@ index 00000000000..23794ab9259
 +
 +#endif /* LINUXINPUTDEVICES_H_ */
 diff --git a/xbmc/system_gl.h b/xbmc/system_gl.h
-index 09dce653fc5..ca76b658c64 100644
+index 09dce653fc..ca76b658c6 100644
 --- a/xbmc/system_gl.h
 +++ b/xbmc/system_gl.h
 @@ -29,6 +29,9 @@
@@ -1882,10 +2376,10 @@ index 09dce653fc5..ca76b658c64 100644
      #include <GLES2/gl2.h>
      #include <GLES2/gl2ext.h>
 diff --git a/xbmc/utils/CMakeLists.txt b/xbmc/utils/CMakeLists.txt
-index 05c008d17cf..9aa8dda4ed6 100644
+index 3579849432..917bb19785 100644
 --- a/xbmc/utils/CMakeLists.txt
 +++ b/xbmc/utils/CMakeLists.txt
-@@ -170,6 +170,11 @@ set(HEADERS ActorProtocol.h
+@@ -168,6 +168,11 @@ set(HEADERS ActorProtocol.h
              XBMCTinyXML.h
              XMLUtils.h)
  
@@ -1899,7 +2393,7 @@ index 05c008d17cf..9aa8dda4ed6 100644
    list(APPEND HEADERS XSLTUtils.h)
 diff --git a/xbmc/utils/DreamboxUtils.cpp b/xbmc/utils/DreamboxUtils.cpp
 new file mode 100644
-index 00000000000..30e6ae3273b
+index 0000000000..30e6ae3273
 --- /dev/null
 +++ b/xbmc/utils/DreamboxUtils.cpp
 @@ -0,0 +1,103 @@
@@ -2008,7 +2502,7 @@ index 00000000000..30e6ae3273b
 +
 diff --git a/xbmc/utils/DreamboxUtils.h b/xbmc/utils/DreamboxUtils.h
 new file mode 100644
-index 00000000000..3f845cbfc44
+index 0000000000..3f845cbfc4
 --- /dev/null
 +++ b/xbmc/utils/DreamboxUtils.h
 @@ -0,0 +1,25 @@
@@ -2038,7 +2532,7 @@ index 00000000000..3f845cbfc44
 +bool dreambox_mode_to_resolution(const char *mode, RESOLUTION_INFO *res);
 +
 diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
-index 0d7c23891c0..1c3e14c8e7e 100644
+index 0d7c23891c..1c3e14c8e7 100644
 --- a/xbmc/utils/EGLUtils.cpp
 +++ b/xbmc/utils/EGLUtils.cpp
 @@ -22,6 +22,19 @@
@@ -2119,7 +2613,7 @@ index 0d7c23891c0..1c3e14c8e7e 100644
    m_eglContext = eglCreateContext(m_eglDisplay, eglConfig,
                                    EGL_NO_CONTEXT, contextAttribs.Get());
 diff --git a/xbmc/utils/GLUtils.cpp b/xbmc/utils/GLUtils.cpp
-index 1ef804709ff..72b75cc0ce2 100644
+index 1ef804709f..72b75cc0ce 100644
 --- a/xbmc/utils/GLUtils.cpp
 +++ b/xbmc/utils/GLUtils.cpp
 @@ -40,7 +40,7 @@ std::map<GLenum, const char*> glErrors =
@@ -2149,9 +2643,22 @@ index 1ef804709ff..72b75cc0ce2 100644
      X(GL_DEBUG_SEVERITY_HIGH_KHR),
      X(GL_DEBUG_SEVERITY_MEDIUM_KHR),
      X(GL_DEBUG_SEVERITY_LOW_KHR),
+diff --git a/xbmc/view/ViewStateSettings.cpp b/xbmc/view/ViewStateSettings.cpp
+index a92bd1e834..79faef8162 100644
+--- a/xbmc/view/ViewStateSettings.cpp
++++ b/xbmc/view/ViewStateSettings.cpp
+@@ -114,7 +114,7 @@ bool CViewStateSettings::Load(const TiXmlNode *settings)
+     if (XMLUtils::GetInt(pElement, XML_SETTINGLEVEL, settingLevel, static_cast<int>(SettingLevel::Basic), static_cast<int>(SettingLevel::Expert)))
+       m_settingLevel = (SettingLevel)settingLevel;
+     else
+-      m_settingLevel = SettingLevel::Standard;
++      m_settingLevel = SettingLevel::Expert;
+ 
+     const TiXmlNode* pEventLogNode = pElement->FirstChild(XML_EVENTLOG);
+     if (pEventLogNode != NULL)
 diff --git a/xbmc/windowing/egl/CMakeLists.txt b/xbmc/windowing/egl/CMakeLists.txt
 new file mode 100644
-index 00000000000..10650326d68
+index 0000000000..9c195ad8c2
 --- /dev/null
 +++ b/xbmc/windowing/egl/CMakeLists.txt
 @@ -0,0 +1,62 @@
@@ -2168,58 +2675,58 @@ index 00000000000..10650326d68
 +            WinEventsSTB.h)
 +
 +if (WITH_PLATFORM STREQUAL "GB-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeGB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeGB.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "dags-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeDags.cpp)
-+  list(APPEND HEADERS EGLNativeTypeDags.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "dreambox-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeDreambox.cpp)
-+  list(APPEND HEADERS EGLNativeTypeDreambox.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "dreambox-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeDreambox.cpp)
-+  list(APPEND HEADERS EGLNativeTypeDreambox.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "vuplus-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeVuplus.cpp)
-+  list(APPEND HEADERS EGLNativeTypeVuplus.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "vuplus-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeVuplus.cpp)
-+  list(APPEND HEADERS EGLNativeTypeVuplus.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "v3d-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeV3DNXPL.cpp)
-+  list(APPEND HEADERS EGLNativeTypeV3DNXPL.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "v3d-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeV3DNXPL.cpp)
-+  list(APPEND HEADERS EGLNativeTypeV3DNXPL.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "xcore-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeV3D.cpp)
-+  list(APPEND HEADERS EGLNativeTypeV3D.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "nextv-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeNexTV.cpp)
-+  list(APPEND HEADERS EGLNativeTypeNexTV.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "mali-cortexa15" OR WITH_PLATFORM STREQUAL "clap-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeMali.cpp)
-+  list(APPEND HEADERS EGLNativeTypeMali.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +if (WITH_PLATFORM STREQUAL "edision-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeEdision.cpp)
-+  list(APPEND HEADERS EGLNativeTypeEdision.h)
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
 +endif()
 +
 +core_add_library(windowing_egl)
 diff --git a/xbmc/windowing/egl/EGLNativeType.h b/xbmc/windowing/egl/EGLNativeType.h
 new file mode 100644
-index 00000000000..48987ada456
+index 0000000000..48987ada45
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeType.h
 @@ -0,0 +1,152 @@
@@ -2375,2821 +2882,9 @@ index 00000000000..48987ada456
 +  XBNativeDisplayType  m_nativeDisplay;
 +  XBNativeWindowType   m_nativeWindow;
 +};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeDags.cpp b/xbmc/windowing/egl/EGLNativeTypeDags.cpp
-new file mode 100644
-index 00000000000..8065f181c69
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeDags.cpp
-@@ -0,0 +1,337 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "system.h"
-+#include "EGLNativeTypeDags.h"
-+#include "utils/StringUtils.h"
-+#include "platform/linux/SysfsPath.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <linux/fb.h>
-+#include <sys/ioctl.h>
-+#include <EGL/egl.h>
-+
-+CEGLNativeTypeDags::CEGLNativeTypeDags()
-+{
-+  m_nativeDisplay = NULL;
-+  m_nativeWindow = NULL;
-+}
-+
-+CEGLNativeTypeDags::~CEGLNativeTypeDags()
-+{
-+}  
-+
-+bool CEGLNativeTypeDags::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeDags::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeDags::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeDags::CreateNativeDisplay()
-+{
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::CreateNativeWindow()
-+{
-+  NxClient_Join(NULL);
-+
-+  NXPL_RegisterNexusDisplayPlatform(&nxpl_handle, nexus_display);
-+  NXPL_NativeWindowInfoEXT nativeWindow;
-+
-+  NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
-+
-+  nativeWindow.x = 0;
-+  nativeWindow.y = 0;
-+  nativeWindow.width = 1280;
-+  nativeWindow.height = 720;
-+  nativeWindow.stretch = false;
-+  nativeWindow.clientID = 0;
-+  nativeWindow.zOrder = 0;
-+  
-+  m_nativeWindow = NXPL_CreateNativeWindowEXT(&nativeWindow);
-+  if (!m_nativeWindow)
-+    return false;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  if (!nativeDisplay)	return false;
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::GetNativeWindow(XBNativeDisplayType **nativeWindow) const
-+{
-+  if (!nativeWindow)	return false;
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::DestroyNativeDisplay()
-+{
-+    m_nativeDisplay = NULL;
-+    return true;
-+}
-+
-+bool CEGLNativeTypeDags::DestroyNativeWindow()
-+{
-+  NXPL_DestroyNativeWindow(m_nativeWindow);
-+
-+  NXPL_UnregisterNexusDisplayPlatform(nxpl_handle);
-+  NxClient_Uninit();
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+        m_desktopRes = res;
-+        return true;
-+}
-+
-+bool CEGLNativeTypeDags::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+        int tmp_resolution = 0;
-+        std::string mode;
-+        CSysfsPath videomode{"/proc/stb/video/videomode"};
-+        mode = videomode.Get<std::string>();
-+
-+        std::string fromMode = mode;        
-+        StringUtils::Trim(fromMode);
-+
-+        const char types[] = { 'p', 'i', 'x' };
-+        for (unsigned int i = 0; i < 3; i++) {
-+                std::size_t pos = fromMode.find(types[i]);
-+                if (pos == 0 || pos == std::string::npos)
-+                        continue;
-+                std::string t1 = fromMode.substr(0, pos);
-+                if (!StringUtils::IsInteger(t1))
-+                        return false;
-+                tmp_resolution = StringUtils::ReturnDigits(t1);
-+        }
-+
-+        resolutions.clear();
-+
-+        if ( tmp_resolution == 480 )
-+                {
-+                        m_desktopResAll[0].bFullScreen  = true;
-+                        m_desktopResAll[0].iWidth       = 640;
-+                        m_desktopResAll[0].iHeight      = 480;
-+                        m_desktopResAll[0].iScreenWidth = 640;
-+                        m_desktopResAll[0].iScreenHeight= 480;
-+                        m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+                        m_desktopResAll[0].fRefreshRate = 50;
-+                        m_desktopResAll[0].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 640, 480);
-+                        m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[0]);
-+
-+                        m_desktopResAll[1].bFullScreen  = true;
-+                        m_desktopResAll[1].iWidth       = 640;
-+                        m_desktopResAll[1].iHeight      = 480;
-+                        m_desktopResAll[1].iScreenWidth = 640;
-+                        m_desktopResAll[1].iScreenHeight= 480;
-+                        m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+                        m_desktopResAll[1].fRefreshRate = 50;
-+                        m_desktopResAll[1].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 640, 480);
-+                        m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[1]);
-+
-+                        m_desktopResAll[2].bFullScreen  = true;
-+                        m_desktopResAll[2].iWidth       = 640;
-+                        m_desktopResAll[2].iHeight      = 480;
-+                        m_desktopResAll[2].iScreenWidth = 640;
-+                        m_desktopResAll[2].iScreenHeight= 480;
-+                        m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+                        m_desktopResAll[2].fRefreshRate = 50;
-+                        m_desktopResAll[2].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 640, 480);
-+                        m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[2]);
-+                }
-+        else if ( tmp_resolution == 576 )
-+                {
-+                        m_desktopResAll[0].bFullScreen  = true;
-+                        m_desktopResAll[0].iWidth       = 720;
-+                        m_desktopResAll[0].iHeight      = 576;
-+                        m_desktopResAll[0].iScreenWidth = 720;
-+                        m_desktopResAll[0].iScreenHeight= 576;
-+                        m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+                        m_desktopResAll[0].fRefreshRate = 50;
-+                        m_desktopResAll[0].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 720, 576);
-+                        m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[0]);
-+
-+                        m_desktopResAll[1].bFullScreen  = true;
-+                        m_desktopResAll[1].iWidth       = 720;
-+                        m_desktopResAll[1].iHeight      = 576;
-+                        m_desktopResAll[1].iScreenWidth = 720;
-+                        m_desktopResAll[1].iScreenHeight= 576;
-+                        m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+                        m_desktopResAll[1].fRefreshRate = 50;
-+                        m_desktopResAll[1].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 720, 576);
-+                        m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[1]);
-+
-+                        m_desktopResAll[2].bFullScreen  = true;
-+                        m_desktopResAll[2].iWidth       = 720;
-+                        m_desktopResAll[2].iHeight      = 576;
-+                        m_desktopResAll[2].iScreenWidth = 720;
-+                        m_desktopResAll[2].iScreenHeight= 576;
-+                        m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+                        m_desktopResAll[2].fRefreshRate = 50;
-+                        m_desktopResAll[2].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 720, 576);
-+                        m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[2]);
-+                }
-+        else
-+                {
-+                        m_desktopResAll[0].bFullScreen  = true;
-+                        m_desktopResAll[0].iWidth       = 1280;
-+                        m_desktopResAll[0].iHeight      = 720;
-+                        m_desktopResAll[0].iScreenWidth = 1280;
-+                        m_desktopResAll[0].iScreenHeight= 720;
-+                        m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+                        m_desktopResAll[0].fRefreshRate = 50;
-+                        m_desktopResAll[0].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+                        m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[0]);
-+
-+                        m_desktopResAll[1].bFullScreen  = true;
-+                        m_desktopResAll[1].iWidth       = 1280;
-+                        m_desktopResAll[1].iHeight      = 720;
-+                        m_desktopResAll[1].iScreenWidth = 1280;
-+                        m_desktopResAll[1].iScreenHeight= 720;
-+                        m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+                        m_desktopResAll[1].fRefreshRate = 50;
-+                        m_desktopResAll[1].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+                        m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[1]);
-+
-+                        m_desktopResAll[2].bFullScreen  = true;
-+                        m_desktopResAll[2].iWidth       = 1280;
-+                        m_desktopResAll[2].iHeight      = 720;
-+                        m_desktopResAll[2].iScreenWidth = 1280;
-+                        m_desktopResAll[2].iScreenHeight= 720;
-+                        m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+                        m_desktopResAll[2].fRefreshRate = 50;
-+                        m_desktopResAll[2].fPixelRatio   = 1.0f;
-+                        m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+                        m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+                        m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+                        CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+                        resolutions.push_back(m_desktopResAll[2]);
-+                }
-+  
-+        m_desktopRes = m_desktopResAll[0];
-+
-+        SetDisplayResolution(tmp_resolution);
-+
-+        return true;
-+}
-+
-+bool CEGLNativeTypeDags::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::ShowWindow(bool show)
-+{
-+  NXPL_ShowNativeWindowEXT(m_nativeWindow, show);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDags::SetDisplayResolution(int tmp_resolution)
-+{
-+        NXPL_NativeWindowInfoEXT nativeWindow;
-+
-+        NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
-+        nativeWindow.x = nativeWindow.y = 0;
-+        nativeWindow.width = m_desktopRes.iWidth;
-+        nativeWindow.height = m_desktopRes.iHeight;
-+
-+        if (tmp_resolution == 1080 || tmp_resolution == 2160)
-+                nativeWindow.stretch = true;
-+        
-+        NXPL_UpdateNativeWindowEXT(m_nativeWindow, &nativeWindow);
-+
-+        return true;
-+}
-diff --git a/xbmc/windowing/egl/EGLNativeTypeDags.h b/xbmc/windowing/egl/EGLNativeTypeDags.h
-new file mode 100644
-index 00000000000..9d2176a942f
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeDags.h
-@@ -0,0 +1,199 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeType.h"
-+
-+#include <vector>
-+#include <string>
-+
-+#define NEXUS_DISPLAYHANDLE void*
-+
-+#ifdef __cplusplus
-+extern "C" {
-+#endif
-+
-+typedef void *NXPL_PlatformHandle;
-+
-+typedef enum NEXUS_BlendFactor
-+{
-+    NEXUS_BlendFactor_eZero
-+} NEXUS_BlendFactor;
-+
-+typedef struct NEXUS_BlendEquation
-+{
-+    NEXUS_BlendFactor a;
-+    NEXUS_BlendFactor b;
-+    bool              subtract_cd;
-+    NEXUS_BlendFactor c;
-+    NEXUS_BlendFactor d;
-+    bool              subtract_e;
-+    NEXUS_BlendFactor e;
-+} NEXUS_BlendEquation;
-+
-+typedef struct
-+{
-+   uint32_t             width;
-+   uint32_t             height;
-+   uint32_t             x;
-+   uint32_t             y;
-+   bool                 stretch;
-+   uint32_t             clientID;
-+   uint32_t             zOrder;
-+   NEXUS_BlendEquation  colorBlend;
-+   NEXUS_BlendEquation  alphaBlend;
-+   uint32_t             magic;
-+} NXPL_NativeWindowInfoEXT;
-+
-+/* FOR NXCLINET */
-+typedef unsigned NEXUS_Error;
-+
-+#define NXCLIENT_MAX_NAME 32
-+
-+/***************************************************************************
-+Summary:
-+Autheticated ID for client/server communication.
-+
-+Description:
-+For non-secure environments, the certificate could be a simple ID.
-+For secure environments, this should use encrypted using standard public-key cryptography.
-+***************************************************************************/
-+typedef struct NEXUS_Certificate
-+{
-+    unsigned char data[256];
-+    unsigned length;
-+} NEXUS_Certificate;
-+
-+/**
-+Summary:
-+Client modes
-+
-+See nexus/docs/Nexus_MultiProcess.pdf for full discussion of process isolation and multi-process application design.
-+**/
-+typedef enum NEXUS_ClientMode
-+{
-+    NEXUS_ClientMode_eUnprotected, /* deprecated */
-+    NEXUS_ClientMode_eVerified,    /* verify handle value, but not owner. unsynchronized caller may compromise nexus settings. */
-+    NEXUS_ClientMode_eProtected,   /* full handle verification. access to full API. if client crashes, server is protected. */
-+    NEXUS_ClientMode_eUntrusted,   /* full handle verification. access to limited API. see nexus/build/common/tools/nexus_untrusted_api.txt. if client crashes, server is protected. */
-+    NEXUS_ClientMode_eMax
-+} NEXUS_ClientMode;
-+
-+/**
-+Summary:
-+Join with Nexus server application (using app ipc) and Nexus driver (using Nexus multiprocess)
-+
-+Description:
-+This dynamically registers a client with both nexus and the server app.
-+NxClient_Join can be called from multiple processes, or multiple times from the same process.
-+
-+NxClient_Join is reference counted within the same process. You must call NxClient_Uninit an equal
-+number of times to detach from nexus and the server app.
-+**/
-+typedef struct NxClient_JoinSettings
-+{
-+    char name[NXCLIENT_MAX_NAME];
-+    bool tunnelCapable; /* deprecated */
-+    unsigned timeout; /* in seconds. if unable to join, try again for this number of seconds. defaults to 0. */
-+    unsigned session; /* set index to choose which session in a multi-session server configuration */
-+    bool ignoreStandbyRequest; /* deprecated. see NxClient_RegisterAcknowledgeStandby() instead. */
-+    NEXUS_ClientMode mode; /* requested client mode. server may reject the request. */
-+    NEXUS_Certificate certificate; /* allows NEXUS_ClientMode_eProtected (aka trusted) status if server requires */
-+} NxClient_JoinSettings;
-+
-+extern void NxClient_GetDefaultJoinSettings(NxClient_JoinSettings *pSettings);
-+
-+extern NEXUS_Error NxClient_Join(const NxClient_JoinSettings *pSettings);
-+
-+extern void NxClient_Uninit(void);
-+
-+
-+/* Register a display for exclusive use. The client application should not use the display until
-+ * calling NXPL_UnregisterNexusDisplayPlatform.
-+ * It will register its own memory, h/w and display APIs suitable for basic exclusive mode rendering on
-+ * a Nexus display.
-+ * Fills in the NXPL platform handle, which must be passed back into the unregister function.
-+ */
-+void NXPL_RegisterNexusDisplayPlatform(NXPL_PlatformHandle *handle, NEXUS_DISPLAYHANDLE display);
-+
-+/* Unregister a display for exclusive use. The client application can the use the Nexus display again. */
-+void NXPL_UnregisterNexusDisplayPlatform(NXPL_PlatformHandle handle);
-+
-+/* Generate a default NXPL_NativeWindowInfoEXT */
-+void NXPL_GetDefaultNativeWindowInfoEXT(NXPL_NativeWindowInfoEXT *info);
-+
-+/* Create a 'native window' of the given size. This is really just a small structure that holds the size
-+ * of the window that EGL will write into. */
-+void *NXPL_CreateNativeWindowEXT(const NXPL_NativeWindowInfoEXT *info);
-+
-+/* Destroy a 'native window' */
-+void NXPL_DestroyNativeWindow(void *nativeWin);
-+
-+/* Show/hide a 'native window' */
-+void NXPL_ShowNativeWindowEXT(void *native,bool show);
-+
-+/* Update a 'native window' */
-+void NXPL_UpdateNativeWindowEXT(void *native, NXPL_NativeWindowInfoEXT * nativeWindow);
-+
-+int NEXUS_Platform_AuthenticatedJoin(const void *settings);
-+#define NEXUS_Platform_Join() NEXUS_Platform_AuthenticatedJoin(NULL)
-+
-+#ifdef __cplusplus
-+}
-+#endif
-+
-+class CEGLNativeTypeDags : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeDags();
-+  virtual ~CEGLNativeTypeDags();
-+  virtual std::string GetNativeName() const { return "Dags"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[4];
-+
-+  NXPL_PlatformHandle nxpl_handle = 0;
-+  NEXUS_DISPLAYHANDLE  nexus_display = 0;
-+
-+  bool SetDisplayResolution(int tmp_resolution);
-+    /* bool */
-+  bool dags_mode_to_resolution(const char *mode, RESOLUTION_INFO *res);
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeDreambox.cpp b/xbmc/windowing/egl/EGLNativeTypeDreambox.cpp
-new file mode 100644
-index 00000000000..3ae4254c04c
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeDreambox.cpp
-@@ -0,0 +1,196 @@
-+/*
-+ *      Copyright (C) 2011-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeTypeDreambox.h"
-+#include "guilib/gui3d.h"
-+#include "utils/DreamboxUtils.h"
-+#include "utils/StringUtils.h"
-+#include "platform/linux/SysfsPath.h"
-+
-+#include <dlfcn.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <linux/fb.h>
-+#include <sys/ioctl.h>
-+#include <EGL/egl.h>
-+
-+CEGLNativeTypeDreambox::CEGLNativeTypeDreambox()
-+{
-+  m_nativeWindow = (XBNativeWindowType)0L;
-+}
-+
-+CEGLNativeTypeDreambox::~CEGLNativeTypeDreambox()
-+{
-+}
-+
-+bool CEGLNativeTypeDreambox::CheckCompatibility()
-+{
-+  CSysfsPath model{"/proc/stb/info/model"};
-+  name = model.Get<std::string>();
-+  return name == "dm820" || name == "dm900" || name == "dm920" || name == "dm7080";
-+}
-+
-+void CEGLNativeTypeDreambox::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeDreambox::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeDreambox::CreateNativeDisplay()
-+{
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::CreateNativeWindow()
-+{
-+  RESOLUTION_INFO res;
-+  if (GetNativeResolution(&res))
-+    SetFramebufferResolution(res.iWidth, res.iHeight);
-+  else
-+    SetFramebufferResolution(1280, 720);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  if (!nativeDisplay)
-+    return false;
-+  *nativeDisplay = (XBNativeDisplayType *)&m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::GetNativeWindow(XBNativeWindowType **nativeWindow) const
-+{
-+  if (!nativeWindow)
-+    return false;
-+  *nativeWindow = (XBNativeWindowType *)&m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::DestroyNativeDisplay()
-+{
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::DestroyNativeWindow()
-+{
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  std::string mode;
-+  CSysfsPath videomode{"/proc/stb/video/videomode"};
-+  mode = videomode.Get<std::string>();
-+  return dreambox_mode_to_resolution(mode.c_str(), res);
-+}
-+
-+bool CEGLNativeTypeDreambox::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  // Don't set the same mode as current
-+  std::string mode;
-+  CSysfsPath videomode{"/proc/stb/video/videomode"};
-+  mode = videomode.Get<std::string>();
-+  if (res.strId == mode)
-+    return false;
-+
-+  return SetDisplayResolution(res.strId.c_str());
-+}
-+
-+bool CEGLNativeTypeDreambox::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  std::string valstr;
-+  CSysfsPath videomode_choices{"/proc/stb/video/videomode_choices"};
-+  valstr = videomode_choices.Get<std::string>();
-+  std::vector<std::string> probe_str = StringUtils::Split(valstr, " ");
-+
-+  resolutions.clear();
-+  RESOLUTION_INFO res;
-+  for (std::vector<std::string>::const_iterator i = probe_str.begin(); i != probe_str.end(); ++i)
-+  {
-+    if (dreambox_mode_to_resolution(i->c_str(), &res))
-+      resolutions.push_back(res);
-+  }
-+
-+  return resolutions.size() > 0;
-+}
-+
-+bool CEGLNativeTypeDreambox::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  // check display/mode, it gets defaulted at boot
-+  if (!GetNativeResolution(res))
-+  {
-+    // punt to 720p if we get nothing
-+    dreambox_mode_to_resolution("720p", res);
-+  }
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::ShowWindow(bool show)
-+{
-+  SysfsUtils::SetInt("/proc/stb/video/alpha", show ? 255 : 0);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeDreambox::SetDisplayResolution(const char *mode)
-+{
-+  // switch display resolution
-+  CSysfsPath videomode{"/proc/stb/video/videomode"};
-+  mode = videomode.Get<std::string>();
-+
-+  RESOLUTION_INFO res;
-+  dreambox_mode_to_resolution(mode, &res);
-+  SetFramebufferResolution(res);
-+
-+  return true;
-+}
-+
-+void CEGLNativeTypeDreambox::SetFramebufferResolution(const RESOLUTION_INFO &res) const
-+{
-+  SetFramebufferResolution(res.iScreenWidth, res.iScreenHeight);
-+}
-+
-+void CEGLNativeTypeDreambox::SetFramebufferResolution(int width, int height) const
-+{
-+  const char fbdev[] = "/dev/fb0";
-+  int fd;
-+
-+  fd = open(fbdev, O_RDWR | O_CLOEXEC);
-+  if (fd >= 0)
-+  {
-+    struct fb_var_screeninfo vinfo;
-+    if (ioctl(fd, FBIOGET_VSCREENINFO, &vinfo) == 0)
-+    {
-+      vinfo.xres = width;
-+      vinfo.yres = height;
-+      vinfo.xres_virtual = width;
-+      vinfo.yres_virtual = height * 2;
-+      vinfo.bits_per_pixel = 32;
-+      vinfo.activate = FB_ACTIVATE_ALL;
-+      ioctl(fd, FBIOPUT_VSCREENINFO, &vinfo);
-+    }
-+    close(fd);
-+  }
-+}
-+
-diff --git a/xbmc/windowing/egl/EGLNativeTypeDreambox.h b/xbmc/windowing/egl/EGLNativeTypeDreambox.h
-new file mode 100644
-index 00000000000..eb032063e7f
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeDreambox.h
-@@ -0,0 +1,61 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include <string>
-+#include <vector>
-+
-+#include "EGLNativeType.h"
-+class CEGLNativeTypeDreambox : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeDreambox();
-+  virtual ~CEGLNativeTypeDreambox();
-+  virtual std::string GetNativeName() const { return "dreambox"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+
-+protected:
-+  bool SetDisplayResolution(const char *resolution);
-+  void SetupVideoScaling(const char *mode);
-+  void DisableFreeScale();
-+
-+private:
-+  void SetFramebufferResolution(const RESOLUTION_INFO &res) const;
-+  void SetFramebufferResolution(int width, int height) const;
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeEdision.cpp b/xbmc/windowing/egl/EGLNativeTypeEdision.cpp
-new file mode 100644
-index 00000000000..add560007d9
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeEdision.cpp
-@@ -0,0 +1,174 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include <EGL/egl.h>
-+
-+#include "system.h"
-+#include "EGLNativeTypeEdision.h"
-+#include "utils/StringUtils.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+bool CEGLNativeTypeV3D::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeV3D::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeV3D::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeV3D::CreateNativeDisplay()
-+{
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::CreateNativeWindow()
-+{
-+  V3D_RegisterDisplayPlatform(&m_platformHandle, m_nativeDisplay);
-+  if (!m_platformHandle)
-+    return false;
-+
-+  V3D_NativeWindowInfo info;
-+
-+  info.x = 0;
-+  info.y = 0;
-+  info.width = 1280;
-+  info.height = 720;
-+  info.stretch = false;
-+  info.clientID = 0;
-+  info.zOrder = 0;
-+
-+  m_nativeWindow = V3D_CreateNativeWindow(&info);
-+  if (!m_nativeWindow)
-+    return false;
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeWindow(XBNativeWindowType **nativeWindow) const
-+{
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::DestroyNativeDisplay()
-+{
-+  m_nativeDisplay = 0;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::DestroyNativeWindow()
-+{
-+  V3D_DestroyNativeWindow(m_nativeWindow);
-+  m_nativeWindow = 0;
-+
-+  V3D_UnregisterDisplayPlatform(m_platformHandle);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  m_desktopRes = res;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  resolutions.clear();
-+
-+  m_desktopResAll[0].bFullScreen  = true;
-+  m_desktopResAll[0].iWidth       = 1280;
-+  m_desktopResAll[0].iHeight      = 720;
-+  m_desktopResAll[0].iScreenWidth = 1280;
-+  m_desktopResAll[0].iScreenHeight= 720;
-+  m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopRes.strMode.c_str(), 50., "");
-+  m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[0]);
-+
-+  m_desktopResAll[1].bFullScreen  = true;
-+  m_desktopResAll[1].iWidth       = 1280;
-+  m_desktopResAll[1].iHeight      = 720;
-+  m_desktopResAll[1].iScreenWidth = 1280;
-+  m_desktopResAll[1].iScreenHeight= 720;
-+  m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), 50., "");
-+  m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[1]);
-+
-+  m_desktopResAll[2].bFullScreen  = true;
-+  m_desktopResAll[2].iWidth       = 1280;
-+  m_desktopResAll[2].iHeight      = 720;
-+  m_desktopResAll[2].iScreenWidth = 1280;
-+  m_desktopResAll[2].iScreenHeight= 720;
-+  m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), 50., "");
-+  m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[2]);
-+
-+  m_desktopRes = m_desktopResAll[0];
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::ShowWindow(bool show)
-+{
-+  return V3D_SetVisible(m_nativeWindow, show);
-+}
-diff --git a/xbmc/windowing/egl/EGLNativeTypeEdision.h b/xbmc/windowing/egl/EGLNativeTypeEdision.h
-new file mode 100644
-index 00000000000..c3b7624809a
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeEdision.h
-@@ -0,0 +1,61 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include <vector>
-+#include <string>
-+#include <v3dplatform.h>
-+
-+#include "EGLNativeType.h"
-+
-+class CEGLNativeTypeV3D : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeV3D() : m_platformHandle(0) {
-+    m_nativeDisplay = 0;
-+    m_nativeWindow = 0;
-+  }
-+  virtual ~CEGLNativeTypeV3D() {};
-+  virtual std::string GetNativeName() const { return "V3D"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[3];
-+  V3D_PlatformHandle m_platformHandle;
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeGB.cpp b/xbmc/windowing/egl/EGLNativeTypeGB.cpp
-new file mode 100644
-index 00000000000..9b223293a3f
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeGB.cpp
-@@ -0,0 +1,190 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "system.h"
-+#include "EGLNativeTypeGB.h"
-+#include "utils/StringUtils.h"
-+#include "platform/linux/SysfsPath.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "platform/linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <linux/fb.h>
-+#include <sys/ioctl.h>
-+#include <EGL/egl.h>
-+
-+#include "gles_init.h"
-+
-+CEGLNativeTypeGB::CEGLNativeTypeGB()
-+{
-+  m_nativeDisplay = NULL;
-+  m_nativeWindow = NULL;
-+}
-+
-+CEGLNativeTypeGB::~CEGLNativeTypeGB()
-+{
-+}  
-+
-+bool CEGLNativeTypeGB::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeGB::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeGB::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeGB::CreateNativeDisplay()
-+{
-+
-+  GLES_Native_Init();
-+  return GLES_Native_CreateNativeDisplay(&m_nativeDisplay);
-+
-+}
-+
-+bool CEGLNativeTypeGB::CreateNativeWindow()
-+{
-+
-+  m_nativeWindow = GLES_Native_CreateNativeWindow();
-+   
-+  if (!m_nativeWindow)
-+    return false;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::GetNativeWindow(XBNativeDisplayType **nativeWindow) const
-+{
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::DestroyNativeDisplay()
-+{
-+	GLES_Native_DestroyNativeDisplay();
-+    m_nativeDisplay = NULL;
-+    return true;
-+}
-+
-+bool CEGLNativeTypeGB::DestroyNativeWindow()
-+{
-+  GLES_Native_DestroyNativeWindow();
-+  m_nativeWindow = NULL;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  m_desktopRes = res;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  resolutions.clear();
-+
-+  m_desktopResAll[0].bFullScreen  = true;
-+  m_desktopResAll[0].iWidth       = 1280;
-+  m_desktopResAll[0].iHeight      = 720;
-+  m_desktopResAll[0].iScreenWidth = 1280;
-+  m_desktopResAll[0].iScreenHeight= 720;
-+  m_desktopResAll[0].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].fPixelRatio = 1.0f;
-+  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopRes.strMode.c_str(), (float)50,m_desktopRes.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+
-+  m_desktopResAll[0].iSubtitles   = (int)(0.965 * m_desktopResAll[0].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[0]);
-+
-+  m_desktopResAll[1].bFullScreen  = true;
-+  m_desktopResAll[1].iWidth       = 1280;
-+  m_desktopResAll[1].iHeight      = 720;
-+  m_desktopResAll[1].iScreenWidth = 1280;
-+  m_desktopResAll[1].iScreenHeight= 720;
-+  m_desktopResAll[1].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
-+
-+  m_desktopResAll[1].dwFlags      |=  D3DPRESENTFLAG_MODE3DSBS;
-+  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].fPixelRatio = 1.0f;
-+  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50,m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+
-+  m_desktopResAll[1].iSubtitles   = (int)(0.965 * m_desktopResAll[1].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[1]);
-+
-+  m_desktopResAll[2].bFullScreen  = true;
-+  m_desktopResAll[2].iWidth       = 1280;
-+  m_desktopResAll[2].iHeight      = 720;
-+  m_desktopResAll[2].iScreenWidth = 1280;
-+  m_desktopResAll[2].iScreenHeight= 720;
-+  m_desktopResAll[2].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
-+
-+  m_desktopResAll[2].dwFlags      |=  D3DPRESENTFLAG_MODE3DTB;
-+  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].fPixelRatio = 1.0f;
-+  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50,m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+
-+  m_desktopResAll[2].iSubtitles   = (int)(0.965 * m_desktopResAll[2].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[2]);
-+
-+  m_desktopRes = m_desktopResAll[0];
-+  
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeGB::ShowWindow(bool show)
-+{
-+  GLES_Native_ShowWindow(m_nativeWindow, show);
-+  return true;
-+}
-diff --git a/xbmc/windowing/egl/EGLNativeTypeGB.h b/xbmc/windowing/egl/EGLNativeTypeGB.h
-new file mode 100644
-index 00000000000..ecf78813d03
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeGB.h
-@@ -0,0 +1,56 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeType.h"
-+
-+#include <vector>
-+#include <string>
-+
-+class CEGLNativeTypeGB : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeGB();
-+  virtual ~CEGLNativeTypeGB();
-+  virtual std::string GetNativeName() const { return "GB"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[3];
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeMali.cpp b/xbmc/windowing/egl/EGLNativeTypeMali.cpp
-new file mode 100644
-index 00000000000..2b39d2fbaa8
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeMali.cpp
-@@ -0,0 +1,149 @@
-+/*
-+ *      Copyright (C) 2011-2015 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "EGLNativeTypeMali.h"
-+#include <EGL/egl.h>
-+#include "utils/log.h"
-+
-+#include <linux/fb.h>
-+#include <fcntl.h>
-+#include <sys/ioctl.h>
-+#include <unistd.h>
-+
-+bool CEGLNativeTypeMali::_GetNativeResolution(RESOLUTION_INFO *res) const {
-+  struct fb_var_screeninfo vinfo;
-+  int fd;
-+  
-+  fd = open("/dev/fb0", O_RDWR, 0);
-+  if (fd < 0) {
-+    return false;
-+  }
-+  
-+  if (ioctl(fd, FBIOGET_VSCREENINFO, &vinfo) < 0) {
-+    return false;
-+  }
-+  close(fd);
-+
-+  res->bFullScreen   = false;
-+  res->dwFlags       = 0;
-+  res->fRefreshRate  = 60;
-+  res->iWidth        = vinfo.xres;
-+  res->iHeight       = vinfo.yres;
-+  res->iScreenWidth  = vinfo.xres;
-+  res->iScreenHeight = vinfo.yres;
-+  res->fPixelRatio   = 1;
-+  res->iSubtitles    = (int)(0.965 * res->iHeight);
-+
-+  return true;
-+}
-+
-+CEGLNativeTypeMali::CEGLNativeTypeMali() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::CEGLNativeTypeMali()\n");
-+}
-+
-+CEGLNativeTypeMali::~CEGLNativeTypeMali() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::~CEGLNativeTypeMali()\n");
-+}
-+
-+bool CEGLNativeTypeMali::CheckCompatibility() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::CheckCompatibility()\n");
-+  return true;
-+}
-+
-+void CEGLNativeTypeMali::Initialize() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::Initialize()\n");
-+}
-+
-+void CEGLNativeTypeMali::Destroy() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::Destroy()\n");
-+}
-+
-+bool CEGLNativeTypeMali::CreateNativeDisplay() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::CreateNativeDisplay()\n");
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::CreateNativeWindow() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::CreateNativeWindow()\n");
-+  m_nativeWindow = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::GetNativeDisplay()\n");
-+  if (!nativeDisplay)
-+    return false;
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::GetNativeWindow(XBNativeWindowType **nativeWindow) const {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::GetNativeWindow()\n");
-+  if (!nativeWindow)
-+    return false;
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::DestroyNativeWindow() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::DestroyNativeWindow()\n");
-+  m_nativeWindow = NULL;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::DestroyNativeDisplay() {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::DestroyNativeDisplay()\n");
-+  m_nativeDisplay = NULL;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::GetNativeResolution(RESOLUTION_INFO *res) const {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::GetNativeResolution()\n");
-+  return _GetNativeResolution(res);
-+}
-+
-+bool CEGLNativeTypeMali::SetNativeResolution(const RESOLUTION_INFO &res) {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::SetNativeResolution()\n");
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions) {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::ProbeResolutions()\n");
-+  resolutions.clear();
-+
-+  RESOLUTION_INFO res;
-+  if(_GetNativeResolution(&res)) {
-+    resolutions.push_back(res);
-+    return true;
-+  }
-+  return true;
-+}
-+
-+bool CEGLNativeTypeMali::GetPreferredResolution(RESOLUTION_INFO *res) const {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::GetPreferredResolution()\n");
-+  _GetNativeResolution(res);
-+  return false;
-+}
-+
-+bool CEGLNativeTypeMali::ShowWindow(bool show) {
-+  CLog::Log(LOGDEBUG, "CEGLNativeTypeMali::ShowWindow()\n");
-+  return false;
-+}
-+
-diff --git a/xbmc/windowing/egl/EGLNativeTypeMali.h b/xbmc/windowing/egl/EGLNativeTypeMali.h
-new file mode 100644
-index 00000000000..083749a5924
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeMali.h
-@@ -0,0 +1,53 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeType.h"
-+
-+class CEGLNativeTypeMali : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeMali();
-+  virtual ~CEGLNativeTypeMali();
-+  virtual std::string GetNativeName() const { return "mali"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+
-+ private:
-+  bool _GetNativeResolution(RESOLUTION_INFO *res) const;
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeNexTV.cpp b/xbmc/windowing/egl/EGLNativeTypeNexTV.cpp
-new file mode 100644
-index 00000000000..1b4ccb30631
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeNexTV.cpp
-@@ -0,0 +1,226 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "system.h"
-+#include "EGLNativeTypeNexTV.h"
-+#include "utils/StringUtils.h"
-+#include "platform/linux/SysfsPath.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "platform/linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <linux/fb.h>
-+#include <sys/ioctl.h>
-+#include <EGL/egl.h>
-+
-+CEGLNativeTypeNexTV::CEGLNativeTypeNexTV()
-+{
-+  m_nativeDisplay = NULL;
-+  m_nativeWindow = NULL;
-+}
-+
-+CEGLNativeTypeNexTV::~CEGLNativeTypeNexTV()
-+{
-+}  
-+
-+bool CEGLNativeTypeNexTV::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeNexTV::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeNexTV::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeNexTV::CreateNativeDisplay()
-+{
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::CreateNativeWindow()
-+{
-+  NxClient_Join(NULL);
-+
-+  NXPL_RegisterNexusDisplayPlatform(&nxpl_handle, nexus_display);
-+  NXPL_NativeWindowInfoEXT nativeWindow;
-+
-+  NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
-+
-+  nativeWindow.x = 0;
-+  nativeWindow.y = 0;
-+  nativeWindow.width = 1280;
-+  nativeWindow.height = 720;
-+  nativeWindow.stretch = false;
-+  nativeWindow.clientID = 0;
-+  nativeWindow.zOrder = 0;
-+
-+  m_nativeWindow = NXPL_CreateNativeWindowEXT(&nativeWindow);
-+  if (!m_nativeWindow)
-+    return false;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  if (!nativeDisplay)	return false;
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::GetNativeWindow(XBNativeDisplayType **nativeWindow) const
-+{
-+  if (!nativeWindow)	return false;
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::DestroyNativeDisplay()
-+{
-+    m_nativeDisplay = NULL;
-+    return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::DestroyNativeWindow()
-+{
-+  NXPL_DestroyNativeWindow(m_nativeWindow);
-+
-+  NXPL_UnregisterNexusDisplayPlatform(nxpl_handle);
-+  NxClient_Uninit();
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  m_desktopRes = res;
-+  return SetDisplayResolution();
-+}
-+
-+bool CEGLNativeTypeNexTV::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  resolutions.clear();
-+
-+ m_desktopResAll[0].bFullScreen  = true;
-+  m_desktopResAll[0].iWidth       = 1280;
-+  m_desktopResAll[0].iHeight      = 720;
-+  m_desktopResAll[0].iScreenWidth = 1280;
-+  m_desktopResAll[0].iScreenHeight= 720;
-+  m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].fPixelRatio   = 1.0f;
-+  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[0]);
-+
-+  m_desktopResAll[1].bFullScreen  = true;
-+  m_desktopResAll[1].iWidth       = 1280;
-+  m_desktopResAll[1].iHeight      = 720;
-+  m_desktopResAll[1].iScreenWidth = 1280;
-+  m_desktopResAll[1].iScreenHeight= 720;
-+  m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].fPixelRatio   = 1.0f;
-+  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[1]);
-+
-+  m_desktopResAll[2].bFullScreen  = true;
-+  m_desktopResAll[2].iWidth       = 1280;
-+  m_desktopResAll[2].iHeight      = 720;
-+  m_desktopResAll[2].iScreenWidth = 1280;
-+  m_desktopResAll[2].iScreenHeight= 720;
-+  m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].fPixelRatio   = 1.0f;
-+  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[2]);
-+
-+  m_desktopResAll[3].bFullScreen  = true;
-+  m_desktopResAll[3].iWidth       = 1280;
-+  m_desktopResAll[3].iHeight      = 720;
-+  m_desktopResAll[3].iScreenWidth = 1920;
-+  m_desktopResAll[3].iScreenHeight= 1080;
-+  m_desktopResAll[3].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[3].fRefreshRate = 50;
-+  m_desktopResAll[3].fPixelRatio   = 1.0f;
-+  m_desktopResAll[3].strMode = StringUtils::Format("%dx%d", 1920, 1080);
-+  m_desktopResAll[3].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[3].strMode.c_str(), (float)50, m_desktopResAll[3].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[3].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[3].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[3].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[3]);
-+
-+  m_desktopRes = m_desktopResAll[0];
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::ShowWindow(bool show)
-+{
-+  NXPL_ShowNativeWindowEXT(m_nativeWindow, show);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeNexTV::SetDisplayResolution()
-+{
-+	NXPL_NativeWindowInfoEXT nativeWindow;
-+
-+	NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
-+	nativeWindow.x = nativeWindow.y = 0;
-+	nativeWindow.width = m_desktopRes.iWidth;
-+	nativeWindow.height = m_desktopRes.iHeight;
-+	
-+	NXPL_UpdateNativeWindowEXT(m_nativeWindow, &nativeWindow);
-+
-+	return true;
-+}
-diff --git a/xbmc/windowing/egl/EGLNativeTypeNexTV.h b/xbmc/windowing/egl/EGLNativeTypeNexTV.h
-new file mode 100644
-index 00000000000..4151347862c
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeNexTV.h
-@@ -0,0 +1,196 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeType.h"
-+
-+#include <vector>
-+#include <string>
-+
-+#define NEXUS_DISPLAYHANDLE void*
-+
-+#ifdef __cplusplus
-+extern "C" {
-+#endif
-+
-+typedef void *NXPL_PlatformHandle;
-+
-+typedef enum NEXUS_BlendFactor
-+{
-+    NEXUS_BlendFactor_eZero
-+} NEXUS_BlendFactor;
-+
-+typedef struct NEXUS_BlendEquation
-+{
-+    NEXUS_BlendFactor a;
-+    NEXUS_BlendFactor b;
-+    bool              subtract_cd;
-+    NEXUS_BlendFactor c;
-+    NEXUS_BlendFactor d;
-+    bool              subtract_e;
-+    NEXUS_BlendFactor e;
-+} NEXUS_BlendEquation;
-+
-+typedef struct
-+{
-+   uint32_t             width;
-+   uint32_t             height;
-+   uint32_t             x;
-+   uint32_t             y;
-+   bool                 stretch;
-+   uint32_t             clientID;
-+   uint32_t             zOrder;
-+   NEXUS_BlendEquation  colorBlend;
-+   NEXUS_BlendEquation  alphaBlend;
-+   uint32_t             magic;
-+} NXPL_NativeWindowInfoEXT;
-+
-+/* FOR NXCLINET */
-+typedef unsigned NEXUS_Error;
-+
-+#define NXCLIENT_MAX_NAME 32
-+
-+/***************************************************************************
-+Summary:
-+Autheticated ID for client/server communication.
-+
-+Description:
-+For non-secure environments, the certificate could be a simple ID.
-+For secure environments, this should use encrypted using standard public-key cryptography.
-+***************************************************************************/
-+typedef struct NEXUS_Certificate
-+{
-+    unsigned char data[256];
-+    unsigned length;
-+} NEXUS_Certificate;
-+
-+/**
-+Summary:
-+Client modes
-+
-+See nexus/docs/Nexus_MultiProcess.pdf for full discussion of process isolation and multi-process application design.
-+**/
-+typedef enum NEXUS_ClientMode
-+{
-+    NEXUS_ClientMode_eUnprotected, /* deprecated */
-+    NEXUS_ClientMode_eVerified,    /* verify handle value, but not owner. unsynchronized caller may compromise nexus settings. */
-+    NEXUS_ClientMode_eProtected,   /* full handle verification. access to full API. if client crashes, server is protected. */
-+    NEXUS_ClientMode_eUntrusted,   /* full handle verification. access to limited API. see nexus/build/common/tools/nexus_untrusted_api.txt. if client crashes, server is protected. */
-+    NEXUS_ClientMode_eMax
-+} NEXUS_ClientMode;
-+
-+/**
-+Summary:
-+Join with Nexus server application (using app ipc) and Nexus driver (using Nexus multiprocess)
-+
-+Description:
-+This dynamically registers a client with both nexus and the server app.
-+NxClient_Join can be called from multiple processes, or multiple times from the same process.
-+
-+NxClient_Join is reference counted within the same process. You must call NxClient_Uninit an equal
-+number of times to detach from nexus and the server app.
-+**/
-+typedef struct NxClient_JoinSettings
-+{
-+    char name[NXCLIENT_MAX_NAME];
-+    bool tunnelCapable; /* deprecated */
-+    unsigned timeout; /* in seconds. if unable to join, try again for this number of seconds. defaults to 0. */
-+    unsigned session; /* set index to choose which session in a multi-session server configuration */
-+    bool ignoreStandbyRequest; /* deprecated. see NxClient_RegisterAcknowledgeStandby() instead. */
-+    NEXUS_ClientMode mode; /* requested client mode. server may reject the request. */
-+    NEXUS_Certificate certificate; /* allows NEXUS_ClientMode_eProtected (aka trusted) status if server requires */
-+} NxClient_JoinSettings;
-+
-+extern void NxClient_GetDefaultJoinSettings(NxClient_JoinSettings *pSettings);
-+
-+extern NEXUS_Error NxClient_Join(const NxClient_JoinSettings *pSettings);
-+
-+extern void NxClient_Uninit(void);
-+
-+
-+/* Register a display for exclusive use. The client application should not use the display until
-+ * calling NXPL_UnregisterNexusDisplayPlatform.
-+ * It will register its own memory, h/w and display APIs suitable for basic exclusive mode rendering on
-+ * a Nexus display.
-+ * Fills in the NXPL platform handle, which must be passed back into the unregister function.
-+ */
-+void NXPL_RegisterNexusDisplayPlatform(NXPL_PlatformHandle *handle, NEXUS_DISPLAYHANDLE display);
-+
-+/* Unregister a display for exclusive use. The client application can the use the Nexus display again. */
-+void NXPL_UnregisterNexusDisplayPlatform(NXPL_PlatformHandle handle);
-+
-+/* Generate a default NXPL_NativeWindowInfoEXT */
-+void NXPL_GetDefaultNativeWindowInfoEXT(NXPL_NativeWindowInfoEXT *info);
-+
-+/* Create a 'native window' of the given size. This is really just a small structure that holds the size
-+ * of the window that EGL will write into. */
-+void *NXPL_CreateNativeWindowEXT(const NXPL_NativeWindowInfoEXT *info);
-+
-+/* Destroy a 'native window' */
-+void NXPL_DestroyNativeWindow(void *nativeWin);
-+
-+/* Show/hide a 'native window' */
-+void NXPL_ShowNativeWindowEXT(void *native,bool show);
-+
-+/* Update a 'native window' */
-+void NXPL_UpdateNativeWindowEXT(void *native, NXPL_NativeWindowInfoEXT * nativeWindow);
-+
-+int NEXUS_Platform_AuthenticatedJoin(const void *settings);
-+#define NEXUS_Platform_Join() NEXUS_Platform_AuthenticatedJoin(NULL)
-+
-+#ifdef __cplusplus
-+}
-+#endif
-+
-+class CEGLNativeTypeNexTV : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeNexTV();
-+  virtual ~CEGLNativeTypeNexTV();
-+  virtual std::string GetNativeName() const { return "NexTV"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[4];
-+
-+  NXPL_PlatformHandle nxpl_handle = 0;
-+  NEXUS_DISPLAYHANDLE  nexus_display = 0;
-+
-+  bool SetDisplayResolution();
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeV3D.cpp b/xbmc/windowing/egl/EGLNativeTypeV3D.cpp
-new file mode 100644
-index 00000000000..e517ae8d610
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeV3D.cpp
-@@ -0,0 +1,174 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include <EGL/egl.h>
-+
-+#include "system.h"
-+#include "EGLNativeTypeV3D.h"
-+#include "utils/StringUtils.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "platform/linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+bool CEGLNativeTypeV3D::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeV3D::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeV3D::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeV3D::CreateNativeDisplay()
-+{
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::CreateNativeWindow()
-+{
-+  V3D_RegisterDisplayPlatform(&m_platformHandle, m_nativeDisplay);
-+  if (!m_platformHandle)
-+    return false;
-+
-+  V3D_NativeWindowInfo info;
-+
-+  info.x = 0;
-+  info.y = 0;
-+  info.width = 1280;
-+  info.height = 720;
-+  info.stretch = false;
-+  info.clientID = 0;
-+  info.zOrder = 0;
-+
-+  m_nativeWindow = V3D_CreateNativeWindow(&info);
-+  if (!m_nativeWindow)
-+    return false;
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeWindow(XBNativeWindowType **nativeWindow) const
-+{
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::DestroyNativeDisplay()
-+{
-+  m_nativeDisplay = 0;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::DestroyNativeWindow()
-+{
-+  V3D_DestroyNativeWindow(m_nativeWindow);
-+  m_nativeWindow = 0;
-+
-+  V3D_UnregisterDisplayPlatform(m_platformHandle);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  m_desktopRes = res;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  resolutions.clear();
-+
-+  m_desktopResAll[0].bFullScreen  = true;
-+  m_desktopResAll[0].iWidth       = 1280;
-+  m_desktopResAll[0].iHeight      = 720;
-+  m_desktopResAll[0].iScreenWidth = 1280;
-+  m_desktopResAll[0].iScreenHeight= 720;
-+  m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopRes.strMode.c_str(), 50., "");
-+  m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[0]);
-+
-+  m_desktopResAll[1].bFullScreen  = true;
-+  m_desktopResAll[1].iWidth       = 1280;
-+  m_desktopResAll[1].iHeight      = 720;
-+  m_desktopResAll[1].iScreenWidth = 1280;
-+  m_desktopResAll[1].iScreenHeight= 720;
-+  m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), 50., "");
-+  m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[1]);
-+
-+  m_desktopResAll[2].bFullScreen  = true;
-+  m_desktopResAll[2].iWidth       = 1280;
-+  m_desktopResAll[2].iHeight      = 720;
-+  m_desktopResAll[2].iScreenWidth = 1280;
-+  m_desktopResAll[2].iScreenHeight= 720;
-+  m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), 50., "");
-+  m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[2]);
-+
-+  m_desktopRes = m_desktopResAll[0];
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::ShowWindow(bool show)
-+{
-+  return V3D_SetVisible(m_platformHandle, show);
-+}
-diff --git a/xbmc/windowing/egl/EGLNativeTypeV3D.h b/xbmc/windowing/egl/EGLNativeTypeV3D.h
-new file mode 100644
-index 00000000000..c3b7624809a
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeV3D.h
-@@ -0,0 +1,61 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include <vector>
-+#include <string>
-+#include <v3dplatform.h>
-+
-+#include "EGLNativeType.h"
-+
-+class CEGLNativeTypeV3D : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeV3D() : m_platformHandle(0) {
-+    m_nativeDisplay = 0;
-+    m_nativeWindow = 0;
-+  }
-+  virtual ~CEGLNativeTypeV3D() {};
-+  virtual std::string GetNativeName() const { return "V3D"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[3];
-+  V3D_PlatformHandle m_platformHandle;
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeV3DNXPL.cpp b/xbmc/windowing/egl/EGLNativeTypeV3DNXPL.cpp
-new file mode 100644
-index 00000000000..f4c84806ac7
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeV3DNXPL.cpp
-@@ -0,0 +1,205 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "system.h"
-+#include "EGLNativeTypeV3DNXPL.h"
-+#include "utils/StringUtils.h"
-+#include "platform/linux/SysfsPath.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "platform/linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <linux/fb.h>
-+#include <sys/ioctl.h>
-+#include <EGL/egl.h>
-+
-+CEGLNativeTypeV3D::CEGLNativeTypeV3D()
-+{
-+  m_nativeDisplay = NULL;
-+  m_nativeWindow = NULL;
-+}
-+
-+CEGLNativeTypeV3D::~CEGLNativeTypeV3D()
-+{
-+}  
-+
-+bool CEGLNativeTypeV3D::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeV3D::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeV3D::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeV3D::CreateNativeDisplay()
-+{
-+  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::CreateNativeWindow()
-+{
-+  NEXUS_Platform_Join();
-+  NXPL_RegisterNexusDisplayPlatform(&nxpl_handle, nexus_display);
-+  NXPL_NativeWindowInfoEXT nativeWindow;
-+
-+  NXPL_GetDefaultNativeWindowInfoEXT(&nativeWindow);
-+
-+  nativeWindow.x = 0;
-+  nativeWindow.y = 0;
-+  nativeWindow.width = 1280;
-+  nativeWindow.height = 720;
-+  nativeWindow.stretch = false;
-+  nativeWindow.clientID = 0;
-+  nativeWindow.zOrder = 0;
-+
-+  m_nativeWindow = NXPL_CreateNativeWindowEXT(&nativeWindow);
-+  if (!m_nativeWindow)
-+    return false;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeWindow(XBNativeDisplayType **nativeWindow) const
-+{
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::DestroyNativeDisplay()
-+{
-+    m_nativeDisplay = NULL;
-+    return true;
-+}
-+
-+bool CEGLNativeTypeV3D::DestroyNativeWindow()
-+{
-+  NXPL_DestroyNativeWindow(m_nativeWindow);
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  m_desktopRes = res;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  resolutions.clear();
-+
-+  m_desktopResAll[0].bFullScreen  = true;
-+  m_desktopResAll[0].iWidth       = 1280;
-+  m_desktopResAll[0].iHeight      = 720;
-+  m_desktopResAll[0].iScreenWidth = 1280;
-+  m_desktopResAll[0].iScreenHeight= 720;
-+  m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].fPixelRatio   = 1.0f;
-+  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[0]);
-+
-+  m_desktopResAll[1].bFullScreen  = true;
-+  m_desktopResAll[1].iWidth       = 1280;
-+  m_desktopResAll[1].iHeight      = 720;
-+  m_desktopResAll[1].iScreenWidth = 1280;
-+  m_desktopResAll[1].iScreenHeight= 720;
-+  m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
-+  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].fPixelRatio   = 1.0f;
-+  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[1]);
-+
-+  m_desktopResAll[2].bFullScreen  = true;
-+  m_desktopResAll[2].iWidth       = 1280;
-+  m_desktopResAll[2].iHeight      = 720;
-+  m_desktopResAll[2].iScreenWidth = 1280;
-+  m_desktopResAll[2].iScreenHeight= 720;
-+  m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
-+  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].fPixelRatio   = 1.0f;
-+  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[2]);
-+
-+  m_desktopResAll[3].bFullScreen  = true;
-+  m_desktopResAll[3].iWidth       = 1280;
-+  m_desktopResAll[3].iHeight      = 720;
-+  m_desktopResAll[3].iScreenWidth = 1920;
-+  m_desktopResAll[3].iScreenHeight= 1080;
-+  m_desktopResAll[3].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[3].fRefreshRate = 50;
-+  m_desktopResAll[3].fPixelRatio   = 1.0f;
-+  m_desktopResAll[3].strMode = StringUtils::Format("%dx%d", 1920, 1080);
-+  m_desktopResAll[3].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[3].strMode.c_str(), (float)50, m_desktopResAll[3].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+  m_desktopResAll[3].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[3].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[3].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[3]);
-+
-+  m_desktopRes = m_desktopResAll[0];
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeV3D::ShowWindow(bool show)
-+{
-+  NXPL_ShowNativeWindowEXT(m_nativeWindow, show);
-+  return true;
-+}
-diff --git a/xbmc/windowing/egl/EGLNativeTypeV3DNXPL.h b/xbmc/windowing/egl/EGLNativeTypeV3DNXPL.h
-new file mode 100644
-index 00000000000..a1745107247
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeV3DNXPL.h
-@@ -0,0 +1,129 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeType.h"
-+
-+#include <vector>
-+#include <string>
-+
-+#define NEXUS_DISPLAYHANDLE void*
-+
-+#ifdef __cplusplus
-+extern "C" {
-+#endif
-+
-+typedef void *NXPL_PlatformHandle;
-+
-+typedef enum NEXUS_BlendFactor
-+{
-+    NEXUS_BlendFactor_eZero
-+} NEXUS_BlendFactor;
-+
-+typedef struct NEXUS_BlendEquation
-+{
-+    NEXUS_BlendFactor a;
-+    NEXUS_BlendFactor b;
-+    bool              subtract_cd;
-+    NEXUS_BlendFactor c;
-+    NEXUS_BlendFactor d;
-+    bool              subtract_e;
-+    NEXUS_BlendFactor e;
-+} NEXUS_BlendEquation;
-+
-+typedef struct
-+{
-+   uint32_t             width;
-+   uint32_t             height;
-+   uint32_t             x;
-+   uint32_t             y;
-+   bool                 stretch;
-+   uint32_t             clientID;
-+   uint32_t             zOrder;
-+   NEXUS_BlendEquation  colorBlend;
-+   NEXUS_BlendEquation  alphaBlend;
-+   uint32_t             magic;
-+} NXPL_NativeWindowInfoEXT;
-+
-+/* Register a display for exclusive use. The client application should not use the display until
-+ * calling NXPL_UnregisterNexusDisplayPlatform.
-+ * It will register its own memory, h/w and display APIs suitable for basic exclusive mode rendering on
-+ * a Nexus display.
-+ * Fills in the NXPL platform handle, which must be passed back into the unregister function.
-+ */
-+void NXPL_RegisterNexusDisplayPlatform(NXPL_PlatformHandle *handle, NEXUS_DISPLAYHANDLE display);
-+
-+/* Unregister a display for exclusive use. The client application can the use the Nexus display again. */
-+void NXPL_UnregisterNexusDisplayPlatform(NXPL_PlatformHandle handle);
-+
-+/* Generate a default NXPL_NativeWindowInfoEXT */
-+void NXPL_GetDefaultNativeWindowInfoEXT(NXPL_NativeWindowInfoEXT *info);
-+
-+/* Create a 'native window' of the given size. This is really just a small structure that holds the size
-+ * of the window that EGL will write into. */
-+void *NXPL_CreateNativeWindowEXT(const NXPL_NativeWindowInfoEXT *info);
-+
-+/* Destroy a 'native window' */
-+void NXPL_DestroyNativeWindow(void *nativeWin);
-+
-+/* Show/hide a 'native window' */
-+void NXPL_ShowNativeWindowEXT(void *native,bool show);
-+
-+int NEXUS_Platform_AuthenticatedJoin(const void *settings);
-+#define NEXUS_Platform_Join() NEXUS_Platform_AuthenticatedJoin(NULL)
-+
-+#ifdef __cplusplus
-+}
-+#endif
-+
-+class CEGLNativeTypeV3D : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeV3D();
-+  virtual ~CEGLNativeTypeV3D();
-+  virtual std::string GetNativeName() const { return "V3D"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[4];
-+
-+  NXPL_PlatformHandle nxpl_handle = 0;
-+  NEXUS_DISPLAYHANDLE  nexus_display = 0;
-+
-+};
-diff --git a/xbmc/windowing/egl/EGLNativeTypeVuplus.cpp b/xbmc/windowing/egl/EGLNativeTypeVuplus.cpp
-new file mode 100644
-index 00000000000..214e51f9ad6
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeVuplus.cpp
-@@ -0,0 +1,177 @@
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+#include "system.h"
-+#include "EGLNativeTypeVuplus.h"
-+#include "utils/StringUtils.h"
-+#include "utils/log.h"
-+#include "guilib/gui3d.h"
-+//#include "linux/DllBCM.h"
-+#include "windowing/GraphicContext.h"
-+
-+#include <stdio.h>
-+#include <malloc.h>
-+#include <assert.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#if defined(TARGET_VUPLUS_ARM)
-+#include "KodiGLESPL.h"
-+#else
-+#include "gles_init.h"
-+#endif
-+
-+using namespace std;
-+
-+bool CEGLNativeTypeVuplus::CheckCompatibility()
-+{
-+  return true;
-+}
-+
-+void CEGLNativeTypeVuplus::Initialize()
-+{
-+}
-+
-+void CEGLNativeTypeVuplus::Destroy()
-+{
-+}
-+
-+bool CEGLNativeTypeVuplus::CreateNativeDisplay()
-+{
-+  GLES_Native_Init();
-+  return GLES_Native_CreateNativeDisplay(&m_nativeDisplay);
-+}
-+
-+bool CEGLNativeTypeVuplus::CreateNativeWindow()
-+{
-+  m_nativeWindow = GLES_Native_CreateNativeWindow();
-+  if (!m_nativeWindow) {
-+	  return false;
-+  }
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const
-+{
-+  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::GetNativeWindow(XBNativeDisplayType **nativeWindow) const
-+{
-+  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
-+  return true;
-+}  
-+
-+bool CEGLNativeTypeVuplus::DestroyNativeDisplay()
-+{
-+  GLES_Native_DestroyNativeDisplay();
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::DestroyNativeWindow()
-+{
-+  GLES_Native_DestroyNativeWindow();
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::GetNativeResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopRes;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::SetNativeResolution(const RESOLUTION_INFO &res)
-+{
-+  m_desktopRes = res;
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
-+{
-+  resolutions.clear();
-+
-+  m_desktopResAll[0].bFullScreen  = true;
-+  m_desktopResAll[0].iWidth       = 1280;
-+  m_desktopResAll[0].iHeight      = 720;
-+  m_desktopResAll[0].iScreenWidth = 1280;
-+  m_desktopResAll[0].iScreenHeight= 720;
-+  m_desktopResAll[0].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
-+  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopRes.strMode.c_str(), (float)50,m_desktopRes.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+
-+  m_desktopResAll[0].iSubtitles   = (int)(0.965 * m_desktopResAll[0].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[0]);
-+
-+  m_desktopResAll[1].bFullScreen  = true;
-+  m_desktopResAll[1].iWidth       = 1280;
-+  m_desktopResAll[1].iHeight      = 720;
-+  m_desktopResAll[1].iScreenWidth = 1280;
-+  m_desktopResAll[1].iScreenHeight= 720;
-+  m_desktopResAll[1].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
-+
-+  m_desktopResAll[1].dwFlags      |=  D3DPRESENTFLAG_MODE3DSBS;
-+  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50,m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+
-+  m_desktopResAll[1].iSubtitles   = (int)(0.965 * m_desktopResAll[1].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[1]);
-+
-+  m_desktopResAll[2].bFullScreen  = true;
-+  m_desktopResAll[2].iWidth       = 1280;
-+  m_desktopResAll[2].iHeight      = 720;
-+  m_desktopResAll[2].iScreenWidth = 1280;
-+  m_desktopResAll[2].iScreenHeight= 720;
-+  m_desktopResAll[2].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
-+
-+  m_desktopResAll[2].dwFlags      |=  D3DPRESENTFLAG_MODE3DTB;
-+  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50,m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
-+
-+  m_desktopResAll[2].iSubtitles   = (int)(0.965 * m_desktopResAll[2].iHeight);
-+
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
-+
-+  resolutions.push_back(m_desktopResAll[2]);
-+
-+  m_desktopRes = m_desktopResAll[0];
-+
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::GetPreferredResolution(RESOLUTION_INFO *res) const
-+{
-+  *res = m_desktopResAll[0];
-+  return true;
-+}
-+
-+bool CEGLNativeTypeVuplus::ShowWindow(bool show)
-+{
-+  return false;
-+}
-+
-diff --git a/xbmc/windowing/egl/EGLNativeTypeVuplus.h b/xbmc/windowing/egl/EGLNativeTypeVuplus.h
-new file mode 100644
-index 00000000000..9f0ff93dea9
---- /dev/null
-+++ b/xbmc/windowing/egl/EGLNativeTypeVuplus.h
-@@ -0,0 +1,60 @@
-+#pragma once
-+
-+/*
-+ *      Copyright (C) 2011-2012 Team XBMC
-+ *      http://www.xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "EGLNativeType.h"
-+
-+#include <vector>
-+#include <string>
-+
-+class CEGLNativeTypeVuplus : public CEGLNativeType
-+{
-+public:
-+  CEGLNativeTypeVuplus()
-+  {
-+	  m_nativeWindow = 0;
-+	  m_nativeDisplay = 0;
-+  };
-+  virtual ~CEGLNativeTypeVuplus() {};
-+  virtual std::string GetNativeName() const { return "vuplus"; };
-+  virtual bool  CheckCompatibility();
-+  virtual void  Initialize();
-+  virtual void  Destroy();
-+  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
-+
-+  virtual bool  CreateNativeDisplay();
-+  virtual bool  CreateNativeWindow();
-+  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
-+  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
-+
-+  virtual bool  DestroyNativeWindow();
-+  virtual bool  DestroyNativeDisplay();
-+
-+  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
-+  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
-+  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
-+  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
-+
-+  virtual bool  ShowWindow(bool show);
-+private:
-+  RESOLUTION_INFO m_desktopRes;
-+  RESOLUTION_INFO m_desktopResAll[3];
-+};
 diff --git a/xbmc/windowing/egl/EGLQuirks.h b/xbmc/windowing/egl/EGLQuirks.h
 new file mode 100644
-index 00000000000..6624f23e01f
+index 0000000000..6624f23e01
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLQuirks.h
 @@ -0,0 +1,42 @@
@@ -5237,10 +2932,10 @@ index 00000000000..6624f23e01f
 +#define EGL_QUIRK_RECREATE_DISPLAY_ON_CREATE_WINDOW (1 << 3)
 diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
 new file mode 100644
-index 00000000000..4ff33d5f440
+index 0000000000..1a11ec9da8
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.cpp
-@@ -0,0 +1,451 @@
+@@ -0,0 +1,397 @@
 +/*
 + *      Copyright (C) 2005-2013 Team XBMC
 + *      http://xbmc.org
@@ -5265,37 +2960,8 @@ index 00000000000..4ff33d5f440
 +#ifdef HAS_EGL
 +#include "utils/log.h"
 +#include <assert.h>
-+#if defined(HAS_IMXVPU)
-+  #include "EGLNativeTypeIMX.h"
-+#endif
-+#if defined(TARGET_DREAMBOX) 
-+  #include "EGLNativeTypeDreambox.h"
-+#endif
-+#if defined(TARGET_V3DNXPL)
-+  #include "EGLNativeTypeV3DNXPL.h"
-+#endif
-+#if defined(TARGET_XCORE)
-+  #include "EGLNativeTypeV3D.h"
-+#endif
-+#if defined(TARGET_VUPLUS)
-+  #include "EGLNativeTypeVuplus.h"
-+#endif
-+#if defined(TARGET_NEXTV)
-+  #include "EGLNativeTypeNexTV.h"
-+#endif
-+#if defined(TARGET_DAGS)
-+  #include "EGLNativeTypeDags.h"
-+#endif
-+#if defined(TARGET_GB)
-+  #include "EGLNativeTypeGB.h"
-+#endif
-+#if defined(TARGET_MALI)
-+  #include "EGLNativeTypeMali.h"
-+#endif
-+#if defined(TARGET_EDISION)
-+  #include "EGLNativeTypeEdision.h"
-+#endif
 +
++#include "EGLNativeTypeSTB.h"
 +#include "EGLWrapper.h"
 +
 +#define CheckError() m_result = eglGetError(); if(m_result != EGL_SUCCESS) CLog::Log(LOGERROR, "EGL error in %s: %x",__FUNCTION__, m_result);
@@ -5346,32 +3012,7 @@ index 00000000000..4ff33d5f440
 +bool CEGLWrapper::Initialize(const std::string &implementation)
 +{
 +  CEGLNativeType *nativeGuess = NULL;
-+
-+  // Try to create each backend in sequence and go with the first one
-+  // that we know will work
-+  if (
-+#if defined(HAS_IMXVPU)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeIMX>(implementation))
-+#elif defined(TARGET_DREAMBOX) 
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeDreambox>(implementation))
-+#elif defined(TARGET_V3DNXPL)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeV3D>(implementation))
-+#elif defined(TARGET_XCORE)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeV3D>(implementation))
-+#elif defined(TARGET_VUPLUS)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeVuplus>(implementation))
-+#elif defined(TARGET_NEXTV)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeNexTV>(implementation))
-+#elif defined(TARGET_DAGS)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeDags>(implementation))
-+#elif defined(TARGET_GB)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeGB>(implementation))
-+#elif defined(TARGET_MALI)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeMali>(implementation))
-+#elif defined(TARGET_EDISION)
-+      (nativeGuess = CreateEGLNativeType<CEGLNativeTypeV3D>(implementation))
-+#endif
-+    )
++  if (nativeGuess = CreateEGLNativeType<CEGLNativeTypeSTB>(implementation))
 +  {
 +    m_nativeTypes = nativeGuess;
 +
@@ -5694,7 +3335,7 @@ index 00000000000..4ff33d5f440
 +
 diff --git a/xbmc/windowing/egl/EGLWrapper.h b/xbmc/windowing/egl/EGLWrapper.h
 new file mode 100644
-index 00000000000..3a73b3e5d75
+index 0000000000..3a73b3e5d7
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.h
 @@ -0,0 +1,76 @@
@@ -5776,7 +3417,7 @@ index 00000000000..3a73b3e5d75
 +};
 diff --git a/xbmc/windowing/egl/WinEventsSTB.cpp b/xbmc/windowing/egl/WinEventsSTB.cpp
 new file mode 100644
-index 00000000000..24a9a7579ac
+index 0000000000..24a9a7579a
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinEventsSTB.cpp
 @@ -0,0 +1,92 @@
@@ -5874,7 +3515,7 @@ index 00000000000..24a9a7579ac
 +//#endif
 diff --git a/xbmc/windowing/egl/WinEventsSTB.h b/xbmc/windowing/egl/WinEventsSTB.h
 new file mode 100644
-index 00000000000..d1540687d34
+index 0000000000..d1540687d3
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinEventsSTB.h
 @@ -0,0 +1,47 @@
@@ -5927,7 +3568,7 @@ index 00000000000..d1540687d34
 +
 diff --git a/xbmc/windowing/egl/WinSystemSTBContext.cpp b/xbmc/windowing/egl/WinSystemSTBContext.cpp
 new file mode 100644
-index 00000000000..623de92cc69
+index 0000000000..623de92cc6
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemSTBContext.cpp
 @@ -0,0 +1,112 @@
@@ -6045,7 +3686,7 @@ index 00000000000..623de92cc69
 +
 diff --git a/xbmc/windowing/egl/WinSystemSTBContext.h b/xbmc/windowing/egl/WinSystemSTBContext.h
 new file mode 100644
-index 00000000000..f8efc14f85e
+index 0000000000..f8efc14f85
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemSTBContext.h
 @@ -0,0 +1,43 @@
@@ -6094,7 +3735,7 @@ index 00000000000..f8efc14f85e
 +};
 diff --git a/xbmc/windowing/egl/WinSystemstb.cpp b/xbmc/windowing/egl/WinSystemstb.cpp
 new file mode 100644
-index 00000000000..54d0b3498aa
+index 0000000000..54d0b3498a
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
 @@ -0,0 +1,541 @@
@@ -6641,7 +4282,7 @@ index 00000000000..54d0b3498aa
 +
 diff --git a/xbmc/windowing/egl/WinSystemstb.h b/xbmc/windowing/egl/WinSystemstb.h
 new file mode 100644
-index 00000000000..2ed66ba9bac
+index 0000000000..2ed66ba9ba
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.h
 @@ -0,0 +1,79 @@

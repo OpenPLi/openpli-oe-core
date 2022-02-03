@@ -5,9 +5,12 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
 
+PROVIDES += "kodi"
+RPROVIDES_${PN} += "kodi"
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake pkgconfig gettext ${PYTHON_PN}-dir ${PYTHON_PN}native systemd
+inherit cmake gettext ${PYTHON_PN}-dir ${PYTHON_PN}native systemd
 
 DEPENDS += " \
             fmt \
@@ -19,6 +22,7 @@ DEPENDS += " \
             libdvdnav libdvdcss libdvdread \
             git-native \
             curl-native \
+            googletest-native \
             gperf-native \
             jsonschemabuilder-native \
             nasm-native \
@@ -53,8 +57,7 @@ DEPENDS += " \
             libpcre \
             libplist \
             libsamplerate0 \
-            libsquish \
-            libssh \
+	        libssh \
             spdlog \
             libtinyxml \
             libusb1 \
@@ -62,10 +65,12 @@ DEPENDS += " \
             libxslt \
             lzo \
             mpeg2dec \
-            python3 \
+            ${PYTHON_PN} \
+	        rapidjson \
             samba \
             sqlite3 \
             taglib \
+	        udev \
             virtual/egl \
             wavpack \
             yajl \
@@ -75,15 +80,12 @@ DEPENDS += " \
 # 'patch' doesn't support binary diffs
 PATCHTOOL = "git"
 
-PE = "1"
-
 PV = "19.3+gitr${SRCPV}"
 SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Matrix \
            file://0001-flatbuffers-19.patch \
            file://0002-readd-Touchscreen-settings.patch \
            file://0003-crossguid-0.2.patch \
            file://0004-shader-nopow-19.patch \
-           file://0006-stb-settings-19.patch \
            file://0005-stb-support-19.patch \
            file://0007-add-winsystemfactory-windowing-init.patch \
            file://0008-adapt-window-system-registration.patch \
@@ -92,6 +94,16 @@ SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Matrix \
 
 # stb, egl, players
 SRC_URI_append += " \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', 'file://egl/0001-EGLNativeTypeV3DNXPL.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/0001-EGLNativeTypeV3DNXPL.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'edision-cortexa15', 'file://egl/0001-EGLNativeTypeEdision.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', 'file://egl/0001-EGLNativeTypeV3D.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', 'file://egl/0001-EGLNativeTypeNexTV.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', 'file://egl/0001-EGLNativeTypeV3D-gb4k.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', 'file://egl/0001-EGLNativeTypeVuplus.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/0001-EGLNativeTypeVuplus4k.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://egl/0001-EGLNativeTypeMali.patch', '', d)} \
+            \
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
                                                               'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
            "
@@ -110,27 +122,27 @@ WINDOWSYSTEM ?= "stb"
 
 APPRENDERSYSTEM ?= "gles"
 
-PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} lcms lto \
+PACKAGECONFIG ??= "${ACCEL} ${WINDOWSYSTEM} pulseaudio lcms lto \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
-                   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', 'openglesv2', d)} \
-                  "
+                   ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', 'openglesv2', d)}"
 
 # Core windowing system choices
 
-PACKAGECONFIG[x11] = "-DCORE_PLATFORM_NAME=x11,,libxinerama libxmu libxrandr libxtst glew"
 PACKAGECONFIG[gbm] = "-DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles,,"
 PACKAGECONFIG[stb] = "-DCORE_PLATFORM_NAME=stb,,"
 PACKAGECONFIG[raspberrypi] = "-DCORE_PLATFORM_NAME=rbpi,,userland"
 PACKAGECONFIG[amlogic] = "-DCORE_PLATFORM_NAME=aml,,"
 PACKAGECONFIG[wayland] = "-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles,,wayland waylandpp"
+PACKAGECONFIG[x11] = "-DCORE_PLATFORM_NAME=x11,,libxinerama libxmu libxrandr libxtst glew"
 
 # Features
 
 PACKAGECONFIG[opengl] = "-DENABLE_OPENGL=ON,,"
 PACKAGECONFIG[openglesv2] = "-DENABLE_GLES=ON,,virtual/egl"
-
-PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
-PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
+PACKAGECONFIG[dvdcss] = "-DENABLE_DVDCSS=ON,-DENABLE_DVDCSS=OFF"
+PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,${KODIVAAPIDEPENDS},${KODIVAAPIDEPENDS}"
+PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau,mesa-vdpau-drivers"
+PACKAGECONFIG[lirc] = ",,lirc"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
 PACKAGECONFIG[lcms] = ",,lcms"
@@ -139,6 +151,23 @@ PACKAGECONFIG[lcms] = ",,lcms"
 
 PACKAGECONFIG[gold] = "-DENABLE_LDGOLD=ON,-DENABLE_LDGOLD=OFF"
 PACKAGECONFIG[lto] = "-DUSE_LTO=${@oe.utils.cpu_count()},-DUSE_LTO=OFF"
+PACKAGECONFIG[testing] = "-DENABLE_TESTING=ON,-DENABLE_TESTING=0FF,googletest"
+
+EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
+EXTRA_OECMAKE_append_mipselarch = " -DWITH_ARCH=${TARGET_ARCH}"
+
+LDFLAGS += "${TOOLCHAIN_OPTIONS}"
+LDFLAGS_append_mips = " -latomic -lpthread"
+LDFLAGS_append_mipsel = " -latomic -lpthread"
+LDFLAGS_append_mips64 = " -latomic -lpthread"
+LDFLAGS_append_mips64el = " -latomic -lpthread"
+LDFLAGS_append_arm = " -lpthread"
+
+KODI_ARCH = ""
+KODI_ARCH_mips = "-DWITH_ARCH=${TARGET_ARCH}"
+KODI_ARCH_mipsel = "-DWITH_ARCH=${TARGET_ARCH}"
+KODI_ARCH_mips64 = "-DWITH_ARCH=${TARGET_ARCH}"
+KODI_ARCH_mips64el = "-DWITH_ARCH=${TARGET_ARCH}"
 
 KODI_DISABLE_INTERNAL_LIBRARIES = " \
   -DENABLE_INTERNAL_CROSSGUID=OFF \
@@ -170,11 +199,13 @@ EXTRA_OECMAKE = " \
     -DENABLE_OPTICAL=OFF \
     -DENABLE_DVDCSS=OFF \
     -DENABLE_DEBUGFISSION=OFF \
+    -DENABLE_NEW_CROSSGUID=ON \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     \
     ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', '-DWITH_PLATFORM="v3d-cortexa15"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', '-DWITH_PLATFORM="v3d-mipsel"', '', d)} \
-    ${@bb.utils.contains('MACHINE_FEATURES', 'edision-cortexa15', '-DWITH_PLATFORM="edision-cortexa15 -DWITH_FFMPEG=stb"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'edision-cortexa15', '-DWITH_PLATFORM="edision-cortexa15"', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'dags-cortexa15', '-DWITH_PLATFORM="dags-cortexa15"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', '-DWITH_PLATFORM="xcore-mipsel"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', '-DWITH_PLATFORM="nextv-cortexa15"', '', d)} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', '-DWITH_PLATFORM="GB-cortexa15"', '', d)} \
@@ -183,14 +214,8 @@ EXTRA_OECMAKE = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
-EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
-
-LDFLAGS += "${TOOLCHAIN_OPTIONS}"
-LDFLAGS_append_mipsarch = " -latomic -lpthread"
-LDFLAGS_append_arm = " -lpthread"
-
-FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O3 -ffast-math"
-FULL_OPTIMIZATION_armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O3 -ffast-math"
+FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
+FULL_OPTIMIZATION_armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
 BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
@@ -211,11 +236,11 @@ do_configure_prepend() {
         sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
-INSANE_SKIP_${PN} = "rpaths already-stripped"
+INSANE_SKIP_${PN} = "rpaths already-stripped file-rdeps"
 
 FILES_${PN} = "${libdir}/kodi ${libdir}/xbmc"
 FILES_${PN} += "${bindir}/kodi ${bindir}/xbmc"
-FILES_${PN} += "${datadir}/icons ${datadir}/kodi ${datadir}/xbmc"
+FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
 FILES_${PN} += "${bindir}/kodi-standalone ${bindir}/xbmc-standalone ${datadir}/xsessions"
 FILES_${PN} += "${libdir}/firewalld"
 FILES_${PN}-dev = "${includedir}"
@@ -227,9 +252,9 @@ RRECOMMENDS_${PN}_append = " libcec \
                              libcurl \
                              libnfs \
                              nss \
-                             ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
                              os-release \
-                             python3 \
+                             ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
+                             ${PYTHON_PN} \
                              ${PYTHON_PN}-ctypes \
                              ${PYTHON_PN}-netclient \
                              ${PYTHON_PN}-html \

@@ -11,14 +11,14 @@ diff --git a/src/lib/live555/liveMedia/include/Locale.hh b/src/lib/live555/liveM
 index b327948..b9c4076 100644
 --- a/src/lib/live555/liveMedia/include/Locale.hh
 +++ b/src/lib/live555/liveMedia/include/Locale.hh
-@@ -43,9 +43,9 @@
+@@ -43,9 +43,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
  
  #ifndef LOCALE_NOT_USED
  #include <locale.h>
--#if !defined(XLOCALE_NOT_USED) && (!defined(__GLIBC__) || !defined(__GLIBC_MINOR__) || __GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 26))
+-#ifndef XLOCALE_NOT_USED
 -#include <xlocale.h> // because, on some systems, <locale.h> doesn't include <xlocale.h>; this makes sure that we get both
 -#endif
-+//#if !defined(XLOCALE_NOT_USED) && (!defined(__GLIBC__) || !defined(__GLIBC_MINOR__) || __GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 26))
++//#ifndef XLOCALE_NOT_USED
 +//#include <xlocale.h> // because, on some systems, <locale.h> doesn't include <xlocale.h>; this makes sure that we get both
 +//#endif
  #endif
@@ -26,3 +26,4 @@ index b327948..b9c4076 100644
  
 -- 
 2.12.0.windows.1
+
