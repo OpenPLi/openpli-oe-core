@@ -1,6 +1,18 @@
+From 7d75dc79ddee91919baf6ab6aa10420b77f25c31 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Thu, 27 Jan 2022 10:41:53 +0100
+Subject: [PATCH] EGLNativeTypeSTB
+
+---
+ xbmc/windowing/egl/EGLNativeTypeSTB.cpp | 174 ++++++++++++++++++++
+ xbmc/windowing/egl/EGLNativeTypeSTB.h   |  61 +++++++
+ 2 files changed, 235 insertions(+)
+ create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.cpp
+ create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.h
+
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.cpp b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
 new file mode 100644
-index 0000000..3023daf
+index 0000000000..add560007d
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
 @@ -0,0 +1,174 @@
@@ -30,7 +42,7 @@ index 0000000..3023daf
 +#include "utils/StringUtils.h"
 +#include "utils/log.h"
 +#include "guilib/gui3d.h"
-+//#include "platform/linux/DllBCM.h"
++//#include "linux/DllBCM.h"
 +#include "windowing/GraphicContext.h"
 +
 +bool CEGLNativeTypeSTB::CheckCompatibility()
@@ -180,7 +192,7 @@ index 0000000..3023daf
 +}
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.h b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 new file mode 100644
-index 0000000..c3b7624
+index 0000000000..c3b7624809
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 @@ -0,0 +1,61 @@
@@ -246,4 +258,5 @@ index 0000000..c3b7624
 +  V3D_PlatformHandle m_platformHandle;
 +};
 -- 
-2.7.4
+2.25.1
+

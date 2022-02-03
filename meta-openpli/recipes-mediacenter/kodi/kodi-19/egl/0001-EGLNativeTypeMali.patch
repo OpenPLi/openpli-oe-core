@@ -1,0 +1,229 @@
+From be0ef345e6135f58d894920d49b2645009fed33c Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Thu, 27 Jan 2022 10:42:19 +0100
+Subject: [PATCH] EGLNativeTypeSTB
+
+---
+ xbmc/windowing/egl/EGLNativeTypeSTB.cpp | 149 +++++++++++++++++++++++
+ xbmc/windowing/egl/EGLNativeTypeSTB.h   |  53 ++++++++
+ 2 files changed, 202 insertions(+)
+ create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.cpp
+ create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.h
+
+diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.cpp b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
+new file mode 100644
+index 0000000000..2b39d2fbaa
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
+@@ -0,0 +1,149 @@
++/*
++ *      Copyright (C) 2011-2015 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++#include "EGLNativeTypeSTB.h"
++#include <EGL/egl.h>
++#include "utils/log.h"
++
++#include <linux/fb.h>
++#include <fcntl.h>
++#include <sys/ioctl.h>
++#include <unistd.h>
++
++bool CEGLNativeTypeSTB::_GetNativeResolution(RESOLUTION_INFO *res) const {
++  struct fb_var_screeninfo vinfo;
++  int fd;
++  
++  fd = open("/dev/fb0", O_RDWR, 0);
++  if (fd < 0) {
++    return false;
++  }
++  
++  if (ioctl(fd, FBIOGET_VSCREENINFO, &vinfo) < 0) {
++    return false;
++  }
++  close(fd);
++
++  res->bFullScreen   = false;
++  res->dwFlags       = 0;
++  res->fRefreshRate  = 60;
++  res->iWidth        = vinfo.xres;
++  res->iHeight       = vinfo.yres;
++  res->iScreenWidth  = vinfo.xres;
++  res->iScreenHeight = vinfo.yres;
++  res->fPixelRatio   = 1;
++  res->iSubtitles    = (int)(0.965 * res->iHeight);
++
++  return true;
++}
++
++CEGLNativeTypeSTB::CEGLNativeTypeSTB() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::CEGLNativeTypeSTB()\n");
++}
++
++CEGLNativeTypeSTB::~CEGLNativeTypeSTB() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::~CEGLNativeTypeSTB()\n");
++}
++
++bool CEGLNativeTypeSTB::CheckCompatibility() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::CheckCompatibility()\n");
++  return true;
++}
++
++void CEGLNativeTypeSTB::Initialize() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::Initialize()\n");
++}
++
++void CEGLNativeTypeSTB::Destroy() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::Destroy()\n");
++}
++
++bool CEGLNativeTypeSTB::CreateNativeDisplay() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::CreateNativeDisplay()\n");
++  m_nativeDisplay = EGL_DEFAULT_DISPLAY;
++  return true;
++}
++
++bool CEGLNativeTypeSTB::CreateNativeWindow() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::CreateNativeWindow()\n");
++  m_nativeWindow = EGL_DEFAULT_DISPLAY;
++  return true;
++}
++
++bool CEGLNativeTypeSTB::GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::GetNativeDisplay()\n");
++  if (!nativeDisplay)
++    return false;
++  *nativeDisplay = (XBNativeDisplayType*) &m_nativeDisplay;
++  return true;
++}
++
++bool CEGLNativeTypeSTB::GetNativeWindow(XBNativeWindowType **nativeWindow) const {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::GetNativeWindow()\n");
++  if (!nativeWindow)
++    return false;
++  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
++  return true;
++}
++
++bool CEGLNativeTypeSTB::DestroyNativeWindow() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::DestroyNativeWindow()\n");
++  m_nativeWindow = NULL;
++  return true;
++}
++
++bool CEGLNativeTypeSTB::DestroyNativeDisplay() {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::DestroyNativeDisplay()\n");
++  m_nativeDisplay = NULL;
++  return true;
++}
++
++bool CEGLNativeTypeSTB::GetNativeResolution(RESOLUTION_INFO *res) const {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::GetNativeResolution()\n");
++  return _GetNativeResolution(res);
++}
++
++bool CEGLNativeTypeSTB::SetNativeResolution(const RESOLUTION_INFO &res) {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::SetNativeResolution()\n");
++  return true;
++}
++
++bool CEGLNativeTypeSTB::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions) {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::ProbeResolutions()\n");
++  resolutions.clear();
++
++  RESOLUTION_INFO res;
++  if(_GetNativeResolution(&res)) {
++    resolutions.push_back(res);
++    return true;
++  }
++  return true;
++}
++
++bool CEGLNativeTypeSTB::GetPreferredResolution(RESOLUTION_INFO *res) const {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::GetPreferredResolution()\n");
++  _GetNativeResolution(res);
++  return false;
++}
++
++bool CEGLNativeTypeSTB::ShowWindow(bool show) {
++  CLog::Log(LOGDEBUG, "CEGLNativeTypeSTB::ShowWindow()\n");
++  return false;
++}
++
+diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.h b/xbmc/windowing/egl/EGLNativeTypeSTB.h
+new file mode 100644
+index 0000000000..083749a592
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLNativeTypeSTB.h
+@@ -0,0 +1,53 @@
++#pragma once
++
++/*
++ *      Copyright (C) 2011-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "EGLNativeType.h"
++
++class CEGLNativeTypeSTB : public CEGLNativeType
++{
++public:
++  CEGLNativeTypeSTB();
++  virtual ~CEGLNativeTypeSTB();
++  virtual std::string GetNativeName() const { return "mali"; };
++  virtual bool  CheckCompatibility();
++  virtual void  Initialize();
++  virtual void  Destroy();
++  virtual int   GetQuirks() { return EGL_QUIRK_NONE; };
++
++  virtual bool  CreateNativeDisplay();
++  virtual bool  CreateNativeWindow();
++  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const;
++  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const;
++
++  virtual bool  DestroyNativeWindow();
++  virtual bool  DestroyNativeDisplay();
++
++  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const;
++  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res);
++  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
++  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
++
++  virtual bool  ShowWindow(bool show);
++
++ private:
++  bool _GetNativeResolution(RESOLUTION_INFO *res) const;
++};
+-- 
+2.25.1
+

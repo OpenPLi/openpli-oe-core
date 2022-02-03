@@ -1,12 +1,18 @@
-commit eeb2b914c3970191ae72493673faa27282ee4962
-Author: Athanasios Oikonomou <athoik@gmail.com>
-Date:   Mon Sep 4 20:44:01 2017 +0300
+From 4b449b0c7b87e91f175ae7910a93db2ad0c6528b Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Thu, 27 Jan 2022 10:44:11 +0100
+Subject: [PATCH] EGLNativeTypeSTB
 
-    EGLNativeTypeSTB vuplus
+---
+ xbmc/windowing/egl/EGLNativeTypeSTB.cpp | 177 +++++++++++++++++++++
+ xbmc/windowing/egl/EGLNativeTypeSTB.h   |  60 +++++++
+ 2 files changed, 237 insertions(+)
+ create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.cpp
+ create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.h
 
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.cpp b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
 new file mode 100644
-index 0000000..03e0def
+index 0000000000..214e51f9ad
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
 @@ -0,0 +1,175 @@
@@ -34,7 +40,7 @@ index 0000000..03e0def
 +#include "utils/StringUtils.h"
 +#include "utils/log.h"
 +#include "guilib/gui3d.h"
-+//#include "platform/linux/DllBCM.h"
++//#include "linux/DllBCM.h"
 +#include "windowing/GraphicContext.h"
 +
 +#include <stdio.h>
@@ -187,7 +193,7 @@ index 0000000..03e0def
 +
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.h b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 new file mode 100644
-index 0000000..0309a32
+index 0000000000..9f0ff93dea
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 @@ -0,0 +1,60 @@
@@ -251,3 +257,6 @@ index 0000000..0309a32
 +  RESOLUTION_INFO m_desktopRes;
 +  RESOLUTION_INFO m_desktopResAll[3];
 +};
+-- 
+2.25.1
+
