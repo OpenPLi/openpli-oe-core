@@ -1,0 +1,10 @@
+diff --git a/genmetaindex.py b/genmetaindex.py
+index f42cefc..e14f1b6 100755
+--- a/genmetaindex.py
++++ b/genmetaindex.py
+@@ -47,4 +47,4 @@ def indent(elem, level=0):
+ 
+ indent(root)
+ 
+-ElementTree(root).write(sys.stdout)
++ElementTree(root).write(sys.stdout, encoding='unicode')

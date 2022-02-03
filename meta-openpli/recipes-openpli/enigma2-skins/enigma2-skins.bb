@@ -19,6 +19,7 @@ SRC_URI_append = " \
 	file://dtvhd.diff \
 	file://brushedaluhd.diff \
 	file://blackbox.diff \
+	file://set-encoding-to-unicode.patch \
 	"
 
 # note that enigma2-skins is just an empty package to satisfy silly dependencies.
