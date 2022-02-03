@@ -9,13 +9,13 @@ DEPENDS += " \
             libtinyxml2 \
             jsoncpp \
             jsonrpc \
+            boost \
             kodi \
           "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV_FORMAT = "pvr${KODIADDONPLUGIN}"
-
 
 PVRMYTV = "${@bb.utils.contains("KODIADDONPLUGIN", "mythtv", "janbar", "kodi-pvr", d)}"
 

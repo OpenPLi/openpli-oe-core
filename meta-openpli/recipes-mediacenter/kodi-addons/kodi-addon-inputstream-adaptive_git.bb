@@ -3,6 +3,8 @@ SUMMARY = "kodi inputstream addon for several manifest types"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://src/main.cpp;beginline=1;endline=17;md5=5eac1e215251c8f88d799f80ed45d5c0"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 inherit kodi-addon
 
 DEPENDS += "expat"
@@ -23,5 +25,4 @@ S = "${WORKDIR}/git"
 
 KODIADDONNAME = "inputstream.adaptive"
 
-# purposedly packaged this way
 INSANE_SKIP_${PN} = "libdir dev-so"

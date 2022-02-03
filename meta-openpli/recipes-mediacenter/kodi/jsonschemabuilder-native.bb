@@ -21,4 +21,3 @@ do_compile_prepend() {
     done
 }
 
-BBCLASSEXTEND = "native"

@@ -13,12 +13,11 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "${AUTOREV}"
 
-PV = "2.0.9+gitr${SRCPV}"
+PV = "19.3.0+gitr${SRCPV}"
 
 KODIADDONBRANCH = "Matrix"
 
-SRC_URI = "git://github.com/xbmc/inputstream.rtmp.git;protocol=https;branch=${KODIADDONBRANCH} \
-         "
+SRC_URI = "git://github.com/xbmc/inputstream.rtmp.git;protocol=https;branch=${KODIADDONBRANCH}"
 
 S = "${WORKDIR}/git"
 
