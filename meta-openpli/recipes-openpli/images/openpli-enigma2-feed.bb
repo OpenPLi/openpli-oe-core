@@ -172,6 +172,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-e2iplayer-deps \
 	enigma2-plugin-extensions-epgimport \
 	enigma2-plugin-extensions-fontinfo \
+	enigma2-plugin-extensions-hdmitest \
 	enigma2-plugin-extensions-historyzapselector \
 	enigma2-plugin-extensions-lcd4linux \
 	enigma2-plugin-extensions-managerautofs \
