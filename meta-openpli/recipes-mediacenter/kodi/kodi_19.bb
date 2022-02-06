@@ -57,7 +57,7 @@ DEPENDS += " \
             libpcre \
             libplist \
             libsamplerate0 \
-	        libssh \
+            libssh \
             spdlog \
             libtinyxml \
             libusb1 \
@@ -66,11 +66,10 @@ DEPENDS += " \
             lzo \
             mpeg2dec \
             ${PYTHON_PN} \
-	        rapidjson \
             samba \
             sqlite3 \
             taglib \
-	        udev \
+            udev \
             virtual/egl \
             wavpack \
             yajl \
