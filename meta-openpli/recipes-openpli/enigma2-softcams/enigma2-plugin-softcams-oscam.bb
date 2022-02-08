@@ -14,6 +14,8 @@ SRC_URI = "git://github.com/OpenVisionE2/oscam.git;protocol=https"
 DEPENDS = "libusb openssl"
 RRECOMMENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
 
+LDFLAGS_prepend = "-ludev "
+
 S = "${WORKDIR}/git"
 B = "${S}"
 CAMNAME = "oscam"
@@ -37,7 +39,7 @@ EXTRA_OECMAKE += "\
 	-DWEBIF=1 \
 	-DWITH_STAPI=0 \
 	-DHAVE_LIBUSB=1 \
-	-DSTATIC_LIBUSB=0 \
+	-DSTATIC_LIBUSB=1 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
 	-DCLOCKFIX=1 \
