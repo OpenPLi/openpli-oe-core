@@ -36,7 +36,7 @@
 	url = https://github.com/neo-pli-bsps/meta-xtrend.git
 [submodule "meta-qt5"]
 	path = meta-qt5
-	url = https://github.com/meta-qt5/meta-qt5.git
+	url = https://github.com/oe-mirrors/meta-qt15.git
 [submodule "meta-gi"]
 	path = meta-gi
 	url = https://github.com/neo-pli-bsps/meta-gi.git
