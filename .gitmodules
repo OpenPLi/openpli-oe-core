@@ -12,7 +12,7 @@
 	ignore = dirty
 [submodule "meta-formuler"]
 	path = meta-formuler
-	url = https://github.com/neo-pli-bsps/meta-formuler.git
+	url = https://github.com/kueken/meta-formuler.git
 [submodule "meta-hd"]
 	path = meta-hd
 	url = https://github.com/kueken/meta-hd.git
@@ -21,7 +21,7 @@
 	url = https://github.com/kueken/meta-vuplus.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
-	url = https://github.com/neo-pli-bsps/meta-xpeedc.git
+	url = https://github.com/kueken/meta-xpeedc.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
 	url = https://github.com/kueken/meta-zgemma.git
@@ -30,16 +30,16 @@
 	url = https://github.com/kueken/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
-	url = https://github.com/neo-pli-bsps/meta-spycat.git
+	url = https://github.com/kueken/meta-spycat.git
 [submodule "meta-xtrend"]
 	path = meta-xtrend
-	url = https://github.com/neo-pli-bsps/meta-xtrend.git
+	url = https://github.com/kueken/meta-xtrend.git
 [submodule "meta-qt5"]
 	path = meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = https://github.com/neo-pli-bsps/meta-gi.git
+	url = https://github.com/kueken/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
 	url = https://github.com/kueken/meta-gfutures.git
@@ -54,7 +54,7 @@
 	url = https://github.com/kueken/meta-gigablue.git
 [submodule "meta-amiko"]
 	path = meta-amiko
-	url = https://github.com/neo-pli-bsps/meta-amiko.git
+	url = https://github.com/kueken/meta-amiko.git
 [submodule "meta-edision"]
 	path = meta-edision
 	url = https://github.com/kueken/meta-edision.git
@@ -66,16 +66,16 @@
 	url = https://github.com/kueken/meta-maxytec
 [submodule "meta-octagon"]
 	path = meta-octagon
-	url = https://github.com/zhtq/meta-octagon
+	url = https://github.com/kueken/meta-octagon
 [submodule "meta-xp"]
 	path = meta-xp
-	url = https://github.com/hd-digital/meta-xp
+	url = https://github.com/kueken/meta-xp
 [submodule "meta-uclan"]
 	path = meta-uclan
 	url = https://github.com/kueken/meta-uclan
 [submodule "meta-dream"]
 	path = meta-dream
-	url = https://github.com/neo-pli-bsps/meta-dream.git
+	url = https://github.com/kueken/meta-dream.git
 [submodule "meta-abcom"]
 	path = meta-abcom
 	url = https://github.com/kueken/meta-pulse4k
