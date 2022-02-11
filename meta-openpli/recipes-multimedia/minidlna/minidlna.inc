@@ -8,12 +8,12 @@ LICENSE_FLAGS = "commercial"
 
 inherit gitpkgv
 
-PV = "1.3.0+git${SRCPV}"
-PKGV = "1.3.0+git${GITPKGV}"
+PV = "1.3.1+git${SRCPV}"
+PKGV = "1.3.1+git${GITPKGV}"
 DEPENDS = "libexif libav libjpeg-turbo libvorbis flac libid3tag sqlite3"
 
 SRC_URI = "git://git.code.sf.net/p/minidlna/git;branch=master;module=git \
-           file://0001-fix-configure-add-skript.patch \
+           file://0001-add-skript-hu.po-adapt-configure.patch \
            "
 S = "${WORKDIR}/git"
 

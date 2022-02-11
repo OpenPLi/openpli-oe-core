@@ -1,49 +1,20 @@
-From 638195fb07a525009c9f4f8fc08e7abea59fed28 Mon Sep 17 00:00:00 2001
+From cfa7769674e7bb66ccea9ba011687487a797be75 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Mon, 20 Sep 2021 22:35:11 +0200
-Subject: [PATCH] fix configure add skript
+Date: Fri, 11 Feb 2022 13:36:07 +0100
+Subject: [PATCH] add skript, hu.po, adapt configure
 
 ---
- Makefile.am   |   5 +-
- configure.ac  |  41 ++++++-----------
+ configure.ac  |   6 +--
  minidlna.conf |  10 ++--
  minidlna.sh   |  58 ++++++++++++++++++++++++
  po/LINGUAS    |   2 +-
  po/hu.po      | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 206 insertions(+), 33 deletions(-)
+ 5 files changed, 189 insertions(+), 10 deletions(-)
  create mode 100755 minidlna.sh
  create mode 100644 po/hu.po
 
-diff --git a/Makefile.am b/Makefile.am
-index 74859c1..1d7d73f 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -15,7 +15,7 @@
- # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- # USA.
- 
--AM_CFLAGS = -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-+AM_CFLAGS = -Wall -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 @STATIC_CFLAGS@
- 
- SUBDIRS=po
- 
-@@ -55,11 +55,14 @@ minidlnad_LDADD = \
- 	@LIBID3TAG_LIBS@ \
- 	@LIBSQLITE3_LIBS@ \
- 	@LIBAVFORMAT_LIBS@ \
-+	@LIBAVUTIL_LIBS@ \
- 	@LIBEXIF_LIBS@ \
- 	@LIBINTL@ \
- 	@LIBICONV@ \
- 	-lFLAC $(flacogglibs) $(vorbislibs) $(avahilibs)
- 
-+minidlnad_LDFLAGS = @STATIC_LDFLAGS@
-+
- testupnpdescgen_SOURCES = testupnpdescgen.c upnpdescgen.c
- testupnpdescgen_LDADD = \
- 	@LIBJPEG_LIBS@ \
 diff --git a/configure.ac b/configure.ac
-index cb596b9..e13a531 100644
+index 92bca0d..2b61229 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -14,7 +14,7 @@
@@ -51,49 +22,11 @@ index cb596b9..e13a531 100644
  # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  # USA.
 -AC_INIT(MiniDLNA,1.1.3,,minidlna)
-+AC_INIT(MiniDLNA,1.3.0,,minidlna)
++AC_INIT(MiniDLNA,1.3.1,,minidlna)
  #LT_INIT
  
  AC_CANONICAL_TARGET
-@@ -411,10 +411,10 @@ for dir in "" /usr/local $SEARCH_DIR; do
-     if test -n "$dir"; then
-         LDFLAGS="$LDFLAGS -L$dir/lib"
-     fi
--    AC_CHECK_LIB([id3tag -lz], [id3_file_open], [LIBID3TAG_LIBS="-lid3tag -lz"], [unset ac_cv_lib_id3tag_id3_file_open; LDFLAGS="$LDFLAGS_SAVE"; continue])
-+    AC_CHECK_LIB([id3tag], [id3_file_open], [LIBID3TAG_LIBS="-lid3tag"], [unset ac_cv_lib_id3tag_id3_file_open; LDFLAGS="$LDFLAGS_SAVE"; continue])
-     break
- done
--test x"$ac_cv_lib_id3tag__lz___id3_file_open" = x"yes" || AC_MSG_ERROR([Could not find libid3tag])
-+test x"$ac_cv_lib_id3tag_id3_file_open" = x"yes" || AC_MSG_ERROR([Could not find libid3tag])
- AC_SUBST(LIBID3TAG_LIBS)
- 
- LDFLAGS_SAVE="$LDFLAGS"
-@@ -435,17 +435,20 @@ for dir in "" /usr/local $SEARCH_DIR; do
-     if test -n "$dir"; then
-         LDFLAGS="$LDFLAGS -L$dir/lib"
-     fi
--    AC_CHECK_LIB([avformat -lavcodec -lavutil -lz], [avformat_open_input], [LIBAVFORMAT_LIBS="-lavformat -lavcodec -lavutil -lz"],
--		 [AC_CHECK_LIB([avformat -lavcodec -lavutil -lz], [av_open_input_file], [LIBAVFORMAT_LIBS="-lavformat -lavcodec -lavutil -lz"],
-+    AC_CHECK_LIB([avformat], [av_open_input_file], [LIBAVFORMAT_LIBS="-lavformat"],
-+		 [AC_CHECK_LIB([avformat], [avformat_open_input], [LIBAVFORMAT_LIBS="-lavformat"],
- 		  [unset ac_cv_lib_avformat_av_open_input_file; unset ac_cv_lib_avformat_avformat_open_input; LDFLAGS="$LDFLAGS_SAVE"; continue])])
-     break
- done
--if test x"$ac_cv_lib_avformat__lavcodec__lavutil__lz___av_open_input_file" != x"yes" &&
--   test x"$ac_cv_lib_avformat__lavcodec__lavutil__lz___avformat_open_input" != x"yes"; then
-+if test x"$ac_cv_lib_avformat_av_open_input_file" != x"yes" &&
-+   test x"$ac_cv_lib_avformat_avformat_open_input" != x"yes"; then
-    AC_MSG_ERROR([Could not find libavformat - part of ffmpeg])
- fi
- AC_SUBST(LIBAVFORMAT_LIBS)
- 
-+AC_CHECK_LIB(avutil ,[av_rescale_q], [LIBAVUTIL_LIBS="-lavutil"], [AC_MSG_ERROR([Could not find libavutil - part of ffmpeg])])
-+AC_SUBST(LIBAVUTIL_LIBS)
-+
- AC_CHECK_LIB(pthread, pthread_create)
- 
- # test if we have vorbisfile
-@@ -486,9 +489,7 @@ AC_CHECK_LIB(avahi-client, avahi_threaded_poll_new,
+@@ -491,9 +491,7 @@ AC_CHECK_LIB(avahi-client, avahi_threaded_poll_new,
  ################################################################################################################
  ### Header checks
  
@@ -102,35 +35,8 @@ index cb596b9..e13a531 100644
 -test x"$ac_cv_header_sys_queue_h" != x"yes" && AC_MSG_ERROR([sys/queue.h not found or not usable])
 +AC_CHECK_HEADERS([arpa/inet.h asm/unistd.h endian.h machine/endian.h fcntl.h libintl.h locale.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/file.h sys/inotify.h sys/ioctl.h sys/param.h sys/socket.h sys/time.h unistd.h])
  
- AC_CHECK_FUNCS(inotify_init, AC_DEFINE(HAVE_INOTIFY,1,[Whether kernel has inotify support]), [
-     AC_MSG_CHECKING([for __NR_inotify_init syscall])
-@@ -606,22 +607,10 @@ AC_MSG_CHECKING([whether to build a static binary executable])
- AC_ARG_ENABLE(static,
- 	[  --enable-static         build a static binary executable],[
- 	if test "$enableval" = "yes"; then
--		CFLAGS="$CFLAGS -DSTATIC"
--		LDFLAGS="$LDFLAGS -static"
--                AC_MSG_RESULT([yes])
--        else
--                AC_MSG_RESULT([no])
--        fi
--        ],[
--                AC_MSG_RESULT([no])
--        ]
--)
--
--AC_MSG_CHECKING([whether to enable LTO])
--AC_ARG_ENABLE(lto,
--	[  --enable-lto            enable link-time optimization],[
--	if test "$enableval" = "yes"; then
--		CFLAGS="$CFLAGS -flto"
-+		STATIC_CFLAGS="-DSTATIC"
-+		AC_SUBST(STATIC_CFLAGS)
-+		STATIC_LDFLAGS="-Wl,-Bstatic"
-+		AC_SUBST(STATIC_LDFLAGS)
-                 AC_MSG_RESULT([yes])
-         else
-                 AC_MSG_RESULT([no])
+ AC_CHECK_FUNCS(inotify_init, 
+ [
 diff --git a/minidlna.conf b/minidlna.conf
 index 82db5f1..c8dc33b 100644
 --- a/minidlna.conf
