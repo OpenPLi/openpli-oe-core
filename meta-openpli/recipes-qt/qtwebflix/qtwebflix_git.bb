@@ -20,7 +20,7 @@ SRC_URI = "git://github.com/gort818/qtwebflix.git;protocol=https;name=qtwebflix 
 
 S = "${WORKDIR}/git"
 
-inherit qmake5
+inherit qmake5 pkgconfig
 
 do_install() {
 	install -d ${D}/usr/bin

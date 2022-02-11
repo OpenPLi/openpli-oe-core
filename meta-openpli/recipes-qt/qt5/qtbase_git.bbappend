@@ -3,6 +3,8 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/qtbase-git:"
 
+inherit pkgconfig
+
 SET_QT_QPA_DEFAULT_PLATFORM ?= "linuxfb"
 SET_QT_QPA_EGLFS_INTEGRATION ?= "eglfs_emu"
 
@@ -20,7 +22,7 @@ PACKAGECONFIG_GL = " "
 PACKAGECONFIG_OPENSSL = "openssl"
 PACKAGECONFIG_remove = "tests ${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'gl' , '', d)}"
 PACKAGECONFIG_append += " \
-    ${@bb.utils.contains('MACHINE_FEATURES', 'noopengl', '', ' gles2 eglfs ', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'no-opengl', '', 'gles2 eglfs', d)} \
     linuxfb \
 "
 

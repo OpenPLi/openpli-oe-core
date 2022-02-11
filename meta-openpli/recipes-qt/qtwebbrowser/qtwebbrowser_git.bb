@@ -21,6 +21,7 @@ SRC_URI = "git://code.qt.io/qt-apps/qtwebbrowser.git;protocol=https;branch=${BRA
 S = "${WORKDIR}/git"
 
 inherit qmake5
+inherit pkgconfig
 
 # Install qtwebbrowser under /usr/bin
 do_install() {
