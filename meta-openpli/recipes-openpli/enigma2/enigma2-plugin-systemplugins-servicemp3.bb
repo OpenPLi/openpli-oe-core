@@ -37,7 +37,6 @@ GST_GOOD_RDEPS = "\
 	gstreamer${GST_VERSION}-plugins-good-isomp4 \
 	gstreamer${GST_VERSION}-plugins-good-matroska \
 	gstreamer${GST_VERSION}-plugins-good-mpg123 \
-	gstreamer${GST_VERSION}-plugins-good-pulse \
 	gstreamer${GST_VERSION}-plugins-good-rtp \
 	gstreamer${GST_VERSION}-plugins-good-rtpmanager \
 	gstreamer${GST_VERSION}-plugins-good-rtsp \
@@ -77,9 +76,6 @@ DEPENDS = "\
 
 RDEPENDS_${PN} = "\
 	enigma2 \
-	"
-
-RRECOMMENDS_${PN} = "\
 	glib-networking \
 	gstreamer${GST_VERSION}-plugin-subsink \
 	virtual/gstreamer${GST_VERSION}-dvbmediasink \
@@ -87,6 +83,10 @@ RRECOMMENDS_${PN} = "\
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
 	${GST_UGLY_RDEPS} \
+	"
+
+RRECOMMENDS_${PN} = "\
+	gstreamer${GST_VERSION}-plugins-good-pulse \
 	"
 
 SRC_URI = "git://github.com/openpli/servicemp3.git;branch=python3;protocol=https"
