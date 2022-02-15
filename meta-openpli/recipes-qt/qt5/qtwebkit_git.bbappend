@@ -5,6 +5,13 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 DEPENDS += " libwebp qtsensors qtlocation patchelf-native"
 RDEPENDS_${PN} += " qtdeclarative qtsensors qtlocation"
 
+SRC_URI_remove = " \
+    file://0003-Fix-build-bug-for-armv32-BE.patch \
+    file://0005-Fix-build-with-bison37.patch \
+    file://0006-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
+    file://0007-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
+    file://0009-Riscv-Add-support-for-riscv.patch \
+    "
 SRC_URI += " \
     file://0001-Qtwebkit-platform-setting.patch \
     file://0002-Qtwebkit-without-x11.patch \

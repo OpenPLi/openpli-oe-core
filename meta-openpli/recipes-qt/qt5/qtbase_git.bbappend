@@ -3,6 +3,8 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/qtbase-git:"
 
+inherit pkgconfig
+
 SET_QT_QPA_DEFAULT_PLATFORM ?= "linuxfb"
 SET_QT_QPA_EGLFS_INTEGRATION ?= "eglfs_emu"
 
