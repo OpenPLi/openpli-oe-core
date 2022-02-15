@@ -104,7 +104,7 @@ SRC_URI_append += " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://egl/0001-EGLNativeTypeMali.patch', '', d)} \
             \
             ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
-                                                              'file://defaultplayer-E2Player.patch file://E2Player.patch', d)} \
+                                                              'file://E2Player.patch', d)} \
            "
 
 S = "${WORKDIR}/git"
