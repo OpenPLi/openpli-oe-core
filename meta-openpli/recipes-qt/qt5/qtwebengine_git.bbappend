@@ -1,8 +1,6 @@
 # package is machine specific
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-inherit pkgconfig
-
 SRC_URI += " \
     file://chromium/0002-Replace-hbbtv-responses-with-application-xhtml-xml.patch;patchdir=src/3rdparty \
     ${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'file://0001-force-alsa.patch' , '', d)} \
@@ -15,9 +13,7 @@ SRC_URI_append_osmio4kplus = " \
 "
 DEPENDS += " \
     libnss-mdns \
-    libxkbcommon \
     libwebp-native \
-    dbus \
 "
 FILESEXTRAPATHS_prepend := "${THISDIR}/qtwebengine-git:"
 
