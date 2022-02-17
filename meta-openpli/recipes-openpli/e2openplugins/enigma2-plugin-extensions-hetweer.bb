@@ -12,6 +12,7 @@ do_install() {
         chmod a+rX ${D}${PLUGINPATH}
 }
 
+SRC_URI_append = " file://fix-temperature-url.patch"
 
 pkg_postrm_${PN}() {
     rm -rf ${libdir}/enigma2/python/Plugins/Extensions/HetWeer
