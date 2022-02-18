@@ -37,6 +37,7 @@ python do_cleanup () {
         ('hd500c', 'hd500c.png', 'hd1x00.png', 'hd1x00.html'),
         ('hd51', 'hd51.png', 'hd1x00.png', 'hd1x00.html'),
         ('hd60', 'hd60.png', 'hd60.png', 'hd60.html'),
+        ('hd66se', 'hd66se.png', 'hd66se.png', 'hd66se.html'),
         ('hd530c', 'hd530c.png', 'hd1x00.png', 'hd1x00.html'),
         ('multibox', 'multibox.png', 'multibox.png', 'multibox.html'),
         ('multiboxse', 'multiboxse.jpg', 'multibox.png', 'multibox.html'),
