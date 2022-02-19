@@ -1,0 +1,138 @@
+diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py b/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
+index dda39dc..72fe38c 100644
+--- a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
++++ b/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
+@@ -92,13 +92,13 @@ class eAITSectionReader:
+ 
+ 	def doDump(self):
+ 		for x in self.getApplicationList():
+-			print "Name  :", x["name"]
+-			print "URL   :", x["url"]
+-			print "OrgID :", x["orgid"]
+-			print "AppID :", x["appid"]
+-			print "Control Code :", x["control"]
+-			print "Profile Code :", x["profile"]
+-			print ""
++			print("Name  :", x["name"])
++			print("URL   :", x["url"])
++			print("OrgID :", x["orgid"])
++			print("AppID :", x["appid"])
++			print("Control Code :", x["control"])
++			print("Profile Code :", x["profile"])
++			print("")
+ 
+ def unit_test(demux, pmtid, sid):
+ 	reader = eAITSectionReader(demux, pmtid, sid)
+diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
+index d7a2ab7..4b30fae 100644
+--- a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
++++ b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
+@@ -171,7 +171,7 @@ class VBHandler(VBHandlers):
+ 		if (vbcfg.g_channel_info):
+ 			try:
+ 				data = struct.pack('iiiii', int(orgid), vbcfg.g_channel_info[0], vbcfg.g_channel_info[1], vbcfg.g_channel_info[2], len(vbcfg.g_channel_info[3])) + vbcfg.g_channel_info[3]
+-			except Exception, err:
++			except Exception as err:
+ 				vbcfg.ERR(err)
+ 				return (False, None)
+ 		else:
+@@ -202,7 +202,7 @@ class VBHandler(VBHandlers):
+ 
+ 		try:
+  			data = struct.pack('i', int(offset))
+-		except Exception, err:
++		except Exception as err:
+ 			vbcfg.ERR(err)
+ 			return (False, None)
+ 
+@@ -280,7 +280,7 @@ class VBMain(Screen):
+ 		try:
+ 			if selected[1] is not None:
+ 				self._cb_hbbtv_activated(selected[1]["url"], selected[1])
+-		except Exception, ErrMsg:
++		except Exception as ErrMsg:
+ 			vbcfg.ERR(ErrMsg)
+ 
+ 	def get_autostart_application(self):
+diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py b/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
+index a6d29c8..ac09b43 100644
+--- a/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
++++ b/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
+@@ -40,7 +40,7 @@ def getPosition():
+ 			file = open("/proc/stb/fb/dst_height", "r")
+ 			dst_height = int(file.read().strip(), 16)
+ 			file.close()
+-		except Exception, Err:
++		except Exception as Err:
+ 			ERR(Err)
+ 			return None
+ 	return (dst_left, dst_width, dst_top, dst_height)
+@@ -64,7 +64,7 @@ def setPosition(params):
+ 			file = open("/proc/stb/fb/dst_height", "w")
+ 			file.write('%X' % params[3])
+ 			file.close()
+-		except Exception, Err:
++		except Exception as Err:
+ 			ERR(Err)
+ 			return
+ 
+@@ -75,14 +75,14 @@ def osd_lock():
+ 	if fileExists("/usr/bin/config"):
+ 		try:
+ 			os.system('config -c DirectFB -visible on; config -c 1 -visible off')
+-		except Exception, Err:
++		except Exception as Err:
+ 			ERR(Err)
+ 
+ def osd_unlock():
+ 	if fileExists("/usr/bin/config"):
+ 		try:
+ 			os.system('config -c 1 -visible on; config -c DirectFB -visible off')
+-		except Exception, Err:
++		except Exception as Err:
+ 			ERR(Err)
+ 
+ 	fbClass.getInstance().unlock()
+@@ -98,9 +98,9 @@ g_debug = False
+ 
+ def LogEntry(mode, string):
+ 	if g_debug:
+-		print strftime("%x %X", localtime()), "%5s [%12s]" % (mode, "Plugin"), string
++		print(strftime("%x %X", localtime()), "%5s [%12s]" % (mode, "Plugin"), string)
+ 	elif mode != "DEBUG":
+-		print "[browser]", string
++		print("[browser]", string)
+ 
+ def DEBUG(string):
+ 	LogEntry("DEBUG", string)
+diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py b/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
+index f616a2d..3a933fc 100644
+--- a/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
++++ b/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
+@@ -43,7 +43,7 @@ class VBController:
+ 			if cmd_fd is None:
+ 				raise Exception("fail to open controller file.")
+ 			os.write(cmd_fd, send_data)
+-		except Exception, err:
++		except Exception as err:
+ 			vbcfg.ERR("VBHController: %s" % err)
+ 			vbcfg.setPosition(vbcfg.g_position)
+ 			vbcfg.osd_unlock()
+@@ -99,7 +99,7 @@ class VBServerThread(threading.Thread):
+ 		result, send_packet = False,None
+ 		try:
+ 			result, send_packet = GetHandler(opcode)(result, read_packet)
+-		except Exception, ErrMsg:
++		except Exception as ErrMsg:
+ 			vbcfg.ERR(ErrMsg)
+ 		send_data = self.assamble(opcode, result, send_packet)
+ 		conn.sendall(send_data)
+@@ -118,7 +118,7 @@ class VBServerThread(threading.Thread):
+ 					try:
+ 						conn, addr = self.mSock.accept()
+ 						self.process(conn, addr)
+-					except Exception, err:
++					except Exception as err:
+ 						vbcfg.ERR("VBSServerThread: %s" % err)
+ 					finally:
+ 						if conn is not None:
