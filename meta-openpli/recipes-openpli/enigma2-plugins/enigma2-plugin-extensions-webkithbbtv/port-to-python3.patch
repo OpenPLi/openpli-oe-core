@@ -23,10 +23,38 @@ index dda39dc..72fe38c 100644
  
  def unit_test(demux, pmtid, sid):
  	reader = eAITSectionReader(demux, pmtid, sid)
+diff --git a/WebkitHbbTV/hbbtv.py b/WebkitHbbTV/hbbtv.py
+index 4ec93d0..c47fa72 100644
+--- a/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
++++ b/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
+@@ -4,8 +4,8 @@ from enigma import eTimer
+ 
+ import os, struct, vbcfg
+ 
+-from __init__ import _
+-from vbipc import VBController
++from .__init__ import _
++from .vbipc import VBController
+ 
+ class HbbTVWindow(Screen):
+ 	skin = """
 diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
 index d7a2ab7..4b30fae 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
+@@ -15,9 +15,9 @@ from enigma import eTimer, iServiceInformation, iPlayableService
+ 
+ import os, struct, vbcfg, time
+ 
+-from __init__ import _
+-from hbbtv import HbbTVWindow
+-from vbipc import VBController, VBServerThread, VBHandlers
++from .__init__ import _
++from .hbbtv import HbbTVWindow
++from .vbipc import VBController, VBServerThread, VBHandlers
+ 
+ strIsEmpty = lambda x: x is None or len(x) == 0
+ 
 @@ -171,7 +171,7 @@ class VBHandler(VBHandlers):
  		if (vbcfg.g_channel_info):
  			try:
@@ -109,6 +137,13 @@ diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py b/webkit-hbbtv-plugin/Webk
 index f616a2d..3a933fc 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
+@@ -1,5 +1,5 @@
+ import os, threading, time, socket, select, struct
+-import vbcfg
++from . import vbcfg
+ 
+ _OPCODE  = {}
+ _BUFSIZE = 4096
 @@ -43,7 +43,7 @@ class VBController:
  			if cmd_fd is None:
  				raise Exception("fail to open controller file.")
