@@ -279,13 +279,15 @@ index ea9b56d..f91dda6 100644
  		self.close()
  
  	def _virtual_keyborad_closed_cb(self, data):
-@@ -230,13 +230,13 @@ def stt_event_callback(text):
+@@ -228,15 +228,15 @@ class BBrowserLauncher(Screen):
+ global_session = None
+ def stt_event_callback(text):
  	url = "https://www.google.co.kr/search?q=" + text.replace(' ', '+')
++	global _g_locked
  	if global_session is not None and _g_locked == False:
  		dvbapp_unlock()
 -        	global _g_locked                                                                                                                                       
 -        	_g_locked = True
-+		global _g_locked
 +		_g_locked = True
  		cbcfg.g_browser = global_session.open(BBrowserLauncher, mode="chromiumos_stt", url=url)
  
