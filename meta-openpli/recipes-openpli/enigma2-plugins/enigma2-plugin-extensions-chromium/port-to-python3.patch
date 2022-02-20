@@ -73,7 +73,16 @@ diff --git a/plugin.py b/plugin.py
 index ea9b56d..f91dda6 100644
 --- a/plugin.py
 +++ b/plugin.py
-@@ -11,10 +11,10 @@ from enigma import eTimer, fbClass, eRCInput, eDVBResourceManager
+@@ -5,16 +5,18 @@ from Components.config import config
+ from Components.ActionMap import ActionMap
+ from Components.VolumeControl import VolumeControl
+ 
+-import os, cbcfg, pipc, time, subprocess
++import os, time, subprocess
++
++from . import cbcfg, pipc
+ 
+ from enigma import eTimer, fbClass, eRCInput, eDVBResourceManager
  
  from Tools.Transponder import ConvertToHumanReadable
  
