@@ -9,18 +9,22 @@ index 4cc56d5..772bcb9 100755
  PluginLanguageDomain = "BROWSER"
  
 diff --git a/cbcfg.py b/cbcfg.py
-index de1d3f1..d1341f3 100755
+index de1d3f1..42140e4 100755
 --- a/cbcfg.py
 +++ b/cbcfg.py
-@@ -55,7 +55,7 @@ class PLogger:
+@@ -55,9 +55,9 @@ class PLogger:
   
      def Log(self, level, format, argv):
          if level < self.level:
 -		return                         
-+            return                         
-         print "[" + _LVSTR[level] + "]", format % argv
-                                                       
+-        print "[" + _LVSTR[level] + "]", format % argv
+-                                                      
++            return
++        print("[" + _LVSTR[level] + "]", format % argv)
++
  def INIT(level=_ERROR):                               
+     PLogger.GetInstance().Init(level)                 
+                                                       
 diff --git a/chromium.py b/chromium.py
 index 26cd7c6..430cc7d 100755
 --- a/chromium.py
