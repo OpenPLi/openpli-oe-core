@@ -2,7 +2,13 @@ diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py b/webkit-hbbtv-plugin/
 index dda39dc..72fe38c 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
-@@ -6,9 +6,9 @@ import vbcfg
+@@ -1,14 +1,14 @@
+ import os, xml.dom.minidom, re
+ from enigma import iServiceInformation
+ 
+-import vbcfg
++from . import vbcfg
+ 
  RE_XML_ILLEGAL = u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
  				u'|' + \
  				u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' % \
@@ -15,7 +21,24 @@ index dda39dc..72fe38c 100644
  
  DUMPBIN = vbcfg.PLUGINROOT + "/dumpait"
  class eAITSectionReader:
-@@ -92,13 +92,13 @@ class eAITSectionReader:
+@@ -74,7 +74,7 @@ class eAITSectionReader:
+ 
+ 		document = ""
+ 		try:	document = os.popen(self.mCommand).read()
+-		except Exception, ErrMsg:
++		except Exception as ErrMsg:
+ 			vbcfg.ERR(ErrMsg)
+ 			return False
+ 		if len(document) == 0:
+@@ -85,20 +85,20 @@ class eAITSectionReader:
+ 		document = "<URL>" + document + "</URL>"
+ 		try:
+ 			self.mDocument = xml.dom.minidom.parseString(document)
+-		except Exception, ErrMsg:
++		except Exception as ErrMsg:
+ 			vbcfg.ERR("XML parse: %s" % ErrMsg)
+ 			return False
+ 		return True
  
  	def doDump(self):
  		for x in self.getApplicationList():
@@ -103,6 +126,15 @@ index d7a2ab7..4b30fae 100644
  			vbcfg.ERR(ErrMsg)
  
  	def get_autostart_application(self):
+@@ -300,7 +301,7 @@ class VBMain(Screen):
+ 				demux = demux if demux > '/' else '0'
+ 				vbcfg.DEBUG("demux = %s, pmtid = 0x%x, sid = 0x%x" % (demux, pmtid, sid))
+ 
+-				from aitreader import eAITSectionReader
++				from .aitreader import eAITSectionReader
+ 				reader = eAITSectionReader(demux, pmtid, sid)
+ 				if reader.doOpen(info, self.m_vuplus):
+ 					reader.doParseApplications()
 diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py b/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
 index a6d29c8..ac09b43 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
