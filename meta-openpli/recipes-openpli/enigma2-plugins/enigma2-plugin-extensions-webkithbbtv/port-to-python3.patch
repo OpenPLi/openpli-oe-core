@@ -40,12 +40,16 @@ diff --git a/WebkitHbbTV/hbbtv.py b/WebkitHbbTV/hbbtv.py
 index 4ec93d0..c47fa72 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
-@@ -4,8 +4,8 @@ from enigma import eTimer
+@@ -2,10 +2,11 @@ from Screens.Screen import Screen
  
- import os, struct, vbcfg
+ from enigma import eTimer
+ 
+-import os, struct, vbcfg
++import os, struct
  
 -from __init__ import _
 -from vbipc import VBController
++from . import vbcfg
 +from .__init__ import _
 +from .vbipc import VBController
  
@@ -55,13 +59,17 @@ diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py b/webkit-hbbtv-plugin/Web
 index d7a2ab7..4b30fae 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
-@@ -15,9 +15,9 @@ from enigma import eTimer, iServiceInformation, iPlayableService
+@@ -13,11 +13,12 @@ from Components.VolumeControl import VolumeControl
  
- import os, struct, vbcfg, time
+ from enigma import eTimer, iServiceInformation, iPlayableService
+ 
+-import os, struct, vbcfg, time
++import os, struct, time
  
 -from __init__ import _
 -from hbbtv import HbbTVWindow
 -from vbipc import VBController, VBServerThread, VBHandlers
++from . import vbcfg
 +from .__init__ import _
 +from .hbbtv import HbbTVWindow
 +from .vbipc import VBController, VBServerThread, VBHandlers
