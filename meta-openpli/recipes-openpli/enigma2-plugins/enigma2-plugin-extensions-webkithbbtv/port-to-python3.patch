@@ -2,6 +2,19 @@ diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py b/webkit-hbbtv-plugin/
 index dda39dc..72fe38c 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
+@@ -6,9 +6,9 @@ import vbcfg
+ RE_XML_ILLEGAL = u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
+ 				u'|' + \
+ 				u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' % \
+-				(unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
+-				unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
+-				unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff))
++				(chr(0xd800),chr(0xdbff),chr(0xdc00),chr(0xdfff),
++				chr(0xd800),chr(0xdbff),chr(0xdc00),chr(0xdfff),
++				chr(0xd800),chr(0xdbff),chr(0xdc00),chr(0xdfff))
+ 
+ DUMPBIN = vbcfg.PLUGINROOT + "/dumpait"
+ class eAITSectionReader:
 @@ -92,13 +92,13 @@ class eAITSectionReader:
  
  	def doDump(self):
