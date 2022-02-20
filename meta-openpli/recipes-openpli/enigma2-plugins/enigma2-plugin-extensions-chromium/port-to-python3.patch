@@ -42,6 +42,14 @@ diff --git a/pipc.py b/pipc.py
 index 48f0823..75a8ab5 100755
 --- a/pipc.py
 +++ b/pipc.py
+@@ -1,4 +1,6 @@
+-import os, threading, time, socket, select, struct, cbcfg
++import os, threading, time, socket, select, struct
++
++from . import cbcfg
+ 
+ _OPCODE  = {}
+ _BUFSIZE = 4096
 @@ -67,7 +67,7 @@ class PServerThread(threading.Thread):
              self.mSock.settimeout(self.mTimeout)
              self.mSock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
