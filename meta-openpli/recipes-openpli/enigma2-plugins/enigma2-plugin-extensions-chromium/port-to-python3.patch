@@ -34,7 +34,7 @@ index 26cd7c6..430cc7d 100755
  from enigma import eTimer
  
 -import cbcfg
-+import .cbcfg
++from . import cbcfg
  
  class ChromiumOSSettings(ConfigListScreen, Screen):
  	skin=   """
@@ -334,7 +334,7 @@ index ea9b56d..f91dda6 100644
  			cbcfg.g_browser = session.open(BBrowserLauncher, mode="chromiumos")
  	cbcfg.g_browser = session.openWithCallback(_cb_chromiumos_close, ChromiumOSWindow)
 diff --git a/youtube.py b/youtube.py
-index d719d76..ccb766c 100755
+index d719d76..e9339c2 100755
 --- a/youtube.py
 +++ b/youtube.py
 @@ -6,7 +6,7 @@ from Components.Label import Label
@@ -342,7 +342,7 @@ index d719d76..ccb766c 100755
  from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigText, getConfigListEntry
  
 -import cbcfg
-+import .cbcfg
++from . import cbcfg
  
  class YoutubeTVSettings(ConfigListScreen, Screen):
  	skin=   """
