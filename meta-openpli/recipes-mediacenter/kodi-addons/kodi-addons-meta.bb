@@ -19,6 +19,7 @@ RDEPENDS_${PN} = " \
     kodi-addon-pvr-iptvsimple \
     kodi-addon-pvr-nextpvr \
     kodi-addon-pvr-dvbviewer \
+    kodi-addon-pvr-plutotv \
     "
 
 # fixme
