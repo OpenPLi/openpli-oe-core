@@ -4,7 +4,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-20:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake gettext python3-dir python3native systemd
+inherit cmake pkgconfig gettext python3-dir python3native systemd
 
 DEPENDS += " \
             autoconf-native \
@@ -196,16 +196,13 @@ EXTRA_OECMAKE = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
-FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
-FULL_OPTIMIZATION_armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
-BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
 export HOST_SYS
 export BUILD_SYS
 export STAGING_LIBDIR
 export STAGING_INCDIR
-export ${PYTHON_DIR}
+export PYTHON_DIR
 
 export TARGET_PREFIX
 
