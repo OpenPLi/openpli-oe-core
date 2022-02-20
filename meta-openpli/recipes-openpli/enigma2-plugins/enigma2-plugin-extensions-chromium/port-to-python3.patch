@@ -211,8 +211,8 @@ index ea9b56d..f91dda6 100644
 -                self.dvbappLockTimer = eTimer()                                                
 -                self.dvbappLockTimer.timeout.get().append(self._cb_DvbappLockTimer)            
 -                self.dvbappLockTimer.start(2000)
-+		self.dvbappLockTimer = eTimer()                                                
-+		self.dvbappLockTimer.timeout.get().append(self._cb_DvbappLockTimer)            
++		self.dvbappLockTimer = eTimer()
++		self.dvbappLockTimer.timeout.get().append(self._cb_DvbappLockTimer)
 +		self.dvbappLockTimer.start(2000)
  
  		self.virtual_keyboard_data = None
@@ -304,14 +304,14 @@ index ea9b56d..f91dda6 100644
 -        if menuid == "mainmenu":                                                  
 -       	        return [(_("YouTubeTV"), start_youtubetv_main, "youtubetv", 46)]
 -        return []
-+		if menuid == "mainmenu":                                                  
++		if menuid == "mainmenu":
 +			return [(_("YouTubeTV"), start_youtubetv_main, "youtubetv", 46)]
 +		return []
  
 -def plugin_setting_youtube(session, **kwargs):                                                                                                                 
 -        session.open(YoutubeTVSettings)    
 +def plugin_setting_youtube(session, **kwargs):
-+	session.open(YoutubeTVSettings)    
++	session.open(YoutubeTVSettings)
  
  def plugin_start_chromiumos(session, **kwargs):
  	dvbapp_unlock()
