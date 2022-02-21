@@ -1,6 +1,6 @@
-From e785f5d7cd4c0b831ab31fcdab8a9ae18e20a5b3 Mon Sep 17 00:00:00 2001
+From 4f3409e185579bdd306917784f34442de3329568 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Fri, 18 Feb 2022 23:24:47 +0100
+Date: Mon, 21 Feb 2022 10:51:37 +0100
 Subject: [PATCH] 0005-stb-support-20
 
 ---
@@ -29,7 +29,7 @@ Subject: [PATCH] 0005-stb-support-20
  xbmc/utils/CMakeLists.txt                     |    5 +
  xbmc/utils/DreamboxUtils.cpp                  |  103 ++
  xbmc/utils/DreamboxUtils.h                    |   25 +
- xbmc/utils/EGLUtils.cpp                       |   21 +
+ xbmc/utils/EGLUtils.cpp                       |   24 +
  xbmc/utils/GLUtils.cpp                        |    6 +-
  xbmc/view/ViewStateSettings.cpp               |    2 +-
  xbmc/windowing/egl/CMakeLists.txt             |   62 +
@@ -43,7 +43,7 @@ Subject: [PATCH] 0005-stb-support-20
  xbmc/windowing/egl/WinSystemSTBContext.h      |   43 +
  xbmc/windowing/egl/WinSystemstb.cpp           |  546 ++++++
  xbmc/windowing/egl/WinSystemstb.h             |   79 +
- 39 files changed, 3758 insertions(+), 45 deletions(-)
+ 39 files changed, 3761 insertions(+), 45 deletions(-)
  create mode 100644 cmake/platform/linux/stb.cmake
  create mode 100644 cmake/treedata/common/stb.txt
  create mode 100644 xbmc/platform/linux/input/Keymap.h
@@ -603,7 +603,7 @@ index ebb2ccd585..3def6644af 100644
  endif()
 diff --git a/xbmc/platform/linux/input/Keymap.h b/xbmc/platform/linux/input/Keymap.h
 new file mode 100644
-index 0000000000..dda1758558
+index 0000000000..02598095dc
 --- /dev/null
 +++ b/xbmc/platform/linux/input/Keymap.h
 @@ -0,0 +1,36 @@
@@ -645,7 +645,7 @@ index 0000000000..dda1758558
 +};
 diff --git a/xbmc/platform/linux/input/LinuxInputDevices.cpp b/xbmc/platform/linux/input/LinuxInputDevices.cpp
 new file mode 100644
-index 0000000000..bf3de1fdad
+index 0000000000..760e526c4a
 --- /dev/null
 +++ b/xbmc/platform/linux/input/LinuxInputDevices.cpp
 @@ -0,0 +1,1584 @@
@@ -2535,10 +2535,10 @@ index 0000000000..3f845cbfc4
 +bool dreambox_mode_to_resolution(const char *mode, RESOLUTION_INFO *res);
 +
 diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
-index 7c5e70938f..d843f01d7f 100644
+index 7c5e70938f..e485c0201a 100644
 --- a/xbmc/utils/EGLUtils.cpp
 +++ b/xbmc/utils/EGLUtils.cpp
-@@ -22,6 +22,19 @@
+@@ -22,6 +22,22 @@
  namespace
  {
  
@@ -2554,11 +2554,14 @@ index 7c5e70938f..d843f01d7f 100644
 +#ifndef EGL_CONTEXT_PRIORITY_MEDIUM_IMG
 +#define EGL_CONTEXT_PRIORITY_MEDIUM_IMG 0x3102
 +#endif
++#ifndef TARGET_STB
++#define TARGET_STB 1
++#endif
 +
  #define X(VAL) std::make_pair(VAL, #VAL)
  std::map<EGLint, const char*> eglAttributes =
  {
-@@ -84,15 +97,18 @@ std::map<EGLenum, const char*> eglErrors =
+@@ -84,15 +100,18 @@ std::map<EGLenum, const char*> eglErrors =
  
  std::map<EGLint, const char*> eglErrorType =
  {
@@ -2577,7 +2580,7 @@ index 7c5e70938f..d843f01d7f 100644
  void EglErrorCallback(EGLenum error,
                        const char* command,
                        EGLint messageType,
-@@ -117,6 +133,7 @@ void EglErrorCallback(EGLenum error,
+@@ -117,6 +136,7 @@ void EglErrorCallback(EGLenum error,
  
    CLog::Log(LOGDEBUG, "EGL Debugging:\nError: {}\nCommand: {}\nType: {}\nMessage: {}", errorStr, command, typeStr, message);
  }
@@ -2585,7 +2588,7 @@ index 7c5e70938f..d843f01d7f 100644
  
  std::set<std::string> CEGLUtils::GetClientExtensions()
  {
-@@ -171,6 +188,7 @@ void CEGLUtils::Log(int logLevel, const std::string& what)
+@@ -171,6 +191,7 @@ void CEGLUtils::Log(int logLevel, const std::string& what)
  CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platformExtension)
  : m_platform{platform}
  {
@@ -2593,7 +2596,7 @@ index 7c5e70938f..d843f01d7f 100644
    if (CEGLUtils::HasClientExtension("EGL_KHR_debug"))
    {
      auto eglDebugMessageControl = CEGLUtils::GetRequiredProcAddress<PFNEGLDEBUGMESSAGECONTROLKHRPROC>("eglDebugMessageControlKHR");
-@@ -183,6 +201,7 @@ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platform
+@@ -183,6 +204,7 @@ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platform
  
      eglDebugMessageControl(EglErrorCallback, eglDebugAttribs);
    }
@@ -2601,7 +2604,7 @@ index 7c5e70938f..d843f01d7f 100644
  
    m_platformSupported = CEGLUtils::HasClientExtension("EGL_EXT_platform_base") && CEGLUtils::HasClientExtension(platformExtension);
  }
-@@ -400,11 +419,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
+@@ -400,11 +422,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
    if (CEGLUtils::HasExtension(m_eglDisplay, "EGL_IMG_context_priority"))
      contextAttribs.Add({{EGL_CONTEXT_PRIORITY_LEVEL_IMG, EGL_CONTEXT_PRIORITY_HIGH_IMG}});
  
@@ -2935,7 +2938,7 @@ index 0000000000..6624f23e01
 +#define EGL_QUIRK_RECREATE_DISPLAY_ON_CREATE_WINDOW (1 << 3)
 diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
 new file mode 100644
-index 0000000000..bdc31285b2
+index 0000000000..b0b6d73e70
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.cpp
 @@ -0,0 +1,397 @@
@@ -3338,7 +3341,7 @@ index 0000000000..bdc31285b2
 +
 diff --git a/xbmc/windowing/egl/EGLWrapper.h b/xbmc/windowing/egl/EGLWrapper.h
 new file mode 100644
-index 0000000000..3a73b3e5d7
+index 0000000000..aa60569767
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.h
 @@ -0,0 +1,76 @@
@@ -3420,7 +3423,7 @@ index 0000000000..3a73b3e5d7
 +};
 diff --git a/xbmc/windowing/egl/WinEventsSTB.cpp b/xbmc/windowing/egl/WinEventsSTB.cpp
 new file mode 100644
-index 0000000000..adcc8bb8ca
+index 0000000000..7e27f19187
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinEventsSTB.cpp
 @@ -0,0 +1,92 @@
@@ -3738,7 +3741,7 @@ index 0000000000..f8efc14f85
 +};
 diff --git a/xbmc/windowing/egl/WinSystemstb.cpp b/xbmc/windowing/egl/WinSystemstb.cpp
 new file mode 100644
-index 0000000000..abccc21c2a
+index 0000000000..46381f61f2
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
 @@ -0,0 +1,546 @@
@@ -4290,7 +4293,7 @@ index 0000000000..abccc21c2a
 +
 diff --git a/xbmc/windowing/egl/WinSystemstb.h b/xbmc/windowing/egl/WinSystemstb.h
 new file mode 100644
-index 0000000000..c2d176c017
+index 0000000000..e9109ace5c
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.h
 @@ -0,0 +1,79 @@

@@ -97,8 +97,7 @@ SRC_URI_append += " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/0001-EGLNativeTypeVuplus4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'mali', 'file://egl/0001-EGLNativeTypeMali.patch', '', d)} \
             \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch \
-                                                               file://define-safe-delete-macro.patch file://define-target-stb.patch', \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'file://HiPlayer.patch file://HiPlayer-Subs.patch file://defaultplayer-HiPlayer.patch', \
                                                               'file://E2Player.patch', d)} \
            "
 
