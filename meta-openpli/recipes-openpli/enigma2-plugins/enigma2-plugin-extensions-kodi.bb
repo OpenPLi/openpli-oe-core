@@ -10,14 +10,14 @@ RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport"
 RDEPENDS_${PN} = "kodi kodi-addons-meta"
 
 SRCREV = "761ec559773857d27d8be5cccd2b7e84adb8f486"
-SRC_URI = "git://github.com/oe-alliance/kodiext.git;protocol=https;branch=python3 \
+SRC_URI = "git://github.com/kueken/kodiext.git;protocol=https;branch=py3 \
 	file://advancedsettings.xml \
 "
 
 S = "${WORKDIR}/git"
 
-PV = "19+git${SRCPV}"
-PKGV = "19+git${GITPKGV}"
+PV = "20+git${SRCPV}"
+PKGV = "20+git${GITPKGV}"
 
 do_install_append() {
 	install -d ${D}${datadir}/kodi/system
