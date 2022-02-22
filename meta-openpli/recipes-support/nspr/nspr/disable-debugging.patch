@@ -1,0 +1,14 @@
+diff --git a/configure b/configure
+index 0d81aac..499e084 100755
+--- a/configure
++++ b/configure
+@@ -2503,7 +2503,7 @@ USE_MDUPDATE=
+ _MACOSX_DEPLOYMENT_TARGET=
+ _OPTIMIZE_FLAGS=-O
+ _DEBUG_FLAGS=-g
+-MOZ_DEBUG=1
++MOZ_DEBUG=
+ MOZ_OPTIMIZE=
+ OBJDIR='$(OBJDIR_NAME)'
+ OBJDIR_NAME=.
+
