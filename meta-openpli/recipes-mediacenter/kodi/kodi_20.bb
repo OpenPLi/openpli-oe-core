@@ -30,7 +30,7 @@ DEPENDS += " \
             faad2 \
             ffmpeg \
             flatbuffers \
-            fmt \	    
+            fmt \
             fstrcmp \
             fontconfig \
             fribidi \
@@ -77,7 +77,6 @@ PATCHTOOL = "git"
 SRC_URI_append += " \
            file://0001-flatbuffers-19.patch \
            file://0002-readd-Touchscreen-settings.patch \
-           file://0003-crossguid-0.2.patch \
            file://0004-shader-nopow.patch \
            file://0005-stb-support-20.patch \
            file://0007-add-winsystemfactory-windowing-init.patch \
