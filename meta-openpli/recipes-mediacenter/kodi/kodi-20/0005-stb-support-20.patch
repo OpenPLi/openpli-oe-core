@@ -1924,7 +1924,7 @@ index 0000000000..760e526c4a
 + */
 +void CLinuxInputDevices::InitAvailable()
 +{
-+  CSingleLock lock(m_devicesListLock);
++   std::unique_lock<CCriticalSection> lock(m_devicesListLock);
 +
 +  /* Close any devices that may have been initialized previously */
 +  for (size_t i = 0; i < m_devices.size(); i++)
@@ -1963,7 +1963,7 @@ index 0000000000..760e526c4a
 +
 +    snprintf(buf, 32, "/dev/input/event%d", i);
 +    {
-+      CSingleLock lock(m_devicesListLock);
++      std::unique_lock<CCriticalSection> lock(m_devicesListLock);
 +      for (size_t j = 0; j < m_devices.size(); j++)
 +      {
 +        if (m_devices[j]->GetFileName().compare(buf) == 0)
@@ -1976,7 +1976,7 @@ index 0000000000..760e526c4a
 +
 +    if (!ispresent && CheckDevice(buf))
 +    {
-+      CSingleLock lock(m_devicesListLock);
++      std::unique_lock<CCriticalSection> lock(m_devicesListLock);
 +      int deviceId = m_devices.size();
 +      CLog::Log(LOGINFO, "Found input device {}", buf);
 +      m_devices.push_back(new CLinuxInputDevice(buf, deviceId));
@@ -2174,7 +2174,7 @@ index 0000000000..760e526c4a
 +    InitAvailable();
 +    m_bReInitialize = false;
 +  }
-+  CSingleLock lock(m_devicesListLock);
++  std::unique_lock<CCriticalSection> lock(m_devicesListLock);
 +
 +  XBMC_Event event;
 +  event.type = XBMC_NOEVENT;
@@ -3986,7 +3986,7 @@ index 0000000000..46381f61f2
 +  }
 +
 +  {
-+    CSingleLock lock(m_resourceSection);
++    std::unique_lock<CCriticalSection> lock(m_resourceSection);
 +    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
 +      (*i)->OnLostDisplay();
 +  }
@@ -4007,7 +4007,7 @@ index 0000000000..46381f61f2
 +
 +  if (!m_delayDispReset)
 +  {
-+    CSingleLock lock(m_resourceSection);
++    std::unique_lock<CCriticalSection> lock(m_resourceSection);
 +    // tell any shared resources
 +    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
 +      (*i)->OnResetDisplay();
@@ -4228,13 +4228,13 @@ index 0000000000..46381f61f2
 +
 +void CWinSystemstb::Register(IDispResource *resource)
 +{
-+  CSingleLock lock(m_resourceSection);
++  std::unique_lock<CCriticalSection> lock(m_resourceSection);
 +  m_resources.push_back(resource);
 +}
 +
 +void CWinSystemstb::Unregister(IDispResource *resource)
 +{
-+  CSingleLock lock(m_resourceSection);
++  std::unique_lock<CCriticalSection> lock(m_resourceSection);
 +  std::vector<IDispResource*>::iterator i = find(m_resources.begin(), m_resources.end(), resource);
 +  if (i != m_resources.end())
 +    m_resources.erase(i);
@@ -4261,7 +4261,7 @@ index 0000000000..46381f61f2
 +  if (m_delayDispReset && m_dispResetTimer.IsTimePast())
 +  {
 +    m_delayDispReset = false;
-+    CSingleLock lock(m_resourceSection);
++    std::unique_lock<CCriticalSection> lock(m_resourceSection);
 +    // tell any shared resources
 +    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
 +      (*i)->OnResetDisplay();
