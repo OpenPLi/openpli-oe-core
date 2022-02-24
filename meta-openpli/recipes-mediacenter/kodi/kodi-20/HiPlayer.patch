@@ -812,7 +812,7 @@ index 0000000000..38b6a62a41
 --- /dev/null
 +++ b/xbmc/cores/HiPlayer/HiPlayerAudio.cpp
 @@ -0,0 +1,79 @@
-+#include "threads/SingleLock.h"
++#include <mutex>
 +#include "utils/XMLUtils.h"
 +
 +#include <fcntl.h>

@@ -268,7 +268,7 @@ index 0000000..9d4ff4e
 +#include "settings/SettingsComponent.h"
 +#include "settings/DisplaySettings.h"
 +#include "threads/SystemClock.h"
-+#include "threads/SingleLock.h"
++#include <mutex>
 +#include "windowing/WinSystem.h"
 +#include "guilib/GUIWindowManager.h"
 +#include "filesystem/MusicDatabaseFile.h"
@@ -1130,7 +1130,7 @@ index 0000000..7672a7c
 + *
 + */
 +
-+#include "threads/SingleLock.h"
++#include <mutex>
 +#include "utils/XMLUtils.h"
 +
 +#include <fcntl.h>

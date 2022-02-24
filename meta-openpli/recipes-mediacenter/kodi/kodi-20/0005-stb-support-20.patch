@@ -2266,7 +2266,7 @@ index 0000000000..23794ab925
 +#include <deque>
 +#include "windowing/XBMC_events.h"
 +#include "input/XBMC_keyboard.h"
-+#include "threads/SingleLock.h"
++#include <mutex>
 +#include "input/touch/ITouchInputHandler.h"
 +#include "input/touch/generic/IGenericTouchGestureDetector.h"
 +#include "input/touch/generic/GenericTouchInputHandler.h"
