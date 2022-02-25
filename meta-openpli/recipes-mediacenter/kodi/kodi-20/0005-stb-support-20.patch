@@ -1,6 +1,6 @@
-From 4f3409e185579bdd306917784f34442de3329568 Mon Sep 17 00:00:00 2001
+From f2c6a6d3f195c767315b4e421cb036165c2f1431 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Mon, 21 Feb 2022 10:51:37 +0100
+Date: Fri, 25 Feb 2022 12:53:00 +0100
 Subject: [PATCH] 0005-stb-support-20
 
 ---
@@ -23,7 +23,7 @@ Subject: [PATCH] 0005-stb-support-20
  xbmc/input/InputManager.cpp                   |   12 +
  xbmc/platform/linux/input/CMakeLists.txt      |    8 +-
  xbmc/platform/linux/input/Keymap.h            |   36 +
- .../linux/input/LinuxInputDevices.cpp         | 1584 +++++++++++++++++
+ .../linux/input/LinuxInputDevices.cpp         | 1583 +++++++++++++++++
  xbmc/platform/linux/input/LinuxInputDevices.h |  125 ++
  xbmc/system_gl.h                              |    3 +
  xbmc/utils/CMakeLists.txt                     |    5 +
@@ -32,18 +32,16 @@ Subject: [PATCH] 0005-stb-support-20
  xbmc/utils/EGLUtils.cpp                       |   24 +
  xbmc/utils/GLUtils.cpp                        |    6 +-
  xbmc/view/ViewStateSettings.cpp               |    2 +-
- xbmc/windowing/egl/CMakeLists.txt             |   62 +
+ xbmc/windowing/egl/CMakeLists.txt             |   13 +
  xbmc/windowing/egl/EGLNativeType.h            |  152 ++
  xbmc/windowing/egl/EGLQuirks.h                |   42 +
- xbmc/windowing/egl/EGLWrapper.cpp             |  397 +++++
+ xbmc/windowing/egl/EGLWrapper.cpp             |  396 +++++
  xbmc/windowing/egl/EGLWrapper.h               |   76 +
- xbmc/windowing/egl/WinEventsSTB.cpp           |   92 +
- xbmc/windowing/egl/WinEventsSTB.h             |   47 +
  xbmc/windowing/egl/WinSystemSTBContext.cpp    |  112 ++
  xbmc/windowing/egl/WinSystemSTBContext.h      |   43 +
- xbmc/windowing/egl/WinSystemstb.cpp           |  546 ++++++
+ xbmc/windowing/egl/WinSystemstb.cpp           |  537 ++++++
  xbmc/windowing/egl/WinSystemstb.h             |   79 +
- 39 files changed, 3761 insertions(+), 45 deletions(-)
+ 37 files changed, 3562 insertions(+), 45 deletions(-)
  create mode 100644 cmake/platform/linux/stb.cmake
  create mode 100644 cmake/treedata/common/stb.txt
  create mode 100644 xbmc/platform/linux/input/Keymap.h
@@ -56,8 +54,6 @@ Subject: [PATCH] 0005-stb-support-20
  create mode 100644 xbmc/windowing/egl/EGLQuirks.h
  create mode 100644 xbmc/windowing/egl/EGLWrapper.cpp
  create mode 100644 xbmc/windowing/egl/EGLWrapper.h
- create mode 100644 xbmc/windowing/egl/WinEventsSTB.cpp
- create mode 100644 xbmc/windowing/egl/WinEventsSTB.h
  create mode 100644 xbmc/windowing/egl/WinSystemSTBContext.cpp
  create mode 100644 xbmc/windowing/egl/WinSystemSTBContext.h
  create mode 100644 xbmc/windowing/egl/WinSystemstb.cpp
@@ -77,7 +73,7 @@ index 4192e93d67..ecaeaeaadf 100644
  						<param name="label" value="$LOCALIZE[33060]" />
  					</include>
 diff --git a/cmake/modules/FindFFMPEG.cmake b/cmake/modules/FindFFMPEG.cmake
-index 16c29e5044..5562754eb4 100644
+index b07adba153..38b664ba7b 100644
 --- a/cmake/modules/FindFFMPEG.cmake
 +++ b/cmake/modules/FindFFMPEG.cmake
 @@ -45,16 +45,22 @@ set(_postproc_ver ">=55.9.100")
@@ -553,10 +549,10 @@ index 7b76ee2d17..b662c76341 100644
    }
  
 diff --git a/xbmc/input/InputManager.cpp b/xbmc/input/InputManager.cpp
-index 274848289d..4b80c81669 100644
+index 0d4c347469..18c29c63d8 100644
 --- a/xbmc/input/InputManager.cpp
 +++ b/xbmc/input/InputManager.cpp
-@@ -579,6 +579,18 @@ bool CInputManager::HandleKey(const CKey& key)
+@@ -580,6 +580,18 @@ bool CInputManager::HandleKey(const CKey& key)
            useKeyboard = true;
        }
      }
@@ -645,10 +641,10 @@ index 0000000000..02598095dc
 +};
 diff --git a/xbmc/platform/linux/input/LinuxInputDevices.cpp b/xbmc/platform/linux/input/LinuxInputDevices.cpp
 new file mode 100644
-index 0000000000..760e526c4a
+index 0000000000..b44da1004e
 --- /dev/null
 +++ b/xbmc/platform/linux/input/LinuxInputDevices.cpp
-@@ -0,0 +1,1584 @@
+@@ -0,0 +1,1583 @@
 +/*
 + *  Portions copied from DirectFB:
 + *      Copyright (C) 2001-2009  The world wide DirectFB Open Source Community (directfb.org)
@@ -681,7 +677,6 @@ index 0000000000..760e526c4a
 +
 +#define VKEY_ENABLE (0)
 +
-+// #include "system.h"
 +#include "ServiceBroker.h"
 +
 +//#if defined(HAS_LINUX_EVENTS)
@@ -2235,7 +2230,7 @@ index 0000000000..760e526c4a
 +//#endif
 diff --git a/xbmc/platform/linux/input/LinuxInputDevices.h b/xbmc/platform/linux/input/LinuxInputDevices.h
 new file mode 100644
-index 0000000000..23794ab925
+index 0000000000..70dbf53bdd
 --- /dev/null
 +++ b/xbmc/platform/linux/input/LinuxInputDevices.h
 @@ -0,0 +1,125 @@
@@ -2379,10 +2374,10 @@ index 04c4d55c66..5179f8d636 100644
  #include <GLES2/gl2.h>
  #include <GLES2/gl2ext.h>
 diff --git a/xbmc/utils/CMakeLists.txt b/xbmc/utils/CMakeLists.txt
-index 201f2e992a..0561c6c4b6 100644
+index 904b5cc985..580c01b2ff 100644
 --- a/xbmc/utils/CMakeLists.txt
 +++ b/xbmc/utils/CMakeLists.txt
-@@ -170,6 +170,11 @@ set(HEADERS ActorProtocol.h
+@@ -172,6 +172,11 @@ set(HEADERS ActorProtocol.h
              XMLUtils.h
              XTimeUtils.h)
  
@@ -2650,7 +2645,7 @@ index c6ddcc0771..1cf1953c4a 100644
      X(GL_DEBUG_SEVERITY_MEDIUM_KHR),
      X(GL_DEBUG_SEVERITY_LOW_KHR),
 diff --git a/xbmc/view/ViewStateSettings.cpp b/xbmc/view/ViewStateSettings.cpp
-index a92bd1e834..79faef8162 100644
+index d8833934ae..0c557cece1 100644
 --- a/xbmc/view/ViewStateSettings.cpp
 +++ b/xbmc/view/ViewStateSettings.cpp
 @@ -114,7 +114,7 @@ bool CViewStateSettings::Load(const TiXmlNode *settings)
@@ -2664,70 +2659,21 @@ index a92bd1e834..79faef8162 100644
      if (pEventLogNode != NULL)
 diff --git a/xbmc/windowing/egl/CMakeLists.txt b/xbmc/windowing/egl/CMakeLists.txt
 new file mode 100644
-index 0000000000..9c195ad8c2
+index 0000000000..80e394b082
 --- /dev/null
 +++ b/xbmc/windowing/egl/CMakeLists.txt
-@@ -0,0 +1,62 @@
+@@ -0,0 +1,13 @@
 +set(SOURCES WinSystemSTBContext.cpp
 +            WinSystemstb.cpp
 +            EGLWrapper.cpp
-+            WinEventsSTB.cpp)
++            EGLNativeTypeSTB.cpp)
 +
 +set(HEADERS EGLNativeType.h
 +            EGLQuirks.h
 +            EGLWrapper.h
 +            WinSystemstb.h
 +            WinSystemSTBContext.h
-+            WinEventsSTB.h)
-+
-+if (WITH_PLATFORM STREQUAL "GB-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "dags-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "dreambox-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "dreambox-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "vuplus-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "vuplus-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "v3d-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "v3d-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "xcore-mipsel")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "nextv-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "mali-cortexa15" OR WITH_PLATFORM STREQUAL "clap-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
-+if (WITH_PLATFORM STREQUAL "edision-cortexa15")
-+  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
-+  list(APPEND HEADERS EGLNativeTypeSTB.h)
-+endif()
++            EGLNativeTypeSTB.h)
 +
 +core_add_library(windowing_egl)
 diff --git a/xbmc/windowing/egl/EGLNativeType.h b/xbmc/windowing/egl/EGLNativeType.h
@@ -2938,10 +2884,10 @@ index 0000000000..6624f23e01
 +#define EGL_QUIRK_RECREATE_DISPLAY_ON_CREATE_WINDOW (1 << 3)
 diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
 new file mode 100644
-index 0000000000..b0b6d73e70
+index 0000000000..f872e4c155
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.cpp
-@@ -0,0 +1,397 @@
+@@ -0,0 +1,396 @@
 +/*
 + *      Copyright (C) 2005-2013 Team XBMC
 + *      http://xbmc.org
@@ -2961,7 +2907,6 @@ index 0000000000..b0b6d73e70
 + *  <http://www.gnu.org/licenses/>.
 + *
 + */
-+// #include "system.h"
 +
 +#ifdef HAS_EGL
 +#include "utils/log.h"
@@ -3421,157 +3366,6 @@ index 0000000000..aa60569767
 +  CEGLNativeType *m_nativeTypes;
 +  EGLint         m_result;
 +};
-diff --git a/xbmc/windowing/egl/WinEventsSTB.cpp b/xbmc/windowing/egl/WinEventsSTB.cpp
-new file mode 100644
-index 0000000000..7e27f19187
---- /dev/null
-+++ b/xbmc/windowing/egl/WinEventsSTB.cpp
-@@ -0,0 +1,92 @@
-+/*
-+ *      Copyright (C) 2005-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+// #include "system.h"
-+
-+#include "AppInboundProtocol.h"
-+#include "WinEventsSTB.h"
-+#include "windowing/WinEvents.h"
-+#include "windowing/XBMC_events.h"
-+#include "input/XBMC_keysym.h"
-+#include "Application.h"
-+#include "input/mouse/MouseStat.h"
-+#include "utils/log.h"
-+#include "powermanagement/PowerManager.h"
-+#include "ServiceBroker.h"
-+#include "platform/linux/input/LinuxInputDevices.h"
-+
-+
-+bool CWinEventsSTB::m_initialized = false;
-+CLinuxInputDevices CWinEventsSTB::m_devices;
-+
-+
-+void CWinEventsSTB::RefreshDevices()
-+{
-+  m_devices.InitAvailable();
-+}
-+
-+bool CWinEventsSTB::IsRemoteLowBattery()
-+{
-+  return m_devices.IsRemoteLowBattery();
-+  return false;
-+}
-+
-+bool CWinEventsSTB::MessagePump()
-+{
-+  std::shared_ptr<CAppInboundProtocol> appPort = CServiceBroker::GetAppPort();
-+
-+  if (!m_initialized)
-+  {
-+    m_devices.InitAvailable();
-+    m_checkHotplug = std::unique_ptr<CLinuxInputDevicesCheckHotplugged>(new CLinuxInputDevicesCheckHotplugged(m_devices));
-+    m_initialized = true;
-+  }
-+
-+  bool ret = false;
-+  XBMC_Event event = XBMC_Event();
-+  while (1)
-+  {
-+    event = m_devices.ReadEvent();
-+    if (event.type != XBMC_NOEVENT)
-+    {
-+      if (appPort)
-+         ret |= appPort->OnEvent(event);
-+    }
-+    else
-+    {
-+      break;
-+    }
-+  }
-+
-+  return ret;
-+}
-+
-+size_t CWinEventsSTB::GetQueueSize()
-+{
-+  return m_devices.Size();
-+}
-+
-+void CWinEventsSTB::MessagePush(XBMC_Event *ev)
-+{
-+  std::shared_ptr<CAppInboundProtocol> appPort = CServiceBroker::GetAppPort();
-+  if (appPort)
-+    appPort->OnEvent(*ev);
-+}
-+
-+//#endif
-diff --git a/xbmc/windowing/egl/WinEventsSTB.h b/xbmc/windowing/egl/WinEventsSTB.h
-new file mode 100644
-index 0000000000..d1540687d3
---- /dev/null
-+++ b/xbmc/windowing/egl/WinEventsSTB.h
-@@ -0,0 +1,47 @@
-+/*
-+ *      Copyright (C) 2005-2013 Team XBMC
-+ *      http://xbmc.org
-+ *
-+ *  This Program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2, or (at your option)
-+ *  any later version.
-+ *
-+ *  This Program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with XBMC; see the file COPYING.  If not, see
-+ *  <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#pragma once
-+#include <memory>
-+#include "windowing/WinEvents.h"
-+#include "platform/linux/input/LinuxInputDevices.h"
-+#include "utils/Observer.h"
-+
-+class CWinEventsSTB : public IWinEvents
-+{
-+public:
-+  bool MessagePump() override;
-+  size_t GetQueueSize();
-+  void MessagePush(XBMC_Event *ev);
-+  void RefreshDevices();
-+  void Notify(const Observable &obs, const ObservableMessage msg)
-+  {
-+    if (msg == ObservableMessagePeripheralsChanged)
-+      RefreshDevices();
-+  }
-+  static bool IsRemoteLowBattery();
-+
-+private:
-+  friend class CWinEventsSTB;
-+  static bool m_initialized;
-+  static CLinuxInputDevices m_devices;
-+  std::unique_ptr<CLinuxInputDevicesCheckHotplugged> m_checkHotplug;
-+};
-+
 diff --git a/xbmc/windowing/egl/WinSystemSTBContext.cpp b/xbmc/windowing/egl/WinSystemSTBContext.cpp
 new file mode 100644
 index 0000000000..623de92cc6
@@ -3741,10 +3535,10 @@ index 0000000000..f8efc14f85
 +};
 diff --git a/xbmc/windowing/egl/WinSystemstb.cpp b/xbmc/windowing/egl/WinSystemstb.cpp
 new file mode 100644
-index 0000000000..46381f61f2
+index 0000000000..d2a2ec82aa
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
-@@ -0,0 +1,546 @@
+@@ -0,0 +1,537 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -3752,8 +3546,6 @@ index 0000000000..46381f61f2
 + *  SPDX-License-Identifier: GPL-2.0-or-later
 + *  See LICENSES/README.md for more information.
 + */
-+
-+// #include "system.h"
 +
 +#include "WinSystemstb.h"
 +
@@ -3774,7 +3566,6 @@ index 0000000000..46381f61f2
 +//#include "platform/linux/RBP.h"
 +#include "platform/linux/powermanagement/LinuxPowerSyscall.h"
 +#include "guilib/IDirtyRegionSolver.h"
-+#include "WinEventsSTB.h"
 +
 +#include <vector>
 +#include <float.h>
@@ -3822,8 +3613,6 @@ index 0000000000..46381f61f2
 +  }
 +
 +  CLinuxPowerSyscall::Register();
-+  m_winEvents.reset(new CWinEventsSTB());
-+  m_lirc.reset(OPTIONALS::LircRegister());
 +  m_libinput->Start();
 +}
 +
@@ -3831,10 +3620,6 @@ index 0000000000..46381f61f2
 +{
 +  delete m_egl;
 +  m_egl = nullptr;
-+ //if(m_nativeWindow)
-+  //{
-+  //  m_nativeWindow = nullptr;
-+  //}
 +}
 +
 +bool CWinSystemstb::InitWindowSystem()
