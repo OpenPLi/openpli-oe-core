@@ -2662,7 +2662,7 @@ new file mode 100644
 index 0000000000..80e394b082
 --- /dev/null
 +++ b/xbmc/windowing/egl/CMakeLists.txt
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,62 @@
 +set(SOURCES WinSystemSTBContext.cpp
 +            WinSystemstb.cpp
 +            EGLWrapper.cpp
@@ -2674,6 +2674,55 @@ index 0000000000..80e394b082
 +            WinSystemstb.h
 +            WinSystemSTBContext.h
 +            EGLNativeTypeSTB.h)
++
++if (WITH_PLATFORM STREQUAL "GB-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "dags-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "dreambox-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "dreambox-mipsel")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "vuplus-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "vuplus-mipsel")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "v3d-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "v3d-mipsel")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "xcore-mipsel")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "nextv-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "mali-cortexa15" OR WITH_PLATFORM STREQUAL "clap-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
++if (WITH_PLATFORM STREQUAL "edision-cortexa15")
++  list(APPEND SOURCES EGLNativeTypeSTB.cpp)
++  list(APPEND HEADERS EGLNativeTypeSTB.h)
++endif()
 +
 +core_add_library(windowing_egl)
 diff --git a/xbmc/windowing/egl/EGLNativeType.h b/xbmc/windowing/egl/EGLNativeType.h
