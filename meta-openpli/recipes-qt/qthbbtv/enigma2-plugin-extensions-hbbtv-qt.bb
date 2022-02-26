@@ -9,7 +9,9 @@ DEPENDS = "freetype"
 
 inherit gitpkgv
 
-SRC_URI = "git://github.com/oe-alliance/e2plugins.git;protocol=https;branch=python3"
+SRC_URI = "git://github.com/oe-alliance/e2plugins.git;protocol=https;branch=python3 \
+           file://port-to-python3.patch \
+"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
