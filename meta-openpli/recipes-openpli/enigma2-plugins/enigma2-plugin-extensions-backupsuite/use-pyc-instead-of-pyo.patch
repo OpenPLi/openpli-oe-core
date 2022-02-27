@@ -1,0 +1,125 @@
+diff --git a/plugin/backupdmm.sh b/plugin/backupdmm.sh
+index 5b08e37..1f0bd5e 100755
+--- a/plugin/backupdmm.sh
++++ b/plugin/backupdmm.sh
+@@ -307,7 +307,7 @@ if [ $SEARCH = "dm900" -o $SEARCH = "dm920" ] ; then
+ 	dd if=/dev/mmcblk0p1 of=$WORKDIR/$KERNELNAME
+ 	log "Kernel resides on /dev/mmcblk0p1" 
+ else
+-	python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/findkerneldevice.pyo
++	python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/findkerneldevice.pyc
+ 	KERNEL=`cat /sys/firmware/devicetree/base/chosen/kerneldev`
+ 	KERNELNAME=${KERNEL:11:7}.bin
+ 	echo "$KERNELNAME = STARTUP_${KERNEL:17:1}"
+diff --git a/plugin/backuphdd-dmm.sh b/plugin/backuphdd-dmm.sh
+index bc751ea..de375fd 100755
+--- a/plugin/backuphdd-dmm.sh
++++ b/plugin/backuphdd-dmm.sh
+@@ -23,7 +23,7 @@ else
+ fi
+ 
+ export LANG=$1
+-export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyo $LANG"
++export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyc $LANG"
+ export HARDDISK=1
+ echo -n $YELLOW
+ $SHOW "message20"   	#echo "Full back-up to the harddisk"
+diff --git a/plugin/backuphdd.sh b/plugin/backuphdd.sh
+index 0c2abb8..e079346 100755
+--- a/plugin/backuphdd.sh
++++ b/plugin/backuphdd.sh
+@@ -23,7 +23,7 @@ else
+ fi
+ 
+ export LANG=$1
+-export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyo $LANG"
++export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyc $LANG"
+ export HARDDISK=1
+ echo -n $YELLOW
+ $SHOW "message20"   	#echo "Full back-up to the harddisk"
+diff --git a/plugin/backupmmc-dmm.sh b/plugin/backupmmc-dmm.sh
+index f873a34..8ed9aad 100755
+--- a/plugin/backupmmc-dmm.sh
++++ b/plugin/backupmmc-dmm.sh
+@@ -23,7 +23,7 @@ else
+ fi
+ 
+ export LANG=$1
+-export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyo $LANG"
++export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyc $LANG"
+ export HARDDISK=0
+ echo -n $YELLOW
+ $SHOW "message43"   	#echo "Full back-up to the MultiMediaCard"
+diff --git a/plugin/backupmmc.sh b/plugin/backupmmc.sh
+index ca101ae..4f7f8e0 100755
+--- a/plugin/backupmmc.sh
++++ b/plugin/backupmmc.sh
+@@ -23,7 +23,7 @@ else
+ fi
+ 
+ export LANG=$1
+-export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyo $LANG"
++export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyc $LANG"
+ export HARDDISK=0
+ echo -n $YELLOW
+ $SHOW "message43"   	#echo "Full back-up to the MultiMediaCard"
+diff --git a/plugin/backupsuite.sh b/plugin/backupsuite.sh
+index f70ae47..2bfbdee 100755
+--- a/plugin/backupsuite.sh
++++ b/plugin/backupsuite.sh
+@@ -386,7 +386,7 @@ else
+ 		log "Kernel resides on $KERNEL"
+ 		dd if=/dev/kernel of=$WORKDIR/$KERNELNAME > /dev/null 2>&1
+ 	else
+-		python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/findkerneldevice.pyo
++		python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/findkerneldevice.pyc
+ 		KERNEL=`cat /sys/firmware/devicetree/base/chosen/kerneldev`
+ 		KERNELNAME=${KERNEL:11:7}.bin
+ 		echo "$KERNELNAME = STARTUP_${KERNEL:17:1}"
+diff --git a/plugin/backupusb-dmm.sh b/plugin/backupusb-dmm.sh
+index bc96274..05edc15 100755
+--- a/plugin/backupusb-dmm.sh
++++ b/plugin/backupusb-dmm.sh
+@@ -24,7 +24,7 @@ fi
+ 
+ export LANG=$1
+ export HARDDISK=0
+-export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyo $LANG"
++export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyc $LANG"
+ TARGET="XX"
+ USEDSIZE=`df -k /usr/ | grep [0-9]% | tr -s " " | cut -d " " -f 3` # size of rootfs
+ NEEDEDSPACE=$(((4*$USEDSIZE)/1024))
+diff --git a/plugin/backupusb.sh b/plugin/backupusb.sh
+index dfd8e54..33bff00 100755
+--- a/plugin/backupusb.sh
++++ b/plugin/backupusb.sh
+@@ -24,7 +24,7 @@ fi
+ 
+ export LANG=$1
+ export HARDDISK=0
+-export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyo $LANG"
++export SHOW="python $LIBDIR/enigma2/python/Plugins/Extensions/BackupSuite/message.pyc $LANG"
+ TARGET="XX"
+ USEDSIZE=`df -k /usr/ | grep [0-9]% | tr -s " " | cut -d " " -f 3` # size of rootfs
+ NEEDEDSPACE=$(((4*$USEDSIZE)/1024))
+diff --git a/plugin/whatsnew.txt b/plugin/whatsnew.txt
+index 1a0a30f..6e7bae8 100644
+--- a/plugin/whatsnew.txt
++++ b/plugin/whatsnew.txt
+@@ -88,14 +88,14 @@ Git 403-415
+ 
+ Git 396-402
+ - Ustym 4K Pro support
+-- Fix pyo files in shell scripts.
++- Fix pyc files in shell scripts.
+ - Fix Qviart Lunix3 4K, thanks to https://github.com/Dima73
+ - Mutant HD60 support
+ 
+ Git 389-395
+ - Edision OS ninopro/mio4k support
+ - Fix message.py error: No such file or directory, Thanks to https://github.com/athoik 
+-- We don't ship .py source files anymore so ipk only contains pyo compiled files.
++- We don't ship .py source files anymore so ipk only contains pyc compiled files.
+ - Zgemma I55 Plus support
+ - Octagon SF8008 support
+ - Version change from 25 to 26.
