@@ -11,6 +11,7 @@ inherit gitpkgv
 SRC_URI = " git://github.com/oe-alliance/e2openplugin-CrossEPG.git;protocol=https;branch=dev \
 			file://add-dummy-boxbranding.patch \
 			file://make-huffman-root-structure-variable-extern.patch \
+			file://fix-boxbranding-import.patch \
 			"
 
 PV = "0.9.0+gitr${SRCPV}"

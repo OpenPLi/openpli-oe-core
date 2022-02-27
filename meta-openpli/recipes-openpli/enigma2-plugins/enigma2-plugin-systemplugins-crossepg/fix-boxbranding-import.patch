@@ -1,0 +1,117 @@
+diff --git a/src/enigma2/python/crossepg_converter.py b/src/enigma2/python/crossepg_converter.py
+index a6fc4ab..d2b7622 100644
+--- a/src/enigma2/python/crossepg_converter.py
++++ b/src/enigma2/python/crossepg_converter.py
+@@ -5,7 +5,7 @@ import os
+ import sys
+ 
+ from enigma import getDesktop, eTimer
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import NumberActionMap
+ from Components.config import config
+ from Components.Label import Label
+diff --git a/src/enigma2/python/crossepg_defragmenter.py b/src/enigma2/python/crossepg_defragmenter.py
+index 8f47791..be77d27 100644
+--- a/src/enigma2/python/crossepg_defragmenter.py
++++ b/src/enigma2/python/crossepg_defragmenter.py
+@@ -5,7 +5,7 @@ import os
+ import sys
+ 
+ from enigma import getDesktop, eTimer
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import NumberActionMap
+ from Components.config import config
+ from Components.Label import Label
+diff --git a/src/enigma2/python/crossepg_downloader.py b/src/enigma2/python/crossepg_downloader.py
+index 1d47cd0..ef6d3db 100644
+--- a/src/enigma2/python/crossepg_downloader.py
++++ b/src/enigma2/python/crossepg_downloader.py
+@@ -5,7 +5,7 @@ import os
+ import sys
+ 
+ from enigma import getDesktop, iPlayableService, eTimer, eServiceReference
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import NumberActionMap
+ from Components.config import config
+ from Components.Label import Label
+diff --git a/src/enigma2/python/crossepg_importer.py b/src/enigma2/python/crossepg_importer.py
+index f75e82c..451c748 100644
+--- a/src/enigma2/python/crossepg_importer.py
++++ b/src/enigma2/python/crossepg_importer.py
+@@ -2,7 +2,7 @@ import os
+ import sys
+ 
+ from enigma import getDesktop, eTimer
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.Label import Label
+ from Components.Sources.StaticText import StaticText
+ from Components.Pixmap import Pixmap
+diff --git a/src/enigma2/python/crossepg_info.py b/src/enigma2/python/crossepg_info.py
+index 30e1da8..e4c7051 100644
+--- a/src/enigma2/python/crossepg_info.py
++++ b/src/enigma2/python/crossepg_info.py
+@@ -5,7 +5,7 @@ import os
+ import sys
+ 
+ from enigma import getDesktop
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import ActionMap
+ from Components.Button import Button
+ from Components.config import config
+diff --git a/src/enigma2/python/crossepg_loader.py b/src/enigma2/python/crossepg_loader.py
+index c0fbb6f..2449f53 100644
+--- a/src/enigma2/python/crossepg_loader.py
++++ b/src/enigma2/python/crossepg_loader.py
+@@ -11,7 +11,7 @@ import sys
+ from shutil import copyfile
+ 
+ from enigma import getDesktop, eTimer, eConsoleAppContainer
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import NumberActionMap
+ from Components.config import config
+ from Components.Label import Label
+diff --git a/src/enigma2/python/crossepg_menu.py b/src/enigma2/python/crossepg_menu.py
+index 93efc88..1e40fd2 100644
+--- a/src/enigma2/python/crossepg_menu.py
++++ b/src/enigma2/python/crossepg_menu.py
+@@ -5,7 +5,7 @@ from time import *
+ 
+ from enigma import *
+ import _enigma
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import ActionMap
+ from Components.Button import Button
+ from Components.Label import Label
+diff --git a/src/enigma2/python/crossepg_setup.py b/src/enigma2/python/crossepg_setup.py
+index 53834af..783d9ad 100644
+--- a/src/enigma2/python/crossepg_setup.py
++++ b/src/enigma2/python/crossepg_setup.py
+@@ -5,7 +5,7 @@ import os
+ from time import *
+ 
+ from enigma import getDesktop
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Components.ActionMap import NumberActionMap
+ from Components.Button import Button
+ from Components.config import KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END, KEY_0, KEY_ASCII, ConfigYesNo, ConfigSelection, ConfigClock, config, configfile
+diff --git a/src/enigma2/python/crossepglib.py b/src/enigma2/python/crossepglib.py
+index 6363448..a19348d 100644
+--- a/src/enigma2/python/crossepglib.py
++++ b/src/enigma2/python/crossepglib.py
+@@ -14,7 +14,7 @@ import traceback
+ 
+ from enigma import *
+ import _enigma
+-from boxbranding import getImageDistro
++from .boxbranding import getImageDistro
+ from Tools.Directories import crawlDirectory, pathExists, createDir
+ 
+ from . crossepg_locale import _
