@@ -214,15 +214,9 @@ do_configure_prepend() {
         sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
-INSANE_SKIP_${PN} = "rpaths already-stripped file-rdeps"
 
-FILES_${PN} = "${libdir}/kodi ${libdir}/xbmc"
-FILES_${PN} += "${bindir}/kodi ${bindir}/xbmc"
 FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
-FILES_${PN} += "${bindir}/kodi-standalone ${bindir}/xbmc-standalone ${datadir}/xsessions"
-FILES_${PN} += "${libdir}/firewalld"
-FILES_${PN}-dev = "${includedir}"
-FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
+FILES:${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
 # OpenGL builds need glxinfo, that's in mesa-demos
@@ -273,6 +267,8 @@ RRECOMMENDS_${PN}_append_libc-glibc = " \
                                         glibc-charmap-utf-8 \
                                         glibc-localedata-en-us \
                                       "
+
+INSANE_SKIP_${PN} = "rpaths already-stripped file-rdeps"
 
 # customizations should be in the BSP layers
 require kodi_20.inc
