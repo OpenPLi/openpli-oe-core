@@ -7,7 +7,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 inherit kodi-addon
 
-DEPENDS += "expat bento4"
+DEPENDS += "expat"
 RDEPENDS_${PN} += "ldd"
 RRECOMMENDS_${PN} = "kernel-module-ext2"
 
@@ -24,5 +24,7 @@ SRC_URI = "git://github.com/xbmc/inputstream.adaptive.git;protocol=https;branch=
 S = "${WORKDIR}/git"
 
 KODIADDONNAME = "inputstream.adaptive"
+
+EXTRA_OECMAKE += "-DENABLE_INTERNAL_BENTO4=ON"
 
 INSANE_SKIP_${PN} = "libdir dev-so"
