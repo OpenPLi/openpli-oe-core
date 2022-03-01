@@ -1,13 +1,17 @@
-From 5537195bb88e060a21825f3ca6d0d37a85662310 Mon Sep 17 00:00:00 2001
-From: Captain <captain.onboard@web.de>
-Date: Wed, 15 Jul 2020 21:42:24 +0200
-Subject: [PATCH 04/10] shader-nopow-19
+From faa40f0a66b91a4e596115654fab2daa3269b5fa Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Tue, 1 Mar 2022 18:06:47 +0100
+Subject: [PATCH] 0004-shader-nopow
 
+---
+ .../shaders/GLES/2.0/gles_yuv2rgb_basic.frag  | 22 +++++++++++++++++--
+ .../VideoShaders/YUV2RGBShaderGLES.cpp        |  2 ++
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 diff --git a/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag b/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag
-index ecd82b13ca4..ad12c636ec0 100644
+index d76a3b89e4..47dcd7dbbc 100644
 --- a/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag
 +++ b/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag
-@@ -62,9 +62,27 @@ void main()
+@@ -63,9 +63,27 @@ void main()
    rgb.a = m_alpha;
  
  #if defined(XBMC_COL_CONVERSION)
@@ -35,7 +39,7 @@ index ecd82b13ca4..ad12c636ec0 100644
 -  rgb.rgb = pow(rgb.rgb, vec3(m_gammaDstInv));
 +  rgb.rgb = ai * rgb.rgb*rgb.rgb + bi * rgb.rgb + ci * sqrt(rgb.rgb);
  
- #if defined(XBMC_TONE_MAPPING)
+ #if defined(KODI_TONE_MAPPING_REINHARD)
    float luma = dot(rgb.rgb, m_coefsDst);
 diff --git a/system/shaders/GLES/2.0/gles_yuv2rgb_bob.frag b/system/shaders/GLES/2.0/gles_yuv2rgb_bob.frag
 index 22d672dd140..119bab453a4 100644
@@ -78,15 +82,15 @@ index 22d672dd140..119bab453a4 100644
 -  rgb.rgb = pow(rgb.rgb, vec3(m_gammaDstInv));
 +  rgb.rgb = ai * rgb.rgb*rgb.rgb + bi * rgb.rgb + ci * sqrt(rgb.rgb);
  
- #if defined(XBMC_TONE_MAPPING)
+ #if defined(KODI_TONE_MAPPING_REINHARD)
    float luma = dot(rgb.rgb, m_coefsDst);
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp
-index 22c72d59daa..240a662c8b0 100644
+index 7282dbf65c..956107c17d 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp
-@@ -48,6 +48,8 @@ BaseYUV2RGBGLSLShader::BaseYUV2RGBGLSLShader(EShaderFormat format, AVColorPrimar
-   if (dstPrimaries != srcPrimaries)
+@@ -52,6 +52,8 @@ BaseYUV2RGBGLSLShader::BaseYUV2RGBGLSLShader(EShaderFormat format,
    {
+     m_colorConversion = true;
      m_defines += "#define XBMC_COL_CONVERSION\n";
 +    if (srcPrimaries == AVCOL_PRI_BT2020) // Only support BT2020 as input for now
 +      m_defines += "#define XBMC_COL_GAMMA_2_4\n";
