@@ -1,7 +1,7 @@
-From a14e90c53f3cb1d932034147f4685ca348d20965 Mon Sep 17 00:00:00 2001
-From: Captain <captain.onboard@web.de>
-Date: Sun, 13 Jun 2021 13:14:40 +0200
-Subject: [PATCH] HiPlayer-Subs-20
+From 06e082540bb53bf04935f27ed4d53ff29168a7ff Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Thu, 3 Mar 2022 23:33:14 +0100
+Subject: [PATCH] HiPlayer-Subs
 
 ---
  xbmc/guilib/GUIWindowManager.cpp    |  11 +++
@@ -13,20 +13,20 @@ Subject: [PATCH] HiPlayer-Subs-20
  create mode 100644 xbmc/windows/GUIWindowSubtitles.h
 
 diff --git a/xbmc/guilib/GUIWindowManager.cpp b/xbmc/guilib/GUIWindowManager.cpp
-index b55213a..943575f 100644
+index fd7b05eda9..34b98b0ac9 100644
 --- a/xbmc/guilib/GUIWindowManager.cpp
 +++ b/xbmc/guilib/GUIWindowManager.cpp
-@@ -59,6 +59,9 @@
- #include "windows/GUIWindowSplash.h"
- #include "windows/GUIWindowStartup.h"
+@@ -61,6 +61,9 @@
  #include "windows/GUIWindowSystemInfo.h"
+ 
+ #include <mutex>
 +#ifdef HAS_HIPLAYER
 +#include "windows/GUIWindowSubtitles.h"
 +#endif
  
  // Dialog includes
  #include "music/dialogs/GUIDialogMusicOSD.h"
-@@ -304,6 +307,10 @@ void CGUIWindowManager::CreateWindows()
+@@ -306,6 +309,10 @@ void CGUIWindowManager::CreateWindows()
    Add(new GAME::CDialogGameAdvancedSettings);
    Add(new GAME::CDialogGameVideoRotation);
    Add(new RETRO::CGameWindowFullScreen);
@@ -37,7 +37,7 @@ index b55213a..943575f 100644
  }
  
  bool CGUIWindowManager::DestroyWindows()
-@@ -436,6 +443,10 @@ bool CGUIWindowManager::DestroyWindows()
+@@ -438,6 +445,10 @@ bool CGUIWindowManager::DestroyWindows()
  
      DestroyWindow(WINDOW_DIALOG_PERIPHERALS);
      DestroyWindow(WINDOW_DIALOG_PERIPHERAL_SETTINGS);
@@ -49,7 +49,7 @@ index b55213a..943575f 100644
    catch (...)
    {
 diff --git a/xbmc/windows/CMakeLists.txt b/xbmc/windows/CMakeLists.txt
-index 2fe465f..f44fd3f 100644
+index 2fe465fcc2..f44fd3f751 100644
 --- a/xbmc/windows/CMakeLists.txt
 +++ b/xbmc/windows/CMakeLists.txt
 @@ -8,7 +8,8 @@ set(SOURCES GUIMediaWindow.cpp
@@ -73,7 +73,7 @@ index 2fe465f..f44fd3f 100644
  core_add_library(windows)
 diff --git a/xbmc/windows/GUIWindowSubtitles.cpp b/xbmc/windows/GUIWindowSubtitles.cpp
 new file mode 100644
-index 0000000..8e60eb6
+index 0000000000..2e92356e79
 --- /dev/null
 +++ b/xbmc/windows/GUIWindowSubtitles.cpp
 @@ -0,0 +1,144 @@
@@ -223,7 +223,7 @@ index 0000000..8e60eb6
 +}
 diff --git a/xbmc/windows/GUIWindowSubtitles.h b/xbmc/windows/GUIWindowSubtitles.h
 new file mode 100644
-index 0000000..4f9cef1
+index 0000000000..4f9cef1100
 --- /dev/null
 +++ b/xbmc/windows/GUIWindowSubtitles.h
 @@ -0,0 +1,21 @@
@@ -248,3 +248,6 @@ index 0000000..4f9cef1
 +	CGUITextLayout *m_layout;
 +	std::string m_text;
 +};
+-- 
+2.25.1
+

@@ -1,6 +1,6 @@
-From ea219cc3e0c05794a47d8d1e36333f5bd5522ebc Mon Sep 17 00:00:00 2001
+From 9176976a7bbf4eb2e1f8c6c0f19ac55713f0bab5 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Mon, 21 Feb 2022 10:47:41 +0100
+Date: Thu, 3 Mar 2022 23:23:24 +0100
 Subject: [PATCH] HiPlayer
 
 ---
@@ -16,7 +16,7 @@ Subject: [PATCH] HiPlayer
  xbmc/cores/HiPlayer/hisilicon.h               |  287 ++++
  .../playercorefactory/PlayerCoreConfig.h      |   10 +
  .../playercorefactory/PlayerCoreFactory.cpp   |   12 +
- 13 files changed, 2712 insertions(+)
+ 12 files changed, 2712 insertions(+)
  create mode 100644 xbmc/cores/HiPlayer/CMakeLists.txt
  create mode 100644 xbmc/cores/HiPlayer/HiPlayer.cpp
  create mode 100644 xbmc/cores/HiPlayer/HiPlayer.h
@@ -808,7 +808,7 @@ index 0000000000..1b1f30be4f
 +};
 diff --git a/xbmc/cores/HiPlayer/HiPlayerAudio.cpp b/xbmc/cores/HiPlayer/HiPlayerAudio.cpp
 new file mode 100644
-index 0000000000..38b6a62a41
+index 0000000000..fcdbd3a652
 --- /dev/null
 +++ b/xbmc/cores/HiPlayer/HiPlayerAudio.cpp
 @@ -0,0 +1,79 @@
@@ -2808,11 +2808,11 @@ index 5af08c2d77..ae143ea42f 100644
      {
        player = std::make_shared<CExternalPlayer>(callback);
 diff --git a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
-index 0bfb7deecd..98d09ebddc 100644
+index 65984e916e..d64a540876 100644
 --- a/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
 +++ b/xbmc/cores/playercorefactory/PlayerCoreFactory.cpp
 @@ -28,6 +28,10 @@
- 
+ #include <mutex>
  #include <sstream>
  
 +#if defined(HAS_HIPLAYER)
