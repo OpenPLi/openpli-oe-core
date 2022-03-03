@@ -20,6 +20,7 @@ RDEPENDS_${PN} = " \
     kodi-addon-pvr-nextpvr \
     kodi-addon-pvr-dvbviewer \
     kodi-addon-pvr-plutotv \
+    kodi-addon-inputstream-ffmpegdirect \
     "
 
 # fixme
