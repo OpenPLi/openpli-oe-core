@@ -18,7 +18,7 @@ inherit distutils-openplugins
 DEPENDS = "${PYTHON_PN}"
 RDEPENDS_${PN} = "${PYTHON_PN}-compression ${PYTHON_PN}-shell ${PYTHON_PN}-backports-lzma ${PYTHON_PN}-pkgutil"
 RRECOMMENDS_${PN} = "${PN}-rytec"
-PACKAGES = "${PN}-dbg ${PN}"
+PACKAGES = "${PN}-dbg ${PN} ${PN}-src"
 
 RREPLACES_${PN} = "enigma2-plugin-extensions-xmltvimport"
 RCONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport"
@@ -26,6 +26,7 @@ RCONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport"
 PLUGIN = "EPGImport"
 
 FILES_${PN} = "${libdir}/enigma2/python"
+FILES_${PN}-src = "${libdir}/enigma2/python/Plugins/Extensions/${PLUGIN}/*.py"
 FILES_${PN}-dbg = "${libdir}/enigma2/python/Plugins/Extensions/${PLUGIN}/.debug ${prefix}/src/debug"
 
 pkg_postinst_${PN}() {
