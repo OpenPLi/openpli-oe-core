@@ -14,6 +14,7 @@ SRC_URI = "git://github.com/kueken/kodiext.git;protocol=https;branch=py3 \
 	file://advancedsettings.xml \
 	file://advancedsettings-empty.xml \
 "
+include ${PYTHON_PN}-package-split.inc
 
 S = "${WORKDIR}/git"
 
@@ -27,6 +28,7 @@ do_install_append() {
 	else
 		install -m 0755 ${WORKDIR}/advancedsettings-empty.xml ${D}${datadir}/kodi/system/advancedsettings.xml
 	fi
+    	python3 -O -m compileall ${S}${libdir}/enigma2/python/
 }
 
 FILES_${PN} = " \
