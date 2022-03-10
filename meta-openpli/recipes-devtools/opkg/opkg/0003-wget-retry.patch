@@ -1,0 +1,17 @@
+diff --git a/libopkg/opkg_download_wget.c b/libopkg/opkg_download_wget.c
+index 3dec766..6cfb813 100644
+--- a/libopkg/opkg_download_wget.c
++++ b/libopkg/opkg_download_wget.c
+@@ -62,6 +62,12 @@ int opkg_download_backend(const char *src, const char *dest,
+     argv[i++] = NULL;
+     res = xsystem(argv);
+ 
++    /* do one rety if failed */
++    if (res) {
++        sleep(1);
++        res = xsystem(argv);
++    }
++
+     if (res) {
+         opkg_msg(ERROR, "Failed to download %s, wget returned %d.\n", src, res);
+         return -1;
