@@ -200,6 +200,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-tmbd \
 	enigma2-plugin-extensions-xmodem \
 	enigma2-plugin-extensions-xstreamity \
+	enigma2-plugin-extensions-jedimakerxtream \
 	enigma2-plugin-extensions-vcs \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
