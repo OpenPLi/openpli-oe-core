@@ -35,7 +35,7 @@ index 0000000000..1b4ccb3063
 + *  <http://www.gnu.org/licenses/>.
 + *
 + */
-+// #include "system.h"
++#include "system.h"
 +#include "EGLNativeTypeSTB.h"
 +#include "utils/StringUtils.h"
 +#include "platform/linux/SysfsPath.h"
@@ -48,7 +48,7 @@ index 0000000000..1b4ccb3063
 +#include <stdlib.h>
 +#include <linux/fb.h>
 +#include <sys/ioctl.h>
-+#include "system_egl.h"
++#include <EGL/egl.h>
 +
 +CEGLNativeTypeSTB::CEGLNativeTypeSTB()
 +{
@@ -156,11 +156,11 @@ index 0000000000..1b4ccb3063
 +  m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
 +  m_desktopResAll[0].fRefreshRate = 50;
 +  m_desktopResAll[0].fPixelRatio   = 1.0f;
-+  m_desktopResAll[0].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[0].strMode.c_str(), (float)50, m_desktopResAll[0].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +  m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[0].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[0]);
 +
@@ -172,11 +172,11 @@ index 0000000000..1b4ccb3063
 +  m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
 +  m_desktopResAll[1].fRefreshRate = 50;
 +  m_desktopResAll[1].fPixelRatio   = 1.0f;
-+  m_desktopResAll[1].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50, m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +  m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[1].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[1]);
 +
@@ -188,11 +188,11 @@ index 0000000000..1b4ccb3063
 +  m_desktopResAll[2].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DTB;
 +  m_desktopResAll[2].fRefreshRate = 50;
 +  m_desktopResAll[2].fPixelRatio   = 1.0f;
-+  m_desktopResAll[2].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50, m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +  m_desktopResAll[2].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[2].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[2].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[2]);
 +
@@ -204,11 +204,11 @@ index 0000000000..1b4ccb3063
 +  m_desktopResAll[3].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
 +  m_desktopResAll[3].fRefreshRate = 50;
 +  m_desktopResAll[3].fPixelRatio   = 1.0f;
-+  m_desktopResAll[3].strMode = StringUtils::Format("{:d}x{:d}", 1920, 1080);
-+  m_desktopResAll[3].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen", m_desktopResAll[3].strMode.c_str(), (float)50, m_desktopResAll[3].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[3].strMode = StringUtils::Format("%dx%d", 1920, 1080);
++  m_desktopResAll[3].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopResAll[3].strMode.c_str(), (float)50, m_desktopResAll[3].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +  m_desktopResAll[3].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[3].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[3].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[3].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[3]);
 +

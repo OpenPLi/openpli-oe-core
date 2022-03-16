@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-20:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-19:"
 
 # NOTE: this should be in the conf files in the respective BSP layers
 
@@ -24,8 +24,8 @@ SRC_URI_append_vuduo4k = " file://vuplus-fix-exception-duo4k.patch"
 SRC_URI_append_vuduo4kse = " file://vuplus-fix-exception-duo4k.patch"
 
 
-PV = "20.3+gitr${SRCPV}"
-KODIURI ?= "git://github.com/xbmc/xbmc.git;protocol=https \
+PV = "19.4+gitr${SRCPV}"
+KODIURI ?= "git://github.com/xbmc/xbmc.git;branch=Matrix;protocol=https \
 "
 
 KODIWORKDIR ?= "${WORKDIR}/git"
@@ -33,7 +33,7 @@ KODIWORKDIR ?= "${WORKDIR}/git"
 KODIPATCHES ?= ""
 KODIADDONS ?= ""
 SRC_URI = "${KODIURI} ${KODIPATCHES} ${KODIADDONS}"
-SRCREV = "b1b7c4b0ae873f456f6a6de7b46066263d47e7e2"
+SRCREV = "${AUTOREV}"
 
 S = "${KODIWORKDIR}"
 LICENSE = "GPLv2"

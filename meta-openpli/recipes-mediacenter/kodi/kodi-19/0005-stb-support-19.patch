@@ -1,7 +1,7 @@
-From 487f6879718baad38bde8520fb2f69d306f540d0 Mon Sep 17 00:00:00 2001
+From ac9c28f61c5b1c4d4aeedc2245be8aba9a9e7fdf Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Mon, 28 Feb 2022 11:44:54 +0100
-Subject: [PATCH] 0005-stb-support-20
+Date: Tue, 15 Mar 2022 12:46:31 +0100
+Subject: [PATCH] 0005-stb-support-19
 
 ---
  addons/skin.estuary/xml/Home.xml              |   2 +-
@@ -17,6 +17,7 @@ Subject: [PATCH] 0005-stb-support-20
  .../VideoShaders/CMakeLists.txt               |   1 +
  .../VideoShaders/VideoFilterShaderGLES.cpp    |   4 +
  xbmc/platform/linux/input/CMakeLists.txt      |   2 +-
+ .../platform/linux/input/LibInputKeyboard.cpp |  11 +-
  xbmc/system_gl.h                              |   3 +
  xbmc/utils/EGLUtils.cpp                       |  24 +
  xbmc/utils/GLUtils.cpp                        |   6 +-
@@ -28,9 +29,9 @@ Subject: [PATCH] 0005-stb-support-20
  xbmc/windowing/egl/EGLWrapper.h               |  76 +++
  xbmc/windowing/egl/WinSystemSTBContext.cpp    | 112 ++++
  xbmc/windowing/egl/WinSystemSTBContext.h      |  43 ++
- xbmc/windowing/egl/WinSystemstb.cpp           | 524 ++++++++++++++++++
+ xbmc/windowing/egl/WinSystemstb.cpp           | 521 ++++++++++++++++++
  xbmc/windowing/egl/WinSystemstb.h             |  75 +++
- 26 files changed, 1582 insertions(+), 30 deletions(-)
+ 27 files changed, 1589 insertions(+), 31 deletions(-)
  create mode 100644 cmake/platform/linux/stb.cmake
  create mode 100644 cmake/treedata/common/stb.txt
  create mode 100644 xbmc/windowing/egl/CMakeLists.txt
@@ -44,10 +45,10 @@ Subject: [PATCH] 0005-stb-support-20
  create mode 100644 xbmc/windowing/egl/WinSystemstb.h
 
 diff --git a/addons/skin.estuary/xml/Home.xml b/addons/skin.estuary/xml/Home.xml
-index 4192e93d67..ecaeaeaadf 100644
+index f90d63470b..82671efbf9 100644
 --- a/addons/skin.estuary/xml/Home.xml
 +++ b/addons/skin.estuary/xml/Home.xml
-@@ -1026,7 +1026,7 @@
+@@ -1046,7 +1046,7 @@
  					<align>justify</align>
  					<include content="IconButton">
  						<param name="control_id" value="804" />
@@ -118,28 +119,28 @@ index 0000000000..2606a0f999
 @@ -0,0 +1 @@
 +xbmc/windowing/egl   windowing/egl    # STB
 diff --git a/system/settings/settings.xml b/system/settings/settings.xml
-index 36b2f7fa47..7ace487dae 100755
+index b8ab2a5ee3..3d069cf775 100755
 --- a/system/settings/settings.xml
 +++ b/system/settings/settings.xml
-@@ -518,7 +518,7 @@
+@@ -503,7 +503,7 @@
            <control type="spinner" format="integer" delayed="true"/>
          </setting>
-         <setting id="subtitles.fontname" type="string" label="14089" help="36185">
+         <setting id="subtitles.font" type="string" label="14089" help="36185">
 -          <level>1</level>
 +          <level>3</level>
-           <default>DEFAULT</default>
+           <default>arial.ttf</default>
            <constraints>
-             <options>subtitlesfonts</options>
-@@ -526,7 +526,7 @@
+             <options>fonts</options>
+@@ -511,7 +511,7 @@
            <control type="list" format="string" />
          </setting>
-         <setting id="subtitles.charset" type="string" parent="subtitles.fontname" label="735" help="36189">
+         <setting id="subtitles.charset" type="string" parent="subtitles.font" label="735" help="36189">
 -          <level>1</level>
 +          <level>3</level>
            <default>DEFAULT</default>
            <constraints>
              <options>charsets</options>
-@@ -2863,7 +2863,7 @@
+@@ -2759,7 +2759,7 @@
          <setting id="audiooutput.processquality" type="integer" label="13505" help="36169">
            <requirement>HAS_AE_QUALITY_LEVELS</requirement>
            <level>2</level>
@@ -148,7 +149,7 @@ index 36b2f7fa47..7ace487dae 100755
            <constraints>
              <options>aequalitylevels</options>
            </constraints>
-@@ -2881,7 +2881,7 @@
+@@ -2777,7 +2777,7 @@
          </setting>
          <setting id="audiooutput.samplerate" type="integer" label="458" help="36523">
            <level>2</level>
@@ -157,7 +158,7 @@ index 36b2f7fa47..7ace487dae 100755
            <dependencies>
              <dependency type="visible">
                <and>
-@@ -2893,10 +2893,6 @@
+@@ -2789,10 +2789,6 @@
            <constraints>
              <options>
                <option label="34124">44100</option>
@@ -168,7 +169,7 @@ index 36b2f7fa47..7ace487dae 100755
                <option label="34129">352800</option>
                <option label="34130">384000</option>
              </options>
-@@ -3736,7 +3732,7 @@
+@@ -3581,7 +3577,7 @@
        <group id="2" label="14270">
          <setting id="locale.country" type="string" label="14271" help="36115">
            <level>0</level>
@@ -178,7 +179,7 @@ index 36b2f7fa47..7ace487dae 100755
              <options>regions</options>
            </constraints>
 diff --git a/tools/Linux/kodi.sh.in b/tools/Linux/kodi.sh.in
-index 108c0b007b..e0401b5348 100644
+index 3806ebc3c4..67780f37cd 100644
 --- a/tools/Linux/kodi.sh.in
 +++ b/tools/Linux/kodi.sh.in
 @@ -26,8 +26,11 @@ exec_prefix="@exec_prefix@"
@@ -227,7 +228,7 @@ index 108c0b007b..e0401b5348 100644
  # Check for some options used by this script
  while [ "$#" -gt "0" ]
  do
-@@ -180,13 +208,13 @@ do
+@@ -185,13 +213,13 @@ do
    CHILD=$!
    wait "${CHILD}"
    RET=$?
@@ -249,11 +250,11 @@ index 108c0b007b..e0401b5348 100644
  
  exit $RET
 diff --git a/tools/depends/target/libdvdcss/Makefile b/tools/depends/target/libdvdcss/Makefile
-index b157eee34d..789c0940f1 100644
+index a5026227c2..c7b103117a 100644
 --- a/tools/depends/target/libdvdcss/Makefile
 +++ b/tools/depends/target/libdvdcss/Makefile
-@@ -3,7 +3,7 @@ include LIBDVDCSS-VERSION
- DEPS = LIBDVDCSS-VERSION Makefile ../../download-files.include
+@@ -3,7 +3,7 @@ include DVDCSS-VERSION
+ DEPS= DVDCSS-VERSION Makefile
  
  ifeq ($(CROSS_COMPILING), yes)
 -  DEPS += ../../Makefile.include
@@ -268,14 +269,14 @@ index b157eee34d..789c0940f1 100644
 -config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
 +config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
  
- include ../../download-files.include
- all: .installed-$(PLATFORM)
+ GITREV=$(shell git ls-remote $(BASE_URL) $(VERSION) | awk '{print $$1}')
+ ifeq ($(GITREV),)
 diff --git a/tools/depends/target/libdvdnav/Makefile b/tools/depends/target/libdvdnav/Makefile
-index eca4d53f54..77b856714f 100644
+index eada58a160..38f9be520d 100644
 --- a/tools/depends/target/libdvdnav/Makefile
 +++ b/tools/depends/target/libdvdnav/Makefile
-@@ -3,11 +3,11 @@ include LIBDVDNAV-VERSION
- DEPS = LIBDVDNAV-VERSION Makefile ../../download-files.include
+@@ -3,11 +3,11 @@ include DVDNAV-VERSION
+ DEPS = DVDNAV-VERSION Makefile
  
  # configuration settings
 -config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
@@ -289,11 +290,11 @@ index eca4d53f54..77b856714f 100644
    ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
    PREFIX := $(ROOT_DIR)/dvdnav-install
 diff --git a/tools/depends/target/libdvdread/Makefile b/tools/depends/target/libdvdread/Makefile
-index 0be5f2d6f4..8e7e0b0e38 100644
+index d240953fe4..2c9100f84e 100644
 --- a/tools/depends/target/libdvdread/Makefile
 +++ b/tools/depends/target/libdvdread/Makefile
-@@ -3,11 +3,12 @@ include LIBDVDREAD-VERSION
- DEPS = LIBDVDREAD-VERSION Makefile ../../download-files.include
+@@ -3,11 +3,12 @@ include DVDREAD-VERSION
+ DEPS = DVDREAD-VERSION Makefile
  
  # configuration settings
 -config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
@@ -308,10 +309,10 @@ index 0be5f2d6f4..8e7e0b0e38 100644
    ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
    PREFIX := $(ROOT_DIR)/dvdread-install
 diff --git a/xbmc/addons/addoninfo/AddonInfoBuilder.cpp b/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
-index 09bdf193a2..091978fab6 100644
+index 1b6a9b5533..eba4772b22 100644
 --- a/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
 +++ b/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
-@@ -600,6 +600,12 @@ const char* CAddonInfoBuilder::GetPlatformLibraryName(const TiXmlElement* elemen
+@@ -582,6 +582,12 @@ const char* CAddonInfoBuilder::GetPlatformLibraryName(const TiXmlElement* elemen
  #if defined(TARGET_FREEBSD)
    libraryName = element->Attribute("library_freebsd");
    if (libraryName == nullptr)
@@ -324,7 +325,7 @@ index 09bdf193a2..091978fab6 100644
  #endif
    libraryName = element->Attribute("library_linux");
  #elif defined(TARGET_WINDOWS_DESKTOP)
-@@ -639,6 +645,12 @@ bool CAddonInfoBuilder::PlatformSupportsAddon(const AddonInfoPtr& addon)
+@@ -621,6 +627,12 @@ bool CAddonInfoBuilder::PlatformSupportsAddon(const AddonInfoPtr& addon)
  #else
      #warning no architecture dependant platform tag
  #endif
@@ -338,10 +339,10 @@ index 09bdf193a2..091978fab6 100644
      "freebsd",
  #elif defined(TARGET_LINUX)
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
-index edafa9ed0b..b094545f86 100644
+index 40aa37a9f6..e48e5b1c91 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
-@@ -47,6 +47,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
+@@ -45,6 +45,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "ios" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "tvos" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "gbm" IN_LIST CORE_PLATFORM_NAME_LC OR
@@ -350,22 +351,22 @@ index edafa9ed0b..b094545f86 100644
                         "wayland" IN_LIST CORE_PLATFORM_NAME_LC))
    list(APPEND SOURCES LinuxRendererGLES.cpp
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
-index 6b71389043..ef7a12f114 100644
+index adc3d144a2..bff6631955 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
-@@ -30,6 +30,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
+@@ -26,6 +26,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "ios" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "tvos" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "gbm" IN_LIST CORE_PLATFORM_NAME_LC OR
 +                       "stb" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "x11" IN_LIST CORE_PLATFORM_NAME_LC OR
                         "wayland" IN_LIST CORE_PLATFORM_NAME_LC))
-   list(APPEND SOURCES VideoFilterShaderGLES.cpp
+   list(APPEND SOURCES ConversionMatrix.cpp
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
-index d0b77faf5b..080decd3ba 100644
+index b2cb942f51..fe80866759 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
-@@ -103,8 +103,12 @@ ConvolutionFilterShader::ConvolutionFilterShader(ESCALINGMETHOD method)
+@@ -99,8 +99,12 @@ ConvolutionFilterShader::ConvolutionFilterShader(ESCALINGMETHOD method)
  
    if (m_floattex)
    {
@@ -391,22 +392,45 @@ index ebb2ccd585..d4d5c00574 100644
    if(LIBINPUT_FOUND)
      list(APPEND SOURCES LibInputHandler.cpp
                          LibInputKeyboard.cpp
+diff --git a/xbmc/platform/linux/input/LibInputKeyboard.cpp b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+index 0681cfc2e9..993cfe3201 100644
+--- a/xbmc/platform/linux/input/LibInputKeyboard.cpp
++++ b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+@@ -145,8 +145,17 @@ static const std::map<xkb_keysym_t, XBMCKey> xkbMap =
+   // XBMCK_REWIND clashes with XBMCK_MEDIA_REWIND
+   { XKB_KEY_XF86Phone, XBMCK_PHONE },
+   { XKB_KEY_XF86AudioPlay, XBMCK_PLAY },
+-  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE }
++  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE },
+   // XBMCK_FASTFORWARD clashes with XBMCK_MEDIA_FASTFORWARD
++  //Remotebuttons
++  { XKB_KEY_XF86AudioNext , XBMCK_MEDIA_NEXT_TRACK },
++  { XKB_KEY_XF86AudioPrev , XBMCK_MEDIA_PREV_TRACK },
++  { XKB_KEY_XF86Close, XBMCK_ESCAPE },
++  { XKB_KEY_XF86Display , XBMCK_z },
++  { XKB_KEY_XF86MenuKB, XBMCK_MENU },
++  { XKB_KEY_XF86Subtitle , XBMCK_l },
++  { XKB_KEY_XF86Sleep , XBMCK_SLEEP },
++  { XKB_KEY_XF86WWW , XBMCK_TAB }
+ };
+ } // namespace
+ 
 diff --git a/xbmc/system_gl.h b/xbmc/system_gl.h
-index 04c4d55c66..5179f8d636 100644
+index 09dce653fc..ca76b658c6 100644
 --- a/xbmc/system_gl.h
 +++ b/xbmc/system_gl.h
-@@ -27,6 +27,9 @@
- #if defined(TARGET_DARWIN)
- #include <OpenGLES/ES2/gl.h>
- #include <OpenGLES/ES2/glext.h>
-+#elif defined(TARGET_V3DNXPL)
-+#include <GLES3/gl31.h>
-+#include <GLES2/gl2ext.h>
- #else
- #include <GLES2/gl2.h>
- #include <GLES2/gl2ext.h>
+@@ -29,6 +29,9 @@
+   #if defined(TARGET_DARWIN)
+     #include <OpenGLES/ES2/gl.h>
+     #include <OpenGLES/ES2/glext.h>
++  #elif defined(TARGET_V3DNXPL)
++    #include <GLES3/gl31.h>
++    #include <GLES2/gl2ext.h>
+   #else
+     #include <GLES2/gl2.h>
+     #include <GLES2/gl2ext.h>
 diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
-index 7c5e70938f..e485c0201a 100644
+index 0d7c23891c..cd51e705bb 100644
 --- a/xbmc/utils/EGLUtils.cpp
 +++ b/xbmc/utils/EGLUtils.cpp
 @@ -22,6 +22,22 @@
@@ -475,7 +499,7 @@ index 7c5e70938f..e485c0201a 100644
  
    m_platformSupported = CEGLUtils::HasClientExtension("EGL_EXT_platform_base") && CEGLUtils::HasClientExtension(platformExtension);
  }
-@@ -400,11 +422,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
+@@ -397,11 +419,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
    if (CEGLUtils::HasExtension(m_eglDisplay, "EGL_IMG_context_priority"))
      contextAttribs.Add({{EGL_CONTEXT_PRIORITY_LEVEL_IMG, EGL_CONTEXT_PRIORITY_HIGH_IMG}});
  
@@ -490,10 +514,10 @@ index 7c5e70938f..e485c0201a 100644
    m_eglContext = eglCreateContext(m_eglDisplay, eglConfig,
                                    EGL_NO_CONTEXT, contextAttribs.Get());
 diff --git a/xbmc/utils/GLUtils.cpp b/xbmc/utils/GLUtils.cpp
-index c6ddcc0771..1cf1953c4a 100644
+index 1ef804709f..72b75cc0ce 100644
 --- a/xbmc/utils/GLUtils.cpp
 +++ b/xbmc/utils/GLUtils.cpp
-@@ -41,7 +41,7 @@ std::map<GLenum, const char*> glErrors =
+@@ -40,7 +40,7 @@ std::map<GLenum, const char*> glErrors =
  };
  
  std::map<GLenum, const char*> glErrorSource = {
@@ -502,7 +526,7 @@ index c6ddcc0771..1cf1953c4a 100644
      X(GL_DEBUG_SOURCE_API_KHR),
      X(GL_DEBUG_SOURCE_WINDOW_SYSTEM_KHR),
      X(GL_DEBUG_SOURCE_SHADER_COMPILER_KHR),
-@@ -52,7 +52,7 @@ std::map<GLenum, const char*> glErrorSource = {
+@@ -51,7 +51,7 @@ std::map<GLenum, const char*> glErrorSource = {
  };
  
  std::map<GLenum, const char*> glErrorType = {
@@ -511,7 +535,7 @@ index c6ddcc0771..1cf1953c4a 100644
      X(GL_DEBUG_TYPE_ERROR_KHR),
      X(GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_KHR),
      X(GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR_KHR),
-@@ -64,7 +64,7 @@ std::map<GLenum, const char*> glErrorType = {
+@@ -63,7 +63,7 @@ std::map<GLenum, const char*> glErrorType = {
  };
  
  std::map<GLenum, const char*> glErrorSeverity = {
@@ -521,7 +545,7 @@ index c6ddcc0771..1cf1953c4a 100644
      X(GL_DEBUG_SEVERITY_MEDIUM_KHR),
      X(GL_DEBUG_SEVERITY_LOW_KHR),
 diff --git a/xbmc/view/ViewStateSettings.cpp b/xbmc/view/ViewStateSettings.cpp
-index d8833934ae..0c557cece1 100644
+index a92bd1e834..79faef8162 100644
 --- a/xbmc/view/ViewStateSettings.cpp
 +++ b/xbmc/view/ViewStateSettings.cpp
 @@ -114,7 +114,7 @@ bool CViewStateSettings::Load(const TiXmlNode *settings)
@@ -760,7 +784,7 @@ index 0000000000..6624f23e01
 +#define EGL_QUIRK_RECREATE_DISPLAY_ON_CREATE_WINDOW (1 << 3)
 diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
 new file mode 100644
-index 0000000000..f872e4c155
+index 0000000000..ac7d1194bb
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.cpp
 @@ -0,0 +1,396 @@
@@ -791,7 +815,7 @@ index 0000000000..f872e4c155
 +#include "EGLNativeTypeSTB.h"
 +#include "EGLWrapper.h"
 +
-+#define CheckError() m_result = eglGetError(); if(m_result != EGL_SUCCESS) CLog::Log(LOGERROR, "EGL error in {}: {:x}",__FUNCTION__, m_result);
++#define CheckError() m_result = eglGetError(); if(m_result != EGL_SUCCESS) CLog::Log(LOGERROR, "EGL error in %s: %x",__FUNCTION__, m_result);
 +
 +CEGLWrapper::CEGLWrapper()
 +{
@@ -995,7 +1019,7 @@ index 0000000000..f872e4c155
 +  CheckError();
 +  if (!eglStatus || !configCount)
 +  {
-+    CLog::Log(LOGERROR, "EGL failed to populate configuration list: {:d}", eglStatus);
++    CLog::Log(LOGERROR, "EGL failed to populate configuration list: %d", eglStatus);
 +    return false;
 +  }
 +
@@ -1145,7 +1169,7 @@ index 0000000000..f872e4c155
 +  void* ext = (void*) eglGetProcAddress(function);
 +  if (!ext)
 +  {
-+    CLog::Log(LOGERROR, "EGL error in {} - cannot get proc addr of {}", __FUNCTION__, function);
++    CLog::Log(LOGERROR, "EGL error in %s - cannot get proc addr of %s", __FUNCTION__, function);
 +    return NULL;
 +  }
 +
@@ -1162,7 +1186,7 @@ index 0000000000..f872e4c155
 +
 diff --git a/xbmc/windowing/egl/EGLWrapper.h b/xbmc/windowing/egl/EGLWrapper.h
 new file mode 100644
-index 0000000000..aa60569767
+index 0000000000..3a73b3e5d7
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.h
 @@ -0,0 +1,76 @@
@@ -1192,7 +1216,7 @@ index 0000000000..aa60569767
 +#include <vector>
 +
 +#include "windowing/Resolution.h"
-+#include "system_egl.h"
++#include <EGL/egl.h>
 +class CEGLNativeType;
 +class CEGLWrapper
 +{
@@ -1411,10 +1435,10 @@ index 0000000000..f8efc14f85
 +};
 diff --git a/xbmc/windowing/egl/WinSystemstb.cpp b/xbmc/windowing/egl/WinSystemstb.cpp
 new file mode 100644
-index 0000000000..d87cafe53b
+index 0000000000..7a6379283e
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.cpp
-@@ -0,0 +1,524 @@
+@@ -0,0 +1,521 @@
 +/*
 + *  Copyright (C) 2005-2018 Team Kodi
 + *  This file is part of Kodi - https://kodi.tv
@@ -1422,6 +1446,8 @@ index 0000000000..d87cafe53b
 + *  SPDX-License-Identifier: GPL-2.0-or-later
 + *  See LICENSES/README.md for more information.
 + */
++
++#include "system.h"
 +
 +#include "WinSystemstb.h"
 +
@@ -1447,12 +1473,10 @@ index 0000000000..d87cafe53b
 +#include "EGLWrapper.h"
 +#include "EGLQuirks.h"
 +
-+#include "system_egl.h"
++#include <EGL/egl.h>
 +#include <EGL/eglplatform.h>
 +
 +using namespace KODI;
-+
-+using namespace std::chrono_literals;
 +
 +CWinSystemstb::CWinSystemstb():
 +  m_libinput(new CLibInputHandler)
@@ -1503,33 +1527,33 @@ index 0000000000..d87cafe53b
 +
 +  if (!m_egl)
 +  {
-+    CLog::Log(LOGERROR, "{}: EGL not in a good state",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: EGL not in a good state",__FUNCTION__);
 +    return false;
 +  }
 +
 +  if (!m_egl->Initialize("auto"))
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not initialize",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not initialize",__FUNCTION__);
 +    return false;
 +  }
 +
-+  CLog::Log(LOGINFO, "{}: Using EGL Implementation: {}",__FUNCTION__,m_egl->GetNativeName().c_str());
++  CLog::Log(LOGINFO, "%s: Using EGL Implementation: %s",__FUNCTION__,m_egl->GetNativeName().c_str());
 +
 +  if (!m_egl->CreateNativeDisplay())
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not get native display",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not get native display",__FUNCTION__);
 +    return false;
 +  }
 +
 +  if (!m_egl->CreateNativeWindow())
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not get native window",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not get native window",__FUNCTION__);
 +    return false;
 +  }
 +
 +  if (!m_egl->InitDisplay(&m_display))
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not create display",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not create display",__FUNCTION__);
 +    return false;
 +  }
 +
@@ -1556,7 +1580,7 @@ index 0000000000..d87cafe53b
 +
 +  if (!m_egl->ChooseConfig(m_display, configAttrs, &m_config))
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not find a compatible configuration",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not find a compatible configuration",__FUNCTION__);
 +    return false;
 +  }
 +
@@ -1628,18 +1652,15 @@ index 0000000000..d87cafe53b
 +    return true;
 +  }
 +
-+  auto delay =
-+      std::chrono::milliseconds(CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt(
-+                                    "videoscreen.delayrefreshchange") *
-+                                100);
-+  if (delay > 0ms)
++  int delay = CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt("videoscreen.delayrefreshchange");
++  if (delay > 0)
 +  {
 +    m_delayDispReset = true;
-+    m_dispResetTimer.Set(delay);
++    m_dispResetTimer.Set(delay * 100);
 +  }
 +
 +  {
-+    std::unique_lock<CCriticalSection> lock(m_resourceSection);
++    CSingleLock lock(m_resourceSection);
 +    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
 +      (*i)->OnLostDisplay();
 +  }
@@ -1654,13 +1675,13 @@ index 0000000000..d87cafe53b
 +  // (otherwise this is taken care of by InitWindowSystem())
 +  if (!CreateWindow(res))
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not create new window",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not create new window",__FUNCTION__);
 +    return false;
 +  }
 +
 +  if (!m_delayDispReset)
 +  {
-+    std::unique_lock<CCriticalSection> lock(m_resourceSection);
++    CSingleLock lock(m_resourceSection);
 +    // tell any shared resources
 +    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
 +      (*i)->OnResetDisplay();
@@ -1688,24 +1709,24 @@ index 0000000000..d87cafe53b
 +    if (m_context != EGL_NO_CONTEXT)
 +      if (!m_egl->InitDisplay(&m_display))
 +      {
-+        CLog::Log(LOGERROR, "{}: Could not reinit display",__FUNCTION__);
++        CLog::Log(LOGERROR, "%s: Could not reinit display",__FUNCTION__);
 +        return false;
 +      }
 +  }
 +
 +  if (!m_egl->CreateSurface(m_display, m_config, &m_surface))
 +  {
-+    CLog::Log(LOGINFO, "{}: Could not create a surface. Trying with a fresh Native Window.",__FUNCTION__);
++    CLog::Log(LOGINFO, "%s: Could not create a surface. Trying with a fresh Native Window.",__FUNCTION__);
 +    m_egl->DestroyNativeWindow();
 +    if (!m_egl->CreateNativeWindow())
 +    {
-+      CLog::Log(LOGERROR, "{}: Could not get native window",__FUNCTION__);
++      CLog::Log(LOGERROR, "%s: Could not get native window",__FUNCTION__);
 +      return false;
 +    }
 +
 +    if (!m_egl->CreateSurface(m_display, m_config, &m_surface))
 +    {
-+      CLog::Log(LOGERROR, "{}: Could not create surface",__FUNCTION__);
++      CLog::Log(LOGERROR, "%s: Could not create surface",__FUNCTION__);
 +      return false;
 +    }
 +  }
@@ -1713,10 +1734,10 @@ index 0000000000..d87cafe53b
 +  int width = 0, height = 0;
 +  if (!m_egl->GetSurfaceSize(m_display, m_surface, &width, &height))
 +  {
-+    CLog::Log(LOGERROR, "{}: Surface is invalid",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Surface is invalid",__FUNCTION__);
 +    return false;
 +  }
-+  CLog::Log(LOGDEBUG, "{}: Created surface of size %ix%i",__FUNCTION__, width, height);
++  CLog::Log(LOGDEBUG, "%s: Created surface of size %ix%i",__FUNCTION__, width, height);
 +
 +  EGLint contextAttrs[] =
 +  {
@@ -1726,7 +1747,7 @@ index 0000000000..d87cafe53b
 +
 +  if (!m_egl->BindAPI(EGL_OPENGL_ES_API))
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not bind %i api",__FUNCTION__, EGL_OPENGL_ES_API);
++    CLog::Log(LOGERROR, "%s: Could not bind %i api",__FUNCTION__, EGL_OPENGL_ES_API);
 +    return false;
 +  }
 +
@@ -1734,14 +1755,14 @@ index 0000000000..d87cafe53b
 +  {
 +    if (!m_egl->CreateContext(m_display, m_config, contextAttrs, &m_context))
 +    {
-+      CLog::Log(LOGERROR, "{}: Could not create context",__FUNCTION__);
++      CLog::Log(LOGERROR, "%s: Could not create context",__FUNCTION__);
 +      return false;
 +    }
 +  }
 +
 +  if (!m_egl->BindContext(m_display, m_surface, m_context))
 +  {
-+    CLog::Log(LOGERROR, "{}: Could not bind to context",__FUNCTION__);
++    CLog::Log(LOGERROR, "%s: Could not bind to context",__FUNCTION__);
 +    return false;
 +  }
 +
@@ -1752,7 +1773,7 @@ index 0000000000..d87cafe53b
 +      guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_UNION)
 +  {
 +    if (!m_egl->SurfaceAttrib(m_display, m_surface, EGL_SWAP_BEHAVIOR, EGL_BUFFER_PRESERVED))
-+      CLog::Log(LOGDEBUG, "{}: Could not set EGL_SWAP_BEHAVIOR",__FUNCTION__);
++      CLog::Log(LOGDEBUG, "%s: Could not set EGL_SWAP_BEHAVIOR",__FUNCTION__);
 +  }
 +
 +  m_bWindowCreated = true;
@@ -1789,7 +1810,7 @@ index 0000000000..d87cafe53b
 +
 +  if (!m_egl->ProbeResolutions(resolutions) || resolutions.empty())
 +  {
-+    CLog::Log(LOGWARNING, "{}: ProbeResolutions failed. Trying safe default.",__FUNCTION__);
++    CLog::Log(LOGWARNING, "%s: ProbeResolutions failed. Trying safe default.",__FUNCTION__);
 +
 +    RESOLUTION_INFO fallback;
 +    if (m_egl->GetPreferredResolution(&fallback))
@@ -1798,7 +1819,7 @@ index 0000000000..d87cafe53b
 +    }
 +    else
 +    {
-+      CLog::Log(LOGERROR, "{}: Fatal Error, GetPreferredResolution failed",__FUNCTION__);
++      CLog::Log(LOGERROR, "%s: Fatal Error, GetPreferredResolution failed",__FUNCTION__);
 +      return;
 +    }
 +  }
@@ -1825,7 +1846,7 @@ index 0000000000..d87cafe53b
 +    CServiceBroker::GetWinSystem()->GetGfxContext().ResetOverscan(resolutions[i]);
 +    CDisplaySettings::GetInstance().GetResolutionInfo(res_index) = resolutions[i];
 +
-+ /*   CLog::Log(LOGINFO, "Found resolution {:d} x {:d} for display {:d} with {:d} x {:d}{} @ {:f} Hz\n",
++ /*   CLog::Log(LOGINFO, "Found resolution %d x %d for display %d with %d x %d%s @ %f Hz\n",
 +      resolutions[i].iWidth,
 +      resolutions[i].iHeight,
 +      resolutions[i].iScreenWidth,
@@ -1849,7 +1870,7 @@ index 0000000000..d87cafe53b
 +  // swap desktop index for desktop res if available
 +  if (ResDesktop != RES_INVALID)
 +  {
-+    CLog::Log(LOGINFO, "Found ({:d}x{:d}{}@{:f}) at {:d}, setting to RES_DESKTOP at {:d}",
++    CLog::Log(LOGINFO, "Found (%dx%d%s@%f) at %d, setting to RES_DESKTOP at %d",
 +      resDesktop.iWidth, resDesktop.iHeight,
 +      resDesktop.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "",
 +      resDesktop.fRefreshRate,
@@ -1881,13 +1902,13 @@ index 0000000000..d87cafe53b
 +
 +void CWinSystemstb::Register(IDispResource *resource)
 +{
-+  std::unique_lock<CCriticalSection> lock(m_resourceSection);
++  CSingleLock lock(m_resourceSection);
 +  m_resources.push_back(resource);
 +}
 +
 +void CWinSystemstb::Unregister(IDispResource *resource)
 +{
-+  std::unique_lock<CCriticalSection> lock(m_resourceSection);
++  CSingleLock lock(m_resourceSection);
 +  std::vector<IDispResource*>::iterator i = find(m_resources.begin(), m_resources.end(), resource);
 +  if (i != m_resources.end())
 +    m_resources.erase(i);
@@ -1901,7 +1922,7 @@ index 0000000000..d87cafe53b
 +  {
 +    //m_bVSync = 0;
 +    resp = false;
-+    CLog::Log(LOGERROR, "{},Could not set egl vsync", __FUNCTION__);
++    CLog::Log(LOGERROR, "%s,Could not set egl vsync", __FUNCTION__);
 +  }
 +#ifdef HAS_IMXVPU
 +  g_IMXContext.SetVSync(enable);
@@ -1914,7 +1935,7 @@ index 0000000000..d87cafe53b
 +  if (m_delayDispReset && m_dispResetTimer.IsTimePast())
 +  {
 +    m_delayDispReset = false;
-+    std::unique_lock<CCriticalSection> lock(m_resourceSection);
++    CSingleLock lock(m_resourceSection);
 +    // tell any shared resources
 +    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
 +      (*i)->OnResetDisplay();
@@ -1941,7 +1962,7 @@ index 0000000000..d87cafe53b
 +
 diff --git a/xbmc/windowing/egl/WinSystemstb.h b/xbmc/windowing/egl/WinSystemstb.h
 new file mode 100644
-index 0000000000..38aa64c704
+index 0000000000..661b8cadef
 --- /dev/null
 +++ b/xbmc/windowing/egl/WinSystemstb.h
 @@ -0,0 +1,75 @@
@@ -1965,7 +1986,7 @@ index 0000000000..38aa64c704
 +
 +#include "cores/AudioEngine/Engines/ActiveAE/ActiveAE.h"
 +
-+#include "system_egl.h"
++#include <EGL/egl.h>
 +#include "utils/EGLUtils.h"
 +
 +class CEGLWrapper;
@@ -2014,7 +2035,7 @@ index 0000000000..38aa64c704
 +  int m_displayHeight;
 +
 +  bool m_delayDispReset;
-+  XbmcThreads::EndTime<> m_dispResetTimer;
++  XbmcThreads::EndTime m_dispResetTimer;
 +
 +  CCriticalSection m_resourceSection;
 +  std::vector<IDispResource*> m_resources;

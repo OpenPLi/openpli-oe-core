@@ -1,32 +1,32 @@
-From 06e082540bb53bf04935f27ed4d53ff29168a7ff Mon Sep 17 00:00:00 2001
-From: kueken <ohnemailadresse@arcor.de>
-Date: Thu, 3 Mar 2022 23:33:14 +0100
-Subject: [PATCH] HiPlayer-Subs
+From 5d8983a7bd2224c39344d917fc573b2608043534 Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Thu, 16 Jul 2020 10:04:58 +0200
+Subject: [PATCH] HiPlayer-Subs-19
 
 ---
  xbmc/guilib/GUIWindowManager.cpp    |  11 +++
  xbmc/windows/CMakeLists.txt         |   6 +-
- xbmc/windows/GUIWindowSubtitles.cpp | 144 ++++++++++++++++++++++++++++
+ xbmc/windows/GUIWindowSubtitles.cpp | 145 ++++++++++++++++++++++++++++
  xbmc/windows/GUIWindowSubtitles.h   |  21 ++++
- 4 files changed, 180 insertions(+), 2 deletions(-)
+ 4 files changed, 181 insertions(+), 2 deletions(-)
  create mode 100644 xbmc/windows/GUIWindowSubtitles.cpp
  create mode 100644 xbmc/windows/GUIWindowSubtitles.h
 
 diff --git a/xbmc/guilib/GUIWindowManager.cpp b/xbmc/guilib/GUIWindowManager.cpp
-index fd7b05eda9..34b98b0ac9 100644
+index 350fbdd089..3f1531a3ac 100644
 --- a/xbmc/guilib/GUIWindowManager.cpp
 +++ b/xbmc/guilib/GUIWindowManager.cpp
-@@ -61,6 +61,9 @@
+@@ -58,6 +58,9 @@
+ #include "windows/GUIWindowSplash.h"
+ #include "windows/GUIWindowStartup.h"
  #include "windows/GUIWindowSystemInfo.h"
- 
- #include <mutex>
 +#ifdef HAS_HIPLAYER
 +#include "windows/GUIWindowSubtitles.h"
 +#endif
  
  // Dialog includes
  #include "music/dialogs/GUIDialogMusicOSD.h"
-@@ -306,6 +309,10 @@ void CGUIWindowManager::CreateWindows()
+@@ -299,6 +302,10 @@ void CGUIWindowManager::CreateWindows()
    Add(new GAME::CDialogGameAdvancedSettings);
    Add(new GAME::CDialogGameVideoRotation);
    Add(new RETRO::CGameWindowFullScreen);
@@ -37,7 +37,7 @@ index fd7b05eda9..34b98b0ac9 100644
  }
  
  bool CGUIWindowManager::DestroyWindows()
-@@ -438,6 +445,10 @@ bool CGUIWindowManager::DestroyWindows()
+@@ -429,6 +436,10 @@ bool CGUIWindowManager::DestroyWindows()
  
      DestroyWindow(WINDOW_DIALOG_PERIPHERALS);
      DestroyWindow(WINDOW_DIALOG_PERIPHERAL_SETTINGS);
@@ -73,10 +73,10 @@ index 2fe465fcc2..f44fd3f751 100644
  core_add_library(windows)
 diff --git a/xbmc/windows/GUIWindowSubtitles.cpp b/xbmc/windows/GUIWindowSubtitles.cpp
 new file mode 100644
-index 0000000000..2e92356e79
+index 0000000000..429b3ad531
 --- /dev/null
 +++ b/xbmc/windows/GUIWindowSubtitles.cpp
-@@ -0,0 +1,144 @@
+@@ -0,0 +1,145 @@
 +#include "GUIWindowSubtitles.h"
 +#include "Util.h"
 +#include "utils/log.h"
@@ -90,7 +90,7 @@ index 0000000000..2e92356e79
 +
 +//#include <inttypes.h>
 +
-+static UTILS::COLOR::Color colors[8] = { UTILS::COLOR::YELLOW,
++static UTILS::Color colors[8] = { UTILS::COLOR::YELLOW,
 +                                  UTILS::COLOR::WHITE,
 +                                  UTILS::COLOR::BLUE,
 +                                  UTILS::COLOR::BRIGHTGREEN,
@@ -165,28 +165,29 @@ index 0000000000..2e92356e79
 +void CGUIWindowSubtitles::Process(unsigned int currentTime, CDirtyRegionList &dirtyregions)
 +{
 +	const std::shared_ptr<CSettings> settings = CServiceBroker::GetSettingsComponent()->GetSettings();
++	if (CUtil::IsUsingTTFSubtitles())
 +	{
 +		RESOLUTION_INFO pal(720, 576, 0);
-+		CGUIFont *subtitle_font = g_fontManager.LoadTTF(StringUtils::Format("__subs{:d}{:x}{:x}{}__",
-+			settings->GetInt(CSettings::SETTING_SUBTITLES_FONTSIZE),
++		CGUIFont *subtitle_font = g_fontManager.LoadTTF(StringUtils::Format("__subs%d%x%x%s__",
++			settings->GetInt(CSettings::SETTING_SUBTITLES_HEIGHT),
 +			settings->GetInt(CSettings::SETTING_SUBTITLES_COLOR),
 +			settings->GetInt(CSettings::SETTING_SUBTITLES_STYLE),
-+			settings->GetString(CSettings::SETTING_SUBTITLES_FONTNAME))
-+			, settings->GetString(CSettings::SETTING_SUBTITLES_FONTNAME)
++			settings->GetString(CSettings::SETTING_SUBTITLES_FONT))
++			, settings->GetString(CSettings::SETTING_SUBTITLES_FONT)
 +			, colors[settings->GetInt(CSettings::SETTING_SUBTITLES_COLOR)]
 +			, 0
-+			, settings->GetInt(CSettings::SETTING_SUBTITLES_FONTSIZE)
++			, settings->GetInt(CSettings::SETTING_SUBTITLES_HEIGHT)
 +			, settings->GetInt(CSettings::SETTING_SUBTITLES_STYLE)
 +			, false, 1.0f, 1.0f, &pal, true);
-+		CGUIFont *border_font   = g_fontManager.LoadTTF(StringUtils::Format("__subsborder{:d}{:x}{:x}{}__",
-+			settings->GetInt(CSettings::SETTING_SUBTITLES_FONTSIZE),
++		CGUIFont *border_font   = g_fontManager.LoadTTF(StringUtils::Format("__subsborder%d%x%x%s__",
++			settings->GetInt(CSettings::SETTING_SUBTITLES_HEIGHT),
 +			settings->GetInt(CSettings::SETTING_SUBTITLES_COLOR),
 +			settings->GetInt(CSettings::SETTING_SUBTITLES_STYLE),
-+			settings->GetString(CSettings::SETTING_SUBTITLES_FONTNAME))
-+			, settings->GetString(CSettings::SETTING_SUBTITLES_FONTNAME)
++			settings->GetString(CSettings::SETTING_SUBTITLES_FONT))
++			, settings->GetString(CSettings::SETTING_SUBTITLES_FONT)
 +			, 0xFF000000
 +			, 0
-+			, settings->GetInt(CSettings::SETTING_SUBTITLES_FONTSIZE)
++			, settings->GetInt(CSettings::SETTING_SUBTITLES_HEIGHT)
 +			, settings->GetInt(CSettings::SETTING_SUBTITLES_STYLE)
 +			, true, 1.0f, 1.0f, &pal, true);
 +		if (subtitle_font && border_font)
@@ -249,5 +250,5 @@ index 0000000000..4f9cef1100
 +	std::string m_text;
 +};
 -- 
-2.25.1
+2.27.0.windows.1
 

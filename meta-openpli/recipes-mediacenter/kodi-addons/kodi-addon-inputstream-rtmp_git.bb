@@ -11,9 +11,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "${AUTOREV}"
 
-PV = "20.1.0+gitr${SRCPV}"
+PV = "19.4.0+gitr${SRCPV}"
 
-KODIADDONBRANCH = "Nexus"
+KODIADDONBRANCH = "Matrix"
 
 SRC_URI = "git://github.com/xbmc/inputstream.rtmp.git;protocol=https;branch=${KODIADDONBRANCH}"
 

@@ -1,21 +1,21 @@
-From 4b449b0c7b87e91f175ae7910a93db2ad0c6528b Mon Sep 17 00:00:00 2001
+From f58ca739d4c99e8348333dee5ef4b4c17770ae6a Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Thu, 27 Jan 2022 10:44:11 +0100
-Subject: [PATCH] EGLNativeTypeSTB
+Date: Thu, 27 Jan 2022 10:36:03 +0100
+Subject: [PATCH] EGLNativeTypeSTB-gb4k
 
 ---
- xbmc/windowing/egl/EGLNativeTypeSTB.cpp | 177 +++++++++++++++++++++
- xbmc/windowing/egl/EGLNativeTypeSTB.h   |  60 +++++++
- 2 files changed, 237 insertions(+)
+ xbmc/windowing/egl/EGLNativeTypeSTB.cpp | 190 +++++++++++++++++++++++++
+ xbmc/windowing/egl/EGLNativeTypeSTB.h   |  56 ++++++++
+ 2 files changed, 246 insertions(+)
  create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.cpp
  create mode 100644 xbmc/windowing/egl/EGLNativeTypeSTB.h
 
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.cpp b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
 new file mode 100644
-index 0000000000..214e51f9ad
+index 0000000000..9b223293a3
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
-@@ -0,0 +1,175 @@
+@@ -0,0 +1,190 @@
 +/*
 + *      Copyright (C) 2011-2012 Team XBMC
 + *      http://www.xbmc.org
@@ -35,24 +35,32 @@ index 0000000000..214e51f9ad
 + *  <http://www.gnu.org/licenses/>.
 + *
 + */
-+// #include "system.h"
++#include "system.h"
 +#include "EGLNativeTypeSTB.h"
 +#include "utils/StringUtils.h"
++#include "platform/linux/SysfsPath.h"
 +#include "utils/log.h"
 +#include "guilib/gui3d.h"
-+//#include "linux/DllBCM.h"
++//#include "platform/linux/DllBCM.h"
 +#include "windowing/GraphicContext.h"
 +
 +#include <stdio.h>
-+#include <malloc.h>
-+#include <assert.h>
-+#include <stdio.h>
 +#include <stdlib.h>
-+#include <string.h>
++#include <linux/fb.h>
++#include <sys/ioctl.h>
++#include <EGL/egl.h>
 +
 +#include "gles_init.h"
 +
-+using namespace std;
++CEGLNativeTypeSTB::CEGLNativeTypeSTB()
++{
++  m_nativeDisplay = NULL;
++  m_nativeWindow = NULL;
++}
++
++CEGLNativeTypeSTB::~CEGLNativeTypeSTB()
++{
++}  
 +
 +bool CEGLNativeTypeSTB::CheckCompatibility()
 +{
@@ -69,16 +77,19 @@ index 0000000000..214e51f9ad
 +
 +bool CEGLNativeTypeSTB::CreateNativeDisplay()
 +{
++
 +  GLES_Native_Init();
 +  return GLES_Native_CreateNativeDisplay(&m_nativeDisplay);
++
 +}
 +
 +bool CEGLNativeTypeSTB::CreateNativeWindow()
 +{
++
 +  m_nativeWindow = GLES_Native_CreateNativeWindow();
-+  if (!m_nativeWindow) {
-+	  return false;
-+  }
++   
++  if (!m_nativeWindow)
++    return false;
 +  return true;
 +}
 +
@@ -92,17 +103,19 @@ index 0000000000..214e51f9ad
 +{
 +  *nativeWindow = (XBNativeWindowType*) &m_nativeWindow;
 +  return true;
-+}  
++}
 +
 +bool CEGLNativeTypeSTB::DestroyNativeDisplay()
 +{
-+  GLES_Native_DestroyNativeDisplay();
-+  return true;
++	GLES_Native_DestroyNativeDisplay();
++    m_nativeDisplay = NULL;
++    return true;
 +}
 +
 +bool CEGLNativeTypeSTB::DestroyNativeWindow()
 +{
 +  GLES_Native_DestroyNativeWindow();
++  m_nativeWindow = NULL;
 +  return true;
 +}
 +
@@ -129,12 +142,13 @@ index 0000000000..214e51f9ad
 +  m_desktopResAll[0].iScreenHeight= 720;
 +  m_desktopResAll[0].dwFlags      =  D3DPRESENTFLAG_PROGRESSIVE;
 +  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen", m_desktopRes.strMode.c_str(), (float)50,m_desktopRes.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[0].fPixelRatio = 1.0f;
++  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopRes.strMode.c_str(), (float)50,m_desktopRes.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +
 +  m_desktopResAll[0].iSubtitles   = (int)(0.965 * m_desktopResAll[0].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[0].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[0]);
 +
@@ -147,12 +161,13 @@ index 0000000000..214e51f9ad
 +
 +  m_desktopResAll[1].dwFlags      |=  D3DPRESENTFLAG_MODE3DSBS;
 +  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50,m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[1].fPixelRatio = 1.0f;
++  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), (float)50,m_desktopResAll[1].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +
 +  m_desktopResAll[1].iSubtitles   = (int)(0.965 * m_desktopResAll[1].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[1].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[1]);
 +
@@ -165,17 +180,18 @@ index 0000000000..214e51f9ad
 +
 +  m_desktopResAll[2].dwFlags      |=  D3DPRESENTFLAG_MODE3DTB;
 +  m_desktopResAll[2].fRefreshRate = 50;
-+  m_desktopResAll[2].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[2].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50,m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++  m_desktopResAll[2].fPixelRatio = 1.0f;
++  m_desktopResAll[2].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[2].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DTB", m_desktopResAll[2].strMode.c_str(), (float)50,m_desktopResAll[2].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
 +
 +  m_desktopResAll[2].iSubtitles   = (int)(0.965 * m_desktopResAll[2].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[2].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[2].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[2]);
 +
 +  m_desktopRes = m_desktopResAll[0];
-+
++  
 +  return true;
 +}
 +
@@ -187,16 +203,15 @@ index 0000000000..214e51f9ad
 +
 +bool CEGLNativeTypeSTB::ShowWindow(bool show)
 +{
-+  return false;
++  GLES_Native_ShowWindow(m_nativeWindow, show);
++  return true;
 +}
-+
-+
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.h b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 new file mode 100644
-index 0000000000..9f0ff93dea
+index 0000000000..ecf78813d0
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.h
-@@ -0,0 +1,60 @@
+@@ -0,0 +1,56 @@
 +#pragma once
 +
 +/*
@@ -227,13 +242,9 @@ index 0000000000..9f0ff93dea
 +class CEGLNativeTypeSTB : public CEGLNativeType
 +{
 +public:
-+  CEGLNativeTypeSTB()
-+  {
-+	  m_nativeWindow = 0;
-+	  m_nativeDisplay = 0;
-+  };
-+  virtual ~CEGLNativeTypeSTB() {};
-+  virtual std::string GetNativeName() const { return "vuplus"; };
++  CEGLNativeTypeSTB();
++  virtual ~CEGLNativeTypeSTB();
++  virtual std::string GetNativeName() const { return "GB"; };
 +  virtual bool  CheckCompatibility();
 +  virtual void  Initialize();
 +  virtual void  Destroy();

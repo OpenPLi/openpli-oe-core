@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://src/util/XMLUtils.cpp;beginline=2;endline=18;md5=dae8
 
 DEPENDS = "libtinyxml kodi"
 
-PV = "20.3.0"
+PV = "19.4.0"
 
 SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/xbmc/kodi-platform.git;protocol=https \

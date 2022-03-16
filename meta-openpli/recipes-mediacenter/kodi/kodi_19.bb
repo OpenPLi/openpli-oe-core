@@ -1,10 +1,9 @@
 SUMMARY = "Kodi Media Center"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-20:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-19:"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake pkgconfig gettext python3-dir python3native systemd
+inherit cmake gettext python3-dir python3native systemd
 
 DEPENDS += " \
             autoconf-native \
@@ -23,10 +22,13 @@ DEPENDS += " \
             zip-native \
             \
             avahi \
+            boost \
             bzip2 \
             crossguid \
             curl \
             dcadec \
+            enca \
+            expat \
             faad2 \
             ffmpeg \
             flatbuffers \
@@ -41,7 +43,10 @@ DEPENDS += " \
             libbluray \
             libcdio \
             libcec \
-            libdvdnav libdvdcss libdvdread \
+            libdvdnav \
+            libdvdcss \
+            libdvdread \
+            libudfread \
             libinput \
             libmicrohttpd \
             libmms \
@@ -52,12 +57,13 @@ DEPENDS += " \
             libsamplerate0 \
             libssh \
             libtinyxml \
+            libusb1 \
             libxkbcommon \
             libxml2 \
             libxslt \
             lzo \
             mpeg2dec \
-            ${PYTHON_PN} \
+            python3 \
             rapidjson \
             samba \
             spdlog \
@@ -66,6 +72,7 @@ DEPENDS += " \
             udev \
             virtual/egl \
             wavpack \
+            yajl \
             zlib \
            "
 
@@ -77,8 +84,9 @@ PATCHTOOL = "git"
 SRC_URI_append += " \
            file://0001-flatbuffers-19.patch \
            file://0002-readd-Touchscreen-settings.patch \
+           file://0003-crossguid-0.2.patch \
            file://0004-shader-nopow.patch \
-           file://0005-stb-support-20.patch \
+           file://0005-stb-support-19.patch \
            file://0007-add-winsystemfactory-windowing-init.patch \
            file://0008-adapt-window-system-registration.patch \
             \
@@ -111,31 +119,30 @@ ACCEL_x86-64 = "vaapi vdpau"
 
 WINDOWSYSTEM ?= "stb"
 
-PACKAGECONFIG ??= "${ACCEL} ${WINDOWSYSTEM} pulseaudio lcms lto \
+APPRENDERSYSTEM ?= "gles"
+PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} pulseaudio lcms lto \
                             ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} \
                             ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', 'openglesv2', d)}"
 
 # Core windowing system choices
 
+PACKAGECONFIG[x11] = "-DCORE_PLATFORM_NAME=x11,,libxinerama libxmu libxrandr libxtst glew"
 PACKAGECONFIG[gbm] = "-DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles,,"
 PACKAGECONFIG[stb] = "-DCORE_PLATFORM_NAME=stb,,"
 PACKAGECONFIG[raspberrypi] = "-DCORE_PLATFORM_NAME=rbpi,,userland"
 PACKAGECONFIG[amlogic] = "-DCORE_PLATFORM_NAME=aml,,"
-PACKAGECONFIG[wayland] = "-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles,,wayland wayland-native waylandpp waylandpp-native"
-PACKAGECONFIG[x11] = "-DCORE_PLATFORM_NAME=x11,,libxinerama libxmu libxrandr libxtst glew"
+PACKAGECONFIG[wayland] = "-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles,,wayland waylandpp"
 
 # Features
 
 PACKAGECONFIG[opengl] = "-DENABLE_OPENGL=ON,,"
 PACKAGECONFIG[openglesv2] = "-DENABLE_GLES=ON,,virtual/egl"
-PACKAGECONFIG[dvdcss] = "-DENABLE_DVDCSS=ON,-DENABLE_DVDCSS=OFF"
-PACKAGECONFIG[lirc] = ",,lirc"
+PACKAGECONFIG[bluetooth] = ",,bluez5"
+PACKAGECONFIG[lcms] = ",,lcms"
 PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
-PACKAGECONFIG[samba] = ",,samba"
-PACKAGECONFIG[lcms] = ",,lcms"
 
 # Compilation tunes
 
@@ -146,25 +153,24 @@ PACKAGECONFIG[testing] = "-DENABLE_TESTING=ON,-DENABLE_TESTING=0FF,googletest"
 LDFLAGS += "${TOOLCHAIN_OPTIONS}"
 LDFLAGS_append_mipsarch = " -latomic -lpthread"
 LDFLAGS_append_arm = " -lpthread"
-
-EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
-EXTRA_OECMAKE_append_mipselarch = " -DWITH_ARCH=${TARGET_ARCH}"
-
-#| cmake/scripts/common/Platform.cmake:11 (message):
-#|   You need to decide whether you want to use GL- or GLES-based rendering.
-#|   Please set APP_RENDER_SYSTEM to either "gl" or "gles".
-#|   For embedded systems you will usually want to use "gles".
-
-KODI_OPENGL_STANDARD ?= "gles"
+EXTRA_OECMAKE:append:mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 
 # Allow downloads during internals build
 do_compile[network] = "1"
 
+KODI_DISABLE_INTERNAL_LIBRARIES = " \
+  -DENABLE_INTERNAL_CROSSGUID=OFF \
+  -DENABLE_INTERNAL_FLATBUFFERS=OFF \
+  -DENABLE_INTERNAL_FMT=OFF \
+  -DENABLE_INTERNAL_FSTRCMP=0 \
+  -DENABLE_INTERNAL_RapidJSON=OFF \
+  -DENABLE_INTERNAL_FFMPEG=OFF \
+"
+
 EXTRA_OECMAKE = " \
     ${KODI_ARCH} \
-    -DAPP_RENDER_SYSTEM=${KODI_OPENGL_STANDARD} \
-    \
     ${KODI_DISABLE_INTERNAL_LIBRARIES} \
+    -DAPP_RENDER_SYSTEM=${APPRENDERSYSTEM} \
     \
     -DNATIVEPREFIX=${STAGING_DIR_NATIVE}${prefix} \
     -DJava_JAVA_EXECUTABLE=/usr/bin/java \
@@ -178,6 +184,7 @@ EXTRA_OECMAKE = " \
     -DNFS_INCLUDE_DIR=${STAGING_INCDIR} \
     -DSHAIRPLAY_INCLUDE_DIR=${STAGING_INCDIR} \
     \
+    -DENABLE_AIRTUNES=ON \
     -DENABLE_OPTICAL=OFF \
     -DENABLE_DVDCSS=OFF \
     -DENABLE_DEBUGFISSION=OFF \
@@ -195,6 +202,9 @@ EXTRA_OECMAKE = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
+FULL_OPTIMIZATION:armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
+FULL_OPTIMIZATION:armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
+BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
 export HOST_SYS
@@ -214,8 +224,9 @@ do_configure_prepend() {
         sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
+INSANE_SKIP_${PN} = "rpaths already-stripped file-rdeps"
 
-FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
+FILES:${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
 FILES:${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
@@ -268,7 +279,7 @@ RRECOMMENDS_${PN}_append_libc-glibc = " \
                                         glibc-localedata-en-us \
                                       "
 
-INSANE_SKIP_${PN} = "rpaths already-stripped file-rdeps"
 
 # customizations should be in the BSP layers
-require kodi_20.inc
+require kodi_19.inc
+PACKAGE_ARCH = "${MACHINE_ARCH}"

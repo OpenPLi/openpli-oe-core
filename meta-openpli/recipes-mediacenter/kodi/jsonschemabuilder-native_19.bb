@@ -1,6 +1,6 @@
 SUMMARY = "Kodi json schema builder"
 
-require kodi_20.inc
+require kodi_19.inc
 inherit autotools-brokensep gettext native
 
 KODIWORKDIR = "${WORKDIR}/git/tools/depends/native/JsonSchemaBuilder/src"

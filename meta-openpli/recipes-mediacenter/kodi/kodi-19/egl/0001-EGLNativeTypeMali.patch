@@ -36,7 +36,7 @@ index 0000000000..2b39d2fbaa
 + *
 + */
 +#include "EGLNativeTypeSTB.h"
-+#include "system_egl.h"
++#include <EGL/egl.h>
 +#include "utils/log.h"
 +
 +#include <linux/fb.h>

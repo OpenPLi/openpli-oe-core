@@ -35,9 +35,9 @@ index 0000000000..e517ae8d61
 + *  <http://www.gnu.org/licenses/>.
 + *
 + */
-+#include "system_egl.h"
++#include <EGL/egl.h>
 +
-+// #include "system.h"
++#include "system.h"
 +#include "EGLNativeTypeSTB.h"
 +#include "utils/StringUtils.h"
 +#include "utils/log.h"
@@ -137,11 +137,11 @@ index 0000000000..e517ae8d61
 +  m_desktopResAll[0].iScreenHeight= 720;
 +  m_desktopResAll[0].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE;
 +  m_desktopResAll[0].fRefreshRate = 50;
-+  m_desktopResAll[0].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[0].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen", m_desktopRes.strMode.c_str(), 50., "");
++  m_desktopResAll[0].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[0].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen", m_desktopRes.strMode.c_str(), 50., "");
 +  m_desktopResAll[0].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[0].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[0].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[0].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[0]);
 +
@@ -152,11 +152,11 @@ index 0000000000..e517ae8d61
 +  m_desktopResAll[1].iScreenHeight= 720;
 +  m_desktopResAll[1].dwFlags      = D3DPRESENTFLAG_PROGRESSIVE | D3DPRESENTFLAG_MODE3DSBS;
 +  m_desktopResAll[1].fRefreshRate = 50;
-+  m_desktopResAll[1].strMode = StringUtils::Format("{:d}x{:d}", 1280, 720);
-+  m_desktopResAll[1].strMode = StringUtils::Format("{} @ {:.2f}{} - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), 50., "");
++  m_desktopResAll[1].strMode = StringUtils::Format("%dx%d", 1280, 720);
++  m_desktopResAll[1].strMode = StringUtils::Format("%s @ %.2f%s - Full Screen 3DSBS", m_desktopResAll[1].strMode.c_str(), 50., "");
 +  m_desktopResAll[1].iSubtitles   = static_cast<int>(0.965 * m_desktopResAll[1].iHeight);
 +
-+  CLog::Log(LOGDEBUG, "EGL initial desktop resolution {}\n", m_desktopResAll[1].strMode.c_str());
++  CLog::Log(LOGDEBUG, "EGL initial desktop resolution %s\n", m_desktopResAll[1].strMode.c_str());
 +
 +  resolutions.push_back(m_desktopResAll[1]);
 +
