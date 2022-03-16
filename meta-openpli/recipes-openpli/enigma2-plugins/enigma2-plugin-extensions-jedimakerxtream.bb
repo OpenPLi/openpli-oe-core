@@ -5,12 +5,14 @@ HOMEPAGE = "https://github.com/kiddac/Jedi_Maker_Xtream"
 
 DEPENDS += "${PYTHON_PN}-backports-lzma"
 
+include ${PYTHON_PN}-package-split.inc
+
 inherit gitpkgv allarch
 
 SRCREV="${AUTOREV}"
 
-PV = "6.12+git${SRCPV}"
-PKGV = "6.12+git${GITPKGV}"
+PV = "6.21+git${SRCPV}"
+PKGV = "6.21+git${GITPKGV}"
 
 SRC_URI = "git://github.com/kiddac/Jedi_Maker_Xtream.git;protocol=https"
 
@@ -24,6 +26,7 @@ do_install () {
 	install -d ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream
 	cp -rf ${S}/JediMakerXtream//etc/enigma2/jediplaylists/* ${D}/${sysconfdir}/enigma2/jediplaylists/
 	cp -rf ${S}/JediMakerXtream/usr/lib/enigma2/python/Plugins/Extensions/JediMakerXtream/* ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream/
+    python3 -m compileall -b ${D}
 }
 
 pkg_preinst_${PN} () {
