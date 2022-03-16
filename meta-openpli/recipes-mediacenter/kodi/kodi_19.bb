@@ -226,7 +226,7 @@ do_configure_prepend() {
 
 INSANE_SKIP_${PN} = "rpaths already-stripped file-rdeps"
 
-FILES:${PN} += "${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
+FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
 FILES:${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
