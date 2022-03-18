@@ -56,6 +56,7 @@ OPTIONAL_PACKAGES += " \
 	autofs \
 	autossh \
 	ccid \
+	cronie \
 	ctorrent \
 	cups \
 	davfs2 \
