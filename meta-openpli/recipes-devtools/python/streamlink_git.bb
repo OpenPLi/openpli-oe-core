@@ -6,7 +6,6 @@ LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=381ff91bf309000e0ec58dafe27a97b0"
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core \
-	${PYTHON_PN}-backports-functools-lru-cache \
 	${PYTHON_PN}-ctypes \
 	${PYTHON_PN}-isodate \
 	${PYTHON_PN}-pycountry \
