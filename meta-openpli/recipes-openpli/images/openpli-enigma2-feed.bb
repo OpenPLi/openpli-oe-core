@@ -121,6 +121,7 @@ OPTIONAL_PACKAGES += " \
 	${PYTHON_PN}-js2py \
 	${PYTHON_PN}-pyexecjs \
 	${PYTHON_PN}-beautifulsoup4 \
+	${PYTHON_PN}-compat2 \
 	${PYTHON_PN}-future \
 	${PYTHON_PN}-futures \
 	${PYTHON_PN}-pycryptodome \
