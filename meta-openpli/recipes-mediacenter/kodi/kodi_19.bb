@@ -88,7 +88,6 @@ SRC_URI_append += " \
            file://0004-shader-nopow.patch \
            file://0005-stb-support-19.patch \
            file://0007-add-winsystemfactory-windowing-init.patch \
-           file://0008-adapt-window-system-registration.patch \
             \
            "
 
@@ -98,7 +97,7 @@ SRC_URI_append += " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/0001-EGLNativeTypeV3DNXPL.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'edision-cortexa15', 'file://egl/0001-EGLNativeTypeEdision.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'xcore-mipsel', 'file://egl/0001-EGLNativeTypeV3D.patch', '', d)} \
-            ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', 'file://egl/0001-EGLNativeTypeNexTV.patch', '', d)} \
+            ${@bb.utils.contains('MACHINE_FEATURES', 'nextv-cortexa15', 'file://egl/0001-EGLNativeTypeDags.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'GB-cortexa15', 'file://egl/0001-EGLNativeTypeV3D-gb4k.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-mipsel', 'file://egl/0001-EGLNativeTypeVuplus.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'vuplus-cortexa15', 'file://egl/0001-EGLNativeTypeVuplus4k.patch', '', d)} \

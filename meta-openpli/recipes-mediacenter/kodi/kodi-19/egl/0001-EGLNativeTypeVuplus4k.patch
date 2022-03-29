@@ -8,7 +8,7 @@ new file mode 100644
 index 0000000000..214e51f9ad
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
-@@ -0,0 +1,173 @@
+@@ -0,0 +1,175 @@
 +/*
 + *      Copyright (C) 2011-2012 Team XBMC
 + *      http://www.xbmc.org
@@ -42,6 +42,7 @@ index 0000000000..214e51f9ad
 +#include <stdio.h>
 +#include <stdlib.h>
 +#include <string.h>
++
 +#include "KodiGLESPL.h"
 +
 +using namespace std;
@@ -181,6 +182,7 @@ index 0000000000..214e51f9ad
 +{
 +  return false;
 +}
++
 +
 diff --git a/xbmc/windowing/egl/EGLNativeTypeSTB.h b/xbmc/windowing/egl/EGLNativeTypeSTB.h
 new file mode 100644
