@@ -15,7 +15,7 @@ new file mode 100644
 index 0000000000..1b4ccb3063
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLNativeTypeSTB.cpp
-@@ -0,0 +1,336 @@
+@@ -0,0 +1,337 @@
 +/*
 + *      Copyright (C) 2011-2012 Team XBMC
 + *      http://www.xbmc.org
@@ -95,7 +95,7 @@ index 0000000000..1b4ccb3063
 +  nativeWindow.stretch = false;
 +  nativeWindow.clientID = 0;
 +  nativeWindow.zOrder = 0;
-+
++  
 +  m_nativeWindow = NXPL_CreateNativeWindowEXT(&nativeWindow);
 +  if (!m_nativeWindow)
 +    return false;
