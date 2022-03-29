@@ -1,19 +1,3 @@
-SRC_URI_IGNORED = " \
-			file://0001-ifupdown-support-post-up-pre-down-hooks.patch \
-			file://0002-ifupdown-code-shrink.patch \
-			file://0003-ifupdown-remove-interface-from-state_list-if-iface_u.patch \
-			file://0004-ifupdown-support-metric-for-static-default-gw.patch \
-			file://0005-ifupdown-improve-compatibility-with-Debian.patch \
-			file://0006-get_linux_version_code-don-t-fail-on-3.0-foo.patch"
-
-SRC_URI_IGNORED += " \
-			file://0001-work-around-linux-ext2_fs.h-breakage.patch \
-			file://0002-Create-and-use-our-own-copy-of-linux-ext2_fs.h.patch \
-			file://0003-Drop-include-bb_linux_ext2_fs.h-use-existing-e2fspro.patch \
-			file://0001-nandwrite-add-OOB-support.patch \
-			file://0001-Revert-ip-fix-ip-oneline-a.patch \
-			"
-
 SRC_URI += " \
 			file://mount_single_uuid.patch \
 			file://inetd \
