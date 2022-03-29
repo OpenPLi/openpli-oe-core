@@ -4,12 +4,14 @@ DEPENDS = "python"
 PRIORITY = "optional"
 LICENSE = "GPLv2+"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/python-yenc:"
+
 LIC_FILES_CHKSUM = "file://COPYING;md5=5858eb949cc6db7a2879a5eb38b3423a"
 
 SRCNAME = "yenc"
 PR = "ml1"
 
-SRC_URI = "http://www.golug.it/pub/yenc/${SRCNAME}-${PV}.tar.gz"
+SRC_URI = "file://${SRCNAME}-${PV}.tar.gz"
 S = "${WORKDIR}/${SRCNAME}-${PV}"
 
 inherit distutils
