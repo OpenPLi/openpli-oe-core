@@ -5,9 +5,10 @@ RDEPENDS_${PN} = "${PYTHON_PN}-html"
 inherit gitpkgv
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 
 require conf/license/license-gplv2.inc
+
 require openplugins-distutils.inc
 
 FILES_${PN} += "${sysconfdir}/enigma2/Foreca"
