@@ -14,6 +14,11 @@ do_install() {
 
 SRC_URI_append = " file://fix-temperature-url.patch"
 
+# Just a quick hack to "compile" the python parts.
+do_compile_append() {
+    python3 -O -m compileall ${S}
+}
+
 pkg_postrm_${PN}() {
     rm -rf ${libdir}/enigma2/python/Plugins/Extensions/HetWeer
 }
