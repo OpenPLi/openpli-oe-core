@@ -29,7 +29,7 @@ index 10ecbc3..a68fd5e 100644
 +enum FlashModeTypeEnum kernel_flash_mode;
 +enum FlashModeTypeEnum rootfs_flash_mode;
 +
- const char ofgwrite_version[] = "4.6.0";
+ const char ofgwrite_version[] = "4.6.1";
  int flash_kernel  = 0;
  int flash_rootfs  = 0;
 diff --git a/ofgwrite.h b/ofgwrite.h
