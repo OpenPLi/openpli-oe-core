@@ -14,12 +14,11 @@ SRC_URI = "git://github.com/kueken/kodiext.git;protocol=https;branch=py3 \
 	file://advancedsettings.xml \
 	file://advancedsettings-empty.xml \
 "
-include ${PYTHON_PN}-package-split.inc
 
 S = "${WORKDIR}/git"
 
-PV = "20+git${SRCPV}"
-PKGV = "20+git${GITPKGV}"
+PV = "19+git${SRCPV}"
+PKGV = "19+git${GITPKGV}"
 
 do_install_append() {
 	install -d ${D}${datadir}/kodi/system
@@ -31,6 +30,28 @@ do_install_append() {
     	python3 -O -m compileall ${S}${libdir}/enigma2/python/
 }
 
+inherit python3-dir python3native
+
+FILES:${PN}-src += " \
+    ${PYTHON_SITEPACKAGES_DIR}/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/*/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/*/*/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*/*/*.py \
+    ${libdir}/${PYTHON_DIR}/*.py \
+    ${libdir}/${PYTHON_DIR}/*/*.py \
+    ${libdir}/${PYTHON_DIR}/*/*/*.py \
+    ${libdir}/${PYTHON_DIR}/*/*/*/*.py \
+    ${libdir}/${PYTHON_DIR}/*/*/*/*/*.py \
+    ${libdir}/${PYTHON_DIR}/*/*/*/*/*/*.py \
+    ${libdir}/enigma2/python/*.py \
+    ${libdir}/enigma2/python/*/*.py \
+    ${libdir}/enigma2/python/*/*/*.py \
+    ${libdir}/enigma2/python/*/*/*/*.py \
+    ${libdir}/enigma2/python/*/*/*/*/*.py \
+    ${libdir}/enigma2/python/*/*/*/*/*/*.py \
+    "
 FILES_${PN} = " \
     ${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext \
