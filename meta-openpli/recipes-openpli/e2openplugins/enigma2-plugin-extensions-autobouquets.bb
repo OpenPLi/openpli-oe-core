@@ -45,3 +45,11 @@ do_install() {
     install -m 644 ${S}/locale/ru/LC_MESSAGES/*.* ${D_FILES_PN}/locale/ru/LC_MESSAGES
 }
 
+pkg_postrm_${PN() {
+    #!/bin/sh
+
+    echo "Removing ${PN}"
+    rm -rf ${FILES_${PN}} > /dev/null 2>&1
+
+    exit 0
+}
