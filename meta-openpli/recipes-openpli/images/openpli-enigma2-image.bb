@@ -81,7 +81,7 @@ IMAGE_INSTALL += " \
 	${@bb.utils.contains_any('MACHINE', 'vusolo2 vuduo2 vusolose vuzero vuuno4k vuuno4kse vuzero4k vuultimo4k vusolo4k vuduo4k vuduo4kse', 'vuplus-tuner-turbo2', '', d)} \
 	${@bb.utils.contains_any('MACHINE', 'vuuno4kse vuultimo4k vuduo4k vuduo4kse', 'vuplus-hdmi-in-helper', '', d)} \
 	\
-	${@bb.utils.contains_any('MACHINE', 'galaxy4k lunix3-4k gbquad4k gbue4k vuuno4k vuuno4kse vusolo4k vuultimo4k vuduo4k vuduo4kse', 'enigma2-plugin-systemplugins-fastchannelchange', '', d)} \
+	${@bb.utils.contains_any('MACHINE', 'vuuno4k vuuno4kse vusolo4k vuultimo4k vuduo4k vuduo4kse', 'enigma2-plugin-systemplugins-fastchannelchange', '', d)} \
 	\
 	${@bb.utils.contains_any('MACHINE', 'gbquad4k gbue4k', 'kernel-module-88xxau', '', d)} \
 	${@bb.utils.contains_any('MACHINE', 'gbquad4k gbue4k', 'enigma2-plugin-systemplugins-wirelesslan', '', d)} \
