@@ -28,6 +28,7 @@ IMAGE_INSTALL = "\
 	openssh-sftp-server \
 	opkg \
 	util-linux-mount \
+	util-linux-blkid \
 	packagegroup-base \
 	packagegroup-core-boot \
 	parted \
