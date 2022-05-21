@@ -4,7 +4,8 @@ HOMEPAGE = "http://videolan.org"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM="file://COPYING;md5=435ed639f84d4585d93824e7da3d85da"
 
-DEPENDS = "libxml2"
+DEPENDS = "libaacs libdca libdvdcss libxml2"
+RDEPENDS_${PN} = "libaacs libdca libdvdcss"
 
 # make the origin overridable from OE config, for local mirroring
 SRC_ORIGIN ?= "gitsm://code.videolan.org/videolan/libbluray.git;protocol=https"
