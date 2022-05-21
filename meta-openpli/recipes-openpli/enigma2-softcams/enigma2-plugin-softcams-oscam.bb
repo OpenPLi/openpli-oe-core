@@ -9,8 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
-#SRC_URI = "git://github.com/OpenVisionE2/oscam.git;protocol=https"
-SRC_URI = "git://repo.or.cz/oscam.git;protocol=https"
+SRC_URI = "git://github.com/OpenVisionE2/oscam.git;protocol=https"
 
 DEPENDS = "libusb openssl"
 RRECOMMENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
