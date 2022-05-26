@@ -6,9 +6,9 @@ diff --git a/plugin/controllers/models/owibranding.py b/plugin/controllers/model
 index 7a179175..49a3a26f 100644
 --- a/plugin/controllers/models/owibranding.py
 +++ b/plugin/controllers/models/owibranding.py
-@@ -128,9 +128,7 @@ def getAllInfo():
- 	model = "unknown"
+@@ -141,9 +141,7 @@ def getAllInfo():
  	procmodel = "unknown"
+ 	grabpip = 0
  	lcd = 0
 -	orgdream = 0
 -	if tpmloaded:
