@@ -56,6 +56,7 @@ OPTIONAL_PACKAGES += " \
 	autofs \
 	autossh \
 	ccid \
+	cronie \
 	ctorrent \
 	cups \
 	davfs2 \
@@ -97,6 +98,7 @@ OPTIONAL_PACKAGES += " \
 	ndisc6 \
 	net-snmp \
 	net-tools \
+	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
 	perl \
 	phodav \
 	ntfs-3g \
@@ -181,6 +183,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-managerautofs \
 	enigma2-plugin-extensions-hdmitest \
 	enigma2-plugin-extensions-moviemanager \
+	enigma2-plugin-extensions-subssupport \
 	enigma2-plugin-extensions-sundtekcontrolcenter \
 	enigma2-plugin-extensions-ts-sateditor \
 	enigma2-plugin-systemplugins-crossepg \
@@ -213,6 +216,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbs", "enigma2-plugin-systemplugins-satscan" , "", d)} \
 	enigma2-plugin-extensions-backupsuite \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
+	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo2', 'enigma2-plugin-drivers-dvb-usb-turbo2', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
