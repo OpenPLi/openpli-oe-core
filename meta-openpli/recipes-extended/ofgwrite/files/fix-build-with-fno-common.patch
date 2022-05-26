@@ -1,6 +1,6 @@
 --- a/ofgwrite.c
 +++ b/ofgwrite.c
-@@ -14,6 +14,28 @@
+@@ -14,6 +14,29 @@
  #include <unistd.h>
  #include <errno.h>
  
@@ -12,6 +12,7 @@
 +char kernel_device[1000];
 +char rootfs_device[1000];
 +char rootfs_sub_dir[1000];
++char ubi_fs_name[1000];
 +
 +int found_kernel_device;
 +int found_rootfs_device;
@@ -26,12 +27,12 @@
 +enum FlashModeTypeEnum kernel_flash_mode;
 +enum FlashModeTypeEnum rootfs_flash_mode;
 +
- const char ofgwrite_version[] = "4.5.7";
+ const char ofgwrite_version[] = "4.6.1";
  int flash_kernel  = 0;
  int flash_rootfs  = 0;
 --- a/ofgwrite.h
 +++ b/ofgwrite.h
-@@ -1,23 +1,23 @@
+@@ -1,24 +1,24 @@
  #include <sys/stat.h>
  
 -struct stat kernel_file_stat;
@@ -59,6 +60,7 @@
 -char current_rootfs_device[1000];
 -char current_kernel_device[1000];
 -char current_rootfs_sub_dir[1000];
+-char ubi_fs_name[1000];
 +extern int found_kernel_device;
 +extern int found_rootfs_device;
 +extern int user_kernel;
@@ -68,11 +70,12 @@
 +extern char current_rootfs_device[1000];
 +extern char current_kernel_device[1000];
 +extern char current_rootfs_sub_dir[1000];
++extern char ubi_fs_name[1000];
  
  void handle_busybox_fatal_error();
  
-@@ -31,5 +31,5 @@ enum FlashModeTypeEnum
- 	FLASH_MODE_UNKNOWN, MTD, TARBZ2
+@@ -32,5 +32,5 @@ enum FlashModeTypeEnum
+ 	FLASH_MODE_UNKNOWN, MTD, TARBZ2, TARBZ2_MTD
  };
  
 -enum FlashModeTypeEnum kernel_flash_mode;
