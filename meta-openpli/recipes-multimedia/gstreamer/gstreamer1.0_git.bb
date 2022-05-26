@@ -15,7 +15,7 @@ DEPENDS = "bison-native flex-native glib-2.0 glib-2.0-native libxml2 libcap"
 
 inherit pkgconfig gobject-introspection
 
-SRC_URI = "git://gitlab.freedesktop.org/gstreamer/gstreamer.git;protocol=https;branch=master;name=gst \
+SRC_URI = "git://github.com/GStreamer/gstreamer.git;protocol=https;branch=master;name=gst \
            file://0001-meson-Add-option-for-installed-tests.patch \
            file://0002-revert-use-new-gst-adapter-get-buffer.patch \
 "
