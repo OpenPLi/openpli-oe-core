@@ -9,8 +9,8 @@ inherit gitpkgv autotools pkgconfig
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://gitlab.com/e2i/gst-ifdsrc.git;protocol=http"
+SRC_URI = "git://gitlab.com/samsamsam/iptvplayer-bin-components.git;protocol=http"
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/git/gst-ifdsrc/gst-ifdsrc"
 
 FILES_${PN} += "${libdir}/gstreamer-1.0"
