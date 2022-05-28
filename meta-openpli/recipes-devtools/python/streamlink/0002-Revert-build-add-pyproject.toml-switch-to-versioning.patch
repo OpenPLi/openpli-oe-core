@@ -8,7 +8,6 @@ This reverts commit 9b0815dbeeb53414ed125281c223b09e58f422ab.
 ---
  .coveragerc                |   16 +
  MANIFEST.in                |    2 +
- dev-requirements.txt       |    1 -
  pyproject.toml             |   48 -
  setup.cfg                  |    8 +
  setup.py                   |    6 +-
@@ -55,15 +54,6 @@ index 28e974ec..f04e2328 100644
  
  recursive-include completions *
  recursive-include docs *
-diff --git a/dev-requirements.txt b/dev-requirements.txt
-index d0359016..7b08367c 100644
---- a/dev-requirements.txt
-+++ b/dev-requirements.txt
-@@ -7,4 +7,3 @@ freezegun>=1.0.0
- flake8
- flake8-import-order
- shtab
--versioningit >=1.1.1, <2
 diff --git a/pyproject.toml b/pyproject.toml
 deleted file mode 100644
 index 697065d6..00000000
