@@ -8,13 +8,12 @@ This reverts commit 9b0815dbeeb53414ed125281c223b09e58f422ab.
 ---
  .coveragerc                |   16 +
  MANIFEST.in                |    2 +
- pyproject.toml             |   48 -
  setup.cfg                  |    8 +
  setup.py                   |    6 +-
  src/streamlink/__init__.py |    4 +-
  src/streamlink/_version.py |  529 ++++++++++-
  versioneer.py              | 1822 ++++++++++++++++++++++++++++++++++++
- 9 files changed, 2372 insertions(+), 64 deletions(-)
+ 7 files changed, 2372 insertions(+), 15 deletions(-)
  create mode 100644 .coveragerc
  delete mode 100644 pyproject.toml
  create mode 100644 versioneer.py
@@ -54,60 +53,6 @@ index 28e974ec..f04e2328 100644
  
  recursive-include completions *
  recursive-include docs *
-diff --git a/pyproject.toml b/pyproject.toml
-deleted file mode 100644
-index 697065d6..00000000
---- a/pyproject.toml
-+++ /dev/null
-@@ -1,48 +0,0 @@
--[build-system]
--build-backend = "setuptools.build_meta"
--requires = [
--  "setuptools >=45",
--  "wheel",
--  "versioningit >=1.1.1, <2",
--]
--
--
--# https://versioningit.readthedocs.io/en/stable/index.html
--[tool.versioningit]
--default-version = "0.0.0+unknown"
--
--[tool.versioningit.vcs]
--method = "git"
--
--[tool.versioningit.format]
--distance = "{version}+{distance}.{vcs}{rev}"
--dirty = "{version}+{distance}.{vcs}{rev}.dirty"
--distance-dirty = "{version}+{distance}.{vcs}{rev}.dirty"
--
--[tool.versioningit.next-version]
--method = "null"
--
--[tool.versioningit.onbuild]
--source-file = "src/streamlink/_version.py"
--build-file = "streamlink/_version.py"
--
--
--# https://coverage.readthedocs.io/en/latest/config.html
--[tool.coverage.run]
--branch = true
--source = [
--  "src",
--  "tests",
--]
--
--[tool.coverage.report]
--omit = [
--  "src/streamlink/packages/*",
--  "src/streamlink_cli/packages/*",
--]
--exclude_lines = [
--  "pragma: no cover",
--  "def __repr__",
--  "raise NotImplementedError",
--  "if __name__ == \"__main__\":",
--]
 diff --git a/setup.cfg b/setup.cfg
 index cc4f7198..79445178 100644
 --- a/setup.cfg
