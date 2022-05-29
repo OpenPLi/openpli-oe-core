@@ -5,8 +5,8 @@ diff -uNr enigma2-plugin-extensions-openhbbtvbrowser/browser.py modify/browser.p
              datasocket.onCommandReceived.append(self.onCommandReceived)
              datasocket.onBrowserClosed.append(self.onBrowserClosed)
              container = eConsoleAppContainer()
--            container.execute("/usr/bin/openhbbtvbrowser %s --onid %d --tsid %d --sid %d" % (url, onid, tsid, sid))
-+            container.execute("export QT_QPA_EGLFS_INTEGRATION=eglfs_mali;/usr/bin/openhbbtvbrowser %s --onid %d --tsid %d --sid %d" % (url, onid, tsid, sid))
+-            container.execute("/usr/bin/openhbbtvbrowser '%s' --onid %d --tsid %d --sid %d" % (url, onid, tsid, sid))
++            container.execute("export QT_QPA_EGLFS_INTEGRATION=eglfs_mali;/usr/bin/openhbbtvbrowser '%s' --onid %d --tsid %d --sid %d" % (url, onid, tsid, sid))
  
      def stop(self):
          if self.commandserver:
