@@ -21,7 +21,7 @@ index dda39dc..72fe38c 100644
  
  DUMPBIN = vbcfg.PLUGINROOT + "/dumpait"
  class eAITSectionReader:
-@@ -74,7 +74,7 @@ class eAITSectionReader:
+@@ -74,31 +74,31 @@ class eAITSectionReader:
  
  		document = ""
  		try:	document = os.popen(self.mCommand).read()
@@ -30,7 +30,11 @@ index dda39dc..72fe38c 100644
  			vbcfg.ERR(ErrMsg)
  			return False
  		if len(document) == 0:
-@@ -85,20 +85,20 @@ class eAITSectionReader:
+ 			return False
+ 		document = re.sub(RE_XML_ILLEGAL, "?", document)
+ 		document = re.sub("&", "+", document)
+-		document = document.decode("cp1252").encode("utf-8")
++		document = document.encode("cp1252").decode("utf-8")
  		document = "<URL>" + document + "</URL>"
  		try:
  			self.mDocument = xml.dom.minidom.parseString(document)
