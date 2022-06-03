@@ -32,7 +32,7 @@ inherit gittag setuptools python-dir
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/Billy2011/streamlink-27;branch=release-2.27.2.0;protocol=https"
+SRC_URI = "git://github.com/Billy2011/streamlink-27;protocol=https"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/streamlink-27:"
 
