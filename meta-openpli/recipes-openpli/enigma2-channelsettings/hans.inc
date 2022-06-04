@@ -18,4 +18,16 @@ do_install () {
 	if [ -e ${D}/etc/enigma2/satellites.xml ]; then
 		rm -f ${D}/etc/enigma2/satellites.xml
 	fi
+
+        if [ -e ${D}/etc/enigma2/satellites.xml ]; then
+                rm -f ${D}/etc/enigma2/satellites.xml
+        fi
+
+        if [ -e ${D}/etc/enigma2/userbouquet.favourites.tv ]; then
+                rm -f ${D}/etc/enigma2/userbouquet.favourites.tv
+        fi
+
+        if [ -e ${D}/etc/enigma2/userbouquet.favourites.radio ]; then
+                rm -f ${D}/etc/enigma2/userbouquet.favourites.radio
+        fi	
 }
