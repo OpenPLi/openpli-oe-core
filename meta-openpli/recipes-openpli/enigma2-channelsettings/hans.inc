@@ -4,7 +4,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
 SRC_URI[md5sum] = "66e88a2e3ea534c8bf22017d4179ec72"
-SRC_URI = "https://https://gitlab.openpli.org/openpli/hanssettings.git"
+SRC_URI = "https://gitlab.openpli.org/openpli/hanssettings.git"
 S = "${WORKDIR}/git"
 
 RDEPENDS_${PN} = "xz"
