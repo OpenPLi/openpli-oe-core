@@ -2,6 +2,7 @@
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 DEPENDS += " \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'no-opengl', 'mesa', ' ', d)} \
     libnss-mdns \
 "
 
