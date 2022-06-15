@@ -6,7 +6,7 @@ SECTION = "net"
 LICENSE = "GPLv3+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=11bbae9cacaf61dd7fc10035f6f5c68e"
 
-SRC_URI = "git://github.com/zerotier/ZeroTierOne.git;protocol=https;tag=1.8.4 \
+SRC_URI = "git://github.com/zerotier/ZeroTierOne.git;protocol=https;tag=1.10.0 \
 	file://zerotier \
 	"
 SRCREV = "${PV}"
