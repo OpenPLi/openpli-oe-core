@@ -27,7 +27,7 @@ index 515c1457..146b66a4 100644
  
  
 -if __name__ == "__main__":
--    from setuptools import setup
+-    from setuptools import setup  # type: ignore[import]
 -    from versioningit import get_cmdclasses
 -
 -    setup(
