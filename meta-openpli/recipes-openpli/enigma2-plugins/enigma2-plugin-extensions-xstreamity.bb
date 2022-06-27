@@ -13,8 +13,8 @@ inherit gitpkgv allarch
 
 SRCREV = "${AUTOREV}"
 
-PV = "3.61+git${SRCPV}"
-PKGV = "3.61+git${GITPKGV}"
+PV = "3.69+git${SRCPV}"
+PKGV = "3.69+git${GITPKGV}"
 
 SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=https"
 
