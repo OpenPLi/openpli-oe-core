@@ -148,7 +148,7 @@ cooldown                      = 30,600
 
 [reader]
 label                         = Mainreceiver
-enable			      = 0
+enable                        = 0
 protocol                      = cs378x
 device                        = ip_adress_mainreceiver,12005
 user                          = 2nd_box
