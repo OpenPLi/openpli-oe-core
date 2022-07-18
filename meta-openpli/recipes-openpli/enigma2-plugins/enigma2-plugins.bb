@@ -29,8 +29,8 @@ PROVIDES += "\
 
 inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext
 
-PV = "z-git${SRCPV}"
-PKGV = "z-git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "git${GITPKGV}"
 
 SRC_URI = "git://github.com/OpenPLi/${BPN}.git;protocol=https;branch=python3"
 
