@@ -231,7 +231,6 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	libxcrypt-compat \
 	dvb-usb-drivers-meta \
 	cdtextinfo \
-	meta-enigma2-dvdburn \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"
 
