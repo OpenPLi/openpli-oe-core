@@ -2,7 +2,7 @@ diff --git a/lib/python/Plugins/Extensions/DLNABrowser/plugin.py b/lib/python/Pl
 index 884b5a07..c63f4a74 100644
 --- a/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
 +++ b/lib/python/Plugins/Extensions/DLNABrowser/plugin.py
-@@ -174,7 +174,7 @@ class DLNAFileBrowser(Screen):
+@@ -176,7 +176,7 @@ class DLNAFileBrowser(Screen):
  		self.updateDirectory()
  
  	def keyGreen(self):
@@ -11,7 +11,7 @@ index 884b5a07..c63f4a74 100644
  
  	def keyYellow(self):
  		self["filelist"].changeParent()
-@@ -340,7 +340,7 @@ class DLNAStreamPlayer(Screen, InfoBarNotifications):
+@@ -342,7 +342,7 @@ class DLNAStreamPlayer(Screen, InfoBarNotifications):
  	def setSeekState(self, wantstate):
  		service = self.session.nav.getCurrentService()
  		if service is None:
@@ -20,7 +20,7 @@ index 884b5a07..c63f4a74 100644
  			return
  
  		pauseable = service.pause()
-@@ -533,7 +533,7 @@ class DLNAImageViewer(Screen):
+@@ -535,7 +535,7 @@ class DLNAImageViewer(Screen):
  		self["status"].show()
  
  	def cbSlideShow(self):
@@ -29,7 +29,7 @@ index 884b5a07..c63f4a74 100644
  		if config.pic.loop.value==False and self.lsatIndex == self.fileListLen:
  			self.PlayPause()
  		self.displayNow = True
-@@ -551,15 +551,15 @@ class TaskManager:
+@@ -553,15 +553,15 @@ class TaskManager:
  		self.taskList.append([command+'\n', cbDataFunc, cbCloseFunc])
  
  	def dump(self):
@@ -52,7 +52,7 @@ index 884b5a07..c63f4a74 100644
  		self.occurError = True
  
  	def reset(self):
-@@ -571,7 +571,7 @@ class TaskManager:
+@@ -573,7 +573,7 @@ class TaskManager:
  		self.reset()
  		self.taskList = []
  		self.cbSetStatusCB = None
@@ -61,7 +61,7 @@ index 884b5a07..c63f4a74 100644
  
  	def index(self):
  		self.taskIdx
-@@ -581,7 +581,7 @@ class TaskManager:
+@@ -583,7 +583,7 @@ class TaskManager:
  		
  	def next(self):
  		if self.taskIdx >= len(self.taskList) or self.occurError:
@@ -70,7 +70,7 @@ index 884b5a07..c63f4a74 100644
  			return False
  		command     = self.taskList[self.taskIdx][0]
  		cbDataFunc  = self.taskList[self.taskIdx][1]
-@@ -595,7 +595,7 @@ class TaskManager:
+@@ -597,7 +597,7 @@ class TaskManager:
  		if self.cbSetStatusCB is not None:
  			self.cbSetStatusCB(self.taskIdx)
  
@@ -79,7 +79,7 @@ index 884b5a07..c63f4a74 100644
  		self.gTaskInstance.execute(command)
  		self.taskIdx += 1
  		return True
-@@ -617,7 +617,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
+@@ -619,7 +619,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
  		</screen>
  		"""
  	def __init__(self, session): 
@@ -88,7 +88,7 @@ index 884b5a07..c63f4a74 100644
  		Screen.__init__(self, session)
  
  		self.menulist  = []
-@@ -631,7 +631,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
+@@ -633,7 +633,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
  			"green"  : self.keyOK,
  			"cancel" : self.keyExit,
  			"ok"     : self.keyOK,
@@ -97,7 +97,7 @@ index 884b5a07..c63f4a74 100644
  		self["key_red"]     = StaticText(_("Exit"))
  		self["key_green"]   = StaticText(_("Save"))
  		self["key_yellow"]  = StaticText(_(" "))
-@@ -675,8 +675,8 @@ class DLNAClientConfig(ConfigListScreen, Screen):
+@@ -677,8 +677,8 @@ class DLNAClientConfig(ConfigListScreen, Screen):
  		#configString = configDataAppend(configString, "rootdir", self.menuItemRootDir.value)
  		configString = configDataAppend(configString, "refresh", self.menuItemRefresh.value)
  		configString = configDataAppend(configString, "slideshow", self.menuItemSlideshow.value)
@@ -108,7 +108,16 @@ index 884b5a07..c63f4a74 100644
  		confFile.write(configString)
  		confFile.close()
  
-@@ -707,7 +707,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
+@@ -696,7 +696,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
+ 			setDefault('refresh', '10')
+ 			setDefault('slideshow', '10')
+ 			return
+-		for line in file(self.configFileName).readlines():
++		for line in open(self.configFileName).readlines():
+ 			line = line.strip()
+ 			if line == '' or line[0] == '#':
+ 				continue
+@@ -709,7 +709,7 @@ class DLNAClientConfig(ConfigListScreen, Screen):
  		#setDefault('rootdir', '/media/upnp/')
  		setDefault('refresh', '10')
  		setDefault('slideshow', '10')
@@ -117,7 +126,7 @@ index 884b5a07..c63f4a74 100644
  
  
  class DLNADeviceBrowser(Screen):
-@@ -801,7 +801,7 @@ class DLNADeviceBrowser(Screen):
+@@ -803,7 +803,7 @@ class DLNADeviceBrowser(Screen):
  		self.deviceListRefreshTimer.stop()
  
  	def keyBlue(self):
@@ -126,16 +135,19 @@ index 884b5a07..c63f4a74 100644
  		self["devicelist"].setList(self.setListOnView())
  
  	def initConfig(self):
-@@ -812,7 +812,7 @@ class DLNADeviceBrowser(Screen):
+@@ -814,9 +814,9 @@ class DLNADeviceBrowser(Screen):
  			DLNA_CONFIG_ROOT_DIR = '/media/upnp/'
  			DLNA_CONFIG_DEVICE_REFRESH = 10000
  			DLNA_CONFIG_SLIDESHOW = 10000
 -			print "config : [%s][%d][%d]"%(DLNA_CONFIG_ROOT_DIR, DLNA_CONFIG_SLIDESHOW, DLNA_CONFIG_DEVICE_REFRESH)
 +			print("config : [%s][%d][%d]"%(DLNA_CONFIG_ROOT_DIR, DLNA_CONFIG_SLIDESHOW, DLNA_CONFIG_DEVICE_REFRESH))
  			return
- 		for line in file(self.configFileName).readlines():
+-		for line in file(self.configFileName).readlines():
++		for line in open(self.configFileName).readlines():
  			line = line.strip()
-@@ -825,7 +825,7 @@ class DLNADeviceBrowser(Screen):
+ 			if line == '' or line[0] == '#':
+ 				continue
+@@ -827,7 +827,7 @@ class DLNADeviceBrowser(Screen):
  				elif k == 'refresh':	DLNA_CONFIG_DEVICE_REFRESH = int(v)*1000
  				elif k == 'slideshow':	DLNA_CONFIG_SLIDESHOW = int(v)*1000
  			except : pass
@@ -144,7 +156,7 @@ index 884b5a07..c63f4a74 100644
  
  	def isRunning(self):
  		ps_str = os.popen('cat /etc/mtab | grep djmount').read()
-@@ -854,7 +854,7 @@ class DLNADeviceBrowser(Screen):
+@@ -856,7 +856,7 @@ class DLNADeviceBrowser(Screen):
  			if rootdir is not None:
  				if DLNA_CONFIG_ROOT_DIR != rootdir:
  					DLNA_CONFIG_ROOT_DIR = rootdir
@@ -153,7 +165,7 @@ index 884b5a07..c63f4a74 100644
  		except: pass
  		try:
  			if slideshow is not None:
-@@ -863,10 +863,10 @@ class DLNADeviceBrowser(Screen):
+@@ -865,10 +865,10 @@ class DLNADeviceBrowser(Screen):
  					DLNA_CONFIG_SLIDESHOW = newSlideshow
  		except: pass
  		self.deviceListRefreshTimer.start(DLNA_CONFIG_DEVICE_REFRESH)
