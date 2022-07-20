@@ -66,3 +66,8 @@ FILES_${PN}-dbg += " \
     ${PYTHON_SITEPACKAGES_DIR}/*/*/Test \
     ${PYTHON_SITEPACKAGES_DIR}/*/*/Tests \
     "
+fakeroot do_compileall() {
+    python3 -m compileall -b "${D}"
+}
+
+addtask compileall before do_package after do_install

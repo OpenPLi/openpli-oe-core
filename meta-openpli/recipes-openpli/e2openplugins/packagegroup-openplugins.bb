@@ -32,7 +32,6 @@ DEPENDS = " \
 	enigma2-plugin-extensions-setpicon \
 	enigma2-plugin-extensions-xpower \
 	enigma2-plugin-extensions-meteoviewer \
-	enigma2-plugin-extensions-snmpagent \
 	enigma2-plugin-extensions-systemtools \
 	enigma2-plugin-extensions-cacheflush \
 	enigma2-plugin-extensions-analogclock \
@@ -40,5 +39,8 @@ DEPENDS = " \
 	enigma2-plugin-extensions-telekomsport \
 	enigma2-plugin-extensions-oscamstatus \
 "
+
+#	[WW] twistedsnmp dependency doesn't build
+#	enigma2-plugin-extensions-snmpagent
 
 require conf/license/license-gplv2.inc
