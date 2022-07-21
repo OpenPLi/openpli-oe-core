@@ -1,0 +1,694 @@
+diff --git a/agent.py b/agent.py
+index aede41f..418429c 100644
+--- a/agent.py
++++ b/agent.py
+@@ -53,7 +53,7 @@ class Agent:
+ 		pdu = response.apiGenGetPdu()
+ 		try:
+ 			result = self.getOIDs( [key for (key,_) in variables] )
+-		except errors.OIDNameError, err:
++		except errors.OIDNameError as err:
+ 			pdu.apiGenSetErrorStatus( err.errorCode )
+ 			pdu.apiGenSetErrorIndex( err.errorIndex + 1 ) # 1-indexed
+ 			pdu.apiGenSetVarBind(variables)
+@@ -76,7 +76,7 @@ class Agent:
+ 		for i,key in enumerate(oids):
+ 			try:
+ 				result.append( self.dataStore.getExactOID( key ) )
+-			except errors.OIDNameError, err:
++			except errors.OIDNameError as err:
+ 				# do error reporting here
+ 				err.errorIndex = i
+ 				raise
+@@ -146,7 +146,7 @@ class Agent:
+ 		pdu = response.apiGenGetPdu()
+ 		try:
+ 			result = self.getNextOIDs( [key for (key,_) in variables] )
+-		except errors.OIDNameError, err:
++		except errors.OIDNameError as err:
+ 			pdu.apiGenSetErrorStatus( err.errorCode )
+ 			pdu.apiGenSetErrorIndex( err.errorIndex + 1 ) # 1-indexed
+ 			pdu.apiGenSetVarBind(variables)
+@@ -169,7 +169,7 @@ class Agent:
+ 		for index, base in enumerate(oids):
+ 			try:
+ 				result.append( self.dataStore.nextOID( base ))
+-			except errors.OIDNameError, err:
++			except errors.OIDNameError as err:
+ 				errorIndex = index
+ 				raise
+ 		return result
+@@ -222,7 +222,7 @@ class Agent:
+ 				[ oid for (oid,_) in variables[nonRepeaters:] ],
+ 				maxRepetitions,
+ 			)
+-		except errors.OIDNameError, err:
++		except errors.OIDNameError as err:
+ 			# should never happen, but who knows...
+ 			pdu.apiGenSetErrorStatus( err.errorCode )
+ 			pdu.apiGenSetErrorIndex( err.errorIndex + 1 ) # 1-indexed
+@@ -258,7 +258,7 @@ class Agent:
+ 		for index, base in enumerate(nonRepeating):
+ 			try:
+ 				oid,value = self.dataStore.nextOID( base )
+-			except errors.OIDNameError, err:
++			except errors.OIDNameError as err:
+ 				oid = oid
+ 				value = v2c.EndOfMibView()
+ 			result.append( (oid,value) )
+@@ -271,7 +271,7 @@ class Agent:
+ 				try:
+ 					oid,value = self.dataStore.nextOID( base )
+ 					foundGood = 1
+-				except errors.OIDNameError, err:
++				except errors.OIDNameError as err:
+ 					# XXX is the use of base here correct?
+ 					oid = base
+ 					value = v2c.EndOfMibView()
+@@ -380,17 +380,17 @@ class Agent:
+ 				try:
+ 					del values[ managerIP ]
+ 					count += 1
+-				except KeyError, err:
++				except KeyError as err:
+ 					pass 
+ 				try:
+ 					if not self._trapRegistry[generic][specific]:
+ 						del self._trapRegistry[generic][specific]
+-				except KeyError, err:
++				except KeyError as err:
+ 					pass
+ 				try:
+ 					if not self._trapRegistry[generic]:
+ 						del self._trapRegistry[generic]
+-				except KeyError, err:
++				except KeyError as err:
+ 					pass
+ 		return count
+ 	def sendTrap(
+diff --git a/agentprotocol.py b/agentprotocol.py
+index c691415..581326f 100644
+--- a/agentprotocol.py
++++ b/agentprotocol.py
+@@ -64,9 +64,9 @@ class AgentProtocol(protocol.ConnectedDatagramProtocol):
+ 			try:
+ 				request.decode(datagram)
+ 				processed = 1
+-			except asnerror.ValueConstraintError, err:
++			except asnerror.ValueConstraintError as err:
+ 				pass
+-			except pysnmp_error.PySnmpError, why:
++			except pysnmp_error.PySnmpError as why:
+ 				log.error( 'Malformed inbound message dropped: %s', why )
+ 				continue
+ 			else:
+diff --git a/bisectoidstore.py b/bisectoidstore.py
+index f6fb2b4..a7b73e7 100644
+--- a/bisectoidstore.py
++++ b/bisectoidstore.py
+@@ -69,7 +69,7 @@ class BisectOIDStore(oidstore.OIDStore):
+ 			if oid != base:
+ 				try:
+ 					oid,result = self.OIDs[start-1]
+-				except IndexError, err:
++				except IndexError as err:
+ 					pass
+ 				else:
+ 					if (
+@@ -119,7 +119,7 @@ class BisectOIDStore(oidstore.OIDStore):
+ 				while hasattr( value, 'firstOID' ):
+ 					try:
+ 						return value.firstOID()
+-					except errors.OIDNameError, err:
++					except errors.OIDNameError as err:
+ 						index += 1
+ 						try:
+ 							oid,value = self.OIDs[index]
+@@ -167,7 +167,7 @@ class BisectOIDStore(oidstore.OIDStore):
+ 				if hasattr( value, 'nextOID' ):
+ 					try:
+ 						return value.nextOID( sortableToOID(base) )
+-					except errors.OIDNameError, err:
++					except errors.OIDNameError as err:
+ 						start += 1
+ 			else:
+ 				# otherwise return the item *after* the found OID (exact match)
+@@ -180,7 +180,7 @@ class BisectOIDStore(oidstore.OIDStore):
+ 				if hasattr( value, 'firstOID' ):
+ 					try:
+ 						return value.firstOID()
+-					except errors.OIDNameError, err:
++					except errors.OIDNameError as err:
+ 						pass
+ 				else:
+ 					return sortableToOID(key),self.returnValue(value,key)
+diff --git a/bsdoidstore.py b/bsdoidstore.py
+index 4e12e0b..2587eab 100644
+--- a/bsdoidstore.py
++++ b/bsdoidstore.py
+@@ -134,7 +134,7 @@ class BSDOIDStore(oidstore.OIDStore):
+ 			encoded = oidToSortable( base )
+ 			oid, value = self.btree.set_location(encoded)
+ 			oid = sortableToOID( oid )
+-		except KeyError, err:
++		except KeyError as err:
+ 			raise errors.OIDNameError(
+ 				base,
+ 				message="OID not found in database"
+@@ -143,7 +143,7 @@ class BSDOIDStore(oidstore.OIDStore):
+ 			try:
+ 				oid,value = self.btree.next()
+ 				oid = sortableToOID( oid )
+-			except KeyError, err:
++			except KeyError as err:
+ 				raise errors.OIDNameError(
+ 					base,
+ 					message="OID appears to be last in database"
+diff --git a/doc/examples/simpleget.py b/doc/examples/simpleget.py
+index 85a9430..47ad7d7 100644
+--- a/doc/examples/simpleget.py
++++ b/doc/examples/simpleget.py
+@@ -15,12 +15,12 @@ def main( proxy, oids ):
+ 	return df
+ 
+ def printResults( result ):
+-	print 'Results:'
++	print('Results:')
+ 	pprint.pprint( result )
+ 	return result
+ 
+ def errorReporter( err ):
+-	print 'ERROR', err.getTraceback()
++	print('ERROR', err.getTraceback())
+ 	return err
+ def exiter( value ):
+ 	reactor.stop()
+@@ -40,7 +40,7 @@ community -- community string for the agent
+ baseoid -- dotted set of OIDs to retrieve from agent
+ """
+ 	if len(sys.argv) < 4:
+-		print usage
++		print(usage)
+ 		sys.exit( 1 )
+ 	ipAddress = sys.argv[1]
+ 	# choose random port in range 25000 to 30000
+diff --git a/doc/examples/simplegettable.py b/doc/examples/simplegettable.py
+index c8c6478..0259bcf 100644
+--- a/doc/examples/simplegettable.py
++++ b/doc/examples/simplegettable.py
+@@ -15,12 +15,12 @@ def main( proxy, oids ):
+ 	return df
+ 
+ def printResults( result ):
+-	print 'Results:'
++	print('Results:')
+ 	pprint.pprint( result )
+-	return result
++	return(result)
+ 
+ def errorReporter( err ):
+-	print 'ERROR', err.getTraceback()
++	print('ERROR', err.getTraceback())
+ 	return err
+ def exiter( value ):
+ 	reactor.stop()
+@@ -40,7 +40,7 @@ community -- community string for the agent
+ baseoid -- dotted set of OIDs to retrieve from agent
+ """
+ 	if len(sys.argv) < 4:
+-		print usage
++		print(usage)
+ 		sys.exit( 1 )
+ 	ipAddress = sys.argv[1]
+ 	# choose random port in range 25000 to 30000
+diff --git a/doc/examples/simpleset.py b/doc/examples/simpleset.py
+index 8f99e97..8376845 100644
+--- a/doc/examples/simpleset.py
++++ b/doc/examples/simpleset.py
+@@ -21,12 +21,12 @@ def main( proxy, oids ):
+ 	return df
+ 
+ def printResults( result ):
+-	print 'Results:'
++	print('Results:')
+ 	pprint.pprint( result )
+ 	return result
+ 
+ def errorReporter( err ):
+-	print 'ERROR', err.getTraceback()
++	print('ERROR', err.getTraceback())
+ 	return err
+ def exiter( value ):
+ 	reactor.stop()
+@@ -46,7 +46,7 @@ community -- community string for the agent
+ baseoid -- dotted set of OIDs to retrieve from agent
+ """
+ 	if len(sys.argv) < 4:
+-		print usage
++		print(usage)
+ 		sys.exit( 1 )
+ 	ipAddress = sys.argv[1]
+ 	# choose random port in range 25000 to 30000
+diff --git a/doc/pydoc/pydoc2.py b/doc/pydoc/pydoc2.py
+index 8fc4d33..1f63b6d 100644
+--- a/doc/pydoc/pydoc2.py
++++ b/doc/pydoc/pydoc2.py
+@@ -42,7 +42,7 @@ def classify_class_attrs(cls):
+ 		else:
+ 			try:
+ 				obj = getattr(cls, name)
+-			except AttributeError, err:
++			except AttributeError as err:
+ 				continue
+ 
+ 		# Figure out where it was defined.
+@@ -173,7 +173,7 @@ class DefaultFormatter(pydoc.HTMLDoc):
+ 
+ 		
+ 		if classes:
+-##			print classes
++##			print(classes)
+ ##			import pdb
+ ##			pdb.set_trace()
+ 			classlist = map(lambda (key, value): value, classes)
+@@ -194,7 +194,7 @@ class DefaultFormatter(pydoc.HTMLDoc):
+ 			for key, value in data:
+ 				try:
+ 					contents.append(self.document(value, key))
+-				except Exception, err:
++				except Exception as err:
+ 					pass
+ 			result = result + self.bigsection(
+ 				'Data', '#ffffff', '#55aa55', join(contents, '<br>\n'))
+@@ -321,7 +321,7 @@ class PackageDocumentationGenerator:
+ 		for exclusion in exclusions:
+ 			try:
+ 				self.exclusions[ exclusion ]= pydoc.locate ( exclusion)
+-			except pydoc.ErrorDuringImport, value:
++			except pydoc.ErrorDuringImport as value:
+ 				self.warn( """Unable to import the module %s which was specified as an exclusion module"""% (repr(exclusion)))
+ 		self.formatter = formatter or DefaultFormatter()
+ 		for base in baseModules:
+@@ -331,18 +331,18 @@ class PackageDocumentationGenerator:
+ 		self.warnings.append (message)
+ 	def info (self, message):
+ 		"""Information/status report"""
+-		print message
++		print(message)
+ 	def addBase(self, specifier):
+ 		"""Set the base of the documentation set, only children of these modules will be documented"""
+ 		try:
+ 			self.baseSpecifiers [specifier] = pydoc.locate ( specifier)
+ 			self.pending.append (specifier)
+-		except pydoc.ErrorDuringImport, value:
++		except pydoc.ErrorDuringImport as value:
+ 			self.warn( """Unable to import the module %s which was specified as a base module"""% (repr(specifier)))
+ 	def addInteresting( self, specifier):
+ 		"""Add a module to the list of interesting modules"""
+ 		if self.checkScope( specifier):
+-##			print "addInteresting", specifier
++##			print("addInteresting", specifier)
+ 			self.pending.append (specifier)
+ 		else:
+ 			self.completed[ specifier] = 1
+@@ -387,7 +387,7 @@ class PackageDocumentationGenerator:
+ 				except (SystemError, SystemExit), value:
+ 					self.info( """   ... FAILED %s"""% (repr( value)))
+ 					self.warn( """Unable to import the module %s"""% (repr(self.pending[0])))
+-				except Exception, value:
++				except Exception as value:
+ 					self.info( """   ... FAILED %s"""% (repr( value)))
+ 					self.warn( """Unable to import the module %s"""% (repr(self.pending[0])))
+ 				else:
+@@ -412,7 +412,7 @@ class PackageDocumentationGenerator:
+ 				del self.pending[0]
+ 		finally:
+ 			for item in self.warnings:
+-				print item
++				print(item)
+ 			
+ 	def clean (self, objectList, object):
+ 		"""callback from the formatter object asking us to remove
+diff --git a/logs.py b/logs.py
+index bb89bba..3f4991a 100644
+--- a/logs.py
++++ b/logs.py
+@@ -43,5 +43,5 @@ massretriever_log = logging.getLogger( 'twsnmp.massretriever' )
+ #agentprotocol_log.setLevel( logging.DEBUG )
+ try:
+ 	logging.basicConfig()
+-except Exception, err:
++except Exception as err:
+ 	pass
+diff --git a/oidstore.py b/oidstore.py
+index 5eb1834..7832823 100644
+--- a/oidstore.py
++++ b/oidstore.py
+@@ -87,7 +87,7 @@ class OIDStore:
+ 			while oid:
+ 				oid,value = self.nextOID( oid )
+ 				yield oid, value
+-		except errors.OIDNameError, err:
++		except errors.OIDNameError as err:
+ 			pass
+ 
+ def dumbPrefix( key, oid ):
+diff --git a/pysnmpproto.py b/pysnmpproto.py
+index 06c0127..0f55889 100644
+--- a/pysnmpproto.py
++++ b/pysnmpproto.py
+@@ -24,16 +24,16 @@ try:
+ 		USE_STRING_OIDS = False
+ 		# This seems to slow down rather than speed up the OID class...
+ 		#psyco.bind(oid.OID)
+-	except ImportError, err:
++	except ImportError as err:
+ 		from twistedsnmp import oidstub as oid
+ 		USE_STRING_OIDS = True
+ 	try:
+ 		from pysnmp.asn1.encoding.ber import univ
+ 		cacheOIDEncoding = univ.ObjectIdentifierMixIn.berInternEncoding
+ 		CAN_CACHE_OIDS = True
+-	except (ImportError,AttributeError), err:
++	except (ImportError,AttributeError) as err:
+ 		CAN_CACHE_OIDS = False
+-except ImportError, err:
++except ImportError as err:
+ 	pysnmpversion = 4
+ 	USE_STRING_OIDS = False
+ 	CAN_CACHE_OIDS = False
+@@ -41,7 +41,7 @@ except ImportError, err:
+ try:
+ 	raise ImportError
+ 	import psyco
+-except ImportError, err:
++except ImportError as err:
+ 	pass
+ else:
+ 	from pysnmp.asn1 import base
+diff --git a/setup.py b/setup.py
+index 99b87a4..f697524 100644
+--- a/setup.py
++++ b/setup.py
+@@ -10,11 +10,11 @@ if __name__ == "__main__":
+ 	import sys,os, string
+ 	from distutils.sysconfig import *
+ 	from distutils.core import setup
+-	
++	from distutils.command.install_data import install_data
+ 	# don't want to use import because there might be an installed version 
+ 	# and current path is often not in import directories, whereas we *know*
+ 	# the file is right next to setup.py in the source archive.
+-	execfile( 'version.py', globals())
++	exec(compile(open("version.py").read(), "version.py", 'exec'))
+ 
+ 	##############
+ 	## Following is from Pete Shinners,
+@@ -22,7 +22,7 @@ if __name__ == "__main__":
+ 	## some unix machines where the data files are copied
+ 	## to weird locations if the user's configuration options
+ 	## were entered during the wrong phase of the moon :) .
+-	from distutils.command.install_data import install_data
++
+ 	class smart_install_data(install_data):
+ 		def run(self):
+ 			#need to change self.install_dir to the library dir
+diff --git a/snmpprotocol.py b/snmpprotocol.py
+index 467a0dc..6430135 100644
+--- a/snmpprotocol.py
++++ b/snmpprotocol.py
+@@ -54,7 +54,7 @@ class SNMPProtocol(protocol.DatagramProtocol):
+ 			return
+ 		try:
+ 			key = self.getRequestKey( response, address )
+-		except KeyError, err:
++		except KeyError as err:
+ 			key = None
+ 		if key in self.requests:
+ 			df,timer = self.requests[key]
+@@ -115,7 +115,7 @@ class SNMPProtocol(protocol.DatagramProtocol):
+ 									callback( request, address )
+ 									found = True
+ 			return found
+-		except Exception, err:
++		except Exception as err:
+ 			log.warn(
+ 				"""Failure processing trap %s from %s: %s""",
+ 				address,
+@@ -137,9 +137,9 @@ class SNMPProtocol(protocol.DatagramProtocol):
+ 		]:
+ 			try:
+ 				ID = request['pdu'][key]['request_id']
+-			except KeyError, err:
++			except KeyError as err:
+ 				pass
+-			except TypeError, err:
++			except TypeError as err:
+ 				log.error(
+ 					"""Unexpected TypeError retrieving request key %r: %s""",
+ 					key, log.getException(err),
+@@ -155,13 +155,13 @@ class SNMPProtocol(protocol.DatagramProtocol):
+ 				response = implementation.GetResponse()
+ 				response.decode( message )
+ 				return response
+-			except Exception, err:
++			except Exception as err:
+ 				pass
+ 		try:
+ 			metaReq = alpha.MetaMessage()
+ 			metaReq.decode( message )
+ 			return metaReq.apiAlphaGetCurrentComponent()
+-		except Exception, err:
++		except Exception as err:
+ 			pass
+ 		return None
+ 
+@@ -214,13 +214,13 @@ def test():
+ 		"205.207.149.252", 161, protocol = port.protocol,
+ 	)
+ 	def onSuccess( value ):
+-		print 'Success:'
++		print('Success:')
+ 		if isinstance( value, dict ):
+ 			value = value.items()
+ 		for key,item in value:
+-			print key, len(item)
++			print(key, len(item))
+ 	def onFailure( reason ):
+-		print 'Failure:', reason
++		print('Failure:', reason)
+ 	d = proxy.get( ['.1.3.6.1.2.1.1.1.0', '.1.3.6.1.2.1.1.5.0', '.1.3.6.1.2.1.1.6.0'] )
+ 	d.addCallbacks( onSuccess, onFailure )
+ 
+diff --git a/tableretriever.py b/tableretriever.py
+index 2f62ee5..f3ef824 100644
+--- a/tableretriever.py
++++ b/tableretriever.py
+@@ -189,7 +189,7 @@ class TableRetriever( object ):
+ 
+ 		try:
+ 			self.proxy.send(request.encode())
+-		except socket.error, err:
++		except socket.error as err:
+ 			if retryCount <= 0:
+ 				failObject = failure.Failure()
+ 				if getattr(self,'df',None) and not self.df.called:
+@@ -231,7 +231,7 @@ class TableRetriever( object ):
+ 			self.df.errback( reason )
+ 			self.finished = True
+ 			self.df = None
+-		except defer.AlreadyCalledError, err:
++		except defer.AlreadyCalledError as err:
+ 			# we already returned a value... guess we'll log an ignore...
+ 			log.warn(
+ 				"""Processing error encountered after callback triggered: %s""",
+@@ -259,7 +259,7 @@ class TableRetriever( object ):
+ 						del self.df
+ 				except defer.AlreadyCalledError:
+ 					pass
+-			except Exception, err:
++			except Exception as err:
+ 				if getattr(self,'df',None) and not self.df.called:
+ 					self.df.errback( err )
+ 					del self.df
+@@ -328,7 +328,7 @@ class TableRetriever( object ):
+ 						for l in newOIDs, repeatingRoots:
+ 							del l[idx]
+ 						break # XXX check logic here, can't more than one end at the same time?
+-				except IndexError, err:
++				except IndexError as err:
+ 					raise error.ProtoError( """Incorrectly formed table response: %s : %s"""%(newOIDs,err))
+ 
+ 		# Decide whether to request next item...
+diff --git a/test/simpleagent.py b/test/simpleagent.py
+index f5092ed..d776bba 100644
+--- a/test/simpleagent.py
++++ b/test/simpleagent.py
+@@ -20,7 +20,7 @@ def main( ):
+ 					),
+ 				),
+ 			)
+-			print 'listening on port', port
++			print('listening on port', port)
+ 			return port
+ 		except twisted_error.CannotListenError:
+ 			pass
+diff --git a/test/test_trap.py b/test/test_trap.py
+index 94050fe..3df6dd1 100644
+--- a/test/test_trap.py
++++ b/test/test_trap.py
+@@ -36,7 +36,7 @@ class TrapTestsV1( basetestcase.BaseTestCase ):
+ 			genericType=6, specificType=8,
+ 			callback = self.storeTrap,
+ 		)
+-		print self.client.protocol._trapRegistry
++		print(self.client.protocol._trapRegistry)
+ 		theAgent = self.agent.protocol.agent
+ 		handler = agent.TrapHandler(
+ 			managerIP = ('127.0.0.1',self.client.protocol.transport.port),
+@@ -81,14 +81,14 @@ class TrapTestsV1( basetestcase.BaseTestCase ):
+ def printTrap( req ):
+ 	pdu = req.apiAlphaGetPdu()
+ 	if req.apiAlphaGetProtoVersionId() == alpha.protoVersionId1:
+-		print 'Enterprise: %s\n' % pdu.apiAlphaGetEnterprise() + \
++		print('Enterprise: %s\n' % pdu.apiAlphaGetEnterprise() + \
+ 			  'Agent Address: %s\n' % pdu.apiAlphaGetAgentAddr() + \
+ 			  'Generic Trap: %s\n' % pdu.apiAlphaGetGenericTrap() + \
+ 			  'Specific Trap: %s\n' % pdu.apiAlphaGetSpecificTrap() + \
+ 			  'Uptime: %s\n' % pdu.apiAlphaGetTimeStamp() + \
+-			  'Var-binds:'
++			  'Var-binds:')
+ 	for varBind in pdu.apiAlphaGetVarBindList():
+-		print varBind.apiAlphaGetOidVal()
++		print(varBind.apiAlphaGetOidVal())
+ 
+ 
+ class TrapTestsV2c( TrapTestsV1 ):
+diff --git a/twinetables.py b/twinetables.py
+index cfe5352..bc5f129 100644
+--- a/twinetables.py
++++ b/twinetables.py
+@@ -63,6 +63,6 @@ def iterTwine( oidTable, oids ):
+ 		for oid,table in tables:
+ 			try:
+ 				record[ oid ] = table.pop( oid+suffix )
+-			except KeyError, err:
++			except KeyError as err:
+ 				pass 
+ 		yield suffix, record 
+diff --git a/utilities/mirroragent.py b/utilities/mirroragent.py
+index fdc5587..782f631 100644
+--- a/utilities/mirroragent.py
++++ b/utilities/mirroragent.py
+@@ -6,18 +6,18 @@ def main( proxy, oidStore, OIDs=('.1.3',) ):
+ 	"""Do a getTable on proxy for OIDs and store in oidStore"""
+ 	oidStore = openStore( oidStore )
+ 	def rowCallback( root, key,value, oidStore = oidStore):
+-		print key, '-->', repr(value)
++		print(key, '-->', repr(value))
+ 		oidStore.setValue( key, value )
+ 	df = proxy.getTable(
+ 		OIDs, retryCount=10,
+ 		recordCallback=rowCallback
+ 	)
+ 	def errorReporter( err ):
+-		print 'ERROR', err
++		print('ERROR', err)
+ 		raise
+ 	def exiter( value, oidStore=oidStore ):
+ 		reactor.stop()
+-		print 'closing'
++		print('closing')
+ 		oidStore.close()
+ 		return value
+ 	df.addCallback( exiter )
+@@ -51,7 +51,7 @@ baseoid -- dotted set of OIDs to retrieve from agent
+ """
+ 	import sys
+ 	if len(sys.argv) < 4:
+-		print usage
++		print(usage)
+ 		sys.exit( 1 )
+ 	ipAddress = sys.argv[1]
+ 	port = reactor.listenUDP(
+diff --git a/utilities/synchronous.py b/utilities/synchronous.py
+index 88fbe41..1430f51 100644
+--- a/utilities/synchronous.py
++++ b/utilities/synchronous.py
+@@ -71,11 +71,11 @@ def synchronous( timeout, callable, *arguments, **named ):
+ if __name__ == "__main__":
+ 	import sys
+ 	if not sys.argv[1:]:
+-		print """For testing run:
++		print("""For testing run:
+ 	synchronous server
+ or
+ 	synchronous client
+-from the command line."""
++from the command line.""")
+ 		sys.exit( 1 )
+ 		
+ 	if sys.argv[1] == 'server':
+@@ -105,7 +105,7 @@ from the command line."""
+ 				),
+ 			),
+ 		)
+-		print 'Starting listening agent'
++		print('Starting listening agent')
+ 		reactor.run()
+ 	else:
+ 		from twistedsnmp import agentproxy, snmpprotocol
+@@ -117,5 +117,5 @@ from the command line."""
+ 			port = 20161,
+ 		)
+ 		proxy.verbose = 1
+-		print synchronous( 0, proxy.getTable, ('.1.3.6.1.2.1.1',) )
+-		
+\ No newline at end of file
++		print(synchronous( 0, proxy.getTable, ('.1.3.6.1.2.1.1',) ))
++		
+diff --git a/v3/agentproxy.py b/v3/agentproxy.py
+index 53da915..528d804 100644
+--- a/v3/agentproxy.py
++++ b/v3/agentproxy.py
+@@ -80,12 +80,12 @@ class AgentProxy:
+ 			request = self.encode(oids, self.community)
+ 			key = self.getRequestKey( request )
+ 			self.send(request.encode())
+-		except socket.error, err:
++		except socket.error as err:
+ 			return defer.fail(failure.Failure())
+ 		def asDictionary( value ):
+ 			try:
+ 				return dict(value)
+-			except Exception, err:
++			except Exception as err:
+ 				log.error( """Failure converting query results %r to dictionary: %s""", value, err )
+ 				return {}
+ 		df = defer.Deferred()
+@@ -115,7 +115,7 @@ class AgentProxy:
+ 			return response
+ 		try:
+ 			self.send(request.encode())
+-		except socket.error, err:
++		except socket.error as err:
+ 			return defer.fail(failure.Failure())
+ 		df = defer.Deferred()
+ 		df.addCallback( raiseOnError )
+@@ -348,7 +348,7 @@ class AgentProxy:
+ 					key = self.getRequestKey( request )
+ 					try:
+ 						self.send(request.encode())
+-					except socket.error, err:
++					except socket.error as err:
+ 						df.errback( failure.Failure() )
+ 						return
+ 					else:
+@@ -360,6 +360,6 @@ class AgentProxy:
+ 						return
+ 				log.debug( """timeout raising error: %r""", self )
+ 				df.errback(defer.TimeoutError('SNMP request timed out'))
+-		except Exception, err:
++		except Exception as err:
+ 			df.errback( failure.Failure() )
+ 		
