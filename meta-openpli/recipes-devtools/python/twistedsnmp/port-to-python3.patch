@@ -1,5 +1,5 @@
 diff --git a/agent.py b/agent.py
-index aede41f..418429c 100644
+index aede41f..70123ba 100644
 --- a/agent.py
 +++ b/agent.py
 @@ -53,7 +53,7 @@ class Agent:
@@ -65,7 +65,27 @@ index aede41f..418429c 100644
  					# XXX is the use of base here correct?
  					oid = base
  					value = v2c.EndOfMibView()
-@@ -380,17 +380,17 @@ class Agent:
+@@ -356,11 +356,11 @@ class Agent:
+ 					if specificType is None:
+ 						for key,value in specifics.items():
+ 							if value:
+-								yield gType, key, value 
+-					elif specifics.has_key( specificType ):
++								yield gType, key, value
++					elif specificType in specifics:
+ 						if specifics[ specificType ]:
+ 							yield gType, specificType, specifics[ specificType ]
+-					elif specifics.has_key( None ):
++					elif None in specifics:
+ 						if specifics[ None ]:
+ 							yield gType, None, specifics[None]
+ 	
+@@ -376,21 +376,21 @@ class Agent:
+ 		for (generic,specific,values) in self.findTrapHandlers(
+ 			genericType, specificType
+ 		):
+-			if values.has_key( managerIP ):
++			if managerIP in values:
  				try:
  					del values[ managerIP ]
  					count += 1
@@ -143,9 +163,27 @@ index f6fb2b4..a7b73e7 100644
  				else:
  					return sortableToOID(key),self.returnValue(value,key)
 diff --git a/bsdoidstore.py b/bsdoidstore.py
-index 4e12e0b..2587eab 100644
+index 4e12e0b..7031692 100644
 --- a/bsdoidstore.py
 +++ b/bsdoidstore.py
+@@ -92,7 +92,7 @@ class BSDOIDStore(oidstore.OIDStore):
+ 		inclusive operation).
+ 		"""
+ 		encoded = oidToSortable( base )
+-		if self.btree.has_key( encoded ):
++		if encoded in self.btree:
+ 			return base, self.btree[ encoded ]
+ 		raise errors.OIDNameError( base, message="No such OID" )
+ 	def setValue( self, oid, value):
+@@ -103,7 +103,7 @@ class BSDOIDStore(oidstore.OIDStore):
+ 		"""
+ 		old = None
+ 		oid = oidToSortable( oid )
+-		if self.btree.has_key( oid ):
++		if oid in self.btree:
+ 			try:
+ 				old = self.btree[ oid ]
+ 			except KeyError:
 @@ -134,7 +134,7 @@ class BSDOIDStore(oidstore.OIDStore):
  			encoded = oidToSortable( base )
  			oid, value = self.btree.set_location(encoded)
@@ -250,7 +288,7 @@ index 8f99e97..8376845 100644
  	ipAddress = sys.argv[1]
  	# choose random port in range 25000 to 30000
 diff --git a/doc/pydoc/pydoc2.py b/doc/pydoc/pydoc2.py
-index 8fc4d33..1f63b6d 100644
+index 8fc4d33..bb5aff5 100644
 --- a/doc/pydoc/pydoc2.py
 +++ b/doc/pydoc/pydoc2.py
 @@ -42,7 +42,7 @@ def classify_class_attrs(cls):
@@ -262,6 +300,15 @@ index 8fc4d33..1f63b6d 100644
  				continue
  
  		# Figure out where it was defined.
+@@ -128,7 +128,7 @@ class DefaultFormatter(pydoc.HTMLDoc):
+ 				module = sys.modules.get(modname)
+ 				if modname != name and module and hasattr(module, key):
+ 					if getattr(module, key) is base:
+-						if not cdict.has_key(key):
++						if not key in cdict:
+ 							cdict[key] = cdict[base] = modname + '.html#' + key
+ 		funcs, fdict = [], {}
+ 		for key, value in inspect.getmembers(object, inspect.isroutine):
 @@ -173,7 +173,7 @@ class DefaultFormatter(pydoc.HTMLDoc):
  
  		
@@ -311,6 +358,15 @@ index 8fc4d33..1f63b6d 100644
  			self.pending.append (specifier)
  		else:
  			self.completed[ specifier] = 1
+@@ -374,7 +374,7 @@ class PackageDocumentationGenerator:
+ 		try:
+ 			while self.pending:
+ 				try:
+-					if self.completed.has_key( self.pending[0] ):
++					if self.pending[0] in self.completed:
+ 						raise AlreadyDone( self.pending[0] )
+ 					self.info( """Start %s"""% (repr(self.pending[0])))
+ 					object = pydoc.locate ( self.pending[0] )
 @@ -387,7 +387,7 @@ class PackageDocumentationGenerator:
  				except (SystemError, SystemExit), value:
  					self.info( """   ... FAILED %s"""% (repr( value)))
@@ -340,6 +396,19 @@ index bb89bba..3f4991a 100644
 -except Exception, err:
 +except Exception as err:
  	pass
+diff --git a/massretriever.py b/massretriever.py
+index 981a866..7f1cc41 100644
+--- a/massretriever.py
++++ b/massretriever.py
+@@ -193,7 +193,7 @@ class MassRetriever( object ):
+ 			self.result[key] = set = {}
+ 		for oidObject in oids:
+ 			oidObject = oid.OID( oidObject )
+-			if not set.has_key( oidObject ):
++			if not oidObject in set:
+ 				set[oidObject] = None
+ 		return None
+ 	def printStats( self ):
 diff --git a/oidstore.py b/oidstore.py
 index 5eb1834..7832823 100644
 --- a/oidstore.py
@@ -414,7 +483,7 @@ index 99b87a4..f697524 100644
  		def run(self):
  			#need to change self.install_dir to the library dir
 diff --git a/snmpprotocol.py b/snmpprotocol.py
-index 467a0dc..6430135 100644
+index 467a0dc..c706765 100644
 --- a/snmpprotocol.py
 +++ b/snmpprotocol.py
 @@ -54,7 +54,7 @@ class SNMPProtocol(protocol.DatagramProtocol):
@@ -426,6 +495,18 @@ index 467a0dc..6430135 100644
  			key = None
  		if key in self.requests:
  			df,timer = self.requests[key]
+@@ -84,9 +84,9 @@ class SNMPProtocol(protocol.DatagramProtocol):
+ 		traps = getattr( self, '_trapRegistry', None )
+ 		if not traps:
+ 			return False
+-		if traps.has_key( address ):
++		if address in traps:
+ 			generics = traps[address]
+-		elif traps.has_key( None ):
++		elif None in traps:
+ 			generics = traps[ None ]
+ 		else:
+ 			return False
 @@ -115,7 +115,7 @@ class SNMPProtocol(protocol.DatagramProtocol):
  									callback( request, address )
  									found = True
@@ -481,9 +562,27 @@ index 467a0dc..6430135 100644
  	d.addCallbacks( onSuccess, onFailure )
  
 diff --git a/tableretriever.py b/tableretriever.py
-index 2f62ee5..f3ef824 100644
+index 2f62ee5..52d3194 100644
 --- a/tableretriever.py
 +++ b/tableretriever.py
+@@ -85,7 +85,7 @@ class TableRetriever( object ):
+ 						if current is None:
+ 							self.values[ root ] = current = {}
+ 						# avoids duplicate callbacks!
+-						if not current.has_key( key ):
++						if key not in current:
+ 							current[ key ] = value
+ 							if self.recordCallback is not None and callable(self.recordCallback):
+ 								self.recordCallback( root, key, value )
+@@ -125,7 +125,7 @@ class TableRetriever( object ):
+ 						if current is None:
+ 							values[ rootOID ] = current = {}
+ 						# avoids duplicate callbacks!
+-						if not current.has_key( key ):
++						if key not in current:
+ 							current[ key ] = value
+ 							if callback is not None:
+ 								callback( rootOID, key, value )
 @@ -189,7 +189,7 @@ class TableRetriever( object ):
  
  		try:
@@ -520,6 +619,15 @@ index 2f62ee5..f3ef824 100644
  					raise error.ProtoError( """Incorrectly formed table response: %s : %s"""%(newOIDs,err))
  
  		# Decide whether to request next item...
+@@ -410,7 +410,7 @@ class TableRetriever( object ):
+ ##					if current is None:
+ ##						values[ rootOID ] = current = {}
+ ##					# avoids duplicate callbacks!
+-##					if not current.has_key( key ):
++##					if key not in current:
+ ##						current[ key ] = value
+ ##						if callback is not None:
+ ##							callback( rootOID, key, value )
 diff --git a/test/simpleagent.py b/test/simpleagent.py
 index f5092ed..d776bba 100644
 --- a/test/simpleagent.py
@@ -533,6 +641,73 @@ index f5092ed..d776bba 100644
  			return port
  		except twisted_error.CannotListenError:
  			pass
+diff --git a/test/test_get.py b/test/test_get.py
+index 6f7893a..7d05764 100644
+--- a/test/test_get.py
++++ b/test/test_get.py
+@@ -39,7 +39,7 @@ class GetRetrieverV1( basetestcase.BaseTestCase ):
+ 
+ 		assert self.success, self.response
+ 		assert isinstance( self.response, dict ), self.response
+-		assert self.response.has_key( oid.OID('.1.3.6.1.2.1.1.1.0') ), self.response
++		assert oid.OID('.1.3.6.1.2.1.1.1.0') in self.response, self.response
+ 		assert self.response[oid.OID('.1.3.6.1.2.1.1.1.0') ] == 'Hello world!', self.response
+ 
+ 	#good
+@@ -52,12 +52,10 @@ class GetRetrieverV1( basetestcase.BaseTestCase ):
+ 
+ 		assert self.success, self.response
+ 		assert isinstance( self.response, dict ), self.response
+-		assert self.response.has_key(
+-			oid.OID('.1.3.6.1.2.1.1')
+-		), (self.response,self)
++		assert oid.OID('.1.3.6.1.2.1.1') in self.response, (self.response,self)
+ 		tableData = self.response[oid.OID('.1.3.6.1.2.1.1') ]
+ 		assert isinstance(tableData, dict)
+-		assert tableData.has_key(oid.OID('.1.3.6.1.2.1.1.1.0')), tableData
++		assert oid.OID('.1.3.6.1.2.1.1.1.0') in tableData, tableData
+ 	def test_tableGetWithStart( self ):
+ 		"""Can retrieve a tabular value?"""
+ 		d = self.client.getTable( 
+@@ -72,15 +70,13 @@ class GetRetrieverV1( basetestcase.BaseTestCase ):
+ 
+ 		assert self.success, self.response
+ 		assert isinstance( self.response, dict ), self.response
+-		assert self.response.has_key(
+-			oid.OID('.1.3.6.1.2.1.1')
+-		), (self.response,self)
++		assert oid.OID('.1.3.6.1.2.1.1') in self.response, (self.response,self)
+ 		tableData = self.response[oid.OID('.1.3.6.1.2.1.1') ]
+ 		assert isinstance(tableData, dict)
+ 		# won't have this key because started later...
+-		assert not tableData.has_key(oid.OID('.1.3.6.1.2.1.1.1.0')), tableData
++		assert not oid.OID('.1.3.6.1.2.1.1.1.0') in tableData, tableData
+ 		# should (only) have this key because started at 3...
+-		assert tableData.has_key(oid.OID('.1.3.6.1.2.1.1.4.0')), tableData
++		assert oid.OID('.1.3.6.1.2.1.1.4.0') in tableData, tableData
+ 		assert len(tableData) == 1
+ 
+ 	#good
+@@ -117,7 +113,7 @@ class GetRetrieverV1( basetestcase.BaseTestCase ):
+ 			raise self.response.value
+ 		else:
+ 			for oidObject in oids:
+-				assert self.response.has_key( oid.OID(oidObject) )
++				assert oid.OID(oidObject) in self.response
+ 	#good
+ 	def test_multiTableGetBad( self ):
+ 		oids = [
+@@ -129,8 +125,8 @@ class GetRetrieverV1( basetestcase.BaseTestCase ):
+ 		d = self.client.getTable( oids )
+ 		self.doUntilFinish( d )
+ 		for oidObject in oids[:-1]:
+-			assert self.response.has_key( oid.OID(oidObject) )
+-		assert not self.response.has_key( oid.OID(oids[-1]) ), self.response
++			assert oid.OID(oidObject) in self.response
++		assert not oid.OID(oids[-1]) in self.response, self.response
+ 	#good
+ 	def test_tableGetErrorReported( self ):
+ 		oids = [
 diff --git a/test/test_trap.py b/test/test_trap.py
 index 94050fe..3df6dd1 100644
 --- a/test/test_trap.py
