@@ -15,7 +15,6 @@ DEPENDS = " \
 	enigma2-plugin-extensions-foreca \
 	enigma2-plugin-extensions-hetweer \
 	enigma2-plugin-extensions-magentamusik360 \
-	enigma2-plugin-extensions-meteoitalia \
 	enigma2-plugin-extensions-newsreader \
 	enigma2-plugin-extensions-nfsserver \
 	enigma2-plugin-extensions-oggisport \
