@@ -7,9 +7,7 @@ inherit gitpkgv
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/ims21/HdmiTest.git;protocol=https \
-           file://Use-python3-compatible-syntax.patch \
-"
+SRC_URI = "git://github.com/ims21/HdmiTest.git;protocol=https"
 
 S="${WORKDIR}/git"
 
