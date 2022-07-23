@@ -12,8 +12,6 @@ do_install() {
         chmod a+rX ${D}${PLUGINPATH}
 }
 
-SRC_URI_append = " file://fix-temperature-url.patch"
-
 # Just a quick hack to "compile" the python parts.
 do_compile_append() {
     python3 -O -m compileall ${S}
