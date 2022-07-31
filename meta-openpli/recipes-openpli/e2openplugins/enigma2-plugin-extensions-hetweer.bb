@@ -17,8 +17,4 @@ do_compile_append() {
     python3 -O -m compileall ${S}
 }
 
-pkg_postrm_${PN}() {
-    rm -rf ${libdir}/enigma2/python/Plugins/Extensions/HetWeer
-}
-
 FILES_${PN} = "${PLUGINPATH}"
