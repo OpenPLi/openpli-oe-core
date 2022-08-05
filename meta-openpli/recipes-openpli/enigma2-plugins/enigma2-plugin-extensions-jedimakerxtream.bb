@@ -3,8 +3,6 @@ MAINTAINER = "kiddac"
 require conf/license/license-gplv2.inc
 HOMEPAGE = "https://github.com/kiddac/Jedi_Maker_Xtream"
 
-DEPENDS += "${PYTHON_PN}-backports-lzma"
-
 include ${PYTHON_PN}-package-split.inc
 
 inherit gitpkgv allarch
