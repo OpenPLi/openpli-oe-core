@@ -3,6 +3,8 @@ AUTHOR = "Maroš Ondrášek <mx3ldev@gmail.com>"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
+inherit python3-dir python3native distutils-openplugins
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RRECOMMENDS_${PN} = "enigma2-plugin-extensions-subssupport kodi"
@@ -27,31 +29,8 @@ do_install_append() {
 	else
 		install -m 0755 ${WORKDIR}/advancedsettings-empty.xml ${D}${datadir}/kodi/system/advancedsettings.xml
 	fi
-    	python3 -O -m compileall ${S}${libdir}/enigma2/python/
 }
 
-inherit python3-dir python3native
-
-FILES:${PN}-src += " \
-    ${PYTHON_SITEPACKAGES_DIR}/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*/*/*.py \
-    ${libdir}/${PYTHON_DIR}/*.py \
-    ${libdir}/${PYTHON_DIR}/*/*.py \
-    ${libdir}/${PYTHON_DIR}/*/*/*.py \
-    ${libdir}/${PYTHON_DIR}/*/*/*/*.py \
-    ${libdir}/${PYTHON_DIR}/*/*/*/*/*.py \
-    ${libdir}/${PYTHON_DIR}/*/*/*/*/*/*.py \
-    ${libdir}/enigma2/python/*.py \
-    ${libdir}/enigma2/python/*/*.py \
-    ${libdir}/enigma2/python/*/*/*.py \
-    ${libdir}/enigma2/python/*/*/*/*.py \
-    ${libdir}/enigma2/python/*/*/*/*/*.py \
-    ${libdir}/enigma2/python/*/*/*/*/*/*.py \
-    "
 FILES_${PN} = " \
     ${libdir}/enigma2/python/Plugins/Extensions/Kodi \
     ${bindir}/kodiext \
