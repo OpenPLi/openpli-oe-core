@@ -9,7 +9,7 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 VER ?= "${@bb.utils.contains('MACHINE_FEATURES', 'hisil', '-v2', '', d)}"
 
-SRC_URI = "git://github.com/zgemma-star/e2plugins.git;protocol=https"
+SRC_URI = "git://github.com/oe-alliance/e2plugins.git;protocol=https;branch=python3"
 
 PACKAGES = "${PN}"
 RDEPENDS_${PN}  = "qtwebkit"
