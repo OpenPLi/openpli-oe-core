@@ -9,4 +9,4 @@ inherit gitpkgv distutils-openplugins
 PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 
-include python3-package-split.inc
+include ../enigma2-plugins/python3-package-split-plugins.inc
