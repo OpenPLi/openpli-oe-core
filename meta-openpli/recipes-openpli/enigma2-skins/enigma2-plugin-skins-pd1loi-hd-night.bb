@@ -3,7 +3,7 @@ MAINTAINER = "pd1loi1"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://README.md;beginline=6;endline=6;md5=68b329da9893e34099c7d8ad5cb9c940"
 
-inherit gitpkgv allarch
+inherit gitpkgv allarch python3-compileall
 
 PV = "2.6.1+git${SRCPV}"
 PKGV = "2.6.1+git${GITPKGV}"
