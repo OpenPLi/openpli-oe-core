@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 DEPENDS = "freetype libtuxtxt"
 DESCRIPTION = "tuxbox tuxtxt for enigma2"
 
-inherit autotools gitpkgv pkgconfig python3native
+inherit autotools gitpkgv pkgconfig python3-compileall
 
 SRC_URI = "git://github.com/OpenPLi/tuxtxt.git;protocol=https"
 

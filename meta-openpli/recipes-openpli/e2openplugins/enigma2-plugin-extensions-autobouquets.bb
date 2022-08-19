@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "\
     file://COPYING;md5=036b9f2d884ff3a35bed6ab09bafff32 \
 "
 
-inherit gitpkgv
+inherit gitpkgv python3-compileall
 
 AUTOBOUQUETS_BRANCH ?= "release"
 PV = "2.2+git${SRCPV}"

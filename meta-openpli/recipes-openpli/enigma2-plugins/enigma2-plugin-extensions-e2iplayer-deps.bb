@@ -1,5 +1,5 @@
 SUMMARY = "Meta package for installing all dependencies for SSS' E2i Player"
-inherit allarch
+inherit allarch python3-compileall
 
 require conf/license/license-gplv2.inc
 
