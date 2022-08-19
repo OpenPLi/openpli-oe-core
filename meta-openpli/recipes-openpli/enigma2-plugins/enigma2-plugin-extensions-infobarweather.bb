@@ -16,5 +16,3 @@ do_install_append() {
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/InfoBarWeather/locale
 	cp -rf ${S}/build/lib/Extensions/InfoBarWeather/locale/ ${D}/${libdir}/enigma2/python/Plugins/Extensions/InfoBarWeather/
 }
-
-include ${PYTHON_PN}-package-split-plugins.inc
