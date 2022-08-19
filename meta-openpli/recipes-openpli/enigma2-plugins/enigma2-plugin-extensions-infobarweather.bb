@@ -3,7 +3,7 @@ MAINTAINER = "scriptmelvin"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
-inherit gitpkgv distutils-openplugins gettext
+inherit gitpkgv distutils-openplugins gettext python3-compileall
 
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"

@@ -3,13 +3,11 @@ HOMEPAGE = "https://www.linuxsat-support.com"
 MAINTAINER = "kiddac"
 require conf/license/license-gplv2.inc
 
-include ${PYTHON_PN}-package-split-plugins.inc
-
 RDEPENDS_${PN} = "${PYTHON_PN} ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-requests \
                   ${PYTHON_PN}-imaging ${PYTHON_PN}-pillow \
 "
 
-inherit gitpkgv allarch
+inherit gitpkgv allarch python3-compileall
 
 SRCREV = "${AUTOREV}"
 

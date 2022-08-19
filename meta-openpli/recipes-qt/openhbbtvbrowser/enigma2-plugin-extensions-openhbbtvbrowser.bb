@@ -7,7 +7,7 @@ file://__init__.py;md5=d41d8cd98f00b204e9800998ecf8427e \
 
 RDEPENDS_${PN} = "openhbbtvbrowser"
 
-require conf/python/python3-compileall.inc
+inherit python3-compileall
 
 inherit gitpkgv
 SRCREV = "${AUTOREV}"
