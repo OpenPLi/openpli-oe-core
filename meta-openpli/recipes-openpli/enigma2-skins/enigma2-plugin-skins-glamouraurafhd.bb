@@ -3,7 +3,7 @@ MAINTAINER = "MCelliotG"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
-inherit gitpkgv allarch
+inherit gitpkgv allarch python3-compileall
 
 PV = "6.0.5+git${SRCPV}"
 PKGV = "6.0.5+git${GITPKGV}"
