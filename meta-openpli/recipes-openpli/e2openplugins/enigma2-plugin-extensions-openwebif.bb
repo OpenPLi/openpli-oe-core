@@ -20,7 +20,7 @@ RDEPENDS_${PN} = "\
 	${PYTHON_PN}-unixadmin \
 	"
 
-inherit gittag python3-compileall
+inherit gittag
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
@@ -29,6 +29,7 @@ require openplugins-distutils.inc
 # Just a quick hack to "compile" it
 do_compile() {
 	cheetah-compile -R --nobackup ${S}/plugin
+	python3 -O -m compileall -d ${PLUGINPATH} ${S}/plugin
 }
 
 PLUGINPATH = "${libdir}/enigma2/python/Plugins/Extensions/${MODULE}"
