@@ -22,5 +22,5 @@ FILES_${PN}-src += " \
     "
 
 do_install_append_class-target () {
-    python3 -m compileall -o2 -b ${D}
+    python3 -m compileall -b ${D}
 }
