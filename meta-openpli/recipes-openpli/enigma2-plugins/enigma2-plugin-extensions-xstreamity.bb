@@ -11,8 +11,8 @@ inherit gitpkgv allarch python3-compileall
 
 SRCREV = "${AUTOREV}"
 
-PV = "3.69+git${SRCPV}"
-PKGV = "3.69+git${GITPKGV}"
+PV = "3.71+git${SRCPV}"
+PKGV = "3.71+git${GITPKGV}"
 
 SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=https"
 
@@ -35,7 +35,6 @@ install -d ${D}${libdir}/enigma2/python/Plugins/Extensions/XStreamity
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Components/Converter/*.py ${D}${libdir}/enigma2/python/Components/Converter/
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Components/Renderer/*.py ${D}${libdir}/enigma2/python/Components/Renderer/
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Plugins/Extensions/XStreamity/* ${D}${libdir}/enigma2/python/Plugins/Extensions/XStreamity/
-    python3 -m compileall -b ${D}
 }
 
 pkg_preinst_${PN}() {
