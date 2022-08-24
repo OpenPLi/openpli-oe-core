@@ -5,7 +5,7 @@
 import sys
 import os.path
 import collections
-import ConfigParser
+import configparser
 
 # ini files processed by this command
 SMBCONF = "/etc/samba/smb.conf"
@@ -15,18 +15,18 @@ SMBUSERCONF = "/etc/samba/smb-user.conf"
 SHAREPATH = '/etc/samba/shares'
 
 #
-# Our "Better" ConfigParser, which supports comments and a
+# Our "Better" configparser, which supports comments and a
 # toplevel section that doesn't require an INI header
 #
 
 
-class BetterConfigParser(ConfigParser.ConfigParser):
+class BetterConfigParser(configparser.ConfigParser):
 
 	# class globals
 	TOPLEVEL = "__toplevel__"             # Name of the dummy toplevel section
 
 	# override the regex, we allow spaces in option names
-	OPTCRE = ConfigParser.re.compile(
+	OPTCRE = configparser.re.compile(
 		r'(?P<option>[^:=][^:=]*)'          # very permissive!
 		r'\s*(?P<vi>[:=])\s*'                 # any number of space/tab,
 											  # followed by separator
@@ -34,7 +34,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 											  # by any # space/tab
 		r'(?P<value>.*)$'                     # everything up to eol
 		)
-	OPTCRE_NV = ConfigParser.re.compile(
+	OPTCRE_NV = configparser.re.compile(
 		r'(?P<option>[^:=][^:=]*)'          # very permissive!
 		r'\s*(?:'                             # any number of space/tab,
 		r'(?P<vi>[:=])\s*'                    # optionally followed by
@@ -62,7 +62,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 			raise ValueError('Invalid section name: %s' % section)
 
 		if section in self._sections:
-			raise ConfigParser.DuplicateSectionError(section)
+			raise configparser.DuplicateSectionError(section)
 
 		self._sections[section] = collections.OrderedDict()
 		if items is not None:
@@ -139,7 +139,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
 								# raised at the end of the file and will contain a
 								# list of all bogus lines
 								if not e:
-									e = ConfigParser.ParsingError(fpname)
+									e = configparser.ParsingError(fpname)
 								e.append(lineno, repr(line))
 
 		# if any parsing errors occurred, raise an exception
