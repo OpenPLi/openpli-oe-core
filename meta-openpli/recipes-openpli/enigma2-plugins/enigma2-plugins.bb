@@ -32,7 +32,9 @@ inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_URI = "git://github.com/OpenPLi/${BPN}.git;protocol=https;branch=python3"
+# make the origin overridable from OE config, for local mirroring
+SRC_ORIGIN ?= "git://github.com/OpenPLi/${BPN}.git;protocol=https"
+SRC_URI := "${SRC_ORIGIN};branch=python3 "
 
 EXTRA_OECONF = " \
 	BUILD_SYS=${BUILD_SYS} \

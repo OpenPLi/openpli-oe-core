@@ -112,7 +112,9 @@ PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
 
 ENIGMA2_BRANCH ?= "python3"
 
-SRC_URI = " git://github.com/OpenPLi/enigma2.git;protocol=https;branch=${ENIGMA2_BRANCH}"
+# make the origin overridable from OE config, for local mirroring
+SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https"
+SRC_URI := " ${SRC_ORIGIN};branch=${ENIGMA2_BRANCH}"
 
 LDFLAGS_prepend = " -lxml2 "
 
