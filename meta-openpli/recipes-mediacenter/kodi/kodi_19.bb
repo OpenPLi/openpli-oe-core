@@ -2,8 +2,9 @@ SUMMARY = "Kodi Media Center"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-19:"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake gettext python3-dir python3native systemd
+inherit cmake gettext python3-dir python3native
 
 DEPENDS += " \
             autoconf-native \
@@ -137,10 +138,12 @@ PACKAGECONFIG[wayland] = "-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=g
 PACKAGECONFIG[opengl] = "-DENABLE_OPENGL=ON,,"
 PACKAGECONFIG[openglesv2] = "-DENABLE_GLES=ON,,virtual/egl"
 PACKAGECONFIG[bluetooth] = ",,bluez5"
+PACKAGECONFIG[samba] = ",,samba"
 PACKAGECONFIG[lcms] = ",,lcms"
 PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
+PACKAGECONFIG[systemd] = ",,,kodi-systemd-service"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
 
 # Compilation tunes
@@ -152,7 +155,7 @@ PACKAGECONFIG[testing] = "-DENABLE_TESTING=ON,-DENABLE_TESTING=0FF,googletest"
 LDFLAGS += "${TOOLCHAIN_OPTIONS}"
 LDFLAGS_append_mipsarch = " -latomic -lpthread"
 LDFLAGS_append_arm = " -lpthread"
-EXTRA_OECMAKE:append:mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
+EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 
 # Allow downloads during internals build
 do_compile[network] = "1"
@@ -201,9 +204,6 @@ EXTRA_OECMAKE = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
-FULL_OPTIMIZATION:armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
-FULL_OPTIMIZATION:armv7ve = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
-BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
 export HOST_SYS
@@ -226,6 +226,9 @@ do_configure_prepend() {
 FILES_${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
 FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
+# for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
+# in RDEPENDS_kodi? [file-rdeps]
+#
 INSANE_SKIP_${PN} = "file-rdeps"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
@@ -281,4 +284,3 @@ RRECOMMENDS_${PN}_append_libc-glibc = " \
 
 # customizations should be in the BSP layers
 require kodi_19.inc
-PACKAGE_ARCH = "${MACHINE_ARCH}"
