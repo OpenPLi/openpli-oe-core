@@ -9,7 +9,7 @@ DEPENDS += "expat"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-SRCREV = "${AUTOREV}"
+SRCREV = "c6e2bbe16ce284cab2b6c4bc98d551a99db8a32b"
 
 PV = "19.4.0+gitr${SRCPV}"
 
