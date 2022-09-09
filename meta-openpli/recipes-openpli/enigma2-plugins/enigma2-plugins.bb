@@ -54,6 +54,8 @@ FILES_enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 CONFFILES_enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 
 FILES_enigma2-plugin-extensions-babelzapper += "${sysconfdir}/babelzapper"
+FILES_enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
+FILES_enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
 
 FILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 CONFFILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
