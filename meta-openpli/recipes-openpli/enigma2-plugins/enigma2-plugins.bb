@@ -75,6 +75,8 @@ DEPENDS = " \
 	${PYTHON_PN}-pyopenssl \
 	streamripper \
 	${PYTHON_PN}-mutagen \
+	${PYTHON_PN}-pyusb \
+	${PYTHON_PN}-simplejson \
 	${PYTHON_PN}-six-native \
 	${PYTHON_PN}-twisted \
 	${PYTHON_PN}-daap \
