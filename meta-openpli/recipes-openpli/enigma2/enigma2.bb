@@ -110,7 +110,7 @@ inherit gitpkgv setuptools3
 PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
 PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
 
-ENIGMA2_BRANCH ?= "python3"
+ENIGMA2_BRANCH ?= "develop"
 
 # make the origin overridable from OE config, for local mirroring
 SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https"
