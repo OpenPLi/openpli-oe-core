@@ -18,7 +18,6 @@ PACKAGES += "\
 RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
 RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
-RDEPENDS_enigma2-plugin-extensions-lcd4linux = "enigma2-plugin-extensions-lcd4linuxplugin"
 RDEPENDS_enigma2-plugin-systemplugins-satipclient = "satipclient"
 
 RRECOMMENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
@@ -84,6 +83,7 @@ DEPENDS = " \
 	libcddb \
 	dvdbackup \
 	libtirpc \
+	enigma2-plugin-extensions-lcd4linuxplugin \
 	"
 
 python populate_packages_prepend () {
