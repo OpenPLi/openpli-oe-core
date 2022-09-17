@@ -10,8 +10,8 @@ SRCREV = "${AUTOREV}"
 S = "${WORKDIR}/git/lcd4linux/src"
 
 do_install() {
-	install -d ${D}/${libdir}/enigma2/python/Plugins/LCD4linux/
-	cp -rf ${S}/plugin.py ${D}/${libdir}/enigma2/python/Plugins/LCD4linux/plugin.py
+	install -d ${D}/${libdir}/enigma2/python/Plugins/Extensions/LCD4linux/
+	cp -rf ${S}/plugin.py ${D}/${libdir}/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py
 }
 
-FILES_${PN} = "${libdir}/enigma2/python/Plugins/LCD4linux/plugin.py"
+FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py"
