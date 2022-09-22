@@ -22,6 +22,7 @@ DEPENDS = " \
 	enigma2-plugin-extensions-permanentvfdclock \
 	enigma2-plugin-extensions-ppanel \
 	enigma2-plugin-extensions-remotecontrolchannel \
+	enigma2-plugin-extensions-remotechannelstreamconverter \
 	enigma2-plugin-extensions-screenposition \
 	enigma2-plugin-extensions-shootyourscreen \
 	enigma2-plugin-extensions-streaminterface \
