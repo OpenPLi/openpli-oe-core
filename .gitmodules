@@ -75,7 +75,7 @@
 	url = https://github.com/kueken/meta-uclan
 [submodule "meta-dream"]
 	path = meta-dream
-	url = https://github.com/kueken/meta-dream.git
+	url = https://github.com/neo-pli-bsps/meta-dream.git
 [submodule "meta-abcom"]
 	path = meta-abcom
 	url = https://github.com/kueken/meta-pulse4k
