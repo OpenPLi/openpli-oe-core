@@ -45,7 +45,7 @@
 	url = https://github.com/kueken/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
-	url = https://github.com/kueken/meta-sab.git
+	url = https://github.com/neo-pli-bsps/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
 	url = https://github.com/kueken/meta-xsarius.pli5.git
