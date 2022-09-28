@@ -232,15 +232,15 @@ def main():
 		sys.exit('Required directory %s not found' % SHAREPATH)
 
 	# read the smb.conf input passed
-	inputfile = BetterConfigParser()
+	inputfile = BetterConfigParser(interpolation=None)
 	inputfile.read(sys.argv[1])
 
 	# read the system smb.conf
-	smbconf = BetterConfigParser()
+	smbconf = BetterConfigParser(interpolation=None)
 	smbconf.read(SMBCONF)
 
 	# read the current smb-user.conf
-	userconf = BetterConfigParser()
+	userconf = BetterConfigParser(interpolation=None)
 	userconf.read(SMBUSERCONF)
 
 	# process the sections found in the smb.conf
