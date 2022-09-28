@@ -18,7 +18,7 @@
 	url = https://github.com/kueken/meta-hd.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
-	url = https://github.com/kueken/meta-vuplus.git
+	url = https://github.com/vu-plus/meta-vuplus.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = https://github.com/kueken/meta-xpeedc.git
