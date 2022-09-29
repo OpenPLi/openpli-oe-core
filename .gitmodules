@@ -48,7 +48,7 @@
 	url = https://github.com/neo-pli-bsps/meta-sab.git
 [submodule "meta-xsarius.pli5"]
 	path = meta-xsarius.pli5
-	url = https://github.com/kueken/meta-xsarius.pli5.git
+	url = https://github.com/pli3/meta-xsarius.pli5.git
 [submodule "meta-gigablue"]
 	path = meta-gigablue
 	url = https://github.com/kueken/meta-gigablue.git
@@ -78,10 +78,10 @@
 	url = https://github.com/neo-pli-bsps/meta-dream.git
 [submodule "meta-abcom"]
 	path = meta-abcom
-	url = https://github.com/kueken/meta-pulse4k
+	url = https://github.com/Ceryon-bsp/meta-pulse4k.git
 [submodule "meta-qviart"]
 	path = meta-qviart
-	url = https://github.com/kueken/meta-qviart.git
+	url = https://github.com/pli3/meta-qviart.git
 [submodule "meta-python2"]
 	path = meta-python2
 	url = git://git.openembedded.org/meta-python2
