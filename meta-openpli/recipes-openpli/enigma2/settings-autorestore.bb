@@ -4,7 +4,7 @@ MAINTAINER = "OpenPLi team"
 
 require conf/license/openpli-gplv2.inc
 
-PV = "2021081701"
+PV = "2022092801"
 SRC_URI = "file://settings-restore.sh file://convert-smbconf.py"
 
 # Need to tell bitbake that we have extra files installed
