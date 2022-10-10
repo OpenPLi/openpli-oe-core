@@ -24,7 +24,7 @@
 	url = https://github.com/OpenPLi-meta/meta-xpeedc.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
-	url = https://github.com/kueken/meta-zgemma.git
+	url = https://github.com/OpenPLi-meta/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
 	url = https://github.com/OpenPLi-meta/meta-miraclebox.git
@@ -42,37 +42,31 @@
 	url = https://github.com/OpenPLi-meta/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
-	url = https://github.com/kueken/meta-gfutures.git
+	url = https://github.com/OpenPLi-meta/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
 	url = https://github.com/OpenPLi-meta/meta-sab.git
-[submodule "meta-xsarius.pli5"]
-	path = meta-xsarius.pli5
-	url = https://github.com/pli3/meta-xsarius.pli5.git
 [submodule "meta-gigablue"]
 	path = meta-gigablue
-	url = https://github.com/kueken/meta-gigablue.git
+	url = https://github.com/OpenPLi-meta/meta-gigablue.git
 [submodule "meta-amiko"]
 	path = meta-amiko
 	url = https://github.com/OpenPLi-meta/meta-amiko
 [submodule "meta-edision"]
 	path = meta-edision
-	url = https://github.com/kueken/meta-edision.git
-[submodule "meta-axasuhd"]
-	path = meta-axasuhd
-	url = https://github.com/OpenPLi-meta/meta-axas.git
+	url = https://github.com/OpenPLi-meta/meta-edision.git
 [submodule "meta-maxytec"]
 	path = meta-maxytec
-	url = https://github.com/kueken/meta-maxytec
+	url = https://github.com/OpenPLi-meta/meta-maxytec.git
 [submodule "meta-octagon"]
 	path = meta-octagon
-	url = https://github.com/kueken/meta-octagon
+	url = https://github.com/OpenPLi-meta/meta-octagon.git
 [submodule "meta-xp"]
 	path = meta-xp
 	url = https://github.com/OpenPLi-meta/meta-xp.git
 [submodule "meta-uclan"]
 	path = meta-uclan
-	url = https://github.com/kueken/meta-uclan
+	url = https://github.com/OpenPLi-meta/meta-uclan.git
 [submodule "meta-dream"]
 	path = meta-dream
 	url = https://github.com/OpenPLi-meta/meta-dream.git
@@ -85,3 +79,9 @@
 [submodule "meta-python2"]
 	path = meta-python2
 	url = git://git.openembedded.org/meta-python2
+[submodule "meta-xsarius"]
+	path = meta-xsarius
+	url = https://github.com/OpenPLi-meta/meta-xsarius.git
+[submodule "meta-axas"]
+	path = meta-axas
+	url = https://github.com/OpenPLi-meta/meta-axas.git
