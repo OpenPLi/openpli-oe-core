@@ -54,7 +54,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-openpli \
 	$(CURDIR)/meta-dream \
 	$(CURDIR)/meta-vuplus \
-	$(CURDIR)/meta-xsarius.pli5 \
+	$(CURDIR)/meta-xsarius \
 	$(CURDIR)/meta-qviart \
 	$(CURDIR)/meta-xp \
 	$(CURDIR)/meta-xtrend \
@@ -69,7 +69,7 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-sab \
 	$(CURDIR)/meta-gigablue \
 	$(CURDIR)/meta-amiko \
-	$(CURDIR)/meta-axasuhd \
+	$(CURDIR)/meta-axas \
 	$(CURDIR)/meta-maxytec \
 	$(CURDIR)/meta-octagon \
 	$(CURDIR)/meta-uclan \
