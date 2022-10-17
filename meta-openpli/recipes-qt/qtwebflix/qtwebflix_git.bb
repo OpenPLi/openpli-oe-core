@@ -7,12 +7,12 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 DEPENDS = "qtwebengine upower qtwidevine"
 RDEPENDS_${PN} = "upower qtwidevine"
 
-SRCREV_qtwebflix = "54c2c1bfe36fbd9406d342e34dca24285440164e"
+SRCREV_qtwebflix = "${AUTOREV}"
 SRCREV_qtdbusextended = "34971431233dc408553245001148d34a09836df1"
 SRCREV_qtmpris = "7251898353f1f5804c9480172ad7df88c4fe7eb6"
 SRCREV_FORMAT = "qtwebflix"
 
-SRC_URI = "git://github.com/gort818/qtwebflix.git;protocol=https;name=qtwebflix \
+SRC_URI = "git://github.com/gort818/qtwebflix.git;protocol=https;name=qtwebflix;branch=master \
            git://github.com/nemomobile/qtdbusextended.git;destsuffix=git/lib/qtdbusextended;branch=master;name=qtdbusextended;protocol=https \
            git://git.merproject.org/mer-core/qtmpris.git;destsuffix=git/lib/qtmpris;branch=master;name=qtmpris;protocol=https \
            file://0001-change-useragent.patch \

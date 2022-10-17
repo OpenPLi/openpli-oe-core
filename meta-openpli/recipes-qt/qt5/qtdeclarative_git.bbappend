@@ -3,3 +3,5 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 INSANE_SKIP_${PN} += "file-rdeps"
 INSANE_SKIP_${PN}-tools += "file-rdeps"
+INSANE_SKIP_${PN}-qmlplugins += "file-rdeps"
+
