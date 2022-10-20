@@ -12,6 +12,7 @@ SRC_URI += " \
 	${@bb.utils.contains('MACHINE_FEATURES', 'eglfs-brcmstb', 'file://0001-Add-eglfs-brcmstb-support-for-INTEGRITY.patch' , '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'file://0001-Add-eglfs-libvupl-support-for-INTEGRITY.patch' , '', d)} \
 	${@bb.utils.contains('MACHINE_FEATURES', 'gb-eglfs', 'file://0001-eglfs-brcm-nexus-nx-platform.patch' , '', d)} \
+	file://0003-add-remote-buttons.patch \
 "
 
 DEPENDS_append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
