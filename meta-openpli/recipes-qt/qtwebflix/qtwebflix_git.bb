@@ -14,7 +14,7 @@ SRCREV_FORMAT = "qtwebflix"
 
 SRC_URI = "git://github.com/gort818/qtwebflix.git;protocol=https;name=qtwebflix;branch=master \
            git://github.com/nemomobile/qtdbusextended.git;destsuffix=git/lib/qtdbusextended;branch=master;name=qtdbusextended;protocol=https \
-           git://git.merproject.org/mer-core/qtmpris.git;destsuffix=git/lib/qtmpris;branch=master;name=qtmpris;protocol=https \
+           git://github.com/sailfishos/qtmpris.git;destsuffix=git/lib/qtmpris;branch=master;name=qtmpris;protocol=https \
            file://0001-change-useragent.patch \
            "
 
