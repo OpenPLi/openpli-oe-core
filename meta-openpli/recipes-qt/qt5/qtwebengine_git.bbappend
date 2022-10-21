@@ -25,7 +25,7 @@ PACKAGECONFIG[alsa] = "-feature-webengine-alsa,-no-feature-webengine-alsa,alsa-l
 PACKAGECONFIG[extensions] = "-feature-webengine-extensions,-no-feature-webengine-extensions"
 
 
-PACKAGECONFIG_append = "libwebp ffmpeg opus libvpx alsa \
+PACKAGECONFIG_append += "libwebp ffmpeg opus libvpx alsa \
                         proprietary-codecs pepper-plugins \
                         webrtc \
                        "
