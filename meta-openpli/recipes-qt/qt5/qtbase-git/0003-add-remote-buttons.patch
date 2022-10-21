@@ -1,0 +1,33 @@
+---
+ .../input/evdevkeyboard/qevdevkeyboard_defaultmap_p.h      | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/platformsupport/input/evdevkeyboard/qevdevkeyboard_defaultmap_p.h b/src/platformsupport/input/evdevkeyboard/qevdevkeyboard_defaultmap_p.h
+index 02ed8463e3..c12918f781 100644
+--- a/src/platformsupport/input/evdevkeyboard/qevdevkeyboard_defaultmap_p.h
++++ b/src/platformsupport/input/evdevkeyboard/qevdevkeyboard_defaultmap_p.h
+@@ -626,15 +626,22 @@ const QEvdevKeyboardMap::Mapping QEvdevKeyboardHandler::s_keymap_default[] = {
+     { KEY_PLAYPAUSE,    0xffff, Qt::Key_MediaTogglePlayPause,  0x00, 0x00, 0x0000 },
+     { KEY_PLAY,         0xffff, Qt::Key_MediaPlay,      0x00, 0x00, 0x0000 },
+     { KEY_FASTFORWARD,  0xffff, Qt::Key_AudioForward,   0x00, 0x00, 0x0000 },
++    { KEY_NEXTSONG,     0xffff, Qt::Key_MediaNext,      0x00, 0x00, 0x0000 },
++    { KEY_PREVIOUSSONG, 0xffff, Qt::Key_MediaPrevious,  0x00, 0x00, 0x0000 },
+     { KEY_CANCEL,       0xffff, Qt::Key_Cancel,         0x00, 0x00, 0x0000 },
+     { 248,              0xffff, Qt::Key_MicMute,        0x00, 0x00, 0x0000 },
+     // 0x160 ->
+     { KEY_SELECT,       0xffff, Qt::Key_Select,         0x00, 0x00, 0x0000 },
+     { KEY_CLEAR,        0xffff, Qt::Key_Clear,          0x00, 0x00, 0x0000 },
+     { KEY_EXIT,         0xffff, Qt::Key_Exit,           0x00, 0x00, 0x0000 },
++    { KEY_BACK,         0xffff, Qt::Key_Back,           0x00, 0x00, 0x0000 },
++    { KEY_OK,           0xffff, Qt::Key_Return,         0x00, 0x00, 0x0000 },
+     { KEY_INFO,         0xffff, Qt::Key_Info,           0x00, 0x00, 0x0000 },
+     { KEY_PROGRAM,      0xffff, Qt::Key_Guide,          0x00, 0x00, 0x0000 },
+     { KEY_CALENDAR,     0xffff, Qt::Key_Calendar,       0x00, 0x00, 0x0000 },
++    { KEY_SUBTITLE,     0xffff, Qt::Key_Subtitle,       0x00, 0x00, 0x0000 },
++    { KEY_AUDIO,        0xffff, Qt::Key_AudioCycleTrack,      0x00, 0x00, 0x0000 },
++    { KEY_VIDEO,        0xffff, Qt::Key_Video,          0x00, 0x00, 0x0000 },
+     { KEY_RED,          0xffff, Qt::Key_Red,            0x00, 0x00, 0x0000 },
+     { KEY_GREEN,        0xffff, Qt::Key_Green,          0x00, 0x00, 0x0000 },
+     { KEY_YELLOW,       0xffff, Qt::Key_Yellow,         0x00, 0x00, 0x0000 },
+-- 
+2.17.1
