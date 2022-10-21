@@ -35,7 +35,7 @@ index 21ccdda5ed64..4a4fba3580c2 100644
    }
  
    switch (decoding_loop_->DecodePacket(
-@@ -356,6 +361,73 @@ bool FFmpegVideoDecoder::OnNewFrame(AVFrame* frame) {
+@@ -356,12 +361,80 @@ bool FFmpegVideoDecoder::OnNewFrame(AVFrame* frame) {
      return false;
    }
  
@@ -109,7 +109,6 @@ index 21ccdda5ed64..4a4fba3580c2 100644
    scoped_refptr<VideoFrame> video_frame =
        reinterpret_cast<VideoFrame*>(av_buffer_get_opaque(frame->buf[0]));
    video_frame->set_timestamp(
-@@ -363,6 +436,7 @@   video_frame->set_timestamp(
        base::TimeDelta::FromMicroseconds(frame->reordered_opaque));
    video_frame->metadata()->power_efficient = false;
    output_cb_.Run(video_frame);
@@ -117,7 +116,7 @@ index 21ccdda5ed64..4a4fba3580c2 100644
    return true;
  }
  
-@@ -392,7 +466,25 @@ bool FFmpegVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config,
+@@ -391,7 +464,25 @@ bool FFmpegVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config,
    if (decode_nalus_)
      codec_context_->flags2 |= AV_CODEC_FLAG2_CHUNKS;
  
