@@ -11,8 +11,8 @@ inherit gitpkgv allarch python3-compileall
 
 SRCREV = "${AUTOREV}"
 
-PV = "3.71+git${SRCPV}"
-PKGV = "3.71+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGV}"
 
 SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=https"
 
