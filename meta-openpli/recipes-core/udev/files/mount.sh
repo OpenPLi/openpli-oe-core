@@ -17,6 +17,25 @@ do
 	fi
 done
 
+lock() {
+	LOCKFILE=/tmp/udevmount.lock
+
+	exec 200>$LOCKFILE
+
+	flock -xn 200
+	while [ $? -eq 1 ]; do
+		sleep 1
+		flock -xn 200
+	done
+
+	trap "rm -f $LOCKFILE" EXIT
+}
+
+unlock() {
+	flock -u 200
+	rm -f $LOCKFILE
+}
+
 log() {
 	# comment to enable logging
 	return
@@ -145,6 +164,9 @@ automount() {
 	readlink -fn /sys/block/$DEVBASE/device | grep -qs 'pci\|ahci\|sata'
 	EXTERNAL=$?
 
+	# make sure this next bit doesn't run concurrently
+	lock
+
 	# Figure out a mount point to use
 	LABEL=${ID_FS_LABEL}
 
@@ -197,7 +219,7 @@ automount() {
 		LABEL="$NAME"
 	fi
 
-	# Create the mountpoint for the device	
+	# Create the mountpoint for the device
 	! test -d "/media/$LABEL" && mkdir -p "/media/$LABEL"
 
 	# Silent util-linux's version of mounting auto
@@ -221,6 +243,9 @@ automount() {
 		MOUNT="$MOUNT -t auto"
 		;;
 	esac
+
+	# remove the concurrency lock
+	unlock
 
 	if ! $MOUNT $DEVNAME "/media/$LABEL"
 	then
