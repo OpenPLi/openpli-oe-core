@@ -1,5 +1,5 @@
 /build/
-/sources/
+/sources
 /meta-local/
 !/meta-local/recipes-local/my-image.bb
 
