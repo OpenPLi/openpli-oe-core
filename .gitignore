@@ -1,11 +1,11 @@
 /build/
-/.deps/
-!/meta-openpli/
-!/meta-local/
-/openembedded-core/
-/sources
-/meta-local/recipes-local/
+/sources/
+/meta-local/
 !/meta-local/recipes-local/my-image.bb
+
+/meta-openembedded/
+/openembedded-core/
+
 *.swp
 site.conf
 bblayers.conf
