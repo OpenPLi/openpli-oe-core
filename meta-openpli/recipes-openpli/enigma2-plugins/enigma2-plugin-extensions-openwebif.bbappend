@@ -117,6 +117,7 @@ python do_cleanup () {
         ('e4hd', 'e4hd.png', 'e4hd.png', 'e4hd.html'),
         ('sf8008', 'sf8008.png', 'octagon.png', 'octagon.html'),
         ('sf8008m', 'sf8008m.png', 'octagon.png', 'octagon.html'),
+        ('sfx6008', 'sfx6008.png', 'octagon3.png', 'octagon3.html'),
         ('ustym4kpro', 'ustym4kpro.png', 'uclan.png', 'uclan.html'),
         ('pulse4k', 'pulse4k.png', 'pulse4k.png', 'pulse4k.html'),
         ('pulse4kmini', 'pulse4kmini.png', 'pulse4k.png', 'pulse4k.html'),
