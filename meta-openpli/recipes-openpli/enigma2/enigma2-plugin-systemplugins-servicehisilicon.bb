@@ -34,4 +34,5 @@ FILES_${PN} = "\
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/servicehisilicon.so"
 
 FILES_${PN}-dev = "\
+	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/*.py \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/ServiceHisilicon.la"
