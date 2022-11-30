@@ -11,7 +11,7 @@ PKGV = "1.0+git${GITPKGV}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-DEPENDS = "freetype"
+DEPENDS = "freetype json-c"
 
 SRC_URI = "git://github.com/oe-alliance/openmultiboot.git;protocol=https;branch=main"
 
