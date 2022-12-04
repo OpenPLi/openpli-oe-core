@@ -13,9 +13,6 @@
 [submodule "meta-formuler"]
 	path = meta-formuler
 	url = https://github.com/OpenPLi-meta/meta-formuler.git
-[submodule "meta-hd"]
-	path = meta-hd
-	url = https://github.com/kueken/meta-hd.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
 	url = https://github.com/OpenPLi-meta/meta-vuplus.git
