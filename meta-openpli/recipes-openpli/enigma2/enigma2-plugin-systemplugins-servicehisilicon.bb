@@ -12,8 +12,8 @@ DEPENDS = "enigma2"
 RDEPENDS_${PN} = "enigma2"
 
 SRCREV = "${AUTOREV}"
-SERVICEHISILICON_BRANCH ?= "py3"
-SRC_URI = "git://github.com/kueken/servicehisilicon.git;branch=${SERVICEHISILICON_BRANCH}"
+SERVICEHISILICON_BRANCH ?= "main"
+SRC_URI = "git://github.com/OpenPLi/servicehisilicon.git;branch=${SERVICEHISILICON_BRANCH}"
 
 S = "${WORKDIR}/git"
 
