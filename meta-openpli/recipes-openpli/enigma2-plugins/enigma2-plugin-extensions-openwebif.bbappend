@@ -158,6 +158,8 @@ python do_cleanup () {
                 exception = ['h9combose.png', 'h9twinse.png']
             elif x[0] == 'sf8008':
                 exception = ['sf8008s.png', 'sf8008t.png', 'sf8008c.png']
+            elif x[0] == 'sfx6008':
+                exception = ['sfx6008.png', 'sfx6018.png']
             break
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
