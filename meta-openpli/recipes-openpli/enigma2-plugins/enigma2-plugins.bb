@@ -79,6 +79,7 @@ DEPENDS = " \
 	${PYTHON_PN}-requests \
 	${PYTHON_PN}-simplejson \
 	${PYTHON_PN}-six-native \
+	${PYTHON_PN}-treq \
 	${PYTHON_PN}-twisted \
 	${PYTHON_PN}-daap \
 	libcddb \

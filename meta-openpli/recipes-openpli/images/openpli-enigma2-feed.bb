@@ -132,7 +132,6 @@ OPTIONAL_PACKAGES += " \
 	${PYTHON_PN}-youtube-dl \
 	${PYTHON_PN}-pycryptodomex \
 	${PYTHON_PN}-evdev \
-	${PYTHON_PN}-treq \
 	picocom \
 	ppp \
 	rclone \
