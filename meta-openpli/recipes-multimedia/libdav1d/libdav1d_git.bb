@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c8055cfe7548dfdaa3a6dc45d8793669"
 
 inherit gittag
 
-SRCREV ?= "${AUTOREV}"
+SRCREV ?= "f2a8fc1339d6cd72bb182ebb688f041688e39bee"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
