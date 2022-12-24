@@ -1,0 +1,25 @@
+From 5e3fc5829d7d9d956bb075c14271eb23007abc14 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Sat, 24 Dec 2022 00:39:53 +0100
+Subject: [PATCH] python3-hardlink
+
+---
+ plugin/subtitles.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugin/subtitles.py b/plugin/subtitles.py
+index e366128..63b1a8d 100644
+--- a/plugin/subtitles.py
++++ b/plugin/subtitles.py
+@@ -2976,7 +2976,7 @@ class SubsEmbeddedSelection(Screen):
+ 
+ class SubsSearchProcess(object):
+     processes = []
+-    process_path = os.path.join(os.path.dirname(__file__), 'searchsubs.py')
++    process_path = os.path.join(os.path.dirname(__file__), 'searchsubs.pyc')
+ 
+     def __init__(self):
+         self.log = SimpleLogger('SubsSearchProcess', SimpleLogger.LOG_INFO)
+-- 
+2.25.1
+

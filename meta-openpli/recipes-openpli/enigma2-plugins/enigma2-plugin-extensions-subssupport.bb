@@ -8,10 +8,11 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 RDEPENDS_${PN} = "${PYTHON_PN}-requests ${PYTHON_PN}-xmlrpc ${PYTHON_PN}-compression ${PYTHON_PN}-codecs ${PYTHON_PN}-difflib unrar"
 
-inherit autotools-brokensep gettext gittag ${PYTHON_PN}native
+inherit autotools-brokensep gettext gittag ${PYTHON_PN}native python3-compileall
 
 SRC_URI = "git://github.com/oe-mirrors/subssupport;protocol=https;branch=master"
-SRC_URI_append = " file://0001-Revert-fix-subsMenu-navigation-handleKey-crash.patch"
+SRC_URI_append = " file://0001-Revert-fix-subsMenu-navigation-handleKey-crash.patch \
+                   file://0002-python3-hardlink.patch"
 
 S = "${WORKDIR}/git"
 
