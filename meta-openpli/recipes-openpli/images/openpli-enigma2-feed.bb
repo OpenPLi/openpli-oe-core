@@ -74,6 +74,7 @@ OPTIONAL_PACKAGES += " \
 	exfat-utils \
 	exteplayer3 \
 	gdb \
+	gerbera \
 	grep \
 	gstplayer \
 	hddtemp \
