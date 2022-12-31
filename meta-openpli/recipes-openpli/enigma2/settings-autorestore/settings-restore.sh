@@ -66,6 +66,20 @@ if [ ! -f ${BACKUPDIR}/backup/.timestamp ]; then
 	exit 0
 fi
 
+if [ "$1x" == "networkx" ]; then
+	if [ -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]; then
+		echo "Restoring network config from: ${BACKUPDIR}/backup/ for ${MACADDR}"
+		tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz etc/network/* etc/wpa\* -C /
+	elif [ -f ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz ]; then
+		echo "Restoring network config from: ${BACKUPDIR}/backup/"
+		tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz etc/network/* etc/wpa\* -C /
+	else
+		echo "PLi-AutoBackup.tar.gz not found"
+		exit 1
+	fi
+	exit 0
+fi
+
 if [ -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]; then
 	echo "Restoring from: ${BACKUPDIR}/backup/ for ${MACADDR}"
 	tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz -C /
