@@ -95,6 +95,7 @@ OPTIONAL_PACKAGES += " \
 	mediainfo \
 	pv \
 	minisatip \
+	mpd \
 	mtd-utils \
 	mtools \
 	nano \
