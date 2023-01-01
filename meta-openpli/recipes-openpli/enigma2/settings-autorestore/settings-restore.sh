@@ -31,7 +31,7 @@ if [ -n ${HAS_DROPBEAR} ]; then
 	fi
 fi
 
-if [ "$1x" == "startx" ] || [ -z "$1" ]; then
+if [ "$1x" == "startx" ] || [ "$1x" == "networkx"] || [ -z "$1" ]; then
 	# Best candidate:
 	#	If a MAC Address dependent backup was found, use that
 	#	Always use the latest version
@@ -69,10 +69,10 @@ fi
 if [ "$1x" == "networkx" ]; then
 	if [ -f ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz ]; then
 		echo "Restoring network config from: ${BACKUPDIR}/backup/ for ${MACADDR}"
-		tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz etc/network/* etc/wpa\* -C /
+		tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup${MACADDR}.tar.gz etc/network/ etc/wpa\* -C /
 	elif [ -f ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz ]; then
 		echo "Restoring network config from: ${BACKUPDIR}/backup/"
-		tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz etc/network/* etc/wpa\* -C /
+		tar -xzf ${BACKUPDIR}/backup/PLi-AutoBackup.tar.gz etc/network/ etc/wpa\* -C /
 	else
 		echo "PLi-AutoBackup.tar.gz not found"
 		exit 1
