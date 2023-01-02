@@ -31,7 +31,7 @@ if [ -n ${HAS_DROPBEAR} ]; then
 	fi
 fi
 
-if [ "$1x" == "startx" ] || [ "$1x" == "networkx"] || [ -z "$1" ]; then
+if [ "$1x" == "startx" ] || [ "$1x" == "networkx" ] || [ -z "$1" ]; then
 	# Best candidate:
 	#	If a MAC Address dependent backup was found, use that
 	#	Always use the latest version
