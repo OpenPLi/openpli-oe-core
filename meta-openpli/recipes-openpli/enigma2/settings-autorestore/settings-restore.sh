@@ -3,6 +3,42 @@
 # it again later, but that may destroy settings that you did.
 # Restore files from backup dir with the most recent timestamp
 
+function restartNetwork 
+{
+	# stop network services
+	/etc/init.d/avahi-daemon stop
+	/etc/init.d/networking stop
+	killall -9 udhcpc
+	rm /var/run/udhcpc*
+
+	# enumerate network interfaces
+	local ifaces=`ip link | awk -F: '$0 !~ "lo|vir|^[^0-9]"{print $2;getline}'`
+
+	# force the interfaces down and flush them
+	for iface in $ifaces; do
+		ifdown $iface
+		ip addr flush dev $iface scope global
+	done
+
+	# restart the services
+	/etc/init.d/dbus-1 reload
+	/etc/init.d/networking start
+	/etc/init.d/avahi-daemon start
+
+	# wait until we have a network again
+	echo "**** Waiting for network ****"
+	for i in {1..60}; do
+		gw=`netstat -rn | grep UG | awk '{print $2}'`
+		if [ ! -z "$gw" ]; then
+			echo "> Online !"
+			break
+		fi
+		sleep 1
+	done
+}
+
+# ---[ main ]---------------------------------------
+
 BACKUPDIR=/media/hdd
 MACADDR=`cat /sys/class/net/eth0/address | cut -b 1,2,4,5,7,8,10,11,13,14,16,17`
 
@@ -77,6 +113,7 @@ if [ "$1x" == "networkx" ]; then
 		echo "PLi-AutoBackup.tar.gz not found"
 		exit 1
 	fi
+	restartNetwork
 	exit 0
 fi
 
@@ -90,6 +127,7 @@ else
 	echo "PLi-AutoBackup.tar.gz not found"
 	exit 1
 fi
+restartNetwork
 
 echo ${BACKUPDIR} > /tmp/backupdir
 
