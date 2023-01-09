@@ -16,7 +16,7 @@ RDEPENDS_${PN}  = "qtwebkit"
 
 S = "${WORKDIR}/git/qtstalker${VER}"
 
-QtStalker = "enigma2/python/Plugins/Extensions/QtStalker"
+QtStalker = "enigma2/python/Plugins/Extensions/Stalker"
 
 do_compile () {
 }
@@ -37,9 +37,9 @@ do_install() {
 	install -m 0755 ${S}/plugin/datasocket.py ${D}${libdir}/${QtStalker}
 	install -m 0755 ${S}/plugin/plugin.py ${D}${libdir}/${QtStalker}
 	install -m 0755 ${S}/plugin/stalker.py ${D}${libdir}/${QtStalker}
-	install -m 0755 ${S}/plugin/stalker.png ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/*.png ${D}${libdir}/${QtStalker}
 	install -d ${D}/${bindir}
-	install -m 0755 ${S}/stalker ${D}${bindir}
+	install -m 0755 ${S}/stalker* ${D}${bindir}
 }
 
 do_package_qa() {
