@@ -51,6 +51,9 @@ MACADDR=`cat /sys/class/net/eth0/address | cut -b 1,2,4,5,7,8,10,11,13,14,16,17`
 # check if we have dropbear installed
 ( test -f /etc/init.d/dropbear ) && HAS_DROPBEAR=yes
 
+# check if we have autofs installed
+( test -f /etc/init.d/autofs ) && HAS_AUTOFS=yes
+
 # Make a safety backup of the smb.conf, we may need that later
 if [ -n ${HAS_SAMBA} ]; then
 	SAMBACONF=/etc/samba/smb.conf
@@ -64,6 +67,18 @@ if [ -n ${HAS_DROPBEAR} ]; then
 	HOSTKEY=/etc/dropbear/dropbear_rsa_host_key
 	if [ -f ${HOSTKEY} ]; then
 		cp ${HOSTKEY} ${HOSTKEY}.tmp
+	fi
+fi
+
+# Make a safety backup of the auto.master and auto.net, if user need that later
+if [ -n ${HAS_AUTOFS} ]; then
+	AUTOFSMASTER=/etc/auto.master
+	if [ -f ${AUTOFSMASTER} ]; then
+		cp ${AUTOFSMASTER} ${AUTOFSMASTER}.orig
+	fi
+	AUTOFSNET=/etc/auto.net
+	if [ -f ${AUTOFSNET} ]; then
+		cp ${AUTOFSNET} ${AUTOFSNET}.orig
 	fi
 fi
 
@@ -248,6 +263,11 @@ if [ -n ${HAS_DROPBEAR} ]; then
 		# no need to for the original
 		rm -f ${HOSTKEY}.tmp
 	fi
+fi
+
+# if we have autofs installed, restart it
+if [ -n ${HAS_AUTOFS} ]; then
+	/etc/init.d/autofs restart
 fi
 
 # custom cron jobs in /etc?
