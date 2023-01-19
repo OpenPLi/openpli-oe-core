@@ -18,11 +18,11 @@ PACKAGES = "\
     gstreamer1.0-meta-debug \
     gstreamer1.0-meta-video"
 
-ALLOW_EMPTY:gstreamer1.0-meta-base = "1"
-ALLOW_EMPTY:gstreamer1.0-meta-x11-base = "1"
-ALLOW_EMPTY:gstreamer1.0-meta-audio = "1"
-ALLOW_EMPTY:gstreamer1.0-meta-debug = "1"
-ALLOW_EMPTY:gstreamer1.0-meta-video = "1"
+ALLOW_EMPTY_gstreamer1.0-meta-base = "1"
+ALLOW_EMPTY_gstreamer1.0-meta-x11-base = "1"
+ALLOW_EMPTY_gstreamer1.0-meta-audio = "1"
+ALLOW_EMPTY_gstreamer1.0-meta-debug = "1"
+ALLOW_EMPTY_gstreamer1.0-meta-video = "1"
 
 RDEPENDS:gstreamer1.0-meta-base = "\
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'gstreamer1.0-meta-x11-base', '', d)} \

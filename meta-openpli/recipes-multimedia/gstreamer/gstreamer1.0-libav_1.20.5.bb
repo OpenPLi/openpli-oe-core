@@ -24,5 +24,5 @@ EXTRA_OEMESON += " \
     -Dtests=disabled \
 "
 
-FILES:${PN} += "${libdir}/gstreamer-1.0/*.so"
-FILES:${PN}-staticdev += "${libdir}/gstreamer-1.0/*.a"
+FILES_${PN} += "${libdir}/gstreamer-1.0/*.so"
+FILES_${PN}-staticdev += "${libdir}/gstreamer-1.0/*.a"

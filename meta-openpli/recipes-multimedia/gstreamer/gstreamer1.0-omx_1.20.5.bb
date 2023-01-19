@@ -40,8 +40,8 @@ set_omx_core_name() {
 }
 do_install[postfuncs] += " set_omx_core_name "
 
-FILES:${PN} += "${libdir}/gstreamer-1.0/*.so"
-FILES:${PN}-staticdev += "${libdir}/gstreamer-1.0/*.a"
+FILES_${PN} += "${libdir}/gstreamer-1.0/*.so"
+FILES_${PN}-staticdev += "${libdir}/gstreamer-1.0/*.a"
 
 VIRTUAL-RUNTIME_libomxil ?= "libomxil"
-RDEPENDS:${PN} = "${VIRTUAL-RUNTIME_libomxil}"
+RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_libomxil}"
