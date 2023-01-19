@@ -1,5 +1,5 @@
-diff --git a/libs/gst/base/gstbaseparse.c b/libs/gst/base/gstbaseparse.c
-index 99283b8e8..3d079a609 100644
+diff --git a/gstbaseparse.c b/gstbaseparse.c
+index 99283b8..5a3e104 100644
 --- a/libs/gst/base/gstbaseparse.c
 +++ b/libs/gst/base/gstbaseparse.c
 @@ -3021,6 +3021,7 @@ gst_base_parse_chain (GstPad * pad, GstObject * parent, GstBuffer * buffer)
@@ -27,9 +27,12 @@ index 99283b8e8..3d079a609 100644
      ret = gst_base_parse_handle_buffer (parse, tmpbuf, &skip, &flush);
      tmpbuf = NULL;
  
-+     /* probably already implicitly unmapped due to adapter operation,
++    /* probably already implicitly unmapped due to adapter operation,
 +     * but for good measure ... */
 +    gst_adapter_unmap (parse->priv->adapter);
      if (ret != GST_FLOW_OK && ret != GST_FLOW_NOT_LINKED) {
        goto done;
      }
+-- 
+2.14.1
+

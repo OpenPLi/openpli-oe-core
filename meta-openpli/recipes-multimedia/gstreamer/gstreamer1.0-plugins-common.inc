@@ -1,14 +1,16 @@
-SUMMARY = "Plugins for the GStreamer multimedia framework 1.x"
-HOMEPAGE = "http://gstreamer.freedesktop.org/"
+# This .inc file contains the common setup for the gstreamer1.0-plugins-*
+# plugin set recipes.
+
+# SUMMARY is set in the actual .bb recipes
+HOMEPAGE = "https://gstreamer.freedesktop.org/"
 BUGTRACKER = "https://bugzilla.gnome.org/enter_bug.cgi?product=Gstreamer"
 SECTION = "multimedia"
 
-require gstreamer1.0-common.inc
-require gstreamer1.0-plugins-packaging.inc
-
 DEPENDS = "gstreamer1.0 glib-2.0-native"
 
-inherit pkgconfig
+inherit gettext meson pkgconfig upstream-version-is-even
+
+require gstreamer1.0-plugins-packaging.inc
 
 # Orc enables runtime JIT compilation of data processing routines from Orc
 # bytecode to SIMD instructions for various architectures (currently SSE, MMX,
@@ -16,7 +18,10 @@ inherit pkgconfig
 # This value is used in the PACKAGECONFIG values for each plugin set recipe.
 # By modifying it, Orc can be enabled/disabled in all of these recipes at once.
 GSTREAMER_ORC ?= "orc"
-
+# workaround to disable orc on mips to fix the build failure
+# {standard input}: Assembler messages:
+# {standard input}:46587: Error: branch out of range
+GSTREAMER_ORC:mips = ""
 PACKAGECONFIG[orc] = "-Dorc=enabled,-Dorc=disabled,orc orc-native"
 
 # TODO: put this in a gettext.bbclass patch (with variables to allow for
@@ -40,9 +45,3 @@ EXTRA_OEMESON += " \
 
 GIR_MESON_ENABLE_FLAG = "enabled"
 GIR_MESON_DISABLE_FLAG = "disabled"
-
-CFLAGS_append = " -Wno-deprecated-declarations"
-CFLAGS_append_sh4 = " -std=gnu99"
-
-# Dynamically generate packages for all enabled plugins
-PACKAGES_DYNAMIC = "^${PN}-.*"
