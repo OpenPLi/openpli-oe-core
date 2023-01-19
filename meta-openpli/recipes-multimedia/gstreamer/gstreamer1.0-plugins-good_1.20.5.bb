@@ -21,7 +21,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343 \
 DEPENDS += "gstreamer1.0-plugins-base libcap zlib libsoup-2.4"
 RPROVIDES_${PN}-pulseaudio += "${PN}-pulse"
 RPROVIDES_${PN}-soup += "${PN}-souphttpsrc"
-RDEPENDS_{PN}-soup += "libsoup=2.4"
+RDEPENDS_{PN}-soup = "libsoup-2.4"
 
 PACKAGECONFIG_SOUP = "soup2"
 
