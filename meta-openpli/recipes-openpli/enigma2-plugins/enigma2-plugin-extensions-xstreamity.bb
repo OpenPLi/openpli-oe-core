@@ -37,20 +37,3 @@ cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Components/Renderer/*.py ${D}${lib
 cp -rf ${S}/XStreamity/usr/lib/enigma2/python/Plugins/Extensions/XStreamity/* ${D}${libdir}/enigma2/python/Plugins/Extensions/XStreamity/
 }
 
-pkg_preinst_${PN}() {
-#!/bin/sh
-if [ -f "/etc/enigma2/X-Streamity/playlists.json" ]
-	then
-	rm -f /etc/enigma2/X-Streamity/playlists.json > /dev/null 2>&1
-fi
-
-if [ -f "/etc/enigma2/xstreamity/playlists.json" ]
-	then
-	rm -f /etc/enigma2/xstreamity/playlists.json > /dev/null 2>&1
-fi
-
-if [ -f "/etc/enigma2/xstreamity/x-playlists.json" ]
-	then
-	rm -f /etc/enigma2/xstreamity/x-playlists.json > /dev/null 2>&1
-fi
-}
