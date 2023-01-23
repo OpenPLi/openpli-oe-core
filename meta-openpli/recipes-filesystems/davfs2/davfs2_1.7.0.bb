@@ -1,15 +1,12 @@
 DESCRIPTION = "A Linux file system driver that allows you to mount a WebDAV server as a disk drive."
 SECTION = "network"
 PRIORITY = "optional"
-HOMEPAGE = "http://dav.sourceforge.net"
+HOMEPAGE = "https://git.savannah.nongnu.org/cgit/davfs2.git/"
 DEPENDS = "gettext-native neon"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=8f0e2cd40e05189ec81232da84bd6e1a"
 
-PR = "r0"
-
-SRC_URI[md5sum] = "930487ab22664a73fa8938483752eb03"
-SRC_URI[sha256sum] = "2e6b675685bd917772be60f0999ae098c80f79ff20dc131e8fec4547cbb63b50"
+SRC_URI[sha256sum] = "251db75a27380cca1330b1b971700c5e5dcc0c90e5a47622285f0140edfe3a2f"
 
 SRC_URI = "http://download.savannah.nongnu.org/releases/davfs2/${P}.tar.gz \
            file://neon-config \
