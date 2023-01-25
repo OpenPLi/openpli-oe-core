@@ -82,6 +82,7 @@ RDEPENDS_${PN} = "\
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
 	${GST_UGLY_RDEPS} \
+	libsoup-2.4 \
 	"
 
 RRECOMMENDS_${PN} = "\
