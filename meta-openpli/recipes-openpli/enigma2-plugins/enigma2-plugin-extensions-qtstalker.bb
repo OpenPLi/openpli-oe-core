@@ -3,7 +3,7 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
 
-inherit gitpkgv autotools pkgconfig
+inherit gitpkgv autotools pkgconfig python3-compileall
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
@@ -16,46 +16,38 @@ RDEPENDS:${PN}  = "qtwebkit ${PYTHON_PN}-netifaces"
 
 S = "${WORKDIR}/git/qtstalker${VER}"
 
-QtStalker = "enigma2/python/Plugins/Extensions/QtStalker"
+QtStalker = "enigma2/python/Plugins/Extensions/Stalker"
 
 do_compile () {
 }
 
-FILES:${PN} =  "${bindir} ${libdir} /usr/share/stalker"
+FILES_${PN} =  " \
+	${bindir} \
+	${libdir}/${QtStalker} \
+	${datadir}/stalker \
+"
 
-do_install(){
-	install -d ${D}${libdir}/enigma2/python/Plugins/Extensions/Stalker
-	install -m 0755 ${S}/plugin/*.py ${D}${libdir}/enigma2/python/Plugins/Extensions/Stalker
-	install -m 0755 ${S}/plugin/*.png ${D}${libdir}/enigma2/python/Plugins/Extensions/Stalker
-
+do_install() {
+	install -d ${D}${libdir}/${QtStalker}
+	install -d ${D}${datadir}/stalker
+	cp -rp ${S}${datadir}/stalker/* ${D}${datadir}/stalker/
+	chmod -R a+rX ${D}${datadir}/stalker/
+	install -m 0755 ${S}/plugin/__init__.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/browser.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/datasocket.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/plugin.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/stalker.py ${D}${libdir}/${QtStalker}
+	install -m 0755 ${S}/plugin/*.png ${D}${libdir}/${QtStalker}
 	install -d ${D}/${bindir}
-	install -m 0755 ${S}/stalker* ${D}/${bindir}
-
-	cp -rp ${S}/plugin/locale ${D}${libdir}/enigma2/python/Plugins/Extensions/Stalker
-
-	install -d ${D}/usr/share/stalker
-	cp -rp ${S}/usr/share/stalker/* ${D}/usr/share/stalker/
-	chmod -R a+rX ${D}/usr/share/stalker/
+	install -m 0755 ${S}/stalker* ${D}${bindir}
 }
 
-pkg_postinst_ontarget:${PN}(){
-#!/bin/sh
-ln -sf /usr/share/fonts /usr/lib/fonts
-exit 0
+do_package_qa() {
 }
-
-pkg_postrm:${PN} () {
-#!/bin/sh
-rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Stalker
-exit 0
-}
-
-
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 # prevent 'double stripping' our binaries, which will break them
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
-do_package_qa[noexec] = "1"
 
 INSANE_SKIP_${PN} += "already-stripped"
