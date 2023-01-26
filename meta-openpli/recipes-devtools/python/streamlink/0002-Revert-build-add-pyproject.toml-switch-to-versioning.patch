@@ -41,13 +41,13 @@ index 00000000..f99370cf
 +    raise NotImplementedError
 +    if __name__ == .__main__.:
 diff --git a/MANIFEST.in b/MANIFEST.in
-index 28e974ec..f04e2328 100644
+index cbc1c60f..417268a4 100644
 --- a/MANIFEST.in
 +++ b/MANIFEST.in
-@@ -3,6 +3,8 @@ include CHANGELOG.md
- include README.md
+@@ -4,6 +4,8 @@ include README.md
  include LICENSE*
  include *requirements.txt
+ include icon.svg
 +include src/streamlink/_version.py
 +include versioneer.py
  
