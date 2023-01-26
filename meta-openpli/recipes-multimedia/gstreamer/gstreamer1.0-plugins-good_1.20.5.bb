@@ -82,4 +82,4 @@ EXTRA_OEMESON += " \
     -Dwaveform=disabled \
 "
 
-FILES_${PN}-equalizer += "${datadir}/gstreamer-1.0/presets/*.prs"
+FILES:${PN}-equalizer += "${datadir}/gstreamer-1.0/presets/*.prs"
