@@ -7,7 +7,7 @@ PLUGINNAME = "enigma2-plugin-extensions-tmbd"
 require dima-plugins.inc
 
 RDEPENDS_${PN} = " \
-	${PYTHON_PN}-twisted-web \
+	${PYTHON_PN}-treq \
 	${PYTHON_PN}-xml \
 	${PYTHON_PN}-shell \
 	${PYTHON_PN}-misc \
