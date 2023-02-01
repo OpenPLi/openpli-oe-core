@@ -2,6 +2,11 @@ SUMMARY = "Kodi Media Center"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-19:"
 
+PROVIDES += "virtual/kodi"
+RPROVIDES_${PN} += "virtual/kodi"
+PROVIDES += "kodi"
+RPROVIDES_${PN} += "kodi"
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit cmake gettext python3-dir python3native

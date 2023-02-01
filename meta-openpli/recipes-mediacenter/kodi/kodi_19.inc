@@ -24,7 +24,7 @@ SRC_URI_append_vuduo4k = " file://vuplus-fix-exception-duo4k.patch"
 SRC_URI_append_vuduo4kse = " file://vuplus-fix-exception-duo4k.patch"
 
 
-PV = "19.4+gitr${SRCPV}"
+PV = "19.5+gitr${SRCPV}"
 KODIURI ?= "git://github.com/xbmc/xbmc.git;branch=Matrix;protocol=https \
 "
 
@@ -33,7 +33,7 @@ KODIWORKDIR ?= "${WORKDIR}/git"
 KODIPATCHES ?= ""
 KODIADDONS ?= ""
 SRC_URI = "${KODIURI} ${KODIPATCHES} ${KODIADDONS}"
-SRCREV = "813a194c4e8d3f9bcfd4c18b04be0fd596036f84"
+SRCREV = "f8fdeb6b1b1a7b753e1559d34a98cea62b4920d9"
 
 S = "${KODIWORKDIR}"
 LICENSE = "GPLv2"
