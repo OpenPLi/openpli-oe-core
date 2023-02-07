@@ -1,4 +1,6 @@
-SUMMARY = "kodi inputstream addon for several manifest types"
+SUMMARY = "Kodi inputstream addon for several manifest types"
+HOMEPAGE = "https://github.com/peak3d/inputstream.adaptive"
+BUGTRACKER = "https://github.com/peak3d/inputstream.adaptive/issues"
 
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://src/main.cpp;beginline=1;endline=17;md5=5eac1e215251c8f88d799f80ed45d5c0"

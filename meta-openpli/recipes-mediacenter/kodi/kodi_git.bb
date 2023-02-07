@@ -1,86 +1,89 @@
 SUMMARY = "Kodi Media Center"
+DESCRIPTION = "Kodi is an award-winning free and open source home theater/media \ 
+center software and entertainment hub for digital media. With its beautiful \
+interface and powerful skinning engine, it's available for Android, BSD, Linux, \
+macOS, iOS and Windows."
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-19:"
-
-PROVIDES += "virtual/kodi"
-RPROVIDES_${PN} += "virtual/kodi"
-PROVIDES += "kodi"
-RPROVIDES_${PN} += "kodi"
+HOMEPAGE = "https://kodi.tv/"
+BUGTRACKER = "https://github.com/xbmc/xbmc/issues"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit cmake gettext python3-dir python3native
+require ${BPN}.inc
+require kodi-extra.inc
+
+inherit cmake pkgconfig gettext python3-dir python3native systemd
 
 DEPENDS += " \
-            autoconf-native \
-            automake-native \
-            curl-native \
-            flatbuffers-native \
-            git-native \
-            googletest-native \
-            gperf-native \
-            jsonschemabuilder-native \
-            nasm-native \
-            swig-native \
-            texturepacker-native \
-            unzip-native \
-            yasm-native \
-            zip-native \
-            \
-            avahi \
-            boost \
-            bzip2 \
-            crossguid \
-            curl \
-            dcadec \
-            enca \
-            expat \
-            faad2 \
-            ffmpeg \
-            flatbuffers \
-            fmt \
-            fstrcmp \
-            fontconfig \
-            fribidi \
-            glib-2.0 \
-            giflib \
-            harfbuzz \
-            libass \
-            libbluray \
-            libcdio \
-            libcec \
-            libdvdnav \
-            libdvdcss \
-            libdvdread \
-            libudfread \
-            libinput \
-            libmicrohttpd \
-            libmms \
-            libmodplug \
-            libnfs \
-            libpcre \
-            libplist \
-            libsamplerate0 \
-            libssh \
-            libtinyxml \
-            libusb1 \
-            libxkbcommon \
-            libxml2 \
-            libxslt \
-            lzo \
-            mpeg2dec \
-            python3 \
-            rapidjson \
-            samba \
-            spdlog \
-            sqlite3 \
-            taglib \
-            udev \
-            virtual/egl \
-            wavpack \
-            yajl \
-            zlib \
-           "
+autoconf-native \
+automake-native \
+curl-native \
+flatbuffers-native \
+git-native \
+googletest-native \
+gperf-native \
+kodi-tools-jsonschemabuilder-native \
+nasm-native \
+swig-native \
+kodi-tools-texturepacker-native \
+unzip-native \
+yasm-native \
+zip-native \
+\
+avahi \
+boost \
+bzip2 \
+crossguid \
+curl \
+dcadec \
+enca \
+expat \
+faad2 \
+ffmpeg \
+flatbuffers \
+fmt \
+fstrcmp \
+fontconfig \
+fribidi \
+glib-2.0 \
+giflib \
+harfbuzz \
+libass \
+libbluray \
+libcdio \
+libcec \
+libdvdnav \
+libdvdcss \
+libdvdread \
+libudfread \
+libinput \
+libmicrohttpd \
+libmms \
+libmodplug \
+libnfs \
+libpcre \
+libplist \
+libsamplerate0 \
+libssh \
+libtinyxml \
+libusb1 \
+libxkbcommon \
+libxml2 \
+libxslt \
+lzo \
+mpeg2dec \
+python3 \
+rapidjson \
+samba \
+spdlog \
+sqlite3 \
+taglib \
+udev \
+virtual/egl \
+wavpack \
+yajl \
+zlib \
+ "
 
 # 'patch' doesn't support binary diffs
 PATCHTOOL = "git"
@@ -115,7 +118,7 @@ SRC_URI_append += " \
 
 
 # breaks compilation
-CCACHE = ""
+CCACHE_DISABLE = "1"
 ASNEEDED = ""
 
 ACCEL ?= ""
@@ -148,7 +151,6 @@ PACKAGECONFIG[lcms] = ",,lcms"
 PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
-PACKAGECONFIG[systemd] = ",,,kodi-systemd-service"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
 
 # Compilation tunes
@@ -219,26 +221,23 @@ export PYTHON_DIR
 
 export TARGET_PREFIX
 
-do_configure_prepend() {
-        # Ensure 'nm' can find the lto plugins 
-        liblto=$(find ${STAGING_DIR_NATIVE} -name "liblto_plugin.so.0.0.0")
-        mkdir -p ${STAGING_LIBDIR_NATIVE}/bfd-plugins
-        ln -sf $liblto ${STAGING_LIBDIR_NATIVE}/bfd-plugins/liblto_plugin.so
+do_configure:prepend() {
+	# Ensure 'nm' can find the lto plugins 
+	liblto=$(find ${STAGING_DIR_NATIVE} -name "liblto_plugin.so.0.0.0")
+	mkdir -p ${STAGING_LIBDIR_NATIVE}/bfd-plugins
+	ln -sf $liblto ${STAGING_LIBDIR_NATIVE}/bfd-plugins/liblto_plugin.so
 
-        sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
+	sed -i -e 's:CMAKE_NM}:}${TARGET_PREFIX}gcc-nm:' ${S}/xbmc/cores/DllLoader/exports/CMakeLists.txt
 }
 
-FILES_${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
-FILES_${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
+INSANE_SKIP:${PN} = "rpaths"
 
-# for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
-# in RDEPENDS_kodi? [file-rdeps]
-#
-INSANE_SKIP_${PN} = "file-rdeps"
+FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
+FILES:${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
 # OpenGL builds need glxinfo, that's in mesa-demos
-RRECOMMENDS_${PN}_append = " \
+RRECOMMENDS:${PN}:append = " \
                              libcec \
                              libcurl \
                              libnfs \
@@ -275,17 +274,13 @@ RRECOMMENDS_${PN}_append = " \
                              alsa-plugins \
                            "
 
-RRECOMMENDS_${PN}_append_libc-glibc = " \
-                                        glibc-charmap-ibm850 \
-                                        glibc-gconv-ibm850 \
-                                        glibc-charmap-ibm437 \
-                                        glibc-gconv-ibm437 \
-                                        glibc-gconv-unicode \
-                                        glibc-gconv-utf-32 \
-                                        glibc-charmap-utf-8 \
-                                        glibc-localedata-en-us \
-                                      "
-
-
-# customizations should be in the BSP layers
-require kodi_19.inc
+RRECOMMENDS:${PN}:append:libc-glibc = " \
+  glibc-charmap-ibm850 \
+  glibc-gconv-ibm850 \
+  glibc-charmap-ibm437 \
+  glibc-gconv-ibm437 \
+  glibc-gconv-unicode \
+  glibc-gconv-utf-32 \
+  glibc-charmap-utf-8 \
+  glibc-localedata-en-us \
+"

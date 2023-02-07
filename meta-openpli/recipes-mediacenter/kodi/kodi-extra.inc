@@ -22,19 +22,3 @@ SRC_URI_append_osmini4k = " file://0001-Add-initial-support-for-V4L2-mem2mem-dec
 # meta-vuplus
 SRC_URI_append_vuduo4k = " file://vuplus-fix-exception-duo4k.patch"
 SRC_URI_append_vuduo4kse = " file://vuplus-fix-exception-duo4k.patch"
-
-
-PV = "19.5+gitr${SRCPV}"
-KODIURI ?= "git://github.com/xbmc/xbmc.git;branch=Matrix;protocol=https \
-"
-
-KODIWORKDIR ?= "${WORKDIR}/git"
-
-KODIPATCHES ?= ""
-KODIADDONS ?= ""
-SRC_URI = "${KODIURI} ${KODIPATCHES} ${KODIADDONS}"
-SRCREV = "f8fdeb6b1b1a7b753e1559d34a98cea62b4920d9"
-
-S = "${KODIWORKDIR}"
-LICENSE = "GPLv2"
-LIC_FILES_CHKSUM ?= "file:///${WORKDIR}/git/LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
