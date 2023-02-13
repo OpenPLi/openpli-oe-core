@@ -90,7 +90,7 @@ PATCHTOOL = "git"
 
 
 # stb, egl, players
-SRC_URI_append += " \
+SRC_URI_append = " \
            file://0001-flatbuffers-19.patch \
            file://0002-readd-Touchscreen-settings.patch \
            file://0003-crossguid-0.2.patch \
@@ -101,7 +101,7 @@ SRC_URI_append += " \
            "
 
 # stb, egl, players
-SRC_URI_append += " \
+SRC_URI_append = " \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-cortexa15', 'file://egl/0001-EGLNativeTypeV3DNXPL.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'file://egl/0001-EGLNativeTypeV3DNXPL.patch', '', d)} \
             ${@bb.utils.contains('MACHINE_FEATURES', 'edision-cortexa15', 'file://egl/0001-EGLNativeTypeEdision.patch', '', d)} \
