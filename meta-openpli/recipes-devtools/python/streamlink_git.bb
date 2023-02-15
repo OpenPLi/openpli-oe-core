@@ -5,8 +5,11 @@ SECTION = "devel/python"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b026f0197dc4ce773b97e3dc1f55f55c"
 
+DEPENDS += "${PYTHON_PN}-versioningit-native ${PYTHON_PN}-importlib-metadata-native"
+
 RDEPENDS_${PN} = "${PYTHON_PN}-core \
 	${PYTHON_PN}-ctypes \
+	${PYTHON_PN}-futures3 \
 	${PYTHON_PN}-isodate \
 	${PYTHON_PN}-pycountry \
 	${PYTHON_PN}-lxml \
@@ -29,8 +32,6 @@ SRCREV_plugins = "${AUTOREV}"
 SRCREV_FORMAT = "streamlink_plugins"
 
 SRC_URI = " git://github.com/streamlink/streamlink;protocol=https;branch=master \
-			file://0001-Revert-build-move-imports-in-setup.py.patch \
-			file://0002-Revert-build-add-pyproject.toml-switch-to-versioning.patch \
 			git://github.com/oe-mirrors/streamlink-plugins;protocol=https;branch=master;name=plugins;destsuffix=additional-plugins \
 "
 
@@ -51,6 +52,8 @@ do_install_append() {
 	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/streamlink/plugins/.removed
 	rm -rf ${D}${datadir}
 }
+
+include ${PYTHON_PN}-package-split.inc
 
 PACKAGES = "${PN}"
 
