@@ -1,5 +1,3 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/kodi-19:"
-
 # NOTE: this should be in the conf files in the respective BSP layers
 
 # meta-edision

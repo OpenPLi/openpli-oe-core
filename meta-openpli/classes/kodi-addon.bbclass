@@ -10,7 +10,7 @@ inherit cmake pkgconfig gettext
 
 ASNEEDED = ""
 
-EXTRA_OECMAKE = " \
+EXTRA_OECMAKE:append = " \
 	  -DADDONS_TO_BUILD=inputstream.adaptive \
 	  -DADDON_SRC_PREFIX=${WORKDIR}/git \
 	  -DCMAKE_BUILD_TYPE=Debug \

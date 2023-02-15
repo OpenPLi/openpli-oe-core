@@ -12,7 +12,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 require ${BPN}.inc
 require kodi-extra.inc
 
-inherit cmake pkgconfig gettext python3-dir python3native systemd
+inherit cmake pkgconfig gettext python3-dir python3native
 
 DEPENDS += " \
 autoconf-native \
@@ -96,6 +96,7 @@ SRC_URI_append = " \
            file://0003-crossguid-0.2.patch \
            file://0004-shader-nopow.patch \
            file://0005-stb-support-19.patch \
+           file://0006-kodi.sh-set-mesa-debug.patch \
            file://0007-add-winsystemfactory-windowing-init.patch \
             \
            "
@@ -152,7 +153,6 @@ PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
-PACKAGECONFIG[systemd] = ",,,kodi-systemd-service"
 
 # Compilation tunes
 
@@ -212,6 +212,11 @@ EXTRA_OECMAKE = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
+# OECMAKE_GENERATOR="Unix Makefiles"
+#PARALLEL_MAKE = " "
+
+FULL_OPTIMIZATION:armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
+BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
 export HOST_SYS
