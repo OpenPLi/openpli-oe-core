@@ -786,7 +786,7 @@ new file mode 100644
 index 0000000000..ac7d1194bb
 --- /dev/null
 +++ b/xbmc/windowing/egl/EGLWrapper.cpp
-@@ -0,0 +1,396 @@
+@@ -0,0 +1,397 @@
 +/*
 + *      Copyright (C) 2005-2013 Team XBMC
 + *      http://xbmc.org
@@ -806,6 +806,7 @@ index 0000000000..ac7d1194bb
 + *  <http://www.gnu.org/licenses/>.
 + *
 + */
++#include "system.h"
 +
 +#ifdef HAS_EGL
 +#include "utils/log.h"

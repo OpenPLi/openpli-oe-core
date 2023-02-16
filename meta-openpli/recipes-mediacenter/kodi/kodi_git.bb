@@ -96,7 +96,6 @@ SRC_URI_append = " \
            file://0003-crossguid-0.2.patch \
            file://0004-shader-nopow.patch \
            file://0005-stb-support-19.patch \
-           file://0006-kodi.sh-set-mesa-debug.patch \
            file://0007-add-winsystemfactory-windowing-init.patch \
             \
            "
@@ -239,6 +238,7 @@ do_configure:prepend() {
 INSANE_SKIP:${PN} = "rpaths"
 
 FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
+FILES:${PN}-dev = "${includedir}"
 FILES:${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
