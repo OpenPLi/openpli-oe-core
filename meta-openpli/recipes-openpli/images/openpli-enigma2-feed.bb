@@ -103,12 +103,9 @@ OPTIONAL_PACKAGES += " \
 	net-snmp \
 	net-tools \
 	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
-	perl \
 	phodav \
 	ntfs-3g \
 	ntp \
-	ofgwrite \
-	openresolv \
 	openssh \
 	openvpn \
 	openmultiboot \

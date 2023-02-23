@@ -67,6 +67,7 @@ IMAGE_INSTALL += " \
 	libavahi-client \
 	ntpdate \
 	ofgwrite \
+	openresolv \
 	perl \
 	settings-autorestore \
 	tuxbox-common \
