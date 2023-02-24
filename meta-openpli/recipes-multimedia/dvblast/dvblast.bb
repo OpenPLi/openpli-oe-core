@@ -5,15 +5,15 @@ SECTION = "multimedia"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=ed7e492ee44e70125a5d42e118354a13"
 
-inherit gitpkgv
+inherit gittag
 
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 DEPENDS = "bitstream libev"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://code.videolan.org/videolan/dvblast.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/videolan/dvblast.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
