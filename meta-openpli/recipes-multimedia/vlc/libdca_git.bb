@@ -3,13 +3,13 @@ SECTION = "libs/multimedia"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
-inherit autotools gitpkgv
+inherit autotools gittag
 
 SRCREV = "${AUTOREV}"
-PV = "0.0.7+git${SRCPV}"
-PKGV = "0.0.7+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://code.videolan.org/videolan/libdca;protocol=https \
+SRC_URI = "git://github.com/jack2015/libdca.git;protocol=https \
         file://fix-libdts-link-path.patch"
 
 S = "${WORKDIR}/git"
