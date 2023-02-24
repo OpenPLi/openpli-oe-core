@@ -6,13 +6,13 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=7decd8ef15ab16ed5436851272b61cf7"
 CLEANBROKEN = "1"
 
-inherit gitpkgv
+inherit gitpkgv gittag
 
-PV = "1.0+git${SRCPV}"
-PKGV = "1.0+git${GITPKGV}"
+PV = "git${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://code.videolan.org/videolan/bitstream.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/videolan/bitstream.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} "
 S = "${WORKDIR}/git"
 
