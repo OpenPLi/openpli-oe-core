@@ -1,0 +1,35 @@
+From 0a690b44f474b9d1f3d503d6af9d5bdf659ddb0f Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Sun, 26 Feb 2023 21:24:22 +0100
+Subject: [PATCH] stb-3-rckey-events
+
+---
+ xbmc/platform/linux/input/LibInputKeyboard.cpp | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/platform/linux/input/LibInputKeyboard.cpp b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+index 0681cfc2e9..993cfe3201 100644
+--- a/xbmc/platform/linux/input/LibInputKeyboard.cpp
++++ b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+@@ -145,8 +145,17 @@ static const std::map<xkb_keysym_t, XBMCKey> xkbMap =
+   // XBMCK_REWIND clashes with XBMCK_MEDIA_REWIND
+   { XKB_KEY_XF86Phone, XBMCK_PHONE },
+   { XKB_KEY_XF86AudioPlay, XBMCK_PLAY },
+-  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE }
++  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE },
+   // XBMCK_FASTFORWARD clashes with XBMCK_MEDIA_FASTFORWARD
++  //Remotebuttons
++  { XKB_KEY_XF86AudioNext , XBMCK_MEDIA_NEXT_TRACK },
++  { XKB_KEY_XF86AudioPrev , XBMCK_MEDIA_PREV_TRACK },
++  { XKB_KEY_XF86Close, XBMCK_ESCAPE },
++  { XKB_KEY_XF86Display , XBMCK_z },
++  { XKB_KEY_XF86MenuKB, XBMCK_MENU },
++  { XKB_KEY_XF86Subtitle , XBMCK_l },
++  { XKB_KEY_XF86Sleep , XBMCK_SLEEP },
++  { XKB_KEY_XF86WWW , XBMCK_TAB }
+ };
+ } // namespace
+ 
+-- 
+2.25.1
+
