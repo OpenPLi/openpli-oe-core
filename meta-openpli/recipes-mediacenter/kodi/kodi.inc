@@ -30,7 +30,7 @@ INSANE_SKIP_${PN}_sx88v2 += "file-rdeps"
 INSANE_SKIP_${PN}_dual += "file-rdeps"
 #
 INSANE_SKIP_${PN}_ustym4kpro += "file-rdeps"
-INSANE_SKIP_${PN}_ustym4kottx += "file-rdeps"
+INSANE_SKIP_${PN}_ustym4ks2ottx += "file-rdeps"
 #
 INSANE_SKIP_${PN}_h7 += "file-rdeps"
 INSANE_SKIP_${PN}_h9 += "file-rdeps"
