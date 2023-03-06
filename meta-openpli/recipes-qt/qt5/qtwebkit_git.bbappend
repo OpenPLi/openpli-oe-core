@@ -17,6 +17,7 @@ SRC_URI += " \
     file://0002-Qtwebkit-without-x11.patch \
     ${@bb.utils.contains('MACHINE_FEATURES', 'no-opengl', 'file://0003-Qtwebkit-without-opengl.patch', '', d)} \
 "
+EXTRA_OECMAKE:append:arm = " -DENABLE_JIT=OFF -DUSE_SYSTEM_MALLOC=ON -DENABLE_C_LOOP=ON "
 
 # HACK Close libEGL.so issue fix rpatch
 do_install_append() {
