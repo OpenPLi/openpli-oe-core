@@ -96,9 +96,6 @@ SRC_URI_append = " \
            file://0003-crossguid-0.2.patch \
            file://0004-shader-nopow.patch \
            file://0005-stb-support-19.patch \
-           file://0006-stb-3-rckey-events.patch \
-           file://0007-add-winsystemfactory-windowing-init.patch \
-           file://0008-adapt-window-system-registration.patch \
             \
            "
 
@@ -139,7 +136,6 @@ PACKAGECONFIG ?= "${ACCEL} ${WINDOWSYSTEM} pulseaudio lcms lto \
 PACKAGECONFIG[x11] = "-DCORE_PLATFORM_NAME=x11,,libxinerama libxmu libxrandr libxtst glew"
 PACKAGECONFIG[gbm] = "-DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles,,"
 PACKAGECONFIG[stb] = "-DCORE_PLATFORM_NAME=stb,,"
-PACKAGECONFIG[raspberrypi] = "-DCORE_PLATFORM_NAME=rbpi,,userland"
 PACKAGECONFIG[amlogic] = "-DCORE_PLATFORM_NAME=aml,,"
 PACKAGECONFIG[wayland] = "-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles,,wayland waylandpp"
 
