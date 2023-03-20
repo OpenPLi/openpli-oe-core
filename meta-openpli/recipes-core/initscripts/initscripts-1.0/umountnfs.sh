@@ -5,4 +5,4 @@
 
 echo "Unmounting remote filesystems..."
 
-umount -a -f -t nfs,smbfs,cifs,ncpfs
+umount -a -f -t nfs,nfs4,smbfs,cifs,ncpfs
