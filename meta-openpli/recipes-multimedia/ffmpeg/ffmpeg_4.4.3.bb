@@ -123,28 +123,28 @@ EXTRA_OECONF = " \
     --pkg-config=pkg-config \
 "
 
-EXTRA_OECONF_append_linux-gnux32 = " --disable-asm"
+EXTRA_OECONF:append:linux-gnux32 = " --disable-asm"
 
 EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mipsisa64r6', '--disable-mips64r2 --disable-mips32r2', '', d)}"
 EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mipsisa64r2', '--disable-mips64r6 --disable-mips32r6', '', d)}"
 EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mips32r2', '--disable-mips64r6 --disable-mips32r6', '', d)}"
 EXTRA_OECONF += "${@bb.utils.contains('TUNE_FEATURES', 'mips32r6', '--disable-mips64r2 --disable-mips32r2', '', d)}"
-EXTRA_OECONF_append_mips = " --extra-libs=-latomic --disable-mips32r5 --disable-mipsdsp --disable-mipsdspr2 \
+EXTRA_OECONF:append:mips = " --extra-libs=-latomic --disable-mips32r5 --disable-mipsdsp --disable-mipsdspr2 \
                              --disable-loongson2 --disable-loongson3 --disable-mmi --disable-msa --disable-msa2"
-EXTRA_OECONF_append_riscv32 = " --extra-libs=-latomic"
-EXTRA_OECONF_append_armv5 = " --extra-libs=-latomic"
+EXTRA_OECONF:append:riscv32 = " --extra-libs=-latomic"
+EXTRA_OECONF:append:armv5 = " --extra-libs=-latomic"
 
 # gold crashes on x86, another solution is to --disable-asm but thats more hacky
 # ld.gold: internal error in relocate_section, at ../../gold/i386.cc:3684
 
-LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
+LDFLAGS:append:x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
 do_configure() {
     ${S}/configure ${EXTRA_OECONF}
 }
 
 # patch out build host paths for reproducibility
-do_compile_prepend_class-target() {
+do_compile:prepend_class-target() {
         sed -i -e "s,${WORKDIR},,g" ${B}/config.h
 }
 
@@ -158,15 +158,15 @@ PACKAGES =+ "libavcodec \
              libswresample \
              libswscale"
 
-FILES_libavcodec = "${libdir}/libavcodec${SOLIBS}"
-FILES_libavdevice = "${libdir}/libavdevice${SOLIBS}"
-FILES_libavfilter = "${libdir}/libavfilter${SOLIBS}"
-FILES_libavformat = "${libdir}/libavformat${SOLIBS}"
-FILES_libavresample = "${libdir}/libavresample${SOLIBS}"
-FILES_libavutil = "${libdir}/libavutil${SOLIBS}"
-FILES_libpostproc = "${libdir}/libpostproc${SOLIBS}"
-FILES_libswresample = "${libdir}/libswresample${SOLIBS}"
-FILES_libswscale = "${libdir}/libswscale${SOLIBS}"
+FILES:libavcodec = "${libdir}/libavcodec${SOLIBS}"
+FILES:libavdevice = "${libdir}/libavdevice${SOLIBS}"
+FILES:libavfilter = "${libdir}/libavfilter${SOLIBS}"
+FILES:libavformat = "${libdir}/libavformat${SOLIBS}"
+FILES:libavresample = "${libdir}/libavresample${SOLIBS}"
+FILES:libavutil = "${libdir}/libavutil${SOLIBS}"
+FILES:libpostproc = "${libdir}/libpostproc${SOLIBS}"
+FILES:libswresample = "${libdir}/libswresample${SOLIBS}"
+FILES:libswscale = "${libdir}/libswscale${SOLIBS}"
 
 # ffmpeg disables PIC on some platforms (e.g. x86-32)
 INSANE_SKIP_${MLPREFIX}libavcodec = "textrel"

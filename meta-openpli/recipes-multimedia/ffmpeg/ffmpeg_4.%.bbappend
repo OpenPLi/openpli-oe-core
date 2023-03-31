@@ -1,7 +1,7 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 
-PACKAGECONFIG_append = " libass libbluray libdav1d libfreetype librtmp libvorbis \
+PACKAGECONFIG:append = " libass libbluray libdav1d libfreetype librtmp libvorbis \
                         mp3lame openjpeg openssl vpx x265 libxml2 libv4l2"
 
 PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
@@ -16,7 +16,7 @@ PACKAGECONFIG[libxml2] = "--enable-libxml2,--disable-libxml2,libxml2"
 
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
-SRC_URI_append += " \
+SRC_URI:append += " \
 	file://4_02_fix_mpegts.patch \
 	file://4_10_rtsp_patch \
 	file://4_11_dxva2_patch \
@@ -60,15 +60,16 @@ EXTRA_FFCONF = " \
 	--disable-vdpau \
 	\
 	--disable-muxers \
+	--enable-muxer=ac3 \
 	--enable-muxer=adts \
 	--enable-muxer=apng \
 	--enable-muxer=asf \
+	--enable-muxer=eac3 \
 	--enable-muxer=flac \
 	--enable-muxer=mp3 \
 	--enable-muxer=h261 \
 	--enable-muxer=h263 \
 	--enable-muxer=h264 \
-	--enable-muxer=h265 \
 	--enable-muxer=hevc \
 	--enable-muxer=image2 \
 	--enable-muxer=image2pipe \
@@ -92,7 +93,6 @@ EXTRA_FFCONF = " \
 	--enable-parser=dvdsub \
 	--enable-parser=flac \
 	--enable-parser=h264 \
-	--enable-parser=h265 \
 	--enable-parser=hevc \
 	--enable-parser=mjpeg \
 	--enable-parser=mpeg4video \
@@ -107,6 +107,7 @@ EXTRA_FFCONF = " \
 	--disable-encoders \
 	--enable-encoder=aac \
 	--enable-encoder=ac3 \
+	--enable-encoder=eac3 \
 	--enable-encoder=h261 \
 	--enable-encoder=h263 \
 	--enable-encoder=h263p \
@@ -164,7 +165,6 @@ EXTRA_FFCONF = " \
 	--enable-decoder=h263i \
 	--enable-decoder=h264 \
 	--enable-decoder=h264_v4l2m2m \
-	--enable-decoder=h265 \
 	--enable-decoder=hevc \
 	--enable-decoder=hevc_v4l2m2m \
 	--enable-decoder=iac \
@@ -256,11 +256,11 @@ EXTRA_FFCONF = " \
 	--enable-demuxer=avi \
 	--enable-demuxer=dts \
 	--enable-demuxer=dash \
+	--enable-demuxer=eac3 \
 	--enable-demuxer=ffmetadata \
 	--enable-demuxer=flac \
 	--enable-demuxer=flv \
 	--enable-demuxer=h264 \
-	--enable-demuxer=h265 \
 	--enable-demuxer=hls \
 	--enable-demuxer=image2 \
 	--enable-demuxer=image2pipe \
