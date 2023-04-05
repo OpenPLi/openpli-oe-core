@@ -4,8 +4,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-openwebif.git;protocol=https"
 
-PR ="2"
-
 SRC_URI_append_dm8000 = " file://get-rid-of-orgdream-check.patch"
 SRC_URI_append = " file://0001-revert-workaround-for-non-pli-streamproxy.patch"
 
