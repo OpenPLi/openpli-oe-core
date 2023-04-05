@@ -166,7 +166,7 @@ python do_cleanup () {
             elif x[0] == 'sfx6008':
                 exception = ['sfx6008.png', 'sfx6018.png', 'sfx6008wl.png']
             elif x[0] == 'ustym4kpro':
-                exception = ['ustym4kpro.png', 'ustym4ktwin.png']
+                exception = ['ustym4kpro.png', 'ustym4ktwin.png', 'uclan3.png', 'uclan3.html']
             break
 
     for root, dirs, files in os.walk(images + 'boxes', topdown=False):
@@ -181,7 +181,7 @@ python do_cleanup () {
 
     for root, dirs, files in os.walk(keymaps + 'remotes', topdown=False):
         for name in files:
-            if target_keymap != name:
+            if target_keymap != name and name not in exception:
                 os.remove(os.path.join(root, name))
 }
 
