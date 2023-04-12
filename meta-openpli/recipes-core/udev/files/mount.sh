@@ -245,7 +245,7 @@ automount() {
 	esac
 
 	# Use the noatime mount option for SSD
-	if [ $(grep . /sys/block/$NAME/queue/rotational) == 0 ]; then
+	if [ `cat /sys/block/$DEVBASE/queue/rotational` == 0 ]; then
 		MOUNT="$MOUNT -o noatime"
 	fi
 
