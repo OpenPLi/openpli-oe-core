@@ -1,0 +1,2199 @@
+From 161c12e5465e1af2c4506f1e1a0e8af41e9e7903 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Fri, 14 Apr 2023 20:45:24 +0200
+Subject: [PATCH] 0004-stb-support
+
+---
+ addons/skin.estuary/xml/Home.xml              |   2 +-
+ cmake/platform/linux/stb.cmake                |  48 ++
+ cmake/scripts/common/ArchSetup.cmake          |   4 +
+ cmake/scripts/linux/ArchSetup.cmake           |   4 +
+ cmake/treedata/common/stb.txt                 |   1 +
+ system/settings/settings.xml                  |  14 +-
+ tools/Linux/kodi.sh.in                        |  46 +-
+ tools/depends/target/libdvdcss/Makefile       |   4 +-
+ tools/depends/target/libdvdnav/Makefile       |   4 +-
+ tools/depends/target/libdvdread/Makefile      |   5 +-
+ xbmc/addons/addoninfo/AddonInfoBuilder.cpp    |  12 +
+ .../VideoPlayer/VideoRenderers/CMakeLists.txt |   1 +
+ .../VideoShaders/CMakeLists.txt               |   1 +
+ .../VideoShaders/VideoFilterShaderGLES.cpp    |   5 +
+ xbmc/guilib/guiinfo/SystemGUIInfo.cpp         |   5 +
+ xbmc/platform/linux/PlatformLinux.cpp         |  12 +
+ xbmc/platform/linux/input/CMakeLists.txt      |   2 +-
+ .../platform/linux/input/LibInputKeyboard.cpp |  11 +-
+ xbmc/system.h                                 |  12 +
+ xbmc/system_gl.h                              |   3 +
+ xbmc/utils/EGLUtils.cpp                       |  24 +
+ xbmc/utils/GLUtils.cpp                        |   6 +-
+ xbmc/view/ViewStateSettings.cpp               |   2 +-
+ xbmc/windowing/egl/CMakeLists.txt             |  13 +
+ xbmc/windowing/egl/EGLNativeType.h            | 152 +++++
+ xbmc/windowing/egl/EGLQuirks.h                |  42 ++
+ xbmc/windowing/egl/EGLWrapper.cpp             | 397 +++++++++++++
+ xbmc/windowing/egl/EGLWrapper.h               |  76 +++
+ xbmc/windowing/egl/WinSystemSTBContext.cpp    | 124 +++++
+ xbmc/windowing/egl/WinSystemSTBContext.h      |  57 ++
+ xbmc/windowing/egl/WinSystemstb.cpp           | 522 ++++++++++++++++++
+ xbmc/windowing/egl/WinSystemstb.h             |  75 +++
+ 32 files changed, 1655 insertions(+), 31 deletions(-)
+ create mode 100644 cmake/platform/linux/stb.cmake
+ create mode 100644 cmake/treedata/common/stb.txt
+ create mode 100644 xbmc/system.h
+ create mode 100644 xbmc/windowing/egl/CMakeLists.txt
+ create mode 100644 xbmc/windowing/egl/EGLNativeType.h
+ create mode 100644 xbmc/windowing/egl/EGLQuirks.h
+ create mode 100644 xbmc/windowing/egl/EGLWrapper.cpp
+ create mode 100644 xbmc/windowing/egl/EGLWrapper.h
+ create mode 100644 xbmc/windowing/egl/WinSystemSTBContext.cpp
+ create mode 100644 xbmc/windowing/egl/WinSystemSTBContext.h
+ create mode 100644 xbmc/windowing/egl/WinSystemstb.cpp
+ create mode 100644 xbmc/windowing/egl/WinSystemstb.h
+
+diff --git a/addons/skin.estuary/xml/Home.xml b/addons/skin.estuary/xml/Home.xml
+index 9a27af758a..5277f70d48 100644
+--- a/addons/skin.estuary/xml/Home.xml
++++ b/addons/skin.estuary/xml/Home.xml
+@@ -1050,7 +1050,7 @@
+ 					<align>justify</align>
+ 					<include content="IconButton">
+ 						<param name="control_id" value="804" />
+-						<param name="onclick" value="ActivateWindow(shutdownmenu)" />
++						<param name="onclick" value="Shutdown" />
+ 						<param name="icon" value="icons/power.png" />
+ 						<param name="label" value="$LOCALIZE[33060]" />
+ 					</include>
+diff --git a/cmake/platform/linux/stb.cmake b/cmake/platform/linux/stb.cmake
+new file mode 100644
+index 0000000000..341b30cd43
+--- /dev/null
++++ b/cmake/platform/linux/stb.cmake
+@@ -0,0 +1,48 @@
++set(PLATFORM_REQUIRED_DEPS EGL LibInput Xkbcommon)
++set(PLATFORM_OPTIONAL_DEPS VAAPI)
++
++set(STB_RENDER_SYSTEM "" CACHE STRING "Render system to use with STB: \"gl\" or \"gles\"")
++
++if(ENABLE_OPENGL STREQUAL "ON")
++  list(APPEND PLATFORM_REQUIRED_DEPS OpenGl)
++  set(APP_RENDER_SYSTEM gl)
++  message(STATUS "STB_RENDER_SYSTEM=GL")
++elseif(ENABLE_GLES STREQUAL "ON")
++  list(APPEND PLATFORM_REQUIRED_DEPS OpenGLES)
++  set(APP_RENDER_SYSTEM gles)
++  message(STATUS "STB_RENDER_SYSTEM=GLES")
++else()
++  message(SEND_ERROR "You need to decide whether you want to use GL- or GLES-based rendering in combination with the STB windowing system. Please set STB_RENDER_SYSTEM to either \"gl\" or \"gles\". For normal desktop systems, you will usually want to use \"gl\".")
++endif()
++
++if(WITH_PLATFORM STREQUAL "edision-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS v3dplatform)
++elseif(WITH_PLATFORM STREQUAL "xcore-mipsel")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS v3dplatform)
++elseif(WITH_PLATFORM STREQUAL "v3d-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus)
++elseif(WITH_PLATFORM STREQUAL "v3d-mipsel")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus)
++elseif(WITH_PLATFORM STREQUAL "nextv-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus nxclient)
++elseif(WITH_PLATFORM STREQUAL "GB-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS nxpl nexus nxclient gles_init)
++elseif(WITH_PLATFORM STREQUAL "vuplus-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS KodiGLESPL dvb_base nxpl dvb_client)
++elseif(WITH_PLATFORM STREQUAL "vuplus-mipsel")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_V3D")
++  list(APPEND DEPLIBS dvb_base nxpl xbmc_base dvb_client gles_init)
++elseif(WITH_PLATFORM STREQUAL "mali-cortexa15")
++  list(APPEND PLATFORM_DEFINES "-DTARGET_MALI")
++  list(APPEND DEPLIBS mali)
++endif()
++
++list(APPEND DEPLIBS EGL GLESv2)
++list(APPEND PLATFORM_DEFINES -DEGL_NO_X11 -DTARGET_STB)
+diff --git a/cmake/scripts/common/ArchSetup.cmake b/cmake/scripts/common/ArchSetup.cmake
+index a59fcb52f7..51e2a567be 100644
+--- a/cmake/scripts/common/ArchSetup.cmake
++++ b/cmake/scripts/common/ArchSetup.cmake
+@@ -156,6 +156,10 @@ if(NOT DEFINED NEON OR NEON)
+   endif()
+ endif()
+ 
++if(PLATFORM_DEFINES)
++  add_options(ALL_LANGUAGES ALL_BUILDS ${PLATFORM_DEFINES})
++endif()
++
+ if(NOT MSVC)
+   # these options affect all code built by cmake including external projects.
+   add_options(ALL_LANGUAGES ALL_BUILDS
+diff --git a/cmake/scripts/linux/ArchSetup.cmake b/cmake/scripts/linux/ArchSetup.cmake
+index 4083483173..838c82a3f4 100644
+--- a/cmake/scripts/linux/ArchSetup.cmake
++++ b/cmake/scripts/linux/ArchSetup.cmake
+@@ -46,6 +46,10 @@ else()
+   elseif(CPU MATCHES loongarch64)
+     set(ARCH loongarch64)
+     set(NEON False)
++  elseif(CPU MATCHES "cortexa15")
++    set(ARCH arm)
++    set(NEON True)
++    set(NEON_FLAGS "-Wno-psabi -Wa,-march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mvectorize-with-neon-quad -fPIC -mcpu=cortex-a15 -mfloat-abi=hard")
+   else()
+     message(SEND_ERROR "Unknown CPU: ${CPU}")
+   endif()
+diff --git a/cmake/treedata/common/stb.txt b/cmake/treedata/common/stb.txt
+new file mode 100644
+index 0000000000..2606a0f999
+--- /dev/null
++++ b/cmake/treedata/common/stb.txt
+@@ -0,0 +1 @@
++xbmc/windowing/egl   windowing/egl    # STB
+diff --git a/system/settings/settings.xml b/system/settings/settings.xml
+index 0898ee71be..96ae0fd55c 100755
+--- a/system/settings/settings.xml
++++ b/system/settings/settings.xml
+@@ -518,7 +518,7 @@
+           <control type="list" format="string" />
+         </setting>
+         <setting id="subtitles.fontname" type="string" label="14089" help="36185">
+-          <level>1</level>
++          <level>3</level>
+           <default>DEFAULT</default>
+           <constraints>
+             <options>subtitlesfonts</options>
+@@ -710,7 +710,7 @@
+           <control type="spinner" format="integer" delayed="true"/>
+         </setting>
+         <setting id="subtitles.charset" type="string" label="735" help="36189">
+-          <level>1</level>
++          <level>3</level>
+           <default>DEFAULT</default>
+           <constraints>
+             <options>charsets</options>
+@@ -2962,7 +2962,7 @@
+         <setting id="audiooutput.processquality" type="integer" label="13505" help="36169">
+           <requirement>HAS_AE_QUALITY_LEVELS</requirement>
+           <level>2</level>
+-          <default>30</default> <!-- AE_QUALITY_MID -->
++          <default>20</default> <!-- AE_QUALITY_MID -->
+           <constraints>
+             <options>aequalitylevels</options>
+           </constraints>
+@@ -2980,7 +2980,7 @@
+         </setting>
+         <setting id="audiooutput.samplerate" type="integer" label="458" help="36523">
+           <level>2</level>
+-          <default>48000</default>
++          <default>44100</default>
+           <dependencies>
+             <dependency type="visible">
+               <and>
+@@ -2992,10 +2992,6 @@
+           <constraints>
+             <options>
+               <option label="34124">44100</option>
+-              <option label="34125">48000</option>
+-              <option label="34126">88200</option>
+-              <option label="34127">96000</option>
+-              <option label="34128">192000</option>
+               <option label="34129">352800</option>
+               <option label="34130">384000</option>
+             </options>
+@@ -3816,7 +3812,7 @@
+       <group id="2" label="14270">
+         <setting id="locale.country" type="string" label="14271" help="36115">
+           <level>0</level>
+-          <default>USA (12h)</default>
++          <default>Central Europe</default>
+           <constraints>
+             <options>regions</options>
+           </constraints>
+diff --git a/tools/Linux/kodi.sh.in b/tools/Linux/kodi.sh.in
+index 11cace29a5..be291667eb 100644
+--- a/tools/Linux/kodi.sh.in
++++ b/tools/Linux/kodi.sh.in
+@@ -26,8 +26,11 @@ exec_prefix="@exec_prefix@"
+ datarootdir="@datarootdir@"
+ LIBDIR="@libdir@"
+ APP_BINARY=$LIBDIR/${bin_name}/@APP_BINARY@
+-CRASHLOG_DIR=${CRASHLOG_DIR:-$HOME}
+-KODI_DATA=${KODI_DATA:-"${HOME}/.${bin_name}"} # mapped to special://home/
++#CRASHLOG_DIR=${CRASHLOG_DIR:-$HOME}
++#KODI_DATA=${KODI_DATA:-"${HOME}/.${bin_name}"} # mapped to special://home/
++
++export KODI_TEMP="/tmp/kodi"
++CRASHLOG_DIR=${CRASHLOG_DIR:-$KODI_TEMP}
+ 
+ # Workaround for high CPU load with nvidia GFX
+ export __GL_YIELD=USLEEP
+@@ -35,6 +38,31 @@ export __GL_YIELD=USLEEP
+ # Fix wasting RAM due to fragmentation
+ export MALLOC_MMAP_THRESHOLD_=131072
+ 
++check_media_hdd() {
++    [ -e /proc/mounts ] || return 0
++
++    exec 9<&0 < /proc/mounts
++    while read DEV MTPT REST; do
++        case $DEV in
++            /dev/sd[a-z][0-9])
++            if [ "$MTPT" == "/media/hdd" ]; then
++                export HOME="$MTPT"
++                break
++            fi
++            ;;
++	    /dev/mmcblk[0-9]p[0-9])
++            if [ "$MTPT" == "/media/mmc" ]; then
++            	export HOME="$MTPT"
++            fi
++	    ;;
++        esac
++    done
++    exec 0<&9 9<&-
++}
++
++check_media_hdd
++KODI_DATA="${HOME}/.${bin_name}"
++
+ # Check for some options used by this script
+ while [ "$#" -gt "0" ]
+ do
+@@ -180,13 +208,13 @@ do
+   CHILD=$!
+   wait "${CHILD}"
+   RET=$?
+-  if [ $RET -eq 65 ]
+-  then # User requested to restart app
+-    LOOP=1
+-  elif [ $RET -ge 131 ] && [ $RET -le 136 ] || [ $RET -eq 139 ]
+-  then # Crashed with core dump
+-    print_crash_report
+-  fi
++#  if [ $RET -eq 65 ]
++#  then # User requested to restart app
++#    LOOP=1
++#  elif [ $RET -ge 131 ] && [ $RET -le 136 ] || [ $RET -eq 139 ]
++#  then # Crashed with core dump
++#    print_crash_report
++#  fi
+ done
+ 
+ exit $RET
+diff --git a/tools/depends/target/libdvdcss/Makefile b/tools/depends/target/libdvdcss/Makefile
+index 5be5138b27..65058a99be 100644
+--- a/tools/depends/target/libdvdcss/Makefile
++++ b/tools/depends/target/libdvdcss/Makefile
+@@ -3,7 +3,7 @@ include LIBDVDCSS-VERSION
+ DEPS = LIBDVDCSS-VERSION Makefile ../../download-files.include
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdcss-install
+@@ -19,7 +19,7 @@ RETRIEVE_TOOL := curl -Ls --create-dirs --retry 10 --retry-delay 3
+ ARCHIVE_TOOL := tar --strip-components=1 -xf
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ 
+ include ../../download-files.include
+ all: .installed-$(PLATFORM)
+diff --git a/tools/depends/target/libdvdnav/Makefile b/tools/depends/target/libdvdnav/Makefile
+index 57214c9728..1df60c42fa 100644
+--- a/tools/depends/target/libdvdnav/Makefile
++++ b/tools/depends/target/libdvdnav/Makefile
+@@ -3,11 +3,11 @@ include LIBDVDNAV-VERSION
+ DEPS = LIBDVDNAV-VERSION Makefile ../../download-files.include
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ EXTRA_CFLAGS = -D_XBMC -DHAVE_DVDCSS_DVDCSS_H
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdnav-install
+diff --git a/tools/depends/target/libdvdread/Makefile b/tools/depends/target/libdvdread/Makefile
+index 3231b431ee..a98ebad902 100644
+--- a/tools/depends/target/libdvdread/Makefile
++++ b/tools/depends/target/libdvdread/Makefile
+@@ -3,11 +3,12 @@ include LIBDVDREAD-VERSION
+ DEPS = LIBDVDREAD-VERSION Makefile ../../download-files.include
+ 
+ # configuration settings
+-config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
++#config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic --with-libdvdcss
++config = --build=$(BUILD_SYS) --host=$(HOST_SYS) --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
+ EXTRA_CFLAGS = -D_XBMC -DHAVE_DVDCSS_DVDCSS_H
+ 
+ ifeq ($(CROSS_COMPILING), yes)
+-  DEPS += ../../Makefile.include
++#  DEPS += ../../Makefile.include
+ else
+   ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+   PREFIX := $(ROOT_DIR)/dvdread-install
+diff --git a/xbmc/addons/addoninfo/AddonInfoBuilder.cpp b/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
+index 268efa6ced..b7d6d8f8de 100644
+--- a/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
++++ b/xbmc/addons/addoninfo/AddonInfoBuilder.cpp
+@@ -774,6 +774,12 @@ const char* CAddonInfoBuilder::GetPlatformLibraryName(const TiXmlElement* elemen
+ #if defined(TARGET_FREEBSD)
+   libraryName = element->Attribute("library_freebsd");
+   if (libraryName == nullptr)
++#elif defined(TARGET_V3D)
++  libraryName = element->Attribute("library_v3d");
++  if (libraryName == nullptr)
++#elif defined(TARGET_MALI)
++  libraryName = element->Attribute("library_mali");
++  if (libraryName == nullptr)
+ #endif
+   libraryName = element->Attribute("library_linux");
+ #elif defined(TARGET_WINDOWS_DESKTOP)
+@@ -813,6 +819,12 @@ bool CAddonInfoBuilder::PlatformSupportsAddon(const AddonInfoPtr& addon)
+ #else
+     #warning no architecture dependant platform tag
+ #endif
++#elif defined(TARGET_MALI)
++    "mali",
++    "linux",
++#elif defined(TARGET_V3D)
++    "v3d",
++    "linux",
+ #elif defined(TARGET_FREEBSD)
+     "freebsd",
+ #elif defined(TARGET_LINUX)
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
+index edafa9ed0b..b094545f86 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/CMakeLists.txt
+@@ -47,6 +47,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "ios" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "tvos" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "gbm" IN_LIST CORE_PLATFORM_NAME_LC OR
++                       "stb" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "x11" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "wayland" IN_LIST CORE_PLATFORM_NAME_LC))
+   list(APPEND SOURCES LinuxRendererGLES.cpp
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
+index 6b71389043..ef7a12f114 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/CMakeLists.txt
+@@ -30,6 +30,7 @@ if(OPENGLES_FOUND AND ("android" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "ios" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "tvos" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "gbm" IN_LIST CORE_PLATFORM_NAME_LC OR
++                       "stb" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "x11" IN_LIST CORE_PLATFORM_NAME_LC OR
+                        "wayland" IN_LIST CORE_PLATFORM_NAME_LC))
+   list(APPEND SOURCES VideoFilterShaderGLES.cpp
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
+index 4f6ffc0061..4e2680e4ea 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
+@@ -89,6 +89,10 @@ ConvolutionFilterShader::ConvolutionFilterShader(ESCALINGMETHOD method)
+     shadername = "gles_convolution-6x6.frag";
+   }
+ 
++/*XCORE stb has an old gl2ext.h without GL_RGBA16F_EXT */
++#if defined (TARGET_XCORE) || defined (TARGET_VUPLUS_MIPSEL)
++  m_internalformat = GL_RGBA;
++#else
+   if (m_floattex)
+   {
+     m_internalformat = GL_RGBA16F_EXT;
+@@ -98,6 +102,7 @@ ConvolutionFilterShader::ConvolutionFilterShader(ESCALINGMETHOD method)
+   {
+     m_internalformat = GL_RGBA;
+   }
++#endif
+ 
+   CLog::Log(LOGDEBUG, "GLES: using scaling method: {}", m_method);
+   CLog::Log(LOGDEBUG, "GLES: using shader: {}", shadername);
+diff --git a/xbmc/guilib/guiinfo/SystemGUIInfo.cpp b/xbmc/guilib/guiinfo/SystemGUIInfo.cpp
+index bc01047b3b..72b1daaaf0 100644
+--- a/xbmc/guilib/guiinfo/SystemGUIInfo.cpp
++++ b/xbmc/guilib/guiinfo/SystemGUIInfo.cpp
+@@ -62,6 +62,11 @@ std::string CSystemGUIInfo::GetSystemHeatInfo(int info) const
+ #if defined(TARGET_POSIX)
+     CServiceBroker::GetCPUInfo()->GetTemperature(m_cpuTemp);
+     m_gpuTemp = GetGPUTemperature();
++#if defined(TARGET_STB_EXTEND)
++    m_gpuTemp = m_cpuTemp;
++#else
++    m_gpuTemp = GetGPUTemperature();
++#endif
+ #endif
+   }
+ 
+diff --git a/xbmc/platform/linux/PlatformLinux.cpp b/xbmc/platform/linux/PlatformLinux.cpp
+index a7af09824d..d8d040031b 100644
+--- a/xbmc/platform/linux/PlatformLinux.cpp
++++ b/xbmc/platform/linux/PlatformLinux.cpp
+@@ -29,6 +29,9 @@
+ #if defined(HAVE_X11)
+ #include "windowing/X11/WinSystemX11GLESContext.h"
+ #endif
++#if defined(TARGET_STB)
++#include "windowing/egl/WinSystemSTBContext.h"
++#endif
+ #if defined(HAVE_GBM)
+ #include "windowing/gbm/WinSystemGbmGLESContext.h"
+ #endif
+@@ -41,6 +44,9 @@
+ #if defined(HAVE_X11)
+ #include "windowing/X11/WinSystemX11GLContext.h"
+ #endif
++#if defined(TARGET_STB)
++#include "windowing/egl/WinSystemSTBContext.h"
++#endif
+ #if defined(HAVE_GBM)
+ #include "windowing/gbm/WinSystemGbmGLContext.h"
+ #endif
+@@ -68,6 +74,9 @@ bool CPlatformLinux::InitStageOne()
+ #if defined(HAVE_X11)
+   KODI::WINDOWING::X11::CWinSystemX11GLESContext::Register();
+ #endif
++#if defined(TARGET_STB)
++  KODI::WINDOWING::STB::CWinSystemSTBContext::Register();
++#endif
+ #if defined(HAVE_GBM)
+   KODI::WINDOWING::GBM::CWinSystemGbmGLESContext::Register();
+ #endif
+@@ -80,6 +89,9 @@ bool CPlatformLinux::InitStageOne()
+ #if defined(HAVE_X11)
+   KODI::WINDOWING::X11::CWinSystemX11GLContext::Register();
+ #endif
++#if defined(TARGET_STB)
++  KODI::WINDOWING::STB::CWinSystemSTBContext::Register();
++#endif
+ #if defined(HAVE_GBM)
+   KODI::WINDOWING::GBM::CWinSystemGbmGLContext::Register();
+ #endif
+diff --git a/xbmc/platform/linux/input/CMakeLists.txt b/xbmc/platform/linux/input/CMakeLists.txt
+index ebb2ccd585..d4d5c00574 100644
+--- a/xbmc/platform/linux/input/CMakeLists.txt
++++ b/xbmc/platform/linux/input/CMakeLists.txt
+@@ -6,7 +6,7 @@ if(LIRCCLIENT_FOUND)
+   list(APPEND HEADERS LIRC.h)
+ endif()
+ 
+-if("gbm" IN_LIST CORE_PLATFORM_NAME_LC)
++if("gbm" IN_LIST CORE_PLATFORM_NAME_LC OR "stb" IN_LIST CORE_PLATFORM_NAME_LC)
+   if(LIBINPUT_FOUND)
+     list(APPEND SOURCES LibInputHandler.cpp
+                         LibInputKeyboard.cpp
+diff --git a/xbmc/platform/linux/input/LibInputKeyboard.cpp b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+index 657588adce..0c7b116983 100644
+--- a/xbmc/platform/linux/input/LibInputKeyboard.cpp
++++ b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+@@ -145,8 +145,17 @@ static const std::map<xkb_keysym_t, XBMCKey> xkbMap =
+   // XBMCK_REWIND clashes with XBMCK_MEDIA_REWIND
+   { XKB_KEY_XF86Phone, XBMCK_PHONE },
+   { XKB_KEY_XF86AudioPlay, XBMCK_PLAY },
+-  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE }
++  { XKB_KEY_XF86AudioRandomPlay, XBMCK_SHUFFLE },
+   // XBMCK_FASTFORWARD clashes with XBMCK_MEDIA_FASTFORWARD
++  //Remotebuttons
++  { XKB_KEY_XF86AudioNext , XBMCK_MEDIA_NEXT_TRACK },
++  { XKB_KEY_XF86AudioPrev , XBMCK_MEDIA_PREV_TRACK },
++  { XKB_KEY_XF86Close, XBMCK_ESCAPE },
++  { XKB_KEY_XF86Display , XBMCK_z },
++  { XKB_KEY_XF86MenuKB, XBMCK_MENU },
++  { XKB_KEY_XF86Subtitle , XBMCK_l },
++  { XKB_KEY_XF86Sleep , XBMCK_SLEEP },
++  { XKB_KEY_XF86WWW , XBMCK_TAB }
+ };
+ } // namespace
+ 
+diff --git a/xbmc/system.h b/xbmc/system.h
+new file mode 100644
+index 0000000000..a0a15f58b8
+--- /dev/null
++++ b/xbmc/system.h
+@@ -0,0 +1,12 @@
++/*
++ *  Copyright (C) 2005-2018 Team Kodi
++ *  This file is part of Kodi - https://kodi.tv
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ *  See LICENSES/README.md for more information.
++ */
++
++#pragma once
++
++#define SAFE_DELETE(p)       do { delete (p);     (p)=NULL; } while (0)
++#define SAFE_RELEASE(p)      do { if(p) { (p)->Release(); (p)=NULL; } } while (0)
+diff --git a/xbmc/system_gl.h b/xbmc/system_gl.h
+index 04c4d55c66..5179f8d636 100644
+--- a/xbmc/system_gl.h
++++ b/xbmc/system_gl.h
+@@ -27,6 +27,9 @@
+ #if defined(TARGET_DARWIN)
+ #include <OpenGLES/ES2/gl.h>
+ #include <OpenGLES/ES2/glext.h>
++#elif defined(TARGET_V3DNXPL)
++#include <GLES3/gl31.h>
++#include <GLES2/gl2ext.h>
+ #else
+ #include <GLES2/gl2.h>
+ #include <GLES2/gl2ext.h>
+diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
+index 7c5e70938f..e485c0201a 100644
+--- a/xbmc/utils/EGLUtils.cpp
++++ b/xbmc/utils/EGLUtils.cpp
+@@ -22,6 +22,22 @@
+ namespace
+ {
+ 
++#ifndef EGL_NO_CONFIG_KHR
++#define EGL_NO_CONFIG_KHR static_cast<EGLConfig>(0)
++#endif
++#ifndef EGL_CONTEXT_PRIORITY_LEVEL_IMG
++#define EGL_CONTEXT_PRIORITY_LEVEL_IMG 0x3100
++#endif
++#ifndef EGL_CONTEXT_PRIORITY_HIGH_IMG
++#define EGL_CONTEXT_PRIORITY_HIGH_IMG 0x3101
++#endif
++#ifndef EGL_CONTEXT_PRIORITY_MEDIUM_IMG
++#define EGL_CONTEXT_PRIORITY_MEDIUM_IMG 0x3102
++#endif
++#ifndef TARGET_STB
++#define TARGET_STB 1
++#endif
++
+ #define X(VAL) std::make_pair(VAL, #VAL)
+ std::map<EGLint, const char*> eglAttributes =
+ {
+@@ -84,15 +100,18 @@ std::map<EGLenum, const char*> eglErrors =
+ 
+ std::map<EGLint, const char*> eglErrorType =
+ {
++#if !defined(TARGET_STB)
+   X(EGL_DEBUG_MSG_CRITICAL_KHR),
+   X(EGL_DEBUG_MSG_ERROR_KHR),
+   X(EGL_DEBUG_MSG_WARN_KHR),
+   X(EGL_DEBUG_MSG_INFO_KHR),
++#endif
+ };
+ #undef X
+ 
+ } // namespace
+ 
++#if !defined(TARGET_STB)
+ void EglErrorCallback(EGLenum error,
+                       const char* command,
+                       EGLint messageType,
+@@ -117,6 +136,7 @@ void EglErrorCallback(EGLenum error,
+ 
+   CLog::Log(LOGDEBUG, "EGL Debugging:\nError: {}\nCommand: {}\nType: {}\nMessage: {}", errorStr, command, typeStr, message);
+ }
++#endif
+ 
+ std::set<std::string> CEGLUtils::GetClientExtensions()
+ {
+@@ -171,6 +191,7 @@ void CEGLUtils::Log(int logLevel, const std::string& what)
+ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platformExtension)
+ : m_platform{platform}
+ {
++#if !defined(TARGET_STB)
+   if (CEGLUtils::HasClientExtension("EGL_KHR_debug"))
+   {
+     auto eglDebugMessageControl = CEGLUtils::GetRequiredProcAddress<PFNEGLDEBUGMESSAGECONTROLKHRPROC>("eglDebugMessageControlKHR");
+@@ -183,6 +204,7 @@ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platform
+ 
+     eglDebugMessageControl(EglErrorCallback, eglDebugAttribs);
+   }
++#endif
+ 
+   m_platformSupported = CEGLUtils::HasClientExtension("EGL_EXT_platform_base") && CEGLUtils::HasClientExtension(platformExtension);
+ }
+@@ -400,11 +422,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
+   if (CEGLUtils::HasExtension(m_eglDisplay, "EGL_IMG_context_priority"))
+     contextAttribs.Add({{EGL_CONTEXT_PRIORITY_LEVEL_IMG, EGL_CONTEXT_PRIORITY_HIGH_IMG}});
+ 
++#if !defined(TARGET_STB)
+   if (CEGLUtils::HasExtension(m_eglDisplay, "EGL_KHR_create_context") &&
+       CServiceBroker::GetSettingsComponent()->GetAdvancedSettings()->m_openGlDebugging)
+   {
+     contextAttribs.Add({{EGL_CONTEXT_FLAGS_KHR, EGL_CONTEXT_OPENGL_DEBUG_BIT_KHR}});
+   }
++#endif
+ 
+   m_eglContext = eglCreateContext(m_eglDisplay, eglConfig,
+                                   EGL_NO_CONTEXT, contextAttribs.Get());
+diff --git a/xbmc/utils/GLUtils.cpp b/xbmc/utils/GLUtils.cpp
+index df8921e2b0..d1267c2de5 100644
+--- a/xbmc/utils/GLUtils.cpp
++++ b/xbmc/utils/GLUtils.cpp
+@@ -41,7 +41,7 @@ std::map<GLenum, const char*> glErrors =
+ };
+ 
+ std::map<GLenum, const char*> glErrorSource = {
+-#if defined(HAS_GLES) && defined(TARGET_LINUX)
++#if defined(HAS_GLES) && defined(TARGET_LINUX)  && !defined(TARGET_STB)
+     X(GL_DEBUG_SOURCE_API_KHR),
+     X(GL_DEBUG_SOURCE_WINDOW_SYSTEM_KHR),
+     X(GL_DEBUG_SOURCE_SHADER_COMPILER_KHR),
+@@ -52,7 +52,7 @@ std::map<GLenum, const char*> glErrorSource = {
+ };
+ 
+ std::map<GLenum, const char*> glErrorType = {
+-#if defined(HAS_GLES) && defined(TARGET_LINUX)
++#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_STB)
+     X(GL_DEBUG_TYPE_ERROR_KHR),
+     X(GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_KHR),
+     X(GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR_KHR),
+@@ -64,7 +64,7 @@ std::map<GLenum, const char*> glErrorType = {
+ };
+ 
+ std::map<GLenum, const char*> glErrorSeverity = {
+-#if defined(HAS_GLES) && defined(TARGET_LINUX)
++#if defined(HAS_GLES) && defined(TARGET_LINUX) && !defined(TARGET_STB)
+     X(GL_DEBUG_SEVERITY_HIGH_KHR),
+     X(GL_DEBUG_SEVERITY_MEDIUM_KHR),
+     X(GL_DEBUG_SEVERITY_LOW_KHR),
+diff --git a/xbmc/view/ViewStateSettings.cpp b/xbmc/view/ViewStateSettings.cpp
+index d8833934ae..0c557cece1 100644
+--- a/xbmc/view/ViewStateSettings.cpp
++++ b/xbmc/view/ViewStateSettings.cpp
+@@ -114,7 +114,7 @@ bool CViewStateSettings::Load(const TiXmlNode *settings)
+     if (XMLUtils::GetInt(pElement, XML_SETTINGLEVEL, settingLevel, static_cast<int>(SettingLevel::Basic), static_cast<int>(SettingLevel::Expert)))
+       m_settingLevel = (SettingLevel)settingLevel;
+     else
+-      m_settingLevel = SettingLevel::Standard;
++      m_settingLevel = SettingLevel::Expert;
+ 
+     const TiXmlNode* pEventLogNode = pElement->FirstChild(XML_EVENTLOG);
+     if (pEventLogNode != NULL)
+diff --git a/xbmc/windowing/egl/CMakeLists.txt b/xbmc/windowing/egl/CMakeLists.txt
+new file mode 100644
+index 0000000000..80e394b082
+--- /dev/null
++++ b/xbmc/windowing/egl/CMakeLists.txt
+@@ -0,0 +1,13 @@
++set(SOURCES WinSystemSTBContext.cpp
++            WinSystemstb.cpp
++            EGLWrapper.cpp
++            EGLNativeTypeSTB.cpp)
++
++set(HEADERS EGLNativeType.h
++            EGLQuirks.h
++            EGLWrapper.h
++            WinSystemstb.h
++            WinSystemSTBContext.h
++            EGLNativeTypeSTB.h)
++
++core_add_library(windowing_egl)
+diff --git a/xbmc/windowing/egl/EGLNativeType.h b/xbmc/windowing/egl/EGLNativeType.h
+new file mode 100644
+index 0000000000..48987ada45
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLNativeType.h
+@@ -0,0 +1,152 @@
++#pragma once
++
++/*
++ *      Copyright (C) 2011-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include <string>
++#include <vector>
++
++#include "windowing/Resolution.h"
++#include "EGLQuirks.h"
++
++typedef void* XBNativeDisplayType;
++typedef void* XBNativeWindowType;
++
++/*!
++This class provides extra functionality on top of EGL in order to facilitate
++the implementation-dependent functionality relating to creating, maintaining,
++and destroying screens and displays.
++
++Each implementation is required to implement each function, though it can
++simply return false to signify that the functionality does not exist.
++
++Internal state should be maintained by each implementation as little as possible.
++If any information needs to be saved outside of the NativeWindow and NativeDisplay
++for later retrieval, there is most likely a bug in the implementation, or in that
++platform's EGL implementation.
++
++Each implementation will be instantiated at runtime to see if it qualifies for use
++until one is found. For this reason, each should avoid operations in its ctors and
++dtors, instead using the provided Initialize() and Destroy() functions which are
++only called once the implementation has been selected.
++*/
++
++class CEGLNativeType
++{
++public:
++
++ /*! \brief Do NOT clean up in the destructor, use the Destroy function
++    instead.
++
++    \sa: Destroy() */
++  virtual ~CEGLNativeType(){};
++
++/*! \brief Unique identifier for this EGL implementation.
++
++   It should be unique enough to set it apart from other possible implementations
++   on a similar platform. */
++  virtual std::string GetNativeName() const = 0;
++
++/*! \brief A function for testing whether this implementation should be used.
++
++  On platforms where several implementations are possible, it should provide a
++  stringent test to rule out false-positives. */
++  virtual bool  CheckCompatibility() = 0;
++
++/*! \brief Initialize any local variables and/or structures here.
++
++    This is called after the implementation has been chosen, which is why this
++    should be used rather than the ctor. */
++  virtual void  Initialize() = 0;
++
++/*! \brief Destroy any local variables and/or structures here.
++
++    This is called when the WindowSystem has been destroyed. */
++  virtual void  Destroy() = 0;
++
++/*! \brief EGL implementation quirks.
++
++    Set any EGL oddities here so that they can be queried during the window's
++    life-cycle. */
++  virtual int   GetQuirks() = 0;
++
++/*! \brief Create the EGL Native Display
++
++    An Implementation-dependent method should be used to create a native
++    display and store it in m_nativeDisplay. XBMC will terminate if this
++    fails */
++  virtual bool  CreateNativeDisplay() = 0;
++
++/*! \brief Create the EGL Native Window
++
++    An Implementation-dependent method should be used to create a native
++    window and store it in m_nativeWindow. XBMC Will terminate if this fails.
++    If possible, the created window should use the current display's geometry
++    and allocate as needed so that it is immediately available for use.
++    If not, it must be made ready by SetNativeResolution(). */
++  virtual bool  CreateNativeWindow() = 0;
++
++/*! \brief Returns the current Native Display */
++  virtual bool  GetNativeDisplay(XBNativeDisplayType **nativeDisplay) const = 0;
++
++/*! \brief Returns the current Native Window */
++  virtual bool  GetNativeWindow(XBNativeWindowType **nativeWindow) const = 0;
++
++/*! \brief Destroy the Native Window
++
++    An Implementation-dependent method should be used to destroy the current
++    Native Window */
++  virtual bool  DestroyNativeWindow() = 0;
++
++/*! \brief Destroy The Native Display
++
++    An Implementation-dependent method should be used to destroy the current
++    Native Display */
++  virtual bool  DestroyNativeDisplay() = 0;
++
++/*! \brief Return the current display's resolution
++
++    This is completely independent of XBMC's internal resolution */
++  virtual bool  GetNativeResolution(RESOLUTION_INFO *res) const = 0;
++
++/*! \brief Set the current display's resolution
++
++    This is completely independent of XBMC's internal resolution */
++  virtual bool  SetNativeResolution(const RESOLUTION_INFO &res) = 0;
++
++/*! \brief Query the display for all possible resolutions */
++  virtual bool  ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions) = 0;
++
++/*! \brief Provide a fall-back resolution
++
++    If all queried resolutions fail, this one is guaranteed to be compatible
++    with the display */
++  virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const = 0;
++
++/*! \brief Show/Hide the current window
++
++    A platform-independent way of hiding XBMC (for example blanking the current
++    framebuffer */
++  virtual bool  ShowWindow(bool show) = 0;
++
++protected:
++  XBNativeDisplayType  m_nativeDisplay;
++  XBNativeWindowType   m_nativeWindow;
++};
+diff --git a/xbmc/windowing/egl/EGLQuirks.h b/xbmc/windowing/egl/EGLQuirks.h
+new file mode 100644
+index 0000000000..6624f23e01
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLQuirks.h
+@@ -0,0 +1,42 @@
++#pragma once
++
++/*
++ *      Copyright (C) 2011-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#define EGL_QUIRK_NONE (0)
++
++/*! \brief Enable this if the implementation does not know its native
++     resolution until a surface has been created. Used, for example, on Android
++     where we have no control over the resolution, so we query it once the
++     surface exists.
++*/
++#define EGL_QUIRK_NEED_WINDOW_FOR_RES (1 << 0)
++
++/*! \brief Enable this if the implementation should have its native window
++     destroyed when the surface is destroyed. In practice this means that a new
++     native window will be created each time the main XBMC window is recreated.
++*/
++#define EGL_QUIRK_DESTROY_NATIVE_WINDOW_WITH_SURFACE (1 << 1)
++
++/*! \brief Some drivers destroy the native display on resolution change. xbmc's EGL
++    implementation is not aware of this change. In that case a Reinit of the display
++    needs to be done.
++*/
++#define EGL_QUIRK_RECREATE_DISPLAY_ON_CREATE_WINDOW (1 << 3)
+diff --git a/xbmc/windowing/egl/EGLWrapper.cpp b/xbmc/windowing/egl/EGLWrapper.cpp
+new file mode 100644
+index 0000000000..bdc31285b2
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLWrapper.cpp
+@@ -0,0 +1,397 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++#include "system.h"
++
++#ifdef HAS_EGL
++#include "utils/log.h"
++#include <assert.h>
++
++#include "EGLNativeTypeSTB.h"
++#include "EGLWrapper.h"
++
++#define CheckError() m_result = eglGetError(); if(m_result != EGL_SUCCESS) CLog::Log(LOGERROR, "EGL error in {}: {:x}",__FUNCTION__, m_result);
++
++CEGLWrapper::CEGLWrapper()
++{
++  m_nativeTypes = NULL;
++  m_result = EGL_SUCCESS;
++}
++
++CEGLWrapper::~CEGLWrapper()
++{
++  Destroy();
++}
++
++namespace
++{
++  bool
++  CorrectGuess(CEGLNativeType *guess,
++               const std::string &implementation)
++  {
++    assert(guess != NULL);
++
++    if(guess->CheckCompatibility())
++    {
++      if (implementation == guess->GetNativeName() ||
++          implementation == "auto")
++      {
++        return true;
++      }
++    }
++
++    return false;
++  }
++
++  template <class NativeType>
++  CEGLNativeType * CreateEGLNativeType(const std::string &implementation)
++  {
++    CEGLNativeType *guess = new NativeType;
++    if(CorrectGuess(guess, implementation))
++      return guess;
++
++    delete guess;
++    return NULL;
++  }
++}
++
++bool CEGLWrapper::Initialize(const std::string &implementation)
++{
++  CEGLNativeType *nativeGuess = NULL;
++  if (nativeGuess = CreateEGLNativeType<CEGLNativeTypeSTB>(implementation))
++  {
++    m_nativeTypes = nativeGuess;
++
++    m_nativeTypes->Initialize();
++    return true;
++  }
++
++  return false;
++}
++
++bool CEGLWrapper::Destroy()
++{
++  if (!m_nativeTypes)
++    return false;
++
++  m_nativeTypes->Destroy();
++
++  delete m_nativeTypes;
++  m_nativeTypes = NULL;
++  return true;
++}
++
++std::string CEGLWrapper::GetNativeName()
++{
++  if (m_nativeTypes)
++    return m_nativeTypes->GetNativeName();
++  return "";
++}
++
++bool CEGLWrapper::CreateNativeDisplay()
++{
++  if(!m_nativeTypes)
++    return false;
++
++  return m_nativeTypes->CreateNativeDisplay();
++}
++
++bool CEGLWrapper::CreateNativeWindow()
++{
++  if(!m_nativeTypes)
++    return false;
++
++  return m_nativeTypes->CreateNativeWindow();
++}
++
++void CEGLWrapper::DestroyNativeDisplay()
++{
++  if(m_nativeTypes)
++    m_nativeTypes->DestroyNativeDisplay();
++}
++
++void CEGLWrapper::DestroyNativeWindow()
++{
++  if(m_nativeTypes)
++    m_nativeTypes->DestroyNativeWindow();
++}
++
++bool CEGLWrapper::SetNativeResolution(RESOLUTION_INFO& res)
++{
++  if (!m_nativeTypes)
++    return false;
++  return m_nativeTypes->SetNativeResolution(res);
++}
++
++bool CEGLWrapper::ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions)
++{
++  if (!m_nativeTypes)
++    return false;
++  return m_nativeTypes->ProbeResolutions(resolutions);
++}
++
++bool CEGLWrapper::GetPreferredResolution(RESOLUTION_INFO *res)
++{
++  if(!m_nativeTypes || !res)
++    return false;
++
++  return m_nativeTypes->GetPreferredResolution(res);
++}
++
++bool CEGLWrapper::GetNativeResolution(RESOLUTION_INFO *res)
++{
++  if(!m_nativeTypes || !res)
++    return false;
++
++  return m_nativeTypes->GetNativeResolution(res);
++}
++
++bool CEGLWrapper::ShowWindow(bool show)
++{
++  if (!m_nativeTypes)
++    return false;
++
++  return m_nativeTypes->ShowWindow(show);
++}
++
++bool CEGLWrapper::GetQuirks(int *quirks)
++{
++  if (!m_nativeTypes || !quirks)
++    return false;
++  *quirks = m_nativeTypes->GetQuirks();
++  return true;
++}
++
++bool CEGLWrapper::InitDisplay(EGLDisplay *display)
++{
++  if (!display || !m_nativeTypes)
++    return false;
++
++  //nativeDisplay can be (and usually is) NULL. Don't use if(nativeDisplay) as a test!
++  EGLint status;
++  EGLNativeDisplayType *nativeDisplay = NULL;
++  if (!m_nativeTypes->GetNativeDisplay((XBNativeDisplayType**)&nativeDisplay))
++    return false;
++
++  *display = eglGetDisplay(*nativeDisplay);
++  CheckError();
++  if (*display == EGL_NO_DISPLAY)
++  {
++    CLog::Log(LOGERROR, "EGL failed to obtain display");
++    return false;
++  }
++
++  status = eglInitialize(*display, 0, 0);
++  CheckError();
++  return status;
++}
++
++bool CEGLWrapper::ChooseConfig(EGLDisplay display, EGLint *configAttrs, EGLConfig *config)
++{
++  EGLint     configCount = 0;
++  EGLConfig* configList = NULL;
++
++  // Find out how many configurations suit our needs
++  EGLBoolean eglStatus = eglChooseConfig(display, configAttrs, NULL, 0, &configCount);
++  CheckError();
++
++  if (!eglStatus || !configCount)
++  {
++    CLog::Log(LOGERROR, "EGL failed to return any matching configurations: %i", configCount);
++    return false;
++  }
++
++  // Allocate room for the list of matching configurations
++  configList = (EGLConfig*)malloc(configCount * sizeof(EGLConfig));
++  if (!configList)
++  {
++    CLog::Log(LOGERROR, "EGL failure obtaining configuration list");
++    return false;
++  }
++
++  // Obtain the configuration list from EGL
++  eglStatus = eglChooseConfig(display, configAttrs, configList, configCount, &configCount);
++  CheckError();
++  if (!eglStatus || !configCount)
++  {
++    CLog::Log(LOGERROR, "EGL failed to populate configuration list: {:d}", eglStatus);
++    return false;
++  }
++
++  // Select an EGL configuration that matches the native window
++  *config = configList[0];
++
++  free(configList);
++  return m_result == EGL_SUCCESS;
++}
++
++bool CEGLWrapper::CreateContext(EGLDisplay display, EGLConfig config, EGLint *contextAttrs, EGLContext *context)
++{
++  if (!context)
++    return false;
++
++  *context = eglCreateContext(display, config, NULL, contextAttrs);
++  CheckError();
++  return *context != EGL_NO_CONTEXT;
++}
++
++bool CEGLWrapper::CreateSurface(EGLDisplay display, EGLConfig config, EGLSurface *surface)
++{
++  if (!surface || !m_nativeTypes)
++    return false;
++
++  EGLNativeWindowType *nativeWindow=NULL;
++  if (!m_nativeTypes->GetNativeWindow((XBNativeWindowType**)&nativeWindow))
++    return false;
++
++  *surface = eglCreateWindowSurface(display, config, *nativeWindow, NULL);
++  CheckError();
++  return *surface != EGL_NO_SURFACE;
++}
++
++bool CEGLWrapper::GetSurfaceSize(EGLDisplay display, EGLSurface surface, EGLint *width, EGLint *height)
++{
++  if (!width || !height)
++    return false;
++
++  const bool failedToQuerySurfaceSize =
++    !eglQuerySurface(display, surface, EGL_WIDTH, width) ||
++    !eglQuerySurface(display, surface, EGL_HEIGHT, height);
++  const bool invalidSurfaceSize =
++    *width <= 0 || *height <= 0;
++
++  if (failedToQuerySurfaceSize || invalidSurfaceSize)
++    return false;
++
++  return true;
++}
++
++bool CEGLWrapper::BindContext(EGLDisplay display, EGLSurface surface, EGLContext context)
++{
++  EGLBoolean status;
++  status = eglMakeCurrent(display, surface, surface, context);
++  CheckError();
++  return status;
++}
++
++bool CEGLWrapper::BindAPI(EGLint type)
++{
++  EGLBoolean status;
++  status = eglBindAPI(type);
++  CheckError();
++  return status && m_result == EGL_SUCCESS;
++}
++
++bool CEGLWrapper::ReleaseContext(EGLDisplay display)
++{
++  EGLBoolean status;
++  if (display == EGL_NO_DISPLAY)
++    return false;
++  status = eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
++  CheckError();
++  return status;
++}
++
++bool CEGLWrapper::DestroyContext(EGLDisplay display, EGLContext context)
++{
++  EGLBoolean status;
++  if (display == EGL_NO_DISPLAY)
++    return false;
++  status = eglDestroyContext(display, context);
++  CheckError();
++  return status;
++}
++
++bool CEGLWrapper::DestroySurface(EGLSurface surface, EGLDisplay display)
++{
++  EGLBoolean status;
++
++  status = eglDestroySurface(display, surface);
++  CheckError();
++  return status;
++}
++
++bool CEGLWrapper::DestroyDisplay(EGLDisplay display)
++{
++  EGLBoolean eglStatus;
++
++  eglStatus = eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
++  CheckError();
++  if (!eglStatus)
++    return false;
++
++  eglStatus = eglTerminate(display);
++  CheckError();
++  if (!eglStatus)
++    return false;
++
++  return true;
++}
++
++std::string CEGLWrapper::GetExtensions(EGLDisplay display)
++{
++  std::string extensions = eglQueryString(display, EGL_EXTENSIONS);
++  CheckError();
++  return " " + extensions + " ";
++}
++
++bool CEGLWrapper::SetVSync(EGLDisplay display, bool enable)
++{
++  EGLBoolean status;
++  // depending how buffers are setup, eglSwapInterval
++  // might fail so let caller decide if this is an error.
++  status = eglSwapInterval(display, enable ? 1 : 0);
++  CheckError();
++  return status;
++}
++
++void CEGLWrapper::SwapBuffers(EGLDisplay display, EGLSurface surface)
++{
++  if ((display == EGL_NO_DISPLAY) || (surface == EGL_NO_SURFACE))
++    return;
++  eglSwapBuffers(display, surface);
++}
++
++bool CEGLWrapper::GetConfigAttrib(EGLDisplay display, EGLConfig config, EGLint attribute, EGLint *value)
++{
++  if (display == EGL_NO_DISPLAY || !config || !attribute)
++    return eglGetConfigAttrib(display, config, attribute, value);
++  return false;
++}
++
++void* CEGLWrapper::GetProcAddress(const char* function)
++{
++  void* ext = (void*) eglGetProcAddress(function);
++  if (!ext)
++  {
++    CLog::Log(LOGERROR, "EGL error in {} - cannot get proc addr of {}", __FUNCTION__, function);
++    return NULL;
++  }
++
++  return ext;
++}
++
++bool CEGLWrapper::SurfaceAttrib(EGLDisplay display, EGLSurface surface, EGLint attribute, EGLint value)
++{
++  if ((display == EGL_NO_DISPLAY) || (surface == EGL_NO_SURFACE))
++    return false;
++  return eglSurfaceAttrib(display, surface, attribute, value);
++}
++#endif
++
+diff --git a/xbmc/windowing/egl/EGLWrapper.h b/xbmc/windowing/egl/EGLWrapper.h
+new file mode 100644
+index 0000000000..3a73b3e5d7
+--- /dev/null
++++ b/xbmc/windowing/egl/EGLWrapper.h
+@@ -0,0 +1,76 @@
++#pragma once
++
++/*
++ *      Copyright (C) 2011-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include <string>
++#include <vector>
++
++#include "windowing/Resolution.h"
++#include <EGL/egl.h>
++class CEGLNativeType;
++class CEGLWrapper
++{
++public:
++  CEGLWrapper();
++  ~CEGLWrapper();
++
++  bool Initialize(const std::string &implementation = "auto");
++  bool Destroy();
++  std::string GetNativeName();
++
++  bool CreateNativeDisplay();
++  bool CreateNativeWindow();
++  void DestroyNativeDisplay();
++  void DestroyNativeWindow();
++
++  bool SetNativeResolution(RESOLUTION_INFO& res);
++  bool ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
++  bool ShowWindow(bool show);
++  bool GetQuirks(int *quirks);
++  bool GetPreferredResolution(RESOLUTION_INFO *res);
++  bool GetNativeResolution(RESOLUTION_INFO *res);
++
++  bool InitDisplay(EGLDisplay *display);
++  bool ChooseConfig(EGLDisplay display, EGLint *configAttrs, EGLConfig *config);
++  bool CreateContext(EGLDisplay display, EGLConfig config, EGLint *contextAttrs, EGLContext *context);
++  bool CreateSurface(EGLDisplay display, EGLConfig config, EGLSurface *surface);
++  bool GetSurfaceSize(EGLDisplay display, EGLSurface surface, EGLint *width, EGLint *height);
++  bool BindContext(EGLDisplay display, EGLSurface surface, EGLContext context);
++  bool BindAPI(EGLint type);
++  bool ReleaseContext(EGLDisplay display);
++  bool DestroyContext(EGLDisplay display, EGLContext context);
++  bool DestroySurface(EGLSurface surface, EGLDisplay display);
++  bool DestroyDisplay(EGLDisplay display);
++
++  std::string GetExtensions(EGLDisplay display);
++  void SwapBuffers(EGLDisplay display, EGLSurface surface);
++  bool SetVSync(EGLDisplay display, bool enable);
++  bool IsExtSupported(const char* extension);
++  bool GetConfigAttrib(EGLDisplay display, EGLConfig config, EGLint attribute, EGLint *value);
++  bool SurfaceAttrib(EGLDisplay display, EGLSurface surface, EGLint  attribute, EGLint  value);
++
++  static void* GetProcAddress(const char* function);
++
++private:
++
++  CEGLNativeType *m_nativeTypes;
++  EGLint         m_result;
++};
+diff --git a/xbmc/windowing/egl/WinSystemSTBContext.cpp b/xbmc/windowing/egl/WinSystemSTBContext.cpp
+new file mode 100644
+index 0000000000..3b4e3e8d66
+--- /dev/null
++++ b/xbmc/windowing/egl/WinSystemSTBContext.cpp
+@@ -0,0 +1,124 @@
++/*
++ *  Copyright (C) 2005-2018 Team Kodi
++ *  This file is part of Kodi - https://kodi.tv
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ *  See LICENSES/README.md for more information.
++ */
++
++#include "WinSystemSTBContext.h"
++
++#include "application/Application.h"
++#include "ServiceBroker.h"
++#include "cores/VideoPlayer/VideoRenderers/RenderFactory.h"
++#include "cores/RetroPlayer/process/RPProcessInfo.h"
++
++#ifdef HAS_GLES
++#include "cores/RetroPlayer/rendering/VideoRenderers/RPRendererOpenGLES.h"
++#include "cores/VideoPlayer/VideoRenderers/LinuxRendererGLES.h"
++#else
++#include "cores/RetroPlayer/rendering/VideoRenderers/RPRendererOpenGL.h"
++#include "cores/VideoPlayer/VideoRenderers/LinuxRendererGL.h"
++#endif
++
++#include "cores/VideoPlayer/VideoRenderers/RenderFactory.h"
++#include "guilib/GUIComponent.h"
++#include "guilib/GUIWindowManager.h"
++#include "utils/log.h"
++#include "windowing/WindowSystemFactory.h"
++
++using namespace KODI;
++using namespace KODI::WINDOWING::STB;
++
++/*std::unique_ptr<CWinSystemBase> CWinSystemBase::CreateWinSystem()
++{
++  std::unique_ptr<CWinSystemBase> winSystem(new CWinSystemSTBContext());
++  return winSystem;
++}
++*/
++
++void CWinSystemSTBContext::Register()
++{
++ KODI::WINDOWING::CWindowSystemFactory::RegisterWindowSystem(CreateWinSystem, "stb");
++}
++
++std::unique_ptr<CWinSystemBase> CWinSystemSTBContext::CreateWinSystem()
++{
++  return std::make_unique<CWinSystemSTBContext>();
++}
++
++bool CWinSystemSTBContext::InitWindowSystem()
++{
++  if (!CWinSystemstb::InitWindowSystem())
++  {
++    return false;
++  }
++
++
++  VIDEOPLAYER::CRendererFactory::ClearRenderer();
++#ifdef HAS_GLES
++  CLinuxRendererGLES::Register();
++  RETRO::CRPProcessInfo::RegisterRendererFactory(new RETRO::CRendererFactoryOpenGLES);
++#else
++  CLinuxRendererGL::Register();
++  RETRO::CRPProcessInfo::RegisterRendererFactory(new RETRO::CRendererFactoryOpenGL);
++#endif
++  return true;
++}
++
++bool CWinSystemSTBContext::CreateNewWindow(const std::string& name,
++                                               bool fullScreen,
++                                               RESOLUTION_INFO& res)
++{
++  CWinSystemstb::CreateNewWindow(name,fullScreen,res);
++
++  return true;
++}
++
++bool CWinSystemSTBContext::ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop)
++{
++  CRenderSystemGLES::ResetRenderSystem(newWidth, newHeight);
++  return true;
++}
++
++bool CWinSystemSTBContext::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays)
++{
++  CreateNewWindow("", fullScreen, res);
++  CRenderSystemGLES::ResetRenderSystem(res.iWidth, res.iHeight);
++  return true;
++}
++
++void CWinSystemSTBContext::SetVSyncImpl(bool enable)
++{
++  m_bVSync = enable;
++  if (!CWinSystemstb::SetVSyncImpl(enable))
++      m_bVSync = 0;
++}
++
++void CWinSystemSTBContext::PresentRenderImpl(bool rendered)
++{
++  CWinSystemstb::PresentRenderImpl(rendered);
++}
++
++EGLDisplay CWinSystemSTBContext::GetEGLDisplay()
++{
++  return CWinSystemstb::GetEGLDisplay();
++}
++
++EGLContext CWinSystemSTBContext::GetEGLContext()
++{
++  return CWinSystemstb::GetEGLContext();
++}
++
++EGLConfig  CWinSystemSTBContext::GetEGLConfig()
++{
++  return CWinSystemstb::GetEGLConfig();
++}
++
++/*std::unique_ptr<CVideoSync> CWinSystemSTBContext::GetVideoSync(void *clock)
++{
++  std::unique_ptr<CVideoSync> pVSync(new CVideoSyncPi(clock));
++  return pVSync;
++    return false;
++}*/
++
+diff --git a/xbmc/windowing/egl/WinSystemSTBContext.h b/xbmc/windowing/egl/WinSystemSTBContext.h
+new file mode 100644
+index 0000000000..81685022d4
+--- /dev/null
++++ b/xbmc/windowing/egl/WinSystemSTBContext.h
+@@ -0,0 +1,57 @@
++/*
++ *  Copyright (C) 2005-2018 Team Kodi
++ *  This file is part of Kodi - https://kodi.tv
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ *  See LICENSES/README.md for more information.
++ */
++
++#pragma once
++
++#include "WinSystemstb.h"
++#include "rendering/gles/RenderSystemGLES.h"
++#include "utils/EGLUtils.h"
++
++namespace KODI
++{
++namespace WINDOWING
++{
++namespace STB
++{
++
++class CWinSystemSTBContext : public CWinSystemstb, public CRenderSystemGLES
++{
++public:
++  CWinSystemSTBContext() = default;
++  virtual ~CWinSystemSTBContext() = default;
++
++  static void Register();
++  static std::unique_ptr<CWinSystemBase> CreateWinSystem();
++
++  // Implementation of CWinSystemBase
++  CRenderSystemBase *GetRenderSystem() override { return this; }
++  bool InitWindowSystem() override;
++  bool CreateNewWindow(const std::string& name,
++                       bool fullScreen,
++                       RESOLUTION_INFO& res) override;
++
++  bool ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop) override;
++  bool SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays) override;
++
++  //virtual std::unique_ptr<CVideoSync> GetVideoSync(void *clock) override;
++
++  EGLDisplay GetEGLDisplay();
++  EGLContext GetEGLContext();
++  EGLConfig  GetEGLConfig();
++protected:
++  void SetVSyncImpl(bool enable) override;
++  void PresentRenderImpl(bool rendered) override;
++
++private:
++  CEGLContextUtils m_pGLContext;
++
++};
++
++}
++}
++}
+diff --git a/xbmc/windowing/egl/WinSystemstb.cpp b/xbmc/windowing/egl/WinSystemstb.cpp
+new file mode 100644
+index 0000000000..0b2176adca
+--- /dev/null
++++ b/xbmc/windowing/egl/WinSystemstb.cpp
+@@ -0,0 +1,527 @@
++/*
++ *  Copyright (C) 2005-2018 Team Kodi
++ *  This file is part of Kodi - https://kodi.tv
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ *  See LICENSES/README.md for more information.
++ */
++
++#include "system.h"
++
++#include "WinSystemstb.h"
++
++#include "filesystem/SpecialProtocol.h"
++#include "ServiceBroker.h"
++#include "cores/AudioEngine/AESinkFactory.h"
++#include "guilib/DispResource.h"
++#include "settings/DisplaySettings.h"
++#include "settings/Settings.h"
++#include "settings/AdvancedSettings.h"
++#include "settings/SettingsComponent.h"
++#include "utils/log.h"
++#include "utils/StringUtils.h"
++#include "windowing/GraphicContext.h"
++#include "windowing/Resolution.h"
++
++#include "platform/linux/powermanagement/LinuxPowerSyscall.h"
++#include "guilib/IDirtyRegionSolver.h"
++
++#include <vector>
++#include <float.h>
++#include <string.h>
++
++#include "EGLWrapper.h"
++#include "EGLQuirks.h"
++
++#include <EGL/egl.h>
++#include <EGL/eglplatform.h>
++
++using namespace KODI;
++
++using namespace std::chrono_literals;
++
++CWinSystemstb::CWinSystemstb():
++  m_libinput(new CLibInputHandler)
++{
++  m_display = EGL_NO_DISPLAY;
++  m_surface = EGL_NO_SURFACE;
++  m_context = EGL_NO_CONTEXT;
++
++  m_displayWidth = 0;
++  m_displayHeight = 0;
++
++  m_stereo_mode = RENDER_STEREO_MODE_OFF;
++  m_delayDispReset = false;
++
++  m_egl = new CEGLWrapper;
++
++//  AE::CAESinkFactory::ClearSinks();
++
++//  CAESinkPi::Register();
++  std::string envSink;
++  if (getenv("KODI_AE_SINK"))
++    envSink = getenv("KODI_AE_SINK");
++
++  if (StringUtils::EqualsNoCase(envSink, "PULSE"))
++  {
++    OPTIONALS::PulseAudioRegister();
++  }
++  else
++  {
++    OPTIONALS::ALSARegister();
++  }
++
++  CLinuxPowerSyscall::Register();
++  m_libinput->Start();
++}
++
++CWinSystemstb::~CWinSystemstb()
++{
++  delete m_egl;
++  m_egl = nullptr;
++}
++
++bool CWinSystemstb::InitWindowSystem()
++{
++  RESOLUTION_INFO preferred_resolution;
++  if (!m_egl)
++    m_egl = new CEGLWrapper;
++
++  if (!m_egl)
++  {
++    CLog::Log(LOGERROR, "{}: EGL not in a good state",__FUNCTION__);
++    return false;
++  }
++
++  if (!m_egl->Initialize("auto"))
++  {
++    CLog::Log(LOGERROR, "{}: Could not initialize",__FUNCTION__);
++    return false;
++  }
++
++  CLog::Log(LOGINFO, "{}: Using EGL Implementation: {}",__FUNCTION__,m_egl->GetNativeName().c_str());
++
++  if (!m_egl->CreateNativeDisplay())
++  {
++    CLog::Log(LOGERROR, "{}: Could not get native display",__FUNCTION__);
++    return false;
++  }
++
++  if (!m_egl->CreateNativeWindow())
++  {
++    CLog::Log(LOGERROR, "{}: Could not get native window",__FUNCTION__);
++    return false;
++  }
++
++  if (!m_egl->InitDisplay(&m_display))
++  {
++    CLog::Log(LOGERROR, "{}: Could not create display",__FUNCTION__);
++    return false;
++  }
++
++  EGLint surface_type = EGL_WINDOW_BIT;
++  // for the non-trivial dirty region modes, we need the EGL buffer to be preserved across updates
++  int guiAlgorithmDirtyRegions = CServiceBroker::GetSettingsComponent()->GetAdvancedSettings()->m_guiAlgorithmDirtyRegions;
++  if (guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_COST_REDUCTION ||
++      guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_UNION)
++    surface_type |= EGL_SWAP_BEHAVIOR_PRESERVED_BIT;
++
++  EGLint configAttrs [] = {
++        EGL_RED_SIZE,        8,
++        EGL_GREEN_SIZE,      8,
++        EGL_BLUE_SIZE,       8,
++        EGL_ALPHA_SIZE,      8,
++        EGL_DEPTH_SIZE,     16,
++        EGL_STENCIL_SIZE,    0,
++        EGL_SAMPLE_BUFFERS,  0,
++        EGL_SAMPLES,         0,
++        EGL_SURFACE_TYPE,    surface_type,
++        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
++        EGL_NONE
++  };
++
++  if (!m_egl->ChooseConfig(m_display, configAttrs, &m_config))
++  {
++    CLog::Log(LOGERROR, "{}: Could not find a compatible configuration",__FUNCTION__);
++    return false;
++  }
++
++
++  // Some platforms require a surface before we can probe the resolution.
++  // Create the window here, then the creation in CreateNewWindow() will be skipped.
++  int quirks;
++  m_egl->GetQuirks(&quirks);
++  if (quirks & EGL_QUIRK_NEED_WINDOW_FOR_RES)
++  {
++    RESOLUTION_INFO temp;
++    CreateWindow(temp);
++  }
++
++  m_extensions = m_egl->GetExtensions(m_display);
++  return CWinSystemBase::InitWindowSystem();
++}
++
++bool CWinSystemstb::DestroyWindowSystem()
++{
++  if (!m_egl)
++    return true;
++
++  DestroyWindow();
++
++  if (m_context != EGL_NO_CONTEXT)
++  {
++    m_egl->DestroyContext(m_display, m_context);
++  }
++  m_context = EGL_NO_CONTEXT;
++
++  if (m_display != EGL_NO_DISPLAY)
++    m_egl->DestroyDisplay(m_display);
++  m_display = EGL_NO_DISPLAY;
++
++  m_egl->DestroyNativeWindow();
++
++  m_egl->DestroyNativeDisplay();
++
++  m_egl->Destroy();
++  delete m_egl;
++  m_egl = NULL;
++
++  CWinSystemBase::DestroyWindowSystem();
++  //return true;
++}
++bool CWinSystemstb::CreateNewWindow(const std::string& name,
++                                    bool fullScreen,
++                                    RESOLUTION_INFO& res)
++{
++  RESOLUTION_INFO current_resolution;
++  current_resolution.iWidth = current_resolution.iHeight = 0;
++  RENDER_STEREO_MODE stereo_mode = CServiceBroker::GetWinSystem()->GetGfxContext().GetStereoMode();
++
++  m_nWidth        = res.iWidth;
++  m_nHeight       = res.iHeight;
++  m_displayWidth  = res.iScreenWidth;
++  m_displayHeight = res.iScreenHeight;
++  m_fRefreshRate  = res.fRefreshRate;
++
++  if ((m_bWindowCreated && m_egl && m_egl->GetNativeResolution(&current_resolution)) &&
++    current_resolution.iWidth == res.iWidth && current_resolution.iHeight == res.iHeight &&
++    current_resolution.iScreenWidth == res.iScreenWidth && current_resolution.iScreenHeight == res.iScreenHeight &&
++    m_bFullScreen == fullScreen && current_resolution.fRefreshRate == res.fRefreshRate &&
++    (current_resolution.dwFlags & D3DPRESENTFLAG_MODEMASK) == (res.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
++    m_stereo_mode == stereo_mode)
++  {
++    CLog::Log(LOGDEBUG, "CWinSystemEGL::CreateNewWindow: No need to create a new window");
++    return true;
++  }
++
++  auto delay =
++      std::chrono::milliseconds(CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt(
++                                    "videoscreen.delayrefreshchange") *
++                                100);
++  if (delay > 0ms)
++  {
++    m_delayDispReset = true;
++    m_dispResetTimer.Set(delay);
++  }
++
++  {
++    std::unique_lock<CCriticalSection> lock(m_resourceSection);
++    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
++      (*i)->OnLostDisplay();
++  }
++
++  m_stereo_mode = stereo_mode;
++  m_bFullScreen   = fullScreen;
++  // Destroy any existing window
++  if (m_surface != EGL_NO_SURFACE)
++    DestroyWindow();
++
++  // If we previously destroyed an existing window we need to create a new one
++  // (otherwise this is taken care of by InitWindowSystem())
++  if (!CreateWindow(res))
++  {
++    CLog::Log(LOGERROR, "{}: Could not create new window",__FUNCTION__);
++    return false;
++  }
++
++  if (!m_delayDispReset)
++  {
++    std::unique_lock<CCriticalSection> lock(m_resourceSection);
++    // tell any shared resources
++    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
++      (*i)->OnResetDisplay();
++  }
++
++  Show();
++  return true;
++}
++
++bool CWinSystemstb::CreateWindow(RESOLUTION_INFO &res)
++{
++  if (!m_egl)
++  {
++    CLog::Log(LOGERROR, "CWinSystemEGL::CreateWindow no EGL!");
++    return false;
++  }
++
++  if(m_egl)
++    m_egl->SetNativeResolution(res);
++
++  int quirks;
++  m_egl->GetQuirks(&quirks);
++  if (quirks & EGL_QUIRK_RECREATE_DISPLAY_ON_CREATE_WINDOW)
++  {
++    if (m_context != EGL_NO_CONTEXT)
++      if (!m_egl->InitDisplay(&m_display))
++      {
++        CLog::Log(LOGERROR, "{}: Could not reinit display",__FUNCTION__);
++        return false;
++      }
++  }
++
++  if (!m_egl->CreateSurface(m_display, m_config, &m_surface))
++  {
++    CLog::Log(LOGINFO, "{}: Could not create a surface. Trying with a fresh Native Window.",__FUNCTION__);
++    m_egl->DestroyNativeWindow();
++    if (!m_egl->CreateNativeWindow())
++    {
++      CLog::Log(LOGERROR, "{}: Could not get native window",__FUNCTION__);
++      return false;
++    }
++
++    if (!m_egl->CreateSurface(m_display, m_config, &m_surface))
++    {
++      CLog::Log(LOGERROR, "{}: Could not create surface",__FUNCTION__);
++      return false;
++    }
++  }
++
++  int width = 0, height = 0;
++  if (!m_egl->GetSurfaceSize(m_display, m_surface, &width, &height))
++  {
++    CLog::Log(LOGERROR, "{}: Surface is invalid",__FUNCTION__);
++    return false;
++  }
++  CLog::Log(LOGDEBUG, "{}: Created surface of size %ix%i",__FUNCTION__, width, height);
++
++  EGLint contextAttrs[] =
++  {
++    EGL_CONTEXT_CLIENT_VERSION, 2,
++    EGL_NONE
++  };
++
++  if (!m_egl->BindAPI(EGL_OPENGL_ES_API))
++  {
++    CLog::Log(LOGERROR, "{}: Could not bind %i api",__FUNCTION__, EGL_OPENGL_ES_API);
++    return false;
++  }
++
++  if (m_context == EGL_NO_CONTEXT)
++  {
++    if (!m_egl->CreateContext(m_display, m_config, contextAttrs, &m_context))
++    {
++      CLog::Log(LOGERROR, "{}: Could not create context",__FUNCTION__);
++      return false;
++    }
++  }
++
++  if (!m_egl->BindContext(m_display, m_surface, m_context))
++  {
++    CLog::Log(LOGERROR, "{}: Could not bind to context",__FUNCTION__);
++    return false;
++  }
++
++
++  // for the non-trivial dirty region modes, we need the EGL buffer to be preserved across updates
++  int guiAlgorithmDirtyRegions = CServiceBroker::GetSettingsComponent()->GetAdvancedSettings()->m_guiAlgorithmDirtyRegions;
++  if (guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_COST_REDUCTION ||
++      guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_UNION)
++  {
++    if (!m_egl->SurfaceAttrib(m_display, m_surface, EGL_SWAP_BEHAVIOR, EGL_BUFFER_PRESERVED))
++      CLog::Log(LOGDEBUG, "{}: Could not set EGL_SWAP_BEHAVIOR",__FUNCTION__);
++  }
++
++  m_bWindowCreated = true;
++
++  return true;
++}
++
++
++bool CWinSystemstb::DestroyWindow()
++{
++  if (!m_egl)
++    return false;
++
++  m_egl->ReleaseContext(m_display);
++  if (m_surface != EGL_NO_SURFACE)
++    m_egl->DestroySurface(m_surface, m_display);
++
++  int quirks;
++  m_egl->GetQuirks(&quirks);
++  if (quirks & EGL_QUIRK_DESTROY_NATIVE_WINDOW_WITH_SURFACE)
++    m_egl->DestroyNativeWindow();
++
++  m_surface = EGL_NO_SURFACE;
++  m_bWindowCreated = false;
++  return true;
++}
++
++void CWinSystemstb::UpdateResolutions()
++{
++  CWinSystemBase::UpdateResolutions();
++
++  RESOLUTION_INFO resDesktop, curDisplay;
++  std::vector<RESOLUTION_INFO> resolutions;
++
++  if (!m_egl->ProbeResolutions(resolutions) || resolutions.empty())
++  {
++    CLog::Log(LOGWARNING, "{}: ProbeResolutions failed. Trying safe default.",__FUNCTION__);
++
++    RESOLUTION_INFO fallback;
++    if (m_egl->GetPreferredResolution(&fallback))
++    {
++      resolutions.push_back(fallback);
++    }
++    else
++    {
++      CLog::Log(LOGERROR, "{}: Fatal Error, GetPreferredResolution failed",__FUNCTION__);
++      return;
++    }
++  }
++
++  /* ProbeResolutions includes already all resolutions.
++   * Only get desktop resolution so we can replace xbmc's desktop res
++   */
++  if (m_egl->GetNativeResolution(&curDisplay))
++    resDesktop = curDisplay;
++
++  RESOLUTION ResDesktop = RES_INVALID;
++  RESOLUTION res_index  = RES_DESKTOP;
++
++  for (size_t i = 0; i < resolutions.size(); i++)
++  {
++    // if this is a new setting,
++    // create a new empty setting to fill in.
++    if ((int)CDisplaySettings::GetInstance().ResolutionInfoSize() <= res_index)
++    {
++      RESOLUTION_INFO res;
++      CDisplaySettings::GetInstance().AddResolutionInfo(res);
++    }
++
++    CServiceBroker::GetWinSystem()->GetGfxContext().ResetOverscan(resolutions[i]);
++    CDisplaySettings::GetInstance().GetResolutionInfo(res_index) = resolutions[i];
++
++ /*   CLog::Log(LOGINFO, "Found resolution {:d} x {:d} for display {:d} with {:d} x {:d}{} @ {:f} Hz\n",
++      resolutions[i].iWidth,
++      resolutions[i].iHeight,
++      resolutions[i].iScreenWidth,
++      resolutions[i].iScreenHeight,
++      resolutions[i].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "",
++      resolutions[i].fRefreshRate);*/
++
++    if(resDesktop.iWidth == resolutions[i].iWidth &&
++       resDesktop.iHeight == resolutions[i].iHeight &&
++       resDesktop.iScreenWidth == resolutions[i].iScreenWidth &&
++       resDesktop.iScreenHeight == resolutions[i].iScreenHeight &&
++       (resDesktop.dwFlags & D3DPRESENTFLAG_MODEMASK) == (resolutions[i].dwFlags & D3DPRESENTFLAG_MODEMASK) &&
++       fabs(resDesktop.fRefreshRate - resolutions[i].fRefreshRate) < FLT_EPSILON)
++    {
++      ResDesktop = res_index;
++    }
++
++    res_index = (RESOLUTION)((int)res_index + 1);
++  }
++
++  // swap desktop index for desktop res if available
++  if (ResDesktop != RES_INVALID)
++  {
++    CLog::Log(LOGINFO, "Found ({:d}x{:d}{}@{:f}) at {:d}, setting to RES_DESKTOP at {:d}",
++      resDesktop.iWidth, resDesktop.iHeight,
++      resDesktop.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "",
++      resDesktop.fRefreshRate,
++      (int)ResDesktop, (int)RES_DESKTOP);
++
++    RESOLUTION_INFO desktop = CDisplaySettings::GetInstance().GetResolutionInfo(RES_DESKTOP);
++    CDisplaySettings::GetInstance().GetResolutionInfo(RES_DESKTOP) = CDisplaySettings::GetInstance().GetResolutionInfo(ResDesktop);
++    CDisplaySettings::GetInstance().GetResolutionInfo(ResDesktop) = desktop;
++  }
++}
++
++bool CWinSystemstb::Hide()
++{
++  return m_egl->ShowWindow(false);
++}
++
++bool CWinSystemstb::Show(bool raise)
++{
++  return m_egl->ShowWindow(true);
++}
++
++void CWinSystemstb::SetVisible(bool visible)
++{
++  if (visible)
++	Show();
++  else
++	Hide();
++}
++
++void CWinSystemstb::Register(IDispResource *resource)
++{
++  std::unique_lock<CCriticalSection> lock(m_resourceSection);
++  m_resources.push_back(resource);
++}
++
++void CWinSystemstb::Unregister(IDispResource *resource)
++{
++  std::unique_lock<CCriticalSection> lock(m_resourceSection);
++  std::vector<IDispResource*>::iterator i = find(m_resources.begin(), m_resources.end(), resource);
++  if (i != m_resources.end())
++    m_resources.erase(i);
++}
++
++bool CWinSystemstb::SetVSyncImpl(bool enable)
++{
++  //m_bVSync = enable;
++  bool resp = true;
++  if (!m_egl->SetVSync(m_display, enable))
++  {
++    //m_bVSync = 0;
++    resp = false;
++    CLog::Log(LOGERROR, "{},Could not set egl vsync", __FUNCTION__);
++  }
++#ifdef HAS_IMXVPU
++  g_IMXContext.SetVSync(enable);
++#endif
++  return resp;
++}
++
++void CWinSystemstb::PresentRenderImpl(bool rendered)
++{
++  if (m_delayDispReset && m_dispResetTimer.IsTimePast())
++  {
++    m_delayDispReset = false;
++    std::unique_lock<CCriticalSection> lock(m_resourceSection);
++    // tell any shared resources
++    for (std::vector<IDispResource *>::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
++      (*i)->OnResetDisplay();
++  }
++  if (!rendered)
++    return;
++  m_egl->SwapBuffers(m_display, m_surface);
++}
++
++EGLDisplay CWinSystemstb::GetEGLDisplay()
++{
++  return m_display;
++}
++
++EGLContext CWinSystemstb::GetEGLContext()
++{
++  return m_context;
++}
++
++EGLConfig CWinSystemstb::GetEGLConfig()
++{
++  return m_config;
++}
++
+diff --git a/xbmc/windowing/egl/WinSystemstb.h b/xbmc/windowing/egl/WinSystemstb.h
+new file mode 100644
+index 0000000000..82389c7158
+--- /dev/null
++++ b/xbmc/windowing/egl/WinSystemstb.h
+@@ -0,0 +1,75 @@
++/*
++ *  Copyright (C) 2005-2018 Team Kodi
++ *  This file is part of Kodi - https://kodi.tv
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ *  See LICENSES/README.md for more information.
++ */
++
++#pragma once
++
++#include "rendering/gles/RenderSystemGLES.h"
++#include "threads/CriticalSection.h"
++#include "threads/SystemClock.h"
++#include "windowing/WinSystem.h"
++
++#include "platform/linux/OptionalsReg.h"
++#include "platform/linux/input/LibInputHandler.h"
++
++#include "cores/AudioEngine/Engines/ActiveAE/ActiveAE.h"
++
++#include <EGL/egl.h>
++#include "utils/EGLUtils.h"
++
++class CEGLWrapper;
++class IDispResource;
++
++class CWinSystemstb : public CWinSystemBase
++{
++public:
++  CWinSystemstb();
++  virtual ~CWinSystemstb();
++
++  bool InitWindowSystem() override;
++  bool DestroyWindowSystem() override;
++
++  bool CreateNewWindow(const std::string& name,
++                       bool fullScreen,
++                       RESOLUTION_INFO& res) override;
++
++  bool CreateWindow(RESOLUTION_INFO &res);
++  bool DestroyWindow() override;
++  void UpdateResolutions() override;
++
++  bool Hide() override;
++  bool Show(bool raise = true) override;
++  void SetVisible(bool visible);
++  virtual void Register(IDispResource *resource);
++  virtual void Unregister(IDispResource *resource);
++  EGLDisplay GetEGLDisplay();
++  EGLSurface GetEGLSurface();
++  EGLContext GetEGLContext();
++  EGLConfig  GetEGLConfig();
++
++protected:
++  bool SetVSyncImpl(bool enable);
++  void PresentRenderImpl(bool rendered);
++  CEGLWrapper           *m_egl;
++  EGLDisplay            m_display;
++  EGLSurface            m_surface;
++  EGLContext            m_context;
++  EGLConfig             m_config;
++  RENDER_STEREO_MODE    m_stereo_mode;
++
++  std::string           m_extensions;
++
++  int m_displayWidth;
++  int m_displayHeight;
++
++  bool m_delayDispReset;
++  XbmcThreads::EndTime<> m_dispResetTimer;
++
++  CCriticalSection m_resourceSection;
++  std::vector<IDispResource*> m_resources;
++  std::unique_ptr<CLibInputHandler> m_libinput;
++};
+-- 
+2.34.1
+

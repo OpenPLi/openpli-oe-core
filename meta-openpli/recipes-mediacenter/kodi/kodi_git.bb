@@ -9,7 +9,7 @@ BUGTRACKER = "https://github.com/xbmc/xbmc/issues"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-require ${BPN}.inc
+require kodi.inc
 require kodi-extra.inc
 
 inherit cmake pkgconfig gettext python3-dir python3native
@@ -30,14 +30,12 @@ unzip-native \
 yasm-native \
 zip-native \
 \
+alsa-lib \
 avahi \
-boost \
 bzip2 \
 crossguid \
 curl \
 dcadec \
-enca \
-expat \
 faad2 \
 ffmpeg \
 flatbuffers \
@@ -58,21 +56,19 @@ libdvdread \
 libudfread \
 libinput \
 libmicrohttpd \
-libmms \
-libmodplug \
 libnfs \
 libpcre \
 libplist \
-libsamplerate0 \
 libssh \
+libsquish \
 libtinyxml \
-libusb1 \
 libxkbcommon \
 libxml2 \
 libxslt \
 lzo \
 mpeg2dec \
 python3 \
+p8platform \
 rapidjson \
 samba \
 spdlog \
@@ -81,7 +77,6 @@ taglib \
 udev \
 virtual/egl \
 wavpack \
-yajl \
 zlib \
  "
 
@@ -91,11 +86,10 @@ PATCHTOOL = "git"
 
 # stb, egl, players
 SRC_URI_append = " \
-           file://0001-flatbuffers-19.patch \
+           file://0001-flatbuffers.patch \
            file://0002-readd-Touchscreen-settings.patch \
-           file://0003-crossguid-0.2.patch \
-           file://0004-shader-nopow.patch \
-           file://0005-stb-support-19.patch \
+           file://0003-shader-nopow.patch \
+           file://0004-stb-support.patch \
             \
            "
 
@@ -121,8 +115,8 @@ CCACHE_DISABLE = "1"
 ASNEEDED = ""
 
 ACCEL ?= ""
-ACCEL_x86 = "vaapi vdpau"
-ACCEL_x86-64 = "vaapi vdpau"
+ACCEL:x86 = "vaapi vdpau"
+ACCEL:x86-64 = "vaapi vdpau"
 
 WINDOWSYSTEM ?= "stb"
 
@@ -150,6 +144,7 @@ PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
+PACKAGECONFIG[lcms] = ",,lcms"
 
 # Compilation tunes
 
@@ -165,18 +160,11 @@ EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 # Allow downloads during internals build
 do_compile[network] = "1"
 
-KODI_DISABLE_INTERNAL_LIBRARIES = " \
-  -DENABLE_INTERNAL_CROSSGUID=OFF \
-  -DENABLE_INTERNAL_FLATBUFFERS=OFF \
-  -DENABLE_INTERNAL_FMT=OFF \
-  -DENABLE_INTERNAL_FSTRCMP=0 \
-  -DENABLE_INTERNAL_RapidJSON=OFF \
-  -DENABLE_INTERNAL_FFMPEG=OFF \
-"
+
 
 EXTRA_OECMAKE = " \
     ${KODI_ARCH} \
-    ${KODI_DISABLE_INTERNAL_LIBRARIES} \
+    -DUSE_INTERNAL_LIBS=OFF \
     -DAPP_RENDER_SYSTEM=${APPRENDERSYSTEM} \
     \
     -DNATIVEPREFIX=${STAGING_DIR_NATIVE}${prefix} \
@@ -184,9 +172,16 @@ EXTRA_OECMAKE = " \
     -DWITH_TEXTUREPACKER=${STAGING_BINDIR_NATIVE}/TexturePacker \
     -DWITH_JSONSCHEMABUILDER=${STAGING_BINDIR_NATIVE}/JsonSchemaBuilder \
     \
+    -DENABLE_STATIC_LIBS=FALSE \
     -DCMAKE_NM='${NM}' \
     \
     -DFFMPEG_PATH=${STAGING_DIR_TARGET} \
+    -DENABLE_INTERNAL_CROSSGUID=OFF \
+    -DENABLE_INTERNAL_RapidJSON=OFF \
+    -DENABLE_INTERNAL_FLATBUFFERS=OFF \
+    -DENABLE_INTERNAL_FMT=OFF \
+    -DENABLE_INTERNAL_FSTRCMP=0 \
+    -DENABLE_INTERNAL_FFMPEG=OFF \
     -DLIBDVD_INCLUDE_DIRS=${STAGING_INCDIR} \
     -DNFS_INCLUDE_DIR=${STAGING_INCDIR} \
     -DSHAIRPLAY_INCLUDE_DIR=${STAGING_INCDIR} \
@@ -209,10 +204,9 @@ EXTRA_OECMAKE = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '-DWITH_PLATFORM="mali-cortexa15"', '', d)} \
 "
 
-# OECMAKE_GENERATOR="Unix Makefiles"
-#PARALLEL_MAKE = " "
 
-FULL_OPTIMIZATION:armv7a = "-fexpensive-optimizations -fomit-frame-pointer -O4 -ffast-math"
+FULL_OPTIMIZATION:armv7a = "-fomit-frame-pointer -O3 -ffast-math"
+FULL_OPTIMIZATION:armv7ve = "-fomit-frame-pointer -O3 -ffast-math"
 BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
 # for python modules
@@ -220,7 +214,7 @@ export HOST_SYS
 export BUILD_SYS
 export STAGING_LIBDIR
 export STAGING_INCDIR
-export PYTHON_DIR
+export ${PYTHON_DIR}
 
 export TARGET_PREFIX
 
@@ -236,7 +230,6 @@ do_configure:prepend() {
 INSANE_SKIP:${PN} = "rpaths"
 
 FILES:${PN} += "${datadir}/metainfo ${datadir}/xsessions ${datadir}/icons ${libdir}/xbmc ${datadir}/xbmc ${libdir}/firewalld"
-FILES:${PN}-dev = "${includedir}"
 FILES:${PN}-dbg += "${libdir}/kodi/.debug ${libdir}/kodi/*/.debug ${libdir}/kodi/*/*/.debug ${libdir}/kodi/*/*/*/.debug"
 
 # kodi uses some kind of dlopen() method for libcec so we need to add it manually
@@ -247,7 +240,7 @@ RRECOMMENDS:${PN}:append = " \
                              libnfs \
                              nss \
                              os-release \
-                             ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xdyinfo xrandr xinit mesa-demos', '', d)} \
+                             ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xrandr xinit mesa-demos', '', d)} \
                              ${PYTHON_PN} \
                              ${PYTHON_PN}-compression \
                              ${PYTHON_PN}-ctypes \
@@ -256,6 +249,7 @@ RRECOMMENDS:${PN}:append = " \
                              ${PYTHON_PN}-html \
                              ${PYTHON_PN}-json \
                              ${PYTHON_PN}-mechanize \
+                             ${PYTHON_PN}-multiprocessing \
                              ${PYTHON_PN}-profile \
                              ${PYTHON_PN}-pycryptodome \
                              ${PYTHON_PN}-pycryptodomex \

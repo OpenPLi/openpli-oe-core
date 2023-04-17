@@ -1,7 +1,7 @@
 SUMMARY = "Kodi Media Center PVR plugins"
 
-PV = "3.4.3+git${SRCPV}"
-PKGV = "3.4.3+git${GITPKGV}"
+PV = "20.3.0+git${SRCPV}"
+PKGV = "20.3.0+git${GITPKGV}"
 
 KODIADDONPLUGIN = "njoy"
 

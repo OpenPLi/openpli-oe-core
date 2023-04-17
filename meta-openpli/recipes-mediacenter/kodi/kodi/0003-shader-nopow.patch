@@ -1,7 +1,7 @@
-From 5e6a56895c84a691af3d4bb91a631e73161c4024 Mon Sep 17 00:00:00 2001
-From: kueken <ohnemailadresse@arcor.de>
-Date: Tue, 15 Mar 2022 14:45:44 +0100
-Subject: [PATCH] 0004-shader-nopow
+From faedd5f6ebe548da8fff0939f23a5147503de230 Mon Sep 17 00:00:00 2001
+From: Captain <captain.onboard@web.de>
+Date: Wed, 15 Jul 2020 21:42:24 +0200
+Subject: [PATCH] shader-nopow-19
 
 ---
  .../shaders/GLES/2.0/gles_yuv2rgb_basic.frag  | 22 +++++++++++++++--
@@ -10,10 +10,10 @@ Subject: [PATCH] 0004-shader-nopow
  3 files changed, 43 insertions(+), 5 deletions(-)
 
 diff --git a/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag b/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag
-index ecd82b13ca..ad12c636ec 100644
+index d76a3b8..47dcd7d 100644
 --- a/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag
 +++ b/system/shaders/GLES/2.0/gles_yuv2rgb_basic.frag
-@@ -62,9 +62,27 @@ void main()
+@@ -63,9 +63,27 @@ void main()
    rgb.a = m_alpha;
  
  #if defined(XBMC_COL_CONVERSION)
@@ -41,10 +41,10 @@ index ecd82b13ca..ad12c636ec 100644
 -  rgb.rgb = pow(rgb.rgb, vec3(m_gammaDstInv));
 +  rgb.rgb = ai * rgb.rgb*rgb.rgb + bi * rgb.rgb + ci * sqrt(rgb.rgb);
  
- #if defined(XBMC_TONE_MAPPING)
+ #if defined(KODI_TONE_MAPPING_REINHARD)
    float luma = dot(rgb.rgb, m_coefsDst);
 diff --git a/system/shaders/GLES/2.0/gles_yuv2rgb_bob.frag b/system/shaders/GLES/2.0/gles_yuv2rgb_bob.frag
-index 22d672dd14..119bab453a 100644
+index a82de9d..e5078ad 100644
 --- a/system/shaders/GLES/2.0/gles_yuv2rgb_bob.frag
 +++ b/system/shaders/GLES/2.0/gles_yuv2rgb_bob.frag
 @@ -20,7 +20,7 @@
@@ -56,7 +56,7 @@ index 22d672dd14..119bab453a 100644
  uniform sampler2D m_sampY;
  uniform sampler2D m_sampU;
  uniform sampler2D m_sampV;
-@@ -83,9 +83,27 @@ void main()
+@@ -84,9 +84,27 @@ void main()
    rgb = mix(rgb, rgbBelow, 0.5);
  
  #if defined(XBMC_COL_CONVERSION)
@@ -84,21 +84,18 @@ index 22d672dd14..119bab453a 100644
 -  rgb.rgb = pow(rgb.rgb, vec3(m_gammaDstInv));
 +  rgb.rgb = ai * rgb.rgb*rgb.rgb + bi * rgb.rgb + ci * sqrt(rgb.rgb);
  
- #if defined(XBMC_TONE_MAPPING)
+ #if defined(KODI_TONE_MAPPING_REINHARD)
    float luma = dot(rgb.rgb, m_coefsDst);
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp
-index 22c72d59da..240a662c8b 100644
+index 7282dbf..956107c 100644
 --- a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp
 +++ b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/YUV2RGBShaderGLES.cpp
-@@ -48,6 +48,8 @@ BaseYUV2RGBGLSLShader::BaseYUV2RGBGLSLShader(EShaderFormat format, AVColorPrimar
-   if (dstPrimaries != srcPrimaries)
+@@ -52,6 +52,8 @@ BaseYUV2RGBGLSLShader::BaseYUV2RGBGLSLShader(EShaderFormat format,
    {
+     m_colorConversion = true;
      m_defines += "#define XBMC_COL_CONVERSION\n";
 +    if (srcPrimaries == AVCOL_PRI_BT2020) // Only support BT2020 as input for now
 +      m_defines += "#define XBMC_COL_GAMMA_2_4\n";
    }
  
    if (toneMap)
--- 
-2.25.1
-

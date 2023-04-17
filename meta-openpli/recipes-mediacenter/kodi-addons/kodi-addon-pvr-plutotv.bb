@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=435d4178fd08b25f9cf911f1c3a0ce1d"
 
 SRC_URI = "git://github.com/kodi-pvr/pvr.plutotv.git;branch=Nexus;protocol=https"
 
+PV = "20.3.0"
+
 KODIADDONPLUGIN = "plutotv"
 
 require kodi-addon-pvr.inc

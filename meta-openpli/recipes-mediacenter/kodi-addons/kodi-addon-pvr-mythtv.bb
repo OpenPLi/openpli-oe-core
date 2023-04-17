@@ -1,7 +1,7 @@
 SUMMARY = "Kodi Media Center PVR plugins"
 
-PV = "5.10.15+git${SRCPV}"
-PKGV = "5.10.15+git${GITPKGV}"
+PV = "20.5.0+git${SRCPV}"
+PKGV = "20.5.9+git${GITPKGV}"
 
 KODIADDONPLUGIN = "mythtv"
 

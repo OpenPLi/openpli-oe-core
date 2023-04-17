@@ -1,27 +1,13 @@
-From 73f406b7964b17798e8ce5451de8503c9bd154c5 Mon Sep 17 00:00:00 2001
-From: kueken <ohnemailadresse@arcor.de>
-Date: Tue, 15 Mar 2022 12:54:39 +0100
-Subject: [PATCH] define-INPUTSTREAM_MAX_STREAM_COUNT-ifndef
-
----
- src/main.cpp | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/src/main.cpp b/src/main.cpp
-index 6c4076b..ab5edc0 100644
 --- a/src/main.cpp
 +++ b/src/main.cpp
-@@ -43,6 +43,10 @@
- #include <kodi/addon-instance/VideoCodec.h>
- #include <kodi/addon-instance/inputstream/StreamCodec.h>
+@@ -27,6 +27,10 @@
+ 
+ #include <stdarg.h> // va_list, va_start, va_arg, va_end
  
 +#ifndef INPUTSTREAM_MAX_STREAM_COUNT
 +#define INPUTSTREAM_MAX_STREAM_COUNT 256
 +#endif
 +
- #if defined(ANDROID)
- #include <kodi/platform/android/System.h>
- #endif
--- 
-2.25.1
-
+ using namespace UTILS;
+ using namespace SESSION;
+ 

@@ -1,7 +1,7 @@
 SUMMARY = "Kodi Media Center PVR plugins"
 
-PV = "3.9.8+git${SRCPV}"
-PKGV = "3.9.8+git${GITPKGV}"
+PV = "20.6.0"
+PKGV = "20.6.0+git${GITPKGV}"
 
 KODIADDONPLUGIN = "iptvsimple"
 

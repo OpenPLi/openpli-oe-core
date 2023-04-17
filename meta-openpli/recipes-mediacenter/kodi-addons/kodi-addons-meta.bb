@@ -7,8 +7,10 @@ require conf/license/license-gplv2.inc
 ALLOW_EMPTY_${PN} = "1"
 
 RDEPENDS_${PN} = " \
+    kodi-addon-ardundzdf \
     kodi-addon-pvr-demo \
     kodi-addon-pvr-dvblink \
+    kodi-addon-fluxfm \
     kodi-addon-pvr-hts \
     kodi-addon-pvr-mythtv \
     kodi-addon-pvr-njoy \
@@ -16,6 +18,8 @@ RDEPENDS_${PN} = " \
     kodi-addon-pvr-vdr.vnsi \
     kodi-addon-pvr-wmc \
     kodi-addon-pvr-vuplus \
+    kodi-addon-kodi-six \
+    kodi-addon-inputstreamhelper \
     kodi-addon-pvr-iptvsimple \
     kodi-addon-pvr-nextpvr \
     kodi-addon-pvr-dvbviewer \

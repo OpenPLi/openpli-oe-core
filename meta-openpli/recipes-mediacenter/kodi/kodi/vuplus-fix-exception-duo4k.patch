@@ -1,8 +1,8 @@
 diff --git a/xbmc/utils/StringUtils.cpp b/xbmc/utils/StringUtils.cpp
-index 4195b18ae5..2a1212a379 100644
+index c9c5e31916..98a44bb185 100644
 --- a/xbmc/utils/StringUtils.cpp
 +++ b/xbmc/utils/StringUtils.cpp
-@@ -1032,6 +1032,7 @@ int64_t StringUtils::AlphaNumericCompare(const wchar_t* left, const wchar_t* rig
+@@ -1070,6 +1070,7 @@ int64_t StringUtils::AlphaNumericCompare(const wchar_t* left, const wchar_t* rig
    const wchar_t *ld, *rd;
    wchar_t lc, rc;
    int64_t lnum, rnum;
@@ -10,7 +10,7 @@ index 4195b18ae5..2a1212a379 100644
    bool lsym, rsym;
    while (*l != 0 && *r != 0)
    {
-@@ -1124,6 +1125,9 @@ int64_t StringUtils::AlphaNumericCompare(const wchar_t* left, const wchar_t* rig
+@@ -1162,6 +1163,9 @@ int64_t StringUtils::AlphaNumericCompare(const wchar_t* left, const wchar_t* rig
      }
      l++; r++;
    }

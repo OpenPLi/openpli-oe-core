@@ -9,11 +9,11 @@ DEPENDS += "expat"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-SRCREV = "c6e2bbe16ce284cab2b6c4bc98d551a99db8a32b"
+SRCREV = "61f7ff342b5c60ff5c9d75f6de843fe4b8cd7aa7"
 
-PV = "19.4.0+gitr${SRCPV}"
+PV = "20.3.0+gitr${SRCPV}"
 
-KODIADDONBRANCH = "Matrix"
+KODIADDONBRANCH = "Nexus"
 
 SRC_URI = "git://github.com/xbmc/inputstream.rtmp.git;protocol=https;branch=${KODIADDONBRANCH}"
 

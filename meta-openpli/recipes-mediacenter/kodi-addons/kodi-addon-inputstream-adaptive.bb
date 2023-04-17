@@ -3,7 +3,7 @@ HOMEPAGE = "https://github.com/peak3d/inputstream.adaptive"
 BUGTRACKER = "https://github.com/peak3d/inputstream.adaptive/issues"
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://src/main.cpp;beginline=1;endline=17;md5=5eac1e215251c8f88d799f80ed45d5c0"
+LIC_FILES_CHKSUM = "file://src/main.cpp;beginline=1;endline=17;md5=7906619e2feca59ac3f5088ac7bc4100"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
@@ -17,9 +17,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "${AUTOREV}"
 
-KODIADDONBRANCH = "Matrix"
+KODIADDONBRANCH = "Nexus"
 
-PV = "19.4.0+gitr${SRCPV}"
+PV = "20.3.4+gitr${SRCPV}"
 SRC_URI = "git://github.com/xbmc/inputstream.adaptive.git;protocol=https;branch=${KODIADDONBRANCH} \
         file://define-INPUTSTREAM_MAX_STREAM_COUNT-ifndef.patch"
 

@@ -1,7 +1,7 @@
 SUMMARY = "Kodi Media Center PVR plugins"
 
-PV = "420.1.2+git${SRCPV}"
-PKGV = "20.1.2+git${GITPKGV}"
+PV = "20.6.0"
+PKGV = "20.6.0+git${GITPKGV}"
 
 KODIADDONPLUGIN = "hts"
 

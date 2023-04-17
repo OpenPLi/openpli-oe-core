@@ -1,6 +1,6 @@
 LICENSE = "GPLv2+"
 require conf/license/license-gplv2.inc
-require kodi-matrix.inc
+require kodi-nexus.inc
 
 DEPENDS += " \
             zip-native \
