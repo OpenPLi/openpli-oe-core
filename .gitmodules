@@ -60,7 +60,7 @@
 	url = https://github.com/edision-open/meta-edision.git
 [submodule "meta-axasuhd"]
 	path = meta-axasuhd
-	url = https://github.com/Axas-UHD/meta-axasuhd.git
+	url = https://github.com/OpenPLi-meta/meta-axas
 [submodule "meta-maxytec"]
 	path = meta-maxytec
 	url = https://github.com/v8droide2/meta-maxytec
