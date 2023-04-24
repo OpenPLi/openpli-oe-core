@@ -116,6 +116,8 @@ ENIGMA2_BRANCH ?= "develop"
 SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https"
 SRC_URI := " ${SRC_ORIGIN};branch=${ENIGMA2_BRANCH}"
 
+SRC_URI:append:dm8000 = " file://fix-wrong-driver-date.patch"
+
 LDFLAGS_prepend = " -lxml2 "
 
 S = "${WORKDIR}/git"
