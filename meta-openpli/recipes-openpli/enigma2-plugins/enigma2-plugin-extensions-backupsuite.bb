@@ -3,9 +3,10 @@ LICENSE = "GPLv3"
 AUTHOR = "Pedro Newbie <pedro.newbie@gmail.com>"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
-SRC_URI = "git://github.com/persianpros/BackupSuite-PLi.git;protocol=https \
-           file://use-pyc-instead-of-pyo.patch \
-"
+SRC_ORIGIN ?= "git://github.com/persianpros/BackupSuite-PLi.git;protocol=https "
+SRC_URI := "${SRC_ORIGIN} "
+
+SRC_URI += "file://use-pyc-instead-of-pyo.patch"
 
 # don't inherit allarch, it can't work with arch-dependent RDEPENDS
 inherit gitpkgv distutils-openplugins gettext
