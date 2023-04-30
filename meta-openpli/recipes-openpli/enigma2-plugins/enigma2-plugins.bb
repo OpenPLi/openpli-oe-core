@@ -86,7 +86,6 @@ DEPENDS = " \
 	libcddb \
 	dvdbackup \
 	libtirpc \
-	enigma2-plugin-extensions-lcd4linuxplugin \
 	"
 
 python populate_packages_prepend () {
