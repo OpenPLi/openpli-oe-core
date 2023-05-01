@@ -13,7 +13,7 @@ LICENSE = "CLOSED"
 FILES_${PN} = "${bindir} ${sysconfdir}"
 
 RDEPENDS_${PN} += "softcam-support"
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP_${PN} += "already-stripped ldflags"
 
 CAMLINK = "/etc/init.d/softcam"
 CAMPATH = "/etc/init.d/softcam.${CAMNAME}"
