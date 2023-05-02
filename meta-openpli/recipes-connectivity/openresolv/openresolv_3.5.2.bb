@@ -4,7 +4,7 @@ HOMEPAGE = "http://roy.marples.name/projects/openresolv"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://resolvconf.in;beginline=4;endline=26;md5=e962049f535f7385f0f2a0ac9638cd43"
 
-SRC_URI = "http://roy.marples.name/downloads/${BPN}/${BP}.tar.bz2 \
+SRC_URI = "git://github.com/NetworkConfiguration/openresolv.git;protocol=https \
            file://000resolvconf.if-up \
            file://000resolvconf.ppp.ip-down \
            file://000resolvconf.ppp.ip-up \
