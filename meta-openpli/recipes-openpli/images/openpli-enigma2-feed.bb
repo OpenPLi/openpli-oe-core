@@ -140,6 +140,7 @@ OPTIONAL_PACKAGES += " \
 	rtorrent \
 	sabnzbd \
 	satipclient \
+	satpi \
 	screen \
 	sed \
 	sshpass \
