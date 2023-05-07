@@ -30,7 +30,7 @@ FILES_${PN} =  " \
 do_install() {
 	install -d ${D}${libdir}/${QtStalker}
 	install -d ${D}${datadir}/stalker
-	cp -rp ${S}${datadir}/stalker/* ${D}${datadir}/stalker/
+	cp --preserve=mode,timestamps -r ${S}${datadir}/stalker/* ${D}${datadir}/stalker/
 	chmod -R a+rX ${D}${datadir}/stalker/
 	install -m 0755 ${S}/plugin/__init__.py ${D}${libdir}/${QtStalker}
 	install -m 0755 ${S}/plugin/browser.py ${D}${libdir}/${QtStalker}
