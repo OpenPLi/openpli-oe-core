@@ -5,13 +5,13 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = " \
     git://github.com/oe-alliance/satip-client.git;protocol=https;branch=mis \
     file://satipclient.sh \
+    file://auto-detect-and-avoid-ioctl-conflicts.patch \
 "
-#SRC_URI += "file://auto-detect-and-avoi-ioct-conflicts.patch"
 
 S = "${WORKDIR}/git"
 
