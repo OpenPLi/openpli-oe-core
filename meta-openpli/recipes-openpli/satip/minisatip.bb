@@ -1,20 +1,38 @@
-DESCRIPTION = "SAT>IP server"
-MAINTAINER = "PLi team"
+SUMMARY = "Minisatip SAT>IP server"
+MAINTAINER = "catalinii"
 require conf/license/openpli-gplv2.inc
 
-inherit gitpkgv
+HOMEPAGE = "https://minisatip.org/"
+DEPENDS = "libdvbcsa openssl"
+RDEPENDS_${PN} = "libdvbcsa openssl"
 
-PV = "1+git${SRCPV}"
-PKGV = "1+git${GITPKGV}"
+SRC_URI = " \
+    git://github.com/catalinii/minisatip.git;protocol=http;branch=master;protocol=https \
+    file://minisatip.sh \
+    "
 
-SRC_URI = "git://github.com/eriksl/minisatip.git;protocol=https"
-FILES_${PN} = "${sbindir}/minisatip"
+UPSTREAMVERSION = "1.0d"
+PV = "${UPSTREAMVERSION}+git${SRCPV}"
+
 S = "${WORKDIR}/git"
-BUILD = "${WORKDIR}/build"
+BUILD = "${WORKDIR}/git"
 
-inherit autotools
+inherit autotools-brokensep update-rc.d
 
-do_install() {
-	install -m 755 -d ${D}${sbindir}
-	install -m 755 ${BUILD}/minisatip ${D}${sbindir}
+INITSCRIPT_NAME = "minisatip"
+
+INITSCRIPT_PARAMS = "defaults 80"
+
+EXTRA_OECONF = "--disable-netcv"
+
+do_configure_prepend () {
+}
+
+do_install () {
+    install -d -m 0755 ${D}/${bindir}
+    install -d -m 0755 ${D}/${datadir}/${PN}
+    install -d -m 0755 ${D}/etc/init.d
+    install -m 0755 ${S}/minisatip ${D}/${bindir}/
+    install -m 0755 ${WORKDIR}/minisatip.sh ${D}/etc/init.d/minisatip
+    cp -r --preserve=timestamps ${S}/html ${D}/${datadir}/${PN}
 }
