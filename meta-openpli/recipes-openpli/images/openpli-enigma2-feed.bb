@@ -209,6 +209,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-systemplugins-radiotimesxmltvemulator \
 	enigma2-plugin-systemplugins-serviceapp \
 	enigma2-plugin-systemplugins-signalfinder \
+	enigma2-plugin-systemplugins-satipserver \
 	enigma2-plugin-systemplugins-terrestrialscan \
 	enigma2-plugin-systemplugins-quadpip \
 	enigma2-plugin-security-firewall \
