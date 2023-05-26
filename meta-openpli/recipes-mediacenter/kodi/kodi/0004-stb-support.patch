@@ -407,7 +407,7 @@ index 4f6ffc0061..4e2680e4ea 100644
    }
  
 +/*XCORE stb has an old gl2ext.h without GL_RGBA16F_EXT */
-+#if defined (TARGET_XCORE) || defined (TARGET_VUPLUS_MIPSEL)
++#if defined (TARGET_STB)
 +  m_internalformat = GL_RGBA;
 +#else
    if (m_floattex)
