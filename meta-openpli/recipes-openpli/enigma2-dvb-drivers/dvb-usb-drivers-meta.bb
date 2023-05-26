@@ -4,7 +4,7 @@ require dvb-usb-drivers-meta.inc
 
 # Get the kernel version for this image, we need it to build conditionally on kernel version
 # NB: this only works in the feed, as the kernel needs to be build before the headers are available
-export KERNEL_VERSION = "${@oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
+export KERNEL_VERSION = "${@oe.utils.read_file('${STAGING_KERNEL_BUILDDIR}/kernel-abiversion')}"
 
 OPTIONAL_DVBUSB_PACKAGES = "\
 	${@ 'enigma2-plugin-drivers-dvb-usb-as102' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.2') > 0) else '' } \

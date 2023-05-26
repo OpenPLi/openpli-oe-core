@@ -28,6 +28,6 @@ FILES_${PN} = " \
 "
 
 # Get the kernel version for this image, we need it to build conditionally on kernel version
-export KERNEL_VERSION = "${@oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
+export KERNEL_VERSION = "${@oe.utils.read_file('${STAGING_KERNEL_BUILDDIR}/kernel-abiversion')}"
 
 RDEPENDS_${PN} = "${@ 'wireguard-module' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.6') < 0) else 'kernel-module-wireguard' } bash"
