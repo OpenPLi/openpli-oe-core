@@ -7,7 +7,7 @@ RDEPENDS_${PN} += " qtdeclarative qtsensors qtlocation"
 
 SRC_URI_remove = " \
     file://0003-Fix-build-bug-for-armv32-BE.patch \
-    file://0005-Fix-build-with-bison37.patch \
+    file://0005-Let-Bison-generate-the-header-directly-to-fix-build-.patch \
     file://0006-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
     file://0007-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
     file://0009-Riscv-Add-support-for-riscv.patch \
