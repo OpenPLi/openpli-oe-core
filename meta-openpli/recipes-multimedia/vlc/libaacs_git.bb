@@ -9,7 +9,7 @@ PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://code.videolan.org/videolan/${BPN}.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/jack2015/libaacs.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
