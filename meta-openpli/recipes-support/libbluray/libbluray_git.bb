@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM="file://COPYING;md5=435ed639f84d4585d93824e7da3d85da"
 DEPENDS = "libxml2 libudfread"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://github.com/kueken/libbluray.git;protocol=https"
+SRC_ORIGIN ?= "git://code.videolan.org/videolan/libbluray.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} "
 
 inherit gittag setuptools3 autotools-brokensep pkgconfig
