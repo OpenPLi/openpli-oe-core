@@ -1,6 +1,6 @@
-From a0a4f38d02c442b68ca9d24b1446582f1f702eca Mon Sep 17 00:00:00 2001
+From 5cc8e77b7580836f039a04185243290662851aa1 Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Sun, 28 May 2023 19:43:17 +0200
+Date: Fri, 2 Jun 2023 01:24:16 +0200
 Subject: [PATCH] 0004-stb-support
 
 ---
@@ -23,6 +23,7 @@ Subject: [PATCH] 0004-stb-support
  .../platform/linux/input/LibInputKeyboard.cpp |  11 +-
  xbmc/system.h                                 |  12 +
  xbmc/system_gl.h                              |   3 +
+ xbmc/utils/EGLUtils.cpp                       |  16 +
  xbmc/view/ViewStateSettings.cpp               |   2 +-
  xbmc/windowing/egl/CMakeLists.txt             |  13 +
  xbmc/windowing/egl/EGLNativeType.h            | 152 +++++
@@ -33,7 +34,7 @@ Subject: [PATCH] 0004-stb-support
  xbmc/windowing/egl/WinSystemSTBContext.h      |  57 ++
  xbmc/windowing/egl/WinSystemstb.cpp           | 527 ++++++++++++++++++
  xbmc/windowing/egl/WinSystemstb.h             |  75 +++
- 29 files changed, 1628 insertions(+), 28 deletions(-)
+ 30 files changed, 1644 insertions(+), 28 deletions(-)
  create mode 100644 cmake/platform/linux/stb.cmake
  create mode 100644 cmake/treedata/common/stb.txt
  create mode 100644 xbmc/system.h
@@ -523,6 +524,33 @@ index 04c4d55c66..5179f8d636 100644
  #else
  #include <GLES2/gl2.h>
  #include <GLES2/gl2ext.h>
+diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
+index 7c5e70938f..23dda990d6 100644
+--- a/xbmc/utils/EGLUtils.cpp
++++ b/xbmc/utils/EGLUtils.cpp
+@@ -22,6 +22,22 @@
+ namespace
+ {
+ 
++#ifndef EGL_NO_CONFIG_KHR
++#define EGL_NO_CONFIG_KHR static_cast<EGLConfig>(0)
++#endif
++#ifndef EGL_CONTEXT_PRIORITY_LEVEL_IMG
++#define EGL_CONTEXT_PRIORITY_LEVEL_IMG 0x3100
++#endif
++#ifndef EGL_CONTEXT_PRIORITY_HIGH_IMG
++#define EGL_CONTEXT_PRIORITY_HIGH_IMG 0x3101
++#endif
++#ifndef EGL_CONTEXT_PRIORITY_MEDIUM_IMG
++#define EGL_CONTEXT_PRIORITY_MEDIUM_IMG 0x3102
++#endif
++#ifndef TARGET_STB
++#define TARGET_STB 1
++#endif
++
+ #define X(VAL) std::make_pair(VAL, #VAL)
+ std::map<EGLint, const char*> eglAttributes =
+ {
 diff --git a/xbmc/view/ViewStateSettings.cpp b/xbmc/view/ViewStateSettings.cpp
 index d8833934ae..0c557cece1 100644
 --- a/xbmc/view/ViewStateSettings.cpp

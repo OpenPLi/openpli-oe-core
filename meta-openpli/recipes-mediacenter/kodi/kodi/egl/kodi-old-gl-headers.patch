@@ -1,13 +1,13 @@
-From f73a9c2292317e2662dd2cbbbee9f591c6cbae96 Mon Sep 17 00:00:00 2001
+From edb7149aa2cfa0c5f715ff485a496d90ba521cbc Mon Sep 17 00:00:00 2001
 From: kueken <ohnemailadresse@arcor.de>
-Date: Sun, 28 May 2023 19:41:29 +0200
+Date: Fri, 2 Jun 2023 01:25:25 +0200
 Subject: [PATCH] kodi-old-gl-headers
 
 ---
- .../VideoShaders/VideoFilterShaderGLES.cpp    |  5 ++++
- xbmc/utils/EGLUtils.cpp                       | 24 +++++++++++++++++++
- xbmc/utils/GLUtils.cpp                        |  6 ++---
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ .../VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp | 5 +++++
+ xbmc/utils/EGLUtils.cpp                                   | 8 ++++++++
+ xbmc/utils/GLUtils.cpp                                    | 6 +++---
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/VideoFilterShaderGLES.cpp
 index 4f6ffc0061..55c46b9b0f 100644
@@ -33,33 +33,10 @@ index 4f6ffc0061..55c46b9b0f 100644
    CLog::Log(LOGDEBUG, "GLES: using scaling method: {}", m_method);
    CLog::Log(LOGDEBUG, "GLES: using shader: {}", shadername);
 diff --git a/xbmc/utils/EGLUtils.cpp b/xbmc/utils/EGLUtils.cpp
-index 7c5e70938f..e485c0201a 100644
+index 23dda990d6..e485c0201a 100644
 --- a/xbmc/utils/EGLUtils.cpp
 +++ b/xbmc/utils/EGLUtils.cpp
-@@ -22,6 +22,22 @@
- namespace
- {
- 
-+#ifndef EGL_NO_CONFIG_KHR
-+#define EGL_NO_CONFIG_KHR static_cast<EGLConfig>(0)
-+#endif
-+#ifndef EGL_CONTEXT_PRIORITY_LEVEL_IMG
-+#define EGL_CONTEXT_PRIORITY_LEVEL_IMG 0x3100
-+#endif
-+#ifndef EGL_CONTEXT_PRIORITY_HIGH_IMG
-+#define EGL_CONTEXT_PRIORITY_HIGH_IMG 0x3101
-+#endif
-+#ifndef EGL_CONTEXT_PRIORITY_MEDIUM_IMG
-+#define EGL_CONTEXT_PRIORITY_MEDIUM_IMG 0x3102
-+#endif
-+#ifndef TARGET_STB
-+#define TARGET_STB 1
-+#endif
-+
- #define X(VAL) std::make_pair(VAL, #VAL)
- std::map<EGLint, const char*> eglAttributes =
- {
-@@ -84,15 +100,18 @@ std::map<EGLenum, const char*> eglErrors =
+@@ -100,15 +100,18 @@ std::map<EGLenum, const char*> eglErrors =
  
  std::map<EGLint, const char*> eglErrorType =
  {
@@ -78,7 +55,7 @@ index 7c5e70938f..e485c0201a 100644
  void EglErrorCallback(EGLenum error,
                        const char* command,
                        EGLint messageType,
-@@ -117,6 +136,7 @@ void EglErrorCallback(EGLenum error,
+@@ -133,6 +136,7 @@ void EglErrorCallback(EGLenum error,
  
    CLog::Log(LOGDEBUG, "EGL Debugging:\nError: {}\nCommand: {}\nType: {}\nMessage: {}", errorStr, command, typeStr, message);
  }
@@ -86,7 +63,7 @@ index 7c5e70938f..e485c0201a 100644
  
  std::set<std::string> CEGLUtils::GetClientExtensions()
  {
-@@ -171,6 +191,7 @@ void CEGLUtils::Log(int logLevel, const std::string& what)
+@@ -187,6 +191,7 @@ void CEGLUtils::Log(int logLevel, const std::string& what)
  CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platformExtension)
  : m_platform{platform}
  {
@@ -94,7 +71,7 @@ index 7c5e70938f..e485c0201a 100644
    if (CEGLUtils::HasClientExtension("EGL_KHR_debug"))
    {
      auto eglDebugMessageControl = CEGLUtils::GetRequiredProcAddress<PFNEGLDEBUGMESSAGECONTROLKHRPROC>("eglDebugMessageControlKHR");
-@@ -183,6 +204,7 @@ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platform
+@@ -199,6 +204,7 @@ CEGLContextUtils::CEGLContextUtils(EGLenum platform, std::string const& platform
  
      eglDebugMessageControl(EglErrorCallback, eglDebugAttribs);
    }
@@ -102,7 +79,7 @@ index 7c5e70938f..e485c0201a 100644
  
    m_platformSupported = CEGLUtils::HasClientExtension("EGL_EXT_platform_base") && CEGLUtils::HasClientExtension(platformExtension);
  }
-@@ -400,11 +422,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
+@@ -416,11 +422,13 @@ bool CEGLContextUtils::CreateContext(CEGLAttributesVec contextAttribs)
    if (CEGLUtils::HasExtension(m_eglDisplay, "EGL_IMG_context_priority"))
      contextAttribs.Add({{EGL_CONTEXT_PRIORITY_LEVEL_IMG, EGL_CONTEXT_PRIORITY_HIGH_IMG}});
  
