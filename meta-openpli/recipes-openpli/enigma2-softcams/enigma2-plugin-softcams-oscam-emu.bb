@@ -13,7 +13,9 @@ PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
 SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
-SRC_URI := "${SRC_ORIGIN} "
+SRC_URI := "${SRC_ORIGIN} \
+        file://icam.patch \
+        "
 
 DEPENDS = "libusb openssl"
 RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
