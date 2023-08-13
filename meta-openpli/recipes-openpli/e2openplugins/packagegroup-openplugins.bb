@@ -11,6 +11,7 @@ DEPENDS = " \
 	enigma2-plugin-extensions-bitrate \
 	enigma2-plugin-extensions-blackoutblind \
 	enigma2-plugin-extensions-changerootpassword \
+	enigma2-plugin-extensions-epgimportfilter \
 	enigma2-plugin-extensions-filecommander \
 	enigma2-plugin-extensions-foreca \
 	enigma2-plugin-extensions-hetweer \
