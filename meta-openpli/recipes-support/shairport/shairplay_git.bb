@@ -7,7 +7,9 @@ PR = "r1"
 
 inherit autotools pkgconfig
 
-SRC_URI = "git://github.com/juhovh/shairplay.git"
+SRC_URI = "git://github.com/juhovh/shairplay.git \
+           file://remove-dns-sd-h-header-file-check.patch \
+"
 
 S = "${WORKDIR}/git"
 

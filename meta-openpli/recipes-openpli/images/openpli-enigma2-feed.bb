@@ -143,6 +143,7 @@ OPTIONAL_PACKAGES += " \
 	satpi \
 	screen \
 	sed \
+	shairplay \
 	sshpass \
 	sshfs-fuse \
 	smartmontools \
