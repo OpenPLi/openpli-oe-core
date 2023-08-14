@@ -1,5 +1,7 @@
 DESCRIPTION = "meta file for USB DVB drivers"
 
+PV = "1.2"
+
 require dvb-usb-drivers-meta.inc
 
 # Get the kernel version for this image, we need it to build conditionally on kernel version
@@ -40,4 +42,3 @@ DEPENDS = "\
 	${OPTIONAL_EXTRA_DVBUSB_PACKAGES} \
 	"
 
-PV = "1.1"
