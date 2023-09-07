@@ -21,6 +21,7 @@ do_install () {
 	install -d ${D}/${sysconfdir}/enigma2/jediplaylists
 	install -d ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream
 	cp -rf ${S}/JediMakerXtream//etc/enigma2/jediplaylists/* ${D}/${sysconfdir}/enigma2/jediplaylists/
+	rm -f ${S}/JediMakerXtream/usr/lib/enigma2/python/Plugins/Extensions/JediMakerXtream/locale/updateallpo.sh
 	cp -rf ${S}/JediMakerXtream/usr/lib/enigma2/python/Plugins/Extensions/JediMakerXtream/* ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream/
 }
 
