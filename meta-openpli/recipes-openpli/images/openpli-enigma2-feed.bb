@@ -97,6 +97,7 @@ OPTIONAL_PACKAGES += " \
 	minisatip \
 	mpd \
 	mtd-utils \
+	mtr \
 	mtools \
 	nano \
 	ndisc6 \
