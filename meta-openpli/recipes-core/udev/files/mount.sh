@@ -208,6 +208,8 @@ automount() {
 
 	# label may not be a used mountpoint or local directory
 	if [ ! -z "${LABEL}" ] && [ -d /media/$LABEL ]; then
+		# symlink? remove it
+		[[ -L /media/$LABEL ]] && rm -f /media/$LABEL
 		# and something is mounted on it
 		mountpoint -q /media/$LABEL && LABEL=
 		# or not an empty directory
