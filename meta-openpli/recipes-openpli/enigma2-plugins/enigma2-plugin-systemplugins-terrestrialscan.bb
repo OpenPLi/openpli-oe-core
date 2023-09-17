@@ -9,7 +9,9 @@ inherit autotools-brokensep gitpkgv python3-compileall gettext
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/oe-alliance/TerrestrialScan.git;protocol=https"
+SRC_URI = "git://github.com/oe-alliance/TerrestrialScan.git;protocol=https \
+           file://revert-back-to-old-devel-m4.patch \
+           "
 
 EXTRA_OECONF = " \
     BUILD_SYS=${BUILD_SYS} \
