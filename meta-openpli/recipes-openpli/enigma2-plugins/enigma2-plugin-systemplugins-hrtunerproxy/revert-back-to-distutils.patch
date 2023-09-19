@@ -1,0 +1,29 @@
+diff --git a/setup.py b/setup.py
+index f0fa819..2f64c81 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,4 +1,4 @@
+-from setuptools import setup
++from distutils.core import setup
+ import setup_translate
+ 
+ pkg = 'SystemPlugins.HRTunerProxy'
+diff --git a/setup_translate.py b/setup_translate.py
+index 842002e..aca91d0 100644
+--- a/setup_translate.py
++++ b/setup_translate.py
+@@ -1,11 +1,11 @@
+ # Language extension for Python scripts. Based on this concept:
+ # http://wiki.maemo.org/Internationalize_a_Python_application
+-from setuptools import Command as cmd
+-from setuptools.command.build import build as _build
++from distutils import cmd
++from distutils.command.build import build as _build
+ import os
+ 
+ 
+-class build_trans(cmd):
++class build_trans(cmd.Command):
+ 	description = 'Compile .po files into .mo files'
+ 
+ 	def initialize_options(self):
