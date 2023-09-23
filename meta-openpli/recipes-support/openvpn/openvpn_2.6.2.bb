@@ -68,7 +68,7 @@ do_install:append() {
 
 PACKAGES =+ " ${PN}-sample "
 
-RRECOMMENDS:${PN} = "kernel-module-tun"
+RDEPENDS:${PN} = "kernel-module-tun"
 
 FILES:${PN}-dbg += "${libdir}/openvpn/plugins/.debug"
 FILES:${PN} += "${systemd_system_unitdir}/openvpn-server@.service \
@@ -77,3 +77,14 @@ FILES:${PN} += "${systemd_system_unitdir}/openvpn-server@.service \
                "
 FILES:${PN}-sample = "${sysconfdir}/openvpn/sample/ \
                      "
+
+pkg_postinst_${PN} () {
+    modprobe tun >/dev/null 2>&1 || true
+    if [ ! -c /dev/net/tun ]; then
+        if [ ! -d /dev/net ]; then
+            mkdir /dev/net
+        fi
+        mknod /dev/net/tun c 10 200
+        chmod 600 /dev/net/tun
+    fi
+}
