@@ -1,0 +1,61 @@
+commit 3d233520cff30dcbe80ed784ebe3cde0db4ec9a3
+Author: WanWizard <wanwizard@wanwizard.eu>
+Date:   Sun Sep 24 18:48:49 2023 +0100
+
+    Revert "devel.m4"
+    
+    This reverts commit 7a31ea2d4f0499eccfd85b0ba982bc491dbae121.
+
+diff --git a/m4/ax_python_devel.m4 b/m4/ax_python_devel.m4
+index 0738948..19f4fea 100644
+--- a/m4/ax_python_devel.m4
++++ b/m4/ax_python_devel.m4
+@@ -283,7 +283,7 @@ EOD`
+ 			then
+ 				ac_python_libdir_XCompile=''
+ 			else
+-				ac_python_libdir_XCompile=`echo "$ac_python_libdir" | sed "s_/usr/lib__"  | sed "s_-native__"`
++				ac_python_libdir_XCompile=`echo "$ac_python_libdir" | sed "s_/usr/lib__"`
+ 			fi
+ 			ac_python_library=`echo "$ac_python_library" | sed "s/^lib//"`
+ 			AC_MSG_RESULT([$ac_python_libdir])
+@@ -315,9 +315,10 @@ EOD`
+ 	   #
+ 	   # Check for Python include path
+ 	   #
+-	   # checking for Python include path... should have -I/build_directory/5.3/builds/distro/release/machine/tmp/work/machine-oe-linux-gnueabi/enigma2/enigma2-7.3+gitAUTOINC+84579bb7a4-r0/recipe-sysroot/usr/include/python3.11
++	   # checking for Python include path... should have -I/media/twol/TwolHome1/5.3/builds/openvix/release/vuuno4kse/tmp/work/vuuno4kse-oe-linux-gnueabi/enigma2/enigma2-7.3+gitAUTOINC+84579bb7a4-r0/recipe-sysroot/usr/include/python3.11
+ 	   # so pick up ac_python_libdir_XCompile from previous search for Python library path for Cross compile and front include...
+ 
++
+ 	   AC_MSG_CHECKING([for Python include path])
+ 	   if test -z "$PYTHON_CPPFLAGS"; then
+ 		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
+@@ -334,21 +335,10 @@ EOD`
+ 				print (sysconfig.get_python_inc (plat_specific=1));"`
+ 		fi
+ 		if test -n "${python_path}"; then
+-			AC_MSG_RESULT([$python_path])
+-			AC_MSG_RESULT([$plat_python_path])
+ 			if test "${plat_python_path}" != "${python_path}"; then
+ 				python_path="-I$python_path -I$plat_python_path"
+ 			else
+-			# check for OpenPli 3.9 build returns full path
+-				length=${#python_path}
+-				AC_MSG_RESULT([$length])							
+-				if [[ "${#python_path}" -gt 24 ]]
+-				then
+-					plat_python_path=`echo "$plat_python_path" | sed "s_-native__"`
+-					python_path="-I$plat_python_path"
+-				else
+-					python_path="-I$ac_python_libdir_XCompile$python_path"
+-				fi
++				python_path="-I$ac_python_libdir_XCompile$python_path"
+ 			fi
+ 		fi
+ 		PYTHON_CPPFLAGS=$python_path
+@@ -492,4 +482,3 @@ print(sitedir)"`
+ 	# all done!
+ 	#
+ ])
+-

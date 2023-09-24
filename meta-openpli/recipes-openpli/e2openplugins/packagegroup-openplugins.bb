@@ -41,9 +41,4 @@ DEPENDS = " \
 	enigma2-plugin-systemplugins-autobouquetsmaker \
 "
 
-# removed due to OE-A changes breaking the build
-#
-#	enigma2-plugin-systemplugins-autobouquetsmaker \
-#
-
 require conf/license/license-gplv2.inc
