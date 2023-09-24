@@ -36,9 +36,13 @@ DEPENDS = " \
 	enigma2-plugin-extensions-systemtools \
 	enigma2-plugin-extensions-cacheflush \
 	enigma2-plugin-extensions-analogclock \
-	enigma2-plugin-systemplugins-autobouquetsmaker \
 	enigma2-plugin-extensions-telekomsport \
 	enigma2-plugin-extensions-oscamstatus \
 "
+
+# removed due to OE-A changes breaking the build
+#
+#	enigma2-plugin-systemplugins-autobouquetsmaker \
+#
 
 require conf/license/license-gplv2.inc
