@@ -10,10 +10,14 @@ inherit gitpkgv
 PV = "4.x+git${SRCPV}"
 PKGV = "4.x+git${GITPKGV}"
 
-SRC_URI = "git://github.com/oe-alliance/ofgwrite.git;protocol=https"
+DEPENDS = "openssl"
+
+SRC_URI = " \
+    git://github.com/oe-alliance/ofgwrite.git;protocol=https \
+    file://0001-makefile-openssl.patch \
+    "
 
 S = "${WORKDIR}/git"
-EXTRA_OEMAKE=""
 
 do_install() {
     install -d ${D}${bindir}
