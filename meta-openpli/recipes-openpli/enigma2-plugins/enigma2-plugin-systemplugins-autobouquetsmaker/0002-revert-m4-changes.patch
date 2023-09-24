@@ -1,0 +1,161 @@
+diff --git a/m4/ax_python_devel.m4 b/m4/ax_python_devel.m4
+index 19f4fea..1f480db 100644
+--- a/m4/ax_python_devel.m4
++++ b/m4/ax_python_devel.m4
+@@ -72,7 +72,7 @@
+ #   modified version of the Autoconf Macro, you may extend this special
+ #   exception to the GPL to apply to your modified version as well.
+ 
+-#serial 36 --------------Updated to cross compile for OE-Alliance Enigma2 git builds
++#serial 36
+ 
+ AU_ALIAS([AC_PYTHON_DEVEL], [AX_PYTHON_DEVEL])
+ AC_DEFUN([AX_PYTHON_DEVEL],[
+@@ -217,6 +217,36 @@ $ac_sysconfig_result])
+ 	fi
+ 
+ 	if test $ax_python_devel_found = yes; then
++	   #
++	   # Check for Python include path
++	   #
++	   AC_MSG_CHECKING([for Python include path])
++	   if test -z "$PYTHON_CPPFLAGS"; then
++		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
++			# sysconfig module has different functions
++			python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
++				print (sysconfig.get_path ('include'));"`
++			plat_python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
++				print (sysconfig.get_path ('platinclude'));"`
++		else
++			# old distutils way
++			python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
++				print (sysconfig.get_python_inc ());"`
++			plat_python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
++				print (sysconfig.get_python_inc (plat_specific=1));"`
++		fi
++		if test -n "${python_path}"; then
++			if test "${plat_python_path}" != "${python_path}"; then
++				python_path="-I$python_path -I$plat_python_path"
++			else
++				python_path="-I$python_path"
++			fi
++		fi
++		PYTHON_CPPFLAGS=$python_path
++	   fi
++	   AC_MSG_RESULT([$PYTHON_CPPFLAGS])
++	   AC_SUBST([PYTHON_CPPFLAGS])
++
+ 	   #
+ 	   # Check for Python library path
+ 	   #
+@@ -275,19 +305,7 @@ EOD`
+ 		if test -n "$ac_python_libdir" -a -n "$ac_python_library"
+ 		then
+ 			# use the official shared library
+-			# if not Github workflow, cross compile ac_python_libdir = builds/distro/release/boxtype/tmp/work/boxtype-oe-linux-gnueabi/enigma2/enigma2-7.3+gitAUTOINC+XXXXXXXXX-rx/recipe-sysroot/usr/lib
+-			# so then pick up ac_python_libdir from previous search for Python library path for Cross compile
+-			hosted="hosted"
+-			# first check for git workflows via hosted
+-			if grep -q "${hosted}" <<< "$ac_python_libdir"
+-			then
+-				ac_python_libdir_XCompile=''
+-			else
+-				ac_python_libdir_XCompile=`echo "$ac_python_libdir" | sed "s_/usr/lib__"`
+-			fi
+ 			ac_python_library=`echo "$ac_python_library" | sed "s/^lib//"`
+-			AC_MSG_RESULT([$ac_python_libdir])
+-			AC_MSG_RESULT([$ac_python_library])
+ 			PYTHON_LIBS="-L$ac_python_libdir -l$ac_python_library"
+ 		else
+ 			# old way: use libpython from python_configdir
+@@ -310,51 +328,19 @@ EOD`
+ 			PYTHON_VERSION=""
+ 		fi
+ 	   fi
+-	   AC_MSG_RESULT([$PYTHON_LIBS])
+-	   AC_SUBST([PYTHON_LIBS])
+-	   #
+-	   # Check for Python include path
+-	   #
+-	   # checking for Python include path... should have -I/media/twol/TwolHome1/5.3/builds/openvix/release/vuuno4kse/tmp/work/vuuno4kse-oe-linux-gnueabi/enigma2/enigma2-7.3+gitAUTOINC+84579bb7a4-r0/recipe-sysroot/usr/include/python3.11
+-	   # so pick up ac_python_libdir_XCompile from previous search for Python library path for Cross compile and front include...
+-
+-
+-	   AC_MSG_CHECKING([for Python include path])
+-	   if test -z "$PYTHON_CPPFLAGS"; then
+-		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
+-			# sysconfig module has different functions
+-			python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+-				print (sysconfig.get_path ('include'));"`
+-			plat_python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+-				print (sysconfig.get_path ('platinclude'));"`
+-		else
+-			# old distutils way
+-			python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+-				print (sysconfig.get_python_inc ());"`
+-			plat_python_path=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+-				print (sysconfig.get_python_inc (plat_specific=1));"`
+-		fi
+-		if test -n "${python_path}"; then
+-			if test "${plat_python_path}" != "${python_path}"; then
+-				python_path="-I$python_path -I$plat_python_path"
+-			else
+-				python_path="-I$ac_python_libdir_XCompile$python_path"
+-			fi
+-		fi
+-		PYTHON_CPPFLAGS=$python_path
+-	   fi
+-	   AC_MSG_RESULT([$PYTHON_CPPFLAGS])
+-	   AC_SUBST([PYTHON_CPPFLAGS])
+ 	fi
+ 
+ 	if test $ax_python_devel_found = yes; then
++	   AC_MSG_RESULT([$PYTHON_LIBS])
++	   AC_SUBST([PYTHON_LIBS])
++
+ 	   #
+ 	   # Check for site packages
+ 	   #
+ 	   AC_MSG_CHECKING([for Python site-packages path])
+ 	   if test -z "$PYTHON_SITE_PKG"; then
+ 		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
+-			PYTHON_SITE_PKG2=`$PYTHON -c "
++			PYTHON_SITE_PKG=`$PYTHON -c "
+ $IMPORT_SYSCONFIG;
+ if hasattr(sysconfig, 'get_default_scheme'):
+     scheme = sysconfig.get_default_scheme()
+@@ -370,11 +356,10 @@ sitedir = sysconfig.get_path('purelib', scheme, vars={'base': prefix})
+ print(sitedir)"`
+ 		else
+ 			# distutils.sysconfig way
+-			PYTHON_SITE_PKG2=`$PYTHON -c "$IMPORT_SYSCONFIG; \
++			PYTHON_SITE_PKG=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+ 				print (sysconfig.get_python_lib(0,0));"`
+ 		fi
+ 	   fi
+-	   PYTHON_SITE_PKG="$ac_python_libdir_XCompile$PYTHON_SITE_PKG2"
+ 	   AC_MSG_RESULT([$PYTHON_SITE_PKG])
+ 	   AC_SUBST([PYTHON_SITE_PKG])
+ 
+@@ -384,7 +369,7 @@ print(sitedir)"`
+ 	   AC_MSG_CHECKING([for Python platform specific site-packages path])
+ 	   if test -z "$PYTHON_PLATFORM_SITE_PKG"; then
+ 		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
+-			PYTHON_PLATFORM_SITE_PKG2=`$PYTHON -c "
++			PYTHON_PLATFORM_SITE_PKG=`$PYTHON -c "
+ $IMPORT_SYSCONFIG;
+ if hasattr(sysconfig, 'get_default_scheme'):
+     scheme = sysconfig.get_default_scheme()
+@@ -400,11 +385,10 @@ sitedir = sysconfig.get_path('platlib', scheme, vars={'platbase': prefix})
+ print(sitedir)"`
+ 		else
+ 			# distutils.sysconfig way
+-			PYTHON_PLATFORM_SITE_PKG2=`$PYTHON -c "$IMPORT_SYSCONFIG; \
++			PYTHON_PLATFORM_SITE_PKG=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+ 				print (sysconfig.get_python_lib(1,0));"`
+ 		fi
+ 	   fi
+-	   PYTHON_PLATFORM_SITE_PKG="$ac_python_libdir_XCompile$PYTHON_PLATFORM_SITE_PKG2"
+ 	   AC_MSG_RESULT([$PYTHON_PLATFORM_SITE_PKG])
+ 	   AC_SUBST([PYTHON_PLATFORM_SITE_PKG])
+ 

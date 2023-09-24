@@ -38,6 +38,7 @@ DEPENDS = " \
 	enigma2-plugin-extensions-analogclock \
 	enigma2-plugin-extensions-telekomsport \
 	enigma2-plugin-extensions-oscamstatus \
+	enigma2-plugin-systemplugins-autobouquetsmaker \
 "
 
 # removed due to OE-A changes breaking the build
