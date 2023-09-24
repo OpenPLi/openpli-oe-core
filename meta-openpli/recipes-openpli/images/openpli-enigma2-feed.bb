@@ -214,6 +214,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-systemplugins-satipserver \
 	enigma2-plugin-systemplugins-quadpip \
 	enigma2-plugin-systemplugins-terrestrialscan \
+	enigma2-plugin-systemplugins-misplslcnscan \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
@@ -241,10 +242,5 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	cdtextinfo \
 	${OPTIONAL_BSP_ENIGMA2_PACKAGES} \
 	"
-
-# removed due to OE-A changes breaking the build
-#
-#	enigma2-plugin-systemplugins-misplslcnscan \
-#
 
 DEPENDS += "${OPTIONAL_PACKAGES} ${OPTIONAL_ENIGMA2_PACKAGES}"
