@@ -23,7 +23,6 @@ KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.ut
 
 # Out-of-tree wifi drivers, build conditionally based on kernel version
 OPTIONAL_WIFI_PACKAGES = "\
-	test-fake-${KERNEL_VERSION} \
 	${@ 'kernel-module-8812au' if ("${KERNEL_VERSION}" and "${MACHINE}" != "dm8000" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.0') < 0) else '' } \
 	${@ 'kernel-module-8814au' if ("${KERNEL_VERSION}" and "${MACHINE}" != "dm8000" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.0') < 0) else '' } \
 	${@ 'kernel-module-rt5572sta' if ("${KERNEL_VERSION}" and "${MACHINE}" != "dm8000" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.10') < 0) else '' } \
