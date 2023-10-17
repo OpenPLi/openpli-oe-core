@@ -9,8 +9,8 @@ inherit gitpkgv allarch
 
 SRCREV="${AUTOREV}"
 
-PV = "6.12+git${SRCPV}"
-PKGV = "6.12+git${GITPKGV}"
+PV = "6.34+git${SRCPV}"
+PKGV = "6.34+git${GITPKGV}"
 
 SRC_URI = "git://github.com/WanWizard/Jedi_Maker_Xtream.git;protocol=https"
 
