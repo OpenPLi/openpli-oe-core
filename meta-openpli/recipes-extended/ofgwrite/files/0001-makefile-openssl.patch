@@ -7,7 +7,7 @@ index ebd95d8..ab46af2 100644
  OUT = ofgwrite_bin
  
 -LDFLAGS= -Llib -lmtd -lssl -lcrypto -latomic -static
-+LDFLAGS= -Llib -lmtd -lssl -lcrypto -latomic -ldl -pthread -static
++LDFLAGS= -Llib -lmtd -lssl -lcrypto -latomic -ldl -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -static
  
  LIBSRC = ./lib/libmtd.c ./lib/libmtd_legacy.c ./lib/libcrc32.c ./lib/libfec.c
  
