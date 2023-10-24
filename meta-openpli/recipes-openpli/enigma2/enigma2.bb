@@ -105,7 +105,7 @@ RRECOMMENDS_${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
-inherit gitpkgv setuptools3
+inherit gitpkgv setuptools3 python3targetconfig
 
 PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
 PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
