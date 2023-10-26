@@ -89,6 +89,9 @@ DEPENDS = " \
 	libtirpc \
 	"
 
+# required to make lcd4linux work on the VU+ Duo2
+DEPENDS_vuduo2 = "png-util"
+
 python populate_packages_prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
 
