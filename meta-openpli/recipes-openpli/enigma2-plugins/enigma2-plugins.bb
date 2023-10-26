@@ -19,6 +19,7 @@ RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
 RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
 RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
 RDEPENDS_enigma2-plugin-systemplugins-satipclient = "satipclient"
+RDEPENDS_enigma2-plugin-extensions-lcd4linux = "${@ "png-util" if "${MACHINE}" == "vuduo2" else "" }"
 
 RRECOMMENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
 RRECOMMENDS_enigma2-plugin-extensions-transmission = "transmission transmission-client"
@@ -90,9 +91,6 @@ DEPENDS = " \
 	${@ "png-util" if "${MACHINE}" == "vuduo2" else "" } \
 	"
 
-RDEPENDS += " \
-	${@ "png-util" if "${MACHINE}" == "vuduo2" else "" } \
-	"
 
 python populate_packages_prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
