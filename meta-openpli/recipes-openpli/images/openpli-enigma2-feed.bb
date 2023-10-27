@@ -17,7 +17,9 @@ OPTIONAL_BSP_ENIGMA2_PACKAGES ?= ""
 
 # Get the kernel version for this image, we need it to build conditionally on kernel version
 # NB: this only works in the feed, as the kernel needs to be build before the headers are available
-export KERNEL_VERSION = "${@oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
+
+inherit linux-kernel-base
+KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
 
 # Out-of-tree wifi drivers, build conditionally based on kernel version
 OPTIONAL_WIFI_PACKAGES = "\
