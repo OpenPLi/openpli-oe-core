@@ -2,7 +2,7 @@ from distutils.core import setup
 import setup_translate
 
 
-pkg='Extensions.SerienRecorder'
+pkg='Extensions.serienrecorder'
 setup(name='enigma2-plugin-extensions-serienrecorder',
 		author='einfall, w22754, egn und MacDisein',
 		author_email='',
