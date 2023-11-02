@@ -33,7 +33,9 @@ do_install() {
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
 pkg_postinst_${PN}_append () {
-if [ -f /lib/ld-2.30.so ]; then
+if [ -f /lib/ld-2.33.so ]; then
+	ln -s /lib/ld-2.33.so /lib/ld-linux.so.3
+elif [ -f /lib/ld-2.30.so ]; then
 	ln -s /lib/ld-2.30.so /lib/ld-linux.so.3
 elif [ -f /lib/ld-2.28.so ]; then
 	ln -s /lib/ld-2.28.so /lib/ld-linux.so.3
