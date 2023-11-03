@@ -3,7 +3,7 @@ DESCRIPTION = "SABnzbd is an Open Source Binary Newsreader written in Python."
 HOMEPAGE = "https://sabnzbd.org"
 MAINTAINER = "team@sabnzbd.org"
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://COPYRIGHT.txt;md5=46890d8608abc5b2b4c8d09c1593f161"
+LIC_FILES_CHKSUM = "file://COPYRIGHT.txt;md5=28eb9a1432a934aae7511c20a9165fa2"
 
 DEPENDS = "${PYTHON_PN}"
 RDEPENDS_${PN} = "\
@@ -22,8 +22,8 @@ SRC_URI = "https://github.com/sabnzbd/sabnzbd/releases/download/${PV}/SABnzbd-${
 	file://init-functions \
 	"
 
-SRC_URI[md5sum] = "b3d1ca01039cb88f7c829412e3fd39f5"
-SRC_URI[sha256sum] = "dfb92a91b6f466c31c9fc9ffc1a1d4b3e6352698674c5ad30913d7a69fefa221"
+SRC_URI[md5sum] = "14eb172190290d0197b52197f6de94a8"
+SRC_URI[sha256sum] = "30ff301ff51c784ed1b8ea6cfa7e28aae33b730ec1491497c5ca541ca7e0ce9d"
 
 S = "${WORKDIR}/SABnzbd-${PV}"
 
