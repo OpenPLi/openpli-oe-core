@@ -16,7 +16,7 @@ SRC_URI = "git://github.com/nickersk/enigmalight.git;protocol=https;branch=pytho
 
 S = "${WORKDIR}/git"
 
-inherit autotools-brokensep pkgconfig
+inherit autotools-brokensep pkgconfig python3-compileall
 
 do_install:append() {
     cd ${S}
