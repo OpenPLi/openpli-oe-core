@@ -90,6 +90,7 @@ SRC_URI_append = " \
            file://0002-readd-Touchscreen-settings.patch \
            file://0003-shader-nopow.patch \
            file://0004-stb-support.patch \
+           file://0005-use-mute-button-as-ok-button.patch \
             \
            "
 
