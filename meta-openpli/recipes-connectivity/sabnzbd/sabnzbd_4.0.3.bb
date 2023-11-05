@@ -49,3 +49,7 @@ do_install() {
 	install -d ${D}${sysconfdir}/enigma2
 	install -m 644 ${WORKDIR}/sabnzbd.conf ${D}/etc/enigma2/sabnzbd.conf
 }
+
+do_install:append() {
+	chmod 777 ${D}${INSTALLDIR}/SABnzbd.pyc
+}
