@@ -21,7 +21,7 @@ QtHbbtv = "enigma2/python/Plugins/Extensions/QtHbbtv"
 do_compile () {
 }
 
-FILES_${PN} =  " \
+FILES:${PN} =  " \
 	${bindir} \
 	${libdir}/mozilla/plugins \
 	${libdir}/${QtHbbtv} \

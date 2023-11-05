@@ -66,7 +66,7 @@ do_install() {
 	install -m 0755 ${S}/bootlogo.sh ${D}/${sysconfdir}/init.d/bootlogo
 }
 
-FILES_${PN} = "/boot ${datadir} ${sysconfdir}/init.d"
+FILES:${PN} = "/boot ${datadir} ${sysconfdir}/init.d"
 
 do_compile[nostamp] = "1"
 do_install[nostamp] = "1"

@@ -16,7 +16,7 @@ SRC_URI = " \
 SRC_URI[md5sum] = "08256c9b2ae77308b608662dc0ba3a1b"
 SRC_URI[sha256sum] = "d3422502e09020bd6909aa63be87747604de976a312c3d38c811b6cf6ac84fe9"
 
-FILES_${PN}_append = "${sysconfdir}/Wireless"
+FILES:${PN}:append = "${sysconfdir}/Wireless"
 
 S = "${WORKDIR}/20120911_RT3573_Linux_STA_v2.5.0.0_Rev4_DPO"
 

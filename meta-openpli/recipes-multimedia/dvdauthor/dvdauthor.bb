@@ -13,7 +13,7 @@ PKGV = "${GITPKGVTAG}"
 
 S = "${WORKDIR}/git"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	mkdir -p ${S}/autotools
 	cp ${STAGING_DATADIR}/gettext/config.rpath ${S}/autotools/
 }

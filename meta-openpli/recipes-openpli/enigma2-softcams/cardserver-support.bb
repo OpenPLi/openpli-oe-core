@@ -19,6 +19,6 @@ do_install() {
 	ln -s cardserver.None ${D}${sysconfdir}/init.d/cardserver
 }
 
-do_compile_append() {
+do_compile:append() {
 	echo "# Placeholder for no cs" > ${S}/cardserver.None
 }

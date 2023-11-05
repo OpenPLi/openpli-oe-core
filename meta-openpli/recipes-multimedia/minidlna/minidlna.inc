@@ -17,11 +17,11 @@ SRC_URI = "git://git.code.sf.net/p/minidlna/git;branch=master;module=git \
            "
 S = "${WORKDIR}/git"
 
-do_configure_prepend() {
+do_configure:prepend() {
 		sed -i 's/AM_INIT_AUTOMAKE.*$/AM_INIT_AUTOMAKE([foreign subdir-objects])/' ${S}/configure.ac
 }
 
-CONFFILES_${PN} = "${sysconfdir}/minidlna.conf"
+CONFFILES:${PN} = "${sysconfdir}/minidlna.conf"
 
 inherit autotools-brokensep pkgconfig gettext update-rc.d
 
@@ -29,7 +29,7 @@ inherit autotools-brokensep pkgconfig gettext update-rc.d
 INITSCRIPT_NAME = "minidlna.sh"
 INITSCRIPT_PARAMS = "stop 21 0 1 6 ."
 
-do_install_append() {
+do_install:append() {
 	install -m 755 -d ${D}${sysconfdir}/
 	install -m 644 ${S}/minidlna.conf ${D}${sysconfdir}/
 	install -m 755 -d ${D}${sysconfdir}/init.d/

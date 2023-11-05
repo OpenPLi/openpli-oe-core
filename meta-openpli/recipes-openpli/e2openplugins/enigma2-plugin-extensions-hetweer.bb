@@ -13,7 +13,7 @@ do_install() {
 }
 
 # Just a quick hack to "compile" the python parts.
-do_compile_append() {
+do_compile:append() {
     python3 -O -m compileall ${S}
 }
 
@@ -21,4 +21,4 @@ pkg_postrm_${PN}() {
 	rm -rf ${libdir}/enigma2/python/Plugins/Extensions/HetWeer
 }
 
-FILES_${PN} = "${PLUGINPATH}"
+FILES:${PN} = "${PLUGINPATH}"

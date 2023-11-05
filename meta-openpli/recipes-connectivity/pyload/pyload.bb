@@ -31,7 +31,7 @@ SRC_URI = "git://github.com/pyload/pyload.git;protocol=https;branch=main \
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = "/usr/pyload/* /etc/*"
+FILES:${PN} = "/usr/pyload/* /etc/*"
 
 INITSCRIPT_NAME = "${PN}"
 INITSCRIPT_PARAMS = "defaults 60 "

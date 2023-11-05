@@ -10,7 +10,7 @@ PKGV = "0.1+git${GITPKGV}"
 
 SRC_URI = "git://github.com/littlesat/PLi-HD-FullNight.git;protocol=https"
 
-FILES_${PN} = "${datadir}/enigma2/"
+FILES:${PN} = "${datadir}/enigma2/"
 
 S = "${WORKDIR}/git"
 

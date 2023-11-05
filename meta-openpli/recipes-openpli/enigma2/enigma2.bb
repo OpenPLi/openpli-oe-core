@@ -28,7 +28,7 @@ RDEPENDS_${PN} = " \
 	${PYTHON_RDEPS} \
 	"
 
-RDEPENDS_${PN}_append_libc-glibc = " glibc-gconv-iso8859-15"
+RDEPENDS_${PN}:append:libc-glibc = " glibc-gconv-iso8859-15"
 
 RRECOMMENDS_${PN} = " \
 	enigma2-plugin-skins-pli-hd \
@@ -38,7 +38,7 @@ RRECOMMENDS_${PN} = " \
 	virtual/enigma2-mediaservice \
 	"
 
-RRECOMMENDS_${PN}_append_libc-glibc = " glibc-gconv-utf-16"
+RRECOMMENDS_${PN}:append:libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
 	${PYTHON_PN}-codecs \
@@ -71,15 +71,15 @@ RDEPENDS_${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "v
 
 DEMUXTOOL ?= "replex"
 
-DESCRIPTION_append_enigma2-plugin-extensions-cutlisteditor = "enables you to cut your movies."
-DESCRIPTION_append_enigma2-plugin-extensions-graphmultiepg = "shows a graphical timeline EPG."
-DESCRIPTION_append_enigma2-plugin-extensions-pictureplayer = "displays photos on the TV."
-DESCRIPTION_append_enigma2-plugin-systemplugins-positionersetup = "helps you installing a motorized dish."
-DESCRIPTION_append_enigma2-plugin-systemplugins-satelliteequipmentcontrol = "allows you to fine-tune DiSEqC-settings."
-DESCRIPTION_append_enigma2-plugin-systemplugins-satfinder = "helps you to align your dish."
-DESCRIPTION_append_enigma2-plugin-systemplugins-videomode = "selects advanced video modes"
-DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
-DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
+DESCRIPTION:append:enigma2-plugin-extensions-cutlisteditor = "enables you to cut your movies."
+DESCRIPTION:append:enigma2-plugin-extensions-graphmultiepg = "shows a graphical timeline EPG."
+DESCRIPTION:append:enigma2-plugin-extensions-pictureplayer = "displays photos on the TV."
+DESCRIPTION:append:enigma2-plugin-systemplugins-positionersetup = "helps you installing a motorized dish."
+DESCRIPTION:append:enigma2-plugin-systemplugins-satelliteequipmentcontrol = "allows you to fine-tune DiSEqC-settings."
+DESCRIPTION:append:enigma2-plugin-systemplugins-satfinder = "helps you to align your dish."
+DESCRIPTION:append:enigma2-plugin-systemplugins-videomode = "selects advanced video modes"
+DESCRIPTION:append:enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
+DESCRIPTION:append:enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 
 RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
 RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "${PYTHON_PN}-twisted-web"
@@ -116,7 +116,7 @@ ENIGMA2_BRANCH ?= "develop"
 SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https"
 SRC_URI := " ${SRC_ORIGIN};branch=${ENIGMA2_BRANCH}"
 
-LDFLAGS_prepend = " -lxml2 "
+LDFLAGS:prepend = " -lxml2 "
 
 S = "${WORKDIR}/git"
 
@@ -153,20 +153,20 @@ EXTRA_OEMAKE = "\
 	ENIGMA2_BRANCH=${ENIGMA2_BRANCH} \
 	"
 
-FILES_enigma2-fonts = "${datadir}/fonts"
+FILES:enigma2-fonts = "${datadir}/fonts"
 
-FILES_${PN} += "${datadir}/keymaps"
+FILES:${PN} += "${datadir}/keymaps"
 
-FILES_${PN}-meta = "${datadir}/meta"
+FILES:${PN}-meta = "${datadir}/meta"
 
 # some plugins contain so's, their stripped symbols should not end up in the enigma2 package
-FILES_${PN}-dbg += "\
+FILES:${PN}-dbg += "\
 	${libdir}/enigma2/python/Plugins/*/*/.debug \
 	"
 
 # Swig generated 200k enigma.py file has no purpose for end users
 # Save some space by not installing sources (Startup.py must remain)
-FILES_${PN}-src += "\
+FILES:${PN}-src += "\
 	${libdir}/enigma2/python/e2reactor.py \
 	${libdir}/enigma2/python/enigma.py \
 	${libdir}/enigma2/python/GlobalActions.py \
@@ -186,7 +186,7 @@ FILES_${PN}-src += "\
 
 INFOFILE = "${libdir}/enigma.info"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${datadir}/keymaps
 
 	# generate the enigma.info file
@@ -199,7 +199,7 @@ do_install_append() {
 	printf "checksum=%s\n" $(md5sum "${D}${INFOFILE}" | awk '{print $1}') >> ${D}${INFOFILE}
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.*$', 'enigma2-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends='')
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.py$', 'enigma2-plugin-%s-src', '%s (sources)', recursive=True, match_path=True, prepend=True, extra_depends='')

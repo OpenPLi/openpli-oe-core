@@ -16,4 +16,4 @@ SRC_URI = "git://github.com/Taapat/enigma2-plugin-blurayplayer.git;branch=${BRAN
 
 S = "${WORKDIR}/git"
 
-FILES_${PN}-dbg += "${libdir}/enigma2/python/Plugins/Extensions/BlurayPlayer/.debug"
+FILES:${PN}-dbg += "${libdir}/enigma2/python/Plugins/Extensions/BlurayPlayer/.debug"

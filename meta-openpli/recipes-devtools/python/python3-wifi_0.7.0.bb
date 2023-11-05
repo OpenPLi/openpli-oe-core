@@ -20,7 +20,7 @@ S = "${WORKDIR}/git"
 
 inherit setuptools3
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${docdir}/${PN}
     mv ${D}${datadir}/README ${D}${docdir}/${PN}
     mv ${D}${datadir}/docs/* ${D}${docdir}/${PN}
@@ -32,6 +32,6 @@ do_install_append() {
 
 PACKAGES =+ "${PN}-examples"
 
-FILES_${PN}-examples = "${sbindir}"
+FILES:${PN}-examples = "${sbindir}"
 
 include python3-package-split.inc

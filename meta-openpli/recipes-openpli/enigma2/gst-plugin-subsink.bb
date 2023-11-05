@@ -16,7 +16,7 @@ S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
 
-FILES_${PN} = "${libdir}/gstreamer-0.10/*.so*"
-FILES_${PN}-dev += "${libdir}/gstreamer-0.10/*.la"
-FILES_${PN}-staticdev += "${libdir}/gstreamer-0.10/*.a"
-FILES_${PN}-dbg += "${libdir}/gstreamer-0.10/.debug"
+FILES:${PN} = "${libdir}/gstreamer-0.10/*.so*"
+FILES:${PN}-dev += "${libdir}/gstreamer-0.10/*.la"
+FILES:${PN}-staticdev += "${libdir}/gstreamer-0.10/*.a"
+FILES:${PN}-dbg += "${libdir}/gstreamer-0.10/.debug"

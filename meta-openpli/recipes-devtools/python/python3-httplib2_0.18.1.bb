@@ -14,7 +14,7 @@ S = "${WORKDIR}/httplib2-${PV}"
 
 inherit setuptools3 ${PYTHON_PN}-dir
 
-do_install_append() {
+do_install:append() {
     perm_files=`find "${D}${PYTHON_SITEPACKAGES_DIR}/" -name "top_level.txt"`
     for f in $perm_files; do
         chmod 644 "${f}"

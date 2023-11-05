@@ -53,4 +53,4 @@ do_install() {
 	done
 }
 
-FILES_${PN} = "${LOCALEDIR} ${LOCALEDIR2}"
+FILES:${PN} = "${LOCALEDIR} ${LOCALEDIR2}"

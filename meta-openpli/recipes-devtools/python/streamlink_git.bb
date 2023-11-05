@@ -37,7 +37,7 @@ SRC_URI = " git://github.com/streamlink/streamlink;protocol=https;branch=master 
 
 S = "${WORKDIR}/git"
 
-do_unpack_append() {
+do_unpack:append() {
     bb.build.exec_func('do_prepare_plugins_dir', d)
 }
 
@@ -45,7 +45,7 @@ do_prepare_plugins_dir() {
 	cp -f ${WORKDIR}/additional-plugins/*.py ${S}/src/streamlink/plugins
 }
 
-do_install_append() {
+do_install:append() {
 	rm -rf ${D}${bindir}
 	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/streamlink_cli
 	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/*.egg-info
@@ -57,6 +57,6 @@ include ${PYTHON_PN}-package-split.inc
 
 PACKAGES = "${PN}"
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	${libdir}/${PYTHON_DIR}/site-packages/streamlink/* \
 "

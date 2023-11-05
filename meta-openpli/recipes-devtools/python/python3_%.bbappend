@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://importlib.patch"
 
@@ -9,7 +9,7 @@ ALTERNATIVE_TARGET[python] = "${bindir}/python3"
 ALTERNATIVE_TARGET[python_config] = "${bindir}/python3-config"
 
 # add dummy __pycache__ files to make happy rm later...
-do_install_prepend() {
+do_install:prepend() {
     mkdir -p ${D}${libdir}/python${PYTHON_MAJMIN}/test/__pycache__
     touch ${D}${libdir}/python${PYTHON_MAJMIN}/test/__pycache__/test_range.cpython
     touch ${D}${libdir}/python${PYTHON_MAJMIN}/test/__pycache__/test_xml_etree.cpython
@@ -65,16 +65,16 @@ python(){
             newpackages.append(pypackage)
 
         # "Build" python's manifest FILES, RDEPENDS and SUMMARY
-        d.setVar('FILES_' + pysrc, '')
-        d.setVar('FILES_' + pypackage, '')
+        d.setVar('FILES:' + pysrc, '')
+        d.setVar('FILES:' + pypackage, '')
         for value in python_manifest[key]['files']:
             if value.endswith('.py'):
-                d.appendVar('FILES_' + pysrc, ' ' + value)
-                d.appendVar('FILES_' + pypackage, ' ' + value + 'c')
+                d.appendVar('FILES:' + pysrc, ' ' + value)
+                d.appendVar('FILES:' + pypackage, ' ' + value + 'c')
             elif value.endswith('.whl'):
-                d.appendVar('FILES_' + pysrc, ' ' + value)
+                d.appendVar('FILES:' + pysrc, ' ' + value)
             else:
-                d.appendVar('FILES_' + pypackage, ' ' + value)
+                d.appendVar('FILES:' + pypackage, ' ' + value)
 
         for value in python_manifest[key]['rdepends']:
             # Make it work with or without $PN

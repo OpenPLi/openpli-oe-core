@@ -9,4 +9,4 @@ do_install () {
     ln -sf python3 ${D}${bindir}/python
 }
 
-FILES_${PN} = "${bindir}"
+FILES:${PN} = "${bindir}"

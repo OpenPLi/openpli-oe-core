@@ -1,5 +1,5 @@
-FILESEXTRAPATHS_append := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:append := "${THISDIR}/${PN}:"
 
-SRC_URI_append_mipsel = " \
+SRC_URI:append:mipsel = " \
 	file://Revert-mke2fs-enable-the-metadata_csum.patch \
 	"

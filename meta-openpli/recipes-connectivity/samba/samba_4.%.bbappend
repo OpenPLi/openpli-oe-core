@@ -1,10 +1,10 @@
 # version
 PR = "r3"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 # Remove acl, cups etc. support.
-PACKAGECONFIG_remove = "acl cups"
+PACKAGECONFIG:remove = "acl cups"
 
 EXTRA_OECONF += " \
                  --without-cluster-support \
@@ -25,7 +25,7 @@ EXTRA_OECONF += " \
                  --disable-python \
                 "
 
-EXTRA_OECONF_remove = " \
+EXTRA_OECONF:remove = " \
                        --with-cluster-support \
                        --with-profiling-data \
                        --with-sockets-dir=/run/samba \
@@ -45,7 +45,7 @@ SRC_URI += " \
            file://0019-dynamically-create-a-samba-account-if-needed.patch \
            "
 
-FILES_${PN}-base += " \
+FILES:${PN}-base += " \
                     ${sysconfdir}/samba/smb.conf \
                     ${sysconfdir}/samba/smb-secure.conf \
                     ${sysconfdir}/samba/shares/share.template \
@@ -55,19 +55,19 @@ FILES_${PN}-base += " \
                     ${bindir}/smbstatus \
                     "
 
-CONFFILES_${PN}-base += " \
+CONFFILES:${PN}-base += " \
                         ${sysconfdir}/samba/smb-user.conf \
                         ${sysconfdir}/samba/shares/share.template \
                         "
 
 # move smbpass config files to samba-common
-FILES_${BPN}-common += " \
+FILES:${BPN}-common += " \
                       ${sysconfdir}/pam.d/samba \
                       ${sysconfdir}/samba/private/users.map \
                       ${sysconfdir}/samba/private/smbpasswd \
                       "
 
-CONFFILES_${BPN}-common += " \
+CONFFILES:${BPN}-common += " \
                           ${sysconfdir}/pam.d/samba \
                           ${sysconfdir}/samba/private/users.map \
                           ${sysconfdir}/samba/private/smbpasswd \
@@ -76,15 +76,15 @@ CONFFILES_${BPN}-common += " \
 PACKAGES_DYNAMIC += "pam-pluginsmbpass"
 RRECOMMENDS_${PN}-base += "wsdd pam-pluginsmbpass"
 
-do_install_prepend() {
+do_install:prepend() {
 	install -d ${D}${sysconfdir}/sudoers.d
 }
 
-do_configure_prepend() {
+do_configure:prepend() {
 	perl -i -pe 's#lp_private_dir#lp_pid_directory#' ${S}/source3/lib/messages.c
 }
 
-do_install_append() {
+do_install:append() {
 	rm -fR ${D}${localstatedir}
 	rm -fR ${D}/run
 	rm -fR ${D}${sysconfdir}/tmpfiles.d
@@ -108,7 +108,7 @@ do_install_append() {
 	install -m 644 ${WORKDIR}/smbpasswd ${D}${sysconfdir}/samba/private
 }
 
-pkg_postinst_${BPN}-common_prepend() {
+pkg_postinst_${BPN}-common:prepend() {
 #!/bin/sh
 
 if [ -z "$D" ]; then
@@ -140,17 +140,17 @@ INITSCRIPT_NAME_${PN}-base = "samba.sh"
 INITSCRIPT_PARAMS_${PN}-base = "defaults"
 
 # remove libnetapi package witch contains a lot of cross dependencies from libsamba-base
-PACKAGES_remove = "libnetapi"
+PACKAGES:remove = "libnetapi"
 
 # move all libraries from samba to libsamba-base to fix circular dependencies
-FILES_lib${PN}-base += "\
+FILES:lib${PN}-base += "\
 					${libdir}/*.so.* \
 					${libdir}/samba/*.so \
 					${libdir}/samba/*.so.* \
 					"
 
 # move some libraries from libsamba-base to libwbclient to fix circular dependencies
-FILES_libwbclient = "${libdir}/libwbclient.so.* \
+FILES:libwbclient = "${libdir}/libwbclient.so.* \
                      ${libdir}/samba/libwinbind-client.so \
                      ${libdir}/samba/libwinbind-client-samba4.so \
                      ${libdir}/samba/libreplace-samba4.so \

@@ -20,7 +20,7 @@ inherit gitpkgv autotools update-rc.d
 INITSCRIPT_NAME = "satipclient"
 INITSCRIPT_PARAMS = "defaults"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/satipclient.sh ${D}${sysconfdir}/init.d/satipclient
 }

@@ -31,5 +31,5 @@ install -m 0755 src/qtwebbrowser ${D}${bindir}/qtwebbrowser
 cp -R --no-dereference --preserve=mode,links ${S}/* ${D}${datadir}/examples/webengine/webbrowser/.
 }
 
-FILES_${PN} += "${bindir}/qtwebbrowser"
-FILES_${PN}-examples += "${datadir}/examples/webengine/webbrowser/*"
+FILES:${PN} += "${bindir}/qtwebbrowser"
+FILES:${PN}-examples += "${datadir}/examples/webengine/webbrowser/*"

@@ -17,4 +17,4 @@ do_install () {
 	ln -s ${sysconfdir}/tuxbox/scce ${D}${localstatedir}/
 }
 
-FILES_${PN} = "/"
+FILES:${PN} = "/"

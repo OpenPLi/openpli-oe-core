@@ -42,7 +42,7 @@ IMAGE_INSTALL = "\
 	vsftpd \
 "
 
-IMAGE_INSTALL_append_libc-glibc = " glibc-binary-localedata-en-gb"
+IMAGE_INSTALL:append:libc-glibc = " glibc-binary-localedata-en-gb"
 
 export IMAGE_BASENAME = "openpli"
 IMAGE_LINGUAS = ""

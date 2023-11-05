@@ -1,7 +1,7 @@
 # package is machine specific
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/qtbase-git:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/qtbase-git:"
 
 SET_QT_QPA_DEFAULT_PLATFORM ?= "linuxfb"
 SET_QT_QPA_EGLFS_INTEGRATION ?= "eglfs_emu"
@@ -15,14 +15,14 @@ SRC_URI += " \
 	file://0003-add-remote-buttons.patch \
 "
 
-DEPENDS_append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
-RDEPENDS_${PN}_append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
+DEPENDS:append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
+RDEPENDS_${PN}:append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
 
 PACKAGECONFIG_GL = " "
 PACKAGECONFIG_OPENSSL = "openssl"
 OPENSSL_LINKING_MODE = "-linked"
-PACKAGECONFIG_remove = "tests ${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'gl' , '', d)}"
-PACKAGECONFIG_append += " \
+PACKAGECONFIG:remove = "tests ${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'gl' , '', d)}"
+PACKAGECONFIG:append += " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'no-opengl', '', 'gles2 eglfs', d)} \
     linuxfb \
 "
@@ -33,7 +33,7 @@ SET_QT_QPA_EGLFS_INTEGRATION = "${@bb.utils.contains('MACHINE_FEATURES', 'v3d-nx
 SET_QT_QPA_EGLFS_INTEGRATION = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'eglfs_libvupl', '', d)}"
 SET_QT_QPA_EGLFS_INTEGRATION = "${@bb.utils.contains('MACHINE_FEATURES', 'gb-eglfs', 'eglfs_brcm_nx', '', d)}"
 
-do_configure_prepend() {
+do_configure:prepend() {
 cat >> ${S}/mkspecs/oe-device-extra.pri <<EOF
 QT_QPA_DEFAULT_PLATFORM = ${SET_QT_QPA_DEFAULT_PLATFORM}
 EGLFS_DEVICE_INTEGRATION = ${SET_QT_QPA_EGLFS_INTEGRATION}

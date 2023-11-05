@@ -18,7 +18,7 @@ do_install() {
 do_package_qa() {
 }
 
-FILES_${PN} = "/usr/lib/PepperFlash"
+FILES:${PN} = "/usr/lib/PepperFlash"
 
 RDEPENDS_${PN} += "qtwebengine"
 

@@ -16,4 +16,4 @@ EXTRA_OECONF = " \
     STAGING_INCDIR=${STAGING_INCDIR} \
     STAGING_LIBDIR=${STAGING_LIBDIR}"
 
-FILES_${PN} = "${libdir} ${bindir}"
+FILES:${PN} = "${libdir} ${bindir}"

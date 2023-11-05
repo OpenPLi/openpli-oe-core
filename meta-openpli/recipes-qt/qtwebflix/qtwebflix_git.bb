@@ -28,6 +28,6 @@ do_install() {
 
 }
 
-FILES_${PN} = "/usr/bin/qtwebflix"
+FILES:${PN} = "/usr/bin/qtwebflix"
 
-PATH_prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"
+PATH:prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"

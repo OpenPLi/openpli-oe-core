@@ -10,7 +10,7 @@ PKGV = "6.0.5+git${GITPKGV}"
 
 SRC_URI = "git://github.com/MCelliotG/GlamourAuraFHD-skin.git;protocol=https"
 
-FILES_${PN} = "/usr"
+FILES:${PN} = "/usr"
 
 S = "${WORKDIR}/git"
 

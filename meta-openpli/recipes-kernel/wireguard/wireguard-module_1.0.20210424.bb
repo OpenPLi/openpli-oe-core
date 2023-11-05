@@ -14,7 +14,7 @@ DEPENDS = "bc-native virtual/kernel libmnl"
 # configuration options. For exact kernel requirements visit:
 # https://www.wireguard.io/install/#kernel-requirements
 
-EXTRA_OEMAKE_append = " \
+EXTRA_OEMAKE:append = " \
     KERNELDIR=${STAGING_KERNEL_DIR} \
     "
 

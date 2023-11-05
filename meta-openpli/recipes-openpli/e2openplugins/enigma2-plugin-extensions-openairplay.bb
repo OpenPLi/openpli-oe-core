@@ -19,4 +19,4 @@ do_install() {
 	cp -r --preserve=mode,links ${S}/plugin/* ${D}${PLUGINPATH}
 }
 
-FILES_${PN} = "${PLUGINPATH}"
+FILES:${PN} = "${PLUGINPATH}"

@@ -31,5 +31,5 @@ PACKAGES =+ "${PN}-modules ${PN}-tools"
 
 RDEPENDS_${PN}-modules = "kernel-module-aes-generic"
 
-FILES_${PN}-modules = "${base_libdir}/modules/"
-FILES_${PN}-tools = "${sbindir}/*"
+FILES:${PN}-modules = "${base_libdir}/modules/"
+FILES:${PN}-tools = "${sbindir}/*"

@@ -27,4 +27,4 @@ do_install(){
     install -m 0755 ${S}/*.py ${D}${libdir}/enigma2/python/Plugins/Extensions/HbbTV
 }
 
-FILES_${PN} = "${libdir}"
+FILES:${PN} = "${libdir}"

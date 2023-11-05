@@ -36,7 +36,7 @@ do_install() {
     install -m 0644 ${S}/r8723bs.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/staging/rtl8723bs
 }
 
-python do_package_prepend() {
+python do_package:prepend() {
     d.appendVar('PKGV', '-')
     d.appendVar('PKGV', d.getVar("KERNEL_VERSION", True).split("-")[0])
 }

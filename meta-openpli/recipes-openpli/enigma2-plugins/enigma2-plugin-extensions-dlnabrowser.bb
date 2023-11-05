@@ -17,7 +17,7 @@ DEPENDS = "djmount fuse libupnp"
 PROVIDES = "enigma2-plugin-systemplugins-dlnabrowser"
 RDEPENDS_${PN} = "djmount fuse-utils fuse libupnp"
 RRECOMMENDS_${PN} = "kernel-module-fuse"
-FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/DLNABrowser/*"
+FILES:${PN} = "${libdir}/enigma2/python/Plugins/Extensions/DLNABrowser/*"
 PACKAGES = "${PN}"
 
 do_install() {

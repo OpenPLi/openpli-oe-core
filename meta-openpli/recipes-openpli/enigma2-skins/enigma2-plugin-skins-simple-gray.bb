@@ -10,7 +10,7 @@ PKGV = "${GITPKGVTAG}"
 
 SRC_URI = "git://github.com/Taapat/skin-SimpleGray.git;protocol=https"
 
-FILES_${PN} = "${prefix}/"
+FILES:${PN} = "${prefix}/"
 
 S = "${WORKDIR}/git"
 

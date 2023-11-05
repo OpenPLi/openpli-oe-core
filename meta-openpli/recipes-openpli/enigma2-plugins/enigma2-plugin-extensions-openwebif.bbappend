@@ -1,11 +1,11 @@
 # Just a comment line to avoid PAK archive (application/x-pak)
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-openwebif.git;protocol=https"
 
-SRC_URI_append_dm8000 = " file://get-rid-of-orgdream-check.patch"
-SRC_URI_append = " file://0001-revert-workaround-for-non-pli-streamproxy.patch"
+SRC_URI:append:dm8000 = " file://get-rid-of-orgdream-check.patch"
+SRC_URI:append = " file://0001-revert-workaround-for-non-pli-streamproxy.patch"
 
 python do_cleanup () {
     # contains: MACHINE, box image, remote image, remote map
@@ -189,5 +189,5 @@ addtask do_cleanup after do_populate_sysroot before do_package
 
 PACKAGES =+ "${PN}-vxg"
 DESCRIPTION_${PN}-vxg = "Adds Google Chrome support to OpenWebif's WebTV"
-FILES_${PN}-vxg = "${libdir}/enigma2/python/Plugins/Extensions/OpenWebif/public/vxg"
+FILES:${PN}-vxg = "${libdir}/enigma2/python/Plugins/Extensions/OpenWebif/public/vxg"
 RDEPENDS_${PN}-vxg =+ "${PN}"

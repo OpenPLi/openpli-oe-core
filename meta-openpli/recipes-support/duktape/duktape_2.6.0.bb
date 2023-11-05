@@ -19,4 +19,4 @@ do_install() {
 	install -m 0755 ${S}/duk ${D}${bindir}/
 }
 
-FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/IPTVPlayer/bin ${bindir}/duk"
+FILES:${PN} = "${libdir}/enigma2/python/Plugins/Extensions/IPTVPlayer/bin ${bindir}/duk"

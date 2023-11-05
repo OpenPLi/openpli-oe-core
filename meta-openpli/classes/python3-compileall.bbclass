@@ -1,6 +1,6 @@
 inherit python3-dir python3native python3targetconfig
 
-FILES_${PN}-src += " \
+FILES:${PN}-src += " \
     ${PYTHON_SITEPACKAGES_DIR}/*.py \
     ${PYTHON_SITEPACKAGES_DIR}/*/*.py \
     ${PYTHON_SITEPACKAGES_DIR}/*/*/*.py \
@@ -21,6 +21,6 @@ FILES_${PN}-src += " \
     ${libdir}/enigma2/python/*/*/*/*/*/*.py \
     "
 
-do_install_append_class-target () {
+do_install:append:class-target () {
     python3 -m compileall -b ${D}
 }

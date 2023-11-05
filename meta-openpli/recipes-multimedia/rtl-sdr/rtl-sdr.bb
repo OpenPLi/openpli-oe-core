@@ -22,7 +22,7 @@ EXTRA_OECMAKE += " -DLIB_INSTALL_DIR=${libdir}"
 EXTRA_OECONF = "--enable-driver-detach"
 
 # next...
-#do_install_append() {
+#do_install:append() {
 #	# some programs try to load librtlsdr.so
 #	cd ${D}${libdir}
 #	ln -sf librtlsdr.so.0 librtlsdr.so

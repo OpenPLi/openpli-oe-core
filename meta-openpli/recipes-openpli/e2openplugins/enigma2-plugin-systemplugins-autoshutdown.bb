@@ -13,4 +13,4 @@ require openplugins.inc
 
 inherit autotools gettext
 
-FILES_${PN} = "/"
+FILES:${PN} = "/"

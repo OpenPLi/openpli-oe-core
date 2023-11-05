@@ -14,7 +14,7 @@ SRC_URI = "git://github.com/WanWizard/Jedi_Maker_Xtream.git;protocol=https"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = " ${sysconfdir}/enigma2/jediplaylists/* \
+FILES:${PN} = " ${sysconfdir}/enigma2/jediplaylists/* \
                 ${libdir}/enigma2/python/Plugins/Extensions/JediMakerXtream/*"
 
 do_install () {

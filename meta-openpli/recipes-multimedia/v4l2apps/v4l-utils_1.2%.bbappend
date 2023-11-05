@@ -1,3 +1,3 @@
 inherit autotools-brokensep
-DEPENDS_append_class-target = " udev"
-LDFLAGS_append = " -pthread"
+DEPENDS:append:class-target = " udev"
+LDFLAGS:append = " -pthread"

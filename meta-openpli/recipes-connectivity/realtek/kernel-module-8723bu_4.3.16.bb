@@ -19,7 +19,7 @@ SRC_URI = " \
 
 S = "${WORKDIR}/git"
 
-MACHINE_KERNEL_PR_append = ".0"
+MACHINE_KERNEL_PR:append = ".0"
 
 EXTRA_OEMAKE = "KSRC=${STAGING_KERNEL_DIR}"
 

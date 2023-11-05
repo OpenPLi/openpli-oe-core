@@ -10,7 +10,7 @@ RDEPENDS_${PN} = "xz"
 
 inherit gitpkgv allarch
 
-FILES_${PN} = "${sysconfdir}/enigma2/"
+FILES:${PN} = "${sysconfdir}/enigma2/"
 
 do_install () {
 	install -d ${D}${sysconfdir}/enigma2

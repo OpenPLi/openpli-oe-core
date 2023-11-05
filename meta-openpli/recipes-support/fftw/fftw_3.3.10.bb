@@ -84,17 +84,17 @@ do_install_ptest() {
 }
 
 PACKAGES =+ "libfftw libfftwl libfftwf"
-FILES_libfftw = "${libdir}/libfftw3.so.* ${libdir}/libfftw3_*.so.*"
-FILES_libfftwl = "${libdir}/libfftw3l.so.* ${libdir}/libfftw3l_*.so.*"
-FILES_libfftwf = "${libdir}/libfftw3f.so.* ${libdir}/libfftw3f_*.so.*"
+FILES:libfftw = "${libdir}/libfftw3.so.* ${libdir}/libfftw3_*.so.*"
+FILES:libfftwl = "${libdir}/libfftw3l.so.* ${libdir}/libfftw3l_*.so.*"
+FILES:libfftwf = "${libdir}/libfftw3f.so.* ${libdir}/libfftw3f_*.so.*"
 
 PACKAGES =+ "fftw-wisdom fftwl-wisdom fftwf-wisdom fftw-wisdom-to-conf"
-FILES_fftw-wisdom = "${bindir}/fftw-wisdom"
-FILES_fftwl-wisdom = "${bindir}/fftwl-wisdom"
-FILES_fftwf-wisdom = "${bindir}/fftwf-wisdom"
-FILES_fftw-wisdom-to-conf = "${bindir}/fftw-wisdom-to-conf"
+FILES:fftw-wisdom = "${bindir}/fftw-wisdom"
+FILES:fftwl-wisdom = "${bindir}/fftwl-wisdom"
+FILES:fftwf-wisdom = "${bindir}/fftwf-wisdom"
+FILES:fftw-wisdom-to-conf = "${bindir}/fftw-wisdom-to-conf"
 
-FILES_${PN}-dev += "${libdir}/cmake"
+FILES:${PN}-dev += "${libdir}/cmake"
 RDEPENDS_${PN}-dev = "libfftw libfftwl libfftwf"
 RDEPENDS_${PN}-ptest += "perl"
 #RDEPENDS_${PN}-ptest:remove = "fftw"

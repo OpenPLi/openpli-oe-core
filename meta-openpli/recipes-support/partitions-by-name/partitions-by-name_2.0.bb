@@ -19,4 +19,4 @@ do_install() {
     install -m 0755 ${WORKDIR}/mmc-dev-mapping.sh ${D}${sysconfdir}/udev/scripts/mmc-dev-mapping.sh 
 }
 
-FILES_${PN} = "${sysconfdir}/udev"
+FILES:${PN} = "${sysconfdir}/udev"

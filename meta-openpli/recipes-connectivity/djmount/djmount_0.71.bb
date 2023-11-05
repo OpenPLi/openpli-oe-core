@@ -16,9 +16,9 @@ PARALLEL_MAKE = ""
 
 SRC_URI = "git://github.com/SHTrassEr/djmount.git;protocol=https"
 
-CFLAGS_append = " -std=gnu89 -fcommon"
+CFLAGS:append = " -std=gnu89 -fcommon"
 
-SRC_URI_append =" \
+SRC_URI:append =" \
 	file://init \
 	file://01-configure.ac.patch \
 	file://02-rt_bool_arg_enable.m4.patch \
@@ -30,10 +30,10 @@ EXTRA_OECONF = "--with-external-libupnp-prefix='${STAGING_LIBDIR}' --with-fuse-p
 
 S = "${WORKDIR}/git"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	cp ${STAGING_DATADIR_NATIVE}/gettext/config.rpath ${S}/libupnp/config.aux/config.rpath
 }
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/init ${D}${sysconfdir}/init.d/djmount
 }

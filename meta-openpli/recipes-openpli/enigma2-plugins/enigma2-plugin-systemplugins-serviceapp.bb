@@ -25,12 +25,12 @@ EXTRA_OECONF = "\
 	STAGING_LIBDIR=${STAGING_LIBDIR} \
 	"
 
-FILES_${PN} = "\
+FILES:${PN} = "\
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.pyc \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/locale/*/LC_MESSAGES/ServiceApp.mo \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/serviceapp.so"
 
-FILES_${PN}-dev = "\
+FILES:${PN}-dev = "\
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.py \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/serviceapp.la"
 

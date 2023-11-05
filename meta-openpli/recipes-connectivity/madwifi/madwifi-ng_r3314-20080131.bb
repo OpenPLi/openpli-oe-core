@@ -1,5 +1,5 @@
 SRCREV = "30414"
-MACHINE_KERNEL_PR_append = ".${INC_PR}.3"
+MACHINE_KERNEL_PR:append = ".${INC_PR}.3"
 
 # versions of OpenWrt backfire (10.03)
 HAL_VERSION = "20090508"
@@ -45,11 +45,11 @@ do_postpatch() {
         patch -p1 -i ${WORKDIR}/workaround-high-interrupt-latency.patch
 }
 
-do_postpatch_append_dm8000() {
+do_postpatch:append:dm8000() {
         patch -p1 -i ${WORKDIR}/dm8000-nand-error-hack.patch
 }
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/network/if-pre-up.d
 	install -m 0755 ${WORKDIR}/madwifi-smp-affinity ${D}${sysconfdir}/network/if-pre-up.d
 	install -d ${D}${sysconfdir}/network/if-post-down.d

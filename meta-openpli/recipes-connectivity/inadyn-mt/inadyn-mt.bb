@@ -19,7 +19,7 @@ S = "${WORKDIR}/${BPN}.${PV}"
 inherit autotools-brokensep update-rc.d
 
 INITSCRIPT_NAME = "inadyn-mt"
-CONFFILES_${PN} = "${sysconfdir}/inadyn.conf"
+CONFFILES:${PN} = "${sysconfdir}/inadyn.conf"
 
 do_compile() {
     make -f makefile-deprecated

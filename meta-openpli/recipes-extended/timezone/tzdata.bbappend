@@ -12,12 +12,12 @@ do_compile () {
         done
 }
 
-TZONES_remove = "systemv"
+TZONES:remove = "systemv"
 
-TZ_PACKAGES_remove = "tzdata-posix tzdata-right"
+TZ_PACKAGES:remove = "tzdata-posix tzdata-right"
 
-RPROVIDES_tzdata-posix_remove = "tzdata-posix"
-RPROVIDES_tzdata-right_remove = "tzdata-right"
+RPROVIDES_tzdata-posix:remove = "tzdata-posix"
+RPROVIDES_tzdata-right:remove = "tzdata-right"
 
 DEFAULT_TIMEZONE = "Europe/Amsterdam"
 

@@ -22,7 +22,7 @@ TARGET_CFLAGS += "-fpic"
 
 RDEPENDS_${PN} = "kernel-module-tun"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/zerotier ${D}${sysconfdir}/init.d/zerotier
 }

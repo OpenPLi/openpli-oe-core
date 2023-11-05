@@ -1,6 +1,6 @@
 LICENSE = "CLOSED"
 
-FILES_${PN} = "${bindir} ${sysconfdir}"
+FILES:${PN} = "${bindir} ${sysconfdir}"
 
 # no docs, locales etc.
 PACKAGES = "${PN}"
@@ -52,13 +52,13 @@ EOF
 }
 
 # Install routine, should be ok for most cams.
-do_install_append () {
+do_install:append () {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 755 ${S}/init.${CSNAME} ${D}${sysconfdir}/init.d/cardserver.${CSNAME}
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
-pkg_postinst_${PN}_append () {
+pkg_postinst_${PN}:append () {
 	if [ ! -e ${CSLINK} ] || [ "$D/etc/init.d/cardserver.None" == `readlink -f $D${CSLINK}` ]
 	then
 		rm -f $D${CSLINK}
@@ -73,7 +73,7 @@ pkg_postinst_${PN}_append () {
 }
 
 # Stop this cam (if running), and move softlink to None if we're the current cam
-pkg_prerm_${PN}_prepend () {
+pkg_prerm_${PN}:prepend () {
 	${CSPATH} stop
 	OLDLINK=`readlink -f ${CSLINK}`
 	if [ "${OLDLINK}" == "${CSPATH}" ]

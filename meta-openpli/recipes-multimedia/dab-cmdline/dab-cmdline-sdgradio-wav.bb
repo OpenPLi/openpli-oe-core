@@ -19,6 +19,6 @@ S = "${WORKDIR}/git/sdgradio"
 
 inherit cmake pkgconfig
 
-do_configure_prepend() {
+do_configure:prepend() {
 	sed -i -e 's:librtlsdr.so:librtlsdr.so.0:g' ${WORKDIR}/git/devices/rtlsdr-handler/rtlsdr-handler.cpp
 }

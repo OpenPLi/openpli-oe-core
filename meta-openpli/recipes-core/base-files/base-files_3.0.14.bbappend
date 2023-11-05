@@ -3,12 +3,12 @@
 
 do_install_basefilesissue[vardeps] += "DISTRO_NAME DISTRO_VERSION"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://utf8.sh"
 SRC_URI += "file://filesystems"
 
-do_install_append() {
+do_install:append() {
 	rm -rf ${D}/mnt
 	rm -rf ${D}/hdd
 	ln -sf media/hdd ${D}/hdd

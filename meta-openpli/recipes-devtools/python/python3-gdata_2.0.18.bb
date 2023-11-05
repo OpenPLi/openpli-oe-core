@@ -10,7 +10,7 @@ S = "${WORKDIR}/gdata.py-${PV}"
 
 inherit pypi distutils3
 
-FILES_${PN} += "${datadir}"
+FILES:${PN} += "${datadir}"
 
 RDEPENDS_${PN} = " \
     ${PYTHON_PN}-distutils \

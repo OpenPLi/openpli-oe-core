@@ -7,7 +7,7 @@ DESCRIPTION = "OScam-emu ${PV} Open Source Softcam"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
@@ -20,7 +20,7 @@ SRC_URI := "${SRC_ORIGIN} \
 DEPENDS = "libusb openssl"
 RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
 
-LDFLAGS_prepend = "-ludev "
+LDFLAGS:prepend = "-ludev "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -38,7 +38,7 @@ SRC_URI += " \
 
 CONFFILES = "${sysconfdir}/tuxbox/config/oscam-emu/oscam.conf ${sysconfdir}/tuxbox/config/oscam-emu/oscam.server ${sysconfdir}/tuxbox/config/oscam-emu/oscam.srvid ${sysconfdir}/tuxbox/config/oscam-emu/oscam.user ${sysconfdir}/tuxbox/config/oscam-emu/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam-emu/oscam.provid"
 
-FILES_${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
+FILES:${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \

@@ -13,11 +13,11 @@ PKGV = "1+git${GITPKGV}"
 inherit autotools-brokensep pkgconfig
 
 SRC_URI = "git://github.com/pcherenkov/udpxy.git file://udpxy.sh"
-CFLAGS_append = " -Wno-format-truncation -Wno-error=stringop-truncation "
+CFLAGS:append = " -Wno-format-truncation -Wno-error=stringop-truncation "
 
 S = "${WORKDIR}/git/chipmunk"
 
-FILES_${PN} = "${bindir}/* ${sysconfdir}/init.d/udpxy.sh"
+FILES:${PN} = "${bindir}/* ${sysconfdir}/init.d/udpxy.sh"
 
 do_compile() {
     make -f Makefile udpxy

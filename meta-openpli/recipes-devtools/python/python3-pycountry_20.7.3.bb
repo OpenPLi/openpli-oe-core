@@ -11,6 +11,6 @@ inherit setuptools3 pypi
 SRC_URI += "file://version.patch"
 SRC_URI[sha256sum] = "81084a53d3454344c0292deebc20fcd0a1488c136d4900312cbd465cf552cb42"
 
-do_install_append() {
+do_install:append() {
     rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/pycountry/locales*
 }

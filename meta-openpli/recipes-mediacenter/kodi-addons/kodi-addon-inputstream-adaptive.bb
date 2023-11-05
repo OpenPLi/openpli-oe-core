@@ -5,7 +5,7 @@ BUGTRACKER = "https://github.com/peak3d/inputstream.adaptive/issues"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://src/main.cpp;beginline=1;endline=17;md5=7906619e2feca59ac3f5088ac7bc4100"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 inherit kodi-addon
 

@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 EXTRA_OECONF += "--with-confdir=/etc/default"
 
@@ -7,7 +7,7 @@ SRC_URI += " file://99_autofs"
 CONFFILES = "${sysconfdir}/auto.master ${sysconfdir}/auto.net"
 
 # Remove and change configuration files
-do_install_append() {
+do_install:append() {
 	echo "/media/net /etc/auto.net --ghost" > ${D}${sysconfdir}/auto.master
 	echo "# automounter configuration" > ${D}${sysconfdir}/auto.net
 	chmod 0644 ${D}${sysconfdir}/auto.net

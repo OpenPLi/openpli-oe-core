@@ -14,7 +14,7 @@ RCONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport-rytec"
 
 PACKAGES = "${PN}"
 
-FILES_${PN} = "${sysconfdir}/epgimport"
+FILES:${PN} = "${sysconfdir}/epgimport"
 
 do_install() {
 	install -d ${D}${sysconfdir}/epgimport

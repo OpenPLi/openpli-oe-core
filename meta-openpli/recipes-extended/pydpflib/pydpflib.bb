@@ -15,6 +15,6 @@ PV = "0.14+git${SRCPV}"
 PKGV = "0.14+git${GITPKGV}"
 PR = "r0"
 
-do_compile_prepend() {
+do_compile:prepend() {
     $MAKE -C ${S}/dpf-ax/dpflib all
 }

@@ -13,7 +13,7 @@ SRC_URI = "file://__init__.py \
 RDEPENDS_${PN} = "minidlna"
 
 S = "${WORKDIR}"
-FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/DLNAServer/*"
+FILES:${PN} = "${libdir}/enigma2/python/Plugins/Extensions/DLNAServer/*"
 PACKAGES = "${PN}"
 
 do_install() {

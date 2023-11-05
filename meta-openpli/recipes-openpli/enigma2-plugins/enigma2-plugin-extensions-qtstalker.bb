@@ -21,7 +21,7 @@ QtStalker = "enigma2/python/Plugins/Extensions/Stalker"
 do_compile () {
 }
 
-FILES_${PN} =  " \
+FILES:${PN} =  " \
 	${bindir} \
 	${libdir}/${QtStalker} \
 	${datadir}/stalker \

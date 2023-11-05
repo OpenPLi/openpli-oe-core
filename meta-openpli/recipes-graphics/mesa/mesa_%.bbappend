@@ -1,10 +1,10 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://0003-Allow-enable-DRI-without-DRI-drivers.patch"
 
 PACKAGECONFIG[dri-no-drivers] = "-Ddri=true -Ddri-drivers=${@strip_comma('${DRIDRIVERS}')}, -Ddri=false -Ddri-drivers='', xorgproto libdrm"
 
-do_install_append() {
+do_install:append() {
     # Remove Mesa libraries (EGL, GLESv1, GLESv2, GBM)
     # provided by SOC
     rm -f ${D}${libdir}/libGLESv1_CM.*
@@ -17,7 +17,7 @@ do_install_append() {
     rm -f ${D}${libdir}/libGLESv2.so
 }
 
-PROVIDES_remove = "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libgbm"
+PROVIDES:remove = "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libgbm"
 PROVIDES += "virtual/egl-native virtual/nativesdk-egl"
 
 REQUIRED_DISTRO_FEATURES = ""

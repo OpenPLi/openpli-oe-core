@@ -16,8 +16,8 @@ PROVIDES += "font-valis-enigma"
 
 SRC_URI = "git://github.com/OpenPLi/${BPN}.git;protocol=https"
 
-FILES_${PN} = "${datadir}/enigma2/Magic"
-FILES_font-valis-enigma = "${datadir}/fonts/valis_enigma.ttf"
+FILES:${PN} = "${datadir}/enigma2/Magic"
+FILES:font-valis-enigma = "${datadir}/fonts/valis_enigma.ttf"
 
 RDEPENDS_${PN} = "font-valis-enigma"
 S = "${WORKDIR}/git"

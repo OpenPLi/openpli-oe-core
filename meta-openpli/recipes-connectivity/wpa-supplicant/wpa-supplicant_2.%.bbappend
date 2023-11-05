@@ -1,7 +1,7 @@
 # Just a comment line to avoid PAK archive (application/x-pak)
 PACKAGECONFIG = "openssl"
 
-FILES_wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
+FILES:wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
 
 SRC_URI += " \
         file://action_wpa.sh \
@@ -11,12 +11,12 @@ SRC_URI += " \
         file://wpa_action.8 \
 "
 
-do_configure_append() {
+do_configure:append() {
         sed -i '/^CONFIG_DRIVER_RALINK=/d' wpa_supplicant/.config
         echo "CONFIG_DRIVER_RALINK=y" >> wpa_supplicant/.config
         echo "CONFIG_DEBUG_SYSLOG=y" >> wpa_supplicant/.config
 }
-do_install_append() {
+do_install:append() {
         rm -rf ${D}${sysconfdir}/network/if-*.d
 
         install -d ${D}${sysconfdir}/wpa_supplicant
@@ -40,4 +40,4 @@ do_install_append() {
         ln -s ../../wpa_supplicant/ifupdown.sh ${D}${sysconfdir}/network/if-up.d/${PN}
 }
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"

@@ -21,7 +21,7 @@ DEPENDS = "\
 "
 
 RDEPENDS_${PN}-dbg = "${PN}"
-FILES_${PN}-dbg = " \
+FILES:${PN}-dbg = " \
     ${libdir}/${PYTHON_DIR}/site-packages/${PN}-*.egg-info \
     ${libdir}/${PYTHON_DIR}/site-packages/${PN}/test \
 "

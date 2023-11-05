@@ -1,6 +1,6 @@
 SUMMARY = "OpenPLi Network Time Protocol daemon and utilities"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 pkg_postinst_ntpdate() {
     if ! grep -q -s ntpdate $D/var/spool/cron/crontabs/root; then

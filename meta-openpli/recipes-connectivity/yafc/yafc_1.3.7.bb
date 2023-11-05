@@ -18,6 +18,6 @@ inherit gitpkgv autotools-brokensep pkgconfig
 PV = "1.3.7+git${SRCPV}"
 PKGV = "1.3.7+git${GITPKGV}"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	rm -f m4/glib-gettext.m4
 }

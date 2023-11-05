@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=f475368924827d06d4b416111c8bdb77"
 PV="1.0.2u"
 
 DEPENDS = "hostperl-runtime-native"
-DEPENDS_append_class-target = " openssl-native"
+DEPENDS:append:class-target = " openssl-native"
 
 SRC_URI = "http://www.openssl.org/source/openssl-${PV}.tar.gz \
            file://run-ptest \
@@ -48,12 +48,12 @@ SRC_URI = "http://www.openssl.org/source/openssl-${PV}.tar.gz \
            file://fix_openssl_100_version_jethro.patch \
            "
 
-SRC_URI_append_class-target = " \
+SRC_URI:append:class-target = " \
            file://reproducible-cflags.patch \
            file://reproducible-mkbuildinf.patch \
            "
 
-SRC_URI_append_class-nativesdk = " \
+SRC_URI:append:class-nativesdk = " \
            file://environment.d-openssl.sh \
            "
 
@@ -85,7 +85,7 @@ export OE_LDFLAGS = "${LDFLAGS}"
 
 TERMIO ?= "-DTERMIO"
 TERMIO_libc-musl = "-DTERMIOS"
-EXTRA_OECONF_append_libc-musl_powerpc64 = " no-asm"
+EXTRA_OECONF:append:libc-musl_powerpc64 = " no-asm"
 
 CFLAG = "${@oe.utils.conditional('SITEINFO_ENDIANNESS', 'le', '-DL_ENDIAN', '-DB_ENDIAN', d)} \
          ${TERMIO} ${CFLAGS} -Wall"
@@ -94,7 +94,7 @@ CFLAG = "${@oe.utils.conditional('SITEINFO_ENDIANNESS', 'le', '-DL_ENDIAN', '-DB
 # (and it causes issues with SELinux)
 CFLAG += "-Wa,--noexecstack"
 
-CFLAG_append_class-native = " -fPIC"
+CFLAG:append:class-native = " -fPIC"
 
 do_configure () {
 	# The crypto_use_bigint patch means that perl's bignum module needs to be
@@ -238,7 +238,7 @@ do_install () {
 	ln -sf libssl.so.1.0.2 ${D}${libdir}/libssl.so.1.0.0
 }
 
-FILES_${PN} =+ "${libdir}/ssl/*"
+FILES:${PN} =+ "${libdir}/ssl/*"
 
 BBCLASSEXTEND = "native nativesdk"
 PACKAGE_PREPROCESS_FUNCS += "openssl_package_preprocess"

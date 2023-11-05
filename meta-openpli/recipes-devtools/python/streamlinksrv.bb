@@ -18,7 +18,7 @@ PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sbindir}
     install -d ${D}${datadir}
     install -d ${D}${sysconfdir}/init.d
@@ -31,6 +31,6 @@ do_install_append() {
     ln -sf ../init.d/streamlinksrv ${D}${sysconfdir}/rc4.d/S50streamlinksrv
 }
 
-FILES_${PN} = "/"
+FILES:${PN} = "/"
 
 do_package_qa[noexec] = "1"

@@ -3,4 +3,4 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 INSANE_SKIP_${PN} += "file-rdeps"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/qtlocation-git:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/qtlocation-git:"

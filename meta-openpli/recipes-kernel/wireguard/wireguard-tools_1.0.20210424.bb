@@ -26,7 +26,7 @@ do_install () {
         install
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     ${sysconfdir} \
     ${systemd_unitdir} \
     ${bindir} \

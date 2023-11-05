@@ -22,7 +22,7 @@ inherit ${PYTHON_PN}-dir ${PYTHON_PN}native
 
 ALLOW_EMPTY_${PN} = "1"
 
-CFLAGS_append = " -I${STAGING_INCDIR}/libxml2/ -I${STAGING_INCDIR}/${PYTHON_DIR}/"
+CFLAGS:append = " -I${STAGING_INCDIR}/libxml2/ -I${STAGING_INCDIR}/${PYTHON_DIR}/"
 
 # prevent lots of QA warnings
 INSANE_SKIP_${PN} += "already-stripped"
@@ -43,7 +43,7 @@ pkg_postrm_${PN}() {
     rm -fr ${libdir}/enigma2/python/Plugins/SystemPlugins/CrossEPG > /dev/null 2>&1
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.*$', 'enigma2-plugin-%s', '%s', recursive=True, match_path=True, prepend=True, extra_depends="enigma2")
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
@@ -53,6 +53,6 @@ python populate_packages_prepend() {
 }
 
 ALLOW_EMPTY_${PN} = "1"
-FILES_${PN}_append = " /usr/crossepg ${libdir}/libcrossepg.so ${libdir}/${PYTHON_DIR}"
-FILES_${PN}-dbg_append = " /usr/crossepg/scripts/mhw2epgdownloader/.debug /usr/crossepg/scripts/mhw2epgdownloader/.debug"
-FILES_SOLIBSDEV = ""
+FILES:${PN}:append = " /usr/crossepg ${libdir}/libcrossepg.so ${libdir}/${PYTHON_DIR}"
+FILES:${PN}-dbg:append = " /usr/crossepg/scripts/mhw2epgdownloader/.debug /usr/crossepg/scripts/mhw2epgdownloader/.debug"
+FILES:SOLIBSDEV = ""

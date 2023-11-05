@@ -33,11 +33,11 @@ do_compile() {
 }
 
 PLUGINPATH = "${libdir}/enigma2/python/Plugins/Extensions/${MODULE}"
-do_install_append() {
+do_install:append() {
 	install -d ${D}${PLUGINPATH}
 	cp -r ${S}/plugin/* ${D}${PLUGINPATH}
 	chmod a+rX ${D}${PLUGINPATH}
 }
 
-FILES_${PN}-src += "${PLUGINPATH}/controllers/views/*.tmpl ${PLUGINPATH}/controllers/views/*/*.tmpl ${PLUGINPATH}/controllers/views/*/*/*.tmpl"
-FILES_${PN} = "${PLUGINPATH}"
+FILES:${PN}-src += "${PLUGINPATH}/controllers/views/*.tmpl ${PLUGINPATH}/controllers/views/*/*.tmpl ${PLUGINPATH}/controllers/views/*/*/*.tmpl"
+FILES:${PN} = "${PLUGINPATH}"

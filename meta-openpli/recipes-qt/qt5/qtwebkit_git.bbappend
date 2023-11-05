@@ -1,11 +1,11 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/qtwebkit-git:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/qtwebkit-git:"
 # package is machine specific
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 DEPENDS += " libwebp qtsensors qtlocation patchelf-native"
 RDEPENDS_${PN} += " qtdeclarative qtsensors qtlocation"
 
-SRC_URI_remove = " \
+SRC_URI:remove = " \
     file://0003-Fix-build-bug-for-armv32-BE.patch \
     file://0005-Let-Bison-generate-the-header-directly-to-fix-build-.patch \
     file://0006-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
@@ -20,7 +20,7 @@ SRC_URI += " \
 EXTRA_OECMAKE:append:arm = " -DENABLE_JIT=OFF -DUSE_SYSTEM_MALLOC=ON -DENABLE_C_LOOP=ON "
 
 # HACK Close libEGL.so issue fix rpatch
-do_install_append() {
+do_install:append() {
     if [ -e ${PKG_CONFIG_SYSROOT_DIR}${libdir}/libEGL.so ]; then
         patchelf --remove-needed ${PKG_CONFIG_SYSROOT_DIR}${libdir}/libEGL.so ${D}${libdir}/libQt5WebKit.so.5.212.0
         patchelf --add-needed libEGL.so ${D}${libdir}/libQt5WebKit.so.5.212.0

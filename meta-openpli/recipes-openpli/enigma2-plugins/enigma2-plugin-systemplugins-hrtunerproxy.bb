@@ -18,11 +18,11 @@ S = "${WORKDIR}/git"
 RCONFLICTS_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 RREPLACES_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 
-#do_install_prepend() {
+#do_install:prepend() {
 #    echo ${GITPKGVTAG} | awk -F"-" '{print $1}'> ${S}/build/lib/SystemPlugins/HRTunerProxy/PLUGIN_VERSION
 #}
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     e2_pdir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
     do_split_packages(d, e2_pdir, '^(\w+/\w+)/.*\/.*\.po$', 'enigma2-plugin-%s-po', '%s (translations)', recursive=True, match_path=True, prepend=True)
 }

@@ -26,7 +26,7 @@ SRC_URI = "git://github.com/axiomatic-systems/Bento4;protocol=https;branch=maste
         file://0014-Ap4SampleDescription-added-missing-dynamic-casts.patch \
         file://0015-Avoid-set-next-fragment-position.patch \
         file://0016-Add-support-for-cmake-install.patch"
-SRC_URI_append_mipsel = " file://ap4config-set-mipsel-byte-order.patch"
+SRC_URI:append:mipsel = " file://ap4config-set-mipsel-byte-order.patch"
 
 S = "${WORKDIR}/git"
 

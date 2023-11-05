@@ -13,4 +13,4 @@ SRC_URI = "git://gitlab.com/samsamsam/iptvplayer-bin-components.git;protocol=htt
 
 S = "${WORKDIR}/git/gst-ifdsrc/gst-ifdsrc"
 
-FILES_${PN} += "${libdir}/gstreamer-1.0"
+FILES:${PN} += "${libdir}/gstreamer-1.0"

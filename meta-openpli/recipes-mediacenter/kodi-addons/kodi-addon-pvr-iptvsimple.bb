@@ -5,6 +5,6 @@ PKGV = "20.6.0+git${GITPKGV}"
 
 KODIADDONPLUGIN = "iptvsimple"
 
-DEPENDS_append = "pugixml"
+DEPENDS:append = "pugixml"
 
 require kodi-addon-pvr.inc

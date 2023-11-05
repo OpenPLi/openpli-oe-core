@@ -22,7 +22,7 @@ do_install() {
 	install -m 0644 ${S}/replace.list ${D}${prefix}/keys/replace.list
 }
 
-FILES_${PN} += "${prefix}/keys"
+FILES:${PN} += "${prefix}/keys"
 
 SRC_URI[md5sum] = "74972fae77137f91b014b9cf4b8da137"
 SRC_URI[sha256sum] = "cc4b190afc8ecbb4664cf297c6298638e28c55e92b381e631dc3729c45bdada6"
