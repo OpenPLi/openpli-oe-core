@@ -4,7 +4,7 @@ HOMEPAGE = "http://roy.marples.name/projects/openresolv"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/resolvconf.in;beginline=4;endline=26;md5=e962049f535f7385f0f2a0ac9638cd43"
 
-SRC_URI = "git://github.com/NetworkConfiguration/openresolv.git;protocol=https \
+SRC_URI = "git://github.com/NetworkConfiguration/openresolv.git;protocol=https;branch=master \
            file://000resolvconf.if-up \
            file://000resolvconf.ppp.ip-down \
            file://000resolvconf.ppp.ip-up \
@@ -40,18 +40,18 @@ do_install() {
         install -m 0755 ${WORKDIR}/000resolvconf.ppp.ip-up ${D}${sysconfdir}/ppp/ip-up.d/000resolvconf
 }
 
-RPROVIDES_${PN} = "resolvconf"
+RPROVIDES:${PN} = "resolvconf"
 
-RCONFLICTS_${PN} = "resolvconf"
+RCONFLICTS:${PN} = "resolvconf"
 
 FILES_${PN} += "${base_libdir}/resolvconf"
 
-pkg_postinst_${PN}() {
+pkg_postinst:${PN}() {
 if [ -z "$D" -a -x ${sysconfdir}/init.d/populate-volatile.sh ]; then
 	${sysconfdir}/init.d/populate-volatile.sh update
 fi
 }
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
 if [ -z "$D" -a -x ${sysconfdir}/init.d/populate-volatile.sh ]; then
 	${sysconfdir}/init.d/populate-volatile.sh update
 fi
