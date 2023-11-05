@@ -8,9 +8,8 @@ HOMEPAGE = "http://pupnp.sourceforge.net/"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://COPYING;md5=394a0f17b97f33426275571e15920434"
 
-SRCREV = "cef2b23fb36baac091b0c7d41136b4c1d9549c6d"
+SRCREV = "380c6b09f426b1a34a2b03c43bd83b6d9ec9b000"
 SRC_URI = "git://github.com/pupnp/pupnp.git;protocol=https;branch=branch-1.14.x \
-           file://0001-ithread-Use-pthread_mutexattr_gettype-pthread_mutexa.patch \
           "
 
 S="${WORKDIR}/git"
