@@ -90,7 +90,9 @@ SRC_URI_append = " \
            file://0002-readd-Touchscreen-settings.patch \
            file://0003-shader-nopow.patch \
            file://0004-stb-support.patch \
-           file://0005-use-mute-button-as-ok-button.patch \
+           file://0005-egl-windowing.patch \
+           file://0006-FindLibDvd.cmake-build-with-external-source.patch \
+           file://0007-Keyboard-Remote-use-MUTE-as-OK-control.patch \
             \
            "
 
@@ -140,23 +142,25 @@ PACKAGECONFIG[opengl] = "-DENABLE_OPENGL=ON,,"
 PACKAGECONFIG[openglesv2] = "-DENABLE_GLES=ON,,virtual/egl"
 PACKAGECONFIG[bluetooth] = ",,bluez5"
 PACKAGECONFIG[samba] = ",,samba"
+PACKAGECONFIG[dvdcss] = "-DENABLE_DVDCSS=ON,-DENABLE_DVDCSS=OFF,libdvdcss"
 PACKAGECONFIG[lcms] = ",,lcms"
 PACKAGECONFIG[vaapi] = "-DENABLE_VAAPI=ON,-DENABLE_VAAPI=OFF,libva"
 PACKAGECONFIG[vdpau] = "-DENABLE_VDPAU=ON,-DENABLE_VDPAU=OFF,libvdpau"
 PACKAGECONFIG[mysql] = "-DENABLE_MYSQLCLIENT=ON,-DENABLE_MYSQLCLIENT=OFF,mysql5"
+PACKAGECONFIG[optical] = "-DENABLE_OPTICAL=ON,-DENABLE_OPTICAL=OFF,libudfread libbluray"
 PACKAGECONFIG[pulseaudio] = "-DENABLE_PULSEAUDIO=ON,-DENABLE_PULSEAUDIO=OFF,pulseaudio"
 PACKAGECONFIG[lcms] = ",,lcms"
+PACKAGECONFIG[vorbis] = ",,libvorbis"
 
 # Compilation tunes
-
 PACKAGECONFIG[gold] = "-DENABLE_LDGOLD=ON,-DENABLE_LDGOLD=OFF"
 PACKAGECONFIG[lto] = "-DUSE_LTO=${@oe.utils.cpu_count()},-DUSE_LTO=OFF"
 PACKAGECONFIG[testing] = "-DENABLE_TESTING=ON,-DENABLE_TESTING=0FF,googletest"
 
 LDFLAGS += "${TOOLCHAIN_OPTIONS}"
-LDFLAGS_append_mipsarch = " -latomic -lpthread"
-LDFLAGS_append_arm = " -lpthread"
-EXTRA_OECMAKE_append_mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
+LDFLAGS:append:mipsarch = " -latomic -lpthread"
+LDFLAGS:append:arm = " -lpthread"
+EXTRA_OECMAKE:append:mipsarch = " -DWITH_ARCH=${TARGET_ARCH}"
 
 # Allow downloads during internals build
 do_compile[network] = "1"
@@ -174,7 +178,7 @@ EXTRA_OECMAKE = " \
     -DWITH_JSONSCHEMABUILDER=${STAGING_BINDIR_NATIVE}/JsonSchemaBuilder \
     \
     -DENABLE_STATIC_LIBS=FALSE \
-    -DCMAKE_NM='${NM}' \
+    -DCMAKE_NM=${STAGING_BINDIR_NATIVE}/${TARGET_SYS}/${RUNTIME_NM} \
     \
     -DFFMPEG_PATH=${STAGING_DIR_TARGET} \
     -DENABLE_INTERNAL_CROSSGUID=OFF \
@@ -245,16 +249,25 @@ RRECOMMENDS:${PN}:append = " \
                              ${PYTHON_PN} \
                              ${PYTHON_PN}-compression \
                              ${PYTHON_PN}-ctypes \
-                             ${PYTHON_PN}-netclient \
+                             ${PYTHON_PN}-crypt \
+                             ${PYTHON_PN}-datetime \
+                             ${PYTHON_PN}-db \
+                             ${PYTHON_PN}-image \
                              ${PYTHON_PN}-difflib \
+                             ${PYTHON_PN}-distutils \
                              ${PYTHON_PN}-html \
                              ${PYTHON_PN}-json \
                              ${PYTHON_PN}-mechanize \
                              ${PYTHON_PN}-multiprocessing \
+                             ${PYTHON_PN}-netclient \
+                             ${PYTHON_PN}-pillow \
                              ${PYTHON_PN}-profile \
                              ${PYTHON_PN}-pycryptodome \
                              ${PYTHON_PN}-pycryptodomex \
                              ${PYTHON_PN}-regex \
+                             ${PYTHON_PN}-shell \
+                             ${PYTHON_PN}-six \
+                             ${PYTHON_PN}-setuptools \
                              ${PYTHON_PN}-shell \
                              ${PYTHON_PN}-sqlite3 \
                              ${PYTHON_PN}-xmlrpc \
