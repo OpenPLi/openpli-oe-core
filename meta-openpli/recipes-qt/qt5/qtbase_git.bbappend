@@ -16,7 +16,7 @@ SRC_URI += " \
 "
 
 DEPENDS:append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
-RDEPENDS_${PN}:append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
+RDEPENDS:${PN}:append = "${@bb.utils.contains('MACHINE_FEATURES', 'vu-eglfs', 'libvupl libgles' , '', d)}"
 
 PACKAGECONFIG_GL = " "
 PACKAGECONFIG_OPENSSL = "openssl"
@@ -41,5 +41,5 @@ QT_QPA_EGLFS_INTEGRATION = ${SET_QT_QPA_EGLFS_INTEGRATION}
 EOF
 }
 
-INSANE_SKIP_${PN} += "file-rdeps"
-INSANE_SKIP_${PN}-plugins += "file-rdeps"
+INSANE_SKIP:${PN} += "file-rdeps"
+INSANE_SKIP:${PN}-plugins += "file-rdeps"

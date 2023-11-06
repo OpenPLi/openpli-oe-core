@@ -3,7 +3,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/qtwebkit-git:"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 DEPENDS += " libwebp qtsensors qtlocation patchelf-native"
-RDEPENDS_${PN} += " qtdeclarative qtsensors qtlocation"
+RDEPENDS:${PN} += " qtdeclarative qtsensors qtlocation"
 
 SRC_URI:remove = " \
     file://0003-Fix-build-bug-for-armv32-BE.patch \
@@ -33,4 +33,4 @@ PACKAGECONFIG = " "
 
 CXXFLAGS:append = " -Wno-deprecated-copy -DBROADCOM_PLATFORM"
 
-INSANE_SKIP_${PN} += "file-rdeps"
+INSANE_SKIP:${PN} += "file-rdeps"

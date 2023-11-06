@@ -2,12 +2,12 @@ DESCRIPTION = "streamlinksrv is a helper deamon for streamlink"
 SECTION = "devel/python"
 MAINTAINER = "SatDreamGR Billy2011"
 HOMEPAGE = "www.satdreamgr.com"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 require conf/license/license-gplv2.inc
 
 inherit allarch
 
-RDEPENDS_${PN} = "${PYTHON_PN}-core streamlink"
+RDEPENDS:${PN} = "${PYTHON_PN}-core streamlink"
 
 SRC_URI = "git://github.com/oe-mirrors/livestreamersrv;protocol=https;branch=streamlinksrv"
 S = "${WORKDIR}/git"

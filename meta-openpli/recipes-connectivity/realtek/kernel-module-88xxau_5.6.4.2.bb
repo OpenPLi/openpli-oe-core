@@ -1,15 +1,15 @@
 SUMMARY = "Ralink 8812AU / 8821AU v5.6.4.2"
 HOMEPAGE = "http://www.realtek.com.tw"
 SECTION = "kernel/modules"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 inherit module
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-RREPLACES_${PN} = "kernel-module-8812au kernel-module-8814au"
-RCONFLICTS_${PN} = "kernel-module-8812au kernel-module-8814au"
+RREPLACES:${PN} = "kernel-module-8812au kernel-module-8814au"
+RCONFLICTS:${PN} = "kernel-module-8812au kernel-module-8814au"
 
 SRC_URI = " \
           git://github.com/aircrack-ng/rtl8812au.git;protocol=https;branch=v5.6.4.2 \

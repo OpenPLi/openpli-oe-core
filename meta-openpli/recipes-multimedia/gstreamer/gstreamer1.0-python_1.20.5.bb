@@ -4,7 +4,7 @@ provided by python-gi) "
 HOMEPAGE = "http://cgit.freedesktop.org/gstreamer/gst-python/"
 SECTION = "multimedia"
 
-LICENSE = "GPLv2+ & LGPLv2.1+"
+LICENSE = "GPL-2.0-or-later & LGPL-2.1-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=c34deae4e395ca07e725ab0076a5f740"
 
 SRC_URI = "https://gstreamer.freedesktop.org/src/${PNREAL}/${PNREAL}-${PV}.tar.xz"
@@ -27,4 +27,4 @@ EXTRA_OEMESON += "\
 REQUIRED_DISTRO_FEATURES = "gobject-introspection-data"
 GIR_MESON_OPTION = ""
 
-inherit meson pkgconfig distutils3-base upstream-version-is-even gobject-introspection features_check
+inherit meson pkgconfig setuptools3-base upstream-version-is-even gobject-introspection features_check

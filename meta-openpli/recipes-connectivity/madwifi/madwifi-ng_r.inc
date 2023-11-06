@@ -1,6 +1,6 @@
 SUMMARY = "Linux driver for 802.11a/b/g universal NIC cards using Atheros chip sets"
 SECTION = "base"
-LICENSE = "BSD-3-Clause | GPLv2"
+LICENSE = "BSD-3-Clause | GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYRIGHT;md5=58383ec8217e551da24db177e27a6ff2"
 INC_PR = "2"
 
@@ -29,7 +29,7 @@ do_install() {
 
 PACKAGES =+ "${PN}-modules ${PN}-tools"
 
-RDEPENDS_${PN}-modules = "kernel-module-aes-generic"
+RDEPENDS:${PN}-modules = "kernel-module-aes-generic"
 
 FILES:${PN}-modules = "${base_libdir}/modules/"
 FILES:${PN}-tools = "${sbindir}/*"

@@ -1,7 +1,7 @@
 DESCRIPTION = "Imports XMLTV and epg.dat files into the EPG cache of enigma2"
 MAINTAINER = "OpenPLi team"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://../etc/epgimport/readme.txt;startline=1;endline=4;md5=c162054328d930d453543efef81be1d8"
 
 inherit gitpkgv python3-compileall
@@ -9,7 +9,7 @@ inherit gitpkgv python3-compileall
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://github.com/OpenPLi/${BPN}.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/OpenPLi/${BPN}.git;protocol=https;branch=master"
 SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git/src"
@@ -17,12 +17,12 @@ S = "${WORKDIR}/git/src"
 inherit distutils-openplugins
 
 DEPENDS = "${PYTHON_PN}"
-RDEPENDS_${PN} = "${PYTHON_PN}-compression ${PYTHON_PN}-shell ${PYTHON_PN}-pkgutil"
-RRECOMMENDS_${PN} = "${PN}-rytec"
+RDEPENDS:${PN} = "${PYTHON_PN}-compression ${PYTHON_PN}-shell ${PYTHON_PN}-pkgutil"
+RRECOMMENDS:${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN} ${PN}-src"
 
-RREPLACES_${PN} = "enigma2-plugin-extensions-xmltvimport"
-RCONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport"
+RREPLACES:${PN} = "enigma2-plugin-extensions-xmltvimport"
+RCONFLICTS:${PN} = "enigma2-plugin-extensions-xmltvimport"
 
 PLUGIN = "EPGImport"
 
@@ -30,7 +30,7 @@ FILES:${PN} = "${libdir}/enigma2/python"
 FILES:${PN}-src = "${libdir}/enigma2/python/Plugins/Extensions/${PLUGIN}/*.py"
 FILES:${PN}-dbg = "${libdir}/enigma2/python/Plugins/Extensions/${PLUGIN}/.debug ${prefix}/src/debug"
 
-pkg_postinst_${PN}() {
+pkg_postinst:${PN}() {
 
 	if [ ! -f $D${sysconfdir}/image-version ]
 	then
@@ -49,7 +49,7 @@ pkg_postinst_${PN}() {
 	fi
 }
 
-pkg_prerm_${PN}() {
+pkg_prerm:${PN}() {
 	if [ -f ${bindir}/enigma2.sh.xmltvbak ] ; then
 		mv -f ${bindir}/enigma2.sh.xmltvbak ${bindir}/enigma2.sh
 	fi

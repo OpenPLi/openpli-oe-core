@@ -1,13 +1,13 @@
 DESCRIPTION = "serviceapp service for enigma2"
 AUTHOR = "Maroš Ondrášek <mx3ldev@gmail.com>"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DEPENDS = "enigma2 uchardet openssl"
-RDEPENDS_${PN} = "enigma2 uchardet openssl ${PYTHON_PN}-json"
-RRECOMMENDS_${PN} = "exteplayer3 gstplayer"
+RDEPENDS:${PN} = "enigma2 uchardet openssl ${PYTHON_PN}-json"
+RRECOMMENDS:${PN} = "exteplayer3 gstplayer"
 
 SRC_URI = "git://github.com/mx3L/serviceapp.git;protocol=https;branch=develop"
 

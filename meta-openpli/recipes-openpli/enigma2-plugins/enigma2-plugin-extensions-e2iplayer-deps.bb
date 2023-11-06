@@ -3,7 +3,7 @@ inherit allarch python3-compileall
 
 require conf/license/license-gplv2.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	ffmpeg \
 	exteplayer3 \
 	gstplayer \
@@ -21,4 +21,4 @@ RRECOMMENDS_${PN} = " \
 PV = "1.0"
 PR = "r0"
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"

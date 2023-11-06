@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a5dd67fd17479587f7093769d95ef186"
 
 SRC_URI[sha256sum] = "df757e3f141fc782ede076a604521194ffcb40fa2645cf48e5a37060307f52ec"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
     ${PYTHON_PN}-twisted-web \
 "
 
@@ -20,7 +20,7 @@ DEPENDS = "\
     ${PYTHON_PN}-wheel-native \
 "
 
-RDEPENDS_${PN}-dbg = "${PN}"
+RDEPENDS:${PN}-dbg = "${PN}"
 FILES:${PN}-dbg = " \
     ${libdir}/${PYTHON_DIR}/site-packages/${PN}-*.egg-info \
     ${libdir}/${PYTHON_DIR}/site-packages/${PN}/test \

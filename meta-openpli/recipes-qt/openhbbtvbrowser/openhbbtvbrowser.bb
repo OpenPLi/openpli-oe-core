@@ -12,7 +12,7 @@ SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_URI = "git://github.com/openhbbtvbrowser/openhbbtvbrowser.git;protocol=https \
+SRC_URI = "git://github.com/openhbbtvbrowser/openhbbtvbrowser.git;protocol=https;branch=master \
     ${@bb.utils.contains_any("MACHINE_FEATURES", "hisil", "file://bg_transparent.patch", "", d)} \
     ${@bb.utils.contains_any("MACHINE_FEATURES", "qtevent1", "file://0001-use-event1.patch", "", d)} \
 "
@@ -29,4 +29,4 @@ do_install(){
 
 FILES:${PN} = "${bindir}"
 
-INSANE_SKIP_${PN} += "file-rdeps"
+INSANE_SKIP:${PN} += "file-rdeps"

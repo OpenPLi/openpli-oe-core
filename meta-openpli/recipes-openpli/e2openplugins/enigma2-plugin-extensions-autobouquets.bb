@@ -5,7 +5,7 @@ HOMEPAGE = "https://github.com/LraiZer/AutoBouquets"
 SECTION = "extra"
 PRIORITY = "optional"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=a23a74b3f4caf9616230789d94217acb \
     file://COPYING;md5=036b9f2d884ff3a35bed6ab09bafff32 \
@@ -18,7 +18,7 @@ PV = "2.2+git${SRCPV}"
 PKGV = "2.2+git${GITPKGV}"
 PR = "r0"
 
-INSANE_SKIP_${PN} += "already-stripped ldflags"
+INSANE_SKIP:${PN} += "already-stripped ldflags"
 
 SRC_URI="git://github.com/LraiZer/AutoBouquets.git;branch=${AUTOBOUQUETS_BRANCH};protocol=https"
 
@@ -45,7 +45,7 @@ do_install() {
     install -m 644 ${S}/locale/ru/LC_MESSAGES/*.* ${D_FILES:PN}/locale/ru/LC_MESSAGES
 }
 
-pkg_postrm_${PN() {
+pkg_postrm:${PN() {
     #!/bin/sh
 
     echo "Removing ${PN}"

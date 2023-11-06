@@ -14,14 +14,14 @@ SRC_URI[sha256sum] = "e83ab4d12ca24959489bbb0ec4fac9b90e32f741d49cda357cb554b2cb
 
 S = "${WORKDIR}/gst-plugins-good-${PV}"
 
-LICENSE = "GPLv2+ & LGPLv2.1+"
+LICENSE = "GPL-2.0-or-later & LGPL-2.1-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343 \
                     file://gst/replaygain/rganalysis.c;beginline=1;endline=23;md5=b60ebefd5b2f5a8e0cab6bfee391a5fe"
 
 DEPENDS += "gstreamer1.0-plugins-base libcap zlib libsoup-2.4"
-RPROVIDES_${PN}-pulseaudio += "${PN}-pulse"
-RPROVIDES_${PN}-soup += "${PN}-souphttpsrc"
-RDEPENDS_{PN}-soup += "libsoup-2.4"
+RPROVIDES:${PN}-pulseaudio += "${PN}-pulse"
+RPROVIDES:${PN}-soup += "${PN}-souphttpsrc"
+RDEPENDS:{PN}-soup += "libsoup-2.4"
 
 PACKAGECONFIG_SOUP ?= "soup2"
 

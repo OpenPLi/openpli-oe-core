@@ -9,7 +9,7 @@ inherit gitpkgv python3native
 PV = "1.1+git${SRCPV}"
 PKGV = "1.1+git${GITPKGV}"
 
-SRC_URI = "git://github.com/OpenVisionE2/e2isubparser.git;protocol=https"
+SRC_URI = "git://github.com/OpenVisionE2/e2isubparser.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

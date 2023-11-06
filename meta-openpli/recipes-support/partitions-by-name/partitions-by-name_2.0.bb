@@ -1,7 +1,7 @@
 SUMMARY = "partitions by name"
 DESCRIPTION = "makes partitions names for internal flash in /dev/block/by-name/"
 SECTION = "base"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 
 require conf/license/openpli-gplv2.inc
 

@@ -15,13 +15,13 @@ PACKAGES += "\
 	enigma2-plugin-extensions-bonjour \
 	enigma2-plugin-extensions-transmission \
 	"
-RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
-RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
-RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
-RDEPENDS_enigma2-plugin-systemplugins-satipclient = "satipclient"
+RDEPENDS:enigma2-plugin-extensions-mosaic = "aio-grab"
+RDEPENDS:enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
+RDEPENDS:enigma2-plugin-extensions-bonjour = "avahi-daemon"
+RDEPENDS:enigma2-plugin-systemplugins-satipclient = "satipclient"
 
-RRECOMMENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
-RRECOMMENDS_enigma2-plugin-extensions-transmission = "transmission transmission-client"
+RRECOMMENDS:enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
+RRECOMMENDS:enigma2-plugin-extensions-transmission = "transmission transmission-client"
 
 PROVIDES += "\
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
@@ -33,7 +33,7 @@ PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://github.com/OpenPLi/${BPN}.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/OpenPLi/${BPN}.git;protocol=https;branch=master"
 SRC_URI := "${SRC_ORIGIN};branch=python3 "
 
 EXTRA_OECONF = " \
@@ -48,7 +48,7 @@ EXTRA_OECONF = " \
 FILES:${PN} = ""
 # But something makes the packages think they depend on it, so just
 # deliver an empty hulk for them.
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
 FILES:enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 CONFFILES:enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
@@ -120,15 +120,15 @@ python populate_packages:prepend () {
                     else:
                         rdepends.append(depend)
                 rdepends = ' '.join(rdepends)
-                d.setVar('RDEPENDS_' + full_package, rdepends)
+                d.setVar('RDEPENDS:' + full_package, rdepends)
             elif line.startswith('Recommends: '):
-                d.setVar('RRECOMMENDS_' + full_package, line[12:])
+                d.setVar('RRECOMMENDS:' + full_package, line[12:])
             elif line.startswith('Description: '):
-                d.setVar('DESCRIPTION_' + full_package, line[13:])
+                d.setVar('DESCRIPTION:' + full_package, line[13:])
             elif line.startswith('Replaces: '):
-                d.setVar('RREPLACES_' + full_package, ' '.join(line[10:].split(', ')))
+                d.setVar('RREPLACES:' + full_package, ' '.join(line[10:].split(', ')))
             elif line.startswith('Conflicts: '):
-                d.setVar('RCONFLICTS_' + full_package, ' '.join(line[11:].split(', ')))
+                d.setVar('RCONFLICTS:' + full_package, ' '.join(line[11:].split(', ')))
             elif line.startswith('Maintainer: '):
                 d.setVar('MAINTAINER_' + full_package, line[12:])
 

@@ -9,7 +9,7 @@ inherit gittag
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/windytan/redsea.git;protocol=https"
+SRC_URI = "git://github.com/windytan/redsea.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

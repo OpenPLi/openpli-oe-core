@@ -2,7 +2,7 @@ DESCRIPTION = "USB ATSC driver for Hauppauge 950Q WinTV-HVR Tuners"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	kernel-module-au0828 \
 	kernel-module-au8522 \
 	kernel-module-au8522-common \

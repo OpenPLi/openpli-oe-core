@@ -2,7 +2,7 @@ DESCRIPTION = "USB DVB driver for Siano chipset"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	firmware-dvb-nova-12mhz-b0 \
 	firmware-dvb-siano \
 	firmware-isdbt-nova-12mhz-b0 \

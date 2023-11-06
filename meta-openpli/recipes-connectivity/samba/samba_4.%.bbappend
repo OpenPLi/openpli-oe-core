@@ -74,7 +74,7 @@ CONFFILES:${BPN}-common += " \
                           "
 
 PACKAGES_DYNAMIC += "pam-pluginsmbpass"
-RRECOMMENDS_${PN}-base += "wsdd pam-pluginsmbpass"
+RRECOMMENDS:${PN}-base += "wsdd pam-pluginsmbpass"
 
 do_install:prepend() {
 	install -d ${D}${sysconfdir}/sudoers.d
@@ -108,7 +108,7 @@ do_install:append() {
 	install -m 644 ${WORKDIR}/smbpasswd ${D}${sysconfdir}/samba/private
 }
 
-pkg_postinst_${BPN}-common:prepend() {
+pkg_postinst:${BPN}-common:prepend() {
 #!/bin/sh
 
 if [ -z "$D" ]; then
@@ -126,7 +126,7 @@ printf "password\toptional\t\t\tpam_smbpass.so nullok use_authtok use_first_pass
 mv $D/var/tmp/common-password $D${sysconfdir}/pam.d/common-password
 }
 
-pkg_prerm_${BPN}-common() {
+pkg_prerm:${BPN}-common() {
 #!/bin/sh
 
 # remove smbpass support from pam.d
@@ -136,8 +136,8 @@ mv /tmp/common-password /etc/pam.d/common-password
 
 inherit update-rc.d
 INITSCRIPT_PACKAGES = "${PN}-base"
-INITSCRIPT_NAME_${PN}-base = "samba.sh"
-INITSCRIPT_PARAMS_${PN}-base = "defaults"
+INITSCRIPT_NAME:${PN}-base = "samba.sh"
+INITSCRIPT_PARAMS:${PN}-base = "defaults"
 
 # remove libnetapi package witch contains a lot of cross dependencies from libsamba-base
 PACKAGES:remove = "libnetapi"

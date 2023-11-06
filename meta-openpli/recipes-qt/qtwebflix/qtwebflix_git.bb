@@ -1,11 +1,11 @@
 SUMMARY = "QtWebflix"
 DESCRIPTION = "A viewer for netflix, amazon prime and similar"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
-LICENSE = "GPL-3.0"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 DEPENDS = "qtwebengine upower qtwidevine"
-RDEPENDS_${PN} = "upower qtwidevine"
+RDEPENDS:${PN} = "upower qtwidevine"
 
 SRCREV_qtwebflix = "${AUTOREV}"
 SRCREV_qtdbusextended = "34971431233dc408553245001148d34a09836df1"

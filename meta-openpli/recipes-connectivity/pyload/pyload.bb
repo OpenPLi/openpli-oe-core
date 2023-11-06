@@ -1,9 +1,9 @@
 SUMMARY = "pyLoad is a fast, lightweight and full featured download manager for many One-Click-Hoster"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=2d20d11c1dccf4454ce811d6bfb05a2b"
 HOMEPAGE = "http://pyload.org/"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	${PYTHON_PN}-compression \
 	${PYTHON_PN}-db \
 	${PYTHON_PN}-email \
@@ -18,7 +18,7 @@ RDEPENDS_${PN} = "\
 	${PYTHON_PN}-unixadmin \
 	${PYTHON_PN}-xmlrpc \
 "
-RRECOMMENDS_${PN} = "unrar"
+RRECOMMENDS:${PN} = "unrar"
 
 inherit gittag update-rc.d
 

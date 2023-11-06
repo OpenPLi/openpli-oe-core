@@ -7,7 +7,7 @@ PLUGIN_PATH = "Extensions/xModem"
 
 require dima-plugins.inc
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
 	iptables \
 	usb-modeswitch \
 	usb-modeswitch-data \

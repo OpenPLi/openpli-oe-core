@@ -3,7 +3,7 @@ require conf/license/openpli-gplv2.inc
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 PACKAGES = "${PN}"
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
 # We only need the packaging tasks - disable the rest
 do_fetch[noexec] = "1"

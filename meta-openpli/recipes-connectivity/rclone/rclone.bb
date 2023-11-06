@@ -10,8 +10,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bed161b82a1ecab65ff7ba3c3b960439"
 
 DEPENDS += "go-cross-${TUNE_PKGARCH}"
 
-RDEPENDS_${PN} += "bash"
-RDEPENDS_${PN}-dev += "bash"
+RDEPENDS:${PN} += "bash"
+RDEPENDS:${PN}-dev += "bash"
 
 inherit gittag
 

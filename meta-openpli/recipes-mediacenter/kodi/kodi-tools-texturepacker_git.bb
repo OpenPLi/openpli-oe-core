@@ -3,7 +3,7 @@ SUMMARY = "Kodi texture packer"
 require kodi.inc
 inherit cmake gettext python3-dir python3native
 
-KODIWORKDIR = "${WORKDIR}/git/tools/depends/native/TexturePacker"
+S = "${WORKDIR}/git/tools/depends/native/TexturePacker"
 
 DEPENDS = " \
     giflib \
@@ -14,7 +14,7 @@ DEPENDS = " \
     libjpeg-turbo-native \
 "
 
-OECMAKE_CXX_FLAGS:append = " -DTARGET_POSIX -std=gnu++11 -I${WORKDIR}/git/xbmc/linux"
+OECMAKE_CXX_FLAGS:append = " -DTARGET_POSIX -std=gnu++17 -I${WORKDIR}/git/xbmc/linux"
 
 do_configure:prepend() {
     ln -sf ${WORKDIR}/git/xbmc ${WORKDIR}/git/tools/depends/native/TexturePacker/

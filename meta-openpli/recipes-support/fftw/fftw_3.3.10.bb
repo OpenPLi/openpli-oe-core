@@ -23,8 +23,8 @@ CFLAGS += "-D_GNU_SOURCE"
 # neon is optional for arm version < 8 -> check tune features
 #FFTW_NEON = "${@bb.utils.contains('TUNE_FEATURES', 'neon', '--enable-neon', '', d)}"
 # neon is suppored for arm version = 8 -> enable
-FFTW_NEON_aarch64 = "--enable-neon"
-FFTW_NEON_class-native = ""
+FFTW_NEON:aarch64 = "--enable-neon"
+FFTW_NEON:class-native = ""
 
 do_configure() {
     # configure fftw
@@ -95,8 +95,8 @@ FILES:fftwf-wisdom = "${bindir}/fftwf-wisdom"
 FILES:fftw-wisdom-to-conf = "${bindir}/fftw-wisdom-to-conf"
 
 FILES:${PN}-dev += "${libdir}/cmake"
-RDEPENDS_${PN}-dev = "libfftw libfftwl libfftwf"
-RDEPENDS_${PN}-ptest += "perl"
-#RDEPENDS_${PN}-ptest:remove = "fftw"
+RDEPENDS:${PN}-dev = "libfftw libfftwl libfftwf"
+RDEPENDS:${PN}-ptest += "perl"
+#RDEPENDS:${PN}-ptest:remove = "fftw"
 
 BBCLASSEXTEND = "native"

@@ -4,9 +4,9 @@ inherit packagegroup
 require conf/license/license-gplv2.inc
 
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     kodi-addon-ardundzdf \
     kodi-addon-pvr-demo \
     kodi-addon-pvr-dvblink \

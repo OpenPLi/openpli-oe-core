@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 inherit autotools-brokensep gitpkgv python3-compileall gettext
 
-SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=https"
+SRC_URI = "git://github.com/oe-alliance/AutoBouquetsMaker.git;protocol=https;branch=master"
 SRC_URI:append = " file://add-dummy-boxbranding.patch"
 
 PV = "3.3+git${SRCPV}"
@@ -24,7 +24,7 @@ S = "${WORKDIR}/git"
 
 DEPENDS = "enigma2"
 
-INSANE_SKIP_${PN} += "already-stripped ldflags"
+INSANE_SKIP:${PN} += "already-stripped ldflags"
 
 python populate_packages:prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
@@ -35,7 +35,7 @@ python populate_packages:prepend() {
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\/.*\.po$', 'enigma2-plugin-%s-po', '%s (translations)', recursive=True, match_path=True, prepend=True)
 }
 
-pkg_preinst_${PN}:prepend() {
+pkg_preinst:${PN}:prepend() {
 #!/bin/sh
 echo "Checking for an ABM cache file"
 

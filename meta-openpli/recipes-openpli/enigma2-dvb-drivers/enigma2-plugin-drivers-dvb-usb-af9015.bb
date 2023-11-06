@@ -2,7 +2,7 @@ DESCRIPTION = "USB DVB driver for Afatech 9015 chipset"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	firmware-dvb-fe-af9013 \
 	firmware-dvb-usb-af9015 \
 	kernel-module-af9013 \

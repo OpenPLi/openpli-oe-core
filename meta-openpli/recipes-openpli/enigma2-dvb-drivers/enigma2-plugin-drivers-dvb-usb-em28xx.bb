@@ -2,7 +2,7 @@ DESCRIPTION = "USB DVB driver for EM28xx chipset"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	kernel-module-cxd2820r \
 	kernel-module-em28xx-dvb \
 	kernel-module-tda10071 \

@@ -13,7 +13,7 @@ export KERNEL_VERSION = "${@oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/ker
 
 DEPENDS = "libmnl ${@ 'wireguard-module' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.6') < 0) else "" }"
 
-RDEPENDS_${PN} = "kernel-module-wireguard bash"
+RDEPENDS:${PN} = "kernel-module-wireguard bash"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

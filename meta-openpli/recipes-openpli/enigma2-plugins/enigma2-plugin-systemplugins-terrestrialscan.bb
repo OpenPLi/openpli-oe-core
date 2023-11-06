@@ -9,7 +9,7 @@ inherit autotools-brokensep gitpkgv python3-compileall gettext
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/oe-alliance/TerrestrialScan.git;protocol=https"
+SRC_URI = "git://github.com/oe-alliance/TerrestrialScan.git;protocol=https;branch=master"
 
 EXTRA_OECONF = " \
     BUILD_SYS=${BUILD_SYS} \
@@ -21,9 +21,9 @@ EXTRA_OECONF = " \
 S = "${WORKDIR}/git"
 
 DEPENDS = "enigma2"
-RDEPENDS_${PN} = "enigma2"
+RDEPENDS:${PN} = "enigma2"
 
-INSANE_SKIP_${PN} += "already-stripped ldflags"
+INSANE_SKIP:${PN} += "already-stripped ldflags"
 
 python populate_packages:prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)

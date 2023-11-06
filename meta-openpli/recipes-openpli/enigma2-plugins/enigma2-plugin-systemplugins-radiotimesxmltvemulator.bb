@@ -1,6 +1,6 @@
 DESCRIPTION = "Handle your EPG on enigma2 using opentv and xmltv"
 HOMEPAGE = "https://github.com/LraiZer/RadiotimesXmltvEmulator"
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=fc178bcd425090939a8b634d1d6a9594"
 
 inherit gitpkgv ${PYTHON_PN}native
@@ -9,9 +9,9 @@ PV = "2+${SRCPV}"
 PKGV = "2+${GITPKGV}"
 PR = "r0"
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
-INSANE_SKIP_${PN} += "already-stripped ldflags"
+INSANE_SKIP:${PN} += "already-stripped ldflags"
 
 SRC_URI = "git://github.com/LraiZer/RadiotimesXmltvEmulator.git;branch=gui-plugin;protocol=https"
 
@@ -26,7 +26,7 @@ do_install() {
     oe_runmake 'D=${D}' install-plugin
 }
 
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
 rm -fr ${libdir}/enigma2/python/Plugins/SystemPlugins/RadiotimesXmltvEmulator > /dev/null 2>&1
 }
 

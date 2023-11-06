@@ -3,7 +3,7 @@ MAINTAINER = "DrMichael"
 LICENSE = "CC-BY-NC-SA-3.0"
 LIC_FILES_CHKSUM = "file://src/LICENSE;md5=ca0fd7efc85d7f5d417c882290c4b9fa"
 
-RDEPENDS_${PN} = "${PYTHON_PN}-twisted-web ${PYTHON_PN}-html ${PYTHON_PN}-json ${PYTHON_PN}-six ${PYTHON_PN}-requests"
+RDEPENDS:${PN} = "${PYTHON_PN}-twisted-web ${PYTHON_PN}-html ${PYTHON_PN}-json ${PYTHON_PN}-six ${PYTHON_PN}-requests"
 
 inherit gitpkgv distutils-openplugins gettext python3-compileall
 

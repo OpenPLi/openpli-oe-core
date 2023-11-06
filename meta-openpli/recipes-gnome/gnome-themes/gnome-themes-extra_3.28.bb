@@ -3,7 +3,7 @@ HOMEPAGE = "http://ftp.gnome.org/pub/GNOME/sources/gnome-themes-standard/"
 BUGTRACKER = "https://bugzilla.gnome.org/"
 SECTION = "x11/gnome"
 
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=2d5025d4aa3495befef8f17206a5b0a1"
 
 inherit gnomebase gettext gtk2-icon-cache upstream-version-is-even features_check
@@ -36,7 +36,7 @@ FILES:gnome-theme-adwaita = "${prefix}/share/themes/Adwaita \
                               ${libdir}/gtk-2.0/2.10.0/engines/libadwaita.so"
 
 FILES:gnome-theme-adwaita-dark = "${prefix}/share/themes/Adwaita-dark"
-RDEPENDS_gnome-theme-adwaita-dark = "gnome-theme-adwaita"
+RDEPENDS:gnome-theme-adwaita-dark = "gnome-theme-adwaita"
 
 # gnome-themes-standard is empty and doesn't exist
-RDEPENDS_${PN}-dev = ""
+RDEPENDS:${PN}-dev = ""

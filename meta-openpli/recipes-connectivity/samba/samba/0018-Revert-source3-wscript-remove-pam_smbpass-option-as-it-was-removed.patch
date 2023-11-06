@@ -10,18 +10,18 @@ This reverts commit 21d0082169bb61417aa7a564050f930808764ac8.
  1 file changed, 4 insertions(+)
 
 diff --git a/source3/wscript b/source3/wscript
-index cf7beb7dc46..47b13432c70 100644
+index 6feda38..1bfa069 100644
 --- a/source3/wscript
 +++ b/source3/wscript
-@@ -46,6 +46,7 @@ def options(opt):
-     opt.SAMBA3_ADD_OPTION('cups', with_name="enable", without_name="disable")
-     opt.SAMBA3_ADD_OPTION('iprint', with_name="enable", without_name="disable")
-     opt.SAMBA3_ADD_OPTION('pam')
-+    opt.SAMBA3_ADD_OPTION('pam_smbpass')
-     opt.SAMBA3_ADD_OPTION('quotas')
-     opt.SAMBA3_ADD_OPTION('sendfile-support', default=None)
-     opt.SAMBA3_ADD_OPTION('utmp')
-@@ -919,6 +920,9 @@ int i; i = PAM_RADIO_TYPE;
+@@ -67,6 +67,7 @@ def options(opt):
+     opt.samba_add_onoff_option('cups', with_name="enable", without_name="disable")
+     opt.samba_add_onoff_option('iprint', with_name="enable", without_name="disable")
+     opt.samba_add_onoff_option('pam')
++    opt.samba_add_onoff_option('pam_smbpass')
+     opt.samba_add_onoff_option('quotas', default=None)
+     opt.samba_add_onoff_option('sendfile-support', default=None)
+     opt.samba_add_onoff_option('utmp')
+@@ -920,6 +921,9 @@ int i; i = PAM_RADIO_TYPE;
                         "or headers not found. Use --without-pam to disable "
                         "PAM support.");
  

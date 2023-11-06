@@ -30,4 +30,4 @@ PACKAGECONFIG:append = " libwebp ffmpeg opus libvpx alsa \
                         webrtc \
                        "
 
-INSANE_SKIP_${PN} += "file-rdeps"
+INSANE_SKIP:${PN} += "file-rdeps"

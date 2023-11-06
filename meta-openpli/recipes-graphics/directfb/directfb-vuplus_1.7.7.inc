@@ -51,7 +51,7 @@ EXTRA_OECONF:append:class-target += "\
 	--without-tools \
 "
 
-PRIVATE_LIBS_${PN}:append:class-target = "\
+PRIVATE_LIBS:${PN}:append:class-target = "\
 	${@bb.utils.contains("MACHINE_FEATURES", "dvbproxy", "libinit.so", "", d)} \
 "
 
@@ -72,7 +72,7 @@ do_install:append:class-target() {
 do_package_qa() {
 }
 
-INSANE_SKIP_${PN}:append:class-target += "dev-so"
+INSANE_SKIP:${PN}:append:class-target += "dev-so"
 
 FILES:${PN}:append:class-target += "\
 	/etc/directfbrc \

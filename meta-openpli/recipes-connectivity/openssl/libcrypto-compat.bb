@@ -5,7 +5,7 @@ BUGTRACKER = "http://www.openssl.org/news/vulnerabilities.html"
 SECTION = "libs/network"
 
 # "openssl | SSLeay" dual license
-LICENSE = "openssl"
+LICENSE = "OpenSSL"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f475368924827d06d4b416111c8bdb77"
 
 PV="1.0.2u"
@@ -67,8 +67,8 @@ UPSTREAM_CHECK_REGEX = "openssl-(?P<pver>1\.0.+)\.tar"
 inherit pkgconfig siteinfo lib_package multilib_header ptest manpages
 
 PACKAGECONFIG ?= "cryptodev-linux"
-PACKAGECONFIG_class-native = ""
-PACKAGECONFIG_class-nativesdk = ""
+PACKAGECONFIG:class-native = ""
+PACKAGECONFIG:class-nativesdk = ""
 
 PACKAGECONFIG[disable-weak-ciphers] = "no-des no-ec no-ecdh no-ecdsa no-md2 no-mdc2,,,"
 PACKAGECONFIG[cryptodev-linux] = "-DHAVE_CRYPTODEV -DUSE_CRYPTODEV_DIGESTS,,cryptodev-linux"
@@ -84,8 +84,8 @@ EXTRA_OEMAKE = "${@bb.utils.contains('PACKAGECONFIG', 'manpages', '', 'OE_DISABL
 export OE_LDFLAGS = "${LDFLAGS}"
 
 TERMIO ?= "-DTERMIO"
-TERMIO_libc-musl = "-DTERMIOS"
-EXTRA_OECONF:append:libc-musl_powerpc64 = " no-asm"
+TERMIO:libc-musl = "-DTERMIOS"
+EXTRA_OECONF:append:libc-musl:powerpc64 = " no-asm"
 
 CFLAG = "${@oe.utils.conditional('SITEINFO_ENDIANNESS', 'le', '-DL_ENDIAN', '-DB_ENDIAN', d)} \
          ${TERMIO} ${CFLAGS} -Wall"
@@ -205,7 +205,7 @@ do_compile () {
 	oe_runmake
 }
 
-do_compile_class-target () {
+do_compile:class-target () {
 	sed -i 's/\((OPENSSL=\)".*"/\1"openssl"/' Makefile
 	oe_runmake depend
 	cc_sanitized=$(echo "${CC} ${CFLAG}" | sed -e 's,--sysroot=${STAGING_DIR_TARGET},,g' -e 's|${DEBUG_PREFIX_MAP}||g' -e 's/[ \t]\+/ /g')
@@ -243,7 +243,7 @@ FILES:${PN} =+ "${libdir}/ssl/*"
 BBCLASSEXTEND = "native nativesdk"
 PACKAGE_PREPROCESS_FUNCS += "openssl_package_preprocess"
 
-RPROVIDES_${PN} ="libcrypto-compat"
+RPROVIDES:${PN} ="libcrypto-compat"
 
 PROVIDES += "libcrypto-compat"
 

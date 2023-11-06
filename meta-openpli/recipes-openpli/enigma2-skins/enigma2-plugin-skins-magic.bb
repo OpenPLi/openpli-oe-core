@@ -1,6 +1,6 @@
 DESCRIPTION = "Magic skin for Enigma2"
 MAINTAINER = "Mike Looijmans"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
 inherit gitpkgv allarch
@@ -8,18 +8,18 @@ inherit gitpkgv allarch
 PV = "1.2+git${SRCPV}"
 PKGV = "1.2+git${GITPKGV}"
 
-PKGV_font-valis-enigma = "2009.11.12"
-DESCRIPTION_font-valis-enigma = "Valis enigma font"
+PKGV:font-valis-enigma = "2009.11.12"
+DESCRIPTION:font-valis-enigma = "Valis enigma font"
 
 PACKAGES = "${PN} font-valis-enigma"
 PROVIDES += "font-valis-enigma"
 
-SRC_URI = "git://github.com/OpenPLi/${BPN}.git;protocol=https"
+SRC_URI = "git://github.com/OpenPLi/${BPN}.git;protocol=https;branch=master"
 
 FILES:${PN} = "${datadir}/enigma2/Magic"
 FILES:font-valis-enigma = "${datadir}/fonts/valis_enigma.ttf"
 
-RDEPENDS_${PN} = "font-valis-enigma"
+RDEPENDS:${PN} = "font-valis-enigma"
 S = "${WORKDIR}/git"
 
 do_install() {

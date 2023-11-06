@@ -17,7 +17,7 @@ do_install:append() {
 	install -m 644 ${WORKDIR}/99_autofs ${D}${sysconfdir}/default/volatiles/99_autofs
 }
 
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
         if [ -z "$D" ]; then
                 if [ -e ${sysconfdir}/init.d/populate-volatile.sh ]; then
                         ${sysconfdir}/init.d/populate-volatile.sh update

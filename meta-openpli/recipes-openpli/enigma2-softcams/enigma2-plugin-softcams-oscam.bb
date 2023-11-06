@@ -4,17 +4,17 @@ inherit cmake
 inherit gitpkgv
 
 DESCRIPTION = "OScam ${PV} Open Source Softcam"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git"
+SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git;branch=master"
 SRC_URI := "${SRC_ORIGIN} "
 
 DEPENDS = "libusb openssl"
-RRECOMMENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
+RRECOMMENDS:${PN} += "enigma2-plugin-extensions-oscamstatus"
 
 LDFLAGS:prepend = "-ludev "
 

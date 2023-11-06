@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=b026f0197dc4ce773b97e3dc1f55f55c"
 
 DEPENDS += "${PYTHON_PN}-versioningit-native ${PYTHON_PN}-importlib-metadata-native"
 
-RDEPENDS_${PN} = "${PYTHON_PN}-core \
+RDEPENDS:${PN} = "${PYTHON_PN}-core \
 	${PYTHON_PN}-ctypes \
 	${PYTHON_PN}-futures3 \
 	${PYTHON_PN}-isodate \

@@ -10,7 +10,7 @@ inherit gittag
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/jgaeddert/liquid-dsp.git;protocol=https"
+SRC_URI = "git://github.com/jgaeddert/liquid-dsp.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

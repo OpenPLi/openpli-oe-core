@@ -12,7 +12,7 @@ VER ?= "${@bb.utils.contains('MACHINE_FEATURES', 'hisil', '-v2', '', d)}"
 SRC_URI = "git://github.com/zgemma-star/e2plugins.git;protocol=https;branch=python3"
 
 PACKAGES = "${PN}"
-RDEPENDS_${PN}  = "qtwebkit"
+RDEPENDS:${PN}  = "qtwebkit"
 
 S = "${WORKDIR}/git/qthbbtv${VER}"
 
@@ -48,4 +48,4 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 # prevent 'double stripping' our binaries, which will break them
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
-INSANE_SKIP_${PN} += "already-stripped dev-so"
+INSANE_SKIP:${PN} += "already-stripped dev-so"

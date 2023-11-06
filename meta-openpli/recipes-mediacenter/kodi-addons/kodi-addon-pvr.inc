@@ -1,4 +1,4 @@
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 require conf/license/license-gplv2.inc
 require kodi-nexus.inc
 
@@ -21,7 +21,7 @@ PVRMYTV = "${@bb.utils.contains("KODIADDONPLUGIN", "mythtv", "janbar", "kodi-pvr
 
 PVRGIT = "${PVRMYTV}"
 
-SRC_URI = "git://github.com/${PVRGIT}/pvr.${KODIADDONPLUGIN}.git;destsuffix=pvr.${KODIADDONPLUGIN};name=pvr${KODIADDONPLUGIN};branch=${KODIADDONBRANCH}"
+SRC_URI = "git://github.com/${PVRGIT}/pvr.${KODIADDONPLUGIN}.git;destsuffix=pvr.${KODIADDONPLUGIN};name=pvr${KODIADDONPLUGIN};branch=${KODIADDONBRANCH};protocol=https"
 
 inherit cmake pkgconfig gettext gitpkgv
 
@@ -60,9 +60,9 @@ do_install:append() {
 }
 
 # Doesn't get added automagically, dlopen()?
-RDEPENDS_${PN} += "libkodiplatform"
+RDEPENDS:${PN} += "libkodiplatform"
 
-INSANE_SKIP_${PN} = "dev-so file-rdeps"
+INSANE_SKIP:${PN} = "dev-so file-rdeps"
 FILES:${PN} += "${datadir}/kodi"
 FILES:${PN}-dbg += "${datadir}/kodi/addons/*/.debug/"
 

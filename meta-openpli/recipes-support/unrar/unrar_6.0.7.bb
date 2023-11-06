@@ -1,5 +1,5 @@
 SUMMARY = "RAR archivers"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 
 LIC_FILES_CHKSUM = "file://license.txt;md5=fc9c335ec05a5f36764ef9ce7a79daa1"
 
@@ -25,4 +25,4 @@ do_install() {
     oe_runmake install
 }
 
-INSANE_SKIP_${PN} = "already-stripped ldflags"
+INSANE_SKIP:${PN} = "already-stripped ldflags"

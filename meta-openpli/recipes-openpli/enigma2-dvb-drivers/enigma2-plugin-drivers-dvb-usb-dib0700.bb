@@ -2,7 +2,7 @@ DESCRIPTION = "USB DVB driver for dib0700 chipset"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	firmware-dvb-usb-dib0700-1.20 \
 	firmware-dvb-usb-dibusb-5.0.0.11 \
 	firmware-dvb-usb-dibusb-6.0.0.8 \

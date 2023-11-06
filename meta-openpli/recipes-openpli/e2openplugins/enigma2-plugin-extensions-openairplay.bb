@@ -1,6 +1,6 @@
 MODULE = "OpenAirPlay"
 DESCRIPTION = "AirPlay and AirTunes server for enigma2"
-RDEPENDS_${PN} = "python-twisted-core python-twisted-web python-m2crypto \
+RDEPENDS:${PN} = "python-twisted-core python-twisted-web python-m2crypto \
                   python-biplist python-netclient python-avahi python-dbus \
                   python-core python-io python-xmlrpc \
                   hairtunes"

@@ -8,7 +8,7 @@ inherit setuptools3 gittag
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/giampaolo/pysendfile.git;protocol=https"
+SRC_URI = "git://github.com/giampaolo/pysendfile.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
 include ${PYTHON_PN}-package-split.inc

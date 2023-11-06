@@ -1,7 +1,7 @@
 SUMMARY = "GUI frontend for Open Source Linux based receivers"
 DESCRIPTION = "Enigma2 is a framebuffer based frontend for DVB functions on Linux settop boxes"
 MAINTAINER = "OpenPLi team <info@openpli.org>"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = " \
@@ -18,19 +18,19 @@ DEPENDS = " \
 	"
 
 # SoftcamSetup, SkinSelector and Systemtime is integrated now
-RREPLACES_${PN} = "enigma2-plugin-pli-softcamsetup enigma2-plugin-systemplugins-skinselector enigma2-plugin-systemplugins-systemtime"
-RCONFLICTS_${PN} = "enigma2-plugin-pli-softcamsetup enigma2-plugin-systemplugins-skinselector enigma2-plugin-systemplugins-systemtime"
+RREPLACES:${PN} = "enigma2-plugin-pli-softcamsetup enigma2-plugin-systemplugins-skinselector enigma2-plugin-systemplugins-systemtime"
+RCONFLICTS:${PN} = "enigma2-plugin-pli-softcamsetup enigma2-plugin-systemplugins-skinselector enigma2-plugin-systemplugins-systemtime"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
 	ethtool \
 	${PYTHON_RDEPS} \
 	"
 
-RDEPENDS_${PN}:append:libc-glibc = " glibc-gconv-iso8859-15"
+RDEPENDS:${PN}:append:libc-glibc = " glibc-gconv-iso8859-15"
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	enigma2-plugin-skins-pli-hd \
 	hotplug-e2-helper \
 	${PYTHON_PN}-sendfile \
@@ -38,7 +38,7 @@ RRECOMMENDS_${PN} = " \
 	virtual/enigma2-mediaservice \
 	"
 
-RRECOMMENDS_${PN}:append:libc-glibc = " glibc-gconv-utf-16"
+RRECOMMENDS:${PN}:append:libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
 	${PYTHON_PN}-codecs \
@@ -61,13 +61,13 @@ PYTHON_RDEPS = " \
 	"
 
 # DVD and iso playback is integrated, we need the libraries
-RDEPENDS_${PN} += "libdreamdvd libudfread"
-RRECOMMENDS_${PN} += "libdvdcss"
+RDEPENDS:${PN} += "libdreamdvd libudfread"
+RRECOMMENDS:${PN} += "libdvdcss"
 
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
-RDEPENDS_${PN} += "font-valis-enigma"
+RDEPENDS:${PN} += "font-valis-enigma"
 
-RDEPENDS_${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual/blindscan-dvbc" , "", d)}"
+RDEPENDS:${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual/blindscan-dvbc" , "", d)}"
 
 DEMUXTOOL ?= "replex"
 
@@ -81,27 +81,27 @@ DESCRIPTION:append:enigma2-plugin-systemplugins-videomode = "selects advanced vi
 DESCRIPTION:append:enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
 DESCRIPTION:append:enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 
-RDEPENDS_enigma2-plugin-extensions-cutlisteditor = "aio-grab"
-RDEPENDS_enigma2-plugin-systemplugins-nfiflash = "${PYTHON_PN}-twisted-web"
-RDEPENDS_enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_PN}-twisted-web"
-RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools ${PYTHON_PN}-wifi"
+RDEPENDS:enigma2-plugin-extensions-cutlisteditor = "aio-grab"
+RDEPENDS:enigma2-plugin-systemplugins-nfiflash = "${PYTHON_PN}-twisted-web"
+RDEPENDS:enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_PN}-twisted-web"
+RDEPENDS:enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools ${PYTHON_PN}-wifi"
 
 # Note that these tools lack recipes
-RDEPENDS_enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools genisoimage ${PYTHON_PN}-imaging ${DEMUXTOOL} \
+RDEPENDS:enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools genisoimage ${PYTHON_PN}-imaging ${DEMUXTOOL} \
                                               ${PYTHON_PN}-pillow"
-RDEPENDS_enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
-RRECOMMENDS_enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
+RDEPENDS:enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
+RRECOMMENDS:enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 
 # Fake package that doesn't actually get built, but allows OE to detect
 # the RDEPENDS for the plugins above, preventing [build-deps] warnings.
-RDEPENDS_${PN}-build-dependencies = "\
+RDEPENDS:${PN}-build-dependencies = "\
 	aio-grab \
 	dvd+rw-tools dvdauthor mjpegtools cdrkit ${DEMUXTOOL} \
 	${PYTHON_PN}-pillow \
 	wpa-supplicant wireless-tools ${PYTHON_PN}-wifi \
 	${PYTHON_PN}-twisted-web \
 	"
-RRECOMMENDS_${PN}-build-dependencies = "\
+RRECOMMENDS:${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
@@ -113,7 +113,7 @@ PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
 ENIGMA2_BRANCH ?= "develop"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https;branch=master"
 SRC_URI := " ${SRC_ORIGIN};branch=${ENIGMA2_BRANCH}"
 
 LDFLAGS:prepend = " -lxml2 "
@@ -126,7 +126,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit autotools pkgconfig
 
-PKGV_enigma2-fonts = "2020.10.17"
+PKGV:enigma2-fonts = "2020.10.17"
 
 def get_crashaddr(d):
     if d.getVar('CRASHADDR', True):

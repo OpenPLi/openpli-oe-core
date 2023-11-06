@@ -7,4 +7,4 @@ PLUGIN_PATH = "SystemPlugins/MountManager"
 
 require dima-plugins.inc
 
-RDEPENDS_${PN} = "e2fsprogs-tune2fs"
+RDEPENDS:${PN} = "e2fsprogs-tune2fs"

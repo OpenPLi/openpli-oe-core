@@ -1,6 +1,6 @@
 SUMMARY = "C implementations of functions for use within SABnzbd"
 SECTION = "devel/python"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=892f569a555ba9c07a568a7c0c4fa63a"
 
 SRC_URI[md5sum] = "35d6bd261734f53b6658ae3a1d22a93f"

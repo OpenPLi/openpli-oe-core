@@ -1,11 +1,11 @@
 SUMMARY = "SysV init scripts which are only used in an LSB image"
 HOMEPAGE = "https://wiki.debian.org/LSBInitScripts"
 SECTION = "base"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 
-RPROVIDES_${PN} += "initd-functions"
-RDEPENDS_${PN} += "util-linux"
-RCONFLICTS_${PN} = "initscripts-functions"
+RPROVIDES:${PN} += "initd-functions"
+RDEPENDS:${PN} += "util-linux"
+RCONFLICTS:${PN} = "initscripts-functions"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=ebf4e8b49780ab187d51bd26aaa022c6"
 

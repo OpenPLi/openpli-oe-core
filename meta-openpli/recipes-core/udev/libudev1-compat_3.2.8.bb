@@ -2,7 +2,7 @@ SUMMARY = "Compatibility for packages that link to older libudev0"
 
 require conf/license/license-gplv2.inc
 
-RDEPENDS_${PN} = "libudev"
+RDEPENDS:${PN} = "libudev"
 
 do_install:append() {
 	install -d ${D}${base_libdir}

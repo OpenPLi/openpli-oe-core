@@ -1,5 +1,5 @@
 SUMMARY = "LC_TIME locale support"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 SECTION = "base"
 PRIORITY = "required"
 MAINTAINER = "OpenPli team"
@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 
 DEPENDS += "cross-localedef-native"
 
-SRC_URI = "git://github.com/OpenPLi/fakelocale-locales.git;protocol=https \
+SRC_URI = "git://github.com/OpenPLi/fakelocale-locales.git;protocol=https;branch=master \
 	file://locale.alias \
 	file://SYS_LC_MESSAGES \
 "
@@ -21,7 +21,7 @@ LANGUAGES = "ar_AE bg_BG ca_AD cs_CZ da_DK de_DE el_GR en_EN es_ES et_EE fa_IR f
 	gl_ES he_IL hr_HR hu_HU id_ID is_IS it_IT ku_TR lt_LT lv_LV mk_MK nb_NO nl_NL nn_NO pl_PL \
 	pt_BR pt_PT ro_RO ru_RU sk_SK sl_SI sr_RS sv_SE th_TH tr_TR uk_UA vi_VN zh_CN zh_HK"
 
-RPROVIDES_${PN} = "virtual-locale-ar virtual-locale-bg virtual-locale-ca virtual-locale-cs \
+RPROVIDES:${PN} = "virtual-locale-ar virtual-locale-bg virtual-locale-ca virtual-locale-cs \
 	virtual-locale-da virtual-locale-de virtual-locale-el virtual-locale-en virtual-locale-es \
 	virtual-locale-et virtual-locale-fa virtual-locale-fi virtual-locale-fr virtual-locale-fy \
 	virtual-locale-gl virtual-locale-he virtual-locale-hr virtual-locale-hu virtual-locale-id \

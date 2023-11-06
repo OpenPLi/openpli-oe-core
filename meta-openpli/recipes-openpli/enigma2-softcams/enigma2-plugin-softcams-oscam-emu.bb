@@ -4,7 +4,7 @@ inherit cmake
 inherit gitpkgv
 
 DESCRIPTION = "OScam-emu ${PV} Open Source Softcam"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
@@ -12,13 +12,13 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https;branch=master"
 SRC_URI := "${SRC_ORIGIN} \
         file://icam.patch \
         "
 
 DEPENDS = "libusb openssl"
-RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
+RDEPENDS:${PN} += "enigma2-plugin-extensions-oscamstatus"
 
 LDFLAGS:prepend = "-ludev "
 

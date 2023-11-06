@@ -2,7 +2,7 @@ DESCRIPTION = "USB DVB driver for pctv292e chipsets"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	firmware-dvb-demod-si2168-b40 \
 	kernel-module-em28xx \
 	kernel-module-em28xx-dvb \

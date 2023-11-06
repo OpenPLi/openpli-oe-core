@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 DEPENDS = "qtwebengine"
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-SRC_URI = "file://libwidevinecdm-${PV}_armhf.zip"
+SRC_URI = "file://libwidevinecdm-${PV}:armhf.zip"
 
 S = "${WORKDIR}"
 
@@ -20,6 +20,6 @@ do_package_qa() {
 
 FILES:${PN} = "/usr/lib/chromium"
 
-RDEPENDS_${PN} += "qtwebengine"
+RDEPENDS:${PN} += "qtwebengine"
 
-INSANE_SKIP_${PN} += "ldflags already-stripped"
+INSANE_SKIP:${PN} += "ldflags already-stripped"

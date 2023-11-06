@@ -9,14 +9,14 @@ inherit gitpkgv distutils-openplugins gettext python3-compileall
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/OpenViX/HRTunerProxy.git;protocol=https \
+SRC_URI = "git://github.com/OpenViX/HRTunerProxy.git;protocol=https;branch=master \
            file://revert-back-to-distutils.patch \
            "
 
 S = "${WORKDIR}/git"
 
-RCONFLICTS_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
-RREPLACES_${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
+RCONFLICTS:${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
+RREPLACES:${PN} = "enigma2-plugin-systemplugins-plexdvrapi"
 
 #do_install:prepend() {
 #    echo ${GITPKGVTAG} | awk -F"-" '{print $1}'> ${S}/build/lib/SystemPlugins/HRTunerProxy/PLUGIN_VERSION

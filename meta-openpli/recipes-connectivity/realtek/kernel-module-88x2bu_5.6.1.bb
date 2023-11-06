@@ -1,11 +1,11 @@
 SUMMARY = "Ralink 88x2BU v5.6.1"
 HOMEPAGE = "http://www.realtek.com.tw"
 SECTION = "kernel/modules"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://README.md;md5=03fe0d7f8756e1858484df4c7a8e2387"
 
 # backward compatibility
-RPROVIDES_${PN} = "rtl8822bu"
+RPROVIDES:${PN} = "rtl8822bu"
 
 inherit module
 

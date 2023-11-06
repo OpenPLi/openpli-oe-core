@@ -8,10 +8,10 @@ LIC_FILES_CHKSUM = "file://license.txt;md5=43c18ca9896bbb1a0fdf78ab4d9902bd"
 
 PACKAGE_ARCH = "all"
 
-RDEPENDS_${PN} = "${PYTHON_PN}-sqlite3 ${PYTHON_PN}-json ${PYTHON_PN}-xmlrpc ${PYTHON_PN}-email ${PYTHON_PN}-requests "
+RDEPENDS:${PN} = "${PYTHON_PN}-sqlite3 ${PYTHON_PN}-json ${PYTHON_PN}-xmlrpc ${PYTHON_PN}-email ${PYTHON_PN}-requests "
 
 SRC_URI = "\
-	git://github.com/einfall/serienrecorder.git;protocol=https \
+	git://github.com/einfall/serienrecorder.git;protocol=https;branch=master \
 	file://git/setup.py \
 	file://git/setup_translate.py \
 	"

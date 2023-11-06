@@ -1,10 +1,10 @@
 DESCRIPTION = "Handle your EPG on enigma2 from various sources (opentv, xmltv, custom sources)"
 HOMEPAGE = "https://github.com/oe-alliance/e2openplugin-CrossEPG"
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=4fbd65380cdd255951079008b364516c"
 
 DEPENDS += "libxml2 zlib swig-native curl ${PYTHON_PN}"
-RDEPENDS_${PN} += "enigma2 libcurl ${PYTHON_PN}-compression xz ${PYTHON_PN}-core"
+RDEPENDS:${PN} += "enigma2 libcurl ${PYTHON_PN}-compression xz ${PYTHON_PN}-core"
 
 inherit gitpkgv python3-compileall
 
@@ -20,12 +20,12 @@ PR = "r0"
 
 inherit ${PYTHON_PN}-dir ${PYTHON_PN}native
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
 CFLAGS:append = " -I${STAGING_INCDIR}/libxml2/ -I${STAGING_INCDIR}/${PYTHON_DIR}/"
 
 # prevent lots of QA warnings
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP:${PN} += "already-stripped"
 
 S = "${WORKDIR}/git"
 
@@ -39,7 +39,7 @@ do_install() {
     mv ${D}/usr/crossepg/libcrossepg.so ${D}${libdir}/
 }
 
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
     rm -fr ${libdir}/enigma2/python/Plugins/SystemPlugins/CrossEPG > /dev/null 2>&1
 }
 
@@ -52,7 +52,7 @@ python populate_packages:prepend() {
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\/.*\.po$', 'enigma2-plugin-%s-po', '%s (translations)', recursive=True, match_path=True, prepend=True)
 }
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 FILES:${PN}:append = " /usr/crossepg ${libdir}/libcrossepg.so ${libdir}/${PYTHON_DIR}"
 FILES:${PN}-dbg:append = " /usr/crossepg/scripts/mhw2epgdownloader/.debug /usr/crossepg/scripts/mhw2epgdownloader/.debug"
 FILES:SOLIBSDEV = ""

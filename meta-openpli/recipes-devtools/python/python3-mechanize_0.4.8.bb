@@ -4,7 +4,7 @@ SECTION = "devel/python"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=621053d4e9daec9454e15e60fe40214f"
 
-RDEPENDS_${PN} = "${PYTHON_PN}-core"
+RDEPENDS:${PN} = "${PYTHON_PN}-core"
 
 SRC_URI = "https://files.pythonhosted.org/packages/b0/02/6c3d393c72db98e8732ec85020a525494fdbb076c7511e3d331188a48154/mechanize-${PV}.tar.gz"
 

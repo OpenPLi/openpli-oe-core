@@ -4,7 +4,7 @@ require conf/license/openpli-gplv2.inc
 
 HOMEPAGE = "https://minisatip.org/"
 DEPENDS = "libdvbcsa openssl"
-RDEPENDS_${PN} = "libdvbcsa openssl"
+RDEPENDS:${PN} = "libdvbcsa openssl"
 
 SRC_URI = " \
     git://github.com/catalinii/minisatip.git;protocol=http;branch=master;protocol=https \
@@ -25,7 +25,7 @@ INITSCRIPT_PARAMS = "defaults 80"
 
 EXTRA_OECONF = "--disable-netcv"
 
-do_configure_prepend () {
+do_configure:prepend () {
 }
 
 do_install () {

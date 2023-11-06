@@ -5,7 +5,7 @@ FILES:${PN} = "${bindir} ${sysconfdir}"
 # no docs, locales etc.
 PACKAGES = "${PN}"
 
-RDEPENDS_${PN} += "cardserver-support"
+RDEPENDS:${PN} += "cardserver-support"
 
 CSLINK = "${sysconfdir}/init.d/cardserver"
 CSPATH = "${sysconfdir}/init.d/cardserver.${CSNAME}"
@@ -58,7 +58,7 @@ do_install:append () {
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
-pkg_postinst_${PN}:append () {
+pkg_postinst:${PN}:append () {
 	if [ ! -e ${CSLINK} ] || [ "$D/etc/init.d/cardserver.None" == `readlink -f $D${CSLINK}` ]
 	then
 		rm -f $D${CSLINK}
@@ -73,7 +73,7 @@ pkg_postinst_${PN}:append () {
 }
 
 # Stop this cam (if running), and move softlink to None if we're the current cam
-pkg_prerm_${PN}:prepend () {
+pkg_prerm:${PN}:prepend () {
 	${CSPATH} stop
 	OLDLINK=`readlink -f ${CSLINK}`
 	if [ "${OLDLINK}" == "${CSPATH}" ]

@@ -5,7 +5,7 @@ MAINTAINER = "PLi team"
 LICENSE = "CC-BY-NC-ND-4.0"
 LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/meta-openpli/licenses/CC-BY-NC-ND-4.0;md5=8009795292660aa9c8da059e5b1581c1"
 
-RDEPENDS_${PN} += "showiframe"
+RDEPENDS:${PN} += "showiframe"
 
 PKGV = "${DATE}"
 

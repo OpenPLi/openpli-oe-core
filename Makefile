@@ -158,13 +158,13 @@ BITBAKE_ENV_HASH := $(call hash, \
 
 $(TOPDIR)/env.source: $(DEPDIR)/.env.source.$(BITBAKE_ENV_HASH)
 	@echo 'Generating $@'
-	@echo 'export BB_ENV_EXTRAWHITE="MACHINE"' > $@
+	@echo 'export BB_ENV_PASSTHROUGH_ADDITIONS="MACHINE"' > $@
 	@echo 'export MACHINE' >> $@
 	@echo 'export PATH=$(CURDIR)/openembedded-core/scripts:$(CURDIR)/bitbake/bin:$${PATH}' >> $@
 	@echo 'export BUILDDIR=$(BUILD_DIR)' >> $@
 
 OPENPLI_CONF_HASH := $(call hash, \
-	'OPENPLI_CONF_VERSION = "1"' \
+	'OPENPLI_CONF_VERSION = "2"' \
 	'CURDIR = "$(CURDIR)"' \
 	'BB_NUMBER_THREADS = "$(BB_NUMBER_THREADS)"' \
 	'PARALLEL_MAKE = "$(PARALLEL_MAKE)"' \
@@ -180,7 +180,7 @@ $(TOPDIR)/conf/openpli.conf: $(DEPDIR)/.openpli.conf.$(OPENPLI_CONF_HASH)
 	@echo 'TMPDIR = "$(TMPDIR)"' >> $@
 	@echo 'BB_GENERATE_MIRROR_TARBALLS = "0"' >> $@
 	@echo 'BBINCLUDELOGS = "yes"' >> $@
-	@echo 'CONF_VERSION = "1"' >> $@
+	@echo 'CONF_VERSION = "2"' >> $@
 	@echo 'DISTRO = "openpli"' >> $@
 	@echo 'EXTRA_IMAGE_FEATURES = "debug-tweaks"' >> $@
 	@echo 'USER_CLASSES = "buildstats"' >> $@

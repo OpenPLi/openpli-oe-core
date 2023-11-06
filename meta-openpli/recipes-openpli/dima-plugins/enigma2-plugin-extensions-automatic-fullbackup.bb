@@ -7,7 +7,7 @@ PLUGIN_PATH = "Extensions/FullBackup"
 
 require dima-plugins.inc
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
 	mtd-utils-ubifs \
 	mtd-utils \
 	ofgwrite \

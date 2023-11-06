@@ -1,6 +1,6 @@
 MODULE = "Satscan"
 DESCRIPTION = "Blind scan on DVB-S"
-RDEPENDS_${PN} = "virtual/blindscan-dvbs"
+RDEPENDS:${PN} = "virtual/blindscan-dvbs"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit gitpkgv

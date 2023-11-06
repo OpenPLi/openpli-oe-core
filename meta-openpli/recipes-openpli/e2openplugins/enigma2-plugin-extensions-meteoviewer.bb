@@ -1,7 +1,7 @@
 MODULE = "MeteoViewer"
 DESCRIPTION = "meteo pictures viewer"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	${PYTHON_PN}-requests \
 	"
 

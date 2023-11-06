@@ -1,12 +1,12 @@
 DESCRIPTION = "servicemp3 for enigma2"
 AUTHOR = "OpenPLi team <info@openpli.org>"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PROVIDES += "virtual/enigma2-mediaservice"
-RPROVIDES_${PN} += "virtual/enigma2-mediaservice"
+RPROVIDES:${PN} += "virtual/enigma2-mediaservice"
 
 GST_BASE_RDEPS = "\
 	gstreamer${GST_VERSION}-plugins-base-alsa \
@@ -73,7 +73,7 @@ DEPENDS = "\
 	gstreamer${GST_VERSION}-plugins-base gstreamer${GST_VERSION} \
 	"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
 	enigma2 \
 	glib-networking \
 	gstreamer${GST_VERSION}-plugin-subsink \
@@ -85,7 +85,7 @@ RDEPENDS_${PN} = "\
 	libsoup-2.4 \
 	"
 
-RRECOMMENDS_${PN} = "\
+RRECOMMENDS:${PN} = "\
 	gstreamer${GST_VERSION}-plugins-good-pulse \
 	"
 

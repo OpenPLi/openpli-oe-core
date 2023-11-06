@@ -5,12 +5,12 @@ DESCRIPTION = "Yafc is a command-line Linux FTP client, with a bunch of useful \
 HOMEPAGE = "http://www.yafc-ftp.com"
 BUGTRACKER = "https://github.com/sebastinas/yafc/issues/"
 MAINTAINER = "Sebastian Ramacher"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=74f65085a4958dced34e7b33cdf95eaf"
 
 DEPENDS = "krb5 libbsd libssh openssl readline glib-2.0-native"
 
-SRC_URI = "git://github.com/sebastinas/yafc.git;protocol=https"
+SRC_URI = "git://github.com/sebastinas/yafc.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

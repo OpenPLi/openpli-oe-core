@@ -24,7 +24,7 @@ do_compile:append() {
 	echo "# Placeholder for no cam" > ${S}/softcam.None
 }
 
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
 	if [ ! -e "$D${sysconfdir}/init.d/softcam" ]
 	then
 		ln -s softcam.None $D${sysconfdir}/init.d/softcam

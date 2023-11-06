@@ -2,7 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://importlib.patch"
 
-ALTERNATIVE_${PN}-core = "python python_config"
+ALTERNATIVE:${PN}-core = "python python_config"
 ALTERNATIVE_LINK_NAME[python] = "${bindir}/python"
 ALTERNATIVE_LINK_NAME[python_config] = "${bindir}/python-config"
 ALTERNATIVE_TARGET[python] = "${bindir}/python3"
@@ -45,7 +45,7 @@ python(){
         if pypackage not in rprovides:
               rprovides.append(pypackage)
 
-    d.setVar('RPROVIDES_class-native', ' '.join(rprovides))
+    d.setVar('RPROVIDES:class-native', ' '.join(rprovides))
 
     packages = d.getVar('PACKAGES').split()
     pn = d.getVar('PN')
@@ -80,20 +80,20 @@ python(){
             # Make it work with or without $PN
             if '${PN}' in value:
                 value=value.split('-', 1)[1]
-            d.appendVar('RDEPENDS_' + pypackage, ' ' + pn + '-' + value)
+            d.appendVar('RDEPENDS:' + pypackage, ' ' + pn + '-' + value)
 
         for value in python_manifest[key].get('rrecommends', ()):
             if '${PN}' in value:
                 value=value.split('-', 1)[1]
-            d.appendVar('RRECOMMENDS_' + pypackage, ' ' + pn + '-' + value)
+            d.appendVar('RRECOMMENDS:' + pypackage, ' ' + pn + '-' + value)
 
-        d.setVar('RDEPENDS_' + pysrc, pypackage)
-        d.setVar('SUMMARY_' + pysrc, pypackage + ' (source)')
-        d.setVar('SUMMARY_' + pypackage, python_manifest[key]['summary'])
+        d.setVar('RDEPENDS:' + pysrc, pypackage)
+        d.setVar('SUMMARY:' + pysrc, pypackage + ' (source)')
+        d.setVar('SUMMARY:' + pypackage, python_manifest[key]['summary'])
 
     # Prepending so to avoid python-misc getting everything
     packages = newpackages + packages
     d.setVar('PACKAGES', ' '.join(packages))
-    d.setVar('ALLOW_EMPTY_${PN}-modules', '1')
-    d.setVar('ALLOW_EMPTY_${PN}-pkgutil', '1')
+    d.setVar('ALLOW_EMPTY:${PN}-modules', '1')
+    d.setVar('ALLOW_EMPTY:${PN}-pkgutil', '1')
 }

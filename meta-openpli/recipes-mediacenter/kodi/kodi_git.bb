@@ -12,7 +12,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 require kodi.inc
 require kodi-extra.inc
 
-inherit cmake pkgconfig gettext python3-dir python3native
+inherit ccache cmake pkgconfig gettext python3-dir python3native
 
 DEPENDS += " \
 autoconf-native \

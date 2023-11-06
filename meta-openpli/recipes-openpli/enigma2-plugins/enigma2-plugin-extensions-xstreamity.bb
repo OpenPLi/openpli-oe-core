@@ -3,7 +3,7 @@ HOMEPAGE = "https://www.linuxsat-support.com"
 MAINTAINER = "kiddac"
 require conf/license/license-gplv2.inc
 
-RDEPENDS_${PN} = "${PYTHON_PN} ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-requests \
+RDEPENDS:${PN} = "${PYTHON_PN} ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-requests \
                   ${PYTHON_PN}-imaging ${PYTHON_PN}-pillow \
 "
 
@@ -14,7 +14,7 @@ SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGV}"
 
-SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=https"
+SRC_URI = "git://github.com/kiddac/XStreamity.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 

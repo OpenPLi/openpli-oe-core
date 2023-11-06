@@ -11,24 +11,24 @@ DEPENDS += "mtd-utils"
 
 PACKAGES =+ "${PN}-inetd"
 INITSCRIPT_PACKAGES += "${PN}-inetd"
-INITSCRIPT_NAME_${PN}-inetd = "inetd.${BPN}" 
+INITSCRIPT_NAME:${PN}-inetd = "inetd.${BPN}" 
 CONFFILES:${PN}-inetd = "${sysconfdir}/inetd.conf"
 FILES:${PN}-inetd = "${sysconfdir}/init.d/inetd.${BPN} ${sysconfdir}/inetd.conf"
-RDEPENDS_${PN}-inetd += "${PN}"
+RDEPENDS:${PN}-inetd += "${PN}"
 
-RRECOMMENDS_${PN} += "${PN}-inetd"
+RRECOMMENDS:${PN} += "${PN}-inetd"
 
 PACKAGES =+ "${PN}-cron"
 INITSCRIPT_PACKAGES += "${PN}-cron"
-INITSCRIPT_NAME_${PN}-cron = "${BPN}-cron" 
+INITSCRIPT_NAME:${PN}-cron = "${BPN}-cron" 
 FILES:${PN}-cron = "${sysconfdir}/cron ${sysconfdir}/init.d/${BPN}-cron"
-RDEPENDS_${PN}-cron += "${PN}"
+RDEPENDS:${PN}-cron += "${PN}"
 
-pkg_postinst_${PN}:append () {
+pkg_postinst:${PN}:append () {
 	update-alternatives --install /bin/sh sh /bin/busybox.nosuid 50
 }
 
-pkg_prerm_${PN}:append () {
+pkg_prerm:${PN}:append () {
 	ln -s ${base_bindir}/busybox $tmpdir/wget
 }
 

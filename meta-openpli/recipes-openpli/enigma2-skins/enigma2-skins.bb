@@ -23,10 +23,10 @@ SRC_URI:append = " \
 	"
 
 # note that enigma2-skins is just an empty package to satisfy silly dependencies.
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 FILES:${PN} = "${datadir}/enigma2 ${datadir}/fonts"
 FILES:${PN}-meta = "${datadir}/meta"
-RDEPENDS_${PN}-meta = ""
+RDEPENDS:${PN}-meta = ""
 
 inherit autotools-brokensep
 

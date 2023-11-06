@@ -1,14 +1,14 @@
 SUMMARY = "Driver for Realtek 8723BS wireless/bluetooth devices"
 HOMEPAGE = "http://www.realtek.com/"
 SECTION = "kernel/modules"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://README.md;md5=c416860023e780aa96e0616b1cda6a49"
 
 inherit module
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-SRC_URI = "git://github.com/anthonywong/rtl8723bs.git;protocol=https \
+SRC_URI = "git://github.com/anthonywong/rtl8723bs.git;protocol=https;branch=master \
     file://0001-makefile-disable-POWER_SAVING.patch \
     file://rt8723bs-makefile.patch \
     file://rt8723bs-remove-debug.patch \

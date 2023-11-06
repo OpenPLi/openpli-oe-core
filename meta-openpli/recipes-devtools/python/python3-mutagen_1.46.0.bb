@@ -1,6 +1,6 @@
 SUMMARY = "Module for manipulating ID3 (v1 + v2) tags in Python"
 SECTION = "devel/python"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = "python3"
@@ -13,6 +13,6 @@ SRC_URI[sha256sum] = "6e5f8ba84836b99fe60be5fb27f84be4ad919bbb6b49caa6ae81e70584
 
 S = "${WORKDIR}/mutagen-${PV}"
 
-inherit distutils3 setuptools3
+inherit setuptools3 setuptools3
 
 include python3-package-split.inc

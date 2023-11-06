@@ -2,7 +2,7 @@ SUMMARY = "Compatibility for packages that link to python"
 
 require conf/license/license-gplv2.inc
 
-RDEPENDS_${PN} = "${PYTHON_PN}-core"
+RDEPENDS:${PN} = "${PYTHON_PN}-core"
 
 do_install () {
     install -d ${D}${bindir}

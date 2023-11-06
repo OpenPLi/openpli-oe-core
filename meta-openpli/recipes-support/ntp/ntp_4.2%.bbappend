@@ -2,7 +2,7 @@ SUMMARY = "OpenPLi Network Time Protocol daemon and utilities"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-pkg_postinst_ntpdate() {
+pkg_postinst:ntpdate() {
     if ! grep -q -s ntpdate $D/var/spool/cron/crontabs/root; then
         echo "adding crontab"
         test -d $D/var/spool/cron/crontabs || mkdir -p $D/var/spool/cron/crontabs

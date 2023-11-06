@@ -1,4 +1,4 @@
-RDEPENDS_${PN}-core += "${PYTHON_PN}-service-identity"
+RDEPENDS:${PN}-core += "${PYTHON_PN}-service-identity"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 

@@ -2,7 +2,7 @@ DESCRIPTION = "USB DVB driver for TBS Tuners"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	kernel-module-dvb-usb-tbsusb \
 	kernel-module-stv090x \
 	kernel-module-stb6100 \

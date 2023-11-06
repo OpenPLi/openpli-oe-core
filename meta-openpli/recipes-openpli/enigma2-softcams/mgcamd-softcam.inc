@@ -12,8 +12,8 @@ LICENSE = "CLOSED"
 
 FILES:${PN} = "${bindir} ${sysconfdir}"
 
-RDEPENDS_${PN} += "softcam-support"
-INSANE_SKIP_${PN} += "already-stripped"
+RDEPENDS:${PN} += "softcam-support"
+INSANE_SKIP:${PN} += "already-stripped"
 
 CAMLINK = "/etc/init.d/softcam"
 CAMPATH = "/etc/init.d/softcam.${CAMNAME}"
@@ -69,7 +69,7 @@ do_install:append () {
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
-pkg_postinst_${PN}:append () {
+pkg_postinst:${PN}:append () {
 	if [ ! -e "$D${CAMLINK}" ] || [ "$D/etc/init.d/softcam.None" = "`readlink -f $D${CAMLINK}`" ]
 	then
 		rm -f "$D${CAMLINK}"
@@ -84,7 +84,7 @@ pkg_postinst_${PN}:append () {
 }
 
 # Stop this cam (if running), and move softlink to None if we're the current cam
-pkg_prerm_${PN}:prepend () {
+pkg_prerm:${PN}:prepend () {
 	${CAMPATH} stop
 	OLDLINK="`readlink -f ${CAMLINK}`"
 	if [ "${OLDLINK}" = "${CAMPATH}" ]

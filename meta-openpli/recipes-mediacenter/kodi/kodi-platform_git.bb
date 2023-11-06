@@ -4,7 +4,7 @@ HOMEPAGE = "https://github.com/xbmc/kodi-platform"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://src/util/XMLUtils.cpp;beginline=2;endline=18;md5=dae8e846500e70dd8ecee55f3f018c30"
 
 DEPENDS = "libtinyxml kodi"
@@ -39,17 +39,11 @@ do_compile:prepend() {
 }
 
 do_install:append() {
-	sed -i -e '/CXX/d' \
-               -e '/CC/d' \
-               -e 's:${STAGING_LIBDIR}:${libdir}:g' \
-               -e 's:${STAGING_DIR_HOST}:/:g' \
-               -e 's:${STAGING_DIR_NATIVE}:/:g' \
-               -e 's:${prefix}/${libdir}:${libdir}:g' \
-               -e 's:${WORKDIR}=::g' \ 
-            ${D}${libdir}/pkgconfig/*.pc
+            rm ${D}${libdir}/pkgconfig/*.pc
 }
 
 RPROVIDES:${PN} += "libkodiplatform"
+RDEPENDS:${PN}-dev = ""
 PACKAGES =+ "libkodiplatform"
 
 FILES:libkodiplatform = "${libdir}/lib*.so.*"

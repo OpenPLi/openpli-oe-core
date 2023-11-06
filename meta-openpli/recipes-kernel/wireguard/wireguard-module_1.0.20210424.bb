@@ -20,7 +20,7 @@ EXTRA_OEMAKE:append = " \
 
 MAKE_TARGETS = "module"
 
-RRECOMMENDS_${PN} = "kernel-module-xt-hashlimit"
+RRECOMMENDS:${PN} = "kernel-module-xt-hashlimit"
 MODULE_NAME = "wireguard"
 
 # Kernel module packages MUST begin with 'kernel-module-', otherwise
@@ -28,7 +28,7 @@ MODULE_NAME = "wireguard"
 #
 # The following line is only necessary if the recipe name does not begin
 # with kernel-module-.
-PKG_${PN} = "kernel-module-${MODULE_NAME}"
+PKG:${PN} = "kernel-module-${MODULE_NAME}"
 
 module_do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/${MODULE_NAME}

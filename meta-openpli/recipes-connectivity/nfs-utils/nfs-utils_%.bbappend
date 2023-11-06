@@ -7,10 +7,10 @@ CXXFLAGS_FOR_BUILD:remove = "-march=native"
 # bash into our system, which we definitely don't want to happen. This
 # bbappend basically reverses that commit.
 #
-RDEPENDS_${PN}-client:remove = "bash"
-RDEPENDS_${PN}:remove = "bash"
+RDEPENDS:${PN}-client:remove = "bash"
+RDEPENDS:${PN}:remove = "bash"
 
-INSANE_SKIP_${PN} = "file-rdeps"
+INSANE_SKIP:${PN} = "file-rdeps"
 
 # The startup script does a check that doesn't work, replace it. It's
 # also overly complex, so simplified it too.

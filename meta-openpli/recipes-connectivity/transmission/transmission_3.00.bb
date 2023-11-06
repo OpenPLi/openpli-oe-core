@@ -1,7 +1,7 @@
 DESCRIPTION = "Transmission is a BitTorrent client w/ a built-in Ajax-Powered Webif GUI."
 SECTION = "network"
 HOMEPAGE = "www.transmissionbt.com/"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=73f535ddffcf2a0d3af4f381f84f9b33"
 
 DEPENDS = "curl libevent gnutls openssl libtool intltool-native glib-2.0-native"
@@ -67,4 +67,4 @@ FILES:${PN}-client = "${bindir}/transmission-remote ${bindir}/transmission-cli $
 FILES:${PN}-gui += "${bindir}/transmission-gtk ${datadir}/icons ${datadir}/applications ${datadir}/pixmaps"
 CONFFILES:${PN} = "${sysconfdir}/default/transmission-daemon"
 
-SYSTEMD_SERVICE_${PN} = "transmission-daemon.service"
+SYSTEMD_SERVICE:${PN} = "transmission-daemon.service"

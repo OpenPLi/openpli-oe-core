@@ -2,7 +2,7 @@ DESCRIPTION = "Multi boot loader manager for enigma2 box"
 HOMEPAGE = "https://github.com/Dima73/pli-openmultibootmanager"
 LICENSE = "PD"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-SRC_URI = "git://github.com/Dima73/pli-openmultibootmanager.git;protocol=https"
+SRC_URI = "git://github.com/Dima73/pli-openmultibootmanager.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
 inherit gitpkgv
@@ -12,9 +12,9 @@ PKGV = "1+git${GITPKGV}"
 
 inherit distutils-openplugins
 
-RRECOMMENDS_${PN} = "mtd-utils mtd-utils-ubifs kernel-module-nandsim openmultiboot"
+RRECOMMENDS:${PN} = "mtd-utils mtd-utils-ubifs kernel-module-nandsim openmultiboot"
 
-pkg_preinst_${PN}() {
+pkg_preinst:${PN}() {
 #!/bin/sh
 if mountpoint -q ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot; then
     echo "openMultiBoot will only install on main image."
@@ -27,7 +27,7 @@ else
 fi
 }
 
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
 #!/bin/sh
 
 if mountpoint -q ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot; then

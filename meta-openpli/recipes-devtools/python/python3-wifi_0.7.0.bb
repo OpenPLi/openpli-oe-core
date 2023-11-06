@@ -1,8 +1,8 @@
 SUMMARY = "Provides access to Linux Wireless Extensions"
 HOMEPAGE = "http://pythonwifi.wikispot.org/"
 SECTION = "devel/python"
-LICENSE = "LGPLv2+ & GPLv2+"
-LICENSE_${PN}-examples = "GPLv2+"
+LICENSE = "LGPL-2.0-or-later & GPL-2.0-or-later"
+LICENSE:${PN}-examples = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://README;md5=54307cbab01c3aad9adf7605132bcf31"
 
 inherit gitpkgv
@@ -11,9 +11,9 @@ PV = "0.7.0+git${SRCPV}"
 PKGV = "0.7.0+git${GITPKGV}"
 PR = "r2"
 
-RDEPENDS_${PN} = "python3-ctypes python3-datetime python3-six"
+RDEPENDS:${PN} = "python3-ctypes python3-datetime python3-six"
 
-SRC_URI = "git://github.com/athoik/pythonwifi.git"
+SRC_URI = "git://github.com/athoik/pythonwifi.git;branch=master;protocol=https"
 SRCREV ?= "${AUTOREV}"
 
 S = "${WORKDIR}/git"

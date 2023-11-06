@@ -1,8 +1,8 @@
 DESCRIPTION = "mount UPnP server content as a linux filesystem"
 HOMEPAGE = "http://djmount.sourceforge.net/"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 DEPENDS = "libupnp fuse"
-RDEPENDS_${PN} = "libupnp fuse"
+RDEPENDS:${PN} = "libupnp fuse"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=eb723b61539feef013de476e68b5c50a"
 
@@ -14,7 +14,7 @@ inherit autotools update-rc.d pkgconfig gettext
 # libupnp make doesn't support it
 PARALLEL_MAKE = ""
 
-SRC_URI = "git://github.com/SHTrassEr/djmount.git;protocol=https"
+SRC_URI = "git://github.com/SHTrassEr/djmount.git;protocol=https;branch=master"
 
 CFLAGS:append = " -std=gnu89 -fcommon"
 

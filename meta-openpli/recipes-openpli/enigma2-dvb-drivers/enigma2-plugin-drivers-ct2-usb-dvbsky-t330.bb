@@ -2,7 +2,7 @@ DESCRIPTION = "USB dvbsky driver for T330"
 
 require dvb-usb-drivers-meta.inc
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
 	kernel-module-dvb-usb-dvbsky \
 	kernel-module-si2157 \
 	kernel-module-si2168 \

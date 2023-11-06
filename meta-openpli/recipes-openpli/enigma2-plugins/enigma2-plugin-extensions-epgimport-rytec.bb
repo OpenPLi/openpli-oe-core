@@ -9,8 +9,8 @@ PV = "20230617"
 SRC_URI = "http://rytecepg.wanwizard.eu/rytec.sources.xml.${PV}.gz"
 S = "${WORKDIR}"
 
-RREPLACES_${PN} = "enigma2-plugin-extensions-xmltvimport-rytec"
-RCONFLICTS_${PN} = "enigma2-plugin-extensions-xmltvimport-rytec"
+RREPLACES:${PN} = "enigma2-plugin-extensions-xmltvimport-rytec"
+RCONFLICTS:${PN} = "enigma2-plugin-extensions-xmltvimport-rytec"
 
 PACKAGES = "${PN}"
 

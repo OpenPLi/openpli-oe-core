@@ -3,10 +3,11 @@ LICENSE = "CLOSED"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://gitlab.openpli.org/openpli/hanssettings.git;protocol=http"
+SRC_URI = "git://gitlab.openpli.org/openpli/hanssettings.git;protocol=https;branch=master"
+
 S = "${WORKDIR}/git"
 
-RDEPENDS_${PN} = "xz"
+RDEPENDS:${PN} = "xz"
 
 inherit gitpkgv allarch
 

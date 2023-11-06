@@ -7,4 +7,4 @@ PLUGIN_PATH = "SystemPlugins/ExtraFanControl"
 
 require dima-plugins.inc
 
-RDEPENDS_${PN} = "hddtemp"
+RDEPENDS:${PN} = "hddtemp"

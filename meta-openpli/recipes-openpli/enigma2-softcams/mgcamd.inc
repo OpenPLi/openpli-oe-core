@@ -32,7 +32,7 @@ do_install() {
 }
 
 # If no cam selected yet, install and start this cam (and don't start it on the build host).
-pkg_postinst_${PN}:append () {
+pkg_postinst:${PN}:append () {
 if [ -f /lib/ld-2.33.so ]; then
 	ln -s /lib/ld-2.33.so /lib/ld-linux.so.3
 elif [ -f /lib/ld-2.30.so ]; then
@@ -47,7 +47,7 @@ fi
 }
 
 # Stop this cam (if running), and move softlink to None if we're the current cam
-pkg_prerm_${PN}:prepend () {
+pkg_prerm:${PN}:prepend () {
 if [ -L /lib/ld-linux.so.3 ]; then
 	rm -f /lib/ld-linux.so.3
 fi

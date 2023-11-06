@@ -3,7 +3,7 @@
 
 KODIVER ?= "20.1"
 
-KODIURI ?= "git://github.com/xbmc/xbmc.git;branch=Nexus;protocol=https"
+KODIURI ?= "git://github.com/xbmc/xbmc.git;protocol=https;branch=Nexus"
 KODIWORKDIR ?= "${WORKDIR}/git"
 
 KODIPATCHES ?= ""
@@ -15,29 +15,29 @@ S = "${KODIWORKDIR}"
 
 PV = "${KODIVER}-Nexus"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM ?= "file:///${WORKDIR}/git/LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
 
 # for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
-# in RDEPENDS_kodi? [file-rdeps]
+# in RDEPENDS:kodi? [file-rdeps]
 #
-INSANE_SKIP_${PN}_gbtrio4k += "file-rdeps"
+INSANE_SKIP:${PN}_gbtrio4k += "file-rdeps"
 #
-INSANE_SKIP_${PN}_sf8008 += "file-rdeps"
-INSANE_SKIP_${PN}_sf8008m += "file-rdeps"
-INSANE_SKIP_${PN}_sx88v2 += "file-rdeps"
+INSANE_SKIP:${PN}_sf8008 += "file-rdeps"
+INSANE_SKIP:${PN}_sf8008m += "file-rdeps"
+INSANE_SKIP:${PN}_sx88v2 += "file-rdeps"
 #
-INSANE_SKIP_${PN}_dual += "file-rdeps"
+INSANE_SKIP:${PN}_dual += "file-rdeps"
 #
-INSANE_SKIP_${PN}_ustym4kpro += "file-rdeps"
-INSANE_SKIP_${PN}_ustym4ks2ottx += "file-rdeps"
+INSANE_SKIP:${PN}_ustym4kpro += "file-rdeps"
+INSANE_SKIP:${PN}_ustym4ks2ottx += "file-rdeps"
 #
-INSANE_SKIP_${PN}_h7 += "file-rdeps"
-INSANE_SKIP_${PN}_h9 += "file-rdeps"
-INSANE_SKIP_${PN}_h9combo += "file-rdeps"
-INSANE_SKIP_${PN}_h9combose += "file-rdeps"
-INSANE_SKIP_${PN}_h9se += "file-rdeps"
-INSANE_SKIP_${PN}_h10 += "file-rdeps"
-INSANE_SKIP_${PN}_h11 += "file-rdeps"
-INSANE_SKIP_${PN}_i55plus += "file-rdeps"
-INSANE_SKIP_${PN}_i55se += "file-rdeps"
+INSANE_SKIP:${PN}_h7 += "file-rdeps"
+INSANE_SKIP:${PN}_h9 += "file-rdeps"
+INSANE_SKIP:${PN}_h9combo += "file-rdeps"
+INSANE_SKIP:${PN}_h9combose += "file-rdeps"
+INSANE_SKIP:${PN}_h9se += "file-rdeps"
+INSANE_SKIP:${PN}_h10 += "file-rdeps"
+INSANE_SKIP:${PN}_h11 += "file-rdeps"
+INSANE_SKIP:${PN}_i55plus += "file-rdeps"
+INSANE_SKIP:${PN}_i55se += "file-rdeps"

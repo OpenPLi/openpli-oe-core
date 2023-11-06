@@ -1,1 +1,1 @@
-RDEPENDS_${PN} = " libltdl "
+RDEPENDS:${PN} = " libltdl "

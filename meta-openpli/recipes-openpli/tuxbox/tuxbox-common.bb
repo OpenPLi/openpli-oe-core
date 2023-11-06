@@ -7,11 +7,11 @@ inherit allarch gitpkgv
 PV = "3+git${SRCPV}"
 PKGV = "3+git${GITPKGV}"
 
-SRC_URI = "git://github.com/OpenPLi/tuxbox-xml.git;protocol=https"
+SRC_URI = "git://github.com/OpenPLi/tuxbox-xml.git;protocol=https;branch=master"
 S = "${WORKDIR}/git/xml"
 FILES:${PN} = "${sysconfdir}/tuxbox/* ${prefix}/* ${localstatedir}/*"
 
-RDEPENDS_${PN} = "xz"
+RDEPENDS:${PN} = "xz"
 
 do_compile[noexec] = "1"
 

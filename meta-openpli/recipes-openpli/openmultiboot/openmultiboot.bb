@@ -1,7 +1,7 @@
 SUMMARY = "Multi boot loader for enigma2"
 MAINTAINER = "oe-alliance"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 inherit gitpkgv
@@ -37,7 +37,7 @@ do_install() {
     install -m 755 ${S}/src/open_multiboot ${D}${base_sbindir}
 }
 
-pkg_preinst_${PN}() {
+pkg_preinst:${PN}() {
 #!/bin/sh
 if mountpoint -q ${libdir}/enigma2/python/Plugins/Extensions/OpenMultiboot; then
     echo "openMultiBoot will only install on main image."
@@ -50,7 +50,7 @@ else
 fi
 }
 
-pkg_postrm_${PN}() {
+pkg_postrm:${PN}() {
 #!/bin/sh
 rm -rf /sbin/init
 ln -s /sbin/init.sysvinit /sbin/init
