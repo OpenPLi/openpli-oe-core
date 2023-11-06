@@ -1,25 +1,30 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 
-PACKAGECONFIG:append = " libass libbluray libdav1d libfreetype librtmp libvorbis \
-                        mp3lame openjpeg openssl vpx x265 libxml2 libv4l2"
+PACKAGECONFIG:append = " libass fdk-aac libbluray libdav1d libfreetype librtmp libvorbis \
+                        mp3lame srt pulseaudio openjpeg openssl vpx x265 libxml2 libv4l2"
 
 PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
+PACKAGECONFIG[libfontconfig] = "--enable-libfontconfig,--disable-libfontconfig,fontconfig"
 PACKAGECONFIG[libbluray] = "--enable-libbluray --enable-protocol=bluray,--disable-libbluray,libbluray"
 PACKAGECONFIG[libdav1d] = "--enable-libdav1d,--disable-libdav1d,libdav1d"
 PACKAGECONFIG[libfreetype] = "--enable-libfreetype,--disable-libfreetype,freetype"
 PACKAGECONFIG[librtmp] = "--enable-librtmp,--disable-librtmp,librtmp rtmpdump"
 PACKAGECONFIG[openjpeg] = "--enable-libopenjpeg,--disable-libopenjpeg,openjpeg"
 PACKAGECONFIG[libv4l2] = "--enable-libv4l2,--disable-libv4l2,v4l-utils"
+PACKAGECONFIG[pulseaudio] = "--enable-libpulse,--disable-libpulse,pulseaudio"
+PACKAGECONFIG[webp] = "--enable-libwebp,--disable-libwebp,libwebp"
+PACKAGECONFIG[zimg] = "--enable-libzimg,--disable-libzimg,zimg"
 PACKAGECONFIG[gnutls] = "--enable-gnutls,--disable-gnutls"
 PACKAGECONFIG[libxml2] = "--enable-libxml2,--disable-libxml2,libxml2"
 
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
-SRC_URI:append += " \
+SRC_URI:append = " \
 	file://4_02_fix_mpegts.patch \
 	file://4_10_rtsp_patch \
 	file://4_11_dxva2_patch \
+	file://4_mips64_cpu_detection.patch \
 	"
 
 EXTRA_FFCONF = " \
