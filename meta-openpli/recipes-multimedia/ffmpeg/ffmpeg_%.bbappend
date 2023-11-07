@@ -2,7 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 
 PACKAGECONFIG:append = " libass fdk-aac libbluray libdav1d libfreetype librtmp libvorbis \
-                        mp3lame srt pulseaudio openjpeg openssl vpx x265 libxml2 libv4l2"
+                        mp3lame srt pulseaudio openjpeg openssl vpx libxml2 libv4l2"
 
 PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
 PACKAGECONFIG[libfontconfig] = "--enable-libfontconfig,--disable-libfontconfig,fontconfig"
@@ -221,7 +221,6 @@ EXTRA_FFCONF = " \
 	--enable-decoder=pcm_u32be \
 	--enable-decoder=pcm_u32le \
 	--enable-decoder=pcm_u8 \
-	--enable-decoder=pcm_zork \
 	--enable-decoder=pgssub \
 	--enable-decoder=png \
 	--enable-decoder=qcelp \
@@ -328,6 +327,4 @@ EXTRA_FFCONF = " \
     ${@bb.utils.contains("TARGET_ARCH", "mipsel", "${MIPSFPU} --disable-mmi --disable-vfp --disable-neon --disable-mipsdsp --disable-mipsdspr2", "", d)} \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "--enable-armv6 --enable-armv6t2 --enable-vfp --enable-neon", "", d)} \
     ${@bb.utils.contains("TUNE_FEATURES", "aarch64", "--enable-armv8 --enable-vfp --enable-neon", "", d)} \
-    --extra-cflags="${TARGET_CFLAGS} ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS} -ffunction-sections -fdata-sections -fno-aggressive-loop-optimizations" \
-    --extra-ldflags="${TARGET_LDFLAGS},--gc-sections -Wl,--print-gc-sections,-lrt" \
 "
