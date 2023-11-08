@@ -11,8 +11,7 @@ RDEPENDS:${PN} = "${PYTHON_PN}-requests ${PYTHON_PN}-xmlrpc ${PYTHON_PN}-compres
 inherit autotools-brokensep gettext gittag ${PYTHON_PN}native python3-compileall
 
 SRC_URI = "git://github.com/oe-mirrors/subssupport;protocol=https;branch=master"
-SRC_URI:append = " file://0001-Revert-fix-subsMenu-navigation-handleKey-crash.patch \
-                   file://0002-python3-hardlink.patch"
+SRC_URI:append = " file://0002-python3-hardlink.patch"
 
 S = "${WORKDIR}/git"
 

@@ -184,6 +184,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-enigmalight \
 	enigma2-plugin-extensions-epgimport \
 	enigma2-plugin-extensions-fontinfo \
+	enigma2-plugin-extensions-freechannels \
 	enigma2-plugin-extensions-fritzcall \
 	enigma2-plugin-extensions-hdmitest \
 	enigma2-plugin-extensions-historyzapselector \
@@ -223,6 +224,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-skins-simple-gray \
 	enigma2-plugin-skins-pd1loi-hd-night \
 	enigma2-plugin-skins-glamouraurafhd \
+	enigma2-plugin-skins-e2darkos \
 	enigma2-plugins \
 	enigma2-skins \
 	softcams-enigma2-meta \
