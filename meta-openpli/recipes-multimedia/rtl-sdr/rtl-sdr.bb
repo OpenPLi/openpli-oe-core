@@ -4,7 +4,7 @@ MAINTAINER = "http://osmocom.org/projects/sdr"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
-inherit gittag cmake
+inherit gittag cmake pkgconfig
 
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
