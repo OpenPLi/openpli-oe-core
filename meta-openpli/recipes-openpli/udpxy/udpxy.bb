@@ -12,7 +12,8 @@ PKGV = "1+git${GITPKGV}"
 
 inherit autotools-brokensep pkgconfig
 
-SRC_URI = "git://github.com/pcherenkov/udpxy.git file://udpxy.sh;branch=master;protocol=https"
+SRC_URI = "git://github.com/pcherenkov/udpxy.git;branch=master;protocol=https \
+	 file://udpxy.sh"
 CFLAGS:append = " -Wno-format-truncation -Wno-error=stringop-truncation "
 
 S = "${WORKDIR}/git/chipmunk"
