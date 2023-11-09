@@ -1,0 +1,22 @@
+From 1d45603dddb0bb5082099611bff0557d0f6c6318 Mon Sep 17 00:00:00 2001
+From: Markus Volk <f_l_k@t-online.de>
+Date: Sat, 21 Jan 2023 12:10:37 +0100
+Subject: [PATCH] fix include order issue
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1c678b1695..07313bc6cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -299,7 +299,7 @@ endif()
+ # Generate messages
+ core_add_subdirs_from_filelist(${CMAKE_SOURCE_DIR}/cmake/messages/flatbuffers/*.txt)
+ 
+-include_directories(${INCLUDES} SYSTEM ${SYSTEM_INCLUDES})
++include_directories(${SYSTEM_INCLUDES} ${INCLUDES})
+ add_compile_options(${ARCH_DEFINES} "${SYSTEM_DEFINES}" ${DEP_DEFINES} ${PATH_DEFINES})
+ 
+ set(core_DEPENDS "" CACHE STRING "" FORCE)
