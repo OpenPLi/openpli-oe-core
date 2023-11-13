@@ -8,8 +8,6 @@ inherit gitpkgv allarch python3-compileall
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRCREV = "${AUTOREV}"
-
 SRC_URI = "git://github.com/DimitarCC/E2-DarkOS-skin.git;protocol=https;branch=main"
 
 S = "${WORKDIR}/git"
