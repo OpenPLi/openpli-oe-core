@@ -14,7 +14,6 @@ PKGV = "git${GITPKGV}"
 
 SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} \
-        file://icam.patch \
         "
 
 DEPENDS = "libusb openssl"
