@@ -1,0 +1,11 @@
+diff --git a/setup.py b/setup.py
+index b7ed54b..2ed424a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-from distutils.core import setup
++from setuptools import setup
+ 
+ def get_version():
+     with open("docs/VERSION") as f:

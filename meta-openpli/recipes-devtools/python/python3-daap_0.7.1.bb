@@ -6,17 +6,16 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=fbc093901857fcd118f065f900982c24"
 
 RDEPENDS:${PN} = "${PYTHON_PN}-compression"
 
-inherit gitpkgv
+inherit gitpkgv setuptools3
 
 SRCREV = "${AUTOREV}"
 
 SRC_URI = "git://github.com/abdelgmartinezl/PythonDaap;protocol=https;branch=master \
            file://python-daap.patch \
-           file://0001-The-member-ob_type-is-not-present-in-the-pcapobject-.patch \
+           file://The-member-ob_type-is-not-present-in-the-pcapobject.patch \
+           file://use-setuptools-instead-of-distutils.patch \
 "
 
 S = "${WORKDIR}/git"
-
-inherit setuptools3
 
 include ${PYTHON_PN}-package-split.inc

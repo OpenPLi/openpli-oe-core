@@ -4,6 +4,8 @@ on top of Twisted's Agents. It provides a simple, higher level API \
 for making HTTP requests when using Twisted."
 SECTION = "devel/python"
 
+do_compile[network] = "1"
+
 MAINTAINER = "Tom Most <twm@freecog.net>"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a5dd67fd17479587f7093769d95ef186"
