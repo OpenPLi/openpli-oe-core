@@ -1,4 +1,4 @@
-From 18a1d6accf8f0846bb3a7fd1c654decb4985dc65 Mon Sep 17 00:00:00 2001
+From bb9478be40b450629f165d5d3566f4e4a3ee1b66 Mon Sep 17 00:00:00 2001
 From: Athanasios Oikonomou <athoik@gmail.com>
 Date: Tue, 28 Oct 2014 08:48:20 +0200
 Subject: [PATCH] rtmp: fix seeking and potential segfault
@@ -6,12 +6,8 @@ Subject: [PATCH] rtmp: fix seeking and potential segfault
 Segfault info: https://bugzilla.gnome.org/show_bug.cgi?id=739263
 Seeking info: http://forums.openpli.org/topic/32910-mediaplayer-seek-doesnt-work-with-rtmp-streams/
 
----
- ext/rtmp/gstrtmpsrc.c | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
-
 diff --git a/ext/rtmp/gstrtmpsrc.c b/ext/rtmp/gstrtmpsrc.c
-index 1db02e278..f25ed5633 100644
+index 12931a2a3..52db7f4a7 100644
 --- a/ext/rtmp/gstrtmpsrc.c
 +++ b/ext/rtmp/gstrtmpsrc.c
 @@ -89,7 +89,6 @@ static void gst_rtmp_src_get_property (GObject * object, guint prop_id,
@@ -30,7 +26,7 @@ index 1db02e278..f25ed5633 100644
    gstbasesrc_class->is_seekable = GST_DEBUG_FUNCPTR (gst_rtmp_src_is_seekable);
    gstbasesrc_class->prepare_seek_segment =
        GST_DEBUG_FUNCPTR (gst_rtmp_src_prepare_seek_segment);
-@@ -646,23 +644,6 @@ error:
+@@ -644,23 +642,6 @@ error:
    return FALSE;
  }
  
@@ -54,7 +50,7 @@ index 1db02e278..f25ed5633 100644
  static gboolean
  gst_rtmp_src_stop (GstBaseSrc * basesrc)
  {
-@@ -671,6 +652,7 @@ gst_rtmp_src_stop (GstBaseSrc * basesrc)
+@@ -669,6 +650,7 @@ gst_rtmp_src_stop (GstBaseSrc * basesrc)
    src = GST_RTMP_SRC (basesrc);
  
    if (src->rtmp) {
@@ -62,3 +58,6 @@ index 1db02e278..f25ed5633 100644
      RTMP_Free (src->rtmp);
      src->rtmp = NULL;
    }
+-- 
+1.7.10.4
+
