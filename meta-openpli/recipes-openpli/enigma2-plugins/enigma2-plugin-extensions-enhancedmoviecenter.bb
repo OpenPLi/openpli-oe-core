@@ -13,7 +13,9 @@ SRCREV = "${AUTOREV}"
 PV = "4.0.+git${SRCPV}"
 PKGV = "4.0.+git${GITPKGV}"
 
-SRC_URI="git://github.com/oe-mirrors/EnhancedMovieCenter.git;branch=master;protocol=https"
+SRC_URI="git://github.com/oe-mirrors/EnhancedMovieCenter.git;branch=master;protocol=https \
+         file://set-shebang-to-python3.patch \
+"
 
 S = "${WORKDIR}/git"
 
@@ -25,15 +27,6 @@ EXTRA_OECONF = " \
 "
 
 PARALLEL_MAKEINST = ""
-
-do_configure:prepend:openatv () {
-    sed 's/config.EMC.use_orig_skin = ConfigYesNo(default=True)/config.EMC.use_orig_skin = ConfigYesNo(default=False)/g' -i ${S}/src/plugin.py
-    sed 's/config.EMC.movie_date_format = ConfigSelection(default="%d.%m.%Y %H:%M", choices=date_choices)/config.EMC.movie_date_format = ConfigSelection(default="%d.%m.%Y", choices=date_choices)/g' -i ${S}/src/plugin.py
-}
-
-do_configure:prepend:beyonwiz () {
-    sed 's/config.EMC.use_orig_skin = ConfigYesNo(default=True)/config.EMC.use_orig_skin = ConfigYesNo(default=False)/g' -i ${S}/src/plugin.py
-}
 
 CONFFILES:${PN} = "${sysconfdir}/enigma2/emc-hide.cfg ${sysconfdir}/enigma2/emc-noscan.cfg ${sysconfdir}/enigma2/emc-permsort.cfg ${sysconfdir}/enigma2/emc-topdir.cfg"
 
