@@ -178,6 +178,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-drivers-usbserial \
 	enigma2-plugin-extensions-automatic-fullbackup \
 	enigma2-plugin-extensions-blurayplayer \
+	enigma2-plugin-extensions-bouquetmakerxtream \
 	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
 	enigma2-plugin-extensions-e2iplayer-deps \
