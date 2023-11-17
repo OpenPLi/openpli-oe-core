@@ -6,7 +6,7 @@ inherit update-rc.d
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI:append += " \
+SRC_URI:append = " \
                    file://pcscd \
                    "
 
