@@ -1,0 +1,13 @@
+diff --git a/lib/dvb/sec.cpp b/lib/dvb/sec.cpp
+index 6234d83a9..6f0456c75 100644
+--- a/lib/dvb/sec.cpp
++++ b/lib/dvb/sec.cpp
+@@ -1276,7 +1276,7 @@ RESULT eDVBSatelliteEquipmentControl::clear()
+ /* LNB Specific Parameters */
+ RESULT eDVBSatelliteEquipmentControl::addLNB()
+ {
+-	eDVBSatelliteLNBParameters lnb;
++	static eDVBSatelliteLNBParameters lnb;
+ 	lnb.m_slot_mask = 0;
+ 	lnb.m_prio = -1; // auto
+ 	lnb.m_advanced_satposdepends = -1;

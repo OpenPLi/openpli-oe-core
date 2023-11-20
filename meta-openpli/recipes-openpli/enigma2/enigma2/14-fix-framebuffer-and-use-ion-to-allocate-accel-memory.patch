@@ -1,0 +1,557 @@
+Based on:
+https://github.com/openatv/enigma2/commit/0f049825127cc7df976f3c4a7787894f64f6a6ef
+
+---
+ interfaces/ion.h  | 204 ++++++++++++++++++++++++++++++++++++++++++++++
+ lib/gdi/fb.cpp    | 117 ++++++++++++++++++++------
+ lib/gdi/fb.h      |   1 +
+ lib/gdi/gfbdc.cpp |  46 +++++++++--
+ lib/gdi/grc.cpp   |  13 +++
+ lib/gdi/grc.h     |   3 +
+ 6 files changed, 352 insertions(+), 32 deletions(-)
+ create mode 100644 interfaces/ion.h
+
+diff --git a/interfaces/ion.h b/interfaces/ion.h
+new file mode 100644
+index 000000000..3af51b418
+--- /dev/null
++++ b/interfaces/ion.h
+@@ -0,0 +1,204 @@
++/*
++ * drivers/staging/android/uapi/ion.h
++ *
++ * Copyright (C) 2011 Google, Inc.
++ *
++ * This software is licensed under the terms of the GNU General Public
++ * License version 2, as published by the Free Software Foundation, and
++ * may be copied, distributed, and modified under those terms.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ */
++
++#ifndef _UAPI_LINUX_ION_H
++#define _UAPI_LINUX_ION_H
++
++#include <linux/ioctl.h>
++#include <linux/types.h>
++
++typedef int ion_user_handle_t;
++
++/**
++ * enum ion_heap_types - list of all possible types of heaps
++ * @ION_HEAP_TYPE_SYSTEM:	 memory allocated via vmalloc
++ * @ION_HEAP_TYPE_SYSTEM_CONTIG: memory allocated via kmalloc
++ * @ION_HEAP_TYPE_CARVEOUT:	 memory allocated from a prereserved
++ * 				 carveout heap, allocations are physically
++ * 				 contiguous
++ * @ION_HEAP_TYPE_DMA:		 memory allocated via DMA API
++ * @ION_NUM_HEAPS:		 helper for iterating over heaps, a bit mask
++ * 				 is used to identify the heaps, so only 32
++ * 				 total heap types are supported
++ */
++enum ion_heap_type {
++	ION_HEAP_TYPE_SYSTEM,
++	ION_HEAP_TYPE_SYSTEM_CONTIG,
++	ION_HEAP_TYPE_CARVEOUT,
++	ION_HEAP_TYPE_CHUNK,
++	ION_HEAP_TYPE_DMA,
++	ION_HEAP_TYPE_CUSTOM, /* must be last so device specific heaps always
++				 are at the end of this enum */
++	ION_NUM_HEAPS = 16,
++};
++
++#define ION_HEAP_SYSTEM_MASK		(1 << ION_HEAP_TYPE_SYSTEM)
++#define ION_HEAP_SYSTEM_CONTIG_MASK	(1 << ION_HEAP_TYPE_SYSTEM_CONTIG)
++#define ION_HEAP_CARVEOUT_MASK		(1 << ION_HEAP_TYPE_CARVEOUT)
++#define ION_HEAP_TYPE_DMA_MASK		(1 << ION_HEAP_TYPE_DMA)
++
++#define ION_NUM_HEAP_IDS		sizeof(unsigned int) * 8
++
++/**
++ * allocation flags - the lower 16 bits are used by core ion, the upper 16
++ * bits are reserved for use by the heaps themselves.
++ */
++#define ION_FLAG_CACHED 1		/* mappings of this buffer should be
++					   cached, ion will do cache
++					   maintenance when the buffer is
++					   mapped for dma */
++#define ION_FLAG_CACHED_NEEDS_SYNC 2	/* mappings of this buffer will created
++					   at mmap time, if this is set
++					   caches must be managed manually */
++
++/**
++ * DOC: Ion Userspace API
++ *
++ * create a client by opening /dev/ion
++ * most operations handled via following ioctls
++ *
++ */
++
++/**
++ * struct ion_allocation_data - metadata passed from userspace for allocations
++ * @len:		size of the allocation
++ * @align:		required alignment of the allocation
++ * @heap_id_mask:	mask of heap ids to allocate from
++ * @flags:		flags passed to heap
++ * @handle:		pointer that will be populated with a cookie to use to 
++ *			refer to this allocation
++ *
++ * Provided by userspace as an argument to the ioctl
++ */
++struct ion_allocation_data {
++	size_t len;
++	size_t align;
++	unsigned int heap_id_mask;
++	unsigned int flags;
++	ion_user_handle_t handle;
++};
++
++/**
++ * struct ion_fd_data - metadata passed to/from userspace for a handle/fd pair
++ * @handle:	a handle
++ * @fd:		a file descriptor representing that handle
++ *
++ * For ION_IOC_SHARE or ION_IOC_MAP userspace populates the handle field with
++ * the handle returned from ion alloc, and the kernel returns the file
++ * descriptor to share or map in the fd field.  For ION_IOC_IMPORT, userspace
++ * provides the file descriptor and the kernel returns the handle.
++ */
++struct ion_fd_data {
++	ion_user_handle_t handle;
++	int fd;
++};
++
++/**
++ * struct ion_handle_data - a handle passed to/from the kernel
++ * @handle:	a handle
++ */
++struct ion_handle_data {
++	ion_user_handle_t handle;
++};
++
++/**
++ * struct ion_custom_data - metadata passed to/from userspace for a custom ioctl
++ * @cmd:	the custom ioctl function to call
++ * @arg:	additional data to pass to the custom ioctl, typically a user
++ *		pointer to a predefined structure
++ *
++ * This works just like the regular cmd and arg fields of an ioctl.
++ */
++struct ion_custom_data {
++	unsigned int cmd;
++	unsigned long arg;
++};
++
++struct ion_phys_data {
++	ion_user_handle_t handle;
++	unsigned long addr;
++	size_t len;
++};
++
++#define ION_IOC_MAGIC		'I'
++
++/**
++ * DOC: ION_IOC_ALLOC - allocate memory
++ *
++ * Takes an ion_allocation_data struct and returns it with the handle field
++ * populated with the opaque handle for the allocation.
++ */
++#define ION_IOC_ALLOC		_IOWR(ION_IOC_MAGIC, 0, \
++				      struct ion_allocation_data)
++
++/**
++ * DOC: ION_IOC_FREE - free memory
++ *
++ * Takes an ion_handle_data struct and frees the handle.
++ */
++#define ION_IOC_FREE		_IOWR(ION_IOC_MAGIC, 1, struct ion_handle_data)
++
++/**
++ * DOC: ION_IOC_MAP - get a file descriptor to mmap
++ *
++ * Takes an ion_fd_data struct with the handle field populated with a valid
++ * opaque handle.  Returns the struct with the fd field set to a file
++ * descriptor open in the current address space.  This file descriptor
++ * can then be used as an argument to mmap.
++ */
++#define ION_IOC_MAP		_IOWR(ION_IOC_MAGIC, 2, struct ion_fd_data)
++
++/**
++ * DOC: ION_IOC_SHARE - creates a file descriptor to use to share an allocation
++ *
++ * Takes an ion_fd_data struct with the handle field populated with a valid
++ * opaque handle.  Returns the struct with the fd field set to a file
++ * descriptor open in the current address space.  This file descriptor
++ * can then be passed to another process.  The corresponding opaque handle can
++ * be retrieved via ION_IOC_IMPORT.
++ */
++#define ION_IOC_SHARE		_IOWR(ION_IOC_MAGIC, 4, struct ion_fd_data)
++
++/**
++ * DOC: ION_IOC_IMPORT - imports a shared file descriptor
++ *
++ * Takes an ion_fd_data struct with the fd field populated with a valid file
++ * descriptor obtained from ION_IOC_SHARE and returns the struct with the handle
++ * filed set to the corresponding opaque handle.
++ */
++#define ION_IOC_IMPORT		_IOWR(ION_IOC_MAGIC, 5, struct ion_fd_data)
++
++/**
++ * DOC: ION_IOC_SYNC - syncs a shared file descriptors to memory
++ *
++ * Deprecated in favor of using the dma_buf api's correctly (syncing
++ * will happend automatically when the buffer is mapped to a device).
++ * If necessary should be used after touching a cached buffer from the cpu,
++ * this will make the buffer in memory coherent.
++ */
++#define ION_IOC_SYNC		_IOWR(ION_IOC_MAGIC, 7, struct ion_fd_data)
++
++/**
++ * DOC: ION_IOC_CUSTOM - call architecture specific ion ioctl
++ *
++ * Takes the argument of the architecture specific ioctl to call and
++ * passes appropriate userdata for that ioctl
++ */
++#define ION_IOC_CUSTOM		_IOWR(ION_IOC_MAGIC, 6, struct ion_custom_data)
++
++#define ION_IOC_PHYS		_IOWR(ION_IOC_MAGIC, 8, struct ion_phys_data)
++
++#endif /* _UAPI_LINUX_ION_H */
+diff --git a/lib/gdi/fb.cpp b/lib/gdi/fb.cpp
+index 66c1e5e56..d2c5b27c2 100644
+--- a/lib/gdi/fb.cpp
++++ b/lib/gdi/fb.cpp
+@@ -13,10 +13,11 @@
+ #define FBIO_WAITFORVSYNC _IOW('F', 0x20, uint32_t)
+ #endif
+ 
+-#ifndef FBIO_BLIT
+-#define FBIO_SET_MANUAL_BLIT _IOW('F', 0x21, __u8)
+-#define FBIO_BLIT 0x22
+-#endif
++#include <lib/gdi/accel.h>
++#include <interfaces/ion.h>
++#define ION_HEAP_TYPE_BMEM      (ION_HEAP_TYPE_CUSTOM + 1)
++#define ION_HEAP_ID_MASK        (1 << ION_HEAP_TYPE_BMEM)
++#define ACCEL_MEM_SIZE          (32*1024*1024)
+ 
+ fbClass *fbClass::instance;
+ 
+@@ -39,6 +40,8 @@ fbClass::fbClass(const char *fb)
+ 	cmap.blue=blue;
+ 	cmap.transp=trans;
+ 
++	int ion;
++
+ 	fbFd=open(fb, O_RDWR);
+ 	if (fbFd<0)
+ 	{
+@@ -64,10 +67,81 @@ fbClass::fbClass(const char *fb)
+ 	m_phys_mem = fix.smem_start;
+ 	eDebug("[fb] %s: %dk video mem", fb, available/1024);
+ 	lfb=(unsigned char*)mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fbFd, 0);
+-	if (!lfb)
++
++	/* allocate accel memory here... its independent from the framebuffer */
++	ion = open("/dev/ion", O_RDWR | O_CLOEXEC);
++	if (ion >= 0)
+ 	{
+-		eDebug("[fb] mmap: %m");
+-		goto nolfb;
++		struct ion_allocation_data alloc_data;
++		struct ion_fd_data share_data;
++		struct ion_handle_data free_data;
++		struct ion_phys_data phys_data;
++		int ret;
++		unsigned char *lion;
++
++		eDebug("Using ION allocator");
++
++		memset(&alloc_data, 0, sizeof(alloc_data));
++		alloc_data.len = ACCEL_MEM_SIZE;
++		alloc_data.align = 4096; // 4k aligned
++		alloc_data.heap_id_mask = ION_HEAP_ID_MASK;
++		ret = ioctl(ion, ION_IOC_ALLOC, &alloc_data);
++		if (ret < 0)
++		{
++			perror("ION_IOC_ALLOC failed");
++			eFatal("failed to allocate accel memory!!!");
++			return;
++		}
++
++		memset(&phys_data, 0, sizeof(phys_data));
++		phys_data.handle = alloc_data.handle;
++		ret = ioctl(ion, ION_IOC_PHYS, &phys_data);
++		if (ret < 0)
++		{
++			perror("ION_IOC_PHYS failed");
++			goto err_ioc_free;
++		}
++
++		memset(&share_data, 0, sizeof(share_data));
++		share_data.handle = alloc_data.handle;
++		ret = ioctl(ion, ION_IOC_SHARE, &share_data);
++		if (ret < 0)
++		{
++			perror("ION_IOC_SHARE failed");
++			goto err_ioc_free;
++		}
++
++		memset(&free_data, 0, sizeof(free_data));
++		free_data.handle = alloc_data.handle;
++		if (ioctl(ion, ION_IOC_FREE, &free_data) < 0)
++			perror("ION_IOC_FREE failed");
++
++		m_accel_fd = share_data.fd;
++		lion=(unsigned char*)mmap(0, ACCEL_MEM_SIZE, PROT_WRITE|PROT_READ, MAP_SHARED, share_data.fd, 0);
++
++		if (lion)
++		{
++			eDebug("%dkB available for acceleration surfaces (via ION).", ACCEL_MEM_SIZE / 1024);
++			gAccel::getInstance()->setAccelMemorySpace(lion, phys_data.addr, ACCEL_MEM_SIZE);
++		}
++		else
++		{
++			close(m_accel_fd);
++			eDebug("mmap lion failed");
++			err_ioc_free:
++			eFatal("failed to allocate accel memory via ION!!!");
++			m_accel_fd = -1;
++			memset(&free_data, 0, sizeof(free_data));
++			free_data.handle = alloc_data.handle;
++			if (ioctl(ion, ION_IOC_FREE, &free_data) < 0)
++				perror("ION_IOC_FREE");
++		}
++		close(ion);
++	}
++	else
++	{
++		eFatal("failed to open ION device node! no allocate accel memory available !!");
++		m_accel_fd = -1;
+ 	}
+ 
+ 	showConsole(0);
+@@ -100,6 +174,11 @@ int fbClass::showConsole(int state)
+ 
+ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
+ {
++
++	/* unmap old framebuffer with old size */
++	if (lfb)
++		munmap(lfb, stride * screeninfo.yres_virtual);
++
+ 	if (fbFd < 0) return -1;
+ 	screeninfo.xres_virtual=screeninfo.xres=nxRes;
+ 	screeninfo.yres_virtual=(screeninfo.yres=nyRes)*2;
+@@ -148,6 +227,7 @@ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
+ 		eDebug("[fb] double buffering available!");
+ 
+ 	m_number_of_pages = screeninfo.yres_virtual / nyRes;
++	eDebug("[fb] %d page(s) available!", m_number_of_pages);
+ 
+ 	ioctl(fbFd, FBIOGET_VSCREENINFO, &screeninfo);
+ 
+@@ -167,6 +247,12 @@ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
+ 		eDebug("[fb] FBIOGET_FSCREENINFO: %m");
+ 	}
+ 	stride=fix.line_length;
++	
++	m_phys_mem = fix.smem_start;
++	available = fix.smem_len;
++	/* map new framebuffer */
++	lfb=(unsigned char*)mmap(0, stride * screeninfo.yres_virtual, PROT_WRITE|PROT_READ, MAP_SHARED, fbFd, 0);
++	
+ 	memset(lfb, 0, stride*yRes);
+ 	blit();
+ 	return 0;
+@@ -196,11 +282,6 @@ int fbClass::waitVSync()
+ 
+ void fbClass::blit()
+ {
+-	if (fbFd < 0) return;
+-	if (m_manual_blit == 1) {
+-		if (ioctl(fbFd, FBIO_BLIT) < 0)
+-			eDebug("[fb] FBIO_BLIT: %m");
+-	}
+ }
+ 
+ fbClass::~fbClass()
+@@ -252,21 +333,9 @@ void fbClass::unlock()
+ 
+ void fbClass::enableManualBlit()
+ {
+-	unsigned char tmp = 1;
+-	if (fbFd < 0) return;
+-	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
+-		eDebug("[fb] enable FBIO_SET_MANUAL_BLIT: %m");
+-	else
+-		m_manual_blit = 1;
+ }
+ 
+ void fbClass::disableManualBlit()
+ {
+-	unsigned char tmp = 0;
+-	if (fbFd < 0) return;
+-	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
+-		eDebug("[fb] disable FBIO_SET_MANUAL_BLIT: %m");
+-	else
+-		m_manual_blit = 0;
+ }
+ 
+diff --git a/lib/gdi/fb.h b/lib/gdi/fb.h
+index 0eb04915d..a4fdb8522 100644
+--- a/lib/gdi/fb.h
++++ b/lib/gdi/fb.h
+@@ -29,6 +29,7 @@ public:
+ #else
+ public:
+ 	unsigned char *lfb;
++	int m_accel_fd;
+ 	void enableManualBlit();
+ 	void disableManualBlit();
+ 	int showConsole(int state);
+diff --git a/lib/gdi/gfbdc.cpp b/lib/gdi/gfbdc.cpp
+index 588e5723a..f9518b89b 100644
+--- a/lib/gdi/gfbdc.cpp
++++ b/lib/gdi/gfbdc.cpp
+@@ -4,15 +4,21 @@
+ #include <lib/base/init_num.h>
+ 
+ #include <lib/gdi/accel.h>
++#include <lib/gdi/grc.h>
+ 
+ #include <time.h>
+ 
++extern void bcm_accel_blit(
++		int src_addr, int src_width, int src_height, int src_stride, int src_format,
++		int dst_addr, int dst_width, int dst_height, int dst_stride,
++		int src_x, int src_y, int width, int height,
++		int dst_x, int dst_y, int dwidth, int dheight,
++int pal_addr, int flags);
++
+ gFBDC::gFBDC()
+ {
+ 	fb=new fbClass;
+ 
+-	if (!fb->Available())
+-		eFatal("[gFBDC] no framebuffer available");
+ 
+ 	int xres;
+ 	int yres;
+@@ -113,6 +119,7 @@ void gFBDC::exec(const gOpcode *o)
+ 			surface = surface_back;
+ 			surface_back = s;
+ 
++			fb->waitVSync();
+ 			if (surface.data_phys > surface_back.data_phys)
+ 				fb->setOffset(surface_back.y);
+ 			else
+@@ -144,6 +151,28 @@ void gFBDC::exec(const gOpcode *o)
+ 	}
+ 	case gOpcode::flush:
+ 		fb->blit();
++
++		if (surface_back.data_phys)
++		{
++			gUnmanagedSurface s(surface);
++			surface = surface_back;
++			surface_back = s;
++			if (surface.data_phys > surface_back.data_phys)
++			{
++				fb->setOffset(0);
++			}
++			else
++			{
++				fb->setOffset(surface_back.y);
++			}
++			bcm_accel_blit(
++				surface_back.data_phys, surface_back.x, surface_back.y, surface_back.stride, 0,
++				surface.data_phys, surface.x, surface.y, surface.stride,
++				0, 0, surface.x, surface.y,
++				0, 0, surface.x, surface.y,
++				0, 0);
++		}
++
+ 		break;
+ 	default:
+ 		gDC::exec(o);
+@@ -180,8 +209,9 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
+ 	if (m_pixmap && (surface.x == xres) && (surface.y == yres) && (surface.bpp == bpp))
+ 		return;
+ 
+-	if (gAccel::getInstance())
+-		gAccel::getInstance()->releaseAccelMemorySpace();
++	gRC *grc = gRC::getInstance();
++	if (grc)
++		grc->lock();
+ 
+ 	fb->SetMode(xres, yres, bpp);
+ 
+@@ -209,11 +239,8 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
+ 		surface_back.data_phys = 0;
+ 	}
+ 
+-	eDebug("[gFBDC] resolution: %dx%dx%d stride=%d, %dkB available for acceleration surfaces.",
+-		 surface.x, surface.y, surface.bpp, fb->Stride(), (fb->Available() - fb_size)/1024);
++	eDebug("[gFBDC] resolution: %d x %d x %d (stride: %d) pages: %d", surface.x, surface.y, surface.bpp, fb->Stride(), fb->getNumPages());
+ 
+-	if (gAccel::getInstance())
+-		gAccel::getInstance()->setAccelMemorySpace(fb->lfb + fb_size, surface.data_phys + fb_size, fb->Available() - fb_size);
+ 
+ 	if (!surface.clut.data)
+ 	{
+@@ -225,6 +252,9 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
+ 	surface_back.clut = surface.clut;
+ 
+ 	m_pixmap = new gPixmap(&surface);
++
++	if (grc)
++		grc->unlock();
+ }
+ 
+ void gFBDC::saveSettings()
+diff --git a/lib/gdi/grc.cpp b/lib/gdi/grc.cpp
+index 723286264..d14efca50 100644
+--- a/lib/gdi/grc.cpp
++++ b/lib/gdi/grc.cpp
+@@ -44,6 +44,19 @@ gRC::gRC(): rp(0), wp(0)
+ 	m_spinneronoff = 1;
+ }
+ 
++void gRC::lock()
++{
++#ifndef SYNC_PAINT
++	pthread_mutex_lock(&mutex);
++#endif
++}
++void gRC::unlock()
++{
++#ifndef SYNC_PAINT
++	pthread_mutex_unlock(&mutex);
++#endif
++}
++
+ DEFINE_REF(gRC);
+ 
+ gRC::~gRC()
+diff --git a/lib/gdi/grc.h b/lib/gdi/grc.h
+index 071e04599..efff43011 100644
+--- a/lib/gdi/grc.h
++++ b/lib/gdi/grc.h
+@@ -187,6 +187,9 @@ public:
+ 
+ 	void submit(const gOpcode &o);
+ 
++	void lock();
++	void unlock();
++
+ 	sigc::signal<void()> notify;
+ 
+ 	void setSpinnerDC(gDC *dc) { m_spinner_dc = dc; }
+-- 
+2.19.1
+

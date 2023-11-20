@@ -11,8 +11,8 @@ DEPENDS = " \
 	jpeg \
 	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-3 giflib libxml2 \
 	openssl libudfread \
-	${PYTHON_PN}-twisted ${PYTHON_PN}-wifi \
-	${PYTHON_PN}-pillow \
+	python3-twisted python3-wifi \
+	python3-pillow python3-six-native \
 	swig-native \
 	tuxtxt-enigma2 \
 	"
@@ -33,7 +33,7 @@ RDEPENDS:${PN}:append:libc-glibc = " glibc-gconv-iso8859-15"
 RRECOMMENDS:${PN} = " \
 	enigma2-plugin-skins-pli-hd \
 	hotplug-e2-helper \
-	${PYTHON_PN}-sendfile \
+	python3-sendfile \
 	ofgwrite \
 	virtual/enigma2-mediaservice \
 	"
@@ -41,23 +41,26 @@ RRECOMMENDS:${PN} = " \
 RRECOMMENDS:${PN}:append:libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
-	${PYTHON_PN}-codecs \
-	${PYTHON_PN}-core \
-	${PYTHON_PN}-crypt \
-	${PYTHON_PN}-fcntl \
-	${PYTHON_PN}-logging \
-	${PYTHON_PN}-mmap \
-	${PYTHON_PN}-netclient \
-	${PYTHON_PN}-netifaces \
-	${PYTHON_PN}-netserver \
-	${PYTHON_PN}-numbers \
-	${PYTHON_PN}-pickle \
-	${PYTHON_PN}-shell \
-	${PYTHON_PN}-threading \
-	${PYTHON_PN}-twisted-core \
-	${PYTHON_PN}-twisted-web \
-	${PYTHON_PN}-xml \
-	${PYTHON_PN}-zopeinterface \
+	python3-codecs \
+	python3-core \
+	python3-crypt \
+	python3-fcntl \
+	python3-logging \
+	python3-mmap \
+	python3-netclient \
+	python3-netifaces \
+	python3-netserver \
+	python3-numbers \
+	python3-pickle \
+	python3-pillow \
+	python3-shell \
+	python3-six \
+	python3-threading \
+	python3-twisted-core \
+	python3-twisted-web \
+	python3-urllib3 \
+	python3-xml \
+	python3-zopeinterface \
 	"
 
 # DVD and iso playback is integrated, we need the libraries
@@ -82,13 +85,12 @@ DESCRIPTION:append:enigma2-plugin-systemplugins-wirelesslan = "helps you configu
 DESCRIPTION:append:enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 
 RDEPENDS:enigma2-plugin-extensions-cutlisteditor = "aio-grab"
-RDEPENDS:enigma2-plugin-systemplugins-nfiflash = "${PYTHON_PN}-twisted-web"
-RDEPENDS:enigma2-plugin-systemplugins-softwaremanager = "${PYTHON_PN}-twisted-web"
-RDEPENDS:enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools ${PYTHON_PN}-wifi"
+RDEPENDS:enigma2-plugin-systemplugins-nfiflash = "python3-twisted-web"
+RDEPENDS:enigma2-plugin-systemplugins-softwaremanager = "python3-twisted-web"
+RDEPENDS:enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python3-wifi"
 
 # Note that these tools lack recipes
-RDEPENDS:enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools genisoimage ${PYTHON_PN}-imaging ${DEMUXTOOL} \
-                                              ${PYTHON_PN}-pillow"
+RDEPENDS:enigma2-plugin-extensions-dvdburn = "dvd+rw-tools dvdauthor mjpegtools genisoimage python3-imaging ${DEMUXTOOL}"
 RDEPENDS:enigma2-plugin-systemplugins-hotplug = "hotplug-e2-helper"
 RRECOMMENDS:enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 
@@ -97,24 +99,34 @@ RRECOMMENDS:enigma2-plugin-extensions-dvdplayer = "kernel-module-udf"
 RDEPENDS:${PN}-build-dependencies = "\
 	aio-grab \
 	dvd+rw-tools dvdauthor mjpegtools cdrkit ${DEMUXTOOL} \
-	${PYTHON_PN}-pillow \
-	wpa-supplicant wireless-tools ${PYTHON_PN}-wifi \
-	${PYTHON_PN}-twisted-web \
+	python3-pillow \
+	wpa-supplicant wireless-tools python3-wifi \
+	python3-twisted-web \
 	"
 RRECOMMENDS:${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
-inherit gitpkgv setuptools3 python3targetconfig
+inherit gitpkgv setuptools3 python3targetconfig python3native
 
 PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
 PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
 
 ENIGMA2_BRANCH ?= "develop"
+GITHUB_URI ?= "git://github.com"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://github.com/OpenPLi/enigma2.git;protocol=https;branch=master"
-SRC_URI := " ${SRC_ORIGIN};branch=${ENIGMA2_BRANCH}"
+SRC_URI = "${GITHUB_URI}/OpenPLi/enigma2.git;branch=${ENIGMA2_BRANCH};protocol=https \
+			file://06-fix-build-gcc11.patch \
+			file://07-suppress-compile-errors.patch \
+			file://08-dual-tuner-letter-detection.patch \
+			file://09-update-cutlist-to-beyonwich.patch \
+			file://11-Add-remote-control-dmm2.patch \
+			file://13-restore-last-update-date-time.patch \
+			file://14-fix-framebuffer-and-use-ion-to-allocate-accel-memory.patch \
+			file://15-display-openssl-version.patch \
+			file://16-fix-write-console.patch \
+"
 
 LDFLAGS:prepend = " -lxml2 "
 
