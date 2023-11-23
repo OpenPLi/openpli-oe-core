@@ -12,4 +12,4 @@ inherit gitpkgv python3-compileall
 PV = "py3-git${SRCPV}"
 PKGV = "py3-git${GITPKGV}"
 
-inherit distutils-openplugins
+inherit setuptools3-openplugins

@@ -4,13 +4,13 @@ DESCRIPTION = "Bitrate viewer"
 require conf/license/license-gplv2.inc
 
 require openplugins-replace-pli.inc
-PR="r1"
+PR="r1.2"
 
 require openplugins.inc
 
-inherit autotools gettext ${PYTHON_PN}native
+inherit autotools gettext python3native
 
-DEPENDS += "${PYTHON_PN}"
+DEPENDS += "python3"
 
 EXTRA_OECONF = " \
     STAGING_INCDIR=${STAGING_INCDIR} \

@@ -15,3 +15,5 @@ do_install:append() {
 }
 
 DEPENDS = "python3-future-native"
+
+SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-AutoBackup.git;branch=python3;protocol=https file://use-setuptools-instead-of-distutils.patch"

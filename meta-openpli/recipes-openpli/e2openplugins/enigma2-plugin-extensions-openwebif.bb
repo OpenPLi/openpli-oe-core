@@ -3,28 +3,32 @@ DESCRIPTION = "Control your receiver with a browser"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://README;md5=26abba37d1c2fcbf96a087ceb8e1db86"
 
-DEPENDS = "${PYTHON_PN}-cheetah-native"
+DEPENDS = "python3-cheetah-native"
 RDEPENDS:${PN} = "\
 	aio-grab \
-	${PYTHON_PN}-cheetah \
-	${PYTHON_PN}-compression \
-	${PYTHON_PN}-ipaddress \
-	${PYTHON_PN}-json \
-	${PYTHON_PN}-misc \
-	${PYTHON_PN}-numbers \
-	${PYTHON_PN}-pprint \
-	${PYTHON_PN}-pyopenssl \
-	${PYTHON_PN}-shell \
-	${PYTHON_PN}-six \
-	${PYTHON_PN}-twisted-web \
-	${PYTHON_PN}-unixadmin \
+	python3-cheetah \
+	python3-compression \
+	python3-ipaddress \
+	python3-json \
+	python3-misc \
+	python3-numbers \
+	python3-pprint \
+	python3-pyopenssl \
+	python3-shell \
+	python3-six \
+	python3-twisted-web \
+	python3-unixadmin \
 	"
 
-inherit gittag
+inherit gittag python3-compileall
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-require openplugins-distutils.inc
+SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-OpenWebif.git;protocol=https;branch=master \
+		file://set-packages-explicit.patch \
+"
+S="${WORKDIR}/git"
+
 
 # Just a quick hack to "compile" it
 do_compile() {

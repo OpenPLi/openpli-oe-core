@@ -14,6 +14,6 @@ PV = "1+git${SRCPV}"
 PKGV = "1+git${GITPKGV}"
 PR = "r1"
 
-inherit distutils-openplugins
+inherit setuptools3-openplugins
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core rtl-sdr redsea dab-cmdline-sdgradio dab-cmdline-sdgradio-pcm dab-cmdline-sdgradio-wav"

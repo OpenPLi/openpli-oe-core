@@ -1,0 +1,10 @@
+diff --git a/setup.py b/setup.py
+index 7c5a933..f0fa819 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,4 +1,4 @@
+-from distutils.core import setup
++from setuptools import setup
+ 
+ pkg = 'Extensions.HetWeer'
+ setup(name='enigma2-plugin-extensions-hetweer',

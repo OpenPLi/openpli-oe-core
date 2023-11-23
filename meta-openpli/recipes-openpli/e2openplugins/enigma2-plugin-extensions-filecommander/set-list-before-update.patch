@@ -1,0 +1,12 @@
+diff --git a/plugin/ui.py b/plugin/ui.py
+index d191687..1c533d4 100644
+--- a/plugin/ui.py
++++ b/plugin/ui.py
+@@ -1258,6 +1258,7 @@ class FileCommanderScreen(Screen, HelpableScreen, key_actions):
+ 			filename = self[side].getFilename()
+ 			if dir is not None:
+ 				self[side + "_head1"].text = cutLargePath(dir, self[side + "_head1"])
++				self[side + "_head2"].setList(self.statInfo(self[side]))
+ 				self[side + "_head2"].updateList(self.statInfo(self[side]))
+ 				self[side + "_free"].text = "%s" % freeDiskSpace(dir) + self.walkdirflag
+ 			elif not dir and filename:

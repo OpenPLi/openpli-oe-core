@@ -14,7 +14,7 @@ SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git/src"
 
-inherit distutils-openplugins
+inherit setuptools3-openplugins
 
 DEPENDS = "${PYTHON_PN}"
 RDEPENDS:${PN} = "${PYTHON_PN}-compression ${PYTHON_PN}-shell ${PYTHON_PN}-pkgutil"

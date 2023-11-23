@@ -22,3 +22,5 @@ pkg_postrm:${PN}() {
 }
 
 FILES:${PN} = "${PLUGINPATH}"
+
+SRC_URI:append = " file://replace-distutils-with-setuptools.patch"
