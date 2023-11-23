@@ -14,17 +14,11 @@ inherit autotools update-rc.d pkgconfig gettext
 # libupnp make doesn't support it
 PARALLEL_MAKE = ""
 
-SRC_URI = "git://github.com/SHTrassEr/djmount.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/amiri82/djmount.git;protocol=https;branch=main"
 
-CFLAGS:append = " -std=gnu89 -fcommon"
 
 SRC_URI:append =" \
 	file://init \
-	file://01-configure.ac.patch \
-	file://02-rt_bool_arg_enable.m4.patch \
-	file://03-djmount.1.patch \
-	file://04-support-fstab-mounting.patch \
-	file://05-fix-build-with-gettext-0.20.x.patch \
 	"
 EXTRA_OECONF = "--with-external-libupnp-prefix='${STAGING_LIBDIR}' --with-fuse-prefix='${STAGING_LIBDIR}'"
 
