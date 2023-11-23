@@ -21,23 +21,23 @@ LIC_FILES_CHKSUM ?= "file:///${WORKDIR}/git/LICENSE.md;md5=7b423f1c9388eae123332
 # for some devices: for libmali.so libEGL.so and libGLESv2.so no providers found
 # in RDEPENDS:kodi? [file-rdeps]
 #
-INSANE_SKIP:${PN}_gbtrio4k += "file-rdeps"
+INSANE_SKIP:${PN}:gbtrio4k += "file-rdeps"
 #
-INSANE_SKIP:${PN}_sf8008 += "file-rdeps"
-INSANE_SKIP:${PN}_sf8008m += "file-rdeps"
-INSANE_SKIP:${PN}_sx88v2 += "file-rdeps"
+INSANE_SKIP:${PN}:sf8008 += "file-rdeps"
+INSANE_SKIP:${PN}:sf8008m += "file-rdeps"
+INSANE_SKIP:${PN}:sx88v2 += "file-rdeps"
 #
-INSANE_SKIP:${PN}_dual += "file-rdeps"
+INSANE_SKIP:${PN}:dual += "file-rdeps"
 #
-INSANE_SKIP:${PN}_ustym4kpro += "file-rdeps"
-INSANE_SKIP:${PN}_ustym4ks2ottx += "file-rdeps"
+INSANE_SKIP:${PN}:ustym4kpro += "file-rdeps"
+INSANE_SKIP:${PN}:ustym4ks2ottx += "file-rdeps"
 #
-INSANE_SKIP:${PN}_h7 += "file-rdeps"
-INSANE_SKIP:${PN}_h9 += "file-rdeps"
-INSANE_SKIP:${PN}_h9combo += "file-rdeps"
-INSANE_SKIP:${PN}_h9combose += "file-rdeps"
-INSANE_SKIP:${PN}_h9se += "file-rdeps"
-INSANE_SKIP:${PN}_h10 += "file-rdeps"
-INSANE_SKIP:${PN}_h11 += "file-rdeps"
-INSANE_SKIP:${PN}_i55plus += "file-rdeps"
-INSANE_SKIP:${PN}_i55se += "file-rdeps"
+INSANE_SKIP:${PN}:h7 += "file-rdeps"
+INSANE_SKIP:${PN}:h9 += "file-rdeps"
+INSANE_SKIP:${PN}:h9combo += "file-rdeps"
+INSANE_SKIP:${PN}:h9combose += "file-rdeps"
+INSANE_SKIP:${PN}:h9se += "file-rdeps"
+INSANE_SKIP:${PN}:h10 += "file-rdeps"
+INSANE_SKIP:${PN}:h11 += "file-rdeps"
+INSANE_SKIP:${PN}:i55plus += "file-rdeps"
+INSANE_SKIP:${PN}:i55se += "file-rdeps"
