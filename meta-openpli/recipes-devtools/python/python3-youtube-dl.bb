@@ -27,14 +27,14 @@ do_compile:prepend() {
 }
 
 do_install:append() {
-    mv ${D}${datadir}/etc ${D}${sysconfdir}
+    mv ${D}${prefix}/etc ${D}${sysconfdir}
     install -m 0755 -d ${D}${sysconfdir}/bash_completion.d
     install -m 0644 youtube-dl.bash-completion ${D}${sysconfdir}/bash_completion.d
 }
 
 RDEPENDS:${PN} = " \
     ${PYTHON_PN}-email \
-    ${PYTHON_PN}-gdata \
+    ${PYTHON_PN}-gdata-python3 \
     ${PYTHON_PN}-unixadmin \
     ${PYTHON_PN}-ctypes \
     ${PYTHON_PN}-html \
