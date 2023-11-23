@@ -37,7 +37,7 @@ crossguid \
 curl \
 dcadec \
 faad2 \
-ffmpeg \
+kodi-ffmpeg \
 flatbuffers \
 fmt \
 fstrcmp \
@@ -246,31 +246,31 @@ RRECOMMENDS:${PN}:append = " \
                              nss \
                              os-release \
                              ${@bb.utils.contains('PACKAGECONFIG', 'x11', 'xrandr xinit mesa-demos', '', d)} \
-                             ${PYTHON_PN} \
-                             ${PYTHON_PN}-compression \
-                             ${PYTHON_PN}-ctypes \
-                             ${PYTHON_PN}-crypt \
-                             ${PYTHON_PN}-datetime \
-                             ${PYTHON_PN}-db \
-                             ${PYTHON_PN}-image \
-                             ${PYTHON_PN}-difflib \
-                             ${PYTHON_PN}-distutils \
-                             ${PYTHON_PN}-html \
-                             ${PYTHON_PN}-json \
-                             ${PYTHON_PN}-mechanize \
-                             ${PYTHON_PN}-multiprocessing \
-                             ${PYTHON_PN}-netclient \
-                             ${PYTHON_PN}-pillow \
-                             ${PYTHON_PN}-profile \
-                             ${PYTHON_PN}-pycryptodome \
-                             ${PYTHON_PN}-pycryptodomex \
-                             ${PYTHON_PN}-regex \
-                             ${PYTHON_PN}-shell \
-                             ${PYTHON_PN}-six \
-                             ${PYTHON_PN}-setuptools \
-                             ${PYTHON_PN}-shell \
-                             ${PYTHON_PN}-sqlite3 \
-                             ${PYTHON_PN}-xmlrpc \
+                             python3 \
+                             python3-compression \
+                             python3-ctypes \
+                             python3-crypt \
+                             python3-datetime \
+                             python3-db \
+                             python3-image \
+                             python3-difflib \
+                             python3-distutils \
+                             python3-html \
+                             python3-json \
+                             python3-mechanize \
+                             python3-multiprocessing \
+                             python3-netclient \
+                             python3-pillow \
+                             python3-profile \
+                             python3-pycryptodome \
+                             python3-pycryptodomex \
+                             python3-regex \
+                             python3-shell \
+                             python3-six \
+                             python3-setuptools \
+                             python3-shell \
+                             python3-sqlite3 \
+                             python3-xmlrpc \
                              tzdata-africa \
                              tzdata-americas \
                              tzdata-antarctica \

@@ -1,7 +1,7 @@
 # Some forked meta-kodi repositories using custom kodi urls, personally I think they should use variable instead of
 # creating different recipes and diverse from upstream
 
-KODIVER ?= "20.1"
+KODIVER ?= "20.2"
 
 KODIURI ?= "git://github.com/xbmc/xbmc.git;protocol=https;branch=Nexus"
 KODIWORKDIR ?= "${WORKDIR}/git"
