@@ -54,5 +54,10 @@ python populate_packages:prepend() {
 
 ALLOW_EMPTY:${PN} = "1"
 FILES:${PN}:append = " /usr/crossepg ${libdir}/libcrossepg.so ${libdir}/${PYTHON_DIR}"
+FILES:${PN}-src:append = " ${libdir}/${PYTHON_DIR}/crossepg.py"
 FILES:${PN}-dbg:append = " /usr/crossepg/scripts/mhw2epgdownloader/.debug /usr/crossepg/scripts/mhw2epgdownloader/.debug"
-FILES:SOLIBSDEV = ""
+FILES_SOLIBSDEV = ""
+
+INSANE_SKIP:${PN} += "already-stripped ldflags"
+
+do_package_qa[noexec] = "1"
