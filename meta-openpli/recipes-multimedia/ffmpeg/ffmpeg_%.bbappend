@@ -21,14 +21,15 @@ PACKAGECONFIG[libxml2] = "--enable-libxml2,--disable-libxml2,libxml2"
 MIPSFPU = "${@bb.utils.contains('TARGET_FPU', 'soft', '--disable-mipsfpu', '--enable-mipsfpu', d)}"
 
 SRC_URI:append = " \
-	file://4_02_fix_mpegts.patch \
-	file://4_10_rtsp_patch \
-	file://4_11_dxva2_patch \
-	file://4_mips64_cpu_detection.patch \
+	file://0001-fix-mpegts.patch \
+	file://0002-rtsp.patch \
+	file://0003-dxva2.patch \
+	file://0004-mips64-cpu-detection.patch \
 	"
 
 EXTRA_FFCONF = " \
 	--prefix=${prefix} \
+	--disable-static \
 	--disable-runtime-cpudetect \
 	--disable-ffplay \
 	--enable-ffprobe \
