@@ -14,7 +14,7 @@ GST_BASE_RDEPS = "\
 	gstreamer${GST_VERSION}-plugins-base-audioconvert \
 	gstreamer${GST_VERSION}-plugins-base-audiorate \
 	gstreamer${GST_VERSION}-plugins-base-audioresample \
-	gstreamer${GST_VERSION}-plugins-base-ivorbisdec \
+	gstreamer${GST_VERSION}-plugins-base-vorbis \
 	gstreamer${GST_VERSION}-plugins-base-ogg \
 	gstreamer${GST_VERSION}-plugins-base-opus \
 	gstreamer${GST_VERSION}-plugins-base-playback \
@@ -105,10 +105,4 @@ EXTRA_OECONF = "\
 	STAGING_LIBDIR=${STAGING_LIBDIR} \
 	"
 
-FILES:${PN} = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/*.pyc \
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/servicemp3.so"
-
-FILES:${PN}-dev = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/*.py \
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/servicemp3.la"
+FILES:${PN} = "${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceMP3/"
