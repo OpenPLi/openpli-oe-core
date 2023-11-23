@@ -6,10 +6,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DEPENDS = "enigma2 uchardet openssl"
-RDEPENDS:${PN} = "enigma2 uchardet openssl ${PYTHON_PN}-json"
+RDEPENDS:${PN} = "enigma2 uchardet openssl python3-json"
 RRECOMMENDS:${PN} = "exteplayer3 gstplayer"
 
-SRC_URI = "git://github.com/mx3L/serviceapp.git;protocol=https;branch=develop"
+SRC_URI = "git://github.com/mx3L/serviceapp.git;protocol=https;branch=develop \
+			file://update-devel-m4-file.patch \
+			file://remove-redundant-c17-check.patch \
+"
 
 S = "${WORKDIR}/git"
 
@@ -26,11 +29,8 @@ EXTRA_OECONF = "\
 	"
 
 FILES:${PN} = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.pyc \
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/locale/*/LC_MESSAGES/ServiceApp.mo \
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/serviceapp.so"
+	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/"
 
 FILES:${PN}-dev = "\
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/*.py \
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceApp/serviceapp.la"
 
