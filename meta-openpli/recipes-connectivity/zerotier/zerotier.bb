@@ -6,14 +6,14 @@ SECTION = "net"
 LICENSE = "GPL-3.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=11bbae9cacaf61dd7fc10035f6f5c68e"
 
-SRC_URI = "git://github.com/zerotier/ZeroTierOne.git;protocol=https;branch=dev;tag=1.10.2 \
+SRC_URI = "git://github.com/zerotier/ZeroTierOne.git;protocol=https;branch=main \
 	file://zerotier \
 	"
-SRCREV = "${PV}"
+SRCREV = "c6d5dc1534c510099f9e8ed1e7be0bb3602784bc"
 
 S = "${WORKDIR}/git"
 
-inherit update-rc.d systemd gitpkgv autotools-brokensep
+inherit update-rc.d systemd gitpkgv autotools-brokensep gittag
 
 INITSCRIPT_NAME = "zerotier"
 
