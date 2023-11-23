@@ -7,7 +7,7 @@ SRC_URI[tzdata.sha256sum] = "3f510b5d1b4ae9bb38e485aa302a776b317fb3637bdb6404c4a
 
 do_compile () {
         for zone in ${TZONES}; do \
-            ${STAGING_BINDIR_NATIVE}/zic -d ${WORKDIR}${datadir}/zoneinfo -L /dev/null \
+            ${STAGING_BINDIR_NATIVE}/zic -d ${WORKDIR}/build/zoneinfo -L /dev/null \
                 -y ${S}/yearistype.sh ${S}/${zone} ; \
         done
 }
@@ -21,3 +21,6 @@ RPROVIDES:tzdata-right:remove = "tzdata-right"
 
 DEFAULT_TIMEZONE = "Europe/Amsterdam"
 
+PACKAGES += "${PN}-base"
+
+FILES:${PN}-base = "${datadir}/zoneinfo"
