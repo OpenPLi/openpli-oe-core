@@ -1,0 +1,14 @@
+Also remove redundant utf-8 coding and __future__ import.
+
+diff --git a/xml2po.py b/xml2po.py
+index 7b1992b..497e0e8 100755
+--- a/xml2po.py
++++ b/xml2po.py
+@@ -1,6 +1,4 @@
+-#!/usr/bin/python
+-# -*- coding: utf-8 -*-
+-from __future__ import print_function
++#!/usr/bin/python3
+ import sys
+ import os
+ import string
