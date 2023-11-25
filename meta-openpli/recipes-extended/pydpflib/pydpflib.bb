@@ -18,3 +18,11 @@ PR = "r0"
 do_compile_prepend() {
     $MAKE -C ${S}/dpf-ax/dpflib all
 }
+
+do_install:prepend() {
+	cp ${B}/lib.linux-x86_64-3.9/dpflib.cpython*.so ${B}/lib.linux-x86_64-3.9/dpflib.so
+}
+
+do_install:append() {
+	rm ${D}${PYTHON_SITEPACKAGES_DIR}/dpflib.cpython*.so
+}
