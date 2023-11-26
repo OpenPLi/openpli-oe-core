@@ -85,10 +85,10 @@ DEPENDS = " \
 	${PYTHON_PN}-twisted \
 	${PYTHON_PN}-daap \
 	libcddb \
-	pydpflib \
 	dvdbackup \
 	libtirpc \
 	png-util \
+	enigma2-plugin-extensions-lcd4linuxplugin \
 	"
 
 python populate_packages:prepend () {
