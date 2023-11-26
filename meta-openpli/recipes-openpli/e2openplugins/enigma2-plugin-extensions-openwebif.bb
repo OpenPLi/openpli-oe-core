@@ -24,11 +24,7 @@ inherit gittag python3-compileall
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-OpenWebif.git;protocol=https;branch=master \
-		file://set-packages-explicit.patch \
-"
-S="${WORKDIR}/git"
-
+require openplugins-distutils.inc
 
 # Just a quick hack to "compile" it
 do_compile() {

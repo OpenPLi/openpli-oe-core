@@ -9,7 +9,7 @@ SRC_URI = "git://github.com/OpenPLi/gst-plugin-subsink.git;protocol=https;branch
 
 S = "${WORKDIR}/git"
 
-inherit gitpkgv
+inherit autotools pkgconfig gitpkgv
 
 GSTVERSION = "1.0"
 
@@ -17,8 +17,6 @@ PV = "${GSTVERSION}+git${SRCPV}"
 PKGV = "${GSTVERSION}+git${GITPKGV}"
 
 EXTRA_OECONF = "--with-gstversion=${GSTVERSION}"
-
-inherit autotools pkgconfig
 
 FILES:${PN} = "${libdir}/gstreamer-${GSTVERSION}/*.so*"
 FILES:${PN}-dev += "${libdir}/gstreamer-${GSTVERSION}/*.la"

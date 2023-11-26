@@ -12,15 +12,16 @@ PR = "r3"
 
 inherit gittag allarch
 
-RDEPENDS_${PN} = "${PYTHON_PN} ${PYTHON_PN}-requests ${PYTHON_PN}-pillow"
+RDEPENDS:${PN} = "python3 python3-requests python3-pillow"
 
 SRC_URI = "git://github.com/kiddac/Bouquet_Maker_Xtream.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
 FILES:${PN} = " ${libdir}/enigma2/python/Plugins/Extensions/BouquetMakerXtream \
-                ${libdir}/enigma2/python/Components/Renderer"
-
+                ${libdir}/enigma2/python/Components/Renderer \
+                ${sysconfdir} \
+"
 
 CONFFILES:${PN} = "${sysconfdir}/enigma2/bouquetmakerxtream/playlists.txt"
 
