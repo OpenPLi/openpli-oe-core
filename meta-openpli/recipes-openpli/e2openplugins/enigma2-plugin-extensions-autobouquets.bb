@@ -11,45 +11,37 @@ LIC_FILES_CHKSUM = "\
     file://COPYING;md5=036b9f2d884ff3a35bed6ab09bafff32 \
 "
 
-inherit gitpkgv python3-compileall
+inherit gitpkgv
 
 AUTOBOUQUETS_BRANCH ?= "release"
 PV = "2.2+git${SRCPV}"
 PKGV = "2.2+git${GITPKGV}"
 PR = "r0"
 
-INSANE_SKIP:${PN} += "already-stripped ldflags"
+INSANE_SKIP:${PN} += "already-stripped"
 
 SRC_URI="git://github.com/LraiZer/AutoBouquets.git;branch=${AUTOBOUQUETS_BRANCH};protocol=https"
 
 S = "${WORKDIR}/git"
 
 FILES:${PN} = "${libdir}/enigma2/python/Plugins/Extensions/AutoBouquets"
-D_FILES:PN = "${D}${FILES:${PN}}"
+D_FILES_PN = "${D}${FILES:${PN}}"
 
 EXTRA_OECONF = ""
 
 do_install() {
-    install -d ${D_FILES:PN}
-    install -d ${D_FILES:PN}/locale
-    install -m 755 ${S}/autobouquetsreader ${D_FILES:PN}
-    install -m 755 ${S}/*.sh ${D_FILES:PN}
-    install -m 644 ${S}/*.py *.txt *.png ${D_FILES:PN}
-    install -m 644 ${S}/locale/*.* ${D_FILES:PN}/locale
-    install -m 644 ${S}/COPYING ${D_FILES:PN}
-    install -m 644 ${S}/LICENSE ${D_FILES:PN}
+    install -d ${D_FILES_PN}
+    install -d ${D_FILES_PN}/locale
+    install -m 755 ${S}/autobouquetsreader ${D_FILES_PN}
+    install -m 755 ${S}/*.sh ${D_FILES_PN}
+    install -m 644 ${S}/*.py *.txt *.png ${D_FILES_PN}
+    install -m 644 ${S}/locale/*.* ${D_FILES_PN}/locale
+    install -m 644 ${S}/COPYING ${D_FILES_PN}
+    install -m 644 ${S}/LICENSE ${D_FILES_PN}
 
-    install -d ${D_FILES:PN}/locale/en_GB/LC_MESSAGES
-    install -d ${D_FILES:PN}/locale/ru/LC_MESSAGES
-    install -m 644 ${S}/locale/en_GB/LC_MESSAGES/*.* ${D_FILES:PN}/locale/en_GB/LC_MESSAGES
-    install -m 644 ${S}/locale/ru/LC_MESSAGES/*.* ${D_FILES:PN}/locale/ru/LC_MESSAGES
+    install -d ${D_FILES_PN}/locale/en_GB/LC_MESSAGES
+    install -d ${D_FILES_PN}/locale/ru/LC_MESSAGES
+    install -m 644 ${S}/locale/en_GB/LC_MESSAGES/*.* ${D_FILES_PN}/locale/en_GB/LC_MESSAGES
+    install -m 644 ${S}/locale/ru/LC_MESSAGES/*.* ${D_FILES_PN}/locale/ru/LC_MESSAGES
 }
 
-pkg_postrm:${PN() {
-    #!/bin/sh
-
-    echo "Removing ${PN}"
-    rm -rf ${FILES:${PN}} > /dev/null 2>&1
-
-    exit 0
-}
