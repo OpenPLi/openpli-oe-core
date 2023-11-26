@@ -31,9 +31,10 @@ IMAGE_INSTALL = "\
 	packagegroup-base \
 	packagegroup-core-boot \
 	parted \
-	${PYTHON_PN}-ipaddress  \
-	${PYTHON_PN}-netifaces \
-	${PYTHON_PN}-pysmb \
+	python3-ipaddress  \
+	python3-netifaces \
+	python3-pysmb \
+	python3-requests \
 	samba-base \
 	sdparm \
 	tuxbox-common \
@@ -51,7 +52,7 @@ IMAGE_FEATURES += "package-management"
 # Remove the mysterious var/lib/opkg/lists that appears to be the result
 # of the installer that populates the rootfs. I wanted to call this
 # rootfs:remove_opkg_leftovers but that fails to parse.
-rootfs:removeopkgleftovers() {
+removeopkgleftovers() {
 	rm -r ${IMAGE_ROOTFS}/var/lib/opkg/lists
 }
 
@@ -69,4 +70,4 @@ ssh_allow_empty_password () {
 license_create_manifest() {
 }
 
-ROOTFS_POSTPROCESS_COMMAND += "rootfs:removeopkgleftovers; "
+ROOTFS_POSTPROCESS_COMMAND += "removeopkgleftovers; "
