@@ -254,7 +254,6 @@ RRECOMMENDS:${PN}:append = " \
                              python3-db \
                              python3-image \
                              python3-difflib \
-                             python3-distutils \
                              python3-html \
                              python3-json \
                              python3-mechanize \
