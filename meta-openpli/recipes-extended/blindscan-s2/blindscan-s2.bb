@@ -14,6 +14,6 @@ PKGV = "1+git${GITPKGV}"
 S = "${WORKDIR}/git"
 
 do_install () {
-	install -d ${D}${bindir}
-	install -m 755 ${S}/blindscan-s2 ${D}${bindir}
+	install -d ${D}/${bindir}
+	install -m 755 ${S}/blindscan-s2 ${D}/${bindir}
 }

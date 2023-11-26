@@ -1,14 +1,5 @@
-From 4400bf7eeec9d61cc2b6aa95ea81f9b9bc54dbc2 Mon Sep 17 00:00:00 2001
-From: kueken <ohnemailadresse@arcor.de>
-Date: Thu, 16 Nov 2023 19:25:22 +0100
-Subject: [PATCH] support-enigma2
-
----
- blindscan-s2.c | 113 +++++++++++++++++++++++++++++--------------------
- 1 file changed, 67 insertions(+), 46 deletions(-)
-
 diff --git a/blindscan-s2.c b/blindscan-s2.c
-index 10199f2..c1ea772 100644
+index 0579ad5..c126a0b 100644
 --- a/blindscan-s2.c
 +++ b/blindscan-s2.c
 @@ -20,7 +20,7 @@
@@ -59,7 +50,7 @@ index 10199f2..c1ea772 100644
          info.type == 0 ? info.frequency_min / 1000: info.frequency_min / 1000000,
          info.type == 0 ? info.frequency_max / 1000: info.frequency_max / 1000000,
          info.type == 0 ? info.symbol_rate_min / 1000: info.symbol_rate_min /1000000,
-@@ -481,7 +482,7 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
+@@ -436,7 +437,7 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
  	int dtv_inner_fec_prop = 0;
  	fe_status_t status;
  	if (ioctl(fefd, FE_READ_STATUS, &status) == -1) {
@@ -68,7 +59,7 @@ index 10199f2..c1ea772 100644
  	}
  
  	struct dtv_property sp[3];
-@@ -494,7 +495,7 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
+@@ -449,7 +450,7 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
  	sp_status.props = sp;
  
  	if (ioctl(fefd, FE_GET_PROPERTY, &sp_status) == -1) {
@@ -77,7 +68,7 @@ index 10199f2..c1ea772 100644
  		return;
  	}
  	lvl_scale = sp_status.props[0].u.st.stat[0].scale;
-@@ -604,36 +605,54 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
+@@ -559,36 +560,54 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
  		lastrol = currentrol;
  		lastpil = currentpil;
  
@@ -152,7 +143,7 @@ index 10199f2..c1ea772 100644
  		}
  
  		switch (dtv_inner_fec_prop) {
-@@ -649,30 +668,32 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
+@@ -604,30 +623,32 @@ void getinfo(int fefd, int lof, unsigned int verbose) {
  			case 9: printf("FEC_AUTO ");  break;
  			case 10: printf("FEC_3_5  ");  break;
  			case 11: printf("FEC_9_10 "); break;
@@ -204,6 +195,3 @@ index 10199f2..c1ea772 100644
  		}
  
  	}
--- 
-2.34.1
-
