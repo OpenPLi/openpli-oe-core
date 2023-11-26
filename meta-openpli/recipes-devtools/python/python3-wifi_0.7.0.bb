@@ -34,6 +34,6 @@ do_install:append() {
 
 PACKAGES =+ "${PN}-examples"
 
-FILES:${PN}-examples = "${sbindir}"
+FILES:${PN}-examples = "${datadir}/docdir/ ${sbindir}"
 
 include python3-package-split.inc
