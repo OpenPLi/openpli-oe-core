@@ -7,10 +7,10 @@ LIC_FILES_CHKSUM = "file://LICENSE.rst;md5=1b2957cd26c589d0defcb357be630e80"
 DEPENDS = "${PYTHON_PN}-pytz ${PYTHON_PN}-dateutil"
 RDEPENDS:${PN} = "${PYTHON_PN}-pytz ${PYTHON_PN}-dateutil"
 
-SRC_URI = "https://files.pythonhosted.org/packages/7b/cb/ab742b444f6a25a349f061f1d661060060191e065f0aa815ba1bf989bf5c/icalendar-${PV}.tar.gz"
+SRC_URI = "https://files.pythonhosted.org/packages/6c/23/187a28257fe26848d07af225cef86abe3712561bd8af93cbd3a64d6eb6ea/icalendar-${PV}.tar.gz"
 
-SRC_URI[md5sum] = "338c8791e989554273705e3004843b0d"
-SRC_URI[sha256sum] = "e306014a64dc4dcf638da0acb2487ee4ada57b871b03a62ed7b513dfc135655c"
+SRC_URI[md5sum] = "801039f92de296253efafdfb27f85880"
+SRC_URI[sha256sum] = "7a298bb864526589d0de81f4b736eeb6ff9e539fefb405f7977aa5c1e201ca00"
 
 S = "${WORKDIR}/icalendar-${PV}"
 
