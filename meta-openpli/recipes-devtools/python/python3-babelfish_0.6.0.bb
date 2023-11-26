@@ -11,24 +11,4 @@ S = "${WORKDIR}/babelfish-${PV}"
 
 inherit pypi setuptools3
 
-FILES:${PN}-src += " \
-    ${PYTHON_SITEPACKAGES_DIR}/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*/*/*/*/*.py \
-    "
-
-FILES:${PN}-doc += " \
-    ${PYTHON_SITEPACKAGES_DIR}/*-info \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*-info \
-    ${PYTHON_SITEPACKAGES_DIR}/*-INFO \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*-INFO \
-    ${PYTHON_SITEPACKAGES_DIR}/*-safe \
-    ${PYTHON_SITEPACKAGES_DIR}/*/*-safe \
-    ${PYTHON_SITEPACKAGES_DIR}/doc \
-    ${PYTHON_SITEPACKAGES_DIR}/*/doc \
-    ${PYTHON_SITEPACKAGES_DIR}/LICENSE \
-    ${PYTHON_SITEPACKAGES_DIR}/README \
-    "
+include python3-package-split.inc
