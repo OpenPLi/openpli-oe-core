@@ -19,12 +19,14 @@ SRC_URI = "git://github.com/amiri82/djmount.git;protocol=https;branch=main"
 
 SRC_URI:append =" \
 	file://init \
+	file://02-djmount.1.patch \
+	file://03-support-fstab-mounting.patch \
 	"
-EXTRA_OECONF = "--with-external-libupnp-prefix='${STAGING_LIBDIR}' --with-fuse-prefix='${STAGING_LIBDIR}'"
 
 S = "${WORKDIR}/git"
 
 do_configure:prepend() {
+	mkdir ${S}/libupnp/config.aux
 	cp ${STAGING_DATADIR_NATIVE}/gettext/config.rpath ${S}/libupnp/config.aux/config.rpath
 }
 do_install:append() {
