@@ -5,7 +5,7 @@ SECTION = "devel/python"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b026f0197dc4ce773b97e3dc1f55f55c"
 
-DEPENDS += "${PYTHON_PN}-versioningit-native ${PYTHON_PN}-importlib-metadata-native"
+DEPENDS += "${PYTHON_PN}-versioningit-native"
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core \
 	${PYTHON_PN}-ctypes \
@@ -46,17 +46,27 @@ do_prepare_plugins_dir() {
 }
 
 do_install:append() {
-	rm -rf ${D}${bindir}
-	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/streamlink_cli
-	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/*.egg-info
-	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/streamlink/plugins/.removed
-	rm -rf ${D}${datadir}
+    rm -rf ${D}${bindir}
+    rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/streamlink_cli
+    rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/*.egg-info
+    rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/streamlink/plugins/.removed
+    rm -rf ${D}${datadir}
 }
 
 include ${PYTHON_PN}-package-split.inc
 
 PACKAGES = "${PN}"
 
-FILES:${PN} = " \
-	${libdir}/${PYTHON_DIR}/site-packages/streamlink/* \
-"
+FILES:${PN} += " \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*.pyc \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*/*.pyc \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*/*/*.pyc \
+    "
+
+FILES:${PN}-src += " \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink-*.egg-info/* \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/plugins/.removed \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*/*.py \
+    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*/*/*.py \
+    "
