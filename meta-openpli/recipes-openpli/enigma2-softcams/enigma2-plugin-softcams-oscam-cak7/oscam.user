@@ -1,0 +1,12 @@
+[account]
+user 			= dvbapiau
+pwd 			=
+disabled 		= 0
+group 			= 1
+au 			= 1
+
+[account]
+user                          = 2nd_box
+pwd                           = 2nd_box
+group                         = 1
+
