@@ -1,5 +1,5 @@
 ESCRIPTION = "Tools for managing memory technology devices."
-LICENSE = "GPLv2+"
+LICENSE = "LGPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${S}/README;md5=42a667e310028ad2cc31da2ae54d8f16"
 
 DEPENDS = "libusb-compat libusb1 python3"
