@@ -1,10 +1,24 @@
+From 44baac106cddeb940229417431a19217cfea5224 Mon Sep 17 00:00:00 2001
+From: kueken <ohnemailadresse@arcor.de>
+Date: Wed, 6 Dec 2023 10:02:54 +0100
+Subject: [PATCH] 2port-to-python3
+
+---
+ webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py | 30 +++++++++++---------
+ webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py     | 12 ++++----
+ webkit-hbbtv-plugin/WebkitHbbTV/plugin.py    | 20 +++++++------
+ webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py     |  8 +++---
+ webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py     | 10 +++----
+ 5 files changed, 43 insertions(+), 37 deletions(-)
+
 diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py b/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
-index dda39dc..72fe38c 100644
+index dda39dc..a69c653 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/aitreader.py
-@@ -1,14 +1,14 @@
+@@ -1,14 +1,15 @@
  import os, xml.dom.minidom, re
  from enigma import iServiceInformation
++from six import unichr, PY3
  
 -import vbcfg
 +from . import vbcfg
@@ -15,13 +29,13 @@ index dda39dc..72fe38c 100644
 -				(unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
 -				unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
 -				unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff))
-+				(chr(0xd800),chr(0xdbff),chr(0xdc00),chr(0xdfff),
-+				chr(0xd800),chr(0xdbff),chr(0xdc00),chr(0xdfff),
-+				chr(0xd800),chr(0xdbff),chr(0xdc00),chr(0xdfff))
++				(unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff),
++				unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff),
++				unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff))
  
  DUMPBIN = vbcfg.PLUGINROOT + "/dumpait"
  class eAITSectionReader:
-@@ -74,31 +74,31 @@ class eAITSectionReader:
+@@ -74,31 +75,32 @@ class eAITSectionReader:
  
  		document = ""
  		try:	document = os.popen(self.mCommand).read()
@@ -34,7 +48,8 @@ index dda39dc..72fe38c 100644
  		document = re.sub(RE_XML_ILLEGAL, "?", document)
  		document = re.sub("&", "+", document)
 -		document = document.decode("cp1252").encode("utf-8")
-+		document = document.encode("cp1252").decode("utf-8")
++		if not PY3:
++			document = document.decode("cp1252").encode("utf-8")
  		document = "<URL>" + document + "</URL>"
  		try:
  			self.mDocument = xml.dom.minidom.parseString(document)
@@ -63,17 +78,21 @@ index dda39dc..72fe38c 100644
  
  def unit_test(demux, pmtid, sid):
  	reader = eAITSectionReader(demux, pmtid, sid)
-diff --git a/WebkitHbbTV/hbbtv.py b/WebkitHbbTV/hbbtv.py
-index 4ec93d0..c47fa72 100644
+diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py b/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
+index 4ec93d0..c96e05f 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/hbbtv.py
-@@ -2,10 +2,11 @@ from Screens.Screen import Screen
+@@ -1,11 +1,13 @@
+ from Screens.Screen import Screen
++from Screens.ChannelSelection import ChannelSelection
++from Components.ActionMap import ActionMap
++from enigma import eTimer, eServiceReference
  
- from enigma import eTimer
- 
--import os, struct, vbcfg
+-from enigma import eTimer
 +import os, struct
  
+-import os, struct, vbcfg
+-
 -from __init__ import _
 -from vbipc import VBController
 +from . import vbcfg
@@ -83,7 +102,7 @@ index 4ec93d0..c47fa72 100644
  class HbbTVWindow(Screen):
  	skin = """
 diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
-index d7a2ab7..4b30fae 100644
+index d7a2ab7..b5dbb70 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/plugin.py
 @@ -13,11 +13,12 @@ from Components.VolumeControl import VolumeControl
@@ -103,7 +122,7 @@ index d7a2ab7..4b30fae 100644
  
  strIsEmpty = lambda x: x is None or len(x) == 0
  
-@@ -171,7 +171,7 @@ class VBHandler(VBHandlers):
+@@ -171,7 +172,7 @@ class VBHandler(VBHandlers):
  		if (vbcfg.g_channel_info):
  			try:
  				data = struct.pack('iiiii', int(orgid), vbcfg.g_channel_info[0], vbcfg.g_channel_info[1], vbcfg.g_channel_info[2], len(vbcfg.g_channel_info[3])) + vbcfg.g_channel_info[3]
@@ -112,7 +131,7 @@ index d7a2ab7..4b30fae 100644
  				vbcfg.ERR(err)
  				return (False, None)
  		else:
-@@ -202,7 +202,7 @@ class VBHandler(VBHandlers):
+@@ -202,7 +203,7 @@ class VBHandler(VBHandlers):
  
  		try:
   			data = struct.pack('i', int(offset))
@@ -121,7 +140,17 @@ index d7a2ab7..4b30fae 100644
  			vbcfg.ERR(err)
  			return (False, None)
  
-@@ -280,7 +280,7 @@ class VBMain(Screen):
+@@ -222,7 +223,8 @@ class VBMain(Screen):
+ 		self._timer_infobar = eTimer()
+ 		self._timer_infobar.callback.append(self._cb_register_infobar)
+ 		self._timer_infobar.start(1000)
+-
++		
++		self._timer_update_video_size = eTimer()		
+ 		self._event = ServiceEventTracker(screen=self, eventmap={
+ 				iPlayableService.evHBBTVInfo: self._cb_ait_detected,
+ 				iPlayableService.evUpdatedInfo: self._cb_info_updated
+@@ -280,7 +282,7 @@ class VBMain(Screen):
  		try:
  			if selected[1] is not None:
  				self._cb_hbbtv_activated(selected[1]["url"], selected[1])
@@ -130,7 +159,7 @@ index d7a2ab7..4b30fae 100644
  			vbcfg.ERR(ErrMsg)
  
  	def get_autostart_application(self):
-@@ -300,7 +301,7 @@ class VBMain(Screen):
+@@ -300,7 +302,7 @@ class VBMain(Screen):
  				demux = demux if demux > '/' else '0'
  				vbcfg.DEBUG("demux = %s, pmtid = 0x%x, sid = 0x%x" % (demux, pmtid, sid))
  
@@ -140,7 +169,7 @@ index d7a2ab7..4b30fae 100644
  				if reader.doOpen(info, self.m_vuplus):
  					reader.doParseApplications()
 diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py b/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
-index a6d29c8..ac09b43 100644
+index a6d29c8..0f79c5b 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/vbcfg.py
 @@ -40,7 +40,7 @@ def getPosition():
@@ -191,7 +220,7 @@ index a6d29c8..ac09b43 100644
  def DEBUG(string):
  	LogEntry("DEBUG", string)
 diff --git a/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py b/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
-index f616a2d..3a933fc 100644
+index f616a2d..a174ecf 100644
 --- a/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
 +++ b/webkit-hbbtv-plugin/WebkitHbbTV/vbipc.py
 @@ -1,5 +1,5 @@
@@ -210,8 +239,12 @@ index f616a2d..3a933fc 100644
  			vbcfg.ERR("VBHController: %s" % err)
  			vbcfg.setPosition(vbcfg.g_position)
  			vbcfg.osd_unlock()
-@@ -99,7 +99,7 @@ class VBServerThread(threading.Thread):
- 		result, send_packet = False,None
+@@ -96,10 +96,10 @@ class VBServerThread(threading.Thread):
+ 		read_data = conn.recv(_BUFSIZE)
+ 		request = self.parse(read_data)
+ 		opcode, result, read_packet = request[0], request[1], request[2]
+-		result, send_packet = False,None
++		result, send_packet = False, None
  		try:
  			result, send_packet = GetHandler(opcode)(result, read_packet)
 -		except Exception, ErrMsg:
@@ -228,3 +261,6 @@ index f616a2d..3a933fc 100644
  						vbcfg.ERR("VBSServerThread: %s" % err)
  					finally:
  						if conn is not None:
+-- 
+2.34.1
+
