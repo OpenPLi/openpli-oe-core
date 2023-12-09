@@ -6,8 +6,9 @@ PRIORITY = "optional"
 require conf/license/license-gplv2.inc
 
 SRCREV="${AUTOREV}"
+
 PV = "git${SRCPV}"
-PKGV = "${GITPKGVTAG}"
+PKGV = "${GITPKGV}"
 
 inherit gittag allarch
 

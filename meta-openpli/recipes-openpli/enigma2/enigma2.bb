@@ -24,6 +24,7 @@ RCONFLICTS:${PN} = "enigma2-plugin-pli-softcamsetup enigma2-plugin-systemplugins
 RDEPENDS:${PN} = " \
 	alsa-conf \
 	enigma2-fonts \
+	enigma-info \	
 	ethtool \
 	${PYTHON_RDEPS} \
 	"
@@ -153,7 +154,6 @@ EXTRA_OECONF = "\
 	${@get_crashaddr(d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "textlcd", "--with-textlcd" , "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "7segment", "--with-7segment" , "", d)} \
-	${@bb.utils.contains("MACHINE_FEATURES", "7seg", "--with-7segment" , "", d)} \
 	BUILD_SYS=${BUILD_SYS} \
 	HOST_SYS=${HOST_SYS} \
 	STAGING_INCDIR=${STAGING_INCDIR} \
@@ -196,19 +196,8 @@ FILES:${PN}-src += "\
 	${libdir}/enigma2/python/*/*/*/*.py \
 	"
 
-INFOFILE = "${libdir}/enigma.info"
-
 do_install:append() {
 	install -d ${D}${datadir}/keymaps
-
-	# generate the enigma.info file
-	install -d ${D}${libdir}
-	printf "imgversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
-	printf "imgrevision=''\n" >> ${D}${INFOFILE}
-	printf "distro=${DISTRO_NAME}\n" >> ${D}${INFOFILE}
-	printf "displaydistro=OpenPLi\n" >> ${D}${INFOFILE}
-	printf "compiledate='${DATE}'\n" >> ${D}${INFOFILE}
-	printf "checksum=%s\n" $(md5sum "${D}${INFOFILE}" | awk '{print $1}') >> ${D}${INFOFILE}
 }
 
 python populate_packages:prepend() {
