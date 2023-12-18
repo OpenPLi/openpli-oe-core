@@ -226,8 +226,8 @@ do_install[vardepsexclude] += " DATE DATETIME IMAGE_BUILD"
 FILES:${PN}:append = " /usr"
 
 do_deploy() {
-	install -d ${DEPLOY_DIR_IMAGE}
-	install -m 0644 ${D}${INFOFILE} ${DEPLOY_DIR_IMAGE}/enigma-${MACHINE}.txt
+	install -d ${DEPLOY_DIR_IMAGE}/enigma-info
+	install -m 0644 ${D}${INFOFILE} ${DEPLOY_DIR_IMAGE}/enigma-info/${MACHINE}.txt
 }
 
 addtask deploy before do_package after do_install
