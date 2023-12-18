@@ -1,6 +1,7 @@
+DESCRIPTION = "enigma.info used by BoxInfo"
 SUMMARY = "enigma.info used by BoxInfo"
 PRIORITY = "required"
-MAINTAINER = "PLi team"
+MAINTAINER = "OpenPLi team"
 
 require conf/license/openpli-gplv2.inc
 
@@ -14,21 +15,17 @@ deltask source_date_epoch
 
 SSTATE_SKIP_CREATION = "1"
 
-PACKAGE_ARCH = "${MACHINEBUILD}"
+inherit linux-kernel-base
+KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
+IMAGE_VERSION = "${DISTRO_VERSION}"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 PV = "${IMAGE_VERSION}"
 PR[vardepsexclude] = "DATE"
 
 PACKAGES = "${PN}"
 
-# if DATE in PR changes (next day), workdir name changes too
-# this makes sstate unhappy and breakes many tasks in many weird ways
-
-WORKDIR = "${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}"
-
 inherit python3-dir 
-
-inherit linux-kernel-base
-KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
 
 # Hardware Branding
 
@@ -186,7 +183,7 @@ do_install() {
     printf "imageversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
     printf "imglanguage=${LANGUAGE}\n" >> ${D}${INFOFILE}
     printf "imgrevision='${BUILD_VERSION}'\n" >> ${D}${INFOFILE}
-    printf "imgversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imgversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kernel='${KERNEL_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kexecmb=${HAVE_KEXECMB}\n" >> ${D}${INFOFILE}
     printf "kernelfile=${KERNEL_FILE}\n" >> ${D}${INFOFILE}
@@ -224,14 +221,13 @@ do_install() {
     printf "checksum=%s\n" $(md5sum "${D}${INFOFILE}" | awk '{print $1}') >> ${D}${INFOFILE}
 }
 
-do_install[vardepsexclude] += " DATE DATETIME IMAGE_BUILD MACHINEBUILD"
+do_install[vardepsexclude] += " DATE DATETIME IMAGE_BUILD"
 
 FILES:${PN}:append = " /usr"
 
 do_deploy() {
 	install -d ${DEPLOY_DIR_IMAGE}
-	install -m 0644 ${D}${INFOFILE} ${DEPLOY_DIR_IMAGE}/enigma-${MACHINEBUILD}.txt
+	install -m 0644 ${D}${INFOFILE} ${DEPLOY_DIR_IMAGE}/enigma-${MACHINE}.txt
 }
 
 addtask deploy before do_package after do_install
-
