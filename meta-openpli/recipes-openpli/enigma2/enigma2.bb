@@ -184,19 +184,8 @@ FILES_${PN}-src += "\
 	${libdir}/enigma2/python/*/*/*/*.py \
 	"
 
-INFOFILE = "${libdir}/enigma.info"
-
 do_install_append() {
 	install -d ${D}${datadir}/keymaps
-
-	# generate the enigma.info file
-	install -d ${D}${libdir}
-	printf "imgversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
-	printf "imgrevision=''\n" >> ${D}${INFOFILE}
-	printf "distro=${DISTRO_NAME}\n" >> ${D}${INFOFILE}
-	printf "displaydistro=OpenPLi\n" >> ${D}${INFOFILE}
-	printf "compiledate='${DATE}'\n" >> ${D}${INFOFILE}
-	printf "checksum=%s\n" $(md5sum "${D}${INFOFILE}" | awk '{print $1}') >> ${D}${INFOFILE}
 }
 
 python populate_packages_prepend() {
