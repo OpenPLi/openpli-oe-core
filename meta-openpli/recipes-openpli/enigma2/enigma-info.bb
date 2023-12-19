@@ -60,7 +60,6 @@ HAVE_DVI = "${@bb.utils.contains('MACHINE_FEATURES', 'DVI', 'True' , 'False', d)
 HAVE_SVIDEO = "${@bb.utils.contains("MACHINE_FEATURES", "SVIDEO", "True", "False", d)}"
 
 #Extra Features
-HAVE_MINITV = "${@bb.utils.contains('MACHINE_FEATURES', 'MINITV', 'True' , 'False', d)}"
 HAVE_HDMI_IN_HD = "${@bb.utils.contains('MACHINE_FEATURES', 'HDMI-IN-HD', 'True' , 'False', d)}"
 HAVE_HDMI_IN_FHD = "${@bb.utils.contains('MACHINE_FEATURES', 'HDMI-IN-FHD', 'True' , 'False', d)}"
 HAVE_WOL = "${@bb.utils.contains('MACHINE_FEATURES', 'WOL', 'True' , 'False', d)}"
@@ -71,7 +70,6 @@ HAVE_MULTITRANSCODING = "${@bb.utils.contains('MACHINE_FEATURES', 'multitranscod
 HAVE_FHDSKIN = "${@bb.utils.contains('MACHINE_FEATURES', 'skins1080', 'True' , 'False', d)}"
 HAVE_SMALLFLASH = "${@bb.utils.contains("MACHINE_FEATURES", "smallflash", "True", "False", d)}"
 HAVE_MIDDLEFLASH = "${@bb.utils.contains("MACHINE_FEATURES", "middleflash", "True", "False", d)}"
-HAVE_MULTILIB = "${@bb.utils.contains("MACHINE_FEATURES", "multilib", "True", "False", d)}"
 HAVE_VFDSYMBOL = "${@bb.utils.contains("MACHINE_FEATURES", "vfdsymbol", "True", "False", d)}"
 HAVE_KEXECMB = "${@bb.utils.contains("MACHINE_FEATURES", "kexecmb", "True", "False", d)}"
 
@@ -80,22 +78,13 @@ RCNAME ??= "dmm1"
 RCIDNUM ??= "2"
 RCHARDWARE ??= "N/A"
 
-#deprecated setting
-TRANSCODING = "\
-${@bb.utils.contains('MACHINE_FEATURES', 'transcoding', 'transcoding' , '', d)}\
-${@bb.utils.contains('MACHINE_FEATURES', 'multitranscoding', 'multitranscoding' , '', d)}\
-"
-
-LANGUAGECHECK = "${@bb.utils.contains_any("FLASHSIZE", "64 96", "DEU;ENG" , "multilang", d)}"
-LANGUAGE = "${@bb.utils.contains_any("MACHINE_FEATURES", "smallflash", "DEU;ENG", "${LANGUAGECHECK}", d)}"
-
 STB_PLATFORM ?= "${MACHINE}"
 MEDIASERVICE ?= "${@bb.utils.contains("MACHINE_FEATURES", "himedia", "servicehisilicon" , "servicegstreamer", d)}"
 BLINDSCAN_BINARY ?= "blindscan"
 FORCE ?= "no"
 SUPPORT_DBOXLCD ?= "${@bb.utils.contains_any("MACHINE_FEATURES", "textlcd", "True", "False", d)}"
 DEVELOPER_NAME ?= "${DISTRO_NAME}"
-FRIENDLY_FAMILY ?= "${MACHINE} ${BUILDMACHINE}"
+FRIENDLY_FAMILY ?= "${MACHINE}"
 HDMISTANDBY_MODE ?= "${@bb.utils.contains_any("MACHINE_FEATURES", "HDMISTANDBY", "1", "0", d)}"
 TIMERWAKEUP_MODE ?= "${@bb.utils.contains_any("MACHINE_FEATURES", "TIMERWAKEUP", "1", "0", d)}"
 
@@ -104,50 +93,64 @@ INFOFILE = "${libdir}/enigma.info"
 do_install[nostamp] = "1"
 
 do_install() {
+    DRIVERSDATE='N/A'
+
+#   Specific machines
     if [ "${MACHINE}" = "vusolo4k" -o "${MACHINE}" = "vusolo2" -o "${MACHINE}" = "vusolose" -o "${MACHINE}" = "vuduo2" -o "${MACHINE}" = "vuuno4k" -o "${MACHINE}" = "vuuno4kse" -o "${MACHINE}" = "vuultimo4k" -o "${MACHINE}" = "vuzero4k" -o "${MACHINE}" = "vuduo4k" -o "${MACHINE}" = "vuduo4kse" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-VUPLUS-BASE}/recipes-drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "vuplus" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-VUPLUS-BASE}/recipes-drivers/vuplus-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "amiko" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-AMIKO-BASE}/recipes-drivers/amiko-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "qviart" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-QVIART-BASE}/recipes-drivers/qviart-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "xtrend" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-XTREND-BASE}/recipes-drivers/et-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "xsarius" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-DAGS-BASE}/recipes-drivers/dags-dvb-modules-${MACHINE_DRIVER}.bb | cut -b 12-19`
-    elif [ "${MACHINE}" = "gb7252" -o "${MACHINE}" = "gb72604" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-GIGABLUE-BASE}/recipes-drivers/gigablue-platform-util-${MACHINE_DRIVER}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "gigablue" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-GIGABLUE-BASE}/recipes-drivers/gigablue-dvb-modules-${MACHINE_DRIVER}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "octagon" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-OCTAGON-BASE}/recipes-drivers/octagon-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "uclan" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-UCLAN-BASE}/recipes-drivers/uclan-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "xp" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-XP-BASE}/recipes-drivers/xp-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "formuler" ]; then
-        if [ "${MACHINE}" = "formuler1" ] || [ "${MACHINE}" = "formuler3" ] || [ "${MACHINE}" = "formuler4" ]; then
-            DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-FORMULER-BASE}/recipes-drivers/formuler-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-        else
-            DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-FORMULER-BASE}/recipes-drivers/formuler-dvb-modules-al-${MACHINE}.bb | cut -b 12-19`
-        fi
-    elif [ "${BRAND_OEM}" = "gfutures" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-GFUTURES-BASE}/recipes-drivers/gfutures-dvb-modules-${MACHINE_DRIVER}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "airdigital" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-AIRDIGITAL-BASE}/recipes-drivers/airdigital-dvb-modules-${MACHINE_DRIVER}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "edision" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-EDISION-BASE}/recipes-drivers/edision-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "maxytec" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-MAXYTEC-BASE}/recipes-drivers/maxytec-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "abcom" ]; then
-        DRIVERSDATE=`grep "SRCDATE = " ${OEA-META-ABCOM-BASE}/recipes-drivers/abcom-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${BRAND_OEM}" = "dreambox" ]; then
-        if [ "${MACHINE}" = "dm8000" ]; then
-            DRIVERSDATE="20140604"
-        fi
-    else
-        DRIVERSDATE='N/A'
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-VUPLUS}/recipes-bsp/drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE}" = "dm8000" ]; then
+        DRIVERSDATE="20140604"
+    elif [ "${MACHINE}" = "hd2400" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE}" = "bre2ze4k" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE}" = "et1x000" -o "${MACHINE}" = "et7000mini" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GI}/recipes-bsp/drivers/nextv-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE}" = "gbquad4k" -o "${MACHINE}" = "gbue4k" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GIGABLUE}/recipes-bsp/drivers/gigablue-platform-util-gb7252.bb | cut -b 12-19`
+    elif [ "${MACHINE}" = "xpeedc" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XPEEDC}/recipes-bsp/drivers/nextv-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+#   Retail brands
+    elif [ "${MACHINE_BRAND}" = "AB-COM" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-ABCOM}/recipes-bsp/drivers/abcom-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "AMIKO" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-AMIKO}/recipes-bsp/drivers/amiko-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "AXAS" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-AXAS}/recipes-bsp/drivers/axas-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Edision" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-EDISION}/recipes-bsp/drivers/edision-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Formuler" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-FORMULER}/recipes-bsp/drivers/formuler-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Miraclebox" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-MIRACLEBOX}/recipes-bsp/drivers/miraclebox-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Mut@nt" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Gigablue" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GIGABLUE}/recipes-bsp/drivers/gigablue-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Maxytec" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-MAXYTEC}/recipes-bsp/drivers/maxytec-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Octagon" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-OCTAGON}/recipes-drivers/octagon-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "qviart" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-QVIART}/recipes-drivers/qviart-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "SAB" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-SAB}/recipes-bsp/drivers/sab-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "SPYCAT" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-SPYCAT}/recipes-bsp/spycat-dvb-modules/spycat-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "uclan" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-UCLAN}/recipes-drivers/uclan-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Vimastec" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "VU+" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-VUPLUS}/recipes-bsp/drivers/vuplus-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "MaxDigital" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XP}/recipes-bsp/drivers/xp-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "XSARIUS" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XSARIUS}/recipes-bsp/drivers/xsarius-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "XTREND" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XTREND}/recipes-bsp/drivers/et-dvb-modules-${MACHINE}.bb | cut -b 12-19`
+    elif [ "${MACHINE_BRAND}" = "Zgemma" ]; then
+        DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-ZGEMMA}/recipes-bsp/drivers/zgemma-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     fi
 
     install -d ${D}${libdir}
@@ -181,7 +184,7 @@ do_install() {
     printf "imagefs=${IMAGE_FSTYPES}\n" >> ${D}${INFOFILE}
     printf "imagetype=${DISTRO_TYPE}\n" >> ${D}${INFOFILE}
     printf "imageversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
-    printf "imglanguage=${LANGUAGE}\n" >> ${D}${INFOFILE}
+    printf "imglanguage=multilang\n" >> ${D}${INFOFILE}
     printf "imgrevision='${BUILD_VERSION}'\n" >> ${D}${INFOFILE}
     printf "imgversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kernel='${KERNEL_VERSION}'\n" >> ${D}${INFOFILE}
@@ -195,7 +198,7 @@ do_install() {
     printf "mtdbootfs=${MTD_BOOTFS}\n" >> ${D}${INFOFILE}
     printf "mtdkernel=${MTD_KERNEL}\n" >> ${D}${INFOFILE}
     printf "mtdrootfs=${MTD_ROOTFS}\n" >> ${D}${INFOFILE}
-    printf "multilib=${HAVE_MULTILIB}\n" >> ${D}${INFOFILE}
+    printf "multilib=False\n" >> ${D}${INFOFILE}
     printf "multitranscoding=${HAVE_MULTITRANSCODING}\n" >> ${D}${INFOFILE}
     printf "oe=${OE_VER}\n" >> ${D}${INFOFILE}
     printf "platform=${STB_PLATFORM}\n" >> ${D}${INFOFILE}
@@ -226,8 +229,8 @@ do_install[vardepsexclude] += " DATE DATETIME IMAGE_BUILD"
 FILES:${PN}:append = " /usr"
 
 do_deploy() {
-	install -d ${DEPLOY_DIR_IMAGE}/enigma-info
-	install -m 0644 ${D}${INFOFILE} ${DEPLOY_DIR_IMAGE}/enigma-info/${MACHINE}.txt
+	install -d ${DEPLOY_DIR_IMAGE}/../../enigma-info
+	install -m 0644 ${D}${INFOFILE} ${DEPLOY_DIR_IMAGE}/../../enigma-info/${MACHINE}.txt
 }
 
 addtask deploy before do_package after do_install
