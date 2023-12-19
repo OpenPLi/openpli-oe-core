@@ -200,7 +200,7 @@ do_install() {
     printf "mtdrootfs=${MTD_ROOTFS}\n" >> ${D}${INFOFILE}
     printf "multilib=False\n" >> ${D}${INFOFILE}
     printf "multitranscoding=${HAVE_MULTITRANSCODING}\n" >> ${D}${INFOFILE}
-    printf "oe=${OE_VER}\n" >> ${D}${INFOFILE}
+    printf "oe=OpenPLi ${DISTRO_VERSION}\n" >> ${D}${INFOFILE}
     printf "platform=${STB_PLATFORM}\n" >> ${D}${INFOFILE}
     printf "python='${PYTHON_BASEVERSION}'\n" >> ${D}${INFOFILE}
     printf "rca=${HAVE_RCA}\n" >> ${D}${INFOFILE}
