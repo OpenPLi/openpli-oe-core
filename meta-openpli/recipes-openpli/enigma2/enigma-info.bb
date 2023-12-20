@@ -141,7 +141,7 @@ do_install() {
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-UCLAN}/recipes-drivers/uclan-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "Vimastec" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${MACHINE_BRAND}" = "VU+" ]; then
+    elif [ "${MACHINE_BRAND}" = "Vu+" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-VUPLUS}/recipes-bsp/drivers/vuplus-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "MaxDigital" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XP}/recipes-bsp/drivers/xp-dvb-modules-${MACHINE}.bb | cut -b 12-19`
