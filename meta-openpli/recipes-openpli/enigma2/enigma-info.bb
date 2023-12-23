@@ -25,7 +25,7 @@ PR[vardepsexclude] = "DATE"
 
 PACKAGES = "${PN}"
 
-inherit python3-dir 
+inherit ${PYTHON_PN}-dir ${PYTHON_PN}native
 
 # Hardware Branding
 
@@ -62,8 +62,8 @@ HAVE_SVIDEO = "${@bb.utils.contains("MACHINE_FEATURES", "SVIDEO", "True", "False
 #Extra Features
 HAVE_HDMI_IN_HD = "${@bb.utils.contains('MACHINE_FEATURES', 'HDMI-IN-HD', 'True' , 'False', d)}"
 HAVE_HDMI_IN_FHD = "${@bb.utils.contains('MACHINE_FEATURES', 'HDMI-IN-FHD', 'True' , 'False', d)}"
-HAVE_WOL = "${@bb.utils.contains('MACHINE_FEATURES', 'WOL', 'True' , 'False', d)}"
-HAVE_WWOL = "${@bb.utils.contains('MACHINE_FEATURES', 'WWOL', 'True' , 'False', d)}"
+HAVE_WOL = "${@bb.utils.contains('MACHINE_FEATURES', 'wol', 'True' , 'False', d)}"
+HAVE_WWOL = "${@bb.utils.contains('MACHINE_FEATURES', 'wwol', 'True' , 'False', d)}"
 HAVE_CI = "${@bb.utils.contains('MACHINE_FEATURES', 'ci', 'True' , 'False', d)}"
 HAVE_TRANSCODING = "${@bb.utils.contains('MACHINE_FEATURES', 'transcoding', 'True' , 'False', d)}"
 HAVE_MULTITRANSCODING = "${@bb.utils.contains('MACHINE_FEATURES', 'multitranscoding', 'True' , 'False', d)}"
@@ -79,6 +79,7 @@ RCIDNUM ??= "2"
 RCHARDWARE ??= "N/A"
 
 STB_PLATFORM ?= "${MACHINE}"
+MACHINE_MODEL ?= "${MACHINE}"
 MEDIASERVICE ?= "${@bb.utils.contains("MACHINE_FEATURES", "himedia", "servicehisilicon" , "servicegstreamer", d)}"
 BLINDSCAN_BINARY ?= "blindscan"
 FORCE ?= "no"
@@ -93,9 +94,92 @@ INFOFILE = "${libdir}/enigma.info"
 do_install[nostamp] = "1"
 
 do_install() {
-    DRIVERSDATE='N/A'
+# Python version
 
-#   Specific machines
+	PYTHON_FULLVERSION=`python3 --version | cut -d ' ' -f 2`
+	if [ "${PYTHON_FULLVERSION}" = "" ]; then
+		PYTHON_FULLVERSION=${PYTHON_BASEVERSION}
+	fi
+
+# OE-A compatible machine names
+
+	MACHINEBUILD=${MACHINE}
+	if [ "$MACHINE" = "alphatriplehd" ]; then
+		MACHINEBUILD=alphatriple
+	elif [ "$MACHINE" = "et1x000" ]; then
+		MACHINEBUILD=gi11000
+	elif [ "$MACHINE" = "et1x000" ]; then
+		MACHINEBUILD=et7x00mini
+	elif [ "$MACHINE" = "h3" ]; then
+		MACHINEBUILD=zgemmah3
+	elif [ "$MACHINE" = "h4" ]; then
+		MACHINEBUILD=zgemmah4
+	elif [ "$MACHINE" = "h5" ]; then
+		MACHINEBUILD=zgemmah5
+	elif [ "$MACHINE" = "h6" ]; then
+		MACHINEBUILD=zgemmah6
+	elif [ "$MACHINE" = "h7" ]; then
+		MACHINEBUILD=zgemmah7
+	elif [ "$MACHINE" = "h8" ]; then
+		MACHINEBUILD=zgemmah82h
+	elif [ "$MACHINE" = "h9" ]; then
+		MACHINEBUILD=zgemmah9s
+	elif [ "$MACHINE" = "h9combo" ]; then
+		MACHINEBUILD=zgemmah9combo
+	elif [ "$MACHINE" = "h9combose" ]; then
+		MACHINEBUILD=zgemmah9combose
+	elif [ "$MACHINE" = "h9se" ]; then
+		MACHINEBUILD=zgemmah9se
+	elif [ "$MACHINE" = "hd11" ]; then
+		MACHINEBUILD=mutant11
+	elif [ "$MACHINE" = "hd1100" ]; then
+		MACHINEBUILD=mutant1100
+	elif [ "$MACHINE" = "hd1200" ]; then
+		MACHINEBUILD=mutant1200
+	elif [ "$MACHINE" = "hd1265" ]; then
+		MACHINEBUILD=mutant1265
+	elif [ "$MACHINE" = "hd1500" ]; then
+		MACHINEBUILD=mutant1500
+	elif [ "$MACHINE" = "hd2400" ]; then
+		MACHINEBUILD=mutant2400
+	elif [ "$MACHINE" = "hd500c" ]; then
+		MACHINEBUILD=mutant500c
+	elif [ "$MACHINE" = "hd530c" ]; then
+		MACHINEBUILD=mutant530c
+	elif [ "$MACHINE" = "hd60" ]; then
+		MACHINEBUILD=mutant60
+	elif [ "$MACHINE" = "hd66se" ]; then
+		MACHINEBUILD=mutant66se
+	elif [ "$MACHINE" = "i55" ]; then
+		MACHINEBUILD=zgemmai55
+	elif [ "$MACHINE" = "i55plus" ]; then
+		MACHINEBUILD=zgemmai55plus
+	elif [ "$MACHINE" = "i55se" ]; then
+		MACHINEBUILD=zgemmai55se
+	elif [ "$MACHINE" = "lc" ]; then
+		MACHINEBUILD=zgemmaslc
+	elif [ "$MACHINE" = "lunix3-4k" ]; then
+		MACHINEBUILD=lunix34k
+	elif [ "$MACHINE" = "multibox" ]; then
+		MACHINEBUILD=maxytecmulti
+	elif [ "$MACHINE" = "multiboxse" ]; then
+		MACHINEBUILD=maxytecmultise
+	elif [ "$MACHINE" = "sh1" ]; then
+		MACHINEBUILD=zgemmash1
+	elif [ "$MACHINE" = "vs1000" ]; then
+		MACHINEBUILD=vimastec1000
+	elif [ "$MACHINE" = "vs1500" ]; then
+		MACHINEBUILD=vimastec1500
+	elif [ "$MACHINE" = "xp1000" ]; then
+		MACHINEBUILD=xp1000max
+	elif [ "$MACHINE" = "xpeedc" ]; then
+		MACHINEBUILD=xpeedlxcc
+	fi
+
+#   driver data
+
+    DRIVERSDATE='N/A'
+    # machine specific
     if [ "${MACHINE}" = "vusolo4k" -o "${MACHINE}" = "vusolo2" -o "${MACHINE}" = "vusolose" -o "${MACHINE}" = "vuduo2" -o "${MACHINE}" = "vuuno4k" -o "${MACHINE}" = "vuuno4kse" -o "${MACHINE}" = "vuultimo4k" -o "${MACHINE}" = "vuzero4k" -o "${MACHINE}" = "vuduo4k" -o "${MACHINE}" = "vuduo4kse" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-VUPLUS}/recipes-bsp/drivers/vuplus-dvb-proxy-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE}" = "dm8000" ]; then
@@ -110,7 +194,7 @@ do_install() {
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GIGABLUE}/recipes-bsp/drivers/gigablue-platform-util-gb7252.bb | cut -b 12-19`
     elif [ "${MACHINE}" = "xpeedc" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XPEEDC}/recipes-bsp/drivers/nextv-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-#   Retail brands
+	# by retail brand
     elif [ "${MACHINE_BRAND}" = "AB-COM" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-ABCOM}/recipes-bsp/drivers/abcom-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "AMIKO" ]; then
@@ -147,7 +231,7 @@ do_install() {
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XP}/recipes-bsp/drivers/xp-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "XSARIUS" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XSARIUS}/recipes-bsp/drivers/xsarius-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${MACHINE_BRAND}" = "XTREND" ]; then
+    elif [ "${MACHINE_BRAND}" = "Xtrend" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-XTREND}/recipes-bsp/drivers/et-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "Zgemma" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-ZGEMMA}/recipes-bsp/drivers/zgemma-dvb-modules-${MACHINE}.bb | cut -b 12-19`
@@ -190,19 +274,20 @@ do_install() {
     printf "kernel='${KERNEL_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kexecmb=${HAVE_KEXECMB}\n" >> ${D}${INFOFILE}
     printf "kernelfile=${KERNEL_FILE}\n" >> ${D}${INFOFILE}
-    printf "machinebuild=${MACHINE}\n" >> ${D}${INFOFILE}
+    printf "machine=${MACHINE}\n" >> ${D}${INFOFILE}
+    printf "machinebuild=${MACHINEBUILD}\n" >> ${D}${INFOFILE}
     printf "mediaservice=${MEDIASERVICE}\n" >> ${D}${INFOFILE}
     printf "middleflash=${HAVE_MIDDLEFLASH}\n" >> ${D}${INFOFILE}
     printf "mkubifs=${MKUBIFS_ARGS}\n" >> ${D}${INFOFILE}
-    printf "model=${MACHINE}\n" >> ${D}${INFOFILE}
+    printf "model=${MACHINE_MODEL}\n" >> ${D}${INFOFILE}
     printf "mtdbootfs=${MTD_BOOTFS}\n" >> ${D}${INFOFILE}
     printf "mtdkernel=${MTD_KERNEL}\n" >> ${D}${INFOFILE}
     printf "mtdrootfs=${MTD_ROOTFS}\n" >> ${D}${INFOFILE}
     printf "multilib=False\n" >> ${D}${INFOFILE}
     printf "multitranscoding=${HAVE_MULTITRANSCODING}\n" >> ${D}${INFOFILE}
-    printf "oe=OpenPLi ${DISTRO_VERSION}\n" >> ${D}${INFOFILE}
+    printf "oe=OpenPLi 3.3 (Hardknott)\n" >> ${D}${INFOFILE}
     printf "platform=${STB_PLATFORM}\n" >> ${D}${INFOFILE}
-    printf "python='${PYTHON_BASEVERSION}'\n" >> ${D}${INFOFILE}
+    printf "python='${PYTHON_FULLVERSION}'\n" >> ${D}${INFOFILE}
     printf "rca=${HAVE_RCA}\n" >> ${D}${INFOFILE}
     printf "rcidnum=${RCIDNUM}\n" >> ${D}${INFOFILE}
     printf "rcname=${RCNAME}\n" >> ${D}${INFOFILE}
@@ -234,3 +319,211 @@ do_deploy() {
 }
 
 addtask deploy before do_package after do_install
+
+pkg_postinst_ontarget_${PN} () {
+#!/bin/sh
+# description: Update the enigma.info file with runtime data
+
+INFOFILE=/usr/lib/enigma.info
+PROC_MODEL=/proc/stb/info/hwmodel
+PROC_TYPE=/proc/stb/info/type
+SFX6008WIFI=/sys/devices/platform/soc/f9890000.ehci/usb1/1-1/idProduct
+
+#
+# fetch the boxes' reported hardware model
+#
+hwmodel() {
+	if [ -f $PROC_MODEL ]; then
+		value=$(head -n 1 $PROC_MODEL)
+	fi
+	echo $value
+}
+
+#
+# fetch the boxes' reported stb type
+#
+hwtype() {
+	prefix=$1
+	if [ -f $PROC_TYPE ]; then
+		value=$(head -n 1 $PROC_TYPE)
+	fi
+	echo $value
+}
+
+#
+# check if $1 starts with $2
+#
+startswith() {
+	prefix=$1
+	value=$2
+	case $prefix in
+		"$value"*) return 0
+	esac
+	return 1
+}
+
+#
+# update TMPFILE with new information
+#
+updateinfo() {
+	key=$1
+	value=$2
+	sed -i "s/^${key}=.*/$key=$value/" $TMPFILE
+}
+
+#
+# bail out if the info file does not exist
+#
+if [ ! -f $INFOFILE ]; then
+	exit 0
+fi
+
+#
+# add the runime values to the enigma.info file
+#
+TMPFILE=$(mktemp /tmp/enigma-info.XXXXXX)
+
+# make a copy, remove the checksum
+grep -v checksum $INFOFILE > $TMPFILE
+
+# get the machine name for this image
+MACHINE=`grep "machine=" $TMPFILE | cut -d '=' -f 2`
+
+# get runtime data
+type=`hwtype`
+model=`hwmodel`
+
+# runtime fixes for the Zgemma H10
+if [ "$MACHINE" = "h10" ]; then
+	if [ "$model" = "h10.t" ]; then
+		updateinfo "displaymodel" "H10 Combo"
+		updateinfo "machinebuild" "zgemmah10combo"
+	elif [ "$model" = "h10.2s" ]; then
+		updateinfo "displaymodel" "H10.2S"
+		updateinfo "machinebuild" "zgemmah102s"
+	elif [ "$model" = "h10.2h" ]; then
+		updateinfo "displaymodel" "H10.2H"
+		updateinfo "machinebuild" "zgemmah102h"
+	fi
+
+# runtime fixes for the Zgemma H11
+elif [ "$MACHINE" = "h11" ]; then
+	if [ "$model" = "h11.s" ]; then
+		updateinfo "displaymodel" "H11.S"
+		updateinfo "machinebuild" "zgemmah11s"
+	elif [ "$model" = "h11.2h" ]; then
+		updateinfo "displaymodel" "H11.2H"
+		updateinfo "machinebuild" "zgemmah112h"
+	fi
+
+# runtime fixes for the Zgemma H3
+elif [ "$MACHINE" = "h3" ]; then
+
+	# todo runtime detect of:
+
+		# displaymodel=H3.2TC
+		# machinebuild=zgemmah32tc
+
+		# displaymodel=H3 AC
+		# machinebuild=zgemmah3ac
+
+# runtime fixes for the Zgemma H5
+elif [ "$MACHINE" = "h5" ]; then
+
+	# todo runtime detect of:
+
+		# displaymodel=H5.2S PLUS
+		# machinebuild=zgemmah52splus
+
+		# displaymodel=H5.2S
+		# machinebuild=zgemmah52s
+
+		# displaymodel=H5.2TC
+		# machinebuild=zgemmah52tc
+
+		# displaymodel=H5 AC
+		# machinebuild=zgemmah5ac
+
+		# displaymodel=H5
+		# machinebuild=zgemmah5
+
+# runtime fixes for the Zgemma H9
+elif [ "$MACHINE" = "h9" ]; then
+	if [ "$model" = "h9.s" ]; then
+		updateinfo "displaymodel" "H9.S"
+		updateinfo "machinebuild" "zgemmah9s"
+	elif [ "$model" = "h9.t" ]; then
+		updateinfo "displaymodel" "H9.T"
+		updateinfo "machinebuild" "zgemmah9t"
+	elif [ "$model" = "h9.2h" ]; then
+		updateinfo "displaymodel" "H9.2H"
+		updateinfo "machinebuild" "zgemmah92h"
+	elif [ "$model" = "h9.2s" ]; then
+		updateinfo "displaymodel" "H9.2S"
+		updateinfo "machinebuild" "zgemmah92s"
+	fi
+
+# runtime fixes for the Zgemma H9 SE
+elif [ "$MACHINE" = "h9se" ]; then
+	if [ "$model" = "h9.s.se" ]; then
+		updateinfo "displaymodel" "H9.S SE"
+		updateinfo "machinebuild" "zgemmah9sse"
+	elif [ "$model" = "h9se" ]; then
+		updateinfo "displaymodel" "H9S SE"
+		updateinfo "machinebuild" "zgemmah9sse"
+	elif [ "$model" = "h9.2s.se" ]; then
+		updateinfo "displaymodel" "H9.2S SE"
+		updateinfo "machinebuild" "zgemmah92sse"
+	elif [ "$model" = "h9.2h.se" ]; then
+		updateinfo "displaymodel" "H9.2H SE"
+		updateinfo "machinebuild" "zgemmah9hse"
+	fi
+
+# runtime fixes for the Octagon SF8008
+if [ "$MACHINE" = "sf8008" ]; then
+	if startswith "11" $type; then
+		updateinfo "machinebrand" "sf8008t"
+		updateinfo "displaymodel" "SF8008 4K Twin"
+	elif startswith "12" $type; then
+		updateinfo "machinebrand" "sf8008c"
+		updateinfo "displaymodel" "SF8008 4K Combo"
+	else  # startswith "10"
+		updateinfo "machinebrand" "sf8008s"
+		updateinfo "displaymodel" "SF8008 4K Single"
+	fi
+
+# runtime fixes for the Octagon SFX6008
+elif [ "$MACHINE" = "sfx6008" ]; then
+	if startswith "10" $type; then
+		updateinfo "machinebrand" "sfx6018"
+		updateinfo "displaymodel" "SFX6018 S2 IP"
+	else # startswith "11"
+		if [ -f $SFX6008WIFI ]; then
+			value=$(head -n 1 $SFX6008WIFI)
+		else
+			value=
+		fi
+		if [ "$value" = "f179" -o "$value" = "F179" ]; then
+			updateinfo "machinebrand" "sfx6008wl"
+			updateinfo "displaymodel" "SFX6008 WL"
+		else
+			updateinfo "machinebrand" "sfx6008"
+			updateinfo "displaymodel" "SFX6008 IP"
+		fi
+	fi
+
+# runtime fixes for the Uclan Ustym4KPro
+elif [ "$MACHINE" = "ustym4kpro" ]; then
+	if startswith "11" $type; then
+		updateinfo "machinebrand" "ustym4ktwin"
+		updateinfo "displaymodel" "uStym 4K Twin"
+	fi
+fi
+
+# re-add the checksum
+MD5SUM=`md5sum $TMPFILE | cut -d ' ' -f 1`
+echo "checksum=$MD5SUM" >> $TMPFILE
+mv $TMPFILE $INFOFILE
+
+exit 0
+}
