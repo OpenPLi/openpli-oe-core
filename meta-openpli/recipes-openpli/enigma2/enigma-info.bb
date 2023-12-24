@@ -17,10 +17,9 @@ SSTATE_SKIP_CREATION = "1"
 
 inherit linux-kernel-base
 KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
-IMAGE_VERSION = "${DISTRO_VERSION}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-PV = "${IMAGE_VERSION}"
+PV = "${DISTRO_VERSION}"
 PR[vardepsexclude] = "DATE"
 
 PACKAGES = "${PN}"
@@ -100,6 +99,9 @@ do_install() {
 	if [ "${PYTHON_FULLVERSION}" = "" ]; then
 		PYTHON_FULLVERSION=${PYTHON_BASEVERSION}
 	fi
+
+# Image version
+	IMAGE_VERSION=`echo ${DISTRO_VERSION} | cut -d "-" -f 1`
 
 # OE-A compatible machine names
 
@@ -262,15 +264,15 @@ do_install() {
     printf "hdmifhdin=${HAVE_HDMI_IN_FHD}\n" >> ${D}${INFOFILE}
     printf "hdmihdin=${HAVE_HDMI_IN_HD}\n" >> ${D}${INFOFILE}
     printf "hdmistandbymode=${HDMISTANDBY_MODE}\n" >> ${D}${INFOFILE}
-    printf "imagebuild='${BUILD_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imagebuild='${DATE}'\n" >> ${D}${INFOFILE}
     printf "imagedevbuild='${DEVELOPER_BUILD_VERSION}'\n" >> ${D}${INFOFILE}
     printf "imagedir=${IMAGEDIR}\n" >> ${D}${INFOFILE}
     printf "imagefs=${IMAGE_FSTYPES}\n" >> ${D}${INFOFILE}
     printf "imagetype=${DISTRO_TYPE}\n" >> ${D}${INFOFILE}
-    printf "imageversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imageversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
     printf "imglanguage=multilang\n" >> ${D}${INFOFILE}
-    printf "imgrevision='${BUILD_VERSION}'\n" >> ${D}${INFOFILE}
-    printf "imgversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imgrevision='${DATE}'\n" >> ${D}${INFOFILE}
+    printf "imgversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kernel='${KERNEL_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kexecmb=${HAVE_KEXECMB}\n" >> ${D}${INFOFILE}
     printf "kernelfile=${KERNEL_FILE}\n" >> ${D}${INFOFILE}
@@ -285,7 +287,7 @@ do_install() {
     printf "mtdrootfs=${MTD_ROOTFS}\n" >> ${D}${INFOFILE}
     printf "multilib=False\n" >> ${D}${INFOFILE}
     printf "multitranscoding=${HAVE_MULTITRANSCODING}\n" >> ${D}${INFOFILE}
-    printf "oe=OpenPLi 3.3 (Hardknott)\n" >> ${D}${INFOFILE}
+    printf "oe=OpenPLi (${LAYERSERIES_CORENAMES})\n" >> ${D}${INFOFILE}
     printf "platform=${STB_PLATFORM}\n" >> ${D}${INFOFILE}
     printf "python='${PYTHON_FULLVERSION}'\n" >> ${D}${INFOFILE}
     printf "rca=${HAVE_RCA}\n" >> ${D}${INFOFILE}
