@@ -77,7 +77,6 @@ RCNAME ??= "dmm1"
 RCIDNUM ??= "2"
 RCHARDWARE ??= "N/A"
 
-OE_VER ?= "0.0"
 STB_PLATFORM ?= "${MACHINE}"
 MACHINE_MODEL ?= "${MACHINE}"
 MEDIASERVICE ?= "${@bb.utils.contains("MACHINE_FEATURES", "himedia", "servicehisilicon" , "servicegstreamer", d)}"
@@ -103,6 +102,10 @@ do_install() {
 
 # Image version
 	IMAGE_VERSION=`echo ${DISTRO_VERSION} | cut -d "-" -f 1`
+
+# OE version info
+	OE_NAME=`cd ${OPENPLI_BASE} && git submodule | grep "meta-openembedded" | cut -d '(' -f 2 | cut -d ')' -f 1 | cut -d '/' -f 3`
+	OE_VERSION=`cd ${OPENPLI_BASE} && git submodule | grep "openembedded-core" | cut -d '(' -f 2 | cut -d ')' -f 1 | cut -d '-' -f 2`
 
 # OE-A compatible machine names
 
@@ -288,7 +291,7 @@ do_install() {
     printf "mtdrootfs=${MTD_ROOTFS}\n" >> ${D}${INFOFILE}
     printf "multilib=False\n" >> ${D}${INFOFILE}
     printf "multitranscoding=${HAVE_MULTITRANSCODING}\n" >> ${D}${INFOFILE}
-    printf "oe=${LAYERSERIES_CORENAMES} (${OE_VER})\n" >> ${D}${INFOFILE}
+    printf "oe=${OE_NAME} (${OE_VERSION})\n" >> ${D}${INFOFILE}
     printf "platform=${STB_PLATFORM}\n" >> ${D}${INFOFILE}
     printf "python='${PYTHON_FULLVERSION}'\n" >> ${D}${INFOFILE}
     printf "rca=${HAVE_RCA}\n" >> ${D}${INFOFILE}
