@@ -30,7 +30,7 @@ inherit ${PYTHON_PN}-dir ${PYTHON_PN}native
 
 #Display type
 DISPLAY_TYPE = "\
-${@bb.utils.contains('MACHINE_FEATURES', 'textlcd', 'textlcd' , '', d)}\
+${@bb.utils.contains('MACHINE_FEATURES', 'textlcd', bb.utils.contains('MACHINE_FEATURES', '7segment', '' , 'textlcd', d) , '', d)}\
 ${@bb.utils.contains('MACHINE_FEATURES', '7segment', '7segment' , '', d)}\
 ${@bb.utils.contains('MACHINE_FEATURES', 'bwlcd96', 'bwlcd96' , '', d)}\
 ${@bb.utils.contains('MACHINE_FEATURES', 'bwlcd128', 'bwlcd128' , '', d)}\
