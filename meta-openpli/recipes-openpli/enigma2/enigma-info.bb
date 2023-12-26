@@ -95,7 +95,8 @@ do_install[nostamp] = "1"
 do_install() {
 # Python version
 
-	PYTHON_FULLVERSION=`python3 --version | cut -d ' ' -f 2`
+	PATTERN=`echo ${BBFILE_PATTERN_core} | cut -c 2-`
+	PYTHON_FULLVERSION=`ls ${PATTERN}recipes-devtools/python/python?_*.bb | cut -d '_' -f 2 | xargs basename -s .bb`
 	if [ "${PYTHON_FULLVERSION}" = "" ]; then
 		PYTHON_FULLVERSION=${PYTHON_BASEVERSION}
 	fi
