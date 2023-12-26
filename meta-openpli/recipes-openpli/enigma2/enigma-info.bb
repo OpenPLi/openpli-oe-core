@@ -215,7 +215,7 @@ do_install() {
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-MIRACLEBOX}/recipes-bsp/drivers/miraclebox-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "Mut@nt" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${MACHINE_BRAND}" = "Gigablue" ]; then
+    elif [ "${MACHINE_BRAND}" = "GigaBlue" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GIGABLUE}/recipes-bsp/drivers/gigablue-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "Maxytec" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-MAXYTEC}/recipes-bsp/drivers/maxytec-dvb-modules-${MACHINE}.bb | cut -b 12-19`
@@ -227,7 +227,7 @@ do_install() {
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-SAB}/recipes-bsp/drivers/sab-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "SPYCAT" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-SPYCAT}/recipes-bsp/spycat-dvb-modules/spycat-dvb-modules-${MACHINE}.bb | cut -b 12-19`
-    elif [ "${MACHINE_BRAND}" = "uclan" ]; then
+    elif [ "${MACHINE_BRAND}" = "Uclan" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-UCLAN}/recipes-drivers/uclan-dvb-modules-${MACHINE}.bb | cut -b 12-19`
     elif [ "${MACHINE_BRAND}" = "Vimastec" ]; then
         DRIVERSDATE=`grep "SRCDATE = " ${BSP-BASE-GFUTURES}/recipes-bsp/drivers/hd-dvb-modules-${MACHINE}.bb | cut -b 12-19`
