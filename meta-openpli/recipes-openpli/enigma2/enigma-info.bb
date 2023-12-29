@@ -274,7 +274,7 @@ do_install() {
     printf "imagedir=${IMAGEDIR}\n" >> ${D}${INFOFILE}
     printf "imagefs=${IMAGE_FSTYPES}\n" >> ${D}${INFOFILE}
     printf "imagetype=${DISTRO_TYPE}\n" >> ${D}${INFOFILE}
-    printf "imageversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imageversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
     printf "imglanguage=multilang\n" >> ${D}${INFOFILE}
     printf "imgrevision='${DATE}'\n" >> ${D}${INFOFILE}
     printf "imgversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
