@@ -18,9 +18,8 @@ do_install_append() {
 }
 
 pkg_postinst_${PN} () {
-        if [ -z "$D" ]; then
-                if [ -e ${sysconfdir}/init.d/populate-volatile.sh ]; then
-                        ${sysconfdir}/init.d/populate-volatile.sh update
-                fi
-        fi
+	if [ -z "$D" ]; then
+		install -dm 770 /var/run/autofs
+		install -dm 755 /media/net
+	fi
 }
