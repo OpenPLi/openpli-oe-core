@@ -19,7 +19,13 @@ do_install_append() {
 
 pkg_postinst_${PN} () {
 	if [ -z "$D" ]; then
-		install -dm 770 /var/run/autofs
-		install -dm 755 /media/net
+		if [ ! -d /var/run/autofs ]; then
+			mkdir -p /var/run/autofs
+			chmod 770 /var/run/autofs
+		fi
+		if [ ! -d /media/net ]; then
+			mkdir -p /media/net
+			chmod 755 /media/net
+		fi
 	fi
 }
