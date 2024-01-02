@@ -82,7 +82,7 @@ if [ ! -f $INFOFILE ]; then
 fi
 
 # get the machine brand name for this image
-MACHINEBUILD=`grep "machinebuild=" $TMPFILE | cut -d '=' -f 2`
+MACHINEBUILD=`grep "machinebuild=" $INFOFILE | cut -d '=' -f 2`
 
 # move the image if it exists
 [ -f "${datadir}/enigma2/${MACHINEBUILD}.svg" ] && mv "${datadir}/enigma2/${MACHINEBUILD}.svg" "${datadir}/enigma2/boxlogo.svg"
