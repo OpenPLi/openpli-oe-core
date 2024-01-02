@@ -96,8 +96,5 @@ rm -f "${datadir}/enigma2/sf8008*.svg"
 rm -f "${datadir}/enigma2/sfx60*.svg"
 rm -f "${datadir}/enigma2/ustym4k*.svg"
 
-# for test
-[ -f "${datadir}/enigma2/${MACHINEBUILD}.svg" ] || touch "${datadir}/enigma2/${MACHINEBUILD}-not-found.svg"
-
 exit 0
 }
