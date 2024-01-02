@@ -8,7 +8,7 @@ DEPENDS = "enigma-info"
 
 ALLOW_EMPTY:${PN} = "1"
 
-inherit gitpkgv python3-compileall distutils-openplugins
+inherit gitpkgv ${PYTHON_PN}native
 
 PV = "1.0+gitr${SRCPV}"
 PKGV = "1.0+gitr${GITPKGV}"
@@ -61,6 +61,7 @@ do_install() {
 
     install -d ${D}${libdir}/enigma2/python/Components/Renderer
     cp -r ${S}/Renderer/* ${D}${libdir}/enigma2/python/Components/Renderer
+    python3 -m compileall -o2 -b ${D}${libdir}/enigma2/python/Components/Renderer
 }
 
 pkg_postinst_ontarget_${PN} () {
