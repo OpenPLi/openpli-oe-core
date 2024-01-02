@@ -57,7 +57,7 @@ do_install() {
 	elif [ "$MACHINE" = "ustym4kpro" ]; then
 		cp "${S}/box/ustym4k*.svg" "${D}${datadir}/enigma2/"
 	fi
-	chmod 644 "${D}${datadir}/enigma2/*.svg"
+	chmod -f 644 "${D}${datadir}/enigma2/*.svg" || true
 
     install -d ${D}${libdir}/enigma2/python/Components/Renderer
     cp -r ${S}/Renderer/* ${D}${libdir}/enigma2/python/Components/Renderer
