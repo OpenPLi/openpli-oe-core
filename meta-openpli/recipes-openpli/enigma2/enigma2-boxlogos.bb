@@ -19,7 +19,7 @@ SRC_URI = "git://github.com/DimitarCC/e2-boxlogos.git;protocol=https;branch=main
 
 S = "${WORKDIR}/git"
 
-FILES:${PN} = "${datadir}/enigma2/ ${libdir}/enigma2/python/Components/Renderer/"
+FILES:${PN} = "${datadir}/enigma2/logos/ ${libdir}/enigma2/python/Components/Renderer/"
 FILES:${PN}-src = "${libdir}/enigma2/python/Components/Renderer/*.py"
 
 do_install() {
