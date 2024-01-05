@@ -40,22 +40,22 @@ do_install() {
 
 	if [ -f "${S}/box/${MACHINE}.svg" ] ; then
 		install -m 0644 "${S}/box/${MACHINE}.svg" ${D}${datadir}/enigma2/logos/boxlogo.svg
-	elif [ "$MACHINE" = "h10" ]; then
-		cp "${S}/box/zgemmah10*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "h11" ]; then
-		cp "${S}/box/zgemmah11*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "h3" ]; then
-		cp "${S}/box/zgemmah3*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "h5" ]; then
-		cp "${S}/box/zgemmah5*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "h9" -o "$MACHINE" = "h9se" ]; then
-		cp "${S}/box/zgemmah9*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "sf8008" ]; then
-		cp "${S}/box/sf8008*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "sfx6008" ]; then
-		cp "${S}/box/sfx60*.svg" "${D}${datadir}/enigma2/logos/"
-	elif [ "$MACHINE" = "ustym4kpro" ]; then
-		cp "${S}/box/ustym4k*.svg" "${D}${datadir}/enigma2/logos/"
+	elif [ "${MACHINE}" = "h10" ]; then
+		cp ${S}/box/zgemmah10*.svg ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "h11" ]; then
+		cp ${S}/box/zgemmah11*.svg ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "h3" ]; then
+		cp ${S}/box/zgemmah3*.svg ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "h5" ]; then
+		cp ${S}/box/zgemmah5*.svg ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "h9" -o "${MACHINE}" = "h9se" ]; then
+		cp ${S}/box/zgemmah9*.svg  ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "sf8008" ]; then
+		cp ${S}/box/sf8008*.svg ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "sfx6008" ]; then
+		cp ${S}/box/sfx60*.svg ${D}${datadir}/enigma2/logos/
+	elif [ "${MACHINE}" = "ustym4kpro" ]; then
+		cp ${S}/box/ustym4k*.svg ${D}${datadir}/enigma2/logos/
 	fi
 	chmod -f 644 "${D}${datadir}/enigma2/logos/*.svg" || true
 
@@ -85,16 +85,16 @@ fi
 MACHINEBUILD=`grep "machinebuild=" $INFOFILE | cut -d '=' -f 2`
 
 # move the image if it exists
-[ -f "${datadir}/enigma2/logos/${MACHINEBUILD}.svg" ] && mv "${datadir}/enigma2/logos/${MACHINEBUILD}.svg" "${datadir}/enigma2/logos/boxlogo.svg"
+[ -f "${datadir}/enigma2/logos/$MACHINEBUILD.svg" ] && mv "${datadir}/enigma2/logos/$MACHINEBUILD.svg" "${datadir}/enigma2/logos/boxlogo.svg"
 
 # remove all other box images
-rm -f "${datadir}/enigma2/logos/zgemmah10*.svg"
-rm -f "${datadir}/enigma2/logos/zgemmah11*.svg"
-rm -f "${datadir}/enigma2/logos/zgemmah3*.svg"
-rm -f "${datadir}/enigma2/logos/zgemmah9*.svg"
-rm -f "${datadir}/enigma2/logos/sf8008*.svg"
-rm -f "${datadir}/enigma2/logos/sfx60*.svg"
-rm -f "${datadir}/enigma2/logos/ustym4k*.svg"
+rm -f ${datadir}/enigma2/logos/zgemmah10*.svg
+rm -f ${datadir}/enigma2/logos/zgemmah11*.svg
+rm -f ${datadir}/enigma2/logos/zgemmah3*.svg
+rm -f ${datadir}/enigma2/logos/zgemmah9*.svg
+rm -f ${datadir}/enigma2/logos/sf8008*.svg
+rm -f ${datadir}/enigma2/logos/sfx60*.svg
+rm -f ${datadir}/enigma2/logos/ustym4k*.svg
 
 exit 0
 }
