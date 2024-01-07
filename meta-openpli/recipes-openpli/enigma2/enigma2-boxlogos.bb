@@ -41,21 +41,21 @@ do_install() {
 	if [ -f "${S}/box/${MACHINE}.svg" ] ; then
 		install -m 0644 "${S}/box/${MACHINE}.svg" ${D}${datadir}/enigma2/logos/boxlogo.svg
 	elif [ "${MACHINE}" = "h10" ]; then
-		cp ${S}/box/zgemmah10*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/zgemmah10*.svg ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "h11" ]; then
-		cp ${S}/box/zgemmah11*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/zgemmah11*.svg ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "h3" ]; then
-		cp ${S}/box/zgemmah3*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/zgemmah3*.svg ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "h5" ]; then
-		cp ${S}/box/zgemmah5*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/zgemmah5*.svg ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "h9" -o "${MACHINE}" = "h9se" ]; then
-		cp ${S}/box/zgemmah9*.svg  ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/zgemmah9*.svg  ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "sf8008" ]; then
-		cp ${S}/box/sf8008*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/sf8008*.svg ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "sfx6008" ]; then
-		cp ${S}/box/sfx60*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/sfx60*.svg ${D}${datadir}/enigma2/logos/ || true
 	elif [ "${MACHINE}" = "ustym4kpro" ]; then
-		cp ${S}/box/ustym4k*.svg ${D}${datadir}/enigma2/logos/
+		cp ${S}/box/ustym4k*.svg ${D}${datadir}/enigma2/logos/ || true
 	fi
 	chmod -f 644 "${D}${datadir}/enigma2/logos/*.svg" || true
 
