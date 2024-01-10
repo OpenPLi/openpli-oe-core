@@ -1,16 +1,16 @@
 diff --git a/lib/python/Components/About.py b/lib/python/Components/About.py
-index 650143087..968e2ef84 100644
+index 739abadcc..9fd372c84 100644
 --- a/lib/python/Components/About.py
 +++ b/lib/python/Components/About.py
-@@ -4,6 +4,7 @@ import time
- import re
+@@ -5,6 +5,7 @@ import re
  from Tools.HardwareInfo import HardwareInfo
+ from Components.SystemInfo import BoxInfo
  from sys import maxsize, modules, version_info
 +from subprocess import PIPE, Popen
  
  
  def getVersionString():
-@@ -220,6 +221,15 @@ def getBoxUptime():
+@@ -216,6 +217,15 @@ def getBoxUptime():
  	except:
  		return '-'
  
@@ -27,10 +27,10 @@ index 650143087..968e2ef84 100644
  # For modules that do "from About import about"
  about = modules[__name__]
 diff --git a/lib/python/Screens/About.py b/lib/python/Screens/About.py
-index f9ab0b4c8..d427625ef 100644
+index dfc522f10..47c0b8b56 100644
 --- a/lib/python/Screens/About.py
 +++ b/lib/python/Screens/About.py
-@@ -78,6 +78,10 @@ class About(Screen):
+@@ -72,6 +72,10 @@ class About(Screen):
  
  		AboutText += player + "\n"
  
