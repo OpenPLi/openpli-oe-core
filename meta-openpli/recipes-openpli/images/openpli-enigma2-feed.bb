@@ -105,7 +105,6 @@ OPTIONAL_PACKAGES += " \
 	ndisc6 \
 	net-snmp \
 	net-tools \
-	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
 	phodav \
 	ntfs-3g \
 	ntp \
@@ -192,6 +191,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-historyzapselector \
 	enigma2-plugin-extensions-infobarweather \
 	enigma2-plugin-extensions-jedimakerxtream \
+	enigma2-plugin-extensions-lcd4linuxplugin \
 	enigma2-plugin-extensions-managerautofs \
 	enigma2-plugin-extensions-modifyplifullhd \
 	enigma2-plugin-extensions-moviemanager \
