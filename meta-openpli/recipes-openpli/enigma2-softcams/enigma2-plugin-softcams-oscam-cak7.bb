@@ -4,23 +4,23 @@ inherit cmake
 inherit gitpkgv
 
 DESCRIPTION = "OScam-cak7 ${PV} Open Source Softcam"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git"
+SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git;branch=master"
 SRC_URI := "${SRC_ORIGIN} \
         file://cak7.patch \
 	"
 
 DEPENDS = "libusb openssl"
-RRECOMMENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
+RRECOMMENDS:${PN} += "enigma2-plugin-extensions-oscamstatus"
 
-LDFLAGS_prepend = "-ludev "
+LDFLAGS:prepend = "-ludev "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -38,7 +38,7 @@ SRC_URI += " \
 
 CONFFILES = "${sysconfdir}/tuxbox/config/oscam-cak7/oscam.conf ${sysconfdir}/tuxbox/config/oscam-cak7/oscam.server ${sysconfdir}/tuxbox/config/oscam-cak7/oscam.srvid ${sysconfdir}/tuxbox/config/oscam-cak7/oscam.user ${sysconfdir}/tuxbox/config/oscam-cak7/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam-cak7/oscam.provid"
 
-FILES_${PN} = "${bindir}/oscam-cak7 ${sysconfdir}/tuxbox/config/oscam-cak7/* ${sysconfdir}/init.d/softcam.oscam-cak7"
+FILES:${PN} = "${bindir}/oscam-cak7 ${sysconfdir}/tuxbox/config/oscam-cak7/* ${sysconfdir}/init.d/softcam.oscam-cak7"
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \
