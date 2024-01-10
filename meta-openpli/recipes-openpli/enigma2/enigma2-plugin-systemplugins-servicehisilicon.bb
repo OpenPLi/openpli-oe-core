@@ -17,7 +17,7 @@ SRC_URI = "git://github.com/OpenPLi/servicehisilicon.git;branch=${SERVICEHISILIC
 
 S = "${WORKDIR}/git"
 
-inherit autotools gitpkgv python3native pkgconfig python3targetconfig
+inherit autotools gitpkgv python3-compileall
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
