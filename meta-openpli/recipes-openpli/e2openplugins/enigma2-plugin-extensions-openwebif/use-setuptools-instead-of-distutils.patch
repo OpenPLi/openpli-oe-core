@@ -1,0 +1,12 @@
+diff --git a/setup.py b/setup.py
+index c3f2c144..ad70b660 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ 
+-from distutils.core import setup
++from setuptools import setup
+ import setup_translate
+ 
+ pkg = 'Extensions.OpenWebif'
