@@ -15,5 +15,6 @@ do_install() {
 	cp -rf ${S}/plugin.py ${D}/${libdir}/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py
 }
 
-FILES_${PN} = "${libdir}/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py"
-FILES_${PN} = "${libdir}/enigma2/python/Components/Renderer/__pycache__/PixmapLcd4linux.cpython-310.py"
+FILES:${PN} = "${libdir}/enigma2/python/Plugins/Extensions/LCD4linux/plugin.py"
+FILES:enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
+FILES:enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
