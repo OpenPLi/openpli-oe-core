@@ -12,7 +12,6 @@ S = "${WORKDIR}/git/tuxtxt"
 
 PV = "2.0+git${SRCPV}"
 PKGV = "2.0+git${GITPKGV}"
-PR = "r3"
 
 PACKAGES = "${PN}-src ${PN}-dev ${PN}-dbg ${PN}"
 FILES:${PN}-src = "/usr/src ${libdir}/enigma2/python/Plugins/Extensions/Tuxtxt/*.py"
