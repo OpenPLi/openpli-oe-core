@@ -12,7 +12,7 @@ DEPENDS = " \
 	libdreamdvd libdvbsi++ fribidi libmad libpng libsigc++-3 giflib libxml2 \
 	openssl libudfread \
 	python3-twisted python3-wifi \
-	python3-pillow python3-six-native \
+	python3-six-native \
 	swig-native \
 	tuxtxt-enigma2 \
 	"
@@ -28,7 +28,10 @@ RDEPENDS:${PN} = " \
 	${PYTHON_RDEPS} \
 	"
 
-RDEPENDS:${PN}:append:libc-glibc = " glibc-gconv-iso8859-15"
+RDEPENDS:${PN}:append:libc-glibc = " \
+	glibc-gconv-iso8859-15 \
+	glibc-gconv-cp1250 \
+	"
 
 RRECOMMENDS:${PN} = " \
 	enigma2-plugin-skins-pli-hd \
@@ -41,27 +44,29 @@ RRECOMMENDS:${PN} = " \
 RRECOMMENDS:${PN}:append:libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
-	python3-codecs \
-	python3-core \
-	python3-crypt \
-	python3-fcntl \
-	python3-logging \
-	python3-mmap \
-	python3-netclient \
-	python3-netifaces \
-	python3-netserver \
-	python3-numbers \
-	python3-pickle \
-	python3-pillow \
-	python3-shell \
-	python3-six \
-	python3-threading \
-	python3-twisted-core \
-	python3-twisted-web \
-	python3-urllib3 \
-	python3-xml \
-	python3-zopeinterface \
-	"
+    ${PYTHON_PN}-codecs \
+    ${PYTHON_PN}-core \
+    ${PYTHON_PN}-crypt \
+    ${PYTHON_PN}-fcntl \
+    python3-logging \
+    ${PYTHON_PN}-mmap \
+    ${PYTHON_PN}-netclient \
+    ${PYTHON_PN}-netifaces \
+    ${PYTHON_PN}-netserver \
+    python3-numbers \
+    ${PYTHON_PN}-pickle \
+    ${PYTHON_PN}-shell \
+    ${PYTHON_PN}-threading \
+    ${PYTHON_PN}-twisted-core \
+    ${PYTHON_PN}-twisted-web \
+    python3-urllib3 \
+    ${PYTHON_PN}-xml \
+    ${PYTHON_PN}-zopeinterface \
+    ${PYTHON_PN}-pillow \
+    ${PYTHON_PN}-smtpd \
+    ${PYTHON_PN}-six \
+    ${PYTHON_PN}-treq \
+"
 
 # DVD and iso playback is integrated, we need the libraries
 RDEPENDS:${PN} += "libdreamdvd libudfread"
@@ -107,7 +112,7 @@ RRECOMMENDS:${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
-inherit gitpkgv setuptools3 python3targetconfig python3native
+inherit setuptools3 autotools gitpkgv pkgconfig python3-compileall
 
 PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
 PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
@@ -135,8 +140,6 @@ S = "${WORKDIR}/git"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies enigma2-fonts"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-
-inherit autotools pkgconfig
 
 PKGV:enigma2-fonts = "2020.10.17"
 
@@ -194,6 +197,7 @@ FILES:${PN}-src += "\
 	${libdir}/enigma2/python/*/*.py \
 	${libdir}/enigma2/python/*/*/*.py \
 	${libdir}/enigma2/python/*/*/*/*.py \
+	${libdir}/enigma.info \
 	"
 
 INFOFILE = "${libdir}/enigma.info"
