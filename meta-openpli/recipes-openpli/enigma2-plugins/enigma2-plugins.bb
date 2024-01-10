@@ -27,7 +27,7 @@ PROVIDES += "\
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
 "
 
-inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig
+inherit gitpkgv pkgconfig gettext python3-compileall
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
@@ -54,8 +54,6 @@ FILES:enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 CONFFILES:enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 
 FILES:enigma2-plugin-extensions-babelzapper += "${sysconfdir}/babelzapper"
-FILES:enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
-FILES:enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
 
 FILES:enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 CONFFILES:enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
@@ -88,7 +86,6 @@ DEPENDS = " \
 	dvdbackup \
 	libtirpc \
 	png-util \
-	enigma2-plugin-extensions-lcd4linuxplugin \
 	"
 
 python populate_packages:prepend () {
