@@ -12,73 +12,73 @@
 	ignore = dirty
 [submodule "meta-formuler"]
 	path = meta-formuler
-	url = https://github.com/OpenPLi-meta/meta-formuler.git
+	url = https://github.com/kueken/meta-formuler.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
-	url = https://github.com/OpenPLi-meta/meta-vuplus.git
+	url = https://github.com/kueken/meta-vuplus.git
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
-	url = https://github.com/OpenPLi-meta/meta-xpeedc.git
+	url = https://github.com/kueken/meta-xpeedc.git
 [submodule "meta-zgemma"]
 	path = meta-zgemma
-	url = https://github.com/OpenPLi-meta/meta-zgemma.git
+	url = https://github.com/kueken/meta-zgemma.git
 [submodule "meta-miraclebox"]
 	path = meta-miraclebox
-	url = https://github.com/OpenPLi-meta/meta-miraclebox.git
+	url = https://github.com/kueken/meta-miraclebox.git
 [submodule "meta-spycat"]
 	path = meta-spycat
-	url = https://github.com/OpenPLi-meta/meta-spycat.git
+	url = https://github.com/kueken/meta-spycat.git
 [submodule "meta-xtrend"]
 	path = meta-xtrend
-	url = https://github.com/OpenPLi-meta/meta-xtrend.git
+	url = https://github.com/kueken/meta-xtrend.git
 [submodule "meta-qt5"]
 	path = meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
 [submodule "meta-gi"]
 	path = meta-gi
-	url = https://github.com/OpenPLi-meta/meta-gi.git
+	url = https://github.com/kueken/meta-gi.git
 [submodule "meta-gfutures"]
 	path = meta-gfutures
-	url = https://github.com/OpenPLi-meta/meta-gfutures.git
+	url = https://github.com/kueken/meta-gfutures.git
 [submodule "meta-sab"]
 	path = meta-sab
-	url = https://github.com/OpenPLi-meta/meta-sab.git
+	url = https://github.com/kueken/meta-sab.git
 [submodule "meta-gigablue"]
 	path = meta-gigablue
-	url = https://github.com/OpenPLi-meta/meta-gigablue.git
+	url = https://github.com/kueken/meta-gigablue.git
 [submodule "meta-amiko"]
 	path = meta-amiko
-	url = https://github.com/OpenPLi-meta/meta-amiko
+	url = https://github.com/kueken/meta-amiko
 [submodule "meta-edision"]
 	path = meta-edision
-	url = https://github.com/OpenPLi-meta/meta-edision.git
+	url = https://github.com/kueken/meta-edision.git
 [submodule "meta-maxytec"]
 	path = meta-maxytec
-	url = https://github.com/OpenPLi-meta/meta-maxytec.git
+	url = https://github.com/kueken/meta-maxytec.git
 [submodule "meta-octagon"]
 	path = meta-octagon
-	url = https://github.com/OpenPLi-meta/meta-octagon.git
+	url = https://github.com/kueken/meta-octagon.git
 [submodule "meta-xp"]
 	path = meta-xp
-	url = https://github.com/OpenPLi-meta/meta-xp.git
+	url = https://github.com/kueken/meta-xp.git
 [submodule "meta-uclan"]
 	path = meta-uclan
-	url = https://github.com/OpenPLi-meta/meta-uclan.git
+	url = https://github.com/kueken/meta-uclan.git
 [submodule "meta-dream"]
 	path = meta-dream
-	url = https://github.com/OpenPLi-meta/meta-dream.git
+	url = https://github.com/kueken/meta-dream.git
 [submodule "meta-abcom"]
 	path = meta-abcom
-	url = https://github.com/OpenPLi-meta/meta-abcom
+	url = https://github.com/kueken/meta-abcom
 [submodule "meta-qviart"]
 	path = meta-qviart
-	url = https://github.com/OpenPLi-meta/meta-qviart.git
+	url = https://github.com/kueken/meta-qviart.git
 [submodule "meta-python2"]
 	path = meta-python2
 	url = git://git.openembedded.org/meta-python2
 [submodule "meta-xsarius"]
 	path = meta-xsarius
-	url = https://github.com/OpenPLi-meta/meta-xsarius.git
+	url = https://github.com/kueken/meta-xsarius.git
 [submodule "meta-axas"]
 	path = meta-axas
-	url = https://github.com/OpenPLi-meta/meta-axas.git
+	url = https://github.com/kueken/meta-axas.git
