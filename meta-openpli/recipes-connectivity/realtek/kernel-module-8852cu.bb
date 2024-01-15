@@ -1,15 +1,13 @@
-SUMMARY = "Realtek rtl8188fu"
+SUMMARY = "Realtek rtw8852cu"
 HOMEPAGE = "http://www.realtek.com.tw"
 SECTION = "kernel/modules"
-LICENSE = "GPL-2.0-only"
-LIC_FILES_CHKSUM = "file://Makefile;md5=84b010020bb976d347a15f8a666ba2d7"
-
-DEPENDS ="bc-native"
+LICENSE = "GPLv2"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 inherit module
 SRCREV = "${AUTOREV}"
 SRC_URI = " \
-    git://github.com/OpenIPC/realtek-wlan.git;protocol=https;branch=rtl8188fu \
+    git://github.com/lwfinger/rtw8852cu.git;protocol=https;branch=main \
 "
 
 EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"
@@ -33,5 +31,5 @@ do_compile () {
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
-    install -m 0644 ${S}/8188fu.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
+    install -m 0644 ${S}/8852cu.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
 }
