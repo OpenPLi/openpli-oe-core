@@ -1,5 +1,6 @@
 SRC_URI += " \
 			file://mount_single_uuid.patch \
+			file://ar_filemode.patch \
 			file://inetd \
 			file://inetd.conf \
 			file://busybox-cron \

@@ -3,6 +3,8 @@ SUMMARY = "enigma.info used by BoxInfo"
 PRIORITY = "required"
 MAINTAINER = "OpenPLi team"
 
+DEPENDS = "virtual/kernel"
+
 require conf/license/openpli-gplv2.inc
 
 deltask fetch
@@ -343,7 +345,8 @@ PROC_MODEL=/proc/stb/info/model
 PROC_HWMODEL=/proc/stb/info/hwmodel
 PROC_BOXTYPE=/proc/stb/info/boxtype
 PROC_TYPE=/proc/stb/info/type
-SFX6008WIFI=/sys/devices/platform/soc/f9890000.ehci/usb1/1-1/idProduct
+WIFI1=/sys/devices/platform/soc/f9890000.ehci/usb1/1-1/idProduct
+WIFI2=/sys/devices/platform/soc/f9890000.ehci/usb1/1-2/idProduct
 
 #
 # bail out if the info file does not exist
@@ -478,8 +481,18 @@ elif [ "$MACHINE" = "sf8008" ]; then
 		updateinfo "machinebrand" "sf8008t"
 		updateinfo "displaymodel" "SF8008 4K Twin"
 	elif startswith "12" $type; then
-		updateinfo "machinebrand" "sf8008c"
-		updateinfo "displaymodel" "SF8008 4K Combo"
+		if [ -f $WIFI2 ]; then
+			value=$(head -n 1 $WIFI2)
+		else
+			value=""
+		fi
+		if [ "$value" = "c82c" ]; then
+			updateinfo "machinebrand" "sf8008"
+			updateinfo "displaymodel" "SF8008 4K Supreme"
+		else
+			updateinfo "machinebrand" "sf8008c"
+			updateinfo "displaymodel" "SF8008 4K Combo"
+		fi
 	else  # startswith "10"
 		updateinfo "machinebrand" "sf8008s"
 		updateinfo "displaymodel" "SF8008 4K Single"
@@ -491,12 +504,12 @@ elif [ "$MACHINE" = "sfx6008" ]; then
 		updateinfo "machinebrand" "sfx6018"
 		updateinfo "displaymodel" "SFX6018 S2 IP"
 	else # startswith "11"
-		if [ -f $SFX6008WIFI ]; then
-			value=$(head -n 1 $SFX6008WIFI)
+		if [ -f $WIFI1 ]; then
+			value=$(head -n 1 $WIFI1)
 		else
 			value=""
 		fi
-		if [ "$value" = "f179" -o "$value" = "F179" ]; then
+		if [ "$value" = "f179" ]; then
 			updateinfo "machinebrand" "sfx6008wl"
 			updateinfo "displaymodel" "SFX6008 WL"
 		else
