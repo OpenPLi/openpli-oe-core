@@ -43,6 +43,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	kernel-module-8192eu \
 	kernel-module-88x2bu \
 	kernel-module-8189es \
+	kernel-module-8852cu \
 	firmware-rtl8723bu \
 	firmware-rtl8188eu  \
 	firmware-rtl8188fu  \
