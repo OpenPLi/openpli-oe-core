@@ -2,12 +2,12 @@ SUMMARY = "Drivers for Realtek 8821CU/8811CU"
 HOMEPAGE = "http://www.realtek.com.tw"
 SECTION = "kernel/modules"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
+LIC_FILES_CHKSUM = "file://ifcfg-wlan0;md5=a84acae65af4b2d44d5035aa9f63cd85"
 
 inherit module
 
-SRC_URI = " \
-    git://github.com/brektrou/rtl8821CU.git;protocol=https \
+SRC_URI = "git://github.com/atvcaptain/RTL8821CU_driver_v5.8.1.git;protocol=https \
+    file://add-5.15-support.patch \
 "
 
 EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"
