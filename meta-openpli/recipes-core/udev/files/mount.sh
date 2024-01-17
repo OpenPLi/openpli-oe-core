@@ -18,7 +18,7 @@ do
 done
 
 lock() {
-	LOCKFILE=/tmp/udevmount.lock
+	LOCKFILE=/var/volatile/tmp/udevmount.lock
 
 	exec 200>$LOCKFILE
 
