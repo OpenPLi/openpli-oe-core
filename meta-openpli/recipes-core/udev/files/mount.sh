@@ -41,9 +41,9 @@ log() {
 	return
 
 	if [ $# -eq 1 ]; then
-		echo "$1" >> /home/root/udev.log
+		logger "udev/mount.sh" "$1"
 	else
-		echo "$DEVNAME: $1 $2" >> /home/root/udev.log
+		logger "udev/mount.sh" "$DEVNAME: $1 $2"
 	fi
 }
 
