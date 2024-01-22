@@ -2,7 +2,7 @@ SUMMARY = "Driver for Realtek 8723BS wireless/bluetooth devices"
 HOMEPAGE = "http://www.realtek.com/"
 SECTION = "kernel/modules"
 LICENSE = "GPL-2.0-only"
-LIC_FILES_CHKSUM = "file://README.md;md5=c416860023e780aa96e0616b1cda6a49"
+LIC_FILES_CHKSUM = "file://README.md;md5=0536b44ddbd0d9e459b655ccc187163b"
 
 inherit module
 
