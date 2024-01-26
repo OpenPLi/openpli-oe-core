@@ -33,6 +33,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 	${@ 'kernel-module-8723a'      if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.15') < 0) else '' } \
 	${@ 'kernel-module-8723bu'     if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.15') < 0) else '' } \
 	${@ 'kernel-module-mt7610u'    if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.15') < 0) else '' } \
+	${@ 'kernel-module-88x2cu'     if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.15') < 0) else '' } \
 	\
 	${@ 'kernel-module-8192fu'     if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.8') >= 0) else '' } \
 	${@ 'kernel-module-88xxau'     if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.0') >= 0) else '' } \
@@ -42,7 +43,6 @@ OPTIONAL_WIFI_PACKAGES = "\
 	kernel-module-8821cu \
 	kernel-module-8192eu \
 	kernel-module-88x2bu \
-	kernel-module-88x2cu \
 	kernel-module-8189es \
 	firmware-rtl8723bu \
 	firmware-rtl8188eu  \
