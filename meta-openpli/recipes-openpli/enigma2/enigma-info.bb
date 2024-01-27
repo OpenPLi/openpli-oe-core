@@ -3,6 +3,8 @@ SUMMARY = "enigma.info used by BoxInfo"
 PRIORITY = "required"
 MAINTAINER = "OpenPLi team"
 
+DEPENDS = "virtual/kernel"
+
 require conf/license/openpli-gplv2.inc
 
 deltask fetch
