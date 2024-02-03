@@ -25,6 +25,7 @@ SRC_URI:append = " \
 	file://0002-rtsp.patch \
 	file://0003-dxva2.patch \
 	file://0004-mips64-cpu-detection.patch \
+	file://0013-add-av_stream_get_first_dts-for-chromium.patch \
 	"
 
 EXTRA_FFCONF = " \
