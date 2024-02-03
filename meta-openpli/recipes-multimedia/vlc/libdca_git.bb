@@ -9,7 +9,11 @@ SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://code.videolan.org/videolan/libdca.git;protocol=https \
-        file://fix-libdts-link-path.patch"
+# make the origin overridable from OE config, for local mirroring
+SRC_ORIGIN ?= "git://code.videolan.org/videolan/libdca.git;protocol=https"
+SRC_URI := " \
+    ${SRC_ORIGIN} \
+    file://fix-libdts-link-path.patch \
+    "
 
 S = "${WORKDIR}/git"
