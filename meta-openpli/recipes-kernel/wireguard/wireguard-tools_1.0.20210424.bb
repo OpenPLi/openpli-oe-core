@@ -9,7 +9,7 @@ S = "${WORKDIR}/wireguard-tools-${PV}/src"
 inherit bash-completion systemd pkgconfig
 
 DEPENDS = "libmnl"
-RDEPENDS_${PN} = "bash, iproute2-ip, kernel-module-wireguard, openresolv"
+RDEPENDS_${PN} = "bash iproute2-ip kernel-module-wireguard openresolv"
 
 do_install () {
     oe_runmake DESTDIR="${D}" PREFIX="${prefix}" SYSCONFDIR="${sysconfdir}" \
