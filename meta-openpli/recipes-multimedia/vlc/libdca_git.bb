@@ -10,7 +10,7 @@ PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_ORIGIN ?= "git://code.videolan.org/videolan/libdca.git;protocol=https"
+SRC_ORIGIN ?= "git://code.videolan.org/videolan/libdca.git;protocol=https;branch=master "
 SRC_URI := " \
     ${SRC_ORIGIN} \
     file://fix-libdts-link-path.patch \
