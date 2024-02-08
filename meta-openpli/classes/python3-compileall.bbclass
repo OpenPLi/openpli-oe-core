@@ -1,4 +1,4 @@
-inherit python3-dir setuptools3-base rm-pycache
+inherit python3-dir setuptools3-base
 
 FILES:${PN}-src += " \
     ${PYTHON_SITEPACKAGES_DIR}/*.py \
