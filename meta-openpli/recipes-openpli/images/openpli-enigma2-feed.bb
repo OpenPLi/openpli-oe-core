@@ -144,6 +144,7 @@ OPTIONAL_PACKAGES += " \
 	rsync \
 	rtorrent \
 	sabnzbd \
+	samba-base \
 	satipclient \
 	satpi \
 	screen \

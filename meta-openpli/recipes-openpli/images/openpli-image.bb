@@ -35,7 +35,7 @@ IMAGE_INSTALL = "\
 	python3-netifaces \
 	python3-pysmb \
 	python3-requests \
-	samba-base \
+	${@bb.utils.contains('TARGET_ARCH', 'mipsel', '', 'samba-base', d)} \
 	sdparm \
 	tuxbox-common \
 	tzdata \
