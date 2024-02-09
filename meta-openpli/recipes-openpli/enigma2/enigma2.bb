@@ -113,7 +113,7 @@ RRECOMMENDS:${PN}-build-dependencies = "\
 	kernel-module-udf \
 	"
 
-inherit setuptools3 autotools gitpkgv pkgconfig python3-compileall
+inherit gitpkgv setuptools3 python3targetconfig
 
 PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
 PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
@@ -137,6 +137,8 @@ S = "${WORKDIR}/git"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies enigma2-fonts"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+inherit autotools pkgconfig
 
 PKGV:enigma2-fonts = "2020.10.17"
 
