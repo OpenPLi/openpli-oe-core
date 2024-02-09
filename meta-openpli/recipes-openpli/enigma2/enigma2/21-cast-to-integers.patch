@@ -1,0 +1,13 @@
+diff --git a/lib/python/Components/MultiContent.py b/lib/python/Components/MultiContent.py
+index 8386f9108..5481e6497 100644
+--- a/lib/python/Components/MultiContent.py
++++ b/lib/python/Components/MultiContent.py
+@@ -30,7 +30,7 @@ def MultiContentTemplateColor(n):
+ 
+ 
+ def MultiContentEntryText(pos=(0, 0), size=(0, 0), font=0, flags=RT_HALIGN_LEFT | RT_VALIGN_TOP, text="", color=None, color_sel=None, backcolor=None, backcolor_sel=None, border_width=None, border_color=None):
+-	return eListboxPythonMultiContent.TYPE_TEXT, pos[0], pos[1], size[0], size[1], font, flags, text, __resolveColor(color), __resolveColor(color_sel), __resolveColor(backcolor), __resolveColor(backcolor_sel), border_width, __resolveColor(border_color)
++	return eListboxPythonMultiContent.TYPE_TEXT, int(pos[0]), int(pos[1]), int(size[0]), int(size[1]), font, flags, text, __resolveColor(color), __resolveColor(color_sel), __resolveColor(backcolor), __resolveColor(backcolor_sel), border_width, __resolveColor(border_color)
+ 
+ 
+ def MultiContentEntryPixmap(pos=(0, 0), size=(0, 0), png=None, backcolor=None, backcolor_sel=None, flags=0):

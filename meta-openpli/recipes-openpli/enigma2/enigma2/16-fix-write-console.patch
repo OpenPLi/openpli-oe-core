@@ -1,21 +1,12 @@
-diff --git a/lib/python/python_console.i b/lib/python/python_console.i
-index 1591570d2..d7ca3c01b 100644
---- a/lib/python/python_console.i
-+++ b/lib/python/python_console.i
-@@ -187,14 +187,14 @@ static PyObject *
- eConsolePy_write(eConsolePy* self, PyObject *args)
- {
- 	char *data;
--	int data_len;
- 	int len = -1;
--	if (!PyArg_ParseTuple(args, "s#|i", &data, &data_len, &len))
-+	if (!PyArg_ParseTuple(args, "s|i", &data, &len))
- 	{
- 		PyErr_SetString(PyExc_TypeError,
- 			"1st arg must be a string, optionaly 2nd arg can be the string length");
- 		return NULL;
- 	}
-+	int data_len = strlen(data);
- 	if (len < 0)
- 		len = data_len;	
- 	self->cont->write(data, len);
+diff --git a/lib/Makefile.am b/lib/Makefile.am
+index 7f08a9ecd..7fb787af6 100644
+--- a/lib/Makefile.am
++++ b/lib/Makefile.am
+@@ -4,6 +4,7 @@ AM_CPPFLAGS = \
+ 	-I$(top_builddir) \
+ 	-I$(top_srcdir) \
+ 	-I$(top_srcdir)/include \
++	-DPY_SSIZE_T_CLEAN \
+ 	-include Python.h \
+ 	-include $(top_builddir)/enigma2_config.h
+
