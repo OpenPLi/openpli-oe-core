@@ -58,6 +58,8 @@ FILES:enigma2-plugin-extensions-babelzapper += "${sysconfdir}/babelzapper"
 FILES:enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 CONFFILES:enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 
+FILES:enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/*"
+
 FILES:${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 
