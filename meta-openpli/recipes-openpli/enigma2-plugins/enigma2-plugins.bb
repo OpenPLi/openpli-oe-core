@@ -83,6 +83,7 @@ DEPENDS = " \
 	${PYTHON_PN}-twisted \
 	${PYTHON_PN}-daap \
 	libcddb \
+	dpflib \
 	dvdbackup \
 	libtirpc \
 	png-util \
