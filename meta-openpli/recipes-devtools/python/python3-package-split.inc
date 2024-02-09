@@ -1,4 +1,4 @@
-inherit python3-dir python3-compileall
+inherit python3-dir
 
 RDEPENDS:{PN}-src = "${PN}"
 
