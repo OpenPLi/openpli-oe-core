@@ -4,8 +4,6 @@ PRIORITY = "optional"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://license.txt;md5=c6f330cac7a286df5a2a7617fdda815f"
 
-PR="2"
-
 FILESEXTRAPATHS:prepend := "${THISDIR}/twistedsnmp:"
 
 RDEPENDS:${PN} = "python3-pysnmp"
