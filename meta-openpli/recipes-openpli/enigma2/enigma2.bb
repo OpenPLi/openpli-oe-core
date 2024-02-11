@@ -49,18 +49,18 @@ PYTHON_RDEPS = " \
     ${PYTHON_PN}-core \
     ${PYTHON_PN}-crypt \
     ${PYTHON_PN}-fcntl \
-    python3-logging \
+    ${PYTHON_PN}-logging \
     ${PYTHON_PN}-mmap \
     ${PYTHON_PN}-netclient \
     ${PYTHON_PN}-netifaces \
     ${PYTHON_PN}-netserver \
-    python3-numbers \
+    ${PYTHON_PN}-numbers \
     ${PYTHON_PN}-pickle \
     ${PYTHON_PN}-shell \
     ${PYTHON_PN}-threading \
     ${PYTHON_PN}-twisted-core \
     ${PYTHON_PN}-twisted-web \
-    python3-urllib3 \
+    ${PYTHON_PN}-urllib3 \
     ${PYTHON_PN}-xml \
     ${PYTHON_PN}-zopeinterface \
     ${PYTHON_PN}-pillow \
