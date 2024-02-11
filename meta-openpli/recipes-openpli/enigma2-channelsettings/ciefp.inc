@@ -3,7 +3,7 @@ LICENSE = "CLOSED"
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://github.com/ciefp/ciefpsettings-enigma2.git;protocol=https"
+SRC_URI = "git://github.com/ciefp/ciefpsettings-enigma2.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
 RDEPENDS_${PN} = "xz"
