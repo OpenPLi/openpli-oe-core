@@ -1,5 +1,5 @@
 # Just a comment line to avoid PAK archive (application/x-pak)
-PACKAGECONFIG = "openssl"
+DEPENDS += "openssl"
 
 FILES:wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
 
