@@ -1,10 +1,9 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+
 SRC_URI += " \
 			file://mount_single_uuid.patch \
-			file://ar_filemode.patch \
-			file://inetd \
-			file://inetd.conf \
 			file://busybox-cron \
-			"
+"
 
 # we do not really depend on mtd-utils, but as mtd-utils replaces 
 # include/mtd/* we cannot build in parallel with mtd-utils
@@ -39,5 +38,3 @@ do_install:append() {
 	fi
 	sed -i "/[/][s][h]*$/d" ${D}${sysconfdir}/busybox.links.nosuid
 }
-
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
