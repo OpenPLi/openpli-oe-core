@@ -23,7 +23,7 @@ TARGET_CFLAGS += "-fpic"
 RDEPENDS:${PN} = "kernel-module-tun"
 
 do_compile:prepend:mipsel() {
-    export LDLIBS+=-latomic
+    export LDLIBS=-latomic
 }
 
 do_install:append() {
