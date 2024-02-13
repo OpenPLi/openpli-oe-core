@@ -457,6 +457,12 @@ elif [ "$MACHINE" = "h9" ]; then
 	elif [ "$model" = "h9.2s" ]; then
 		updateinfo "displaymodel" "H9.2S"
 		updateinfo "machinebuild" "zgemmah92s"
+	elif [ "$model" = "h9twin"  -o  "$model" = "h9 twin"  ]; then
+		updateinfo "displaymodel" "H9 TWIN"
+		updateinfo "machinebuild" "zgemmah9twin"
+	elif [ "$model" = "h9combo" ]; then
+		updateinfo "displaymodel" "H9 COMBO"
+		updateinfo "machinebuild" "zgemmah9combo"
 	fi
 
 # runtime fixes for the Zgemma H9 SE
@@ -473,6 +479,12 @@ elif [ "$MACHINE" = "h9se" ]; then
 	elif [ "$model" = "h9.2h.se" ]; then
 		updateinfo "displaymodel" "H9.2H SE"
 		updateinfo "machinebuild" "zgemmah9hse"
+	elif [ "$model" = "h9twinse" ]; then
+		updateinfo "displaymodel" "H9 TWIN SE"
+		updateinfo "machinebuild" "zgemmah9twinse"
+	elif [ "$model" = "h9combose" ]; then
+		updateinfo "displaymodel" "H9 COMBO SE"
+		updateinfo "machinebuild" "zgemmah9combose"
 	fi
 
 # runtime fixes for the Octagon SF8008
