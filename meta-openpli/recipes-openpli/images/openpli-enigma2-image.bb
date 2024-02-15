@@ -84,6 +84,7 @@ IMAGE_INSTALL += " \
 	\
 	${@bb.utils.contains_any('MACHINE', 'gbquad4k gbue4k', 'kernel-module-88xxau', '', d)} \
 	${@bb.utils.contains_any('MACHINE', 'gbquad4k gbue4k', 'enigma2-plugin-systemplugins-wirelesslan', '', d)} \
+	${@bb.utils.contains_any('MACHINE', 'sf8008', 'kernel-module-88x2cu', '', d)} \
 	\
 	${@bb.utils.contains("MACHINE_FEATURES", "chromium", "enigma2-plugin-extensions-chromium", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "enigma2-plugin-systemplugins-transcodingsetup", "", d)} \
