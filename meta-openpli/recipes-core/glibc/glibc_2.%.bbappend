@@ -12,3 +12,4 @@ SRC_URI:append:arm = " file://stdlib-canonicalize-realpath_stk-dest-maybe-uninit
                        file://add-support-for-SHT_RELR-sections.patch \
                        file://tls-libwidevinecdm.so-since-4.10.2252.0-has-TLS-with.patch \
 "
+CFLAGS:append = " -Wno-maybe-uninitialized"
