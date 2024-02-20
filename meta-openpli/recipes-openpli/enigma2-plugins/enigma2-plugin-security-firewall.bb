@@ -21,3 +21,6 @@ do_install() {
 	install -d ${D}${sysconfdir}
 	install -m 0755 ${WORKDIR}/firewall.users ${D}${sysconfdir}/firewall.users
 }
+do_package_qa() {
+}
+
