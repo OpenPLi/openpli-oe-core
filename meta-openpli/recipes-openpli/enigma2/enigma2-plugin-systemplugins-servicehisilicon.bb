@@ -12,7 +12,7 @@ DEPENDS = "enigma2"
 RDEPENDS:${PN} = "enigma2"
 
 SRCREV = "${AUTOREV}"
-SERVICEHISILICON_BRANCH ?= "main"
+SERVICEHISILICON_BRANCH ?= "kirkstone"
 SRC_URI = "git://github.com/OpenPLi/servicehisilicon.git;branch=${SERVICEHISILICON_BRANCH};protocol=https"
 
 S = "${WORKDIR}/git"
@@ -31,8 +31,10 @@ EXTRA_OECONF = "\
 
 FILES:${PN} = "\
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/*.pyc \
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/servicehisilicon.so"
+	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/servicehisilicon.so \
+	"
 
 FILES:${PN}-dev = "\
 	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/*.py \
-	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/ServiceHisilicon.la"
+	${libdir}/enigma2/python/Plugins/SystemPlugins/ServiceHisilicon/ServiceHisilicon.la \
+	"
