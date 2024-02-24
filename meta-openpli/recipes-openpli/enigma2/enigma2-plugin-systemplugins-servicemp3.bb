@@ -21,8 +21,7 @@ GST_BASE_RDEPS = "\
 	gstreamer${GST_VERSION}-plugins-base-rawparse \
 	gstreamer${GST_VERSION}-plugins-base-subparse \
 	gstreamer${GST_VERSION}-plugins-base-typefindfunctions \
-	gstreamer${GST_VERSION}-plugins-base-videoconvert \
-	gstreamer${GST_VERSION}-plugins-base-vorbis \
+	gstreamer${GST_VERSION}-plugins-base-videoconvertscale \
 	"
 
 GST_GOOD_RDEPS = "\
@@ -42,9 +41,7 @@ GST_GOOD_RDEPS = "\
 	gstreamer${GST_VERSION}-plugins-good-rtsp \
 	gstreamer${GST_VERSION}-plugins-good-soup \
 	gstreamer${GST_VERSION}-plugins-good-udp \
-	gstreamer${GST_VERSION}-plugins-good-vpx \
 	gstreamer${GST_VERSION}-plugins-good-wavparse \
-	gstreamer${GST_VERSION}-plugins-good-wavpack \
 	"
 
 GST_BAD_RDEPS = "\
