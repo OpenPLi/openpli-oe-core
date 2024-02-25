@@ -64,7 +64,7 @@ do_install() {
     python3 -m compileall -o2 -b ${D}${libdir}/enigma2/python/Components/Renderer
 }
 
-pkg_postinst_ontarget_${PN} () {
+pkg_postinst_ontarget:${PN} () {
 #!/bin/sh
 set -e
 

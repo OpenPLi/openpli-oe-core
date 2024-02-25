@@ -118,7 +118,7 @@ ALTERNATIVE:${PN} = "whois dnsdomainname"
 ALTERNATIVE_LINK_NAME[uucpd]  = "${sbindir}/in.uucpd"
 ALTERNATIVE_LINK_NAME[dnsdomainname]  = "${base_bindir}/dnsdomainname"
 
-ALTERNATIVE_PRIORITY_${PN}-logger = "60"
+ALTERNATIVE_PRIORITY:${PN}-logger = "60"
 ALTERNATIVE:${PN}-logger = "logger"
 ALTERNATIVE:${PN}-syslogd = "syslogd"
 ALTERNATIVE_LINK_NAME[syslogd]  = "${base_sbindir}/syslogd"

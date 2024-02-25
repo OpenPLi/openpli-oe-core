@@ -6,7 +6,7 @@ PKGV = "1.0+git${GITPKGV}"
 SRC_URI = "git://github.com/ciefp/ciefpsettings-enigma2.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
-RDEPENDS_${PN} = "xz"
+RDEPENDS:${PN} = "xz"
 
 inherit gitpkgv allarch
 

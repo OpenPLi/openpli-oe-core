@@ -329,7 +329,7 @@ do_deploy() {
 
 addtask deploy before do_package after do_install
 
-pkg_postinst_ontarget_${PN} () {
+pkg_postinst_ontarget:${PN} () {
 #!/bin/sh
 set -e
 

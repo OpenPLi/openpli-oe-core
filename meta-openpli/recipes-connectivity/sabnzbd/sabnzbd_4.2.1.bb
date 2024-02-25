@@ -6,7 +6,7 @@ LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYRIGHT.txt;md5=dc94785ad7ae0960293331f807d14628"
 
 DEPENDS = "${PYTHON_PN}"
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
     ${PYTHON_PN}-cheetah ${PYTHON_PN}-compression ${PYTHON_PN}-core ${PYTHON_PN}-crypt ${PYTHON_PN}-ctypes ${PYTHON_PN}-email ${PYTHON_PN}-html \
     ${PYTHON_PN}-misc ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-sqlite3 ${PYTHON_PN}-shell ${PYTHON_PN}-sabyenc3 ${PYTHON_PN}-configobj \
     ${PYTHON_PN}-cryptography ${PYTHON_PN}-feedparser ${PYTHON_PN}-cheroot ${PYTHON_PN}-cherrypy ${PYTHON_PN}-portend ${PYTHON_PN}-chardet \
@@ -14,7 +14,7 @@ RDEPENDS_${PN} = "\
     ${PYTHON_PN}-sabctools ${PYTHON_PN}-rebulk ${PYTHON_PN}-dateutil ${PYTHON_PN}-babelfish ${PYTHON_PN}-pysocks ${PYTHON_PN}-pip p7zip \
     "
 
-RRECOMMENDS_${PN} = "par2cmdline unrar"
+RRECOMMENDS:${PN} = "par2cmdline unrar"
 
 SRC_URI = "https://github.com/sabnzbd/sabnzbd/releases/download/${PV}/SABnzbd-${PV}-src.tar.gz \
 	file://sabnzbd \

@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://ifcfg-wlan0;md5=6061d24ec65e191716f64bb3fe580790"
 inherit module
 
 # backward compatibility
-RPROVIDES_${PN} = "rtl8822bu"
+RPROVIDES:${PN} = "rtl8822bu"
 
 SRCREV = "${AUTOREV}"
 SRC_URI = " \
