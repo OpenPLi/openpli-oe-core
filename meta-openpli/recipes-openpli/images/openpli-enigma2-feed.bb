@@ -207,6 +207,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
 	enigma2-plugin-skins-simple-gray \
+	enigma2-plugin-skins-pd1loi-hd-night \
 	enigma2-plugin-skins-glamouraurafhd \
 	enigma2-plugins \
 	enigma2-skins \
