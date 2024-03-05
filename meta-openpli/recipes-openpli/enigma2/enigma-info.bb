@@ -530,9 +530,17 @@ elif [ "$MACHINE" = "sfx6008" ]; then
 		fi
 	fi
 
-# runtime fixes for the Uclan Ustym4KPro
+# runtime fixes for the Uclan Ustym 4K Pro
 elif [ "$MACHINE" = "ustym4kpro" ]; then
-	if startswith "11" $type; then
+	if [ -f $WIFI2 ]; then
+		value=$(head -n 1 $WIFI2)
+	else
+		value=""
+	fi
+	if [ "$value" = "c82c" ]; then
+		updateinfo "machinebrand" "ustym4kpro"
+		updateinfo "displaymodel" "Usytm 4K Supreme"
+	elif startswith "11" $type; then
 		updateinfo "machinebrand" "ustym4ktwin"
 		updateinfo "displaymodel" "uStym 4K Twin"
 	fi
