@@ -14,7 +14,6 @@ PKGV = "git${GITPKGV}"
 
 SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git;branch=master"
 SRC_URI := "${SRC_ORIGIN} \
-        file://cak7.patch \
 	"
 
 DEPENDS = "libusb openssl"
