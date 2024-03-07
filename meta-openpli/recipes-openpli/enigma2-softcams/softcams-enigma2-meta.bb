@@ -31,5 +31,4 @@ DEPENDS_append_armv7ve = " \
 DEPENDS += " \
 	enigma2-plugin-softcams-oscam \
 	enigma2-plugin-softcams-oscam-emu \
-	enigma2-plugin-softcams-oscam-cak7 \
 	"
