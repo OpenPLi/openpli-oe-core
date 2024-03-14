@@ -539,7 +539,7 @@ elif [ "$MACHINE" = "ustym4kpro" ]; then
 	fi
 	if [ "$value" = "c82c" ]; then
 		updateinfo "machinebrand" "ustym4kpro"
-		updateinfo "displaymodel" "Usytm 4K Supreme"
+		updateinfo "displaymodel" "Usytm 4K PRO Ultimate"
 	elif startswith "11" $type; then
 		updateinfo "machinebrand" "ustym4ktwin"
 		updateinfo "displaymodel" "uStym 4K Twin"
