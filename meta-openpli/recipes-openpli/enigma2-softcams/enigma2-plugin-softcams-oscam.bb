@@ -10,12 +10,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-#SRC_ORIGIN = "git://github.com/OpenVisionE2/oscam.git;protocol=https"
 SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git"
 SRC_URI := "${SRC_ORIGIN} "
 
-DEPENDS = "libusb openssl"
+DEPENDS = "libusb openssl libdvbcsa"
 RRECOMMENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
+
+LDFLAGS_prepend = "-ludev -ldvbcsa "
+EXTRA_OECONF = "LIBDVBCSA=yes "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -40,10 +42,10 @@ EXTRA_OECMAKE += "\
 	-DWEBIF=1 \
 	-DWITH_STAPI=0 \
 	-DHAVE_LIBUSB=1 \
-	-DSTATIC_LIBUSB=0 \
+	-DSTATIC_LIBUSB=1 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
-	-DCLOCKFIX=0 \
+	-DCLOCKFIX=1 \
 	-DHAVE_PCSC=1 \
 	-DCARDREADER_SMARGO=1 \
 	-DCARDREADER_PCSC=1 \
@@ -51,6 +53,8 @@ EXTRA_OECMAKE += "\
 	-DCS_CACHEEX=1 \
 	-DMODULE_CONSTCW=1 \
 	-DLCDSUPPORT=1 \
+	-DMODULE_SCAM=1 \
+	-DMODULE_STREAMRELAY=1 \
 	"
 
 do_install() {
