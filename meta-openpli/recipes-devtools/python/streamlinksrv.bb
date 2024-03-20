@@ -9,7 +9,10 @@ inherit allarch
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core streamlink"
 
-SRC_URI = "git://github.com/oe-mirrors/livestreamersrv;protocol=https;branch=streamlinksrv"
+SRC_URI = "git://github.com/oe-mirrors/livestreamersrv;protocol=https;branch=streamlinksrv \
+           file://set-interpreter-to-python3.patch \
+"
+
 S = "${WORKDIR}/git"
 
 inherit gittag
