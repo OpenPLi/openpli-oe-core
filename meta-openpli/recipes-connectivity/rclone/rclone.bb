@@ -15,6 +15,8 @@ RDEPENDS:${PN}-dev += "bash"
 
 inherit gittag
 
+do_compile[network] = "1"
+
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
