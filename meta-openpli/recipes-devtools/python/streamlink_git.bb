@@ -23,7 +23,7 @@ RDEPENDS:${PN} = "${PYTHON_PN}-core \
 	${PYTHON_PN}-websocket-client \
 "
 
-inherit setuptools3 python3-dir gittag
+inherit setuptools3 python3-dir gittag python3-compileall
 
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
@@ -33,6 +33,9 @@ SRCREV_FORMAT = "streamlink_plugins"
 
 SRC_URI = " git://github.com/streamlink/streamlink;protocol=https;branch=master \
 			git://github.com/oe-mirrors/streamlink-plugins;protocol=https;branch=master;name=plugins;destsuffix=additional-plugins \
+			file://hardcoded-version.patch \
+			file://remove-exceptiongroup-import.patch \
+			file://remove-self-import.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -52,7 +55,6 @@ do_install:append() {
     rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/streamlink/plugins/.removed
     rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/*dirty.dist-info
     rm -rf ${D}${datadir}
-    cp -r ${S}/src/streamlink ${D}${PYTHON_SITEPACKAGES_DIR}/
 }
 
 include ${PYTHON_PN}-package-split.inc

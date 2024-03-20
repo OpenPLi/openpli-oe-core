@@ -1,0 +1,17 @@
+diff --git a/src/streamlink/stream/hls/m3u8.py b/src/streamlink/stream/hls/m3u8.py
+index 2c22db18..104d9de9 100644
+--- a/src/streamlink/stream/hls/m3u8.py
++++ b/src/streamlink/stream/hls/m3u8.py
+@@ -26,12 +26,6 @@ from streamlink.stream.hls.segment import (
+ )
+ 
+ 
+-try:
+-    from typing import Self  # type: ignore[attr-defined]
+-except ImportError:  # pragma: no cover
+-    from typing_extensions import Self
+-
+-
+ log: StreamlinkLogger = logging.getLogger(__name__)  # type: ignore[assignment]
+ 
+ 
