@@ -7,19 +7,16 @@ DESCRIPTION = "OScam-emu ${PV} Open Source Softcam"
 LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
-
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https;branch=master"
-SRC_URI := "${SRC_ORIGIN} \
-        "
+SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
+SRC_URI := "${SRC_ORIGIN} "
 
-DEPENDS = "libusb openssl"
-RDEPENDS:${PN} += "enigma2-plugin-extensions-oscamstatus"
+DEPENDS = "libusb openssl libdvbcsa"
+RDEPENDS:${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
 
-LDFLAGS:prepend = "-ludev "
+LDFLAGS:prepend = "-ludev -ldvbcsa "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -44,7 +41,7 @@ EXTRA_OECMAKE += "\
 	-DWEBIF=1 \
 	-DWITH_STAPI=0 \
 	-DHAVE_LIBUSB=1 \
-	-DSTATIC_LIBUSB=1 \
+	-DSTATIC_LIBUSB=0 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
 	-DCLOCKFIX=1 \
@@ -55,6 +52,9 @@ EXTRA_OECMAKE += "\
 	-DCS_CACHEEX=1 \
 	-DMODULE_CONSTCW=1 \	
 	-DLCDSUPPORT=1 \
+	-DMODULE_SCAM=1 \
+	-DMODULE_STREAMRELAY=1 \
+	-DHAVE_LIBDVBCSA=1 \
 	"
 
 do_install() {

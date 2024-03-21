@@ -14,10 +14,9 @@ SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git;branch=master"
 SRC_URI := "${SRC_ORIGIN} "
 
 DEPENDS = "libusb openssl libdvbcsa"
-RRECOMMENDS:${PN} += "enigma2-plugin-extensions-oscamstatus"
+RDEPENDS:${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
 
 LDFLAGS:prepend = "-ludev -ldvbcsa "
-EXTRA_OECONF = "LIBDVBCSA=yes "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -42,7 +41,7 @@ EXTRA_OECMAKE += "\
 	-DWEBIF=1 \
 	-DWITH_STAPI=0 \
 	-DHAVE_LIBUSB=1 \
-	-DSTATIC_LIBUSB=1 \
+	-DSTATIC_LIBUSB=0 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
 	-DCLOCKFIX=1 \
@@ -55,6 +54,7 @@ EXTRA_OECMAKE += "\
 	-DLCDSUPPORT=1 \
 	-DMODULE_SCAM=1 \
 	-DMODULE_STREAMRELAY=1 \
+	-DHAVE_LIBDVBCSA=1 \
 	"
 
 do_install() {
