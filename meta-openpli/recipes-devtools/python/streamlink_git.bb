@@ -35,7 +35,6 @@ SRC_URI = " git://github.com/streamlink/streamlink;protocol=https;branch=master 
 			git://github.com/oe-mirrors/streamlink-plugins;protocol=https;branch=master;name=plugins;destsuffix=additional-plugins \
 			file://hardcoded-version.patch \
 			file://remove-exceptiongroup-import.patch \
-			file://remove-self-import.patch \
 "
 
 S = "${WORKDIR}/git"
