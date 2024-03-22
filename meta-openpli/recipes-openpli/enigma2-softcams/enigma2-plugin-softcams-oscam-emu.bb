@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
+SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https;branch=master"
 SRC_URI := "${SRC_ORIGIN} "
 
 DEPENDS = "libusb openssl libdvbcsa"
@@ -50,7 +50,7 @@ EXTRA_OECMAKE += "\
 	-DCARDREADER_PCSC=1 \
 	-DCW_CYCLE_CHECK=1 \
 	-DCS_CACHEEX=1 \
-	-DMODULE_CONSTCW=1 \	
+	-DMODULE_CONSTCW=1 \
 	-DLCDSUPPORT=1 \
 	-DMODULE_SCAM=1 \
 	-DMODULE_STREAMRELAY=1 \
