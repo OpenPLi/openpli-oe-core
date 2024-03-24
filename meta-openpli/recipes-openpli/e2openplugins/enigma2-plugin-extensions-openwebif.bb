@@ -20,6 +20,8 @@ RDEPENDS:${PN} = "\
 	python3-unixadmin \
 	"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 inherit gittag python3-compileall
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
