@@ -5,7 +5,7 @@ HOMEPAGE = "www.satdreamgr.com"
 LICENSE = "GPL-2.0-or-later"
 require conf/license/license-gplv2.inc
 
-inherit allarch
+inherit allarch gittag
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core streamlink"
 
@@ -15,11 +15,8 @@ SRC_URI = "git://github.com/oe-mirrors/livestreamersrv;protocol=https;branch=str
 
 S = "${WORKDIR}/git"
 
-inherit gittag
-SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
-
 
 do_install:append() {
     install -d ${D}${sbindir}
