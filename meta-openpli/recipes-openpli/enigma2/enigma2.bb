@@ -127,6 +127,7 @@ SRC_URI = "${GITHUB_URI}/OpenPLi/enigma2.git;branch=${ENIGMA2_BRANCH};protocol=h
 			file://07-suppress-compile-errors.patch \
 			file://16-fix-write-console.patch \
 			file://21-cast-to-integers.patch \
+			file://retrieve-commit-info-from-kirkstone-branch.patch \
 "
 
 LDFLAGS:prepend = " -lxml2 "
