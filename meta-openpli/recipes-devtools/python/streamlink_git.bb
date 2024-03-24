@@ -57,7 +57,7 @@ do_install:append() {
 
 include ${PYTHON_PN}-package-split.inc
 
-PACKAGES = "${PN}"
+PACKAGES = "${PN} ${PN}-src"
 
 FILES:${PN} += " \
     ${PYTHON_SITEPACKAGES_DIR}/streamlink/*.pyc \
@@ -66,9 +66,5 @@ FILES:${PN} += " \
     "
 
 FILES:${PN}-src += " \
-    ${PYTHON_SITEPACKAGES_DIR}/streamlink-*.egg-info/* \
     ${PYTHON_SITEPACKAGES_DIR}/streamlink/plugins/.removed \
-    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*/*.py \
-    ${PYTHON_SITEPACKAGES_DIR}/streamlink/*/*/*.py \
     "
