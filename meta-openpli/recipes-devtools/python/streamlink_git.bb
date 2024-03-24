@@ -33,7 +33,6 @@ SRCREV_FORMAT = "streamlink_plugins"
 
 SRC_URI = " git://github.com/streamlink/streamlink;protocol=https;branch=master \
 			git://github.com/oe-mirrors/streamlink-plugins;protocol=https;branch=master;name=plugins;destsuffix=additional-plugins \
-			file://hardcoded-version.patch \
 			file://remove-exceptiongroup-import.patch \
 "
 
@@ -54,7 +53,6 @@ do_install:append() {
     rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/streamlink/plugins/.removed
     rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/*dirty.dist-info
     rm -rf ${D}${datadir}
-    cp -r ${S}/src/streamlink ${D}${PYTHON_SITEPACKAGES_DIR}/
 }
 
 include ${PYTHON_PN}-package-split.inc
