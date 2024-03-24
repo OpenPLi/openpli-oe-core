@@ -5,7 +5,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-openwebif.git;protocol=https;branch=master"
 
 SRC_URI:append:dm8000 = " file://get-rid-of-orgdream-check.patch"
-SRC_URI:append = " file://0001-revert-workaround-for-non-pli-streamproxy.patch"
+SRC_URI:append = " file://0001-revert-workaround-for-non-pli-streamproxy.patch file://set-packages-explicit.patch"
 
 python do_cleanup () {
     # contains: MACHINE, box image, remote image, remote map
