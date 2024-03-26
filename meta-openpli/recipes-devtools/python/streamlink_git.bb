@@ -9,6 +9,7 @@ DEPENDS += "${PYTHON_PN}-versioningit-native"
 
 RDEPENDS:${PN} = "${PYTHON_PN}-core \
 	${PYTHON_PN}-ctypes \
+	${PYTHON_PN}-exceptiongroup \
 	${PYTHON_PN}-futures3 \
 	${PYTHON_PN}-isodate \
 	${PYTHON_PN}-pycountry \
@@ -33,7 +34,6 @@ SRCREV_FORMAT = "streamlink_plugins"
 
 SRC_URI = " git://github.com/streamlink/streamlink;protocol=https;branch=master \
 			git://github.com/oe-mirrors/streamlink-plugins;protocol=https;branch=master;name=plugins;destsuffix=additional-plugins \
-			file://remove-exceptiongroup-import.patch \
 "
 
 S = "${WORKDIR}/git"
