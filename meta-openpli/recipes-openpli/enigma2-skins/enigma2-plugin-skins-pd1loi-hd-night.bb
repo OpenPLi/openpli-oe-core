@@ -1,7 +1,7 @@
 DESCRIPTION = "PD1LOI HD night"
 MAINTAINER = "pd1loi1"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://README.md;md5=bf787cb63f6ed5c8a1faf7273fe86695"
+LIC_FILES_CHKSUM = "file://README.md;md5=4e92522262895e6aa6977828a170c78b"
 
 inherit gitpkgv allarch
 
