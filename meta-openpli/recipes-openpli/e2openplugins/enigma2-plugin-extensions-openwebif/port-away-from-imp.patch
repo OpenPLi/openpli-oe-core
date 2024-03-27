@@ -1,0 +1,57 @@
+diff --git a/plugin/controllers/base.py b/plugin/controllers/base.py
+index 1e42b87d..0f481eec 100644
+--- a/plugin/controllers/base.py
++++ b/plugin/controllers/base.py
+@@ -22,9 +22,9 @@
+ 
+ from __future__ import print_function
+ import os
+-import imp
+ import json
+ import six
++from importlib.util import spec_from_file_location, module_from_spec
+ 
+ from twisted.web import server, http, resource
+ from twisted.web.resource import EncodingResourceWrapper
+@@ -118,13 +118,10 @@ class BaseController(resource.Resource):
+ 		request.finish()
+ 
+ 	def loadTemplate(self, path, module, args):
+-		if fileExists(getViewsPath(path + ".py")) or fileExists(getViewsPath(path + ".pyo")) or fileExists(getViewsPath(path + ".pyc")):
+-			if fileExists(getViewsPath(path + ".pyo")):
+-				template = imp.load_compiled(module, getViewsPath(path + ".pyo"))
+-			elif fileExists(getViewsPath(path + ".pyc")):
+-				template = imp.load_compiled(module, getViewsPath(path + ".pyc"))
+-			else:
+-				template = imp.load_source(module, getViewsPath(path + ".py"))
++		if fileExists(getViewsPath(path + ".pyc")):
++			spec = spec_from_file_location(module, getViewsPath(path + ".pyc"))
++			template = module_from_spec(spec)
++			spec.loader.exec_module(template)
+ 			mod = getattr(template, module, None)
+ 			if callable(mod):
+ 				return str(mod(searchList=args))
+diff --git a/plugin/httpserver.py b/plugin/httpserver.py
+index 4fba811d..c6c503b8 100644
+--- a/plugin/httpserver.py
++++ b/plugin/httpserver.py
+@@ -38,7 +38,6 @@ from OpenSSL import crypto
+ from Components.Network import iNetwork
+ 
+ import os
+-import imp
+ import ipaddress
+ import six
+ 
+@@ -158,11 +157,6 @@ def buildRootTree(session):
+ 					continue
+ 
+ 				loaded.append(modulename)
+-				try:
+-					imp.load_source(modulename, origwebifpath + "/WebChilds/External/" + modulename + ".py")
+-				except Exception as e:
+-					# maybe there's only the compiled version
+-					imp.load_compiled(modulename, origwebifpath + "/WebChilds/External/" + external)
+ 
+ 		if len(loaded_plugins) > 0:
+ 			for plugin in loaded_plugins:
