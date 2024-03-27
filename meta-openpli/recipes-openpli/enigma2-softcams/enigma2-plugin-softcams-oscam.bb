@@ -21,7 +21,7 @@ LDFLAGS_prepend = "-ludev -ldvbcsa "
 S = "${WORKDIR}/git"
 B = "${S}"
 CAMNAME = "oscam"
-CAMSTART = "/usr/bin/oscam --wait 60 --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2 --utf8"
+CAMSTART = "/usr/bin/oscam --wait 60 --config-dir /etc/tuxbox/config/oscam --daemon --pidfile /tmp/oscam.pid --restart 2"
 CAMSTOP = "kill \`cat /tmp/oscam.pid\` 2> /dev/null"
 
 SRC_URI += " \
