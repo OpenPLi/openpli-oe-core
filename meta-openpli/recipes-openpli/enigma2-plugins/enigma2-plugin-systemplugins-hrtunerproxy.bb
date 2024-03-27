@@ -9,9 +9,7 @@ inherit gitpkgv setuptools3-openplugins gettext python3-compileall
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/OpenViX/HRTunerProxy.git;protocol=https;branch=master \
-           file://revert-back-to-distutils.patch \
-           "
+SRC_URI = "git://github.com/OpenViX/HRTunerProxy.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
