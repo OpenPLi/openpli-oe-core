@@ -31,6 +31,7 @@ require openplugins-distutils.inc
 SRC_URI = "git://github.com/E2OpenPlugins/e2openplugin-openwebif.git;protocol=https;branch=master \
            file://0001-revert-workaround-for-non-pli-streamproxy.patch \
            file://set-packages-explicit.patch \
+           file://use-setuptools-instead-of-distutils.patch \
 "
 
 SRC_URI:append:dm8000 = " file://get-rid-of-orgdream-check.patch"
