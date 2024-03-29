@@ -1,4 +1,4 @@
-inherit python3-dir setuptools3-base
+inherit python3-dir python3native python3targetconfig
 
 FILES:${PN}-src += " \
     ${PYTHON_SITEPACKAGES_DIR}/*.py \
