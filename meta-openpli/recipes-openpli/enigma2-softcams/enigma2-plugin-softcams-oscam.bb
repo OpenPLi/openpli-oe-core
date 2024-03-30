@@ -1,14 +1,14 @@
 require conf/license/openpli-gplv2.inc
 require softcam.inc
 inherit cmake
-inherit gitpkgv
+inherit gittag
 
 DESCRIPTION = "OScam ${PV} Open Source Softcam"
 LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 PV = "git${SRCPV}"
-PKGV = "git${GITPKGV}"
+PKGV = "${GITPKGV}"
 
 SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git;branch=master"
 SRC_URI := "${SRC_ORIGIN} "
