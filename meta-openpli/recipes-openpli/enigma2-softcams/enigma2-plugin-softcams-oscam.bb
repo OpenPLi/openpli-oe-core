@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git"
+SRC_ORIGIN ?= "git://git.streamboard.tv/common/oscam.git;protocol=git"
 SRC_URI := "${SRC_ORIGIN} "
 
 DEPENDS = "libusb openssl libdvbcsa"
@@ -33,7 +33,7 @@ SRC_URI += " \
 	file://oscam.provid"
 
 CONFFILES = "${sysconfdir}/tuxbox/config/oscam/oscam.conf ${sysconfdir}/tuxbox/config/oscam/oscam.server ${sysconfdir}/tuxbox/config/oscam/oscam.srvid ${sysconfdir}/tuxbox/config/oscam/oscam.user ${sysconfdir}/tuxbox/config/oscam/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam/oscam.provid"
-
+5
 FILES_${PN} = "${bindir}/oscam ${sysconfdir}/tuxbox/config/oscam/* ${sysconfdir}/init.d/softcam.oscam"
 
 EXTRA_OECMAKE += "\
