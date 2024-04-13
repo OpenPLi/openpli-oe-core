@@ -33,7 +33,7 @@ SRC_URI += " \
 	file://oscam.provid"
 
 CONFFILES = "${sysconfdir}/tuxbox/config/oscam/oscam.conf ${sysconfdir}/tuxbox/config/oscam/oscam.server ${sysconfdir}/tuxbox/config/oscam/oscam.srvid ${sysconfdir}/tuxbox/config/oscam/oscam.user ${sysconfdir}/tuxbox/config/oscam/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam/oscam.provid"
-5
+
 FILES_${PN} = "${bindir}/oscam ${sysconfdir}/tuxbox/config/oscam/* ${sysconfdir}/init.d/softcam.oscam"
 
 EXTRA_OECMAKE += "\
