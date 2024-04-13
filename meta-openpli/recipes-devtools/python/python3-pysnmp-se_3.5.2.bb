@@ -8,7 +8,7 @@ RDEPENDS_${PN} = "${PYTHON_PN}-core"
 
 SRCREV = "${AUTOREV}"
 
-SRC_URI = "git://github.com/Hains/python3-pysnmp-se.git;branch=main;protocol=https"
+SRC_URI = "git://github.com/OpenPLi/python3-pysnmp-se.git;branch=main;protocol=https"
 
 S = "${WORKDIR}/git"
 
