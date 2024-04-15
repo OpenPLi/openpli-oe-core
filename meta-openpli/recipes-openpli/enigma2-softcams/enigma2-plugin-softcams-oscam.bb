@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://repo.or.cz/oscam.git;protocol=git"
+SRC_ORIGIN ?= "git://git.streamboard.tv/common/oscam.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN} "
 
 DEPENDS = "libusb openssl libdvbcsa"
@@ -44,7 +44,7 @@ EXTRA_OECMAKE += "\
 	-DSTATIC_LIBUSB=0 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
-	-DCLOCKFIX=1 \
+	-DCLOCKFIX=0 \
 	-DHAVE_PCSC=1 \
 	-DCARDREADER_SMARGO=1 \
 	-DCARDREADER_PCSC=1 \
