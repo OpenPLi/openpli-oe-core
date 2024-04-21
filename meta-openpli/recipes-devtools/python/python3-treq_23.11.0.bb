@@ -25,8 +25,8 @@ DEPENDS = "\
 RDEPENDS:${PN}-dbg = "${PN}"
 
 FILES:${PN}-dbg = " \
-    ${libdir}/${PYTHON_DIR}/site-packages/${PN}-*.egg-info \
-    ${libdir}/${PYTHON_DIR}/site-packages/${PN}/test \
+    ${PYTHON_SITEPACKAGES_DIR}/${PN}-*.egg-info \
+    ${PYTHON_SITEPACKAGES_DIR}/${PN}/test \
 "
 
 S = "${WORKDIR}/${PN}-${PV}"
