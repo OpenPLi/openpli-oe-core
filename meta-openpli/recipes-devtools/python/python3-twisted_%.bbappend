@@ -7,4 +7,6 @@ SRC_URI += " \
            file://0002-Revert-Remove-twisted.web.client.getPage-and-friends.patch \
 "
 
+ALLOW_EMPTY:${PN} = "1"
+
 include ${PYTHON_PN}-package-split.inc
