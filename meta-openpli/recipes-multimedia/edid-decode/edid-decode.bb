@@ -12,4 +12,4 @@ SRC_URI = "git://git.linuxtv.org/edid-decode.git;protocol=https"
 
 S = "${WORKDIR}/git"
 
-inherit autotools-brokensep pkgconfig
+inherit meson pkgconfig
