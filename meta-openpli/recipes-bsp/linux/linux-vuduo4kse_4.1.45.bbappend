@@ -1,5 +1,4 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/gcc:"
-SRC_URI += " \
-	file://kernel-add-support-for-gcc10.patch \
+SRC_URI:append = " \
 	file://kernel-add-support-for-gcc11.patch \
 	"
