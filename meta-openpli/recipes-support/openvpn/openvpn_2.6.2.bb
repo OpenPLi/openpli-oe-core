@@ -65,7 +65,7 @@ do_install:append() {
     install -m 644 ${S}/sample/sample-scripts/* ${D}${sysconfdir}/openvpn/sample/sample-scripts
 
     install -d -m 710 ${D}/${localstatedir}/lib/openvpn
-    install -m 775 ${S}/update-resolv-conf.sh ${D}${sysconfdir}/openvpn/update-resolv-conf.sh
+    install -m 775 ${S}/../update-resolv-conf.sh ${D}${sysconfdir}/openvpn/update-resolv-conf.sh
 }
 
 PACKAGES =+ " ${PN}-sample "
