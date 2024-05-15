@@ -11,6 +11,7 @@ inherit autotools systemd update-rc.d pkgconfig
 SRC_URI = "http://swupdate.openvpn.org/community/releases/${BP}.tar.gz \
            file://0001-configure.ac-eliminate-build-path-from-openvpn-versi.patch \
            file://openvpn \
+           file://update-resolv-conf.sh \
           "
 
 UPSTREAM_CHECK_URI = "https://openvpn.net/community-downloads"
@@ -64,6 +65,7 @@ do_install:append() {
     install -m 644 ${S}/sample/sample-scripts/* ${D}${sysconfdir}/openvpn/sample/sample-scripts
 
     install -d -m 710 ${D}/${localstatedir}/lib/openvpn
+    install -m 775 ${S}/../update-resolv-conf.sh ${D}${sysconfdir}/openvpn/update-resolv-conf.sh
 }
 
 PACKAGES =+ " ${PN}-sample "
