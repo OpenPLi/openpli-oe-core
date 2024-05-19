@@ -1,10 +1,22 @@
 # package is machine specific
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
+inherit python3native
+
+BBFILE_COLLECTIONS:prepend = " meta-python2"
+
+SRCREV_qtwebengine = "63d4e58009c7f069ace14b64f1528ba2664272e9"
+SRCREV_chromium = "0d0d7dfbae4f2adfe1109d963160f14896e65244"
+
+SRC_URI:remove = " \
+	file://chromium/0013-Fix-build-with-gcc-13.patch;patchdir=src/3rdparty \
+	file://chromium/0014-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch;patchdir=src/3rdparty \
+	file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.X.patch \
+"
+
 SRC_URI += " \
     file://chromium/0002-ffmpeg-5.patch \
     file://chromium/0002-Replace-hbbtv-responses-with-application-xhtml-xml.patch;patchdir=src/3rdparty \
-    file://chromium/qt5-webengine-python3.patch \
     file://chromium/qt5-webengine-pipewire-0.3.patch;patchdir=src/3rdparty \
 "
 
