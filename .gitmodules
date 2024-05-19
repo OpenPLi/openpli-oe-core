@@ -73,9 +73,6 @@
 [submodule "meta-qviart"]
 	path = meta-qviart
 	url = https://github.com/OpenPLi-meta/meta-qviart.git
-[submodule "meta-python2"]
-	path = meta-python2
-	url = git://git.openembedded.org/meta-python2
 [submodule "meta-xsarius"]
 	path = meta-xsarius
 	url = https://github.com/OpenPLi-meta/meta-xsarius.git

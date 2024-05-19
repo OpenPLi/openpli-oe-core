@@ -74,7 +74,6 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-octagon \
 	$(CURDIR)/meta-uclan \
 	$(CURDIR)/meta-abcom \
-	$(CURDIR)/meta-python2 \
 	$(CURDIR)/meta-qt5
 
 CONFFILES = \
