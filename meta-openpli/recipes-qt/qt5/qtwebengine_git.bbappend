@@ -18,6 +18,7 @@ SRC_URI += " \
     file://chromium/0002-ffmpeg-5.patch \
     file://chromium/0002-Replace-hbbtv-responses-with-application-xhtml-xml.patch;patchdir=src/3rdparty \
     file://chromium/qt5-webengine-pipewire-0.3.patch;patchdir=src/3rdparty \
+    file://chromium/replace-html5ib-with-html-parser.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI:append:osmio4k = " \

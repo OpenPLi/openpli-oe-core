@@ -1,0 +1,31 @@
+diff --git a/chromium/third_party/catapult/common/py_vulcanize/py_vulcanize/parse_html_deps.py b/chromium/third_party/catapult/common/py_vulcanize/py_vulcanize/parse_html_deps.py
+index 19d7ef647..a1c6cf0b2 100644
+--- a/chromium/third_party/catapult/common/py_vulcanize/py_vulcanize/parse_html_deps.py
++++ b/chromium/third_party/catapult/common/py_vulcanize/py_vulcanize/parse_html_deps.py
+@@ -144,7 +144,7 @@ class ExternalScript(Script):
+       f.write('\n')
+ 
+ def _CreateSoupWithoutHeadOrBody(html):
+-  soupCopy = bs4.BeautifulSoup(html, 'html5lib')
++  soupCopy = bs4.BeautifulSoup(html, 'html.parser')
+   soup = bs4.BeautifulSoup()
+   soup.reset()
+   if soupCopy.head:
+@@ -161,7 +161,7 @@ def _CreateSoupWithoutHeadOrBody(html):
+ class HTMLModuleParserResults(object):
+ 
+   def __init__(self, html):
+-    self._soup = bs4.BeautifulSoup(html, 'html5lib')
++    self._soup = bs4.BeautifulSoup(html, 'html.parser')
+     self._inline_scripts = None
+     self._scripts = None
+ 
+@@ -251,7 +251,7 @@ class HTMLModuleParserResults(object):
+     for stylesheet_link in stylesheet_links:
+       html = controller.GetHTMLForStylesheetHRef(stylesheet_link['href'])
+       if html:
+-        tmp = bs4.BeautifulSoup(html, 'html5lib').findAll('style')
++        tmp = bs4.BeautifulSoup(html, 'html.parser').findAll('style')
+         assert len(tmp) == 1
+         stylesheet_link.replaceWith(tmp[0])
+       else:
