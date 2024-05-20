@@ -5,15 +5,15 @@ Subject: [PATCH] Add av_stream_get_first_dts for Chromium
 
 [foutrelis: adjust for new FFStream struct replacing AVStreamInternal]
 
-Rebased against ffmpeg 5.0.1
+Rebased against ffmpeg 6.1.1
 
 diff --git a/libavformat/avformat.h b/libavformat/avformat.h
-index 6ce367e..cba3f5e 100644
+index 9e7eca0..3b1d171 100644
 --- a/libavformat/avformat.h
 +++ b/libavformat/avformat.h
-@@ -1115,6 +1115,10 @@ struct AVCodecParserContext *av_stream_get_parser(const AVStream *s);
-  */
+@@ -1030,6 +1030,10 @@ attribute_deprecated
  int64_t    av_stream_get_end_pts(const AVStream *st);
+ #endif
  
 +// Chromium: We use the internal field first_dts vvv
 +int64_t    av_stream_get_first_dts(const AVStream *st);
@@ -23,10 +23,10 @@ index 6ce367e..cba3f5e 100644
  
  /**
 diff --git a/libavformat/utils.c b/libavformat/utils.c
-index cee86ae..b8bafee 100644
+index c722743..ce10c51 100644
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -194,6 +194,13 @@ static int append_packet_chunked(AVIOContext *s, AVPacket *pkt, int size)
+@@ -100,6 +100,13 @@ static int append_packet_chunked(AVIOContext *s, AVPacket *pkt, int size)
      return pkt->size > orig_size ? pkt->size - orig_size : ret;
  }
  
