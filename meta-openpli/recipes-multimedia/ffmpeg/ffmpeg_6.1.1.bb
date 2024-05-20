@@ -58,7 +58,7 @@ inherit autotools pkgconfig
 PACKAGECONFIG ??= "avdevice avfilter avcodec avformat swresample swscale postproc \
                    alsa bzlib lzma theora zlib gpl \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xv xcb', '', d)} \
-                   ibass fdk-aac libbluray libdav1d libfreetype librtmp libvorbis \
+                   libass fdk-aac libbluray libdav1d libfreetype librtmp libvorbis \
                    mp3lame srt pulseaudio openjpeg openssl vpx libxml2 libv4l2 \
 "
 
