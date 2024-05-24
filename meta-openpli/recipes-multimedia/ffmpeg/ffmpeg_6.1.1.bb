@@ -30,6 +30,11 @@ SRC_URI = " \
     file://0002-rtsp.patch \
     file://0003-dxva2.patch \
     file://0004-mips64-cpu-detection.patch \
+    file://0005-hls-replace-key-uri.patch \
+    file://0006-optimize-aac.patch \
+    file://0007-increase-buffer-size.patch \
+    file://0008-recheck-discard-flags.patch \
+    file://0009-ffmpeg-fix-edit-list-parsing.patch \
     file://0013-add-av_stream_get_first_dts-for-chromium.patch \
 "
 
