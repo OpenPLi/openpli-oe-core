@@ -4,7 +4,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
 BRANCH = "vuplus_experimental"
 S = "${WORKDIR}/git"
-SRC_URI = "git://github.com/vuplus-com/dvbapp.git;protocol=http;branch=${BRANCH} \
+SRC_URI = "git://github.com/vuplus-com/dvbapp.git;protocol=https;branch=${BRANCH} \
 	file://enigma2-plugin-systemplugins-dlnabrowser_20130723.patch;striplevel=1;apply=yes \
 	file://port-to-python3.patch \
 "
