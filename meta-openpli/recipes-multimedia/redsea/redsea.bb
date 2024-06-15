@@ -9,12 +9,14 @@ inherit gittag
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://github.com/windytan/redsea.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/windytan/redsea.git;protocol=https;branch=master \
+           file://fix-include-header-file.patch \
+"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "liquid-dsp virtual/libiconv libsndfile1"
 
-inherit autotools-brokensep pkgconfig gettext
+inherit meson pkgconfig gettext
 
 EXTRA_OECONF += "--disable-tmc --without-macports"
