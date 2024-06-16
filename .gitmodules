@@ -18,7 +18,8 @@
 	url = https://github.com/HD-Digital/meta-hd.git
 [submodule "meta-vuplus"]
 	path = meta-vuplus
-	url = https://github.com/vu-plus/meta-vuplus.git
+	url = https://github.com/OpenPLi-meta/meta-vuplus.git
+	branch = python2
 [submodule "meta-xpeedc"]
 	path = meta-xpeedc
 	url = https://github.com/neo-pli-bsps/meta-xpeedc.git
