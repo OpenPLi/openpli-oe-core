@@ -1,0 +1,24 @@
+From 7ccdbffda216b3be4cb8d3df0c0c9cf5c1d29663 Mon Sep 17 00:00:00 2001
+From: sujong <dgdgksj@gmail.com>
+Date: Thu, 21 Mar 2024 14:58:17 +0900
+Subject: [PATCH] fix: fallthrough compile error
+
+This commit replaces the fallthrough macro definition with the __attribute__((fallthrough)) syntax, which is recognized by GCC and resolves the compilation issue.
+---
+ include/drv_conf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/drv_conf.h b/include/drv_conf.h
+index f5835a4..819cc83 100755
+--- a/include/drv_conf.h
++++ b/include/drv_conf.h
+@@ -51,7 +51,7 @@
+ #endif
+ 
+ #if !defined(fallthrough)
+-#define fallthrough (do {} while(0))
++#define fallthrough __attribute__((fallthrough))
+ #endif
+ 
+ #ifdef CONFIG_RTW_ANDROID
+
