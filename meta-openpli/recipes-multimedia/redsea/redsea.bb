@@ -18,5 +18,3 @@ S = "${WORKDIR}/git"
 DEPENDS = "nlohmann-json liquid-dsp virtual/libiconv libsndfile1"
 
 inherit meson pkgconfig gettext
-
-EXTRA_OECONF += "--disable-tmc --without-macports"
