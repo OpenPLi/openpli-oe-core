@@ -185,6 +185,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-bouquetmakerxtream \
 	enigma2-plugin-extensions-dlnabrowser \
 	enigma2-plugin-extensions-dlnaserver \
+	enigma2-plugin-extensions-czechmeteo \
 	enigma2-plugin-extensions-e2iplayer-deps \
 	enigma2-plugin-extensions-enhancedmoviecenter \
 	enigma2-plugin-extensions-enigmalight \
