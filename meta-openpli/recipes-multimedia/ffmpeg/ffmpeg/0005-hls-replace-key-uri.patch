@@ -1,6 +1,8 @@
---- a/libavformat/hls.c	2018-08-17 13:16:57.721007600 +0200
-+++ b/libavformat/hls.c	2018-08-17 13:33:57.530170057 +0200
-@@ -213,6 +213,8 @@
+diff --git a/libavformat/hls.c b/libavformat/hls.c
+index f5f549b24d..f74f587aba 100644
+--- a/libavformat/hls.c
++++ b/libavformat/hls.c
+@@ -226,6 +226,8 @@ typedef struct HLSContext {
      int http_persistent;
      int http_multiple;
      int http_seekable;
@@ -9,9 +11,9 @@
      int seg_max_retry;
      AVIOContext *playlist_pb;
      HLSCryptoContext  crypto_ctx;
-@@ -1255,8 +1257,16 @@
-     } else if (seg->key_type == KEY_AES_128) {
-         char iv[33], key[33], url[MAX_URL_SIZE];
+@@ -1295,8 +1297,16 @@ static int open_input(HLSContext *c, struct playlist *pls, struct segment *seg,
+ 
+     if (seg->key_type == KEY_AES_128 || seg->key_type == KEY_SAMPLE_AES) {
          if (strcmp(seg->key, pls->key_url)) {
 +            char *key_url = NULL;
              AVIOContext *pb = NULL;
@@ -27,16 +29,16 @@
                  ret = avio_read(pb, pls->key, sizeof(pls->key));
                  if (ret != sizeof(pls->key)) {
                      av_log(pls->parent, AV_LOG_ERROR, "Unable to read key file %s\n",
-@@ -1268,6 +1278,8 @@
+@@ -1308,6 +1318,8 @@ static int open_input(HLSContext *c, struct playlist *pls, struct segment *seg,
                         seg->key);
              }
              av_strlcpy(pls->key_url, seg->key, sizeof(pls->key_url));
 +            if (key_url != seg->key)
 +                av_free(key_url);
          }
-         ff_data_to_hex(iv, seg->iv, sizeof(seg->iv), 0);
-         ff_data_to_hex(key, pls->key, sizeof(pls->key), 0);
-@@ -2404,6 +2416,8 @@
+     }
+ 
+@@ -2579,6 +2591,8 @@ static const AVOption hls_options[] = {
          OFFSET(seg_format_opts), AV_OPT_TYPE_DICT, {.str = NULL}, 0, 0, FLAGS},
      {"seg_max_retry", "Maximum number of times to reload a segment on error.",
       OFFSET(seg_max_retry), AV_OPT_TYPE_INT, {.i64 = 0}, 0, INT_MAX, FLAGS},
