@@ -3,7 +3,7 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 inherit python3native
 
-BBFILE_COLLECTIONS:prepend = " meta-python2"
+BBFILE_COLLECTIONS:prepend = "meta-python2 "
 
 SRCREV_qtwebengine = "63d4e58009c7f069ace14b64f1528ba2664272e9"
 SRCREV_chromium = "0d0d7dfbae4f2adfe1109d963160f14896e65244"
@@ -19,6 +19,8 @@ SRC_URI += " \
     file://chromium/0002-Replace-hbbtv-responses-with-application-xhtml-xml.patch;patchdir=src/3rdparty \
     file://chromium/qt5-webengine-pipewire-0.3.patch;patchdir=src/3rdparty \
     file://chromium/replace-html5ib-with-html-parser.patch;patchdir=src/3rdparty \
+    file://chromium/remove-unused-imp-module-import.patch;patchdir=src/3rdparty \
+    file://chromium/port-away-from-six-moves.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI:append:osmio4k = " \

@@ -1,0 +1,25 @@
+diff --git a/chromium/third_party/protobuf/python/google/protobuf/internal/python_message.py b/chromium/third_party/protobuf/python/google/protobuf/internal/python_message.py
+index 803ae848493..d9ed9f91ffc 100755
+--- a/chromium/third_party/protobuf/python/google/protobuf/internal/python_message.py
++++ b/chromium/third_party/protobuf/python/google/protobuf/internal/python_message.py
+@@ -56,7 +56,6 @@ import sys
+ import weakref
+ 
+ import six
+-from six.moves import range
+ 
+ # We use "as" to avoid name collisions with variables.
+ from google.protobuf.internal import api_implementation
+diff --git a/chromium/tools/grit/grit/util.py b/chromium/tools/grit/grit/util.py
+index 6e8cdb0ebfa..b6fa91b104c 100644
+--- a/chromium/tools/grit/grit/util.py
++++ b/chromium/tools/grit/grit/util.py
+@@ -18,7 +18,7 @@ from xml.sax import saxutils
+ 
+ import six
+ from six import StringIO
+-from six.moves import html_entities as entities
++import html.entities as entities
+ 
+ from grit import lazy_re
+ 

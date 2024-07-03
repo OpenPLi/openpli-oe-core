@@ -1,0 +1,24 @@
+diff --git a/chromium/mojo/public/tools/mojom/mojom/fileutil.py b/chromium/mojo/public/tools/mojom/mojom/fileutil.py
+index bf626f54798..e1c823daa3c 100644
+--- a/chromium/mojo/public/tools/mojom/mojom/fileutil.py
++++ b/chromium/mojo/public/tools/mojom/mojom/fileutil.py
+@@ -3,7 +3,6 @@
+ # found in the LICENSE file.
+ 
+ import errno
+-import imp
+ import os.path
+ import sys
+ 
+diff --git a/chromium/mojo/public/tools/mojom/mojom/parse/lexer.py b/chromium/mojo/public/tools/mojom/mojom/parse/lexer.py
+index 3e084bbf22b..1e8b49f245f 100644
+--- a/chromium/mojo/public/tools/mojom/mojom/parse/lexer.py
++++ b/chromium/mojo/public/tools/mojom/mojom/parse/lexer.py
+@@ -2,7 +2,6 @@
+ # Use of this source code is governed by a BSD-style license that can be
+ # found in the LICENSE file.
+ 
+-import imp
+ import os.path
+ import sys
+ 
