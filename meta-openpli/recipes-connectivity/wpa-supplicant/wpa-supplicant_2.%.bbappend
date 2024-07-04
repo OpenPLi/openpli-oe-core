@@ -1,7 +1,7 @@
 # Just a comment line to avoid PAK archive (application/x-pak)
 DEPENDS += "openssl"
 
-FILES:wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
+FILES:${PN}-passphrase = "${bindir}/wpa_passphrase"
 
 SRC_URI += " \
         file://action_wpa.sh \
