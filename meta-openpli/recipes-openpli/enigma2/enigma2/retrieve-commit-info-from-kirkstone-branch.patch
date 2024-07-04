@@ -6,7 +6,7 @@ index 9c231590d..841b00b99 100644
  		except:
  			branch = ""
  		branch_e2plugins = "?sha=python3"
-+		branch_oe = "?sha=Kirkstone"
++		branch_oe = "?sha=scarthgap"
  
  		self.project = 0
  		self.projects = [
