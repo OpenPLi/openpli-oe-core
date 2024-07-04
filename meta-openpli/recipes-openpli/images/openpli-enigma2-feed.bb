@@ -109,6 +109,7 @@ OPTIONAL_PACKAGES += " \
 	ndisc6 \
 	net-snmp \
 	net-tools \
+	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
 	phodav \
 	ntfs-3g \
 	ntp \
@@ -119,26 +120,29 @@ OPTIONAL_PACKAGES += " \
 	parted \
 	procps \
 	pyload \
-	python3-ipaddress \
-	python3-ntplib \
-	python3-pip \
-	python3-requests \
-	python3-mechanize \
-	python3-lxml \
-	python3-js2py \
-	python3-pyexecjs \
-	python3-beautifulsoup4 \
-	python3-compat2 \
-	python3-future \
-	python3-futures \
-	python3-pycryptodome \
-	python3-singledispatch \
-	python3-websocket-client \
-	python3-isodate \
-	python3-pycountry \
-	python3-youtube-dl \
-	python3-pycryptodomex \
-	python3-evdev \
+	${PYTHON_PN}-ipaddress \
+	${PYTHON_PN}-ntplib \
+	${PYTHON_PN}-pip \
+	${PYTHON_PN}-requests \
+	${PYTHON_PN}-mechanize \
+	${PYTHON_PN}-lxml \
+	${PYTHON_PN}-js2py \
+	${PYTHON_PN}-pyexecjs \
+	${PYTHON_PN}-beautifulsoup4 \
+	${PYTHON_PN}-compat2 \
+	${PYTHON_PN}-future \
+	${PYTHON_PN}-futures \
+	${PYTHON_PN}-pycryptodome \
+	${PYTHON_PN}-singledispatch \
+	${PYTHON_PN}-websocket-client \
+	${PYTHON_PN}-isodate \
+	${PYTHON_PN}-pycountry \
+	${PYTHON_PN}-youtube-dl \
+	${PYTHON_PN}-pycryptodomex \
+	${PYTHON_PN}-evdev \
+	${PYTHON_PN}-rarfile \
+	${PYTHON_PN}-fuzzywuzzy \
+	${PYTHON_PN}-levenshtein \
 	picocom \
 	ppp \
 	rclone \
@@ -241,6 +245,8 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-backupsuite \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo2', 'enigma2-plugin-drivers-dvb-usb-turbo2', '', d)} \
+	${@bb.utils.contains('OPENPLI_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
+	${@bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
