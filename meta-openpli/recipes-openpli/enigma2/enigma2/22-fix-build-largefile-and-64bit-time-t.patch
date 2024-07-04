@@ -1,0 +1,128 @@
+diff --git a/lib/base/eerror.cpp b/lib/base/eerror.cpp
+index 0ad9bcbda..af06239f9 100644
+--- a/lib/base/eerror.cpp
++++ b/lib/base/eerror.cpp
+@@ -154,7 +154,7 @@ void eDebugImpl(int flags, const char* fmt, ...)
+ 
+ 	if (debugTime && !(flags & _DBGFLG_NOTIME)) {
+ 		clock_gettime(CLOCK_MONOTONIC, &tp);
+-		pos = snprintf(buf, eDEBUG_BUFLEN, "<%6lu.%03lu> ", tp.tv_sec, tp.tv_nsec/1000000);
++		pos = snprintf(buf, eDEBUG_BUFLEN, "<%6llu.%03lu> ", tp.tv_sec, tp.tv_nsec/1000000);
+ 	}
+ 
+ 	va_list ap;
+@@ -173,7 +173,7 @@ void eDebugImpl(int flags, const char* fmt, ...)
+ 		// +2 for \0 and optional newline
+ 		buf = new char[pos + vsize + 2];
+ 		if (debugTime && !(flags & _DBGFLG_NOTIME))
+-			pos = snprintf(buf, pos + vsize, "<%6lu.%03lu> ", tp.tv_sec, tp.tv_nsec/1000000);
++			pos = snprintf(buf, pos + vsize, "<%6llu.%03lu> ", tp.tv_sec, tp.tv_nsec/1000000);
+ 		va_start(ap, fmt);
+ 		vsize = vsnprintf(buf + pos, vsize + 1, fmt, ap);
+ 		va_end(ap);
+diff --git a/lib/dvb/dvbtime.cpp b/lib/dvb/dvbtime.cpp
+index 70d1896d1..bda84d60b 100644
+--- a/lib/dvb/dvbtime.cpp
++++ b/lib/dvb/dvbtime.cpp
+@@ -394,7 +394,7 @@ void eDVBLocalTimeHandler::updateTime( time_t tp_time, eDVBChannel *chan, int up
+ 			localtime_r(&linuxTime, &now);
+ 			eDebug("[eDVBLocalTimerHandler] Receiver time is %02d:%02d:%02d", now.tm_hour, now.tm_min, now.tm_sec);
+ 			time_difference = rtc_time - linuxTime;
+-			eDebug("[eDVBLocalTimerHandler] RTC to Receiver time difference is %ld seconds", linuxTime - rtc_time );
++			eDebug("[eDVBLocalTimerHandler] RTC to Receiver time difference is %lld seconds", linuxTime - rtc_time );
+ 
+ 			if (time_difference)
+ 			{
+@@ -477,7 +477,7 @@ void eDVBLocalTimeHandler::updateTime( time_t tp_time, eDVBChannel *chan, int up
+ 					time_t rtc=getRTC();
+ 					m_timeOffsetMap[chan->getChannelID()] = rtc-tp_time;
+ 					new_diff = rtc-linuxTime;  // set enigma time to rtc
+-					eDebug("[eDVBLocalTimerHandler] update stored correction to %ld (calced against RTC time)", rtc-tp_time );
++					eDebug("[eDVBLocalTimerHandler] update stored correction to %lld (calced against RTC time)", rtc-tp_time );
+ 				}
+ 				else if ( abs(ddiff) <= 120 )
+ 				{
+diff --git a/lib/dvb/epgchanneldata.cpp b/lib/dvb/epgchanneldata.cpp
+index d657957d0..3a0599a32 100644
+--- a/lib/dvb/epgchanneldata.cpp
++++ b/lib/dvb/epgchanneldata.cpp
+@@ -55,7 +55,7 @@ void eEPGChannelData::startChannel()
+ 
+ void eEPGChannelData::startEPG()
+ {
+-	eDebug("[eEPGChannelData] start reading events(%ld)", ::time(0));
++	eDebug("[eEPGChannelData] start reading events(%lld)", ::time(0));
+ 	state=0;
+ 	haveData=0;
+ 	for (unsigned int i=0; i < sizeof(seenSections)/sizeof(tidMap); ++i)
+@@ -278,7 +278,7 @@ void eEPGChannelData::finishEPG()
+ {
+ 	if (!isRunning)  // epg ready
+ 	{
+-		eDebug("[eEPGChannelData] stop caching events(%ld)", ::time(0));
++		eDebug("[eEPGChannelData] stop caching events(%lld)", ::time(0));
+ 		zapTimer->start(UPDATE_INTERVAL, 1);
+ 		eDebug("[eEPGChannelData] next update in %i min", UPDATE_INTERVAL / 60000);
+ 		for (unsigned int i=0; i < sizeof(seenSections)/sizeof(tidMap); ++i)
+@@ -505,7 +505,7 @@ void eEPGChannelData::readData( const uint8_t *data, int source)
+ #endif
+ 			default: eDebugNoNewLine("unknown");break;
+ 		}
+-		eDebugNoNewLine(" finished(%ld)\n", ::time(0));
++		eDebugNoNewLine(" finished(%lld)\n", ::time(0));
+ 		if ( reader )
+ 			reader->stop();
+ 		isRunning &= ~source;
+@@ -1149,7 +1149,7 @@ void eEPGChannelData::readMHWData(const uint8_t *data)
+ 				return;	// Continue reading of the current table.
+ 		}
+ 	}
+-	eDebug("[eEPGChannelData] mhw finished(%ld) %zu summaries not found",
++	eDebug("[eEPGChannelData] mhw finished(%lld) %zu summaries not found",
+ 		::time(0),
+ 		m_program_ids.size());
+ 	// Summaries have been read, titles that have summaries have been stored.
+@@ -1463,7 +1463,7 @@ void eEPGChannelData::readMHWData2(const uint8_t *data)
+ 			// Now store titles that do not have summaries.
+ 			for (std::map<uint32_t, mhw_title_t>::iterator itTitle(m_titles.begin()); itTitle != m_titles.end(); itTitle++)
+ 				storeMHWTitle( itTitle, "", data );
+-			eDebug("[eEPGChannelData] mhw2 finished(%ld) %zu summaries not found",
++			eDebug("[eEPGChannelData] mhw2 finished(%lld) %zu summaries not found",
+ 				::time(0),
+ 				m_program_ids.size());
+ 		}
+diff --git a/lib/network/socket.cpp b/lib/network/socket.cpp
+index bd94428cf..f13f7fe03 100644
+--- a/lib/network/socket.cpp
++++ b/lib/network/socket.cpp
+@@ -213,7 +213,7 @@ int eSocket::writeBlock(const char *data, unsigned int len)
+ 	// and eDebug self can cause a call of writeBlock !!
+ 			struct timespec tp = {};
+ 			clock_gettime(CLOCK_MONOTONIC, &tp);
+-			fprintf(stderr, "<%6lu.%06lu> [eSocket] write: %m\n", tp.tv_sec, tp.tv_nsec/1000);
++			fprintf(stderr, "<%6llu.%06lu> [eSocket] write: %m\n", tp.tv_sec, tp.tv_nsec/1000);
+ 		}
+ 		if (tw < 0)
+ 			tw = 0;
+diff --git a/lib/service/servicedvd.cpp b/lib/service/servicedvd.cpp
+index 6c77e8dc3..ea5ef9ada 100644
+--- a/lib/service/servicedvd.cpp
++++ b/lib/service/servicedvd.cpp
+@@ -1030,7 +1030,7 @@ void eServiceDVD::loadCuesheet()
+ 			if (stat(m_ref.path.c_str(), &st) == 0)
+ 			{
+ 				char buf[128];
+-				snprintf(buf, 128, "%lx", st.st_mtime);
++				snprintf(buf, 128, "%llx", st.st_mtime);
+ 				filename += buf;
+ 			}
+ 			else
+@@ -1130,7 +1130,7 @@ void eServiceDVD::saveCuesheet()
+ 			if (stat(m_ref.path.c_str(), &st) == 0)
+ 			{
+ 				char buf[128];
+-				snprintf(buf, 128, "%lx", st.st_mtime);
++				snprintf(buf, 128, "%llx", st.st_mtime);
+ 				filename += buf;
+ 			}
+ 			else
