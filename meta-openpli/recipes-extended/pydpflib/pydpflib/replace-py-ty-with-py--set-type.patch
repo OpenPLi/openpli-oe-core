@@ -1,0 +1,14 @@
+https://docs.python.org/3/whatsnew/3.11.html
+
+diff --git a/python/py_device.c b/python/py_device.c
+index e375647..0c2a5c4 100644
+--- a/python/py_device.c
++++ b/python/py_device.c
+@@ -582,6 +582,6 @@ static struct PyModuleDef moduledef = {
+ 
+ PyMODINIT_FUNC PyInit_dpflib(void)
+ {
+-    Py_TYPE(&DeviceType) = &PyType_Type;
++    Py_SET_TYPE(&DeviceType, &PyType_Type);
+     return PyModule_Create(&moduledef);
+ }

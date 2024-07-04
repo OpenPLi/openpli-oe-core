@@ -5,6 +5,7 @@ LIC_FILES_CHKSUM = "file://${S}/README;md5=42a667e310028ad2cc31da2ae54d8f16"
 DEPENDS = "libusb-compat libusb1 python3"
 
 SRC_URI="git://github.com/atvcaptain/dpf-ax.git;branch=dreamlayers;protocol=https \
+         file://replace-py-ty-with-py--set-type.patch \
          file://set-python-version-to-310.patch \
 "
 
