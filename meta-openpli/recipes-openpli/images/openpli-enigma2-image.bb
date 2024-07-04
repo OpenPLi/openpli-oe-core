@@ -65,7 +65,7 @@ IMAGE_INSTALL += " \
 	aio-grab \
 	enigma2 \
 	libavahi-client \
-	ntpdate \
+	ntp \
 	ofgwrite \
 	openresolv \
 	perl \

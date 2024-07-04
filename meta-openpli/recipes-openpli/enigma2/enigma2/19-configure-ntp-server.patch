@@ -1,0 +1,27 @@
+diff --git a/lib/python/Components/UsageConfig.py b/lib/python/Components/UsageConfig.py
+index d0e5d7ec0..714c41257 100644
+--- a/lib/python/Components/UsageConfig.py
++++ b/lib/python/Components/UsageConfig.py
+@@ -814,7 +814,21 @@ def InitUsageConfig():
+ 	config.ntp.timesync = ConfigSelection(default="auto", choices=[("auto", _("auto")), ("dvb", _("Transponder Time")), ("ntp", _("Internet (ntp)"))])
+ 	config.ntp.timesync.addNotifier(timesyncChanged)
+ 	config.ntp.server = ConfigText("pool.ntp.org", fixed_size=False)
+-
++	config.ntp.server_old = ConfigText("pool.ntp.org")
++	def setNTPServer(configElement):
++		if configElement.value != config.ntp.server_old.value and configElement.value != "" and " " not in configElement.value:
++			f = open("/etc/ntp.conf", "r")
++			lst = f.readlines()
++			f = open("/etc/ntp.conf", "w")
++			for x in lst:
++				x1 = x.split()
++				if len(x1) > 1 and x1[0] == "server":
++					x1[1] = configElement.value
++					x = " ".join(x1) +"\n"
++				f.write(x)
++			f.close()
++			config.ntp.server_old.value = configElement.value
++	config.ntp.server.addNotifier(setNTPServer, immediate_feedback=False)
+ 
+ def updateChoices(sel, choices):
+ 	if choices:
