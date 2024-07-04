@@ -18,7 +18,6 @@ EXTRA_OECONF += " \
                  --nopyc \
                  --disable-iprint \
                  --without-ad-dc \
-                 --without-dnsupdate \
                  --without-quotas \
                  --without-winbind \
                  --without-syslog \
