@@ -137,6 +137,9 @@ OPTIONAL_PACKAGES += " \
 	${PYTHON_PN}-youtube-dl \
 	${PYTHON_PN}-pycryptodomex \
 	${PYTHON_PN}-evdev \
+	${PYTHON_PN}-rarfile \
+	${PYTHON_PN}-fuzzywuzzy \
+	${PYTHON_PN}-levenshtein \
 	picocom \
 	ppp \
 	rclone \
