@@ -86,7 +86,7 @@ RRECOMMENDS:${PN} = "\
 	gstreamer1.0-plugins-good-pulse \
 	"
 
-SRC_URI = "git://github.com/openpli/servicemp3.git;branch=python3;protocol=https"
+SRC_URI = "git://github.com/openpli/servicemp3.git;branch=python3;protocol=https file://remove-redundant-c17-check.patch"
 
 S = "${WORKDIR}/git"
 
