@@ -1,1 +1,0 @@
-inherit python3targetconfig
