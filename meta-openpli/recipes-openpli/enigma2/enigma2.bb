@@ -64,7 +64,6 @@ PYTHON_RDEPS = " \
     ${PYTHON_PN}-xml \
     ${PYTHON_PN}-zopeinterface \
     ${PYTHON_PN}-pillow \
-    ${PYTHON_PN}-smtpd \
     ${PYTHON_PN}-six \
     ${PYTHON_PN}-treq \
 "
