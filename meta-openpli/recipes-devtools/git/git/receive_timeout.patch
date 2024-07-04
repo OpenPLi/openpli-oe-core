@@ -1,18 +1,18 @@
 diff --git a/connect.c b/connect.c
-index a0783d4..0eb1c6f 100644
+index 0d77737..ebd142d 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -375,8 +375,13 @@ static int git_tcp_connect_sock(char *host, int flags)
-
- static void git_tcp_connect(int fd[2], char *host, int flags)
+@@ -953,8 +953,13 @@ int git_connection_is_socket(struct child_process *conn)
+ 
+ static struct child_process *git_tcp_connect(int fd[2], char *host, int flags)
  {
 +	struct timeval tv;
  	int sockfd = git_tcp_connect_sock(host, flags);
-
+ 
 +	tv.tv_sec = 90;
 +	tv.tv_usec = 0;
 +	setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 +
  	fd[0] = sockfd;
  	fd[1] = dup(sockfd);
- }
+ 
