@@ -39,7 +39,7 @@ RRECOMMENDS:${PN} = " \
 	hotplug-e2-helper \
 	python3-sendfile \
 	ofgwrite \
-	virtual/enigma2-mediaservice \
+	virtual-enigma2-mediaservice \
 	"
 
 RRECOMMENDS:${PN}:append:libc-glibc = " glibc-gconv-utf-16"
@@ -75,7 +75,7 @@ RRECOMMENDS:${PN} += "libdvdcss"
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
 RDEPENDS:${PN} += "font-valis-enigma"
 
-RDEPENDS:${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual/blindscan-dvbc" , "", d)}"
+RDEPENDS:${PN} += "${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbc", "virtual-blindscan-dvbc" , "", d)}"
 
 DEMUXTOOL ?= "replex"
 

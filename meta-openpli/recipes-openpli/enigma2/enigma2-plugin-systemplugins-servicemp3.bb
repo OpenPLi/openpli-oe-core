@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PROVIDES += "virtual/enigma2-mediaservice"
-RPROVIDES:${PN} += "virtual/enigma2-mediaservice"
+RPROVIDES:${PN} += "virtual-enigma2-mediaservice"
 
 GST_BASE_RDEPS = "\
 	gstreamer1.0-plugins-base-alsa \
@@ -74,7 +74,7 @@ RDEPENDS:${PN} = "\
 	enigma2 \
 	glib-networking \
 	gstreamer1.0-plugin-subsink \
-	virtual/gstreamer1.0-dvbmediasink \
+	virtual-gstreamer1.0-dvbmediasink \
 	${GST_BASE_RDEPS} \
 	${GST_GOOD_RDEPS} \
 	${GST_BAD_RDEPS} \
