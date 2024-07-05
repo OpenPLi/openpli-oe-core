@@ -21,4 +21,4 @@ RDEPENDS:${PN} = " \
     ${PYTHON_PN}-xml \
 "
 
-include ${PYTHON_PN}-package-split.in
+include ${PYTHON_PN}-package-split.inc
