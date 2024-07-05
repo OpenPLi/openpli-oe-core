@@ -13,3 +13,5 @@ INSANE_SKIP:${PN} += "file-rdeps ldflags"
 
 RCONFLICTS:${PN} = "enigma2-plugins-softcams-mgcamd"
 RREPLACES:${PN} = "enigma2-plugins-softcams-mgcamd"
+
+INSANE_SKIP = "32bit-time"
