@@ -12,6 +12,7 @@ SRC_URI = "http://download.savannah.nongnu.org/releases/davfs2/${P}.tar.gz \
            file://neon-config \
            file://volatiles \
            file://davfs2.cfg \
+           file://add-neon-version-033.patch \
 "
 DEPENDS = "fuse libdvdread neon"
 
