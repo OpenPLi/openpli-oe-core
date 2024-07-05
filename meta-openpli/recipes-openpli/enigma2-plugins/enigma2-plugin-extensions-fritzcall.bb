@@ -16,6 +16,4 @@ SRC_URI = "\
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-PACKAGE_ARCH = "all"
-
 S="${WORKDIR}/git"
