@@ -34,6 +34,8 @@ GOPATH = "${TMPDIR}/go/"
 export GOPATH
 
 do_compile() {
+    GOPROXY=https://proxy.golang.org,direct
+    export GOPROXY
     ${TARGET_PREFIX}go build
     chmod -R +w "$GOPATH"
 }
