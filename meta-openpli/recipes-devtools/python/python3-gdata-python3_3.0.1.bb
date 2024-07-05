@@ -20,3 +20,5 @@ RDEPENDS:${PN} = " \
     ${PYTHON_PN}-stringold \
     ${PYTHON_PN}-xml \
 "
+
+include ${PYTHON_PN}-package-split.in
