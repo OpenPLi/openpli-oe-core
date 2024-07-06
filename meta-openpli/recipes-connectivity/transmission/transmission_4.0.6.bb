@@ -2,7 +2,7 @@ DESCRIPTION = "Transmission is a BitTorrent client w/ a built-in Ajax-Powered We
 SECTION = "network"
 HOMEPAGE = "www.transmissionbt.com/"
 LICENSE = "GPL-2.0-or-later & GPL-3.0-or-later"
-LIC_FILES_CHKSUM = "file://COPYING;md5=ba8199e739948e198310093de27175fa"
+LIC_FILES_CHKSUM = "file://COPYING;md5=bdc0efbaf051d9c78b10cff310eb40d2"
 
 DEPENDS = "curl libevent gnutls openssl libtool intltool-native glib-2.0-native"
 
