@@ -6,9 +6,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=ba8199e739948e198310093de27175fa"
 
 DEPENDS = "curl libevent gnutls openssl libtool intltool-native glib-2.0-native"
 
-# Transmission release 4.0.3
-SRCREV = "6b0e49bbb296f1c84785275b8a8f18b4210180af"
-PV = "4.0.3"
+# Transmission release 4.0.6
+SRCREV = "ec5296c8dc15c0d51014d67ef93658e5569f354c"
 
 SRC_URI = "gitsm://github.com/transmission/transmission;protocol=https;branch=main \
         file://init \
