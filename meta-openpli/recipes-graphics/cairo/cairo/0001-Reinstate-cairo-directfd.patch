@@ -1,0 +1,967 @@
+From 479c9a48ca9d4ac0acf2b42ddd600eb9b4396ee6 Mon Sep 17 00:00:00 2001
+From: Hains van den Bosch <hainsvdbosch@ziggo.nl>
+Date: Sun, 7 Jul 2024 19:50:33 +0200
+Subject: [PATCH] Reinstate-cairo-directfd
+
+---
+ boilerplate/cairo-boilerplate-directfb.c | 235 ++++++++++
+ boilerplate/meson.build                  |   1 +
+ meson.build                              |  14 +
+ meson_options.txt                        |   1 +
+ src/cairo-directfb-surface.c             | 545 +++++++++++++++++++++++
+ src/cairo-directfb.h                     |  67 +++
+ src/meson.build                          |   7 +
+ 7 files changed, 870 insertions(+)
+ create mode 100644 boilerplate/cairo-boilerplate-directfb.c
+ create mode 100644 src/cairo-directfb-surface.c
+ create mode 100644 src/cairo-directfb.h
+
+diff --git a/boilerplate/cairo-boilerplate-directfb.c b/boilerplate/cairo-boilerplate-directfb.c
+new file mode 100644
+index 000000000..a479011d9
+--- /dev/null
++++ b/boilerplate/cairo-boilerplate-directfb.c
+@@ -0,0 +1,235 @@
++/*
++Test were run with the following script
++target can be directfb_bitmap or directfb
++
++export CAIRO_TEST_TARGET=directfb_bitmap
++export DFBARGS=quiet,no-banner,no-debug,log-file=dfblog,system=x11
++cd cairo/test
++make check
++
++*/
++
++#include "cairo-boilerplate-private.h"
++
++#include <cairo-directfb.h>
++
++#include <stdio.h>
++#include <stdlib.h>
++
++#include <direct/debug.h>
++
++D_DEBUG_DOMAIN (CairoDFB_Boiler, "CairoDFB/Boiler", "Cairo DirectFB Boilerplate");
++
++/* macro for a safe call to DirectFB functions */
++#define DFBCHECK(x...)	do{					\
++    err = x;							\
++    if (err != DFB_OK) {					\
++	fprintf (stderr, "%s <%d>:\n\t", __FILE__, __LINE__); \
++	goto ERROR; \
++    }								\
++} while (0)
++
++typedef struct _DFBInfo {
++    IDirectFB		   *dfb;
++    IDirectFBDisplayLayer  *layer;
++    IDirectFBWindow	   *window;
++    IDirectFBSurface	   *surface;
++} DFBInfo;
++
++static void
++_cairo_boilerplate_directfb_cleanup (void *closure)
++{
++    DFBInfo *info = (DFBInfo *) closure;
++
++    if (info->surface)
++	info->surface->Release (info->surface);
++
++    if (info->window)
++	info->window->Release (info->window);
++
++    if (info->layer)
++	info->layer->Release (info->layer);
++
++    if (info->dfb)
++	info->dfb->Release (info->dfb);
++
++    free (info);
++}
++
++static DFBInfo *
++init (void)
++{
++    DFBDisplayLayerConfig	 layer_config;
++    DFBGraphicsDeviceDescription desc;
++    int err;
++    DFBInfo *info;
++
++    info = xcalloc (1, sizeof (DFBInfo));
++    if (info == NULL)
++	return NULL;
++
++    DFBCHECK (DirectFBInit (NULL, NULL));
++    DFBCHECK (DirectFBCreate (&info->dfb));
++    info->dfb->GetDeviceDescription (info->dfb, &desc);
++
++    DFBCHECK (info->dfb->GetDisplayLayer (info->dfb,
++					  DLID_PRIMARY, &info->layer));
++    info->layer->SetCooperativeLevel (info->layer, DLSCL_ADMINISTRATIVE);
++
++    if ((desc.blitting_flags & (DSBLIT_BLEND_ALPHACHANNEL |
++				DSBLIT_BLEND_COLORALPHA)) !=
++	(DSBLIT_BLEND_ALPHACHANNEL | DSBLIT_BLEND_COLORALPHA))
++    {
++	layer_config.flags = DLCONF_BUFFERMODE;
++	layer_config.buffermode = DLBM_BACKSYSTEM;
++	info->layer->SetConfiguration (info->layer, &layer_config);
++    }
++
++    return info;
++
++ERROR:
++    if (info != NULL)
++	_cairo_boilerplate_directfb_cleanup (info);
++    return NULL;
++}
++
++static cairo_surface_t *
++_cairo_boilerplate_directfb_window_create_surface (DFBInfo	   *info,
++						   cairo_content_t  content,
++						   int		    width,
++						   int		    height)
++{
++    DFBWindowDescription desc;
++    int err;
++
++    D_DEBUG_AT (CairoDFB_Boiler, "%s (%p, %s, %dx%d)\n", __FUNCTION__, info,
++		content == CAIRO_CONTENT_ALPHA	     ? "ALPHA" :
++		content == CAIRO_CONTENT_COLOR	     ? "RGB"   :
++		content == CAIRO_CONTENT_COLOR_ALPHA ? "ARGB"  : "unknown content!",
++		width, height);
++
++    desc.flags	= DWDESC_POSX | DWDESC_POSY |
++		  DWDESC_WIDTH | DWDESC_HEIGHT;
++    desc.caps	= DSCAPS_NONE;
++    desc.posx	= 0;
++    desc.posy	= 0;
++    desc.width	= width;
++    desc.height = height;
++    if (content == CAIRO_CONTENT_COLOR_ALPHA) {
++	desc.flags |= DWDESC_CAPS | DWDESC_PIXELFORMAT;
++	desc.caps  |= DWCAPS_DOUBLEBUFFER | DWCAPS_ALPHACHANNEL;
++	desc.pixelformat = DSPF_ARGB;
++    }
++
++    DFBCHECK (info->layer->CreateWindow (info->layer, &desc, &info->window));
++    info->window->SetOpacity (info->window, 0xFF);
++    info->window->GetSurface (info->window, &info->surface);
++    info->surface->SetColor (info->surface, 0xFF, 0xFF, 0xFF, 0xFF);
++    info->surface->FillRectangle (info->surface,0, 0, desc.width, desc.height);
++    info->surface->Flip (info->surface, NULL, 0);
++
++    return cairo_directfb_surface_create (info->dfb, info->surface);
++
++ERROR:
++    _cairo_boilerplate_directfb_cleanup (info);
++    return NULL;
++}
++
++static cairo_surface_t *
++_cairo_boilerplate_directfb_bitmap_create_surface (DFBInfo	   *info,
++						   cairo_content_t  content,
++						   int		    width,
++						   int		    height)
++{
++    int  err;
++    DFBSurfaceDescription  desc;
++
++    D_DEBUG_AT (CairoDFB_Boiler, "%s (%p, %s, %dx%d)\n", __FUNCTION__, info,
++		content == CAIRO_CONTENT_ALPHA	     ? "ALPHA" :
++		content == CAIRO_CONTENT_COLOR	     ? "RGB"   :
++		content == CAIRO_CONTENT_COLOR_ALPHA ? "ARGB"  : "unknown content!",
++		width, height);
++
++    desc.flags = DSDESC_WIDTH | DSDESC_HEIGHT;
++    desc.caps = DSCAPS_NONE;
++    desc.width	= width;
++    desc.height = height;
++    if (content == CAIRO_CONTENT_COLOR_ALPHA) {
++	desc.flags |= DSDESC_PIXELFORMAT;
++	desc.pixelformat = DSPF_ARGB;
++    }
++    DFBCHECK (info->dfb->CreateSurface (info->dfb, &desc, &info->surface));
++
++    return cairo_directfb_surface_create (info->dfb, info->surface);
++
++ERROR:
++    _cairo_boilerplate_directfb_cleanup (info);
++    return NULL;
++}
++
++static cairo_surface_t *
++_cairo_boilerplate_directfb_create_surface (const char		      *name,
++					    cairo_content_t	       content,
++					    double		       width,
++					    double		       height,
++					    double		       max_width,
++					    double		       max_height,
++					    cairo_boilerplate_mode_t   mode,
++					    void		     **closure)
++{
++
++    DFBInfo *info;
++
++    info = init ();
++    if (info == NULL)
++	return NULL;
++
++    *closure = info;
++
++    D_DEBUG_AT (CairoDFB_Boiler, "%s ('%s', %s, %dx%d, %s)\n",
++		__FUNCTION__, name,
++		content == CAIRO_CONTENT_ALPHA	     ? "ALPHA" :
++		content == CAIRO_CONTENT_COLOR	     ? "RGB"   :
++		content == CAIRO_CONTENT_COLOR_ALPHA ? "ARGB"  : "unknown content!",
++		width, height,
++		mode == CAIRO_BOILERPLATE_MODE_TEST ? "TEST" :
++		mode == CAIRO_BOILERPLATE_MODE_PERF ? "PERF" : "unknown mode!");
++
++    if (width == 0)
++	width = 1;
++    if (height == 0)
++	height = 1;
++
++    if (mode == CAIRO_BOILERPLATE_MODE_TEST)
++	return _cairo_boilerplate_directfb_bitmap_create_surface (info, content, width, height);
++    else /* mode == CAIRO_BOILERPLATE_MODE_PERF */
++	return _cairo_boilerplate_directfb_window_create_surface (info, content, width, height);
++}
++
++static const cairo_boilerplate_target_t targets[] = {
++    {
++	"directfb", "directfb", NULL, NULL,
++	CAIRO_SURFACE_TYPE_DIRECTFB, CAIRO_CONTENT_COLOR, 0,
++	"cairo_directfb_surface_create",
++	_cairo_boilerplate_directfb_create_surface,
++	cairo_surface_create_similar,
++	NULL, NULL,
++	_cairo_boilerplate_get_image_surface,
++	cairo_surface_write_to_png,
++	_cairo_boilerplate_directfb_cleanup,
++	NULL, NULL, TRUE, FALSE, FALSE
++    },
++    {
++	"directfb-bitmap", "directfb", NULL, NULL,
++	CAIRO_SURFACE_TYPE_DIRECTFB, CAIRO_CONTENT_COLOR_ALPHA, 0,
++	"cairo_directfb_surface_create",
++	_cairo_boilerplate_directfb_create_surface,
++	cairo_surface_create_similar,
++	NULL, NULL,
++	_cairo_boilerplate_get_image_surface,
++	cairo_surface_write_to_png,
++	_cairo_boilerplate_directfb_cleanup,
++	NULL, NULL, FALSE, FALSE, FALSE
++    },
++};
++CAIRO_BOILERPLATE (directfb, targets);
+diff --git a/boilerplate/meson.build b/boilerplate/meson.build
+index 544bfcc09..0bb7a1b10 100644
+--- a/boilerplate/meson.build
++++ b/boilerplate/meson.build
+@@ -9,6 +9,7 @@ cairo_boilerplate_feature_sources = {
+   'cairo-quartz': ['cairo-boilerplate-quartz.c'],
+   'cairo-xcb': ['cairo-boilerplate-xcb.c'],
+   'cairo-win32': ['cairo-boilerplate-win32.c', 'cairo-boilerplate-win32-printing.c'],
++  'cairo-directfb': ['cairo-boilerplate-directfb.c'],
+   'cairo-pdf': ['cairo-boilerplate-pdf.c'],
+   'cairo-ps': ['cairo-boilerplate-ps.c'],
+   'cairo-svg': ['cairo-boilerplate-svg.c'],
+diff --git a/meson.build b/meson.build
+index 9100152..233ec52 100644
+--- a/meson.build
++++ b/meson.build
+@@ -632,6 +632,19 @@ if feature_conf.get('CAIRO_HAS_SVG_SURFACE', 0) == 1
+   endif
+ endif
+ 
++#Untested
++directfb_dep = dependency('directfb', required: get_option('directfb'))
++if directfb_dep.found()
++  deps += [directfb_dep]
++
++  feature_conf.set('CAIRO_HAS_DIRECTFB_SURFACE', 1)
++  built_features += [{
++    'name': 'cairo-directfb',
++    'description': 'directfb surface backend',
++    'deps': [directfb_dep],
++  }]
++endif
++
+ pixman_dep = dependency('pixman-1',
+   version: '>= 0.36.0',
+   fallback: ['pixman', 'idep_pixman'],
+@@ -831,6 +844,7 @@ summary({
+         'PostScript':  feature_conf.get('CAIRO_HAS_PS_SURFACE', 0) == 1,
+         'PDF':  feature_conf.get('CAIRO_HAS_PDF_SURFACE', 0) == 1,
+         'SVG':  feature_conf.get('CAIRO_HAS_SVG_SURFACE', 0) == 1,
++        'DirectFB': feature_conf.get('CAIRO_HAS_DIRECTFB_SURFACE', 0) == 1,
+         }, section: 'Surface Backends', bool_yn: true)
+ 
+ summary({
+diff --git a/meson_options.txt b/meson_options.txt
+index f481ef3ea..830e348b2 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -4,6 +4,7 @@ option('fontconfig', type : 'feature', value : 'auto')
+ option('freetype', type : 'feature', value : 'auto')
+ 
+ # Cairo surface backends
++option('directfb', type : 'feature', value : 'disabled')
+ option('png', type : 'feature', value : 'auto') # png and svg surfaces
+ option('quartz', type : 'feature', value : 'auto')
+ option('tee', type : 'feature', value : 'auto')
+diff --git a/src/cairo-directfb-surface.c b/src/cairo-directfb-surface.c
+new file mode 100644
+index 000000000..0deedf0d5
+--- /dev/null
++++ b/src/cairo-directfb-surface.c
+@@ -0,0 +1,545 @@
++/* cairo - a vector graphics library with display and print output
++ *
++ * Copyright © 2012 Intel Corporation
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it either under the terms of the GNU Lesser General Public
++ * License version 2.1 as published by the Free Software Foundation
++ * (the "LGPL") or, at your option, under the terms of the Mozilla
++ * Public License Version 1.1 (the "MPL"). If you do not alter this
++ * notice, a recipient may use your version of this file under either
++ * the MPL or the LGPL.
++ *
++ * You should have received a copy of the LGPL along with this library
++ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA 02110-1335, USA
++ * You should have received a copy of the MPL along with this library
++ * in the file COPYING-MPL-1.1
++ *
++ * The contents of this file are subject to the Mozilla Public License
++ * Version 1.1 (the "License"); you may not use this file except in
++ * compliance with the License. You may obtain a copy of the License at
++ * http://www.mozilla.org/MPL/
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
++ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
++ * the specific language governing rights and limitations.
++ *
++ * The Original Code is the cairo graphics library.
++ *
++ * The Initial Developer of the Original Code is Chris Wilson
++ *
++ * Contributor(s):
++ *    Chris Wilson <chris@chris-wilson.co.uk>
++ */
++
++#include "cairoint.h"
++#include "cairo-directfb.h"
++
++#include "cairo-clip-private.h"
++#include "cairo-compositor-private.h"
++#include "cairo-default-context-private.h"
++#include "cairo-error-private.h"
++#include "cairo-image-surface-inline.h"
++#include "cairo-pattern-private.h"
++#include "cairo-surface-backend-private.h"
++#include "cairo-surface-fallback-private.h"
++
++#include <pixman.h>
++
++#include <directfb.h>
++#include <direct/types.h>
++#include <direct/debug.h>
++#include <direct/memcpy.h>
++#include <direct/util.h>
++
++slim_hidden_proto(cairo_directfb_surface_create);
++
++typedef struct _cairo_dfb_surface {
++    cairo_image_surface_t image;
++
++    IDirectFB			*dfb;
++    IDirectFBSurface		*dfb_surface;
++
++    unsigned             blit_premultiplied : 1;
++} cairo_dfb_surface_t;
++
++static cairo_content_t
++_directfb_format_to_content (DFBSurfacePixelFormat format)
++{
++    cairo_content_t content = 0;
++
++    if (DFB_PIXELFORMAT_HAS_ALPHA (format))
++	content |= CAIRO_CONTENT_ALPHA;
++    if (DFB_COLOR_BITS_PER_PIXEL (format))
++	content |= CAIRO_CONTENT_COLOR_ALPHA;
++
++    assert(content);
++    return content;
++}
++
++static inline pixman_format_code_t
++_directfb_to_pixman_format (DFBSurfacePixelFormat format)
++{
++    switch (format) {
++    case DSPF_UNKNOWN: return 0;
++    case DSPF_ARGB1555: return PIXMAN_a1r5g5b5;
++    case DSPF_RGB16: return PIXMAN_r5g6b5;
++    case DSPF_RGB24: return PIXMAN_r8g8b8;
++    case DSPF_RGB32: return PIXMAN_x8r8g8b8;
++    case DSPF_ARGB: return PIXMAN_a8r8g8b8;
++    case DSPF_A8: return PIXMAN_a8;
++    case DSPF_YUY2: return PIXMAN_yuy2;
++    case DSPF_RGB332: return PIXMAN_r3g3b2;
++    case DSPF_UYVY: return 0;
++    case DSPF_I420: return 0;
++    case DSPF_YV12: return PIXMAN_yv12;
++    case DSPF_LUT8: return 0;
++    case DSPF_ALUT44: return 0;
++    case DSPF_AiRGB: return 0;
++    case DSPF_A1: return 0; /* bit reversed, oops */
++    case DSPF_NV12: return 0;
++    case DSPF_NV16: return 0;
++    case DSPF_ARGB2554: return 0;
++    case DSPF_ARGB4444: return PIXMAN_a4r4g4b4;
++    case DSPF_NV21: return 0;
++    case DSPF_AYUV: return 0;
++    case DSPF_A4: return PIXMAN_a4;
++    case DSPF_ARGB1666: return 0;
++    case DSPF_ARGB6666: return 0;
++    case DSPF_RGB18: return 0;
++    case DSPF_LUT2: return 0;
++    case DSPF_RGB444: return PIXMAN_x4r4g4b4;
++    case DSPF_RGB555: return PIXMAN_x1r5g5b5;
++#if DFB_NUM_PIXELFORMATS >= 29
++    case DSPF_BGR555: return PIXMAN_x1b5g5r5;
++#endif
++    }
++    return 0;
++}
++
++static cairo_surface_t *
++_cairo_dfb_surface_create_similar (void            *abstract_src,
++				   cairo_content_t  content,
++				   int              width,
++				   int              height)
++{
++    cairo_dfb_surface_t *other  = abstract_src;
++    DFBSurfacePixelFormat     format;
++    IDirectFBSurface      *buffer;
++    DFBSurfaceDescription  dsc;
++    cairo_surface_t *surface;
++
++    if (width <= 0 || height <= 0)
++	return _cairo_image_surface_create_with_content (content, width, height);
++
++    switch (content) {
++    default:
++	ASSERT_NOT_REACHED;
++    case CAIRO_CONTENT_COLOR_ALPHA:
++	format = DSPF_ARGB;
++	break;
++    case CAIRO_CONTENT_COLOR:
++	format = DSPF_RGB32;
++	break;
++    case CAIRO_CONTENT_ALPHA:
++	format = DSPF_A8;
++	break;
++    }
++
++    dsc.flags       = DSDESC_WIDTH | DSDESC_HEIGHT | DSDESC_PIXELFORMAT;
++    dsc.caps        = DSCAPS_PREMULTIPLIED;
++    dsc.width       = width;
++    dsc.height      = height;
++    dsc.pixelformat = format;
++
++    if (other->dfb->CreateSurface (other->dfb, &dsc, &buffer))
++	return _cairo_surface_create_in_error (_cairo_error (CAIRO_STATUS_DEVICE_ERROR));
++
++    surface = cairo_directfb_surface_create (other->dfb, buffer);
++    buffer->Release (buffer);
++
++    return surface;
++}
++
++static cairo_status_t
++_cairo_dfb_surface_finish (void *abstract_surface)
++{
++    cairo_dfb_surface_t *surface = abstract_surface;
++
++    surface->dfb_surface->Release (surface->dfb_surface);
++    return _cairo_image_surface_finish (abstract_surface);
++}
++
++static cairo_image_surface_t *
++_cairo_dfb_surface_map_to_image (void *abstract_surface,
++				 const cairo_rectangle_int_t *extents)
++{
++    cairo_dfb_surface_t *surface = abstract_surface;
++
++    if (surface->image.pixman_image == NULL) {
++	IDirectFBSurface *buffer = surface->dfb_surface;
++	pixman_image_t *image;
++	void *data;
++	int pitch;
++
++	if (buffer->Lock (buffer, DSLF_READ | DSLF_WRITE, &data, &pitch))
++	    return _cairo_image_surface_create_in_error (_cairo_error (CAIRO_STATUS_NO_MEMORY));
++
++	image = pixman_image_create_bits (surface->image.pixman_format,
++					  surface->image.width,
++					  surface->image.height,
++					  data, pitch);
++	if (image == NULL) {
++	    buffer->Unlock (buffer);
++	    return _cairo_image_surface_create_in_error (_cairo_error (CAIRO_STATUS_NO_MEMORY));
++	}
++	_cairo_image_surface_init (&surface->image, image, surface->image.pixman_format);
++    }
++
++    return _cairo_image_surface_map_to_image (&surface->image.base, extents);
++}
++
++static cairo_int_status_t
++_cairo_dfb_surface_unmap_image (void *abstract_surface,
++				cairo_image_surface_t *image)
++{
++    cairo_dfb_surface_t *surface = abstract_surface;
++    return _cairo_image_surface_unmap_image (&surface->image.base, image);
++}
++
++static cairo_status_t
++_cairo_dfb_surface_flush (void *abstract_surface,
++			  unsigned flags)
++{
++    cairo_dfb_surface_t *surface = abstract_surface;
++
++    if (flags)
++	return CAIRO_STATUS_SUCCESS;
++
++    if (surface->image.pixman_image) {
++	surface->dfb_surface->Unlock (surface->dfb_surface);
++
++	pixman_image_unref (surface->image.pixman_image);
++	surface->image.pixman_image = NULL;
++	surface->image.data = NULL;
++    }
++
++    return CAIRO_STATUS_SUCCESS;
++}
++
++#if 0
++static inline DFBSurfacePixelFormat
++_directfb_from_pixman_format (pixman_format_code_t format)
++{
++    switch ((int) format) {
++    case PIXMAN_a1r5g5b5: return DSPF_ARGB1555;
++    case PIXMAN_r5g6b5: return DSPF_RGB16;
++    case PIXMAN_r8g8b8: return DSPF_RGB24;
++    case PIXMAN_x8r8g8b8: return DSPF_RGB32;
++    case PIXMAN_a8r8g8b8: return DSPF_ARGB;
++    case PIXMAN_a8: return DSPF_A8;
++    case PIXMAN_yuy2: return DSPF_YUY2;
++    case PIXMAN_r3g3b2: return DSPF_RGB332;
++    case PIXMAN_yv12: return DSPF_YV12;
++    case PIXMAN_a1: return DSPF_A1; /* bit reversed, oops */
++    case PIXMAN_a4r4g4b4: return DSPF_ARGB4444;
++    case PIXMAN_a4: return DSPF_A4;
++    case PIXMAN_x4r4g4b4: return DSPF_RGB444;
++    case PIXMAN_x1r5g5b5: return DSPF_RGB555;
++#if DFB_NUM_PIXELFORMATS >= 29
++    case PIXMAN_x1b5g5r5: return DSPF_BGR555;
++#endif
++    default: return 0;
++    }
++}
++
++static cairo_bool_t
++_directfb_get_operator (cairo_operator_t         operator,
++                        DFBSurfaceBlendFunction *ret_srcblend,
++                        DFBSurfaceBlendFunction *ret_dstblend)
++{
++    DFBSurfaceBlendFunction srcblend = DSBF_ONE;
++    DFBSurfaceBlendFunction dstblend = DSBF_ZERO;
++
++    switch (operator) {
++    case CAIRO_OPERATOR_CLEAR:
++	srcblend = DSBF_ZERO;
++	dstblend = DSBF_ZERO;
++	break;
++    case CAIRO_OPERATOR_SOURCE:
++	srcblend = DSBF_ONE;
++	dstblend = DSBF_ZERO;
++	break;
++    case CAIRO_OPERATOR_OVER:
++	srcblend = DSBF_ONE;
++	dstblend = DSBF_INVSRCALPHA;
++	break;
++    case CAIRO_OPERATOR_IN:
++	srcblend = DSBF_DESTALPHA;
++	dstblend = DSBF_ZERO;
++	break;
++    case CAIRO_OPERATOR_OUT:
++	srcblend = DSBF_INVDESTALPHA;
++	dstblend = DSBF_ZERO;
++	break;
++    case CAIRO_OPERATOR_ATOP:
++	srcblend = DSBF_DESTALPHA;
++	dstblend = DSBF_INVSRCALPHA;
++	break;
++    case CAIRO_OPERATOR_DEST:
++	srcblend = DSBF_ZERO;
++	dstblend = DSBF_ONE;
++	break;
++    case CAIRO_OPERATOR_DEST_OVER:
++	srcblend = DSBF_INVDESTALPHA;
++	dstblend = DSBF_ONE;
++	break;
++    case CAIRO_OPERATOR_DEST_IN:
++	srcblend = DSBF_ZERO;
++	dstblend = DSBF_SRCALPHA;
++	break;
++    case CAIRO_OPERATOR_DEST_OUT:
++	srcblend = DSBF_ZERO;
++	dstblend = DSBF_INVSRCALPHA;
++	break;
++    case CAIRO_OPERATOR_DEST_ATOP:
++	srcblend = DSBF_INVDESTALPHA;
++	dstblend = DSBF_SRCALPHA;
++	break;
++    case CAIRO_OPERATOR_XOR:
++	srcblend = DSBF_INVDESTALPHA;
++	dstblend = DSBF_INVSRCALPHA;
++	break;
++    case CAIRO_OPERATOR_ADD:
++	srcblend = DSBF_ONE;
++	dstblend = DSBF_ONE;
++	break;
++    case CAIRO_OPERATOR_SATURATE:
++	/* XXX This does not work. */
++#if 0
++	srcblend = DSBF_SRCALPHASAT;
++	dstblend = DSBF_ONE;
++	break;
++#endif
++    case CAIRO_OPERATOR_MULTIPLY:
++    case CAIRO_OPERATOR_SCREEN:
++    case CAIRO_OPERATOR_OVERLAY:
++    case CAIRO_OPERATOR_DARKEN:
++    case CAIRO_OPERATOR_LIGHTEN:
++    case CAIRO_OPERATOR_COLOR_DODGE:
++    case CAIRO_OPERATOR_COLOR_BURN:
++    case CAIRO_OPERATOR_HARD_LIGHT:
++    case CAIRO_OPERATOR_SOFT_LIGHT:
++    case CAIRO_OPERATOR_DIFFERENCE:
++    case CAIRO_OPERATOR_EXCLUSION:
++    case CAIRO_OPERATOR_HSL_HUE:
++    case CAIRO_OPERATOR_HSL_SATURATION:
++    case CAIRO_OPERATOR_HSL_COLOR:
++    case CAIRO_OPERATOR_HSL_LUMINOSITY:
++    default:
++	return FALSE;
++    }
++
++    *ret_srcblend = srcblend;
++    *ret_dstblend = dstblend;
++
++    return TRUE;
++}
++#define RUN_CLIPPED(surface, clip_region, clip, func) {\
++    if ((clip_region) != NULL) {\
++	int n_clips = cairo_region_num_rectangles (clip_region), n; \
++        for (n = 0; n < n_clips; n++) {\
++            if (clip) {\
++                DFBRegion  reg, *cli = (clip); \
++		cairo_rectangle_int_t rect; \
++		cairo_region_get_rectangle (clip_region, n, &rect); \
++		reg.x1 = rect.x; \
++		reg.y1 = rect.y; \
++		reg.x2 = rect.x + rect.width - 1; \
++		reg.y2 = rect.y + rect.height - 1; \
++                if (reg.x2 < cli->x1 || reg.y2 < cli->y1 ||\
++                    reg.x1 > cli->x2 || reg.y1 > cli->y2)\
++                    continue;\
++                if (reg.x1 < cli->x1)\
++                    reg.x1 = cli->x1;\
++                if (reg.y1 < cli->y1)\
++                    reg.y1 = cli->y1;\
++                if (reg.x2 > cli->x2)\
++                    reg.x2 = cli->x2;\
++                if (reg.y2 > cli->y2)\
++                    reg.y2 = cli->y2;\
++                (surface)->dfbsurface->SetClip ((surface)->dfbsurface, &reg);\
++            } else {\
++		DFBRegion reg; \
++		cairo_rectangle_int_t rect; \
++		cairo_region_get_rectangle (clip_region, n, &rect); \
++		reg.x1 = rect.x; \
++		reg.y1 = rect.y; \
++		reg.x2 = rect.x + rect.width - 1; \
++		reg.y2 = rect.y + rect.height - 1; \
++                (surface)->dfbsurface->SetClip ((surface)->dfbsurface, &reg); \
++            }\
++            func;\
++        }\
++    } else {\
++        (surface)->dfbsurface->SetClip ((surface)->dfbsurface, clip);\
++        func;\
++    }\
++}
++
++static cairo_int_status_t
++_cairo_dfb_surface_fill_rectangles (void                  *abstract_surface,
++                                         cairo_operator_t       op,
++                                         const cairo_color_t   *color,
++                                         cairo_rectangle_int_t *rects,
++                                         int                    n_rects)
++{
++    cairo_dfb_surface_t *dst   = abstract_surface;
++    DFBSurfaceDrawingFlags    flags;
++    DFBSurfaceBlendFunction   sblend;
++    DFBSurfaceBlendFunction   dblend;
++    DFBRectangle              r[n_rects];
++    int                       i;
++
++    D_DEBUG_AT (CairoDFB_Render,
++		"%s( dst=%p, op=%d, color=%p, rects=%p, n_rects=%d ).\n",
++		__FUNCTION__, dst, op, color, rects, n_rects);
++
++    if (! dst->supported_destination)
++	return CAIRO_INT_STATUS_UNSUPPORTED;
++
++    if (! _directfb_get_operator (op, &sblend, &dblend))
++	return CAIRO_INT_STATUS_UNSUPPORTED;
++
++    if (CAIRO_COLOR_IS_OPAQUE (color)) {
++	if (sblend == DSBF_SRCALPHA)
++	    sblend = DSBF_ONE;
++	else if (sblend == DSBF_INVSRCALPHA)
++	    sblend = DSBF_ZERO;
++
++	if (dblend == DSBF_SRCALPHA)
++	    dblend = DSBF_ONE;
++	else if (dblend == DSBF_INVSRCALPHA)
++	    dblend = DSBF_ZERO;
++    }
++    if ((dst->base.content & CAIRO_CONTENT_ALPHA) == 0) {
++	if (sblend == DSBF_DESTALPHA)
++	    sblend = DSBF_ONE;
++	else if (sblend == DSBF_INVDESTALPHA)
++	    sblend = DSBF_ZERO;
++
++	if (dblend == DSBF_DESTALPHA)
++	    dblend = DSBF_ONE;
++	else if (dblend == DSBF_INVDESTALPHA)
++	    dblend = DSBF_ZERO;
++    }
++
++    flags = (sblend == DSBF_ONE && dblend == DSBF_ZERO) ? DSDRAW_NOFX : DSDRAW_BLEND;
++    dst->dfbsurface->SetDrawingFlags (dst->dfbsurface, flags);
++    if (flags & DSDRAW_BLEND) {
++	dst->dfbsurface->SetSrcBlendFunction (dst->dfbsurface, sblend);
++	dst->dfbsurface->SetDstBlendFunction (dst->dfbsurface, dblend);
++    }
++
++    dst->dfbsurface->SetColor (dst->dfbsurface,
++			       color->red_short >> 8,
++			       color->green_short >> 8,
++			       color->blue_short >> 8,
++			       color->alpha_short >> 8);
++
++    for (i = 0; i < n_rects; i++) {
++	r[i].x = rects[i].x;
++	r[i].y = rects[i].y;
++	r[i].w = rects[i].width;
++	r[i].h = rects[i].height;
++    }
++
++    RUN_CLIPPED (dst, NULL, NULL,
++		 dst->dfbsurface->FillRectangles (dst->dfbsurface, r, n_rects));
++
++    return CAIRO_STATUS_SUCCESS;
++}
++#endif
++
++static cairo_surface_backend_t
++_cairo_dfb_surface_backend = {
++    CAIRO_SURFACE_TYPE_DIRECTFB, /*type*/
++    _cairo_dfb_surface_finish, /*finish*/
++    _cairo_default_context_create,
++
++    _cairo_dfb_surface_create_similar,/*create_similar*/
++    NULL, /* create similar image */
++    _cairo_dfb_surface_map_to_image,
++    _cairo_dfb_surface_unmap_image,
++
++    _cairo_surface_default_source,
++    _cairo_surface_default_acquire_source_image,
++    _cairo_surface_default_release_source_image,
++    NULL,
++
++    NULL, /* copy_page */
++    NULL, /* show_page */
++
++    _cairo_image_surface_get_extents,
++    _cairo_image_surface_get_font_options,
++
++    _cairo_dfb_surface_flush,
++    NULL, /* mark_dirty_rectangle */
++
++    _cairo_surface_fallback_paint,
++    _cairo_surface_fallback_mask,
++    _cairo_surface_fallback_stroke,
++    _cairo_surface_fallback_fill,
++    NULL, /* fill-stroke */
++    _cairo_surface_fallback_glyphs,
++};
++
++cairo_surface_t *
++cairo_directfb_surface_create (IDirectFB *dfb, IDirectFBSurface *dfbsurface)
++{
++    cairo_dfb_surface_t *surface;
++    DFBSurfacePixelFormat     format;
++    DFBSurfaceCapabilities caps;
++    pixman_format_code_t pixman_format;
++    int width, height;
++
++    D_ASSERT (dfb != NULL);
++    D_ASSERT (dfbsurface != NULL);
++
++    dfbsurface->GetPixelFormat (dfbsurface, &format);
++    dfbsurface->GetSize (dfbsurface, &width, &height);
++
++    pixman_format = _directfb_to_pixman_format (format);
++    if (! pixman_format_supported_destination (pixman_format))
++        return _cairo_surface_create_in_error (_cairo_error (CAIRO_STATUS_INVALID_FORMAT));
++
++    surface = calloc (1, sizeof (cairo_dfb_surface_t));
++    if (surface == NULL)
++        return _cairo_surface_create_in_error (_cairo_error (CAIRO_STATUS_NO_MEMORY));
++
++    /* XXX dfb -> device */
++    _cairo_surface_init (&surface->image.base,
++                         &_cairo_dfb_surface_backend,
++			 NULL, /* device */
++			 _directfb_format_to_content (format),
++			 FALSE); /* is_vector */
++
++    surface->image.pixman_format = pixman_format;
++    surface->image.format = _cairo_format_from_pixman_format (pixman_format);
++
++    surface->image.width = width;
++    surface->image.height = height;
++    surface->image.depth = PIXMAN_FORMAT_DEPTH(pixman_format);
++
++    surface->dfb = dfb;
++    surface->dfb_surface = dfbsurface;
++    dfbsurface->AddRef (dfbsurface);
++
++    dfbsurface->GetCapabilities (dfbsurface, &caps);
++    if (caps & DSCAPS_PREMULTIPLIED)
++	surface->blit_premultiplied = TRUE;
++
++    return &surface->image.base;
++}
++slim_hidden_def(cairo_directfb_surface_create);
+diff --git a/src/cairo-directfb.h b/src/cairo-directfb.h
+new file mode 100644
+index 000000000..e3d818c66
+--- /dev/null
++++ b/src/cairo-directfb.h
+@@ -0,0 +1,67 @@
++/* cairo - a vector graphics library with display and print output
++ *
++ * Copyright © 2003 University of Southern California
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it either under the terms of the GNU Lesser General Public
++ * License version 2.1 as published by the Free Software Foundation
++ * (the "LGPL") or, at your option, under the terms of the Mozilla
++ * Public License Version 1.1 (the "MPL"). If you do not alter this
++ * notice, a recipient may use your version of this file under either
++ * the MPL or the LGPL.
++ *
++ * You should have received a copy of the LGPL along with this library
++ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA 02110-1335, USA
++ * You should have received a copy of the MPL along with this library
++ * in the file COPYING-MPL-1.1
++ *
++ * The contents of this file are subject to the Mozilla Public License
++ * Version 1.1 (the "License"); you may not use this file except in
++ * compliance with the License. You may obtain a copy of the License at
++ * http://www.mozilla.org/MPL/
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
++ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
++ * the specific language governing rights and limitations.
++ *
++ * The Original Code is the cairo graphics library.
++ *
++ * The Initial Developer of the Original Code is University of Southern
++ * California.
++ *
++ * Contributor(s):
++ *	Carl D. Worth <cworth@isi.edu>
++ */
++
++/*
++ * Environment variables affecting the backend:
++ *
++ *  %CAIRO_DIRECTFB_NO_ACCEL (boolean)
++ *      if found, disables acceleration at all
++ *
++ *  %CAIRO_DIRECTFB_ARGB_FONT (boolean)
++ *      if found, enables using ARGB fonts instead of A8
++ */
++
++#ifndef CAIRO_DIRECTFB_H
++#define CAIRO_DIRECTFB_H
++
++#include "cairo.h"
++
++#if  CAIRO_HAS_DIRECTFB_SURFACE
++
++#include <directfb.h>
++
++CAIRO_BEGIN_DECLS
++
++cairo_public cairo_surface_t *
++cairo_directfb_surface_create (IDirectFB *dfb, IDirectFBSurface *surface);
++
++CAIRO_END_DECLS
++
++#else  /*CAIRO_HAS_DIRECTFB_SURFACE*/
++# error Cairo was not compiled with support for the directfb backend
++#endif /*CAIRO_HAS_DIRECTFB_SURFACE*/
++
++#endif /*CAIRO_DIRECTFB_H*/
+diff --git a/src/meson.build b/src/meson.build
+index ac06ac61a..c7cc892b1 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -182,6 +182,12 @@ cairo_feature_sources = {
+   'cairo-dwrite-font': [
+     'win32/cairo-dwrite-font.cpp',
+   ],
++  'cairo-directfb': [
++    'cairo-directfb-surface.c',
++  ],
++  'cairo-vg': [
++    'cairo-vg-surface.c',
++  ],
+   'cairo-script': [
+     'cairo-script-surface.c',
+   ],
+@@ -213,6 +219,7 @@ cairo_feature_headers = {
+   'cairo-win32': ['cairo-win32.h'],
+   'cairo-dwrite-font': ['cairo-dwrite.h'],
+   'cairo-gl': ['cairo-gl.h'],
++  'cairo-directfb': ['cairo-directfb.h'],
+   'cairo-script': ['cairo-script.h'],
+   'cairo-tee': ['cairo-tee.h'],
+   'cairo-vg': ['cairo-vg.h'],
+-- 
+2.43.0
+
