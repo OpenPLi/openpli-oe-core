@@ -13,11 +13,11 @@ PKGV = "git${GITPKGV}"
 SRC_URI = "git://github.com/kiddac/Jedi-EPG-XStream.git;protocol=https;branch=main"
 
 # fuzzywuzzy is EOL and replaced by thefuzz, but the plugin isn't fixed yet
-RDEPENDS_${PN} = "python3-requests python3-difflib python3-fuzzywuzzy python3-thefuzz"
+RDEPENDS:${PN} = "python3-requests python3-difflib python3-fuzzywuzzy python3-thefuzz"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = " ${sysconfdir}/enigma2/jediepgxtream/* \
+FILES:${PN} = " ${sysconfdir}/enigma2/jediepgxtream/* \
                 ${libdir}/enigma2/python/Plugins/Extensions/JediEPGXtream/*"
 
 do_install () {
@@ -28,13 +28,13 @@ do_install () {
 	cp -rf ${S}/JediEPGXtream/usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/* ${D}/${libdir}/enigma2/python/Plugins/Extensions/JediEPGXtream/
 }
 
-pkg_preinst_${PN} () {
+pkg_preinst:${PN} () {
 #!/bin/sh
 rm -rf /usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream > /dev/null 2>&1
 rm -rf /etc/epgimport/*jex*.* > /dev/null 2>&1
 }
 
-pkg_postrm_${PN} () {
+pkg_postrm:${PN} () {
 #!/bin/sh
 rm -rf /usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream > /dev/null 2>&1
 rm -rf /etc/epgimport/*jex*.* > /dev/null 2>&1
