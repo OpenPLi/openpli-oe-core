@@ -109,7 +109,9 @@ OPTIONAL_PACKAGES += " \
 	ndisc6 \
 	net-snmp \
 	net-tools \
-	${@bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
+	\
+	${@"" and bb.utils.contains('TARGET_FPU', 'soft', '', 'nodejs', d)} \
+	\
 	phodav \
 	ntfs-3g \
 	ntp \
@@ -245,8 +247,10 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-backupsuite \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo', 'enigma2-plugin-drivers-dvb-usb-turbo', '', d)} \
 	${@bb.utils.contains('EXTRA_IMAGEDEPENDS', 'vuplus-tuner-turbo2', 'enigma2-plugin-drivers-dvb-usb-turbo2', '', d)} \
-	${@bb.utils.contains('OPENPLI_FEATURES', 'kodi-do-not-build', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
-	${@bb.utils.contains('MACHINE_FEATURES', 'kodi-do-not-build', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
+	\
+	${@"" and bb.utils.contains('OPENPLI_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
+	${@"" and bb.utils.contains('MACHINE_FEATURES', 'kodi', 'enigma2-plugin-extensions-kodi kodi-addons-meta', '', d)} \
+	\
 	${@bb.utils.contains('OPENPLI_FEATURES', 'qtplugins', 'enigma2-plugin-extensions-qthbbtv enigma2-plugin-extensions-qtstalker', '', d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding", "streamproxy", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "webkithbbtv", "enigma2-plugin-extensions-webkithbbtv", "", d)} \
