@@ -7,7 +7,7 @@ SRC_ORIGIN ?= "git://github.com/persianpros/BackupSuite-PLi.git;protocol=https "
 SRC_URI := "${SRC_ORIGIN} "
 
 # don't inherit allarch, it can't work with arch-dependent RDEPENDS
-inherit gitpkgv distutils-openplugins gettext
+inherit gitpkgv distutils-openplugins gettext python3-compileall
 
 RDEPENDS_${PN} = " \
 	mtd-utils \
