@@ -110,7 +110,7 @@ do_install() {
 
 # OE version info
 	OE_NAME=`cd ${OPENPLI_BASE} && git submodule | grep "meta-openembedded" | cut -d '(' -f 2 | cut -d ')' -f 1 | cut -d '/' -f 3`
-	OE_VERSION=`cd ${OPENPLI_BASE} && git submodule | grep "openembedded-core" | cut -d '(' -f 2 | cut -d ')' -f 1 | cut -d '-' -f 2 | sed "s/^0*//"`
+	OE_VERSION=`cd "${OPENPLI_BASE}/openembedded-core" && git describe --match=yocto* | cut -d '-' -f 2`
 
 # OE-A compatible machine names
 
