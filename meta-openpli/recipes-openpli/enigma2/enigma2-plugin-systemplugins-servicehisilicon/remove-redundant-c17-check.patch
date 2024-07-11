@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index 474c17d..6a11860 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,8 +9,6 @@ AM_PATH_PYTHON
+ AX_PYTHON_DEVEL
+ AC_LANG(C++)
+ 
+-AX_CXX_COMPILE_STDCXX_17([ext],[mandatory])
+-
+ PKG_CHECK_MODULES(ENIGMA2, enigma2)
+ 
+ AC_DEFINE([DEBUG])
