@@ -133,7 +133,6 @@ OPTIONAL_PACKAGES += " \
 	${PYTHON_PN}-beautifulsoup4 \
 	${PYTHON_PN}-compat2 \
 	${PYTHON_PN}-future \
-	${PYTHON_PN}-futures \
 	${PYTHON_PN}-pycryptodome \
 	${PYTHON_PN}-singledispatch \
 	${PYTHON_PN}-websocket-client \
