@@ -11,4 +11,4 @@ SRC_URI = "git://github.com/ims21/ModifyPliFullHD.git;protocol=https"
 
 S="${WORKDIR}/git"
 
-inherit distutils-openplugins
+inherit distutils-openplugins python3-compileall
