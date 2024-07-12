@@ -139,6 +139,7 @@ OPTIONAL_PACKAGES += " \
 	${PYTHON_PN}-isodate \
 	${PYTHON_PN}-pycountry \
 	${PYTHON_PN}-youtube-dl \
+	${PYTHON_PN}-youtube-dlp \
 	${PYTHON_PN}-pycryptodomex \
 	${PYTHON_PN}-evdev \
 	${PYTHON_PN}-rarfile \
