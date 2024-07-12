@@ -10,7 +10,6 @@ DEPENDS = "libxml2 bash-completion python3-hatchling-native"
 
 inherit python_flit_core python3-dir gittag
 
-SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 

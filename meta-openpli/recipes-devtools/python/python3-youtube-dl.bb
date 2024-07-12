@@ -11,7 +11,6 @@ DEPENDS = "libxml2 bash-completion"
 
 inherit python3-dir setuptools3 gittag
 
-SRCREV = "${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
