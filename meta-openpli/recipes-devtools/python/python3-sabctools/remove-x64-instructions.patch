@@ -61,13 +61,13 @@ index 68ea2a9..52c2009 100644
              {
                  "sources": ["src/yencode/encoder_vbmi2.cc"],
                  "depends": srcdeps_enc_common + ["encoder_avx_base.h"],
--                "gcc_x86_flags": gcc_vbmi2_flags,
+-                "gcc_x86_flags": gcc_vbmi2_flags + gcc_avx10_flags,
                  "msvc_x86_flags": ["/arch:AVX512"],
              },
              {
                  "sources": ["src/yencode/decoder_vbmi2.cc"],
                  "depends": srcdeps_dec_common + ["decoder_avx2_base.h"],
--                "gcc_x86_flags": gcc_vbmi2_flags,
+-                "gcc_x86_flags": gcc_vbmi2_flags + gcc_avx10_flags,
                  "msvc_x86_flags": ["/arch:AVX512"],
              },
              {
