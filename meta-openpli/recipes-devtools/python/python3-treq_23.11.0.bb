@@ -13,13 +13,13 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a5dd67fd17479587f7093769d95ef186"
 SRC_URI[sha256sum] = "0914ff929fd1632ce16797235260f8bc19d20ff7c459c1deabd65b8c68cbeac5"
 
 RDEPENDS:${PN} = "\
-    ${PYTHON_PN}-twisted-web \
+    python3-twisted-web \
 "
 
 # setup.py of treq needs this.
 DEPENDS = "\
-    ${PYTHON_PN}-pip-native \
-    ${PYTHON_PN}-wheel-native \
+    python3-pip-native \
+    python3-wheel-native \
 "
 
 RDEPENDS:${PN}-dbg = "${PN}"

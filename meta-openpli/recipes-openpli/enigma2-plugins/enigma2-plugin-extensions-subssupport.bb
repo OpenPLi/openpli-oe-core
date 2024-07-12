@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-RDEPENDS:${PN} = "${PYTHON_PN}-requests ${PYTHON_PN}-xmlrpc ${PYTHON_PN}-compression ${PYTHON_PN}-codecs ${PYTHON_PN}-difflib ${PYTHON_PN}-rarfile unrar"
+RDEPENDS:${PN} = "python3-requests python3-xmlrpc python3-compression python3-codecs python3-difflib python3-rarfile unrar"
 
-inherit autotools-brokensep gettext gittag ${PYTHON_PN}native python3-compileall
+inherit autotools-brokensep gettext gittag python3native python3-compileall
 
 SRC_URI = "git://github.com/oe-mirrors/subssupport;protocol=https;branch=master"
 SRC_URI:append = " file://0002-python3-hardlink.patch"

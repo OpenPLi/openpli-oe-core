@@ -2,7 +2,7 @@ DESCRIPTION = "Python module for text subtitles parsing"
 MAINTAINER = "samsamsam"
 require conf/license/openpli-gplv2.inc
 
-DEPENDS = "${PYTHON_PN}"
+DEPENDS = "python3"
 
 inherit gitpkgv python3native
 

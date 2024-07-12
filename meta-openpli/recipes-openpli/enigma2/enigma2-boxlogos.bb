@@ -8,7 +8,7 @@ DEPENDS = "enigma-info"
 
 ALLOW_EMPTY:${PN} = "1"
 
-inherit gitpkgv ${PYTHON_PN}native
+inherit gitpkgv python3native
 
 PV = "1.0+gitr${SRCPV}"
 PKGV = "1.0+gitr${GITPKGV}"

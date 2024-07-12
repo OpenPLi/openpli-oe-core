@@ -7,7 +7,7 @@ require conf/license/license-gplv2.inc
 
 inherit allarch gittag
 
-RDEPENDS:${PN} = "${PYTHON_PN}-core streamlink"
+RDEPENDS:${PN} = "python3-core streamlink"
 
 SRC_URI = "git://github.com/oe-mirrors/livestreamersrv;protocol=https;branch=streamlinksrv \
            file://set-interpreter-to-python3.patch \

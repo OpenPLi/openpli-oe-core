@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-RDEPENDS:${PN}-core += "${PYTHON_PN}-service-identity"
+RDEPENDS:${PN}-core += "python3-service-identity"
 
 SRC_URI += " \
            file://0001-fix-writing-after-channel-is-closed.patch \
@@ -9,4 +9,4 @@ SRC_URI += " \
 
 ALLOW_EMPTY:${PN} = "1"
 
-include ${PYTHON_PN}-package-split.inc
+include python3-package-split.inc

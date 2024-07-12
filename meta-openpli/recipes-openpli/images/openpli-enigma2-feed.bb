@@ -122,29 +122,29 @@ OPTIONAL_PACKAGES += " \
 	parted \
 	procps \
 	pyload \
-	${PYTHON_PN}-ipaddress \
-	${PYTHON_PN}-ntplib \
-	${PYTHON_PN}-pip \
-	${PYTHON_PN}-requests \
-	${PYTHON_PN}-mechanize \
-	${PYTHON_PN}-lxml \
-	${PYTHON_PN}-js2py \
-	${PYTHON_PN}-pyexecjs \
-	${PYTHON_PN}-beautifulsoup4 \
-	${PYTHON_PN}-compat2 \
-	${PYTHON_PN}-future \
-	${PYTHON_PN}-pycryptodome \
-	${PYTHON_PN}-singledispatch \
-	${PYTHON_PN}-websocket-client \
-	${PYTHON_PN}-isodate \
-	${PYTHON_PN}-pycountry \
-	${PYTHON_PN}-youtube-dl \
-	${PYTHON_PN}-youtube-dlp \
-	${PYTHON_PN}-pycryptodomex \
-	${PYTHON_PN}-evdev \
-	${PYTHON_PN}-rarfile \
-	${PYTHON_PN}-fuzzywuzzy \
-	${PYTHON_PN}-levenshtein \
+	python3-ipaddress \
+	python3-ntplib \
+	python3-pip \
+	python3-requests \
+	python3-mechanize \
+	python3-lxml \
+	python3-js2py \
+	python3-pyexecjs \
+	python3-beautifulsoup4 \
+	python3-compat2 \
+	python3-future \
+	python3-pycryptodome \
+	python3-singledispatch \
+	python3-websocket-client \
+	python3-isodate \
+	python3-pycountry \
+	python3-youtube-dl \
+	python3-youtube-dlp \
+	python3-pycryptodomex \
+	python3-evdev \
+	python3-rarfile \
+	python3-fuzzywuzzy \
+	python3-levenshtein \
 	picocom \
 	ppp \
 	rclone \

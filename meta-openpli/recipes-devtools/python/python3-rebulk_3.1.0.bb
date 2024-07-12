@@ -4,7 +4,7 @@ SECTION = "devel/python"
 LICENSE = "BSD-4-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=df5f9321c8784271adb6c95a3da69f82"
 
-RDEPENDS:${PN} = "${PYTHON_PN}-regex"
+RDEPENDS:${PN} = "python3-regex"
 
 SRC_URI += "file://disable-test.patch"
 
@@ -15,4 +15,4 @@ S = "${WORKDIR}/rebulk-${PV}"
 
 inherit pypi setuptools3
 
-include ${PYTHON_PN}-package-split.inc
+include python3-package-split.inc

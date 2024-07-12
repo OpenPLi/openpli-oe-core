@@ -9,7 +9,7 @@ SRC_URI = "git://github.com/vuplus-com/dvbapp.git;protocol=https;branch=${BRANCH
 	file://port-to-python3.patch \
 "
 
-inherit gitpkgv ${PYTHON_PN}native
+inherit gitpkgv python3native
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 

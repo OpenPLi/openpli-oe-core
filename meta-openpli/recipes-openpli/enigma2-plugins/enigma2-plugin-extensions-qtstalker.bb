@@ -12,7 +12,7 @@ VER ?= "${@bb.utils.contains('MACHINE_FEATURES', 'hisil', '-v2', '', d)}"
 SRC_URI = "git://github.com/zgemma-star/e2plugins.git;protocol=https;branch=python3"
 
 PACKAGES = "${PN}"
-RDEPENDS:${PN}  = "qtwebkit ${PYTHON_PN}-netifaces" 
+RDEPENDS:${PN}  = "qtwebkit python3-netifaces" 
 
 S = "${WORKDIR}/git/qtstalker${VER}"
 

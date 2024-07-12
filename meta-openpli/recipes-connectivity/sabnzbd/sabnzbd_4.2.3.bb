@@ -5,13 +5,13 @@ MAINTAINER = "team@sabnzbd.org"
 LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYRIGHT.txt;md5=dc94785ad7ae0960293331f807d14628"
 
-DEPENDS = "${PYTHON_PN}"
+DEPENDS = "python3"
 RDEPENDS:${PN} = "\
-    ${PYTHON_PN}-cheetah ${PYTHON_PN}-compression ${PYTHON_PN}-core ${PYTHON_PN}-crypt ${PYTHON_PN}-ctypes ${PYTHON_PN}-email ${PYTHON_PN}-html \
-    ${PYTHON_PN}-misc ${PYTHON_PN}-multiprocessing ${PYTHON_PN}-sqlite3 ${PYTHON_PN}-shell ${PYTHON_PN}-sabyenc3 ${PYTHON_PN}-configobj \
-    ${PYTHON_PN}-cryptography ${PYTHON_PN}-feedparser ${PYTHON_PN}-cheroot ${PYTHON_PN}-cherrypy ${PYTHON_PN}-portend ${PYTHON_PN}-chardet \
-    ${PYTHON_PN}-notify2 ${PYTHON_PN}-puremagic ${PYTHON_PN}-guessit ${PYTHON_PN}-sgmllib3k ${PYTHON_PN}-more-itertools ${PYTHON_PN}-modules \
-    ${PYTHON_PN}-sabctools ${PYTHON_PN}-rebulk ${PYTHON_PN}-dateutil ${PYTHON_PN}-babelfish ${PYTHON_PN}-pysocks ${PYTHON_PN}-pip p7zip \
+    python3-cheetah python3-compression python3-core python3-crypt python3-ctypes python3-email python3-html \
+    python3-misc python3-multiprocessing python3-sqlite3 python3-shell python3-sabyenc3 python3-configobj \
+    python3-cryptography python3-feedparser python3-cheroot python3-cherrypy python3-portend python3-chardet \
+    python3-notify2 python3-puremagic python3-guessit python3-sgmllib3k python3-more-itertools python3-modules \
+    python3-sabctools python3-rebulk python3-dateutil python3-babelfish python3-pysocks python3-pip p7zip \
     "
 
 RRECOMMENDS:${PN} = "par2cmdline unrar"

@@ -25,7 +25,7 @@ PR[vardepsexclude] = "DATE"
 
 PACKAGES = "${PN}"
 
-inherit ${PYTHON_PN}-dir ${PYTHON_PN}native
+inherit python3-dir python3native
 
 # Hardware Branding
 

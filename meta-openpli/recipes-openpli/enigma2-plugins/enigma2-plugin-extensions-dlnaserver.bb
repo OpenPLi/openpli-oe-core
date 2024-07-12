@@ -3,7 +3,7 @@ MAINTAINER = "OpenPLi"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${OPENPLI_BASE}/LICENSE;md5=eb723b61539feef013de476e68b5c50a"
 
-inherit ${PYTHON_PN}native
+inherit python3native
 
 PV = "0.2"
 

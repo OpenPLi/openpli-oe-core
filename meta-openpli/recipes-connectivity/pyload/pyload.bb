@@ -4,19 +4,19 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=2d20d11c1dccf4454ce811d6bfb05a2b"
 HOMEPAGE = "http://pyload.org/"
 
 RDEPENDS:${PN} = "\
-	${PYTHON_PN}-compression \
-	${PYTHON_PN}-db \
-	${PYTHON_PN}-email \
-	${PYTHON_PN}-html \
-	${PYTHON_PN}-pillow  \
-	${PYTHON_PN}-numbers \
-	${PYTHON_PN}-pprint \
-	${PYTHON_PN}-pycryptodome \
-	${PYTHON_PN}-pycurl \
-	${PYTHON_PN}-sqlite3 \
-	${PYTHON_PN}-terminal \
-	${PYTHON_PN}-unixadmin \
-	${PYTHON_PN}-xmlrpc \
+	python3-compression \
+	python3-db \
+	python3-email \
+	python3-html \
+	python3-pillow  \
+	python3-numbers \
+	python3-pprint \
+	python3-pycryptodome \
+	python3-pycurl \
+	python3-sqlite3 \
+	python3-terminal \
+	python3-unixadmin \
+	python3-xmlrpc \
 "
 RRECOMMENDS:${PN} = "unrar"
 
@@ -49,4 +49,4 @@ do_install() {
 	install -m 0755 ${WORKDIR}/pyload.init ${D}/etc/init.d/pyload
 }
 
-include ${PYTHON_PN}-package-split.inc
+include python3-package-split.inc

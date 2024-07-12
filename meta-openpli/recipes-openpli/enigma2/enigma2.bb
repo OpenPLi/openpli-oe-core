@@ -45,27 +45,27 @@ RRECOMMENDS:${PN} = " \
 RRECOMMENDS:${PN}:append:libc-glibc = " glibc-gconv-utf-16"
 
 PYTHON_RDEPS = " \
-    ${PYTHON_PN}-codecs \
-    ${PYTHON_PN}-core \
-    ${PYTHON_PN}-crypt \
-    ${PYTHON_PN}-fcntl \
-    ${PYTHON_PN}-logging \
-    ${PYTHON_PN}-mmap \
-    ${PYTHON_PN}-netclient \
-    ${PYTHON_PN}-netifaces \
-    ${PYTHON_PN}-netserver \
-    ${PYTHON_PN}-numbers \
-    ${PYTHON_PN}-pickle \
-    ${PYTHON_PN}-shell \
-    ${PYTHON_PN}-threading \
-    ${PYTHON_PN}-twisted-core \
-    ${PYTHON_PN}-twisted-web \
-    ${PYTHON_PN}-urllib3 \
-    ${PYTHON_PN}-xml \
-    ${PYTHON_PN}-zopeinterface \
-    ${PYTHON_PN}-pillow \
-    ${PYTHON_PN}-six \
-    ${PYTHON_PN}-treq \
+    python3-codecs \
+    python3-core \
+    python3-crypt \
+    python3-fcntl \
+    python3-logging \
+    python3-mmap \
+    python3-netclient \
+    python3-netifaces \
+    python3-netserver \
+    python3-numbers \
+    python3-pickle \
+    python3-shell \
+    python3-threading \
+    python3-twisted-core \
+    python3-twisted-web \
+    python3-urllib3 \
+    python3-xml \
+    python3-zopeinterface \
+    python3-pillow \
+    python3-six \
+    python3-treq \
 "
 
 # DVD and iso playback is integrated, we need the libraries

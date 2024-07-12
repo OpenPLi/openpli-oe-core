@@ -18,7 +18,7 @@ S = "${WORKDIR}/git/src"
 
 inherit setuptools3-openplugins
 
-RDEPENDS:${PN} = "${PYTHON_PN}-compression ${PYTHON_PN}-shell ${PYTHON_PN}-pkgutil"
+RDEPENDS:${PN} = "python3-compression python3-shell python3-pkgutil"
 RRECOMMENDS:${PN} = "${PN}-rytec"
 PACKAGES = "${PN}-dbg ${PN} ${PN}-src"
 

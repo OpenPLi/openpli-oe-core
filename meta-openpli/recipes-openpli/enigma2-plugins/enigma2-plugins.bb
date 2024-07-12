@@ -72,18 +72,18 @@ inherit autotools-brokensep
 S = "${WORKDIR}/git"
 
 DEPENDS = " \
-	${PYTHON_PN}-pyopenssl \
+	python3-pyopenssl \
 	streamripper \
-	${PYTHON_PN}-icalendar \
-	${PYTHON_PN}-dateutil \
-	${PYTHON_PN}-mutagen \
-	${PYTHON_PN}-pyusb \
-	${PYTHON_PN}-requests \
-	${PYTHON_PN}-simplejson \
-	${PYTHON_PN}-six-native \
-	${PYTHON_PN}-treq \
-	${PYTHON_PN}-twisted \
-	${PYTHON_PN}-daap \
+	python3-icalendar \
+	python3-dateutil \
+	python3-mutagen \
+	python3-pyusb \
+	python3-requests \
+	python3-simplejson \
+	python3-six-native \
+	python3-treq \
+	python3-twisted \
+	python3-daap \
 	libcddb \
 	dvdbackup \
 	libtirpc \
