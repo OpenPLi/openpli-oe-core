@@ -9,6 +9,7 @@ PACKAGES = "\
 	enigma2-plugin-extensions-moviecut \
 	enigma2-plugin-systemplugins-networkbrowser \
 	enigma2-plugin-systemplugins-vps \
+	enigma2-binary-plugins \
 	"
 
 inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig
