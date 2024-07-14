@@ -29,7 +29,7 @@ EXTRA_OECONF = " \
 "
 
 # Main package should be empty
-FILES_${PN} = ""
+FILES:${PN} = ""
 # But something makes the packages think they depend on it, so just
 # deliver an empty hulk for them.
 ALLOW_EMPTY_${PN} = "1"
@@ -66,7 +66,7 @@ DEPENDS = " \
 	"
 
 
-python populate_packages_prepend () {
+python populate_packages:prepend () {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
 
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/[a-zA-Z0-9_]+.*$', 'enigma2-plugin-%s', '%s', recursive=True, match_path=True, prepend=True)
@@ -113,12 +113,12 @@ python populate_packages_prepend () {
         getControlLines(mydir, d, package.split('-')[-1])
 }
 
-do_install_append() {
+do_install:append() {
 	# remove leftover webinterface garbage
 	rm -rf ${D}${libdir}/enigma2/python/Plugins/Extensions/WebInterface
 }
 
-python populate_packages_prepend() {
+python populate_packages:prepend() {
     enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
     do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.a$', 'enigma2-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True)
