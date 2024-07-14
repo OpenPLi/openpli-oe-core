@@ -9,6 +9,7 @@ PACKAGES = "\
 	enigma2-plugin-extensions-moviecut \
 	enigma2-plugin-systemplugins-networkbrowser \
 	enigma2-plugin-systemplugins-vps \
+	enigma2-binary-plugins \
 	"
 
 inherit gitpkgv python3native pkgconfig gettext python3targetconfig
@@ -33,6 +34,9 @@ FILES:${PN} = ""
 # But something makes the packages think they depend on it, so just
 # deliver an empty hulk for them.
 ALLOW_EMPTY:${PN} = "1"
+
+FILES:enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
+FILES:enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
 
 FILES:${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies"
@@ -96,7 +100,7 @@ python populate_packages:prepend () {
                     else:
                         rdepends.append(depend)
                 rdepends = ' '.join(rdepends)
-                d.setVar('RDEPENDS_' + full_package, rdepends)
+                d.setVar('RDEPENDS:' + full_package, rdepends)
             elif line.startswith('Recommends: '):
                 d.setVar('RRECOMMENDS:' + full_package, line[12:])
             elif line.startswith('Description: '):
@@ -116,13 +120,6 @@ python populate_packages:prepend () {
 do_install:append() {
 	# remove leftover webinterface garbage
 	rm -rf ${D}${libdir}/enigma2/python/Plugins/Extensions/WebInterface
-}
-
-python populate_packages:prepend() {
-    enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
-    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
-    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.a$', 'enigma2-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True)
-    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/(.*/)?\.debug/.*$', 'enigma2-plugin-%s-dbg', '%s (debug)', recursive=True, match_path=True, prepend=True)
 }
 
 # Nothing of this recipe should end up in sysroot, so blank it away.
