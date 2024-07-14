@@ -34,6 +34,9 @@ FILES_${PN} = ""
 # deliver an empty hulk for them.
 ALLOW_EMPTY_${PN} = "1"
 
+FILES_enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
+FILES_enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
+
 FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies"
 
@@ -116,13 +119,6 @@ python populate_packages_prepend () {
 do_install_append() {
 	# remove leftover webinterface garbage
 	rm -rf ${D}${libdir}/enigma2/python/Plugins/Extensions/WebInterface
-}
-
-python populate_packages_prepend() {
-    enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
-    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
-    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.a$', 'enigma2-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True)
-    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/(.*/)?\.debug/.*$', 'enigma2-plugin-%s-dbg', '%s (debug)', recursive=True, match_path=True, prepend=True)
 }
 
 # Nothing of this recipe should end up in sysroot, so blank it away.
