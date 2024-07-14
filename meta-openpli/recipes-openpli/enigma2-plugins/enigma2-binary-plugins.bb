@@ -4,32 +4,14 @@ MAINTAINER = "OpenPLi team <info@openpli.org>"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://COPYING;md5=8e37f34d0e40d32ea2bc90ee812c9131"
 
-PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
-
-PACKAGE_ARCH = "all"
-
-# This prevents QA warnings because bitbake cannot see the dependencies
-# after parsing the recipe due to the PACKAGES_DYNAMIC stuff. It tells
-# the system what to build when installing these into an image.
-PACKAGES += "\
-	enigma2-plugin-extensions-mosaic \
-	enigma2-plugin-extensions-fancontrol2 \
-	enigma2-plugin-extensions-bonjour \
-	enigma2-plugin-extensions-transmission \
+PACKAGES = "\
+	enigma2-plugin-extensions-lcd4linux \
+	enigma2-plugin-extensions-moviecut \
+	enigma2-plugin-systemplugins-networkbrowser \
+	enigma2-plugin-systemplugins-vps \
 	"
-RDEPENDS_enigma2-plugin-extensions-mosaic = "aio-grab"
-RDEPENDS_enigma2-plugin-extensions-fancontrol2 = "smartmontools hdparm"
-RDEPENDS_enigma2-plugin-extensions-bonjour = "avahi-daemon"
-RDEPENDS_enigma2-plugin-systemplugins-satipclient = "satipclient"
 
-RRECOMMENDS_enigma2-plugin-systemplugins-blindscan = "virtual/blindscan-dvbs"
-RRECOMMENDS_enigma2-plugin-extensions-transmission = "transmission transmission-client"
-
-PROVIDES += "\
-	${@bb.utils.contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
-"
-
-inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig autotools-brokensep
+inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
@@ -38,25 +20,28 @@ PKGV = "git${GITPKGV}"
 SRC_ORIGIN ?= "git://github.com/OpenPLi/${BPN}.git;protocol=https"
 SRC_URI := "${SRC_ORIGIN};branch=python3 "
 
+EXTRA_OECONF = " \
+	BUILD_SYS=${BUILD_SYS} \
+	HOST_SYS=${HOST_SYS} \
+	STAGING_INCDIR=${STAGING_INCDIR} \
+	STAGING_LIBDIR=${STAGING_LIBDIR} \
+	--without-debug \
+"
+
 # Main package should be empty
 FILES_${PN} = ""
-
 # But something makes the packages think they depend on it, so just
 # deliver an empty hulk for them.
 ALLOW_EMPTY_${PN} = "1"
 
-FILES_enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
-CONFFILES_enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
-
-FILES_enigma2-plugin-extensions-babelzapper += "${sysconfdir}/babelzapper"
-FILES_enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
-FILES_enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
-
-FILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
-CONFFILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
-
 FILES_${PN}-meta = "${datadir}/meta"
 PACKAGES += "${PN}-meta ${PN}-build-dependencies"
+
+CFLAGS += "-I${STAGING_INCDIR}/tirpc"
+LDFLAGS += "-ltirpc"
+CXXFLAGS = " -std=c++11"
+
+inherit autotools-brokensep
 
 S = "${WORKDIR}/git"
 
@@ -76,6 +61,7 @@ DEPENDS = " \
 	libcddb \
 	pydpflib \
 	dvdbackup \
+	libtirpc \
 	png-util \
 	"
 
@@ -130,6 +116,13 @@ python populate_packages_prepend () {
 do_install_append() {
 	# remove leftover webinterface garbage
 	rm -rf ${D}${libdir}/enigma2/python/Plugins/Extensions/WebInterface
+}
+
+python populate_packages_prepend() {
+    enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
+    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.la$', 'enigma2-plugin-%s-dev', '%s (development)', recursive=True, match_path=True, prepend=True)
+    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/.*\.a$', 'enigma2-plugin-%s-staticdev', '%s (static development)', recursive=True, match_path=True, prepend=True)
+    do_split_packages(d, enigma2_plugindir, '^(\w+/\w+)/(.*/)?\.debug/.*$', 'enigma2-plugin-%s-dbg', '%s (debug)', recursive=True, match_path=True, prepend=True)
 }
 
 # Nothing of this recipe should end up in sysroot, so blank it away.
