@@ -4,9 +4,9 @@ MAINTAINER = "OpenPLi team <info@openpli.org>"
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://COPYING;md5=8e37f34d0e40d32ea2bc90ee812c9131"
 
-PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
-
 PACKAGE_ARCH = "all"
+
+PACKAGES_DYNAMIC = "enigma2-plugin-(?!pli-).*"
 
 # This prevents QA warnings because bitbake cannot see the dependencies
 # after parsing the recipe due to the PACKAGES_DYNAMIC stuff. It tells
@@ -29,7 +29,16 @@ PROVIDES += "\
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
 "
 
-inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig autotools-brokensep
+inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig autotools-brokensep allarch
+
+# needed to prevent autotools from running C compiler checks, which
+# fails in allarch (as there is no cross compiler for this ARCH !!
+CC = ""
+CFLAGS = ""
+CPP = ""
+CPPFLAGS = ""
+CXX = ""
+CXXFLAGS = ""
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
@@ -49,8 +58,6 @@ FILES_enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 CONFFILES_enigma2-plugin-extensions-movietagger += "${sysconfdir}/enigma2/movietags"
 
 FILES_enigma2-plugin-extensions-babelzapper += "${sysconfdir}/babelzapper"
-FILES_enigma2-plugin-extensions-lcd4linux += "${libdir}/enigma2/python/Components/Renderer/*.pyc"
-FILES_enigma2-plugin-extensions-lcd4linux-src += "${libdir}/enigma2/python/Components/Renderer/*.py"
 
 FILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
 CONFFILES_enigma2-plugin-extensions-netcaster += "${sysconfdir}/NETcaster.conf"
@@ -76,7 +83,6 @@ DEPENDS = " \
 	libcddb \
 	pydpflib \
 	dvdbackup \
-	png-util \
 	"
 
 
