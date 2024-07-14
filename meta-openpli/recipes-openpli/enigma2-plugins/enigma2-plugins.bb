@@ -29,7 +29,7 @@ PROVIDES += "\
 	${@bb.utils.contains("MACHINE_FEATURES", "transcoding","enigma2-plugin-systemplugins-transcodingsetup","",d)} \
 "
 
-inherit gitpkgv ${PYTHON_PN}native pkgconfig gettext python3targetconfig autotools-brokensep
+inherit gitpkgv python3native pkgconfig gettext python3targetconfig autotools-brokensep
 
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
