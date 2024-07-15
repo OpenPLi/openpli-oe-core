@@ -14,7 +14,7 @@ RRECOMMENDS:${PN} = " \
 	gst-ifdsrc \
 	iptvsubparser \
 	rtmpdump \
-	duktape \
+	duktape-e2iplayer \
 	uchardet \
 	"
 

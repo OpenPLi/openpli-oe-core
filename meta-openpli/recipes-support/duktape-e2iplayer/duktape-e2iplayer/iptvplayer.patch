@@ -1,18 +1,8 @@
 diff --git a/Makefile.cmdline b/Makefile.cmdline
-index a5fffb7..d92cd48 100644
+index 0b02051..d2c10b3 100644
 --- a/Makefile.cmdline
 +++ b/Makefile.cmdline
-@@ -8,7 +8,8 @@ DUKTAPE_SOURCES = src/duktape.c
- CMDLINE_SOURCES = \
- 	examples/cmdline/duk_cmdline.c
- 
--CC = gcc
-+# Let bitbake specify CC and LDFLAGS
-+# CC	= gcc
- CCOPTS = -Os -pedantic -std=c99 -Wall -fstrict-aliasing -fomit-frame-pointer
- CCOPTS += -I./examples/cmdline -I./src   # duktape.h and duk_config.h must be in include path
- CCLIBS = -lm
-@@ -22,12 +23,12 @@ CCOPTS += -DDUK_CMDLINE_CONSOLE_SUPPORT -I./extras/console
+@@ -23,12 +23,12 @@ CCOPTS += -DDUK_CMDLINE_CONSOLE_SUPPORT -I./extras/console
  CMDLINE_SOURCES += extras/console/duk_console.c
  
  # Enable Duktape.Logger for command line.
@@ -29,20 +19,11 @@ index a5fffb7..d92cd48 100644
  
  # If you want linenoise, you can enable these.  At the moment linenoise
  # will cause some harmless compilation warnings.
-@@ -40,7 +41,7 @@ CMDLINE_SOURCES += extras/module-duktape/duk_module_duktape.c
- # http://wiki.duktape.org/Configuring.html
- 
- duk: $(DUKTAPE_SOURCES) $(CMDLINE_SOURCES)
--	$(CC) -o $@ $(DEFINES) $(CCOPTS) $(DUKTAPE_SOURCES) $(CMDLINE_SOURCES) $(CCLIBS)
-+	$(CC) -o $@ $(DEFINES) $(CCOPTS) $(DUKTAPE_SOURCES) $(CMDLINE_SOURCES) $(CCLIBS) $(LDFLAGS)
- 
- linenoise/linenoise.c: linenoise
- linenoise:
 diff --git a/examples/cmdline/duk_cmdline.c b/examples/cmdline/duk_cmdline.c
-index b55ec66..54705fe 100644
+index f54c11c..95c33f8 100644
 --- a/examples/cmdline/duk_cmdline.c
 +++ b/examples/cmdline/duk_cmdline.c
-@@ -109,8 +109,12 @@ static int debugger_reattach = 0;
+@@ -120,8 +120,12 @@ int duk_cmdline_stack_check(void);
  /*
   *  Misc helpers
   */
@@ -55,7 +36,7 @@ index b55ec66..54705fe 100644
  	printf("((o) Duktape%s %d.%d.%d (%s)\n",
  #if defined(DUK_CMDLINE_LINENOISE)
  	       " [linenoise]",
-@@ -1255,6 +1259,57 @@ static void destroy_duktape_heap(duk_context *ctx, int alloc_provider) {
+@@ -1261,6 +1265,57 @@ static void destroy_duktape_heap(duk_context *ctx, int alloc_provider) {
  /*
   *  Main
   */
@@ -113,7 +94,7 @@ index b55ec66..54705fe 100644
  
  int main(int argc, char *argv[]) {
  	duk_context *ctx = NULL;
-@@ -1272,6 +1327,8 @@ int main(int argc, char *argv[]) {
+@@ -1278,6 +1333,8 @@ int main(int argc, char *argv[]) {
  	int run_stdin = 0;
  	const char *compile_filename = NULL;
  	int i;
@@ -122,7 +103,7 @@ index b55ec66..54705fe 100644
  
  	main_argc = argc;
  	main_argv = (char **) argv;
-@@ -1358,6 +1415,18 @@ int main(int argc, char *argv[]) {
+@@ -1366,6 +1423,18 @@ int main(int argc, char *argv[]) {
  			}
  			i++;
  			compile_filename = argv[i];
@@ -141,7 +122,7 @@ index b55ec66..54705fe 100644
  		} else if (strcmp(arg, "-e") == 0) {
  			have_eval = 1;
  			if (i == argc - 1) {
-@@ -1401,17 +1470,9 @@ int main(int argc, char *argv[]) {
+@@ -1413,17 +1482,9 @@ int main(int argc, char *argv[]) {
  	}
  
  	/*
@@ -161,7 +142,7 @@ index b55ec66..54705fe 100644
  
  	/*
  	 *  Create heap
-@@ -1442,6 +1503,12 @@ int main(int argc, char *argv[]) {
+@@ -1454,6 +1515,12 @@ int main(int argc, char *argv[]) {
  		} else if (strlen(arg) == 2 && strcmp(arg, "-c") == 0) {
  			i++;  /* skip filename */
  			continue;
@@ -174,7 +155,7 @@ index b55ec66..54705fe 100644
  		} else if (strlen(arg) >= 1 && arg[0] == '-') {
  			continue;
  		}
-@@ -1525,6 +1592,7 @@ int main(int argc, char *argv[]) {
+@@ -1537,6 +1604,7 @@ int main(int argc, char *argv[]) {
  	 */
  
   usage:
