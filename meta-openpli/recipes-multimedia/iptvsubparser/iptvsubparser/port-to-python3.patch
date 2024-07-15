@@ -1,0 +1,123 @@
+diff --git a/make.sh b/make.sh
+index 1120ff2..292a679 100755
+--- a/make.sh
++++ b/make.sh
+@@ -26,13 +26,13 @@ OUTPUT_FILE_NAME='_subparser.so'
+ case "$EPLATFORM" in
+     i686)
+         CROSS_COMPILE=""
+-        CFLAGS="-I/usr/include -I/usr/include/python2.7"
++        CFLAGS="-I/usr/include -I/usr/include/python3.12"
+         ;;
+     sh4)
+         BASE_PATH="/home/sulge/e2/tdt/tdt/tufsbox/"
+         CROSS_COMPILE="sh4-linux-"
+         PATH=$BASE_PATH"devkit/sh4/bin/":$PATH
+-        CFLAGS=" -I$BASE_PATH/cdkroot/ -L$BASE_PATH/cdkroot/ -I$BASE_PATH/cdkroot/usr/include/python2.7/ "
++        CFLAGS=" -I$BASE_PATH/cdkroot/ -L$BASE_PATH/cdkroot/ -I$BASE_PATH/cdkroot/usr/include/python3.12/ "
+         LDFLAGS=" -L$BASE_PATH/cdkroot/ -L$BASE_PATH/cdkroot/ "
+         ;;
+     mipsel)
+@@ -40,7 +40,7 @@ case "$EPLATFORM" in
+         CROSS_COMPILE="mipsel-oe-linux-"
+         PATH=$BASE_PATH"i686-linux/usr/bin/mipsel-oe-linux/":$PATH
+         SYSROOT=$BASE_PATH"et4x00"
+-        CFLAGS="--sysroot=$SYSROOT -mel -mabi=32 -march=mips32 -I$SYSROOT/usr/include/python2.7/"
++        CFLAGS="--sysroot=$SYSROOT -mel -mabi=32 -march=mips32 -I$SYSROOT/usr/include/python3.12/"
+         OUTPUT_FILE_NAME='_subparser.so.fpu' # hard float
+         ;;
+     mipsel_softfpu)
+@@ -49,21 +49,21 @@ case "$EPLATFORM" in
+         CROSS_COMPILE="mipsel-oe-linux-"
+         PATH=$BASE_PATH"i686-linux/usr/bin/mipsel-oe-linux/":$PATH
+         SYSROOT=$BASE_PATH"et4x00"
+-        CFLAGS="--sysroot=$SYSROOT -mel -mabi=32 -msoft-float -march=mips32 -I$SYSROOT/usr/include/python2.7/"
++        CFLAGS="--sysroot=$SYSROOT -mel -mabi=32 -msoft-float -march=mips32 -I$SYSROOT/usr/include/python3.12/"
+         ;;
+     armv7)
+         BASE_PATH="/mnt/new2/vusolo4k/openvuplus_3.0/build/vusolo4k/tmp/sysroots/"
+         CROSS_COMPILE="arm-oe-linux-gnueabi-"
+         PATH=$BASE_PATH"i686-linux/usr/bin/arm-oe-linux-gnueabi/":$PATH
+         SYSROOT=$BASE_PATH"vusolo4k"
+-        CFLAGS="--sysroot=$SYSROOT -march=armv7-a -mfloat-abi=hard -mfpu=neon -I$SYSROOT/usr/include/python2.7/"
++        CFLAGS="--sysroot=$SYSROOT -march=armv7-a -mfloat-abi=hard -mfpu=neon -I$SYSROOT/usr/include/python3.12/"
+         ;;
+     armv5t)
+         BASE_PATH="/mnt/new2/openatv2/build-enviroment/builds/openatv/release/cube/tmp/sysroots/"
+         CROSS_COMPILE="arm-oe-linux-gnueabi-"
+         PATH=$BASE_PATH"i686-linux/usr/bin/arm-oe-linux-gnueabi/":$PATH
+         SYSROOT=$BASE_PATH"cube"
+-        CFLAGS="--sysroot=$SYSROOT -mfloat-abi=softfp -mtune=cortex-a9 -mfpu=vfpv3-d16 -I$SYSROOT/usr/include/python2.7/"
++        CFLAGS="--sysroot=$SYSROOT -mfloat-abi=softfp -mtune=cortex-a9 -mfpu=vfpv3-d16 -I$SYSROOT/usr/include/python3.12/"
+         ;;
+     *)
+         usage
+diff --git a/src/subparsermodule.c b/src/subparsermodule.c
+index f131f02..371bd71 100755
+--- a/src/subparsermodule.c
++++ b/src/subparsermodule.c
+@@ -14,7 +14,7 @@ static const IPTV_UI_TYPE MAX_SUBTITLE_TEXT_SIZE = 1024;
+ 
+ static PyObject * get_version(PyObject *self, PyObject *unused)
+ {
+-    return PyString_FromString(SUB_PARSER_VERSION);
++    return PyUnicode_FromString(SUB_PARSER_VERSION);
+ }
+ 
+ static uint32_t words(const char sentence[ ])
+@@ -198,7 +198,7 @@ static PyObject * _subparser_parse(PyObject *self, PyObject *args)
+     
+     /* add subtitles format to return dict */
+     /* elem = PyInt_FromLong((long) p_sys->i_type); */
+-    elem = PyString_FromString( p_sys->psz_type_name );
++    elem = PyUnicode_FromString( p_sys->psz_type_name );
+     PyDict_SetItemString(retObj, "type", elem); 
+     Py_DECREF(elem); // PyDict_SetItemString not still reference but incement it
+     
+@@ -220,10 +220,10 @@ static PyObject* _subparser_strip_html_tags(PyObject *self, PyObject *args, PyOb
+     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:strip_html_tags", kwlist, &string))
+         return NULL;
+     
+-    if (!PyString_Check(string))
++    if (!PyUnicode_Check(string))
+         return NULL;
+ 
+-    if (PyString_AsStringAndSize(string, &in, &isize) == -1) {
++    if (PyBytes_AsStringAndSize(string, &in, &isize) == -1) {
+         return NULL; // not a string object or it contains null bytes
+     }
+ 
+@@ -233,7 +233,7 @@ static PyObject* _subparser_strip_html_tags(PyObject *self, PyObject *args, PyOb
+ 
+     if (out)
+     {
+-        object = PyString_FromStringAndSize(out, osize);
++        object = PyUnicode_FromStringAndSize(out, osize);
+         free(out);
+     }
+     else
+@@ -265,7 +265,20 @@ static PyMethodDef _subparserMethods[] = {
+     {NULL,NULL,0,NULL}
+ };
+ 
+-PyMODINIT_FUNC init_subparser(void)
++
++static struct PyModuleDef moduledef = {
++	PyModuleDef_HEAD_INIT,
++	"subparser",         /* m_name */
++	"subparser",         /* m_doc */
++	-1,                  /* m_size */
++	_subparserMethods ,  /* m_methods */
++	NULL,                /* m_reload */
++	NULL,                /* m_traverse */
++	NULL,                /* m_clear */
++	NULL,                /* m_free */
++};
++
++PyMODINIT_FUNC PyInit__subparser(void)
+ {
+-    Py_InitModule("_subparser", _subparserMethods);
+-}
+\ No newline at end of file
++	return PyModule_Create(&moduledef);
++}
