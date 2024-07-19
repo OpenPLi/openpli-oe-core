@@ -1,0 +1,91 @@
+diff --git a/JediEPGXtream/usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/main.py b/JediEPGXtream/usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/main.py
+index 4c0fc0e..dbde54d 100644
+--- a/JediEPGXtream/usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/main.py
++++ b/JediEPGXtream/usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/main.py
+@@ -22,6 +22,10 @@ import os
+ import re
+ import sys
+ import shutil
++import requests
++import difflib
++from thefuzz import fuzz
++from thefuzz import process
+ 
+ try:
+     pythonVer = sys.version_info.major
+@@ -108,7 +112,7 @@ class JediEPGXtream_Main(Screen):
+ 
+         self.clear_caches()
+ 
+-        self.onFirstExecBegin.append(self.check_dependencies)
++        self.onFirstExecBegin.append(self.start)
+         self.onLayoutFinish.append(self.__layoutFinished)
+ 
+     def enablelist1(self):
+@@ -151,32 +155,6 @@ class JediEPGXtream_Main(Screen):
+         self.disablelist3()
+         self.disablelist4()
+ 
+-    def check_dependencies(self):
+-        dependencies = True
+-        if os.path.exists('/var/lib/dpkg/status'):
+-            try:
+-                import requests
+-                import difflib
+-            except Exception as e:
+-                print(e)
+-                dependencies = False
+-        else:
+-            try:
+-                import requests
+-                import difflib
+-                from fuzzywuzzy import fuzz
+-                from fuzzywuzzy import process
+-            except Exception as e:
+-                print(e)
+-                dependencies = False
+-
+-        if dependencies is False:
+-            chmod("/usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/dependencies.sh", 0o0755)
+-            cmd1 = ". /usr/lib/enigma2/python/Plugins/Extensions/JediEPGXtream/dependencies.sh"
+-            self.session.openWithCallback(self.start, Console, title="Checking Python Dependencies", cmdlist=[cmd1], closeOnSuccess=False)
+-        else:
+-            self.start()
+-
+     def clear_caches(self):
+         try:
+             system("echo 1 > /proc/sys/vm/drop_caches")
+@@ -530,13 +508,6 @@ class JediEPGXtream_Main(Screen):
+     def getMatchList(self, name):
+         from difflib import get_close_matches
+ 
+-        try:
+-            from fuzzywuzzy import fuzz
+-            from fuzzywuzzy import process
+-            self.fuzzy = True
+-        except:
+-            self.fuzzy = False
+-
+         self.list4 = []
+         epgidlist = []
+         originallist = []
+@@ -560,15 +531,11 @@ class JediEPGXtream_Main(Screen):
+             matchlist = []
+             namelist = []
+ 
+-            if self.fuzzy:
+-                matchlist = process.extract(self["list2"].getCurrent()[0], epgidlist, limit=42, scorer=fuzz.token_sort_ratio)
++            matchlist = process.extract(self["list2"].getCurrent()[0], epgidlist, limit=42, scorer=fuzz.token_sort_ratio)
+ 
+-                for match in matchlist:
+-                    if match[1] >= 40:
+-                        namelist.append(match[0])
+-            else:
+-                current = self["list2"].getCurrent()[0].lower().lstrip("~").lstrip("#").lstrip("-").lstrip("~").lstrip("<").lstrip("^").replace(" ", "")
+-                namelist = get_close_matches(current, epgidlist, n=42, cutoff=0.20)
++            for match in matchlist:
++                if match[1] >= 40:
++                    namelist.append(match[0])
+ 
+             if not namelist:
+                 text = (_("No close matches"))

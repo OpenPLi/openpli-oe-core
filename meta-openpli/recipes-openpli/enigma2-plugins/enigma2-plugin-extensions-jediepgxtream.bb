@@ -10,10 +10,11 @@ SRCREV="${AUTOREV}"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_URI = "git://github.com/kiddac/Jedi-EPG-XStream.git;protocol=https;branch=main"
+SRC_URI = "git://github.com/kiddac/Jedi-EPG-XStream.git;protocol=https;branch=main \
+           file://get-rid-of-fuzzywuzzy.patch \
+           "
 
-# fuzzywuzzy is EOL and replaced by thefuzz, but the plugin isn't fixed yet
-RDEPENDS:${PN} = "python3-requests python3-difflib python3-fuzzywuzzy python3-thefuzz"
+RDEPENDS:${PN} = "python3-requests python3-difflib  python3-thefuzz"
 
 S = "${WORKDIR}/git"
 
