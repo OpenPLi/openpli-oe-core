@@ -1,6 +1,6 @@
 DESCRIPTION = "PD1LOI HD night"
 MAINTAINER = "pd1loi1"
-LICENSE = "AGPLv3"
+LICENSE = "AGPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4ae09d45eac4aa08d013b5f2e01c67f6"
 
 inherit gitpkgv allarch python3-compileall
