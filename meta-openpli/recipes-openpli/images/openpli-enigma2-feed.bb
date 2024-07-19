@@ -202,6 +202,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-hdmitest \
 	enigma2-plugin-extensions-historyzapselector \
 	enigma2-plugin-extensions-infobarweather \
+	enigma2-plugin-extensions-jediepgxtream \
 	enigma2-plugin-extensions-jedimakerxtream \
 	enigma2-plugin-extensions-managerautofs \
 	enigma2-plugin-extensions-modifyplifullhd \
