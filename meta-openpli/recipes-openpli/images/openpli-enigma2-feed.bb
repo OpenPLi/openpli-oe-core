@@ -143,7 +143,7 @@ OPTIONAL_PACKAGES += " \
 	python3-pycryptodomex \
 	python3-evdev \
 	python3-rarfile \
-	python3-fuzzywuzzy \
+	python3-thefuzz \
 	python3-levenshtein \
 	picocom \
 	ppp \
