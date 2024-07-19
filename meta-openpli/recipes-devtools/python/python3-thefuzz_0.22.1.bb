@@ -3,6 +3,8 @@ HOMEPAGE = "https://github.com/seatgeek/thefuzz"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=f370a4436f8e1656d00272929f73ec3b"
 
+RDEPENDS:${PN} = "rapidfuzz"
+
 inherit pypi setuptools3
 
 SRC_URI[md5sum] = "0b7ec0d80b46c90d113df62892d78395"
