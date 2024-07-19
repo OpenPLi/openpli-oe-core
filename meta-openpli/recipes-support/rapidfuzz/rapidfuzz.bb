@@ -1,4 +1,4 @@
-ESCRIPTION = "RapidFuzz provides libraries for fuzzy string matching in various programming languages."
+DESCRIPTION = "RapidFuzz provides libraries for fuzzy string matching in various programming languages."
 LICENSE = "LGPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${S}/README.md;md5=d04c97bc3eaa7ca22c05ce1316aadc6a"
 
