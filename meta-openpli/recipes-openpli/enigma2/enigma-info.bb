@@ -103,7 +103,9 @@ do_install() {
 	fi
 
 # Image version
-	IMAGE_VERSION=`echo ${DISTRO_VERSION} | cut -d "-" -f 1`
+	if [[ "$x" =~ "^[0-9]\.[0-9]*\-.*$" ]]; then
+		IMAGE_VERSION=`echo ${DISTRO_VERSION} | cut -d "-" -f 1`
+	fi
 
 # Kernel version
 	KERNEL_VERSION="${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
@@ -111,6 +113,10 @@ do_install() {
 # OE version info
 	OE_NAME=`cd ${OPENPLI_BASE} && git submodule | grep "meta-openembedded" | cut -d '(' -f 2 | cut -d ')' -f 1 | cut -d '/' -f 3`
 	OE_VERSION=`cd "${OPENPLI_BASE}/openembedded-core" && git describe --match=yocto* | cut -d '-' -f 2`
+
+# OE revision info
+	OE_REVISION=`cd ${OPENPLI_BASE} && git rev-list --count HEAD`
+	OE_HASH=`cd ${OPENPLI_BASE} && git rev-parse --short HEAD`
 
 # OE-A compatible machine names
 
@@ -273,14 +279,14 @@ do_install() {
     printf "hdmifhdin=${HAVE_HDMI_IN_FHD}\n" >> ${D}${INFOFILE}
     printf "hdmihdin=${HAVE_HDMI_IN_HD}\n" >> ${D}${INFOFILE}
     printf "hdmistandbymode=${HDMISTANDBY_MODE}\n" >> ${D}${INFOFILE}
-    printf "imagebuild='${DATE}'\n" >> ${D}${INFOFILE}
-    printf "imagedevbuild='${DEVELOPER_BUILD_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imagebuild='${OE_REVISION}'\n" >> ${D}${INFOFILE}
+    printf "imagedevbuild='${OE_HASH}'\n" >> ${D}${INFOFILE}
     printf "imagedir=${IMAGEDIR}\n" >> ${D}${INFOFILE}
     printf "imagefs=${IMAGE_FSTYPES}\n" >> ${D}${INFOFILE}
     printf "imagetype=${DISTRO_TYPE}\n" >> ${D}${INFOFILE}
-    printf "imageversion='${DISTRO_VERSION}'\n" >> ${D}${INFOFILE}
+    printf "imageversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
     printf "imglanguage=multilang\n" >> ${D}${INFOFILE}
-    printf "imgrevision='${DATE}'\n" >> ${D}${INFOFILE}
+    printf "imgrevision='${OE_REVISION}'\n" >> ${D}${INFOFILE}
     printf "imgversion='${IMAGE_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kernel='${KERNEL_VERSION}'\n" >> ${D}${INFOFILE}
     printf "kexecmb=${HAVE_KEXECMB}\n" >> ${D}${INFOFILE}
