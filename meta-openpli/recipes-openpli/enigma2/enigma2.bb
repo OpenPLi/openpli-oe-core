@@ -117,22 +117,11 @@ inherit gitpkgv setuptools3 python3targetconfig
 PV = "${PYTHON_BASEVERSION}+git${SRCPV}"
 PKGV = "${PYTHON_BASEVERSION}+git${GITPKGV}"
 
-ENIGMA2_BRANCH ?= "develop"
+ENIGMA2_BRANCH ?= "scarthgap"
 GITHUB_URI ?= "git://github.com"
 
 # make the origin overridable from OE config, for local mirroring
-SRC_URI = "${GITHUB_URI}/OpenPLi/enigma2.git;branch=${ENIGMA2_BRANCH};protocol=https \
-			file://06-fix-build-gcc11.patch \
-			file://07-suppress-compile-errors.patch \
-			file://10-remove-codeset.patch \
-			file://16-fix-write-console.patch \
-			file://19-configure-ntp-server.patch \
-			file://21-cast-to-integers.patch \
-			file://22-fix-build-largefile-and-64bit-time-t.patch \
-			file://23-add-sys-dvbc2.patch \
-			file://26-suppress-overloaded-virtual.patch \
-			file://retrieve-commit-info-from-kirkstone-branch.patch \
-"
+SRC_URI = "${GITHUB_URI}/OpenPLi/enigma2.git;branch=${ENIGMA2_BRANCH};protocol=https"
 
 LDFLAGS:prepend = " -lxml2 "
 
