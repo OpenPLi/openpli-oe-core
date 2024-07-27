@@ -1,3 +1,4 @@
-do_install:prepend:ustym4ks2ottx () {
-	rm -rf ${PKGDATA_DIR}/runtime-reverse/libjpeg-*
+do_install:prepend:libjpeg () {
+	rm -rf ${PKGDATA_DIR}/runtime-reverse/libjpeg-dev
+	rm -rf ${PKGDATA_DIR}/runtime-reverse/libjpeg-dbg
 }
