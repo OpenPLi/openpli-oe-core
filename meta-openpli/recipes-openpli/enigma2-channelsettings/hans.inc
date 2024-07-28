@@ -23,5 +23,8 @@ do_install () {
 	if [ -e ${S}/${SETTINGS_FILENAME}/userbouquet.favourites.radio ]; then
 		rm -f ${S}/${SETTINGS_FILENAME}/userbouquet.favourites.radio
 	fi
-	cp -r ${S}/${SETTINGS_FILENAME}/* ${D}${sysconfdir}/enigma2
+	cd ${S}/${SETTINGS_FILENAME}
+	for f in *; do
+		iconv -f UTF-8 -t UTF-8 -c $f -o ${D}${sysconfdir}/enigma2/$f
+	done
 }
