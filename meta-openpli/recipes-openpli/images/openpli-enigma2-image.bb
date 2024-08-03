@@ -65,6 +65,7 @@ IMAGE_INSTALL += " \
 	enigma2 \
 	libavahi-client \
 	ntp \
+	ntpq \
 	ofgwrite \
 	openresolv \
 	perl \
