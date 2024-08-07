@@ -1,6 +1,6 @@
 LICENSE = "GPL-2.0-or-later"
 require conf/license/license-gplv2.inc
-require kodi-nexus.inc
+require kodi-omega.inc 
 
 DEPENDS += " \
             zip-native \
@@ -10,10 +10,10 @@ DEPENDS += " \
             jsoncpp \
             jsonrpc \
             boost \
-            kodi \
+            virtual/kodi \
           "
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
+PACKAGE_ARCH = "${MACHINE}"
 
 SRCREV_FORMAT = "pvr${KODIADDONPLUGIN}"
 
