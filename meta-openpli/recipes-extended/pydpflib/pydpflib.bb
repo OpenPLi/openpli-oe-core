@@ -22,6 +22,8 @@ INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 EXTRA_OEMAKE = "'CC=${CC}' 'CFLAGS=${CFLAGS} -I${S}include -I${S}src 'BUILDDIR=${S}'"
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 EXTRA_OECONF = " \
         BUILD_SYS=${BUILD_SYS} \
         HOST_SYS=${HOST_SYS} \
