@@ -74,7 +74,8 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-octagon \
 	$(CURDIR)/meta-uclan \
 	$(CURDIR)/meta-abcom \
-	$(CURDIR)/meta-qt5
+	$(CURDIR)/meta-qt5 \
+	$(CURDIR)/meta-clang
 
 CONFFILES = \
 	$(TOPDIR)/env.source \

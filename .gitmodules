@@ -79,3 +79,6 @@
 [submodule "meta-axas"]
 	path = meta-axas
 	url = https://github.com/OpenPLi-meta/meta-axas.git
+[submodule "meta-clang"]
+	path = meta-clang
+	url = https://github.com/kraj/meta-clang
