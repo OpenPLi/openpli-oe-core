@@ -78,11 +78,11 @@ PR = "r0"
 
 PV = "21.0+gitr"
 PV_groovy = "4.0.18"
-PV_commons-lang3 = "3.14.0"
+PV_commons-lang3 = "3.16.0"
 PV_commons-text = "1.12.0"
 
 SRC_URI[groovy.sha256sum] = "4b03aa472ec7848d272893348a656be05d1b3502b30770ea57efa158e61154a6"
-SRC_URI[commons-lang.sha256sum] = "317c3e3fcd5fcca3781a7996ff1e0c50c13244ee961e94e5f6f6d84b84733b16"
+SRC_URI[commons-lang.sha256sum] = "0c97775a9e8a37b1e4cfd0993ad27c28bf6fc2611857a80ff5769805cea53a0a"
 SRC_URI[commons-text.sha256sum] = "265a149c7e0c1ebfe019bbe0226f8c1f6474811054d459145510ea2eed93a11a"
 
 SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Omega \
