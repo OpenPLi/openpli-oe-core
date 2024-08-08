@@ -80,42 +80,6 @@ index 6c6bf973de..39ee98a914 100644
    file(COPY ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/ffmpeg/ffmpeg-link-wrapper
         DESTINATION ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}
         FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE)
-@@ -158,19 +165,22 @@ endmacro()
- # Allows building with external ffmpeg not found in system paths,
- # without library version checks
- if(WITH_FFMPEG)
--  set(FFMPEG_PATH ${WITH_FFMPEG})
--  message(STATUS "Warning: FFmpeg version checking disabled")
--  set(REQUIRED_FFMPEG_VERSION undef)
--else()
--  # required ffmpeg library versions
--  set(REQUIRED_FFMPEG_VERSION 6.0.0)
--  set(_avcodec_ver ">=60.2.100")
--  set(_avfilter_ver ">=9.3.100")
--  set(_avformat_ver ">=60.3.100")
--  set(_avutil_ver ">=58.2.100")
--  set(_postproc_ver ">=57.1.100")
--  set(_swresample_ver ">=4.10.100")
--  set(_swscale_ver ">=7.1.100")
-+  if(WITH_FFMPEG STREQUAL stb)
-+    set(FFMPEG_TARGET ${WITH_FFMPEG})
-+    set(REQUIRED_FFMPEG_VERSION 5.0.0)
-+  else()
-+    set(FFMPEG_TARGET "")
-+    set(FFMPEG_PATH ${WITH_FFMPEG})
-+    message(STATUS "Warning: FFmpeg version checking disabled")
-+    set(REQUIRED_FFMPEG_VERSION undef)
-+    unset(_avcodec_ver)
-+    unset(_avfilter_ver)
-+    unset(_avformat_ver)
-+    unset(_avutil_ver)
-+    unset(_postproc_ver)
-+    unset(_swresample_ver)
-+    unset(_swscale_ver)
-+  endif()
- endif()
- 
- # Allows building with external ffmpeg not found in system paths,
 diff --git a/cmake/platform/linux/stb.cmake b/cmake/platform/linux/stb.cmake
 new file mode 100644
 index 0000000000..e1fe54a13d
