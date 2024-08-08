@@ -29,6 +29,8 @@ D_FILES_PN = "${D}${FILES:${PN}}"
 
 EXTRA_OECONF = ""
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 do_install() {
     install -d ${D_FILES_PN}
     install -d ${D_FILES_PN}/locale
