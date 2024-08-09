@@ -9,7 +9,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RRECOMMENDS:${PN} = "enigma2-plugin-extensions-subssupport kodi"
 
-RDEPENDS:${PN} = "kodi kodi-addons-meta kodi-addon-inputstream-adaptive nspr nss"
+RDEPENDS:${PN} = "kodi kodi-addons-meta kodi-addon-inputstream-adaptive-omega nspr nss"
 
 SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/OpenPLi/kodiext.git;protocol=https;branch=main \
