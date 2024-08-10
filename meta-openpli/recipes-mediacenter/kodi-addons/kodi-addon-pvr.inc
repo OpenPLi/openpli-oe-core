@@ -10,7 +10,7 @@ DEPENDS += " \
             jsoncpp \
             jsonrpc \
             boost \
-            kodi \
+            stb-kodi \
           "
 
 PACKAGE_ARCH = "${MACHINE}"
