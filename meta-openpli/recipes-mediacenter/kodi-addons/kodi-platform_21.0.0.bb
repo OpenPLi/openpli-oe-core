@@ -6,7 +6,7 @@ PACKAGE_ARCH = "${MACHINE}"
 LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://src/util/XMLUtils.cpp;beginline=2;endline=18;md5=dae8e846500e70dd8ecee55f3f018c30"
 
-DEPENDS = "libtinyxml kodi"
+DEPENDS = "libtinyxml virtual/kodi"
 
 PV = "21.0.0"
 
