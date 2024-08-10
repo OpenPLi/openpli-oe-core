@@ -304,5 +304,3 @@ RRECOMMENDS:${PN}:append:libc-glibc = " glibc-charmap-ibm850 \
                                         glibc-charmap-utf-8 \
                                         glibc-localedata-en-us \
                                       "
-
-ERROR_QA:remove = "file-rdeps"
