@@ -7,7 +7,7 @@ inherit autotools gitpkgv python3-compileall
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-RRECOMMENDS:${PN} = "enigma2-plugin-extensions-subssupport kodi"
+RRECOMMENDS:${PN} = "enigma2-plugin-extensions-subssupport"
 
 RDEPENDS:${PN} = "${@bb.utils.contains_any('MACHINE', 'ustym4kpro ustym4ks2ottx', 'kodi', 'stb-kodi', d)} kodi-addons-meta kodi-addon-inputstream-adaptive-omega nspr nss"
 
