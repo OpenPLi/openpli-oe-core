@@ -104,9 +104,7 @@ do_install() {
 
 #	Image version
 
-	if [[ "$DISTRO_VERSION" =~ ^[0-9]+\.[0-9]+\-.*$ ]]; then
-		IMAGE_VERSION=`echo ${DISTRO_VERSION} | cut -d "-" -f 1`
-	fi
+	IMAGE_VERSION=`echo ${DISTRO_VERSION} | cut -d "-" -f 1`
 
 #	Kernel version
 
