@@ -101,6 +101,7 @@ SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=Omega \
            file://0010-FindLibDvd.cmake-build-with-external-source.patch \
            file://0011-cmake-includedirs.patch \
            file://0012-taglib2.patch \
+           file://0013-use-mute-button-for-ok-control.patch \
            file://0100-e2-player.patch \
            file://0101-gst-player.patch \
           "
