@@ -35,7 +35,7 @@ SRC_URI[gfxdriver.vuduo4kse.sha256sum] = "a1ee8bd434a6aff051503dfe9fdfa784fe1e0c
 
 GFX_FILE = "directfb_1.7-7_gfxdriver_${MACHINE}_${GFXPR}.tar.gz"
 
-DEPENDS:append:class-target = "libgles-${MACHINE}"
+DEPENDS:append:class-target = " libgles-${MACHINE}"
 
 SRC_URI:append:class-target = " \
 	file://vuplus-conf.patch \
