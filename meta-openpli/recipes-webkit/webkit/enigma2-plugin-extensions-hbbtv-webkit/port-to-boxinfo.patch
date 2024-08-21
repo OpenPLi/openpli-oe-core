@@ -11,16 +11,18 @@ index 4af9d81..250e570 100644
  
  import os, struct
  from . import vbcfg
-@@ -29,7 +29,7 @@ class HbbTVWindow(Screen):
+@@ -29,10 +29,6 @@ class HbbTVWindow(Screen):
  		elif (self.height < 576):
  			self.height = 576
  
 -		if getMachineBuild() in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h8', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'multibox', 'multiboxse'):
-+		if BoxInfo.getItem("machine") in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h8', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'multibox', 'multiboxse'):
- 			self.width=1280
- 			self.height=720
- 
-@@ -42,7 +42,7 @@ class HbbTVWindow(Screen):
+-			self.width=1280
+-			self.height=720
+-
+ 		vbcfg.g_vmpegposition = vbcfg.getvmpegPosition()
+ 		vbcfg.g_position = vbcfg.getPosition()
+ 		vbcfg.osd_lock()
+@@ -42,7 +38,7 @@ class HbbTVWindow(Screen):
  		self._url = url
  		self._info = app_info
  
@@ -29,7 +31,7 @@ index 4af9d81..250e570 100644
  			self.servicelist = self.session.instantiateDialog(ChannelSelection)
  
  		self.onLayoutFinish.append(self.start_hbbtv_application)
-@@ -122,13 +122,13 @@ class HbbTVWindow(Screen):
+@@ -122,13 +118,13 @@ class HbbTVWindow(Screen):
  		vbcfg.osd_unlock()
  		dsk.paint()
  
