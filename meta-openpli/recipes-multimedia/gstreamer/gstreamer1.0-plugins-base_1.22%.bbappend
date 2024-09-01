@@ -1,5 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
+RDEPENDS:libgstgl-1.0 = "libGLESv2.so"
+
 PV = "1.24.5"
 
 SRC_URI[sha256sum] = "0e33ec9b59eef5ef3a6a53bbd55c44340e681d0000910caca12541a73db38a7d"
