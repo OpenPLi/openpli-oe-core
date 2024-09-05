@@ -220,6 +220,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-xstreamity \
 	enigma2-plugin-extensions-xklass \
 	enigma2-plugin-extensions-youtube \
+	enigma2-plugin-systemplugins-m3uiptv \
 	enigma2-plugin-systemplugins-crossepg \
 	enigma2-plugin-systemplugins-devicemanager \
 	enigma2-plugin-systemplugins-extnumberzap \
@@ -234,6 +235,8 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-systemplugins-quadpip \
 	enigma2-plugin-systemplugins-terrestrialscan \
 	enigma2-plugin-systemplugins-misplslcnscan \
+	enigma2-plugin-extensions-iptv-org-playlists \
+	enigma2-plugin-systemplugins-terrestrialbouquet \
 	enigma2-plugin-security-firewall \
 	enigma2-plugin-skins-pli-hd \
 	enigma2-plugin-skins-pli-hd-fullnight \
