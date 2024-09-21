@@ -1,0 +1,15 @@
+Workaround. 
+Inherit cmake or add cmake(-native) as dependency doesn't work.
+
+diff --git a/pyproject.toml b/pyproject.toml
+index be97048..603f907 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -62,7 +62,6 @@ wheel.cmake = false
+ messages.after-success = "{yellow}CMake unavailable, falling back to pure Python Extension"
+ 
+ [[tool.scikit-build.overrides]]
+-if.any.system-cmake = ">=3.15"
+ if.any.cmake-wheel = true
+ wheel.cmake = true
+ messages.after-success = "{green}C++ Extension built successfully"
