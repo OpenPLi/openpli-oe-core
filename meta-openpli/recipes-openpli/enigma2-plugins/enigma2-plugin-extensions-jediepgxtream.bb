@@ -5,8 +5,6 @@ HOMEPAGE = "https://github.com/kiddac/Jedi-EPG-XStream"
 
 inherit gitpkgv allarch python3-compileall
 
-SRCREV="${AUTOREV}"
-
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
