@@ -1,5 +1,5 @@
 DESCRIPTION = "RapidFuzz provides libraries for fuzzy string matching in various programming languages."
-LICENSE = "LGPL-2.0-only"
+LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${S}/README.md;md5=cd30fe688968c142c6223b363c0bcd3b"
 
 DEPENDS = "scikit-build-core-native ninja-native python3-cython-native"
@@ -12,8 +12,8 @@ S = "${WORKDIR}/git"
 
 inherit gitpkgv pkgconfig python_flit_core
 
-PV = "3.9.7.+git${SRCPV}"
-PKGV = "3.9.7+git${GITPKGV}"
+PV = "3.10.0.+git${SRCPV}"
+PKGV = "3.10.0+git${GITPKGV}"
 
 do_install:append() {
     rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/*.dist-info
