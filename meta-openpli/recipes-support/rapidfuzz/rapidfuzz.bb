@@ -14,3 +14,9 @@ inherit gitpkgv pkgconfig python_flit_core
 
 PV = "3.9.7.+git${SRCPV}"
 PKGV = "3.9.7+git${GITPKGV}"
+
+do_install:append() {
+    rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/*.dist-info
+}
+
+FILES:${PN}-src = "${PYTHON_SITEPACKAGES_DIR}/${PN}/*.py"
