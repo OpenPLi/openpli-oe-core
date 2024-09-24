@@ -19,4 +19,6 @@ do_install:append() {
     rm -rf ${D}${PYTHON_SITEPACKAGES_DIR}/*.dist-info
 }
 
-FILES:${PN}-src = "${PYTHON_SITEPACKAGES_DIR}/${PN}/*.py"
+FILES:${PN}-src = "${PYTHON_SITEPACKAGES_DIR}/${PN}/*.py \
+                   ${PYTHON_SITEPACKAGES_DIR}/${PN}/*/*.py \
+                   "
