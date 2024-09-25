@@ -2,7 +2,7 @@ DESCRIPTION = "RapidFuzz provides libraries for fuzzy string matching in various
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${S}/README.md;md5=cd30fe688968c142c6223b363c0bcd3b"
 
-DEPENDS = "scikit-build-core-native ninja-native python3-cython-native"
+DEPENDS = "scikit-build-core-native ninja-native python3-cython-native cmake-native"
 
 SRC_URI="git://github.com/rapidfuzz/rapidfuzz;branch=main;protocol=https \
          file://remove-cmake-check.patch \
