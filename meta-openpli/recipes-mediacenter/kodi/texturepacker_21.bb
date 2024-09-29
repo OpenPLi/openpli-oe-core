@@ -2,7 +2,7 @@ SUMMARY = "Kodi texture packer"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM ?= "file:///${WORKDIR}/git/LICENSE.md;md5=7b423f1c9388eae123332e372451a4f7"
 
-SRCREV = "${AUTOREV}"
+SRCREV = "12ac3e2085665ae0f23fcb719e0aa67cbd433352"
 PV = "21.0+gitr"
 SRC_URI = "git://github.com/xbmc/xbmc.git;protocol=https;branch=master"
 
