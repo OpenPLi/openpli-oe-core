@@ -1,6 +1,6 @@
 DEPENDS += "scikit-build-core-native ninja-native"
 
-inherit python_pep517 python3native python3-dir setuptools3-base
+inherit python_pep517 python3targetconfig
 
 do_compile:prepend:class-target() {
         export _PYTHON_SYSCONFIGDATA_NAME="_sysconfigdata"
