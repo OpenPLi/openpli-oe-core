@@ -10,8 +10,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
-SRC_URI := "${SRC_ORIGIN} "
+SRC_ORIGIN ?= "git://git.streamboard.tv/common/oscam.git;protocol=https;branch=master"
+SRC_URI := "${SRC_ORIGIN} \
+        file://oscam-emu.patch"
 
 DEPENDS = "libusb openssl libdvbcsa"
 RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
