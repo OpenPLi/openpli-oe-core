@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "git${SRCPV}"
 PKGV = "${GITPKGVTAG}"
 
-SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched.git;protocol=https;branch=master"
+SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched-old.git;protocol=https;branch=master"
 SRC_URI := "${SRC_ORIGIN} "
 
 DEPENDS = "libusb openssl libdvbcsa"
