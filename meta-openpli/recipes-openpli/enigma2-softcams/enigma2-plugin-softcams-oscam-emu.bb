@@ -1,22 +1,23 @@
 require conf/license/openpli-gplv2.inc
 require softcam.inc
 inherit cmake
-inherit gittag
+inherit gitpkgv
 
 DESCRIPTION = "OScam-emu ${PV} Open Source Softcam"
-LICENSE = "GPL-3.0-only"
+LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 PV = "git${SRCPV}"
-PKGV = "${GITPKGVTAG}"
+PKGV = "git${GITPKGV}"
 
-SRC_ORIGIN ?= "git://github.com/oscam-emu/oscam-patched-old.git;protocol=https;branch=master"
-SRC_URI := "${SRC_ORIGIN} "
+SRC_ORIGIN ?= "git://git.streamboard.tv/common/oscam.git;protocol=https;branch=master"
+SRC_URI := "${SRC_ORIGIN} \
+        file://oscam-emu.patch"
 
 DEPENDS = "libusb openssl libdvbcsa"
-RDEPENDS:${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
+RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
 
-LDFLAGS:prepend = "-ludev -ldvbcsa "
+LDFLAGS_prepend = "-ludev -ldvbcsa "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -34,7 +35,7 @@ SRC_URI += " \
 
 CONFFILES = "${sysconfdir}/tuxbox/config/oscam-emu/oscam.conf ${sysconfdir}/tuxbox/config/oscam-emu/oscam.server ${sysconfdir}/tuxbox/config/oscam-emu/oscam.srvid ${sysconfdir}/tuxbox/config/oscam-emu/oscam.user ${sysconfdir}/tuxbox/config/oscam-emu/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam-emu/oscam.provid"
 
-FILES:${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
+FILES_${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \
