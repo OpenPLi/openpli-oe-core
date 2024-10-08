@@ -15,9 +15,9 @@ SRC_URI := "${SRC_ORIGIN} \
         file://oscam-emu.patch"
 
 DEPENDS = "libusb openssl libdvbcsa"
-RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
+RDEPENDS:${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
 
-LDFLAGS_prepend = "-ludev -ldvbcsa "
+LDFLAGS:prepend = "-ludev -ldvbcsa "
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -35,7 +35,7 @@ SRC_URI += " \
 
 CONFFILES = "${sysconfdir}/tuxbox/config/oscam-emu/oscam.conf ${sysconfdir}/tuxbox/config/oscam-emu/oscam.server ${sysconfdir}/tuxbox/config/oscam-emu/oscam.srvid ${sysconfdir}/tuxbox/config/oscam-emu/oscam.user ${sysconfdir}/tuxbox/config/oscam-emu/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam-emu/oscam.provid"
 
-FILES_${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
+FILES:${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \
