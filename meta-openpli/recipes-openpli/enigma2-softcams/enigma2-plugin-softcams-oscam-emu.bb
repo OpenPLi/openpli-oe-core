@@ -7,22 +7,19 @@ DESCRIPTION = "OScam-emu ${PV} Open Source Softcam"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/enigma2-plugin-softcams-oscam:"
+
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
+SRC_URI = "git://github.com/oscam-emu/oscam-patched.git;protocol=https"
 
-SRC_ORIGIN ?= "git://git.streamboard.tv/common/oscam.git;protocol=https;branch=master"
-SRC_URI := "${SRC_ORIGIN} \
-        file://oscam-emu.patch"
-
-DEPENDS = "libusb openssl libdvbcsa"
-RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus libdvbcsa libusb1"
-
-LDFLAGS_prepend = "-ludev -ldvbcsa "
+DEPENDS = "libusb openssl"
+RDEPENDS_${PN} += "enigma2-plugin-extensions-oscamstatus"
 
 S = "${WORKDIR}/git"
 B = "${S}"
 CAMNAME = "oscam-emu"
-CAMSTART = "/usr/bin/oscam-emu --wait 60 --config-dir /etc/tuxbox/config/oscam-emu --daemon --pidfile /tmp/oscam-emu.pid --restart 2"
+CAMSTART = "/usr/bin/oscam-emu --wait 0 --config-dir /etc/tuxbox/config/oscam-emu --daemon --pidfile /tmp/oscam-emu.pid --restart 2 --utf8"
 CAMSTOP = "kill \`cat /tmp/oscam-emu.pid\` 2> /dev/null"
 
 SRC_URI += " \
@@ -30,19 +27,18 @@ SRC_URI += " \
 	file://oscam.server \
 	file://oscam.srvid \
 	file://oscam.user \
-	file://oscam.dvbapi \
 	file://oscam.provid"
 
-CONFFILES = "${sysconfdir}/tuxbox/config/oscam-emu/oscam.conf ${sysconfdir}/tuxbox/config/oscam-emu/oscam.server ${sysconfdir}/tuxbox/config/oscam-emu/oscam.srvid ${sysconfdir}/tuxbox/config/oscam-emu/oscam.user ${sysconfdir}/tuxbox/config/oscam-emu/oscam.dvbapi ${sysconfdir}/tuxbox/config/oscam-emu/oscam.provid"
+CONFFILES = "/etc/tuxbox/config/oscam-emu/oscam.conf /etc/tuxbox/config/oscam-emu/oscam.server /etc/tuxbox/config/oscam-emu/oscam.srvid /etc/tuxbox/config/oscam-emu/oscam.user /etc/tuxbox/config/oscam-emu/oscam.provid"
 
-FILES_${PN} = "${bindir}/oscam-emu ${sysconfdir}/tuxbox/config/oscam-emu/* ${sysconfdir}/init.d/softcam.oscam-emu"
+FILES_${PN} = "/usr/bin/oscam-emu /etc/tuxbox/config/oscam-emu/* /etc/init.d/softcam.oscam-emu"
 
 EXTRA_OECMAKE += "\
 	-DOSCAM_SYSTEM_NAME=Tuxbox \
 	-DWEBIF=1 \
 	-DWITH_STAPI=0 \
 	-DHAVE_LIBUSB=1 \
-	-DSTATIC_LIBUSB=0 \
+	-DSTATIC_LIBUSB=1 \
 	-DWITH_SSL=1 \
 	-DIPV6SUPPORT=1 \
 	-DCLOCKFIX=0 \
@@ -51,16 +47,12 @@ EXTRA_OECMAKE += "\
 	-DCARDREADER_PCSC=1 \
 	-DCW_CYCLE_CHECK=1 \
 	-DCS_CACHEEX=1 \
-	-DMODULE_CONSTCW=1 \
-	-DLCDSUPPORT=1 \
-	-DMODULE_SCAM=1 \
-	-DMODULE_STREAMRELAY=1 \
-	-DHAVE_LIBDVBCSA=1 \
+	-DMODULE_CONSTCW=1 \	
 	"
 
 do_install() {
-	install -d ${D}${sysconfdir}/tuxbox/config/oscam-emu
-	install -m 0644 ${WORKDIR}/oscam.* ${D}${sysconfdir}/tuxbox/config/oscam-emu
-	install -d ${D}${bindir}
-	install -m 0755 ${B}/oscam ${D}${bindir}/oscam-emu
+	install -d ${D}/etc/tuxbox/config/oscam-emu
+	install -m 0644 ${WORKDIR}/oscam.* ${D}/etc/tuxbox/config/oscam-emu
+	install -d ${D}/usr/bin
+	install -m 0755 ${B}/oscam ${D}/usr/bin/oscam-emu
 }
