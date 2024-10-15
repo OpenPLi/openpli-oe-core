@@ -33,5 +33,4 @@ DEPENDS_append_armv7ve = " \
 # softcams with source available
 DEPENDS += " \
 	enigma2-plugin-softcams-oscam \
-	enigma2-plugin-softcams-oscam-emu \
 	"
