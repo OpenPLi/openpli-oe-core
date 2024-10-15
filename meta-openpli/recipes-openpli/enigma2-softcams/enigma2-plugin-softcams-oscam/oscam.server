@@ -113,42 +113,8 @@ cooldown                      = 30,600
 
 
 [reader]
-label                         = Smargo_1
-enable                        = 0
-protocol                      = smargo
-device                        = /dev/ttyUSB0
-detect                        = cd
-group                         = 1
-emmcache                      = 1,3,15
-audisabled                    = 0
-mhz                           = 357
-cardmhz                       = 2700
-ratelimitecm                  = 4
-ratelimittime                 = 10000
-ecmunique                     = 1
-srvidholdtime                 = 2000
-cooldown                      = 30,600
-
-[reader]
-label                         = Smargo_2
-enable                        = 0
-protocol                      = smargo
-device                        = /dev/ttyUSB1
-detect                        = cd
-group                         = 1
-emmcache                      = 1,3,15
-audisabled                    = 0
-mhz                           = 357
-cardmhz                       = 2700
-ratelimitecm                  = 4
-ratelimittime                 = 10000
-ecmunique                     = 1
-srvidholdtime                 = 2000
-cooldown                      = 30,600
-
-[reader]
 label                         = Mainreceiver
-enable                        = 0
+enable			      = 0
 protocol                      = cs378x
 device                        = ip_adress_mainreceiver,12005
 user                          = 2nd_box
