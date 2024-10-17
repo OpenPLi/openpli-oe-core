@@ -6,7 +6,7 @@ SRC_URI[sha256sum] = "8839139a53733bd20602e39cfc679a8176747dae8fe9f9c7fce28f8fba
 
 S = "${WORKDIR}/wireguard-linux-compat-${PV}/src"
 
-inherit module
+inherit module linux-kernel-base
 
 DEPENDS = "bc-native virtual/kernel libmnl"
 
