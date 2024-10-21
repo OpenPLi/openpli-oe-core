@@ -56,7 +56,7 @@ OPTIONAL_WIFI_PACKAGES = "\
 #	rtl8723au
 
 OPTIONAL_PACKAGES += " \
-	${@ 'wireguard-tools' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.14') >= 0) else '' } \
+	${@ 'wireguard-tools' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.10') >= 0) else '' } \
 	astra-sm \
 	autofs \
 	autossh \
