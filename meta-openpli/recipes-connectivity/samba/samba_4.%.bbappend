@@ -141,6 +141,9 @@ INITSCRIPT_PARAMS:${PN}-base = "defaults"
 # remove libnetapi package witch contains a lot of cross dependencies from libsamba-base
 PACKAGES:remove = "libnetapi"
 
+# remove python, we're builing without
+RDEPENDS:${PN}:remove = "${PN}-python3 python3"
+
 # move all libraries from samba to libsamba-base to fix circular dependencies
 FILES:lib${PN}-base += "\
 					${libdir}/*.so.* \
