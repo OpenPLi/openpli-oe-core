@@ -4,7 +4,7 @@ PRIORITY = "required"
 LICENSE = "CLOSED"
 #require conf/license/license-close.inc
 
-COMPATIBLE_MACHINE = "^(lunix4k|lunix3-4k)$ ^(galaxy|revo)4k$"
+COMPATIBLE_MACHINE = "^(lunix|lunix3-|galaxy|revo)4k$"
 
 # force this package into the machine feed
 PACKAGE_ARCH = "${MACHINE_ARCH}"
