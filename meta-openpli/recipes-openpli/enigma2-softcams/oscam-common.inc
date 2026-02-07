@@ -54,14 +54,12 @@ EXTRA_OECMAKE += "\
 	-DMODULE_STREAMRELAY=1 \
 	-DHAVE_LIBDVBCSA=1 \
 	-DWITH_EXTENDED_CW=1 \
-	-DWEBIF_WIKI=1 \
 	${@bb.utils.contains_any("TUNE_FEATURES", "neon simd", "-DWITH_ARM_NEON=1", "", d)} \
 	-DWITH_SIGNING=1 \
 	-DUSE_COMPRESS=1 \
 	-DCOMP_LEVEL="--best" \
 	"
 
-do_compile[network] = "1"
 do_configure:prepend () {
 	rm -rf ${S}/certs
 	${S}/config.sh --create-cert ecdsa prime256v1 ca "OpenPLi OSCam Distribution"
