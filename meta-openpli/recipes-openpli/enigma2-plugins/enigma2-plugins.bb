@@ -69,6 +69,7 @@ S = "${WORKDIR}/git"
 
 DEPENDS = " \
 	bluez5 \
+	bluez-alsa \
 	btinit \
 	${PYTHON_PN}-pyopenssl \
 	streamripper \
