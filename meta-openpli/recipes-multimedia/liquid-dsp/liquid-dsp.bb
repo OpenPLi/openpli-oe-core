@@ -16,6 +16,8 @@ SRC_URI = " \
 
 S = "${WORKDIR}/git"
 
+EXTRA_OECONF:append = "${@bb.utils.contains('TUNE_FEATURES', 'neon', '', ' --enable-simdoverride', d)}"
+
 inherit autotools-brokensep
 
 do_install() {
