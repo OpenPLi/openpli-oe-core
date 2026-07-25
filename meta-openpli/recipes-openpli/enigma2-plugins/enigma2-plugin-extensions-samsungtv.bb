@@ -1,17 +1,18 @@
 DESCRIPTION = "SamsungTV plugin for enigma2"
 MAINTAINER = "xcentaurix"
 LICENSE = "GPL-3.0-only"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
+LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=1ebbd3e34237af26da5dc08a4e440464"
 HOMEPAGE = "https://github.com/OpenCockpit/SamsungTV"
 
 RDEPENDS:${PN} = "python3-multiprocessing python3-requests python3-zoneinfo"
 
-inherit gitpkgv allarch gettext python3-compileall
+inherit gittag allarch gettext python3-compileall
 
 DEPENDS = "gettext-native"
 
-PV = "1.1.2"
-PKGV = "1.1.2+git${GITPKGV}"
+PV = "git"
+PKGV = "${GITPKGVTAG}"
+
 SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/OpenCockpit/SamsungTV.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"

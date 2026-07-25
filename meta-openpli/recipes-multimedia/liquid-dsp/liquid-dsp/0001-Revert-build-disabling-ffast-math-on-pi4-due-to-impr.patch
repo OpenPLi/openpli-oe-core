@@ -1,0 +1,28 @@
+From 41d4ba015d6589d60898040a46ae97f8fc191adb Mon Sep 17 00:00:00 2001
+From: WanWizard <wanwizard@wanwizard.eu>
+Date: Tue, 25 Mar 2025 17:44:27 +0000
+Subject: [PATCH] Revert "build: disabling -ffast-math on pi4 due to
+ imprecision, causing tests to fail"
+
+This reverts commit 3a5e1f578ad5e73d7665e71781e764765608c2a2.
+---
+ configure.ac | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 14394023..03c3bfc5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -252,8 +252,7 @@ else
+         *)
+             # TODO: check these flags
+             #ARCH_OPTION="-ffast-math -mcpu=cortex-a8 -mfloat-abi=softfp -mfpu=neon";;
+-            #ARCH_OPTION="-ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4";;
+-            ARCH_OPTION="";; # -ffast-math causes tests to fail on pi4 due to imprecision
++            ARCH_OPTION="-ffast-math -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4";;
+         esac;;
+     *)
+         # unknown architecture : use portable C version
+-- 
+2.49.0
+

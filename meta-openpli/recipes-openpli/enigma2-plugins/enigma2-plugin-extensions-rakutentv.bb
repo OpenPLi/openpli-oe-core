@@ -6,12 +6,13 @@ HOMEPAGE = "https://github.com/OpenCockpit/RakutenTV"
 
 RDEPENDS:${PN} = "python3-multiprocessing python3-requests python3-zoneinfo"
 
-inherit gitpkgv allarch gettext python3-compileall
+inherit gittag allarch gettext python3-compileall
 
 DEPENDS = "gettext-native"
 
-PV = "0.2.2"
-PKGV = "0.2.2+git${GITPKGV}"
+PV = "git"
+PKGV = "${GITPKGVTAG}"
+
 SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/OpenCockpit/RakutenTV.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
