@@ -14,7 +14,7 @@ PV = "git"
 PKGV = "${GITPKGVTAG}"
 
 SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/OpenCockpit/RakutenTV.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/OpenCockpit/RakutenTVCockpit.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
 do_install:append() {
@@ -34,7 +34,7 @@ do_install:append() {
 	fi
 }
 
-pluginname = "RakutenTV"
+pluginname = "RakutenTVCockpit"
 pluginpath = "/usr/lib/enigma2/python/Plugins/Extensions/${pluginname}"
 
 FILES:${PN} = "/usr/*"
