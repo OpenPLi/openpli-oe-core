@@ -8,10 +8,10 @@ require conf/license/license-gplv2.inc
 
 RDEPENDS:${PN} = "python3-pillow"
 
-inherit allarch gitpkgv python3-compileall
+inherit allarch gittag python3-compileall
 
-PV = "1.2.9+git${SRCPV}"
-PKGV = "1.2.9+git${GITPKGV}"
+PV = "git"
+PKGV = "${GITPKGVTAG}"
 
 SRC_URI = "git://github.com/Belfagor2005/ForecaOne.git;protocol=https;branch=main"
 
