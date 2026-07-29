@@ -11,7 +11,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "\
     octagon-hihalt-${MACHINE} \
     octagon-reader-${MACHINE} \
     octagon-libreader-${SOC_FAMILY} \
-    ${@bb.utils.contains("MACHINE_FEATURES", "blindscan", "octagon-blindscan-${SOC_FAMILY}" , "", d)} \    
+    ${@bb.utils.contains("MACHINE_FEATURES", "blindscan-dvbs", "octagon-blindscan-${SOC_FAMILY}" , "", d)} \
     octagon-partitions-${MACHINE} \
     octagon-buildimage \
     e2fsprogs-resize2fs \
