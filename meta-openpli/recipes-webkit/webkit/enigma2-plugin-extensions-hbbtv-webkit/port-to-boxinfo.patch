@@ -1,5 +1,5 @@
 diff --git a/HbbTV/hbbtv.py b/HbbTV/hbbtv.py
-index 4af9d81..250e570 100644
+index 940d332..f62ed8d 100644
 --- a/HbbTV/hbbtv.py
 +++ b/HbbTV/hbbtv.py
 @@ -3,7 +3,7 @@ from Screens.Screen import Screen
@@ -15,7 +15,7 @@ index 4af9d81..250e570 100644
  		elif (self.height < 576):
  			self.height = 576
  
--		if getMachineBuild() in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h8', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'multibox', 'multiboxse'):
+-		if getMachineBuild() in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h11', 'h8', 'h8se', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'hd66', 'multibox', 'multiboxse', 'multiboxpro'):
 -			self.width=1280
 -			self.height=720
 -
