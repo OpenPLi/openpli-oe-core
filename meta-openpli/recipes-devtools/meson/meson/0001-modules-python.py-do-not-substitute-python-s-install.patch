@@ -1,0 +1,28 @@
+From: Alexander Kanavin <alex.kanavin@gmail.com>
+Date: Thu, 18 Apr 2019 17:36:11 +0200
+Subject: [PATCH] modules/python.py: do not substitute python's install prefix
+ with meson's
+
+Ported to Meson 0.59.2.
+
+Upstream-Status: Pending
+Signed-off-by: Alexander Kanavin <alex.kanavin@gmail.com>
+Signed-off-by: ims <ims21@users.sourceforge.net>
+---
+ mesonbuild/modules/python.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/mesonbuild/modules/python.py
++++ b/mesonbuild/modules/python.py
+@@ -251 +251 @@
+-install_paths = sysconfig.get_paths(scheme='posix_prefix', vars={'base': '', 'platbase': '', 'installed_base': ''})
++install_paths = sysconfig.get_paths(scheme='posix_prefix')
+@@ -332,7 +332,7 @@
+     def _get_path(self, key: str) -> None:
+         user_dir = str(Path.home())
+         sys_paths = self.info['sys_paths']
+-        rel_path = self.info['install_paths'][key][1:]
++        rel_path = self.info['install_paths'][key]
+         if not any(p.endswith(rel_path) for p in sys_paths if not p.startswith(user_dir)):
+             # On Debian derivatives sysconfig install path is broken and is not
+             # included in the locations python actually lookup.
