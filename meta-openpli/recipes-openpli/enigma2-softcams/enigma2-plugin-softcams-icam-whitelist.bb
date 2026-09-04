@@ -10,8 +10,8 @@ SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
 
-RCONFLICTS:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
-RREPLACES:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
+RCONFLICTS:${PN} = "enigma2-plugins-softcams-oscam-whitelist enigma2-plugins-softcams-csa-whitelist"
+RREPLACES:${PN} = "enigma2-plugins-softcams-oscam-whitelist enigma2-plugins-softcams-csa-whitelist"
 
 inherit allarch gitpkgv
 
