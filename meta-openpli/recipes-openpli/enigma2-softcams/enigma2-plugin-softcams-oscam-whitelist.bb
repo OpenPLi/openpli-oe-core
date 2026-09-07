@@ -1,4 +1,4 @@
-DESCRIPTION = "NDS CSA whitelist, list of service references using NDS CSA scrambling"
+DESCRIPTION = "Oscam Streamrelay whitelist"
 MAINTAINER = "AbuBaniaz"
 LICENSE = "CLOSED"
 
@@ -9,9 +9,6 @@ SRC_ORIGIN ?= "git://github.com/E2OpenPlugins/oscam-whitelist.git;protocol=https
 SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
-
-RCONFLICTS:${PN} = "enigma2-plugins-softcams-oscam-whitelist enigma2-plugins-softcams-csa-whitelist"
-RREPLACES:${PN} = "enigma2-plugins-softcams-oscam-whitelist enigma2-plugins-softcams-csa-whitelist"
 
 inherit allarch gitpkgv
 
