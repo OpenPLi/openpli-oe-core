@@ -1,0 +1,37 @@
+--- a/drivers/of/fdt.c	2024-08-02 12:23:30.751276557 +0000
++++ b/drivers/of/fdt.c	2024-08-02 12:24:25.012383571 +0000
+@@ -937,8 +937,9 @@
+ 
+ 	/* Retrieve command line */
+ 	p = of_get_flat_dt_prop(node, "bootargs", &l);
+-	if (p != NULL && l > 0)
++	if (p != NULL && l > 0) {
+ 		strlcpy(data, p, min((int)l, COMMAND_LINE_SIZE));
++	}
+ 
+ 	/*
+ 	 * CONFIG_CMDLINE is meant to be a default in case nothing else
+@@ -946,10 +947,13 @@
+ 	 * is set in which case we override whatever was found earlier.
+ 	 */
+ #ifdef CONFIG_CMDLINE
+-#ifndef CONFIG_CMDLINE_FORCE
++#ifdef CONFIG_CMDLINE_FORCE
++	strlcat(data, " ", COMMAND_LINE_SIZE);
++	strlcat(data, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
++#else
+ 	if (!((char *)data)[0])
+-#endif
+ 		strlcpy(data, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
++#endif /* CONFIG_CMDLINE_FORCE */
+ #endif /* CONFIG_CMDLINE */
+ 
+ 	pr_debug("Command line is: %s\n", (char*)data);
+@@ -958,6 +962,7 @@
+ 	return 1;
+ }
+ 
++
+ #ifdef CONFIG_HAVE_MEMBLOCK
+ void __init __weak early_init_dt_add_memory_arch(u64 base, u64 size)
+ {

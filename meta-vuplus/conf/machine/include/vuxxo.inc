@@ -61,5 +61,8 @@ IMAGE_CMD:ubi:append = " \
 "
 
 MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec"
+# removes MIPS.xhash sections from ELF-Binary, saves 2 MB flash
+LINKER_HASH_STYLE = ""
+TARGET_LINK_HASH_STYLE = ""
 
 require conf/machine/include/mips/tune-mips32.inc

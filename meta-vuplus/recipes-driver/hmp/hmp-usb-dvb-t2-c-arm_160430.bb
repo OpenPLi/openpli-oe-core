@@ -3,7 +3,7 @@ HOMEPAGE = "http://linuxtv.org/"
 SECTION = "kernel/modules"
 LICENSE = "GPL-2.0-only"
 
-COMPATIBLE_MACHINE = "^(vuzero4k|vuuno4kse|vuduo4k)$"
+COMPATIBLE_MACHINE = "^(vuzero4k|vuuno4kse|vuduo4k|vuduo4klite)$"
 
 SRC_URI[md5sum] = "66990bd8b8aa3759d764552a7ccac013"
 SRC_URI[sha256sum] = "b3c612d792834d14c981c400022ec923c154e10161121cf730a09b4ed4e35b04"
