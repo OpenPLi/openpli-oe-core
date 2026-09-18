@@ -11,7 +11,7 @@ PV = "0.7.0+git"
 PKGV = "0.7.0+git${GITPKGV}"
 PR = "r3"
 
-RDEPENDS:${PN} = "python3-ctypes python3-datetime python3-six"
+RDEPENDS:${PN} = "python3-ctypes python3-datetime"
 
 SRC_URI = "git://github.com/openpli/pythonwifi.git;branch=master;protocol=https \
            file://replace-distutils-with-setuptools.patch \
