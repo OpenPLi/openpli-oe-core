@@ -6,7 +6,6 @@ inherit packagegroup
 DEPENDS = " \
 	enigma2-plugin-extensions-addstreamurl \
 	enigma2-plugin-extensions-antilogo \
-	enigma2-plugin-extensions-autobackup \
 	enigma2-plugin-extensions-autobouquets \
 	enigma2-plugin-extensions-bitrate \
 	enigma2-plugin-extensions-blackoutblind \
