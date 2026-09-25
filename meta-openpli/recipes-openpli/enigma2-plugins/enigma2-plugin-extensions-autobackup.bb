@@ -14,6 +14,8 @@ PV = "2.0+git"
 PKGV = "2.0+git${GITPKGV}"
 PR = "r2"
 
+S = "${WORKDIR}/git"
+
 # I spent over 2 hours trying to get the shell file to be executable. Sorry, I just gave up
 # and decided that this would be good enough until someone explains how to do this properly
 # with distutils.
