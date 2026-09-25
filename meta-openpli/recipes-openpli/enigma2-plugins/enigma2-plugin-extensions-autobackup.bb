@@ -4,8 +4,15 @@ DESCRIPTION = "Can create daily backups. Backups created will be restored automa
 
 require conf/license/license-gplv2.inc
 
-require openplugins-replace-pli.inc
-require openplugins-distutils.inc
+DEPENDS = "python3-future-native"
+
+SRC_URI = "git://github.com/OpenPLi/AutoBackup.git;branch=master;protocol=https file://use-setuptools-instead-of-distutils.patch"
+
+inherit gitpkgv python3-compileall allarch setuptools3-openplugins
+
+PV = "2.0+git"
+PKGV = "2.0+git${GITPKGV}"
+PR = "r2"
 
 # I spent over 2 hours trying to get the shell file to be executable. Sorry, I just gave up
 # and decided that this would be good enough until someone explains how to do this properly
@@ -14,6 +21,3 @@ do_install:append() {
 	chmod a+x ${D}${libdir}/enigma2/python/Plugins/*/*/*.sh
 }
 
-DEPENDS = "python3-future-native"
-
-SRC_URI = "git://github.com/OpenPLi/AutoBackup.git;branch=master;protocol=https file://use-setuptools-instead-of-distutils.patch"
