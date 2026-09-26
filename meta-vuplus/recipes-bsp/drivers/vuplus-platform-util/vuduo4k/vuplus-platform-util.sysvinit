@@ -10,7 +10,7 @@ case "$1" in
     [ -f /etc/dropbear/dropbear_rsa_host_key ]
     echo -n "Starting  vuplus-platform-util"
     if [ ! -e /dev/brcm0 ]; then
-	bp3flash.py 2>/dev/null
+        bp3flash.py 2>/dev/null
         DRV_PATH=/lib/modules/`uname -r`/extra
         insmod $DRV_PATH/procmk.ko                           
         insmod $DRV_PATH/bcm_event.ko                            
