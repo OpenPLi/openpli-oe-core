@@ -1,6 +1,7 @@
 DESCRIPTION = "Utils for blindscan"
 SECTION = "base"
 PRIORITY = "optional"
+RDEPENDS:${PN} = "ncurses"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -23,37 +24,78 @@ SRC_URI[sha256sum] = "518775bf3ff43ade300741232ce4d303d4aeaea09f1a7d7256e40a4fe9
 
 S = "${WORKDIR}/blindscan-utils"
 
-PLUGABLE_MODEL_BLINDSCAN = " \
-        vuplus_blindscan \
-        vuplus_6211_blindscan \
-        vuplus_6222_blindscan \
-        ssh108 \
-        tt3l10 \
-        tt2l08 \
-        bcm3148 \
-        ssh108_t2_scan \
-        tt3l10_t2_scan \
-        tt2l08_t2_scan \
-        bcm3466 \
-        "
-
-PLUGABLE_MODEL_BLINDSCAN:remove:vusolo4k = "bcm3148 bcm3466"
-PLUGABLE_MODEL_BLINDSCAN:vuduo4k = "bcm3148 bcm3466"
-PLUGABLE_MODEL_BLINDSCAN:vuduo4kse = "bcm3148 bcm3466"
-PLUGABLE_MODEL_BLINDSCAN:vuuno4k = "bcm3148 bcm3466"
-PLUGABLE_MODEL_BLINDSCAN:vuuno4kse = "bcm3148 bcm3466"
-PLUGABLE_MODEL_BLINDSCAN:vuzero4k = "tt2l08b tt2l08b_t2_scan vuplus_si2166_blindscan"
+PLUGABLE_ARM_BLINDSCAN = " \
+	vuplus_blindscan \
+	vuplus_6211_blindscan \
+	vuplus_6222_blindscan \
+	ssh108 \
+	ssh108_t2_scan \
+	tt3l10 \
+	tt3l10_t2_scan \
+	tt2l08 \
+	tt2l08_t2_scan \
+	bcm3148 \
+	bcm3466 \
+"
 
 do_install() {
-        install -d "${D}${bindir}"
-        for f in ${PLUGABLE_MODEL_BLINDSCAN}; do
-                install -m 0755 "${S}/$f" "${D}${bindir}"
-        done
+	install -d "${D}/${bindir}"
+	install -m 0755 "${S}/tda1002x" "${D}/${bindir}"
+}
+do_install:vusolo4k() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
 }
 
-do_install:append:vuzero4k() {
-        mv "${D}${bindir}/tt2l08b" "${D}${bindir}/tt2l08"
-        mv "${D}${bindir}/tt2l08b_t2_scan" "${D}${bindir}/tt2l08_t2_scan"
+do_install:vuuno4k() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
+}
+
+do_install:vuultimo4k() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
+}
+
+do_install:vuuno4kse() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
+}
+
+do_install:vuzero4k() {
+	install -d "${D}/${bindir}"
+	install -m 0755 "${S}/tt2l08b" "${D}/${bindir}/tt2l08"
+	install -m 0755 "${S}/tt2l08b_t2_scan" "${D}/${bindir}/tt2l08_t2_scan"
+	install -m 0755 "${S}/vuplus_si2166_blindscan" "${D}/${bindir}/vuplus_si2166_blindscan"
+}
+
+do_install:vuduo4k() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
+}
+
+do_install:vuduo4kse() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
+}
+
+do_install:vuduo4klite() {
+	install -d "${D}/${bindir}"
+	for f in ${PLUGABLE_ARM_BLINDSCAN}; do
+		install -m 0755 "${S}/$f" "${D}/${bindir}"
+	done
 }
 
 FILES:vuplus-blindscan-dvbs-utils-${MACHINE} = "\
