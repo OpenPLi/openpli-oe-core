@@ -50,6 +50,7 @@ do_install:append() {
     ln -sf ../init.d/bootup ${D}${sysconfdir}/rcS.d/S66bootup
 }
 FILES:${PN} = "/boot"
+FILES:${PN} += "${sysconfdir}"
 
 INHIBIT_PACKAGE_STRIP = "1"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
