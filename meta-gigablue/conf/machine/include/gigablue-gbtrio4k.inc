@@ -110,7 +110,7 @@ IMAGE_CMD:gigablueemmc:append = "\
     mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs3; \
     mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs4; \
     cp -fR ${IMAGE_ROOTFS}/* ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs1/; \
-    mv ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/gbtrio4k_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/fastboot.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/platforms/gbtrio4k_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/fastboot.bin; \
     dd if=/dev/zero of=${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/rootfs.ext4 seek=${IMAGE_ROOTFS_SIZE} count=60 bs=1024; \
     mkfs.ext4 -F -i 4096 ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/rootfs.ext4 -d ${DEPLOY_DIR_IMAGE}/userdata; \
     cd ${IMAGE_ROOTFS}; \
@@ -139,7 +139,7 @@ IMAGE_CMD:gigablueemmc:append = "\
     mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs3; \
     mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs4; \
     cp -fR ${IMAGE_ROOTFS}/* ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs1/; \
-    mv ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/gbtrio4kpro_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/fastboot.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/platforms/gbtrio4kpro_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/fastboot.bin; \
     dd if=/dev/zero of=${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/rootfs.ext4 seek=${IMAGE_ROOTFS_SIZE} count=60 bs=1024; \
     mkfs.ext4 -F -i 4096 ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/rootfs.ext4 -d ${DEPLOY_DIR_IMAGE}/userdata; \
     cd ${IMAGE_ROOTFS}; \

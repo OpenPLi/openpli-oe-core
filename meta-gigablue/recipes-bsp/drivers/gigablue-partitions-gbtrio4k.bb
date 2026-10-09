@@ -21,10 +21,11 @@ FILES:${PN} = "/usr/share"
 
 do_deploy() {
     install -d ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
+    install -d ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/platforms
     install -m 0755 ${S}/bootargs.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
     install -m 0755 ${S}/boot.img ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
-    install -m 0755 ${S}/gbtrio4k_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
-    install -m 0755 ${S}/gbtrio4kpro_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
+    install -m 0755 ${S}/gbtrio4k_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/platforms
+    install -m 0755 ${S}/gbtrio4kpro_fastboot.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/platforms
     install -m 0755 ${S}/apploader.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
     install -m 0755 ${S}/pq_param.bin ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
     install -m 0755 ${S}/emmc_partitions.xml ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions
