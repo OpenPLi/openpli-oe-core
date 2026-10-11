@@ -36,9 +36,6 @@ do_install:append() {
     && ln -sf libgbm.so.1 libgbm.so)
 }
 
-do_package_qa() {
-}
-
 FILES:${PN} = "${libdir}"
 FILES:${PN}-dev = "${incdir}"
 

@@ -1,10 +1,12 @@
 inherit image_types
 
+IMAGE_TYPEDEP:zgemmafastboot8gb = "tar"
+
 IMAGE_ROOTFS = "${WORKDIR}/rootfs/linuxrootfs1"
 BOOTOPTIONS_PARTITION_SIZE = "2048"
 IMAGE_ROOTFS_SIZE = "614400"
 
-do_image_zgemmafastboot8gb[depends] = " \
+do_image_zgemmafastboot8gb[depends] += " \
 	e2fsprogs-native:do_populate_sysroot \
 	android-tools-native:do_populate_sysroot \
 	dosfstools-native:do_populate_sysroot \
