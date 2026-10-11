@@ -44,13 +44,10 @@ do_install:append() {
     && ln -sf libgbm.so.1 libgbm.so)
 }
 
-do_package_qa() {
-}
-
 FILES:${PN} = "${libdir} /etc/udev/rules.d/50-mali.rules"
 FILES:${PN}-dev = "${incdir}"
 
-INSANE_SKIP:${PN} += "already-stripped dev-so ldflags"
+INSANE_SKIP:${PN} += "already-stripped dev-so ldflags 32bit-time"
 
 # The driver is missing EGL/GLES headers and pkgconfig files. Handle
 # the conflicts as mesa and the driver are both providing the same shared libraries.
