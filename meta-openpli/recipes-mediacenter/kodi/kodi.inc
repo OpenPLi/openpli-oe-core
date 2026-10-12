@@ -34,6 +34,7 @@ INSANE_SKIP_${PN}_ustym4kpro += "file-rdeps"
 INSANE_SKIP_${PN}_ustym4ks2ottx += "file-rdeps"
 #
 INSANE_SKIP_${PN}_h7 += "file-rdeps"
+INSANE_SKIP_${PN}_h8se += "file-rdeps"
 INSANE_SKIP_${PN}_h9 += "file-rdeps"
 INSANE_SKIP_${PN}_h9combo += "file-rdeps"
 INSANE_SKIP_${PN}_h9combose += "file-rdeps"
