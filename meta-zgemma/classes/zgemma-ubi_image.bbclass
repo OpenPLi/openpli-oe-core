@@ -1,5 +1,7 @@
 inherit image_types
 
+IMAGE_TYPEDEP:ubi += "zgemmaubi"
+
 BOOTOPTIONS_PARTITION_SIZE = "2048"
 
 do_image_zgemmaubi[depends] = " \
