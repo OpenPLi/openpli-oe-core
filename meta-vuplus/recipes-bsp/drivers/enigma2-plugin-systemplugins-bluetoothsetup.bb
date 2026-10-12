@@ -1,7 +1,7 @@
 DESCRIPTION = "Vu+ bluetooth plugin"
 LICENSE = "CLOSED"
 
-COMPATIBLE_MACHINE = "^(vuuno4k|vuuno4kse|vusolo4k|vuduo4k|vuduo4kse|vuultimo4k|vuzero4k)$"
+COMPATIBLE_MACHINE = "^(vuuno4k|vuuno4kse|vusolo4k|vuduo4k|vuduo4kse|vuultimo4k|vuzero4k|vuduo4klite)$"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
