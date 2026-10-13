@@ -12,6 +12,9 @@ PKGV = "${GITPKGV}"
 
 inherit gittag allarch
 
+RCONFLICTS_${PN} = "enigma2-plugin-extensions-jedimakerxtream"
+RREPLACES_${PN} = "enigma2-plugin-extensions-jedimakerxtream"
+
 RDEPENDS_${PN} = "${PYTHON_PN} ${PYTHON_PN}-requests ${PYTHON_PN}-pillow"
 
 SRC_URI = "git://github.com/kiddac/Bouquet_Maker_Xtream.git;protocol=https;branch=master"
