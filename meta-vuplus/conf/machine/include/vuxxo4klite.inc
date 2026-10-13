@@ -14,6 +14,11 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	ntfs-3g \
 "
 
+MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += " \
+    firmware-aic8800d80 \
+    vuplus-aic8800-driver \
+    "
+
 MACHINE_EXTRA_RDEPENDS += "\
 "
 
