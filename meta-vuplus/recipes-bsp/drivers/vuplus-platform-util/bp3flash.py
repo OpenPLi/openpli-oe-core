@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 ##################################################################################################
 
@@ -20,7 +20,7 @@ DEBUG_ENABLE = False
 
 def bp3Log(s):
 	if DEBUG_ENABLE:
-		print s
+		print (s)
 
 class rpmbUpdate:
 	def __init__(self):
@@ -156,7 +156,7 @@ class rpmbUpdate:
 
 		# read data
 		while data_size > 0:
-			#print "data_size : ", data_size
+			#print ("data_size : ", data_size)
 			cmd = [MMC_CMD, "rpmb", "read-block", "/dev/mmcblk0rpmb", str(hex(cur_offset)), "1", "-", "-"]
 			(data, err) = self.readSubprocess(cmd)
 			if err:
@@ -362,19 +362,19 @@ def bp3Main(newBp3Path = None):
 
 	if not bp30.hasBp3Bin() and not bp31.hasBp3Bin():
 		if rpmb_checkok:
-			print "get data from rpmb.."
+			print ("get data from rpmb..")
 			rpmb.readRpmb(BP3_INST_PATH)
 			if isExist(BP3_INST_PATH):
 				bp30.updateBp3Bin(BP3_INST_PATH)
 				bp31.updateBp3Bin(BP3_INST_PATH)
 		else:
-			print "Warning!!!!!!!!! we lost b3data!"
+			print ("Warning!!!!!!!!! we lost b3data!")
 
 	if not isExist(BP3_LINK_PATH) and isExist(BP3_INST_PATH):
 		runCmd("ln -sf %s %s" % (BP3_INST_PATH, BP3_LINK_PATH))
 
 	if not rpmb_checkok and isExist(BP3_INST_PATH):
-		print "backup %s to rpmb." % BP3_INST_PATH
+		print ("backup %s to rpmb." % BP3_INST_PATH)
 		rpmb.registerRpmbKey()
 		rpmb.writeRpmb(BP3_INST_PATH)
 
