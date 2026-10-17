@@ -1,5 +1,8 @@
 require wireguard.inc
 
+MAKE_TARGETS = "module"
+MODULE_NAME = "wireguard"
+
 SRC_URI = " \
     https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-${PV}.tar.xz \
     file://0001-fix-fallback-macro-missing.patch \
@@ -12,6 +15,7 @@ S = "${WORKDIR}/wireguard-linux-compat-${PV}/src"
 inherit module linux-kernel-base
 
 DEPENDS = "bc-native virtual/kernel libmnl"
+RRECOMMENDS:${PN} = "kernel-module-xt-hashlimit"
 
 # This module requires Linux 3.10 higher and several networking related
 # configuration options. For exact kernel requirements visit:
@@ -21,11 +25,8 @@ EXTRA_OEMAKE:append = " \
     KERNELDIR=${STAGING_KERNEL_DIR} \
 "
 
-MAKE_TARGETS = "module"
-
-RRECOMMENDS:${PN} = "kernel-module-xt-hashlimit"
+KERNEL_VERSION="${@get_kernelversion_headers('${STAGING_KERNEL_DIR}') or oe.utils.read_file('${PKGDATA_DIR}/kernel-depmod/kernel-abiversion')}"
 RPROVIDES:${PN} = "${@ 'kernel-module-wireguard' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '5.6') < 0) else '' }"
-MODULE_NAME = "wireguard"
 
 # Kernel module packages MUST begin with 'kernel-module-', otherwise
 # multilib image generation can fail.
