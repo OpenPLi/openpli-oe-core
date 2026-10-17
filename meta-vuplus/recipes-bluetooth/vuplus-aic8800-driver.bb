@@ -14,11 +14,10 @@ PV = "5.0+git"
 PKGV = "5.0+git${GITPKGV}"
 PR = "r1"
 
-SRC_URI = "git://github.com/oe-alliance-drivers/aic8800.git;protocol=https;branch=master;destsuffix=s"
+SRC_URI = "git://github.com/oe-alliance-drivers/aic8800.git;protocol=https;branch=master"
 SRCREV = "${AUTOREV}"
 
-UNPACKDIR = "${WORKDIR}/s"
-S = "${UNPACKDIR}/src/USB/driver_fw/drivers"
+S = "${WORKDIR}/git/src/USB/driver_fw/drivers"
 
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"

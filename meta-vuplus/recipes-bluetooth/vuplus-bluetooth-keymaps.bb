@@ -8,7 +8,7 @@ COMPATIBLE_MACHINE = "^(vuduo4klite)$"
 
 SRC_URI = "file://70-vuplus-bluetooth-rcu.hwdb"
 
-S = "${UNPACKDIR}"
+S = "${WORKDIR}"
 
 RDEPENDS:${PN} = "eudev-hwdb"
 
