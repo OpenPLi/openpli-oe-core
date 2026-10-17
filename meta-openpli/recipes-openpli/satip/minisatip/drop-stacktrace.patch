@@ -2,7 +2,7 @@ diff --git a/src/utils.cpp b/src/utils.cpp
 index 4d881e4..372beae 100644
 --- a/src/utils.cpp
 +++ b/src/utils.cpp
-@@ -226,13 +226,7 @@ void set_signal_handler(char *argv0) {
+@@ -236,13 +236,7 @@ void set_signal_handler(char *argv0) {
  }
  
  void print_trace(void) {
@@ -16,4 +16,4 @@ index 4d881e4..372beae 100644
 +    LOG("No stacktrace support compiled in");
  }
  
- extern int run_loop;
+ extern std::atomic<int> run_loop;
