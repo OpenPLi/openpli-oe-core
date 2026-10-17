@@ -9,5 +9,5 @@ index 9e9fa78f..217aced2 100644
 -from Tools.CopyFiles import copyFiles, moveFiles
 +from Screens.CopyFiles import copyFiles, moveFiles
  from Tools.Directories import fileExists
- from ..i18n import _
+ from ... import _
  from ..utilities import getUrlArg2, toString
