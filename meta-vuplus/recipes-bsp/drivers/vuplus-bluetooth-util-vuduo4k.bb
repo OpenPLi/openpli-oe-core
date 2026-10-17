@@ -2,9 +2,8 @@ require vuplus-bluetooth-util.inc
 
 COMPATIBLE_MACHINE = "^(vuduo4k)$"
 
-SRCDATE = "20181109"
-SRCDATE_PR = "r1"
+SRCDATE = "20261009"
+SRCDATE_PR = "r0"
 
-SRC_URI[md5sum] = "fbbe1050ab72d8ae1b541293eb83a9d6"
-SRC_URI[sha256sum] = "c99de55349d9d8259639a70154956583aa29e1d28517de883d8811934d8bd6b8"
-
+SRC_URI[md5sum] = "fef862ab7ae25d6a383207a4ba640b1c"
+SRC_URI[sha256sum] = "037433d3cee26c2e2214c23edfe04d01d013ee7f6b2c44de351446bd96e87ae8"

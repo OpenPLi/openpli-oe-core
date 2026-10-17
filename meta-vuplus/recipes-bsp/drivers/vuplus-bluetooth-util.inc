@@ -5,20 +5,22 @@ LICENSE = "CLOSED"
 PROVIDES += "vuplus-bluetooth-util"
 RPROVIDES:${PN} += "vuplus-bluetooth-util"
 
-PR="${SRCDATE}.${SRCDATE_PR}"
+# oe-core 2015=3.0, oe-core 2025=3.1
+VUBT_OE_VERSION ?= "3.1"
 
+PR="${SRCDATE}-${VUBT_OE_VERSION}.${SRCDATE_PR}"
+
+# not available at code.vuplus.com
 SRC_URI = " \
-    http://downloads.openpli.org/archive/vuplus/vuplus-bluetooth-util-${MACHINE}-${PR}.tar.gz \
+    https://code.vuplus.de/download/release/bt/vuplus-bluetooth-util-${MACHINE}-${PR}.tar.gz \
     file://vuplus-bluetooth.conf \
 "
-
 FILESEXTRAPATHS:prepend := "${THISDIR}/vuplus-bluetooth-util:"
 
-S="${WORKDIR}/vuplus-bluetooth-util-${MACHINE}"
+S = "${WORKDIR}/vuplus-bluetooth-util-${MACHINE}"
 
-do_install() {
-	install -d ${D}${bindir}
-	install -m 0755 ${S}/* ${D}${bindir}
+do_compile() {
+    :
 }
 
 do_package_qa() {
