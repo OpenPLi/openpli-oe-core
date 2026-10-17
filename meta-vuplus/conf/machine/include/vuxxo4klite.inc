@@ -14,6 +14,11 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	ntfs-3g \
 "
 
+MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += " \
+    firmware-aic8800d80 \
+    vuplus-aic8800-driver \
+    "
+
 MACHINE_EXTRA_RDEPENDS += "\
 "
 
@@ -23,6 +28,7 @@ EXTRA_IMAGEDEPENDS += "\
 	vuplus-tuner-turbo \
 	vuplus-tuner-turbo2 \
 	hmp-usb-dvb-t2-c-arm \
+	vuplus-bluetooth-keymaps \
 	${@bb.utils.contains("MACHINE_FEATURES", "bcmwifi", "vuplus-wifi-util-${MACHINE}", "", d)} \
 "
 
@@ -42,6 +48,10 @@ PREFERRED_PROVIDER_virtual/libgles2 = "libgles-${MACHINE}"
 PREFERRED_PROVIDER_virtual/kodi = "stb-kodi-${MACHINE}"
 
 IMAGE_FSTYPES ?= "tar.bz2"
+
+### Logitech keyboard ###
+KERNEL_MODULE_AUTOLOAD += "hid-logitech"
+KERNEL_MODULE_AUTOLOAD += "hid-logitech-dj"
 
 MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec vuplus-cortexa15"
 OPENPLI_FEATURES += "kodi"
