@@ -46,6 +46,8 @@ IMAGEDIR ?= "zgemma"
 IMAGEDIRRECOVERY ?= "zgemma-recovery"
 IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 
+require conf/machine/include/zgemma-partitions.inc
+
 IMAGE_CMD:ubifs:prepend = " \
 	rm -Rf ${IMAGE_ROOTFS}/boot/*; \
 	rm -Rf ${IMAGE_ROOTFS}/tmp/*; \

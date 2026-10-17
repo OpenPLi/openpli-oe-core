@@ -5,7 +5,9 @@ LICENSE = "CLOSED"
 PR = "${SRCDATE}"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit deploy
+inherit zgemma-partition-deploy
+
+ZGEMMA_LEGACY_DEPLOY_FILES = "${MACHINE}/pq_param.bin ${MACHINE}/baseparam.img"
 
 SRC_URI = "http://downloads.openpli.org/archive/zgemma/zgemma-param-${HICHIPSET}-${SRCDATE}.zip"
 
@@ -15,9 +17,9 @@ ALLOW_EMPTY:${PN} = "1"
 do_configure[nostamp] = "1"
 
 do_deploy() {
-    install -d ${DEPLOY_DIR_IMAGE}/zgemma-partitions-${MACHINE}/${MACHINE}
-    install -m 0755 ${WORKDIR}/pq_param.bin ${DEPLOY_DIR_IMAGE}/zgemma-partitions-${MACHINE}/${MACHINE}
-    install -m 0755 ${WORKDIR}/baseparam.img ${DEPLOY_DIR_IMAGE}/zgemma-partitions-${MACHINE}/${MACHINE}
+    install -d ${DEPLOYDIR}/zgemma-partitions-${MACHINE}/${MACHINE}
+    install -m 0755 ${WORKDIR}/pq_param.bin ${DEPLOYDIR}/zgemma-partitions-${MACHINE}/${MACHINE}
+    install -m 0755 ${WORKDIR}/baseparam.img ${DEPLOYDIR}/zgemma-partitions-${MACHINE}/${MACHINE}
 }
 
 addtask deploy before do_build after do_install

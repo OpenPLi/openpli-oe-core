@@ -1,0 +1,45 @@
+From: OpenPLi developers <developers@openpli.org>
+Subject: [PATCH] Honor the compiler and flags supplied by OpenEmbedded
+
+Use the selected toolchain without forcing a 32-bit host executable or host
+include paths. Keep the YAFFS configuration and large-file support flags when
+the caller supplies CFLAGS, and use LDFLAGS during linking.
+
+Upstream-Status: Inappropriate [vendor tool]
+
+--- a/mkyaffs2image/Makefile
++++ b/mkyaffs2image/Makefile
+@@ -14,16 +14,14 @@
+ 
+ ## Change or override  KERNELDIR to your kernel
+ 
+-CFLAGS =   -I/usr/include -O2 -Wall -DCONFIG_YAFFS_UTIL
+-CFLAGS+=   -Wshadow -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-declarations
+-CFLAGS+=   -Wmissing-prototypes -Wredundant-decls -Wnested-externs -Winline
+-
+-CC=$(MAKETOOLS)gcc -m32
++CC ?= gcc
++CFLAGS ?= -O2 -Wall
++YAFFS_CPPFLAGS = -DCONFIG_YAFFS_UTIL -D_FILE_OFFSET_BITS=64
+ 
+ MKYAFFS2SOURCES = yaffs_ecc.c yaffs_packedtags2.c yaffs_tagsvalidity.c
+ 
+ ifeq ($(CFG_SPI_NAND_SUPPORT),y)
+-CFLAGS     += -DCFG_SPI_NAND_SUPPORT
++YAFFS_CPPFLAGS += -DCFG_SPI_NAND_SUPPORT
+ endif
+ 
+ all : mkyaffs
+@@ -31,10 +29,10 @@
+ MKYAFFS2IMAGEOBJS = $(MKYAFFS2SOURCES:.c=.o)
+ 
+ %.o: %.c
+-	$(CC) -c $(CFLAGS) $< -o $@
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(YAFFS_CPPFLAGS) -c $< -o $@
+ 
+ mkyaffs: $(MKYAFFS2IMAGEOBJS) mkyaffs2image.o oob_config.o
+-	$(CC) -o $@ $(MKYAFFS2IMAGEOBJS) mkyaffs2image.o oob_config.o
++	$(CC) $(LDFLAGS) -o $@ $(MKYAFFS2IMAGEOBJS) mkyaffs2image.o oob_config.o
+ 
+ clean:
+ 	rm -f $(MKYAFFS2IMAGEOBJS) mkyaffs mkyaffs2image*.o oob_config*.o

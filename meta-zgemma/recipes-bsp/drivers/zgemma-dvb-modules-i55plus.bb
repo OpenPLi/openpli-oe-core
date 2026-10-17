@@ -1,13 +1,13 @@
 KV = "4.4.35"
-SRCDATE = "20201118"
+SRCDATE = "20261009"
 
 PROVIDES += "virtual/blindscan-dvbc virtual/blindscan-dvbs"
 RPROVIDES:${PN} += "virtual-blindscan-dvbc virtual-blindscan-dvbs"
 
 require zgemma-dvb-himodules.inc
 
-SRC_URI[arm.md5sum] = "c577ec40e3172e44ea3dcfa94a438c6b"
-SRC_URI[arm.sha256sum] = "c71650d8e3e8c52b89270171b33038b6cfbb6a5339c75f8592c17143445cd19e"
+SRC_URI[arm.md5sum] = "c6c628365aa752e2d6e14e899f46f589"
+SRC_URI[arm.sha256sum] = "0a4a14021bea57a480b848097c5454c07d52f3c776296e07db91d0a409694a6f"
 
 COMPATIBLE_MACHINE = "i55plus"
 
@@ -41,9 +41,10 @@ do_install:append() {
 	install -m 0755 ${S}/turnoff_power ${D}${bindir}
 }
 
-do_package_qa() {
-}
-
 FILES:${PN} += " ${bindir} ${sysconfdir}/init.d"
 
-INSANE_SKIP:${PN} += "already-stripped"
+# The vendor power-off executable cannot be relinked with OE linker flags.
+INSANE_SKIP:${PN} += "already-stripped ldflags"
+
+# Vendor libraries are excluded from automatic shared-library dependencies.
+RDEPENDS:${PN} += "zgemma-libs-${HICHIPSET}"

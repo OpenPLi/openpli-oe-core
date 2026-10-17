@@ -28,7 +28,4 @@ do_install() {
 	install -m 0755 ciplus1_enable ${D}${sysconfdir}
 }
 
-do_package_qa() {
-}
-
 INSANE_SKIP:${PN} += "ldflags already-stripped"
