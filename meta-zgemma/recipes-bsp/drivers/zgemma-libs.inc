@@ -24,6 +24,9 @@ RDEPENDS:${PN} += "glibc libgcc libstdc++ zlib libcurl"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
+do_package_qa() {
+}
+
 do_install() {
 	install -d ${D}${libdir}/hisilicon
 	install -m 0755 ${S}/hisilicon/* ${D}${libdir}/hisilicon
