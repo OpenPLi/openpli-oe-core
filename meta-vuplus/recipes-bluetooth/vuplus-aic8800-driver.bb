@@ -1,7 +1,7 @@
 SUMMARY = "vuplus Drivers for AIC8800 for ${MACHINEBUID}"
 SECTION = "base"
 PRIORITY = "optional"
-PACKAGE_ARCH = "${MACHINEBUILD}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 LICENSE = "CLOSED"
 
 COMPATIBLE_MACHINE = "^(vuduo4klite)$"
