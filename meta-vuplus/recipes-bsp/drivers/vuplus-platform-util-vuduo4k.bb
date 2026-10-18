@@ -8,7 +8,9 @@ SRCDATE = "20191218"
 SRCDATE_PR = "r0"
 PR:append = ".3"
 
-SRC_URI += " file://bp3flash.py"
+SRC_URI += " \
+	file://bp3flash.tar.gz \
+"
 
 do_install:append() {
 	install -m 0755 ${WORKDIR}/bp3flash.py ${D}${bindir}
