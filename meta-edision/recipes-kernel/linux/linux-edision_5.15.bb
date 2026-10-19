@@ -38,7 +38,7 @@ kernel_do_install:append () {
 pkg_postinst:kernel-image () {
 	if [ -z "$D" ]
 	then
-		python /${KERNEL_IMAGEDEST}/findkerneldevice.py
+		python3 /${KERNEL_IMAGEDEST}/findkerneldevice.py
 		dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION} of=/dev/kernel
 	fi
 }

@@ -41,4 +41,4 @@ do_install() {
 FILES:${PN} = "${libdir}/hisilicon/*"
 FILES:${PN}-dev = ""
 
-INSANE_SKIP:${PN} += "ldflags already-stripped dev-so 32bit-time"
+INSANE_SKIP:${PN} += "ldflags already-stripped dev-so 32bit-time file-rdeps"

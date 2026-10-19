@@ -100,7 +100,7 @@ kernel_do_compile() {
 pkg_postinst:kernel-image () {
     if [ -d /proc/stb ]; then
         if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ]; then
-            python /${KERNEL_IMAGEDEST}/vufindkerneldevice.py
+            python3 /${KERNEL_IMAGEDEST}/vufindkerneldevice.py
             [ -e /dev/kernel ] && dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/kernel
         fi
     fi
