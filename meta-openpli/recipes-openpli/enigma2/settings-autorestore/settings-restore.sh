@@ -207,7 +207,7 @@ if [ -n ${HAS_SAMBA} ]; then
 		mv ${SAMBACONF}.tmp ${SAMBACONF}
 
 		# process the smb configuration from the backup
-		python /bin/convert-smbconf.py ${SAMBACONF}.old
+		python3 /bin/convert-smbconf.py ${SAMBACONF}.old
 
 		# check if samba is running
 		SAMBA_ON=$(pidof -s smbd)
