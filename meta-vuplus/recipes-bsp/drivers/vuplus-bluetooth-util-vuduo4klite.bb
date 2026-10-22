@@ -16,7 +16,7 @@ PR = "${SRCDATE}.${SRCDATE_PR}"
 
 # not available at code.vuplus.com
 SRC_URI = " \
-    https://code.vuplus.de/download/release/bt/vuplus-bluetooth-util-${MACHINE}-${PR}.zip \
+    http://downloads.openpli.org/archive/vuplus/vuplus-bluetooth-util-${MACHINE}-${PR}.zip \
 "
 
 S = "${WORKDIR}/vuplus-bluetooth-util-${MACHINE}"

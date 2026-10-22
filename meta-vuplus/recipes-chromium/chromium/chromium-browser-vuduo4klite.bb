@@ -12,7 +12,7 @@ PV = "1.4"
 PR = "${SRCDATE}"
 
 # not available at code.vuplus.com
-SRC_URI = "https://code.vuplus.de/download/chromium/chromium-vuplus-${MACHINE}-${SRCDATE}.tar.gz"
+SRC_URI = "http://downloads.openpli.org/archive/vuplus/chromium-vuplus-${MACHINE}-${SRCDATE}.tar.gz"
 
 SRC_URI[md5sum] = "0779f182e7eea90ad7051a571a942d3d"
 SRC_URI[sha256sum] = "4b11482b4a0641994b07f107368eb53bbd0e6fce008e5fb19158b389c3132086"

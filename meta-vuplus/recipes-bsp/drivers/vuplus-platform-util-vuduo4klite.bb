@@ -19,11 +19,7 @@ SRCDATE = "20260728"
 SRC_URI[md5sum] = "d16622d0ababdbd7ef7f7b41ff0c61b9"
 SRC_URI[sha256sum] = "8384c6e092a9933a3c34c061bb0e364211bc11ce1acf74024d871aaad0120555"
 
-
-# not available at code.vuplus.com
-#SRC_URI = "https://code.vuplus.de/download/release/platform-util/platform-util-${MACHINE}-${SRCDATE}${PR}.zip"
-# with RCU key patch
-SRC_URI = "https://code.vuplus.de/download/release/platform-util/platform-util-${MACHINE}-with-keypatch-${SRCDATE}${PR}.zip"
+SRC_URI = "http://downloads.openpli.org/archive/vuplus/platform-util-${MACHINE}-with-keypatch-${SRCDATE}${PR}.zip"
 
 INHIBIT_PACKAGE_STRIP = "1"
 

@@ -6,11 +6,7 @@ COMPATIBLE_MACHINE = "^(vuduo4klite)$"
 
 SRCDATE = "20260827r4"
 
-
-# todo: cleanup
-
-# not available at code.vuplus.com
-SRC_URI += "https://code.vuplus.de/download/release/kernel/initrd_${MACHINE}_${SRCDATE}.zip"
+SRC_URI += "http://downloads.openpli.org/archive/vuplus/initrd_${MACHINE}_${SRCDATE}.zip"
 
 SRC_URI[md5sum] = "26dec08469801c156afb6b16acba3d9c"
 SRC_URI[sha256sum] = "4dccac8c0e69e510e33ad4697130a0d248087503cd8b3066ceba7b55c6ee8e1f"

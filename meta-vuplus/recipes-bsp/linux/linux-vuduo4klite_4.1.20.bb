@@ -19,7 +19,7 @@ SRC_URI[sha256sum] = "6a97857446c41b94de5a5fc618afa68a493b7cc6f7f0bca14b880d95be
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-SRC_URI += "https://source.mynonpublic.com/vuplus.de/linux/vuplus-linux-${PV}-${SRC_DATE}.tar.gz \
+SRC_URI += "http://downloads.openpli.org/archive/vuplus/vuplus-linux-${PV}-${SRC_DATE}.tar.gz \
     file://defconfig_initrd \
     file://initramfs-subdirboot.cpio.gz;unpack=0 \
     file://vufindkerneldevice.py \
