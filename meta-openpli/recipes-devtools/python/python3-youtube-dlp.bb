@@ -1,4 +1,4 @@
-SUMMARY = "A feature-rich command-line audio/vidoe downloader"
+3SUMMARY = "A feature-rich command-line audio/vidoe downloader"
 DESCRIPTION = "yt-dlp is a feature-rich command-line audio/video downloader with support for thousands of sites \
 The project is a fork of youtube-dl based on the now inactive youtube-dlc"
 HOMEPAGE = "https://github.com/yt-dlp/yt-dlp"
@@ -21,6 +21,7 @@ EXTRA_OEMAKE = "PYTHON=${PYTHON}"
 
 do_compile:prepend() {
     cd ${S}
+    sed -i '/Programming Language :: Python :: 3\.15/d' pyproject.toml
     oe_runmake lazy-extractors completions/bash/yt-dlp
 }
 
