@@ -4,7 +4,7 @@ index 9e9fa78f..217aced2 100644
 +++ b/plugin/controllers/models/movies.py
 @@ -31,7 +31,7 @@ from ServiceReference import ServiceReference
  from Components.config import config
- from Components.MovieList import MovieList
+ from Components.MovieList import moviePlayState
  from Screens.MovieSelection import defaultMoviePath
 -from Tools.CopyFiles import copyFiles, moveFiles
 +from Screens.CopyFiles import copyFiles, moveFiles
