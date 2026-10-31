@@ -63,6 +63,7 @@ OPTIONAL_PACKAGES += " \
 	astra-sm \
 	autofs \
 	autossh \
+        binutils \
 	ccid \
 	cronie \
 	ctorrent \
