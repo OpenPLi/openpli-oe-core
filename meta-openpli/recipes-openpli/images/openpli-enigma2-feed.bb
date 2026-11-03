@@ -212,6 +212,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-modifyplifullhd \
 	enigma2-plugin-extensions-moviemanager \
 	enigma2-plugin-extensions-openmultiboot \
+	enigma2-plugin-extensions-opkg-tools \
 	enigma2-plugin-extensions-plutotv \
 	enigma2-plugin-extensions-rakutentvcockpit \
 	enigma2-plugin-extensions-refreshbouquet \
