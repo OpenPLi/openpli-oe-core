@@ -12,6 +12,9 @@ S = "${WORKDIR}/git"
 
 inherit allarch gitpkgv
 
+RCONFLICTS:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
+RREPLACES:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
+
 do_install () {
 	install -d ${D}${sysconfdir}/enigma2/
 	if [ -f ${D}${sysconfdir}/enigma2/whitelist_streamrelay ]; then
