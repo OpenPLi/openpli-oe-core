@@ -2,8 +2,8 @@ DESCRIPTION = "iCAM (SoftCSA) descramble whitelist"
 MAINTAINER = "AbuBaniaz"
 LICENSE = "CLOSED"
 
-PV = "2.0+git${SRCPV}"
-PKGV = "2.0+git${GITPKGV}"
+PV = "2.1+git${SRCPV}"
+PKGV = "2.1+git${GITPKGV}"
 
 SRC_ORIGIN ?= "git://github.com/E2OpenPlugins/oscam-whitelist.git;protocol=https;branch=main"
 SRC_URI := "${SRC_ORIGIN} "
