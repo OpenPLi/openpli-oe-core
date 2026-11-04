@@ -14,6 +14,7 @@ inherit allarch gitpkgv
 
 RDEPENDS:${PN} += "libdvbcsa"
 
+RPROVIDES:${PN} = "enigma2-plugins-softcams-icam"
 RCONFLICTS:${PN} = "enigma2-plugins-softcams-icam"
 RREPLACES:${PN} = "enigma2-plugins-softcams-icam"
 

@@ -12,6 +12,7 @@ S = "${WORKDIR}/git"
 
 inherit allarch gitpkgv
 
+RPROVIDES:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
 RCONFLICTS:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
 RREPLACES:${PN} = "enigma2-plugins-softcams-oscam-whitelist"
 
