@@ -1,4 +1,4 @@
-DESCRIPTION = "SoftCSA / iCAM descramble whitelist"
+DESCRIPTION = "iCAM (SoftCSA) descramble whitelist"
 MAINTAINER = "AbuBaniaz"
 LICENSE = "CLOSED"
 
@@ -13,6 +13,9 @@ S = "${WORKDIR}/git"
 inherit allarch gitpkgv
 
 RDEPENDS:${PN} += "libdvbcsa"
+
+RCONFLICTS:${PN} = "enigma2-plugins-softcams-icam"
+RREPLACES:${PN} = "enigma2-plugins-softcams-icam"
 
 do_install () {
 	install -d ${D}${sysconfdir}/enigma2/
