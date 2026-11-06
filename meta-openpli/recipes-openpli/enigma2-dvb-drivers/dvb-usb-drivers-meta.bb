@@ -22,7 +22,7 @@ OPTIONAL_DVBUSB_PACKAGES = "\
 	${@ 'enigma2-plugin-drivers-ct2-usb-geniatech-t230' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.19') > 0) else '' } \
 	${@ 'enigma2-plugin-drivers-ct2-usb-dvbsky-t330' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '3.19') > 0) else '' } \
 	${@ 'enigma2-plugin-drivers-atsc-usb-hauppauge-955q' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.1') > 0) else '' } \
-	${@ 'enigma2-plugin-drivers-ct2-usb-xbox-one-tuner' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.16') > 0) else '' } \
+	${@ 'enigma2-plugin-drivers-ct2-usb-xbox-one-tuner' if ("${KERNEL_VERSION}" and bb.utils.vercmp_string("${KERNEL_VERSION}", '4.1') > 0) else '' } \
 	\
 	enigma2-plugin-drivers-dvb-usb-tbs \
 	"
