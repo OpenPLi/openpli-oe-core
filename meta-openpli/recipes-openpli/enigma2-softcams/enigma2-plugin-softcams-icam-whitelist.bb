@@ -1,5 +1,5 @@
 DESCRIPTION = "iCAM (SoftCSA) descramble whitelist"
-MAINTAINER = "AbuBaniaz"
+MAINTAINER = "E2OpenPlugins"
 LICENSE = "CLOSED"
 
 PV = "2.1+git${SRCPV}"
