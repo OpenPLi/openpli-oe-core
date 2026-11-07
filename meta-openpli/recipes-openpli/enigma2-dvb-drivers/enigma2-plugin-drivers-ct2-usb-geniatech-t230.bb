@@ -7,7 +7,6 @@ RRECOMMENDS_${PN} = " \
 	kernel-module-si2157 \
 	kernel-module-si2168 \
 	firmware-dvb-demod-si2168-b40 \
-	firmware-dvb-tuner-si2158-a20 \
 	"
 
 PV = "1.0"
