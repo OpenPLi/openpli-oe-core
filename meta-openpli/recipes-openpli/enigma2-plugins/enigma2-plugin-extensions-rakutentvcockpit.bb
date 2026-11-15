@@ -14,7 +14,7 @@ PV = "git"
 PKGV = "${GITPKGVTAG}"
 
 SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/OpenCockpit/RakutenTVCockpit.git;protocol=https;branch=main"
+SRC_URI = "git://github.com/OpenCockpit/RakutenTVCockpit.git;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 
 do_install:append() {

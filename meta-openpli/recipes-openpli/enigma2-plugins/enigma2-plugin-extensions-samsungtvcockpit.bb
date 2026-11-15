@@ -14,7 +14,7 @@ PV = "git"
 PKGV = "${GITPKGVTAG}"
 
 SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/OpenCockpit/SamsungTVCockpit.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/OpenCockpit/SamsungTVCockpit.git;protocol=https;branch=main"
 S = "${WORKDIR}/git"
 
 pluginname = "SamsungTVCockpit"
