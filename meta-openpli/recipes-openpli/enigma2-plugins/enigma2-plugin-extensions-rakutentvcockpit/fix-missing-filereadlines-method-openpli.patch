@@ -1,0 +1,63 @@
+From 0d4228ed8f4ce35fb98fe3df914c88e2321320e9 Mon Sep 17 00:00:00 2001
+From: atefganm <atef_anim_1974@yahoo.com>
+Date: Fri, 16 Oct 2026 20:55:56 +0300
+Subject: [PATCH] fix-missing-filereadlines-method-openpli
+
+---
+ src/PluginUpgrade.py | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/src/PluginUpgrade.py b/src/PluginUpgrade.py
+index bbc23c5..9b7e617 100644
+--- a/src/PluginUpgrade.py
++++ b/src/PluginUpgrade.py
+@@ -10,7 +10,6 @@ from Components.Console import Console
+ from Screens.MessageBox import MessageBox
+ from Screens.Standby import TryQuitMainloop, QUIT_RESTART
+ from Tools import Notifications
+-from Tools.Directories import fileReadLines
+ from twisted.internet import threads
+ 
+ from .Version import PLUGIN
+@@ -43,7 +42,11 @@ def _isVersionNewer(candidate_version, current_version):
+ 
+ 
+ def _opkgListsDir():
+-    for line in fileReadLines("/etc/opkg/opkg.conf") or []:
++    try:
++        readFile = open("/etc/opkg/opkg.conf").readlines()
++    except:
++        readFile = []
++    for line in readFile:
+         parts = line.split()
+         if len(parts) >= 2 and parts[-2] == "lists_dir":
+             return parts[-1]
+@@ -55,7 +58,11 @@ def getInstalledPackageVersion(package_name):
+     if not os.path.exists(control_file):
+         return None
+ 
+-    for line in fileReadLines(control_file) or []:
++    try:
++        readFile = open(control_file).readlines()
++    except:
++        readFile = []
++    for line in readFile:
+         if line.startswith("Version:"):
+             return line.split("Version:", 1)[1].strip().split("+", 1)[0]
+ 
+@@ -112,7 +119,11 @@ def _availablePackageVersionFromLists(package_name):
+     latest_version = None
+     in_package = False
+ 
+-    for line in fileReadLines(os.path.join(_opkgListsDir(), COCKPIT_FEED_NAME)) or []:
++    try:
++        readFile = open(os.path.join(_opkgListsDir(), COCKPIT_FEED_NAME)).readlines()
++    except:
++        readFile = []
++    for line in readFile:
+         if line.startswith("Package:"):
+             in_package = line.split(":", 1)[1].strip() == package_name
+         elif in_package and line.startswith("Version:"):
+-- 
+2.43.0
+

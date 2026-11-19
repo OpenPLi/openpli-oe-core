@@ -13,8 +13,10 @@ DEPENDS = "gettext-native"
 PV = "git"
 PKGV = "${GITPKGVTAG}"
 
-SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/OpenCockpit/RakutenTVCockpit.git;protocol=https;branch=main"
+SRC_URI = "git://github.com/OpenCockpit/RakutenTVCockpit.git;protocol=https;branch=main \
+           file://fix-missing-filereadlines-method-openpli.patch \
+           "
+
 S = "${WORKDIR}/git"
 
 do_install:append() {
