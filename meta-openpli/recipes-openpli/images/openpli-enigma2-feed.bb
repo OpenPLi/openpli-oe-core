@@ -186,6 +186,7 @@ OPTIONAL_PACKAGES += " \
 
 OPTIONAL_ENIGMA2_PACKAGES = " \
 	channelsettings-enigma2-meta \
+	enigma2-fonts-oe-alliance \
 	enigma2-plugin-drivers-usbserial \
 	enigma2-plugin-extensions-automatic-fullbackup \
 	enigma2-plugin-extensions-blurayplayer \
