@@ -8,7 +8,6 @@ RDEPENDS:${PN} = "pcsc-lite"
 
 inherit gittag 
 
-SRCREV = "${AUTOREV}"
 PV = "git"
 PKGV = "${GITPKGVTAG}"
 

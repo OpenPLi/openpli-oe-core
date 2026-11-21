@@ -9,7 +9,6 @@ inherit module
 # backward compatibility
 RPROVIDES:${PN} = "rtl8822cu"
 
-SRCREV = "${AUTOREV}"
 SRC_URI = " \
     git://github.com/atvcaptain/RTL8822C.git;protocol=https;branch=main \
 "

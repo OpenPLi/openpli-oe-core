@@ -10,7 +10,7 @@ RDEPENDS:${PN} = "openhbbtvbrowser"
 inherit python3-compileall
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+
 PV = "1.0+git"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r1"

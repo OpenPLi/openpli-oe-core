@@ -5,7 +5,7 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://ifcfg-wlan0;md5=a84acae65af4b2d44d5035aa9f63cd85"
 
 inherit module
-SRCREV = "${AUTOREV}"
+
 SRC_URI = " \
     git://github.com/lwfinger/rtl8852au;protocol=https;branch=dwa-x1850 \
     file://0001-fix-fallthrough-error.patch \

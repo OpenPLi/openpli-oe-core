@@ -7,8 +7,6 @@ inherit kodi-addon
 
 DEPENDS += "expat"
 
-SRCREV = "${AUTOREV}"
-
 PV = "2.0.9+gitr"
 
 KODIADDONBRANCH = "Leia"

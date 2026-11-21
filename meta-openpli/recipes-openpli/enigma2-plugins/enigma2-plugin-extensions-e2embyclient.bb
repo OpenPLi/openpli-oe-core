@@ -11,8 +11,6 @@ inherit gittag allarch gettext python3-compileall setuptools3-openplugins
 PV = "git"
 PKGV = "${GITPKGVTAG}"
 
-SRCREV = "${AUTOREV}"
-
 SRC_URI = "git://github.com/DimitarCC/e2-emby-client.git;protocol=https;branch=main"
 
 S = "${WORKDIR}/git"

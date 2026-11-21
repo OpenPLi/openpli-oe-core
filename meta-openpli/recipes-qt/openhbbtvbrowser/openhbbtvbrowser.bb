@@ -8,7 +8,7 @@ file://LICENSE;md5=e56d5762d06c562486323805b3ee7dde \
 DEPENDS = "qtwebengine"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+
 PV = "git"
 PKGV = "git${GITPKGV}"
 

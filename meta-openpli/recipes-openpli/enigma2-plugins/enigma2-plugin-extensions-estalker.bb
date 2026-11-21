@@ -9,8 +9,6 @@ RDEPENDS:${PN} = "python3 python3-multiprocessing python3-requests \
 
 inherit gittag allarch python3-compileall
 
-SRCREV = "${AUTOREV}"
-
 PV = "git"
 PKGV = "${GITPKGVTAG}"
 
