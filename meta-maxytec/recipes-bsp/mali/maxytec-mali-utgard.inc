@@ -9,7 +9,7 @@ VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 PROVIDES = "virtual/libgles2 virtual/libgles1 virtual/egl"
 RPROVIDES:${PN} = "libmali.so libMali.so libEGL.so.1.4 libEGL.so.1 libEGL.so libGLESv1_CM.so.1.1 libGLESv1_CM.so.1 libGLESv1_CM.so libGLESv2.so.2.0 libGLESv2.so.2 libGLESv2.so"
 
-SRC_URI = "http://downloads.openpli.org/archive/maxytec/multibox-mali${VER}-${SRCDATE}.zip"
+SRC_URI = "http://downloads.openpli.org/archive/hisilicon/hisilicon-mali${VER}-${SRCDATE}.zip"
 
 S = "${WORKDIR}"
 
@@ -53,5 +53,5 @@ INSANE_SKIP:${PN} += "already-stripped dev-so ldflags"
 # The driver is missing EGL/GLES headers and pkgconfig files. Handle
 # the conflicts as mesa and the driver are both providing the same shared libraries.
 RREPLACES:${PN} = "libegl libegl1 libgles1 libglesv1-cm1 libgles2 libglesv2-2"
-RPROVIDES:${PN} = "libegl libegl1 libgles1 libglesv1-cm1 libgles2 libglesv2-2"
+RPROVIDES:${PN} += "libegl libegl1 libgles1 libglesv1-cm1 libgles2 libglesv2-2"
 RCONFLICTS:${PN} = "libegl libegl1 libgles1 libglesv1-cm1 libgles2 libglesv2-2"

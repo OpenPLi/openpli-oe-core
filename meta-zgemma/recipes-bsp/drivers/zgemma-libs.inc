@@ -6,7 +6,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 PR = "${SRCDATE}"
 VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 
-SRC_URI = "http://downloads.openpli.org/archive/zgemma/zgemma-libs${VER}-${HICHIPSET}-${SRCDATE}.zip"
+SRC_URI = "http://downloads.openpli.org/archive/hisilicon/hisilicon-libs${VER}-${SRCDATE}.zip"
 
 S = "${WORKDIR}"
 
@@ -40,5 +40,6 @@ do_install() {
 
 FILES:${PN} = "${libdir}/hisilicon/*"
 FILES:${PN}-dev = ""
+RPROVIDES:${PN} += "libhi_common.so"
 
 INSANE_SKIP:${PN} += "ldflags already-stripped dev-so 32bit-time file-rdeps"

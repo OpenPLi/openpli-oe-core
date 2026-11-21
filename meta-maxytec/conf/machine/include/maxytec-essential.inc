@@ -3,6 +3,9 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'maxytec-libs-${MACHINE} maxytec-param-${MACHINE} maxytec-bootargs-${MACHINE} maxytec-fastboot-${MACHINE} maxytec-logo-${MACHINE} maxytec-recovery-${MACHINE} maxytec-dtbo-${MACHINE}' , '', d)} \
 	"
 
+COBALT_HILOADER_BUILD_DEPENDS = "${@bb.utils.contains('MACHINE_FEATURES', 'hisil mali', 'maxytec-libs-${MACHINE} maxytec-mali-${MACHINE}', '', d)}"
+COBALT_HILOADER_RDEPENDS = "${COBALT_HILOADER_BUILD_DEPENDS}"
+
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 	kernel-module-cdfs \
 	maxytec-ethwol \

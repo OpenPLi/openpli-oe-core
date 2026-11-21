@@ -7,6 +7,9 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "\
 	${@bb.utils.contains('MACHINE_FEATURES', 'hisil-3716mv430', 'zgemma-libs-3716mv430 zgemma-param-3716mv430 zgemma-bootargs-3716mv430 zgemma-bootlogo-3716mv430 zgemma-fastboot-3716mv430 zgemma-recovery-3716mv430' , '', d)} \
 	"
 
+COBALT_HILOADER_BUILD_DEPENDS = "${@bb.utils.contains('MACHINE_FEATURES', 'hisil-3798mv200', 'zgemma-libs-3798mv200 zgemma-mali-3798mv200', '', d)}"
+COBALT_HILOADER_RDEPENDS = "${COBALT_HILOADER_BUILD_DEPENDS}"
+
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 	kernel-module-cdfs \
 	\

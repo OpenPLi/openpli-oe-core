@@ -1,8 +1,8 @@
-SRCDATE = "20181201"
+SRCDATE = "20261118"
 
 require hd-mali-utgard.inc
 
-SRC_URI[md5sum] = "19aacdd98123f4aedeaf6d25dceddc8c"
-SRC_URI[sha256sum] = "2e799131fa28ea98c92f3bf2e5a24b5ee93bd09812a0ce1a848911d2e6c5bc15"
+SRC_URI[md5sum] = "127f9dcb2e0f0b131b81675ef24eead0"
+SRC_URI[sha256sum] = "b3c6d0cb134b807820ff0e677222b3041ceb44a9d1b5f3db797b7719459b4083"
 
 COMPATIBLE_MACHINE = "hd61"

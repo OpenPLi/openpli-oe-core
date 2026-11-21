@@ -4,6 +4,9 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	${@bb.utils.contains('MACHINE_FEATURES', 'hisil emmc', 'hd-recovery-${MACHINE}' , '', d)} \
 	"
 
+COBALT_HILOADER_BUILD_DEPENDS = "${@bb.utils.contains('MACHINE_FEATURES', 'hisil mali', 'hd-libs-${MACHINE} hd-mali-${MACHINE}', '', d)}"
+COBALT_HILOADER_RDEPENDS = "${COBALT_HILOADER_BUILD_DEPENDS}"
+
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 	kernel-module-cdfs \
 	${@bb.utils.contains('MACHINE_FEATURES', 'v3d-mipsel', 'hd-v3ddriver-${MACHINE}' , '', d)} \

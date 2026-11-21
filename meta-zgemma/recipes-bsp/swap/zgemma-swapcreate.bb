@@ -14,4 +14,4 @@ do_install() {
     ln -sf ../init.d/createswap.sh ${D}${sysconfdir}/rc3.d/S98createswap
 }
 
-COMPATIBLE_MACHINE = "(h7|h17|h17twin)"
+COMPATIBLE_MACHINE = "^h7$|^h17$|^h17twin$"

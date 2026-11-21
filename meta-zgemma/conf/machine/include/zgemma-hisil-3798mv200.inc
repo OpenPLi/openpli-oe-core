@@ -3,7 +3,7 @@ KERNEL_MODULE_AUTOLOAD += "xfs"
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-PREFERRED_VERSION_linux-zgemma = "4.4.35"
+PREFERRED_VERSION_linux-zgemma = "4.4.176"
 
 #Provider
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-zgemma"

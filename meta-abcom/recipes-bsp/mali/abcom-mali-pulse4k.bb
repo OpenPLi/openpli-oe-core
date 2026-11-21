@@ -1,8 +1,8 @@
-SRCDATE = "20210203"
+SRCDATE = "20261118"
 
 require abcom-mali-utgard.inc
 
-SRC_URI[md5sum] = "b96caae5248e4fa3606a367e290877d0"
-SRC_URI[sha256sum] = "dc408d3a0e647fcf008df3a8a8c2a68cf1884f3b86ce1b837469eed2caa25ad6"
+SRC_URI[md5sum] = "127f9dcb2e0f0b131b81675ef24eead0"
+SRC_URI[sha256sum] = "b3c6d0cb134b807820ff0e677222b3041ceb44a9d1b5f3db797b7719459b4083"
 
 COMPATIBLE_MACHINE = "pulse4k"

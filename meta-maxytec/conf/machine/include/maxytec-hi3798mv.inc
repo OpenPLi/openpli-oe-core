@@ -4,7 +4,7 @@ KERNEL_MODULE_AUTOLOAD += "xfs"
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-PREFERRED_VERSION_linux-maxytec = "4.4.35"
+PREFERRED_VERSION_linux-maxytec = "4.4.176"
 
 #Provider
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-maxytec"
@@ -17,6 +17,8 @@ PREFERRED_PROVIDER_virtual/mesa ?= "mesa"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs ?= "maxytec-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc ?= "maxytec-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/gstreamer1.0-dvbmediasink ?= "gstreamer1.0-plugin-dvbmediasink"
+PREFERRED_PROVIDER_virtual/enigma2-mediaservice ?= "enigma2-plugin-systemplugins-servicehisilicon"
+PREFERRED_PROVIDER_virtual/kodi ?= "stb-kodi-${MACHINE}"
 
 require conf/machine/include/arm/armv7a/tune-cortexa15.inc
 require conf/machine/include/maxytec-essential.inc
@@ -28,15 +30,10 @@ EXTRA_OECONF:append:pn-enigma2 = " --with-alphablendingacceleration=always --wit
 PACKAGECONFIG_GL:pn-qtbase = " "
 PACKAGECONFIG:append:pn-qtbase = " gles2 linuxfb"
 
-# Kodi
-EXTRA_OECONF:pn-kodi += " --with-gpu=mali --enable-player=hiplayer"
-
 # Gstreamer dvbmediasink
 DVBMEDIASINK_CONFIG = "--with-h265 --with-vb6 --with-vb8 --with-vb9 --with-dts --with-wma --with-wmv --with-pcm  --with-eac3 --with-amr --with-spark"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
-	gstreamer1.0-plugin-dvbmediasink \
-	gstreamer1.0-libav \
 	ffmpeg \
 	ntfs-3g \
 "

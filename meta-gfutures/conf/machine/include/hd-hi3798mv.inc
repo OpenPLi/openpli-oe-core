@@ -4,7 +4,7 @@ KERNEL_MODULE_AUTOLOAD += "xfs"
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-PREFERRED_VERSION_linux-hd = "4.4.35"
+PREFERRED_VERSION_linux-hd = "4.4.176"
 
 #Provider
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-hd"
@@ -18,6 +18,7 @@ PREFERRED_PROVIDER_virtual/blindscan-dvbs ?= "hd-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc ?= "hd-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/gstreamer1.0-dvbmediasink ?= "gstreamer1.0-plugin-dvbmediasink"
 PREFERRED_PROVIDER_virtual/enigma2-mediaservice ?= "enigma2-plugin-systemplugins-servicehisilicon"
+PREFERRED_PROVIDER_virtual/kodi ?= "stb-kodi-${MACHINE}"
 
 # require conf/machine/include/arm/arch-armv8.inc
 require conf/machine/include/arm/armv7a/tune-cortexa15.inc
@@ -34,8 +35,6 @@ PACKAGECONFIG:append:pn-qtbase = " gles2 linuxfb"
 DVBMEDIASINK_CONFIG = "--with-h265 --with-vb8 --with-vb9 --with-wma --with-wmv --with-pcm --with-dts --with-eac3 --with-amr --with-spark"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
-	gst-plugin-dvbmediasink \
-	gstreamer1.0-libav \
 	ffmpeg \
 	ntfs-3g \
 "

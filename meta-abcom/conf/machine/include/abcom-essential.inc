@@ -3,6 +3,9 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	${@bb.utils.contains('MACHINE_FEATURES', 'hisil', 'abcom-libs-${MACHINE} abcom-param-${MACHINE} abcom-bootargs-${MACHINE} abcom-fastboot-${MACHINE} abcom-logo-${MACHINE} abcom-recovery-${MACHINE}' , '', d)} \
 	"
 
+COBALT_HILOADER_BUILD_DEPENDS = "${@bb.utils.contains('MACHINE_FEATURES', 'hisil mali', 'abcom-libs-${MACHINE} abcom-mali-${MACHINE}', '', d)}"
+COBALT_HILOADER_RDEPENDS = "${COBALT_HILOADER_BUILD_DEPENDS}"
+
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 	kernel-module-cdfs \
 	abcom-ethwol \

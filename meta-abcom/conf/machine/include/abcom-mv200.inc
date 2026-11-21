@@ -4,7 +4,7 @@ KERNEL_MODULE_AUTOLOAD += "xfs"
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-PREFERRED_VERSION_linux-abcom = "4.4.35"
+PREFERRED_VERSION_linux-abcom = "4.4.176"
 
 #Provider
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-abcom"
@@ -17,6 +17,8 @@ PREFERRED_PROVIDER_virtual/mesa ?= "mesa"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs ?= "abcom-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc ?= "abcom-dvb-modules-${MACHINE}"
 PREFERRED_PROVIDER_virtual/gstreamer1.0-dvbmediasink ?= "gstreamer1.0-plugin-dvbmediasink"
+PREFERRED_PROVIDER_virtual/enigma2-mediaservice ?= "enigma2-plugin-systemplugins-servicehisilicon"
+PREFERRED_PROVIDER_virtual/kodi ?= "stb-kodi-${MACHINE}"
 
 require conf/machine/include/arm/armv7a/tune-cortexa15.inc
 require conf/machine/include/abcom-essential.inc
@@ -33,11 +35,10 @@ DVBMEDIASINK_CONFIG = "--with-h265 --with-vb8 --with-vb9 --with-wma --with-wmv -
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	ffmpeg \
-	gstreamer1.0-libav \
 	ntfs-3g \
 "
 
-MACHINE_FEATURES += " alsa usbhost wlan 3dtv switchoff osdposition qtevent1"
+MACHINE_FEATURES += " alsa usbhost wlan 3dtv switchoff osdposition hdmicec qtevent1"
 
 IMAGEVERSION := "${DISTRO_NAME}-${DISTRO_VERSION}-${DATE}"
 IMAGEVERSION[vardepsexclude] = "DATE"
