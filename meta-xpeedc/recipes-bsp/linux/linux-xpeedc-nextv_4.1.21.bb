@@ -15,6 +15,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/linux-${PV}/COPYING;md5=d7810fab7487fb0aad
 MACHINE_KERNEL_PR:append = ".8"
 
 SRC_URI += "http://downloads.openpli.org/archive/xpeedc/linux-${PV}.tar.xz \
+	file://kernel-add-support-for-gcc13.patch \
 	file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
 	file://0003-dont-mark-register-as-const.patch \
 	file://defconfig \

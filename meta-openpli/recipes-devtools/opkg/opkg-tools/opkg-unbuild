@@ -1,0 +1,71 @@
+#!/bin/sh
+# opkg-unbuild -- extract an .ipk from a directory
+# maintained by WanWizard 31/10/2026
+
+set -e
+
+###
+# opkg-unbuild "main"
+###
+
+case $# in
+1)
+	IPKFILE=$1
+	;;
+*)
+	echo "Usage: opkg-unbuild package-name.ipk" ;
+	exit 1 
+	;;
+esac
+
+if [ ! -f "${IPKFILE}" ]; then
+	echo "opkg-unbuild: Error: ipk archive '${IPKFILE} does not exist"
+	exit 1
+fi
+
+LANG=C IFS= read -r -d '' -n 7 HEADER < ${IPKFILE}
+if [ "${HEADER}" != "!<arch>" ]; then
+	echo File {$IPKFILE} is not a valid AR archive!
+	exit 1
+fi
+
+BASENAME=$(basename -- "${IPKFILE}")
+EXTENSION="${BASENAME##*.}"
+DIRNAME="${BASENAME%.*}"
+
+if [ -d $DIRNAME ]; then
+	rm -rf $DIRNAME
+fi
+
+mkdir $DIRNAME
+mkdir $DIRNAME/CONTROL
+
+cd $DIRNAME
+if [ "${IPKFILE}" = "${BASENAME}" ]; then
+	ar -x ../${IPKFILE} || tar zxf ../${IPKFILE}
+else
+	ar -x ${IPKFILE} || tar zxf ${IPKFILE}
+fi
+
+if [ -f control.tar.gz ]; then
+	tar xzf control.tar.gz -C CONTROL
+	rm control.tar.gz
+fi
+
+if [ -f data.tar.gz ]; then
+	tar xzf data.tar.gz -C .
+	rm -f data.tar.gz
+fi
+
+if [ -f data.tar.zst ]; then
+	zstd -d --rm data.tar.zst 
+fi
+
+if [ -f debian-binary ]; then
+	rm -rf debian-binary
+fi
+
+echo
+echo "Unpacked in ${DIRNAME}:"
+echo
+ls -l

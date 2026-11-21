@@ -63,6 +63,7 @@ OPTIONAL_PACKAGES += " \
 	astra-sm \
 	autofs \
 	autossh \
+        binutils \
 	ccid \
 	cronie \
 	ctorrent \
@@ -211,6 +212,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-modifyplifullhd \
 	enigma2-plugin-extensions-moviemanager \
 	enigma2-plugin-extensions-openmultiboot \
+	enigma2-plugin-extensions-opkg-tools \
 	enigma2-plugin-extensions-plutotv \
 	enigma2-plugin-extensions-rakutentvcockpit \
 	enigma2-plugin-extensions-refreshbouquet \
@@ -220,6 +222,7 @@ OPTIONAL_ENIGMA2_PACKAGES = " \
 	enigma2-plugin-extensions-simpleumount \
 	enigma2-plugin-extensions-subssupport \
 	enigma2-plugin-extensions-sundtekcontrolcenter \
+	enigma2-plugin-extensions-timerplanner \
 	enigma2-plugin-extensions-tmbd \
 	enigma2-plugin-extensions-ts-sateditor \
 	enigma2-plugin-extensions-usbformatwizard \

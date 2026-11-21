@@ -27,3 +27,5 @@ INHIBIT_PACKAGE_STRIP = "1"
 
 SRC_URI[md5sum] = "28bcf3cd9de63144d7b0bbf9d5040e74"
 SRC_URI[sha256sum] = "05c99af948d6fd1e17765698db5e4be46d1deda868ed0b84f5b03f6af8667200"
+
+INSANE_SKIP:${PN} = "already-stripped"
