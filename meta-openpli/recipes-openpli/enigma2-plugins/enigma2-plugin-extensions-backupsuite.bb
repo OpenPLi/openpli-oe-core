@@ -1,7 +1,7 @@
 DESCRIPTION = "Backup Suite"
 LICENSE = "GPL-3.0-only"
 AUTHOR = "Pedro Newbie <pedro.newbie@gmail.com>, updated by lullula"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=db95b6e40dc7d26d8308b6b7375637b6"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 SRC_ORIGIN ?= "git://github.com/Belfagor2005/BackupSuite.git;protocol=https;branch=main"
 SRC_URI := "${SRC_ORIGIN} "
