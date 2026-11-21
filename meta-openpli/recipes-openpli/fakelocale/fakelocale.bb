@@ -1,4 +1,4 @@
-SUMMARY = "LC_TIME locale support"
+SUMMARY = "LC_TIME and optional LC_COLLATE locale support"
 LICENSE = "GPL-3.0-only"
 SECTION = "base"
 PRIORITY = "required"
@@ -32,9 +32,9 @@ RPROVIDES:${PN} = "virtual-locale-ar virtual-locale-bg virtual-locale-ca virtual
 	virtual-locale-vi virtual-locale-zh"
 
 do_compile() {
-    install -d ${S}/output
-    cd ${S}/locales
-    for lang in ${LANGUAGES}; do
+	install -d ${S}/output
+	cd ${S}/locales
+	for lang in ${LANGUAGES}; do
 		cross-localedef --no-archive -i ${S}/locales/${lang} -f ${S}/locales/UTF-8 ${S}/output/${lang}
 	done
 }
@@ -49,8 +49,21 @@ do_install() {
 	for lang in ${LANGUAGES}; do
 		install -d ${D}${LOCALEDIR}/${lang}
 		cp ${S}/output/${lang}/LC_TIME ${D}${LOCALEDIR}/${lang}
+		cp ${S}/output/${lang}/LC_COLLATE ${D}${LOCALEDIR}/${lang}
 		ln -s ../fake/LC_MESSAGES ${D}${LOCALEDIR}/${lang}/LC_MESSAGES
 	done
 }
 
 FILES:${PN} = "${LOCALEDIR} ${LOCALEDIR2}"
+
+python __anonymous() {
+    pn = d.getVar("PN")
+    localedir = d.getVar("LOCALEDIR")
+
+    for lang in d.getVar("LANGUAGES").split():
+        pkg = pn + "-collate-" + lang.lower().replace("_", "-")
+        d.prependVar("PACKAGES", pkg + " ")
+        d.setVar("SUMMARY:" + pkg, "LC_COLLATE locale support for " + lang)
+        d.setVar("FILES:" + pkg, localedir + "/" + lang + "/LC_COLLATE")
+        d.setVar("RDEPENDS:" + pkg, pn)
+}
