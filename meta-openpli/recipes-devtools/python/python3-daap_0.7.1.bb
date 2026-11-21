@@ -8,8 +8,6 @@ RDEPENDS:${PN} = "python3-compression"
 
 inherit gitpkgv setuptools3
 
-SRCREV = "${AUTOREV}"
-
 SRC_URI = "git://github.com/abdelgmartinezl/PythonDaap;protocol=https;branch=master \
            file://python-daap.patch \
            file://The-member-ob_type-is-not-present-in-the-pcapobject.patch \

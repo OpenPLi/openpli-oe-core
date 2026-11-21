@@ -9,8 +9,6 @@ DEPENDS += "expat"
 RDEPENDS:${PN} += "ldd"
 RRECOMMENDS:${PN} = "kernel-module-ext2"
 
-SRCREV = "${AUTOREV}"
-
 KODIADDONBRANCH = "Leia"
 
 PV = "2.4.7+gitr"

@@ -11,7 +11,6 @@ RRECOMMENDS:${PN} = "enigma2-plugin-extensions-subssupport"
 
 RDEPENDS:${PN} = "virtual-kodi kodi-addons-meta kodi-addon-inputstream-adaptive-omega nspr nss"
 
-SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/OpenPLi/kodiext.git;protocol=https;branch=main \
 	file://advancedsettings.xml \
 	file://advancedsettings-empty.xml \

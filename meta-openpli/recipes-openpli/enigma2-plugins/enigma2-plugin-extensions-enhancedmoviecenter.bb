@@ -9,7 +9,6 @@ RDEPENDS:${PN} = "gstreamer1.0-plugins-good-flv gstreamer1.0-plugins-bad-rtmp py
 
 inherit gitpkgv autotools-brokensep gettext python3-compileall
 
-SRCREV = "${AUTOREV}"
 PV = "4.0.+git"
 PKGV = "4.0.+git${GITPKGV}"
 

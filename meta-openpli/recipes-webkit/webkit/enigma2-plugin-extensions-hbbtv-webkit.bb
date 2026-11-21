@@ -11,7 +11,6 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
 PKGVERSION = "2.0-r0"
 PV = "${PKGVERSION}"
 PKGV = "${PKGVERSION}-${GITPKGV}"

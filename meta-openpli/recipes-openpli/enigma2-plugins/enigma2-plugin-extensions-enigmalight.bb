@@ -7,7 +7,7 @@ DEPENDS = "libusb1"
 RRECOMMENDS:${PN} = "python3-cheetah libusb1 kernel-module-cdc-acm kernel-module-ftdi-sio kernel-module-usbserial kernel-module-ch341"
 
 inherit gitpkgv
-SRCREV = "${AUTOREV}"
+
 PV = "1.42+git"
 PKGV = "1.42+git${GITPKGV}"
 PR = "r12"

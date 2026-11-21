@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://Makefile;md5=84b010020bb976d347a15f8a666ba2d7"
 DEPENDS ="bc-native"
 
 inherit module
-SRCREV = "${AUTOREV}"
+
 SRC_URI = " \
     git://github.com/OpenIPC/realtek-wlan.git;protocol=https;branch=rtl8188fu \
 "

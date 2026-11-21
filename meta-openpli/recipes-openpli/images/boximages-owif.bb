@@ -5,8 +5,6 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit gitpkgv
 
-SRCREV = "${AUTOREV}"
-
 PV = "${DISTRO_VERSION}+git"
 PKGV = "${DISTRO_VERSION}+git${GITPKGV}"
 
