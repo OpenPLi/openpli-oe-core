@@ -57,14 +57,9 @@ check_network_swap() {
 
 interfaces_up() {
 	while IFS=\  read AUTO IF; do
-		if [ -f /sys/class/net/$IF/carrier ]; then
-			carrier=`cat /sys/class/net/$IF/carrier`
-			if [ "$carrier" = "1" ]; then
-				ifdown $IF
-				ip addr flush dev $IF scope global
-				ifup $IF
-			fi
-		fi
+		ifdown $IF
+		ip addr flush dev $IF scope global
+		ifup $IF
 	done < <(grep -E "^auto \w" /etc/network/interfaces)
 }
 
