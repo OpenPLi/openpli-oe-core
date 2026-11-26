@@ -1,0 +1,36 @@
+From: Andy <github@zgemma.org>
+Subject: [PATCH] gmain: fall back to poll on timeout overflow
+
+On 32-bit ARM receivers with Linux 4.4, glibc falls back to the 32-bit
+ppoll syscall. A timeout outside its time_t range returns EOVERFLOW,
+which makes the main loop retry and emit warnings without polling any
+file descriptors.
+
+Use the existing bounded millisecond poll path when ppoll reports
+EOVERFLOW. This still wakes for I/O, and the main loop recalculates the
+remaining timeout when poll returns.
+
+---
+ glib/gmain.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/glib/gmain.c b/glib/gmain.c
+--- a/glib/gmain.c
++++ b/glib/gmain.c
+@@ -3712,6 +3712,6 @@ round_timeout_to_msec (gint64 timeout_usec)
+   if (timeout_usec > 0)
+     {
+-      guint64 timeout_msec = (timeout_usec + 999) / 1000;
++      guint64 timeout_msec = ((guint64) timeout_usec + 999) / 1000;
+ 
+       return (int) MIN (timeout_msec, G_MAXINT);
+     }
+@@ -4630,6 +4630,8 @@ g_main_context_poll_unlocked (GMainContext *context,
+ 
+           UNLOCK_CONTEXT (context);
+           ret = ppoll ((struct pollfd *) fds, n_fds, spec_p, NULL);
++          if (ret < 0 && errno == EOVERFLOW)
++            ret = g_poll (fds, n_fds, round_timeout_to_msec (timeout_usec));
+           LOCK_CONTEXT (context);
+         }
+       else
