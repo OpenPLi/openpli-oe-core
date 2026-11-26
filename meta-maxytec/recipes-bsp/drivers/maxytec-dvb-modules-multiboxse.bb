@@ -1,10 +1,10 @@
 KV = "4.4.176"
-SRCDATE = "20261118"
+SRCDATE = "20261126"
 
 require maxytec-dvb-modules.inc
 
-SRC_URI[md5sum] = "a703dcb984e473cf8b2d78d315253a25"
-SRC_URI[sha256sum] = "bf79d5639af9d7cd29001a94db29efd94b9a536d49a2f142e13fcac4d8ce227f"
+SRC_URI[md5sum] = "52d95290d6932955b6040739bb8d5173"
+SRC_URI[sha256sum] = "4dd8f21f8be34187d1a2dd41c9226c8641d8c169346d838f6b54d37e6751db8f"
 
 COMPATIBLE_MACHINE = "multiboxse"
 

@@ -1,3 +1,6 @@
+MACHINEOVERRIDES =. "kernel-4.10:"
+MACHINEOVERRIDES =. "bcm-v3d:"
+
 PREFERRED_VERSION_linux-hd = "4.10.12"
 
 IMAGE_CLASSES += " hd-emmc_image_multiboot"

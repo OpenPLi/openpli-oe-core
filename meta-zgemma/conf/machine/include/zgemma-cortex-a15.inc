@@ -3,6 +3,9 @@ KERNEL_MODULE_AUTOLOAD += "xfs"
 # We know about rtc
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
+MACHINEOVERRIDES =. "kernel-4.10:"
+MACHINEOVERRIDES =. "bcm-v3d:"
+
 PREFERRED_VERSION_linux-zgemma = "4.10.12"
 
 #Provider

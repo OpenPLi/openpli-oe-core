@@ -11,7 +11,7 @@ COMPATIBLE_MACHINE = "^h11$|^h8$|^h8se$|^h9$|^h9combo$|^h9se$|^h9combose$|^h10$|
 inherit kernel machine_kernel_pr
 
 MACHINE_KERNEL_PR = "r0"
-MACHINE_KERNEL_PR:append = ".5"
+MACHINE_KERNEL_PR:append = ".6"
 
 SRC_URI[md5sum] = "261fd4b3d11cf2e593abb1706033fe1c"
 SRC_URI[sha256sum] = "6448ea7093cea5e30fcd9ceea357eee3ad98d1b3e7a2367a41fae990f39468e8"
@@ -50,6 +50,7 @@ S = "${WORKDIR}/linux-${PV}"
 
 FILES:${KERNEL_PACKAGE_NAME}-image = "/${KERNEL_IMAGEDEST}/findkerneldevice.sh"
 FILES:${KERNEL_PACKAGE_NAME}-image:nand = " "
+RDEPENDS:${KERNEL_PACKAGE_NAME}-image:nand += "mtd-utils"
 
 
 kernel_do_configure:prepend() {
@@ -78,20 +79,36 @@ pkg_postinst:kernel-image() {
 }
 
 pkg_postinst:kernel-image:nand() {
-    if [ -z "$D" ]; then
-        MTD_DEVICE="$(grep -m1 '"kernel"' /proc/mtd | cut -d: -f1)"
-
-        if [ -z "$MTD_DEVICE" ]; then
-            echo "Kernel MTD partition not found"
-            exit 1
-        fi
-
-        KERNEL_FILE="/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}"
-
-        if [ -f "$KERNEL_FILE" ]; then
-            flash_eraseall "/dev/$MTD_DEVICE" &&
-            nandwrite -p "/dev/$MTD_DEVICE" "$KERNEL_FILE"
-        fi
+    if [ -n "$D" ]; then
+        exit 0
     fi
-    true
+
+    MTD_ENTRY="$(grep -m1 '"kernel"' /proc/mtd || true)"
+    MTD_DEVICE="$(printf '%s\n' "$MTD_ENTRY" | cut -d: -f1)"
+    if [ -z "$MTD_DEVICE" ]; then
+        echo "ERROR: kernel MTD partition not found" >&2
+        exit 1
+    fi
+
+    MTD_PATH="/dev/$MTD_DEVICE"
+    KERNEL_FILE="/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_RELEASE}"
+    if [ ! -e "$MTD_PATH" ]; then
+        echo "ERROR: MTD device does not exist: $MTD_PATH" >&2
+        exit 1
+    fi
+    if [ ! -f "$KERNEL_FILE" ]; then
+        echo "ERROR: kernel image is missing: $KERNEL_FILE" >&2
+        exit 1
+    fi
+
+    if ! flash_erase "$MTD_PATH" 0 0; then
+        echo "ERROR: flash_erase failed for $MTD_PATH" >&2
+        exit 1
+    fi
+
+    if ! nandwrite -p "$MTD_PATH" "$KERNEL_FILE"; then
+        echo "ERROR: nandwrite failed for $KERNEL_FILE to $MTD_PATH" >&2
+        exit 1
+    fi
+    sync
 }

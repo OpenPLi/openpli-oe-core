@@ -96,7 +96,7 @@ pkg_postinst:kernel-image:nand() {
         KERNEL_FILE="/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}"
 
         if [ -f "$KERNEL_FILE" ]; then
-            flash_eraseall "/dev/$MTD_DEVICE" &&
+            flash_erase "/dev/$MTD_DEVICE" 0 0 &&
             nandwrite -p "/dev/$MTD_DEVICE" "$KERNEL_FILE"
         fi
     fi

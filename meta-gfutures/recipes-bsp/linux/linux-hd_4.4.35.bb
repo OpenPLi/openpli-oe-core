@@ -62,7 +62,7 @@ kernel_do_install:append() {
 pkg_postinst:kernel-image:hd31() {
 	if [ "x$D" == "x" ]; then
 		if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
-			flash_eraseall /dev/${MTD_KERNEL}
+			flash_erase /dev/${MTD_KERNEL} 0 0
 			nandwrite -p /dev/${MTD_KERNEL} /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
 		fi
 	fi
@@ -72,7 +72,7 @@ pkg_postinst:kernel-image:hd31() {
 pkg_postinst:kernel-image:hd41() {
 	if [ "x$D" == "x" ]; then
 		if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
-			flash_eraseall /dev/${MTD_KERNEL}
+			flash_erase /dev/${MTD_KERNEL} 0 0
 			nandwrite -p /dev/${MTD_KERNEL} /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
 		fi
 	fi

@@ -3,7 +3,7 @@ SECTION = "kernel"
 LICENSE = "GPL-2.0-only"
 
 KERNEL_RELEASE = "4.10.12"
-COMPATIBLE_MACHINE = "^hd11$|^hd1100$|^hd1200$|^hd1265$|^hd1500$|^hd2400$|^hd500c$|^ĥd51$|^hd530$|^vs1000$|^vs1500$|^bre2ze4k$"
+COMPATIBLE_MACHINE = "^hd11$|^hd1100$|^hd1200$|^hd1265$|^hd1500$|^hd2400$|^hd500c$|^hd51$|^hd530c$|^vs1000$|^vs1500$|^bre2ze4k$"
 
 inherit kernel machine_kernel_pr
 
@@ -52,7 +52,7 @@ KERNEL_OUTPUT:mipsel = "vmlinux.gz"
 pkg_postinst:kernel-image:mipsel() {
 	if [ "x$D" == "x" ]; then
 		if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
-			flash_eraseall /dev/mtd1
+			flash_erase /dev/mtd1 0 0
 			nandwrite -p /dev/mtd1 /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
 		fi
 	fi
