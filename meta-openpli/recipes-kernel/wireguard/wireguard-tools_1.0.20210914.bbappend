@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/wireguard-tools:"
 
 SRC_URI += " file://wg-quick.patch;striplevel=2 file://wg"
 
