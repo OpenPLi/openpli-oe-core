@@ -9,7 +9,8 @@ inherit gittag cmake pkgconfig
 PV = "git"
 PKGV = "${GITPKGVTAG}"
 
-SRC_URI = "git://git.osmocom.org/rtl-sdr;protocol=https;branch=master"
+SRC_ORIGIN ?= "git://git.osmocom.org/rtl-sdr;protocol=https;branch=master"
+SRC_URI := "${SRC_ORIGIN} "
 
 S = "${WORKDIR}/git"
 
